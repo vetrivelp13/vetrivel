@@ -1,0 +1,52 @@
+a:link,
+a:visited {
+  text-decoration: underline
+}
+#site-name a:link,
+#site-name a:visited {
+  text-decoration: none
+}
+#content a:link:after,
+#content a:visited:after {
+  content: " (" attr(href) ") ";
+  font-size: 0.8em;
+  font-weight: normal
+}
+#content,
+#content .section {
+  float: none;
+  width: 100%;
+  margin: 0;
+  padding: 0
+}
+body,
+#page-wrapper,
+#page,
+#main-wrapper,
+#main,
+#content,
+#content .section {
+  color: #000;
+  background-color: transparent;
+  background-image: none
+}
+#skip-to-nav,
+#toolbar,
+#navigation,
+.region-sidebar-first,
+.region-sidebar-second,
+.region-footer,
+.breadcrumb,
+div.tabs,
+.action-links,
+.links,
+.book-navigation,
+.forum-topic-navigation,
+.pager,
+.feed-icons {
+  visibility: hidden;
+  display: none
+}
+#page-wrapper {
+  overflow-y: visible
+}

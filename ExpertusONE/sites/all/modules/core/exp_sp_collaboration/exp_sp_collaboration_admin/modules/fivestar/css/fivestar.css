@@ -1,0 +1,174 @@
+/* Plain HTML Version */
+form.fivestar-widget {
+  clear: both;
+  display: block;
+}
+form.fivestar-widget select,form.fivestar-widget input {
+  margin: 0;
+}
+/* Combo Static and Rate Widget */
+.fivestar-combo-stars .fivestar-static-form-item {
+  float: left;
+  margin-right: 40px;
+}
+.fivestar-combo-stars .fivestar-form-item {
+  float: left;
+}
+/* Fivestar form items */
+.fivestar-static-form-item .form-item,.fivestar-form-item .form-item {
+  margin: 0;
+}
+/* Static View-only Star Version */
+div.fivestar-widget-static {
+  display: block;
+}
+div.fivestar-widget-static br {
+  clear: left;
+}
+div.fivestar-widget-static .star {
+  float: left;
+  width: 17px;
+  height: 15px;
+  overflow: hidden;
+  text-indent: -999em;
+  background: url(../widgets/default/star.png) no-repeat 0 0;
+}
+div.fivestar-widget-static .star span.on {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url(../widgets/default/star.png) no-repeat 0 -32px;
+}
+div.fivestar-widget-static .star span.off {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url(../widgets/default/star.png) no-repeat 0 0;
+}
+/* Javascript Star Version */
+div.fivestar-widget {
+  display: block;
+}
+div.fivestar-widget .cancel,div.fivestar-widget .star {
+  float: left;
+  width: 12px;
+  height: 10px;
+  overflow: hidden;
+  text-indent: -999em;
+}
+div.fivestar-widget .cancel,div.fivestar-widget .cancel a {
+  background: url(../widgets/default/delete.gif) no-repeat 0 -16px;
+  text-decoration: none;
+}
+div.fivestar-widget .star,div.fivestar-widget .star a {
+  background: url(../widgets/default/star.png) no-repeat 0 0;
+  text-decoration: none;
+}
+div.fivestar-widget .cancel a,div.fivestar-widget .star a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-position: 0 0;
+  cursor: pointer;
+}
+div.fivestar-widget div.on a {
+  background-position: 0 -10px;
+}
+div.fivestar-widget div.hover a,div.rating div a:hover {
+  background-position: 0 -32px;
+}
+form.fivestar-widget div.description {
+  margin-bottom: 0;
+}
+html.js .fivestar-submit {
+  display: none;
+}
+.fivestar-combo-stars .form-type-fivestar .form-item {
+  float: left;
+}
+div.clsdet-node form#fivestar-rating-widget .form-item .description {
+  width: 65px;
+  margin-left : 0px;
+}
+div.prgdet-node form#fivestar-rating-widget .form-item .description {
+  margin-left: 0;
+  width: 68px;
+}
+div.fivestar-summary span.empty {
+  font-size: 10px;	
+  margin-right : 2px;
+}
+div.fivestar-widget-static .star,
+div.fivestar-widget .cancel,
+div.fivestar-widget .star {
+  float: left;
+}
+div.fivestar-widget .cancel, div.fivestar-widget .star {
+  height: 10px;
+  width: 12px;
+}
+div.fivestar-widget-static .star span.on,
+div.fivestar-widget div.on a {
+  background-position: right -10px;
+}
+#paintEnrollmentLPResults div.fivestar-widget {
+  margin : 26px 0px 0px 26px;
+}
+#paintEnrollmentResults div.fivestar-widget {
+  margin : 26px 0px 0px 26px;
+} 
+div.fivestar-widget-static .star span.off,
+div.fivestar-widget .star,
+div.fivestar-widget .star a,
+div.fivestar-widget .cancel a {
+  background-position: right 0;
+}
+div.fivestar-widget .cancel,
+div.fivestar-widget .cancel a,
+div.fivestar-widget div.hover a,
+div.rating div a:hover {
+  background-position: right -20px;
+}
+span.total-votes,
+span.total-votes span,
+span.average-rating,
+span.average-rating span {
+  font-size: 10px;
+}
+/*span.total-votes{
+  margin-right:18px;
+}*/
+div#class_details_display_area div.fivestar-widget {
+  margin : 4px 0px 0px 0px;
+}
+#paintContentResults div.fivestar-widget {
+  margin : 2px 10px 7px 0;
+  float  : left;
+}
+div#learning-plan-details-display-content div.fivestar-widget {
+  margin : 4px 0px 0px 0px;
+  float: left;
+}
+.form-item .description {
+  margin-left: 10px;
+  float: left;
+}
+#paintContentResults form.fivestar-widget .form-item .description {
+  margin-left: 0px;
+}
+table#paintEnrollmentResults div.enroll-main-list form.fivestar-widget .form-item .description{
+  margin-left: 8px;
+  float: none;
+  text-align: center;
+    width: 105px;
+}
+#paintEnrollmentLPResults .form-item-vote .description{
+  margin-left: 7px;
+  float: none;
+  text-align: center;
+  width: 105px;
+}
+.page-learning-catalog-search #select-class-dialog div.fivestar-widget {
+  float: left;
+  margin: 3px 10px 7px 0;	
+}

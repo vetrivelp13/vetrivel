@@ -1,0 +1,347 @@
+<?php 
+
+class AdministrationContentTestHelper extends ExpertusWebTestCase {
+	private $searchResultContent=null;
+	public $listContent = '';
+	protected $testcases = array();
+
+	
+	private $srcParam = array(
+			'title'=>'',		// Title base search
+			'announcementdaterange'=>'',		// date range on announcement
+			'announcementlang'=>'cre_sys_lng_eng', 	// Selected languages pipe separated
+			'sortby'=> 'desc',		//	Sort by option
+			'announcemanage' => 'cre_sys_fop_me'
+	);
+
+	public function setUp() {
+		parent::setUp();
+		$this->drupalLogin($this->admin); // login as admin
+		$this->getContentTestCases();
+		// set refer to prevent access denied error
+		$this->setHttpReferer('learning/enrollment-search');
+	}
+	
+	public function manageAdminContent($scope = 'basic') {
+	
+		// Get Main HTML content
+		$this->drupalPost('administration/manage/content');
+		$content = $this->content;
+	
+		// Get Filters
+		$this->drupalGetAJAX('administration/search-filter/content');
+		$this->content = drupal_json_decode($this->content);
+			
+		//Update filters with existing response
+		$replArray = array(
+				'rendered_narrow_search_filters' => 'narrow-search',
+				'rendered_main_div' => 'root-admin-results',
+				'rendered_tab_content_main' => 'tab-content-main',
+				'rendered_narrow_search_sortbar' => 'admin-maincontent_tab',
+				'rendered_narrow_search_actionbar' => 'sort-bar-V2'
+		);
+			
+		$this->updateSearchFilters($content, $replArray, 'div', 'tag', 'div' );
+	
+		$this->displayTagsById('narrow-search');
+		$this->displayTagsById('root-admin-results');
+	
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['contentList'];
+		} else {
+			$testCases = array($this->testcases['contentList'][$scope]);
+		}
+		
+		//Get search results
+		foreach($testCases as $test){
+			$this->getAdministrationContentList($test);
+		}
+	}
+	
+	public function getAdministrationContentList($opt = array()){
+		$opt = array_merge($this->basicParam, $opt);
+		$this->listContent = $this->content;
+		$srcRc = $this->drupalGetAJAX('administration/manage/content/search/all/',array('query'=>$opt));
+		$this->updateSearchResults($this->listContent,$srcRc,'narrow-search-results-holder');
+	}
+
+	protected function getContentTestCases(){
+		$rand = $this->randomName();
+		$this->testcases = array(
+				'contentList' => array(
+						'basic' => array(),
+						'case1' => array(),
+				),		
+				'contentCreate' => array(
+		  				'st_case1' => array(
+		  						"content_type"				=> 'lrn_cnt_typ_knc',
+								"lang_code" 				=> 'cre_sys_lng_eng',
+								"hosted_type"				=> 'URL', 
+								"short_description[value]" 	=> 'SimpleTest content created by test '.$rand, 
+								"content_data_url"			=> 'http://www.st_case1.com' . $rand
+		  				 ),
+						'st_case2' => array(
+		  						"content_type"				=> 'lrn_cnt_typ_knc',
+								"lang_code" 				=> 'cre_sys_lng_eng',
+								"hosted_type"				=> 'URL', 
+								"short_description[value]" 	=> 'SimpleTest content created by test '.$rand, 
+								"content_data_url"			=> 'http://www.st_case2.com' . $rand
+						),
+				),
+				'contentUpdate' => array(
+						'st_case1' 	=> array(
+							"content_title1"			=> 'st_case1 content changed- '.$rand,
+							"id"						=> $this->getContentId('st_case1'),	
+						 ),
+						'st_case2' => array(
+							"content_title1"						=> 'st_case2 content changed- '.$rand,
+							"id"						=> $this->getContentId('st_case2'),
+						),
+				),
+				'contentDelete' => array(
+						'st_case1' 	=> array( 'id'	 	=> $this->getContentId('st_case1') ),
+						'st_case2' 	=> array( 'id' 		=> $this->getContentId('st_case2') ),
+				),
+				'contentView' => array(
+						'st_case1' 	=> array( 'id'	 	=> $this->getContentId('st_case1') )						
+				),
+				'contentStatus' => array(
+						'st_case1' 	=> array( 'id'	 	=> $this->getContentId('st_case1') ),
+						'st_case2' 	=> array( 'id' 		=> $this->getContentId('st_case2') ),
+				),
+		);
+	}
+	
+	public function getContentTitle($contentId = '') {
+		$contentTitle = db_query("SELECT code FROM slt_content_master WHERE id = :content_id", array(':content_id' => $contentId ))->fetchField();
+		return $contentTitle;
+	}
+	
+	public function getContentStatus($contentId = '') {
+		$contentStatus = db_query("SELECT status FROM slt_content_master WHERE id = :content_id", array(':content_id' => $contentId ))->fetchField();
+		return $contentStatus;
+	}
+
+	//To check how many class having this content
+	public function getContentTemplateCount($contentId = '') {
+		$classCount = db_query("SELECT count(content_id) FROM slt_course_content_mapper WHERE content_id = :contentId", array(':contentId' => $contentId ))->fetchField();
+		return $classCount;
+	}
+	
+	public function getContentId($search_str = '') {
+		$select = db_select('slt_content_master', 'con');
+		$select->addField('con', 'id', 'id');
+		$select->condition('con.status','lrn_cnt_sts_del','!=' );
+		$select->condition('con.code', '%' . db_like($search_str) . '%', 'LIKE');
+		$select->condition('con.subtype', array('h5p-video-mp4','h5p-video-webm','h5p-Youtube','h5p-presentatn'),'NOT IN');
+		$select->orderBy('con.id', 'DESC');
+		$select->range(0,1);
+		$contentId = $select->execute()->fetchField();
+		return $contentId;
+	}
+}
+
+
+class AdministrationContentListBase extends AdministrationContentTestHelper
+{
+	
+}
+
+class AdministrationContentListAll extends AdministrationContentListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Content - List - All Tests',
+				'description' => 'Module : exp_sp_administration_content',
+				'group' => '1501 - Administration - Manage - Content - List',
+		);
+	}
+	
+	public function testContentListAll() {
+		debug('testAdminContentListAll called');
+		$this->manageAdminContent('all');
+	}
+}
+
+class AdministrationContentListCase1 extends AdministrationContentListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Content - List - Case 1',
+				'description' => 'Module : exp_sp_administration_content',
+				'group' => '1501 - Administration - Manage - Content - List',
+		);
+	}
+
+	public function testContentListCase1() {
+		debug('testAdminContentListCase1 called');
+		$this->manageAdminContent('case1');
+	}
+}
+
+
+/**
+ *  Content view test cases
+ *  Created By :Maheswari.M
+ *  Created Date:21.12.2016
+ */
+
+class AdministrationContentViewBase extends AdministrationContentTestHelper
+{
+	public function viewContentTestCase($scope) {
+		$ctoolModel = array(
+				'modelWidth' => 890,
+				'modelClass' => 'ctools-modal-ctools-viewscreen-wrapper',
+				'modelTitle' => t('View'),
+				'contentWidth' => 680,
+				'contentMhight' => 335,
+				'outerHeight' => 620,
+				'outerWidth' => 336,
+				'blockHeight' => 1232,
+				'blockWidth' => 1343,
+				'modelTop' => 150,
+				'modelLeft' => 226.5,
+				'docHeight' => 1232,
+				'docWidth' => 1343
+		);
+		$this->addCtoolModelContent($ctoolModel);
+
+		$modelContent = $this->content;		
+		$testCases =$this->testcases['contentView'][$scope];			
+		if($testCases['id']=='null'||$testCases['id']==''){		
+			debug('there is no content exists');
+		}
+		else{
+			//Reset content with the ctool model
+			$this->content = $modelContent;
+			//Get empty form
+			$post_field = array('wrapper'=>'paint-narrow-search-results');
+			$groupId = $testCases['id'];
+			$out = $this->drupalPostAJAX(null, $edit,'Save','?q=administration/manage/view-content/ajax/addedit/' . $groupId,array(),array(),'',$post_field);
+			$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+			// Do General validations
+			$this->assertResponse(200,'Form Rended successfully');
+			$webError = "Website encountered an unexpected error";
+			$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+
+		}
+	}
+}
+
+class AdministrationContentViewCase1 extends AdministrationContentViewBase
+{
+	public static function getInfo() {
+		return array(
+			'name' => 'Administration - Content - View - Case 1',
+				'description' => 'Module : exp_sp_administration_content',
+				'group' => '1501 - Administration - Manage - Content - View',
+		);
+	}
+
+	public function testContentViewCase1() {
+		debug('testContentViewCase1 called');
+		$this->manageAdminContent('case1');
+		$this->viewContentTestCase('st_case1');
+	}
+}
+
+
+/**
+ *  Content change status test cases
+ *  Created By :Maheswari.M
+ *  Modified Date:30.12.2016
+ *  To check the functionality for the content enable/disable .
+ */
+
+class AdministrationContentStatusBase extends AdministrationContentTestHelper
+{
+	public function statusGroupTestCase($scope = 'all') {
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['contentStatus'];
+		} else {
+			$testCases = array($this->testcases['contentStatus'][$scope]);
+		}
+
+		foreach($testCases as $test){
+			$contentId = $test['id'];
+			if ($contentId != '') {
+			//checking the status if the content attach any class
+			$notication_template_count=$this->getContentTemplateCount($contentId);
+			if($notication_template_count==0){
+				//fetching the content status
+				//if content not attach any class,we can publish/unpublish
+				$status=$this->getContentStatus($contentId);
+				$this->changeStatus($contentId,$status);
+				$status=$this->getContentStatus($contentId);
+				$this->changeStatus($contentId,$status);
+				$this->getAdministrationContentList();
+				$this->content = $this->listContent;
+			}else
+				//if content attached any class,we can't publish/unpublish
+				debug("This content attached to course/class.");
+			} else
+				debug ( 'The content id not found' );
+				
+		}
+	}
+	//change the content status
+	public function changeStatus($contentId,$status) {
+		if($status=='lrn_cnt_sts_atv'){
+			//content is published status.
+			$this->changeContentStatus($contentId);
+			$this->assertResponse(200,'Content status unpublished successfully');
+		}else{
+			//content is unpublished status.
+			$this->changeContentStatus($contentId);
+			$this->assertResponse(200,'Content status published successfully');
+		}
+	}
+
+	public function changeContentStatus($contentId) {
+		$this->drupalPostAJAX(null, $edit,'Save','?q=ajax/administration/manage/content/publish-and-unpublish/' . $contentId,array(),array(),'',$post_field);
+		$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+	}
+
+}
+
+class AdministrationContentStatusCase1 extends AdministrationContentStatusBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Content - Status - Case1',
+				'description' => 'Module : exp_sp_administration_content',
+				'group' => '1501 - Administration - Manage - Content - Status',
+		);
+	}
+
+	public function testContentPublishCase1() {
+		debug('testContentPublishCase1 called');
+		$this->manageAdminContent('case1');
+		$this->statusGroupTestCase('st_case1');
+	}
+}
+
+class AdministrationContentStatusCase2 extends AdministrationContentStatusBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Content - Status - Case2',
+				'description' => 'Module : exp_sp_administration_content',
+				'group' => '1501 - Administration - Manage - Content - Status',
+		);
+	}
+
+	public function testContentPublishCase2() {
+		debug('testContentPublishCase1 called');
+		$this->manageAdminContent('case1');
+		$this->statusGroupTestCase('st_case2');
+	}
+}
+
+
+
+
+
+?>

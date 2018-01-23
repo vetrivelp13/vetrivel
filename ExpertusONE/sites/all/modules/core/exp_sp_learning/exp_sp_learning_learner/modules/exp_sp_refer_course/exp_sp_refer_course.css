@@ -1,0 +1,703 @@
+.refer-course-form-wrapper,.ui-dialog {
+  font-size:13px;
+  padding:0
+}
+.refer-course-form-wrapper .control-div input {
+  background-color:#FFF1E6;
+  border:1px solid #FF801B;
+  color:#E36500;
+  cursor:pointer;
+  display:inline-block;
+  margin-right:5px;
+  text-align:center
+}
+.refer-course-holder .modal-content {
+  height:auto;
+  max-height:525px;
+  overflow:visible
+}
+.refer-course-holder .rc-error {
+  margin:0;
+  padding:5px;
+  display:none;
+  background-color:#FFEEEE;
+  border:1px solid #FFFF77;
+  color:#000;
+  margin:5px 0;
+  min-height:21px;
+  padding:5px;
+  line-height:20px
+}
+.refer-course-holder .rc-error b {
+  font-weight:bold
+}
+.refer-course-holder .rc-success-message {
+  line-height:100px;
+  text-align:center
+}
+.refer-course-holder {
+  font-family:"helvetica neue", arial;
+  font-size:12px
+}
+.refer-course-holder .refer-class-table {
+  padding-top:7px
+}
+.refer-course-holder .refer-class-table .refer-class-col1 {
+  width:133px;
+  padding-top:7px;
+  color:#666
+}
+#request_course_holder .refer-class-table .req-class-msg-title {
+  vertical-align:top;
+  padding-top:7px
+}
+.refer-course-holder .refer-class-table .refer-class-col2 {
+  width:10px;
+  padding-top:7px
+}
+.refer-course-holder .refer-class-table .refer-class-col3 {
+  padding-top:7px;
+  color:#666
+}
+.refer-course-holder .refer-class-table .refer-class-col4 {
+  width:10px;
+  padding-top:11px;
+  vertical-align:top
+}
+.refer-course-holder .refer-class-table .refer-class-col3 input[type="checkbox"] {
+  margin:-2px 5px 0 0;
+}
+.refer-course-holder .refer-class-table .input-text {
+  width:242px;
+  font-size:13px
+}
+#request_course_holder .refer-class-table .input-text {
+  width:274px;
+  font-size:13px
+}
+#request_course_holder .refer-class-table .input-textarea {
+  min-width:274px;
+  max-width:274px;
+  min-height:121px;
+  font-size:13px
+}
+.refer-course-holder .refer-class-table span.mandatory {
+  display:block;
+  width:10px;
+  height:10px;
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/arrowRedLeft.gif") no-repeat 0 0
+}
+.refer-course-link {
+  height:auto;
+  text-decoration:none
+}
+.refer-course-link a {
+  color:#4686DD;
+  text-decoration:none;
+  display:block;
+  font-size:12px;
+  padding:0
+}
+.refer-course-holder .ui-dialog-buttonset button {
+  font-weight:normal;
+  text-decoration:none
+}
+.refer-course-holder .refer-class-container #form-refer .ui-dialog-buttonset button.admin-save-button-middle-bg {
+  margin-left:10px
+}
+.refer-course-holder .ui-dialog-titlebar-close {
+  font-family:helvetica neue, arial;
+  font-size:14px;
+  text-decoration:none;
+  font-weight:normal;
+  height:auto;
+  width:auto;
+  padding:3px 4px 0 0;
+  color:#222
+}
+.refer-course-holder .ui-dialog-titlebar-close:hover {
+  height:auto;
+  width:auto;
+  padding:3px 4px 0 0
+}
+.refer-course-holder .ui-state-hover {
+  border:0;
+  background:none
+}
+.refer-course-holder .ui-button-text-only .ui-button-text {
+  padding:2px
+}
+.refer-course-holder .ui-dialog-titlebar {
+  height:20px;
+  color:#000;
+  border:0
+}
+.refer-note{
+  width:100%;
+}
+.refer-course-holder .refer-note, 
+.expertusV2PopupContainer .refer-note, 
+.refer-course-holder .refer-note span{
+  color:#666;
+  display:flex;
+  float:left; 
+  margin-right:10px;
+  margin-top:0;
+  font-family:openSansRegular,helvetica neue, arial;
+  font-size:11px;  
+}
+.refer-course-holder .ui-dialog-buttonpane{
+    /*float:right;*/
+    padding-top:0;
+    display:table;
+    margin-top:0;
+    width:99%
+}
+.refer-class-table .require-text, div.require-text{
+  color:#FF0000;
+  font-weight:bold;
+  font-size:9px
+}
+#refer_course_holder #refer_class_container {
+  min-width:92.5%;
+  overflow:visible
+}
+body.page-learning-catalog-search #refer_course_holder #refer_class_container {
+  min-width:93.2%;
+  overflow:visible
+}
+.page-learning-enrollment-search #refer_course_holder #refer_class_container {
+  min-width:93.5%;
+}
+.refer-course-holder .refer-class-table .input-text.error,
+.refer-course-holder .refer-class-table .input-text.error {
+  border:1px solid red
+}
+.refer-course-holder  .refer-class-table .refer-class-col1,
+.refer-course-holder  .refer-class-table .refer-class-mtitle {
+  color:#474747;
+  font-size:12px;
+  font-family:ProximaNovaBold, Arial;
+  font-weight:normal;
+  line-height:auto;
+  text-align:left
+}
+#refer_course_holder  #refer_class_container {
+  float:left;
+  overflow:visible;
+  width:auto
+}
+#refer_course_holder  #refer_class_container form {
+  padding:0
+}
+#refer_course_holder  form .checkbox-unselected, 
+#refer_course_holder  form .checkbox-selected {
+  margin:4px 0 0 3px;
+  float:left
+}
+#page-container #refer_course_holder  form .checkbox-unselected, 
+#page-container #refer_course_holder  form .checkbox-selected {
+  margin:8px 0 0 3px;
+  float:left
+}
+#refer_course_holder  form .checkbox-unselected input, 
+#refer_course_holder  form .checkbox-selected input {
+  margin:0
+}
+ .ui-dialog-content {
+  border:0;
+  padding:.5em 2em;
+  position:relative 
+}
+#request_course_holder  .ui-dialog-content {
+  padding-bottom:0
+}
+.refer-course-holder  .refer-class-table .refer-class-col1 {
+  padding-top:7px;
+  width:100px
+}
+#request_course_holder  .refer-class-table .refer-class-col1 {
+  padding-top:7px
+}
+#request_course_holder  .refer-class-table .req-class-msg-title {
+  vertical-align:top;
+  padding-top:2px
+}
+.refer-course-holder  .refer-class-table .input-text,
+.refer-course-holder  .refer-class-table .input-textarea,
+.refer-course-holder  .widget-class-table .input-textarea {
+  width:244px;
+  border:1px solid #E5E5E5;
+  border-radius:10px;
+  padding:0 10px;
+  height:28px
+}
+#multishareoption .refer-course-holder  .refer-class-table .input-text,
+#multishareoption .refer-course-holder  .refer-class-table .input-textarea,
+#multishareoption .refer-course-holder  .widget-class-table .input-textarea{
+  width:276px;
+}
+.refer-course-holder  .refer-class-table .input-textarea {
+  padding:0 
+}
+#request_course_holder  .refer-class-table .input-text,
+#request_course_holder  .refer-class-table .input-textarea {
+  width:231px
+}
+.refer-course-holder .refer-class-table .input-textarea {
+  height:70px;
+  min-width:364px;
+  max-width:364px;
+  font-size:13px;
+  padding:10px 5px 5px;
+  margin-top:8px
+}
+#multishareoption .refer-course-holder .refer-class-table .input-textarea{
+  min-width:396px;
+  max-width:396px;
+}
+#request_course_holder  .refer-class-table .input-textarea {
+  min-width:360px;
+  max-width:251px;
+  min-height:89px
+}
+#request_course_holder  .refer-class-table tr.last td {
+  line-height:17px;
+  padding-top:13px
+}
+.refer-course-holder  .refer-class-table, .refer-course-holder  .widget-class-table  {
+  margin-left:15px;
+    padding-top:0 
+}
+ .checkbox-unselected,
+ .checkbox-selected {
+  margin-right:5px  
+}
+#refer_course_holder .ui-dialog-buttonpane .ui-dialog-buttonset {
+  float:right;
+  margin-right:0;
+  margin-top:10px
+}
+.page-learning-enrollment-search #refer_course_holder .ui-dialog-buttonpane .ui-dialog-buttonset {
+  margin-right:19px
+}
+#request_course_holder .ui-dialog-buttonpane .ui-dialog-buttonset {
+  margin-right:10px;
+  margin-top:0
+}
+#request_course_holder .checkbox-unselected,
+#request_course_holder .checkbox-selected {
+  margin-top:-8px;
+  margin-left:1px;
+  vertical-align:middle;
+  width:auto;
+  height:14px
+}
+#request_course_holder .checkbox-unselected {
+  background-position:0 -436px
+}
+#request_course_holder .checkbox-selected {
+  background-position:0 -448px
+}
+#request_course_holder .checkbox-unselected input,
+#request_course_holder .checkbox-selected input {
+  margin:0;
+  vertical-align:top;
+  float:left
+}
+#request_course_holder .checkbox-selected .check-label,
+#request_course_holder .checkbox-unselected  .check-label {
+  float:left;
+  line-height:14px;
+  font-size:12px
+}
+.refer-class-mtitle {
+  padding-top:0;
+  color:#666
+}
+.refer-class-mfield {
+  padding-top:0;
+  text-align:left
+}
+.refer-class-mtitle span {
+  font-weight:bold  
+}
+.refer-course-holder  .refer-class-mtitle span {
+  font-weight:normal  
+}
+.refer-course-holder .ui-dialog-buttonset button.admin-save-button-middle-bg {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -3px -1022px;
+  color:#FFF;
+  line-height:1.3em;
+  padding:0;
+  margin:0;
+  display:block;
+  font-family:Verdana, Arial, sans-serif;
+  outline:none
+}
+#select-class-equalence-dialog .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+  min-width:109px
+}
+.page-learning-catalog-search #select-class-equalence-dialog .expertusV2PopupContainer .ui-dialog-buttonset button.admin-save-button-middle-bg {
+  margin-top: 1px
+}
+/*---- Embed widget start ----*/
+#embed_widget_container .widget-class-table td.dispayparam-checkbox {
+  width:48%
+}
+ 
+#embed_widget_container .widget-class-table td.dispayparam-checkbox.dispayparam-rowtwo {
+  width:auto
+}
+#form-embed-widget .widgetsize-container{
+  padding:0;
+  margin:0 0 0 10px;
+  border:1px solid #d3d3d3;
+  width:102px;
+  overflow:hidden;
+  background-color:#f8f8f8;
+  position:relative;
+  float:left;
+  background:#f8f8f8 url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat 85px -2821px;
+}
+#form-embed-widget .widgetsize-container select{
+  padding:5px;
+  color:#333;
+  font-size:10px;
+  cursor:pointer;
+  margin-left:-1px;
+  width:125%;
+  border:0;
+  box-shadow:none;
+  background-color:transparent;
+  background-image:none;
+  -webkit-appearance:none;
+     -moz-appearance:none;
+          appearance:none
+}
+#form-embed-widget .widgetsize-container select:focus {
+  outline:0
+}
+#form-embed-widget .label-text {
+  display:inline;
+  font-size:11px;
+  font-weight:normal;
+  margin-left:3px;
+  margin-top:6px;
+  float:left
+}
+#form-embed-widget .require-text{
+  float:left;
+  margin-top:6px;
+  font-size:9px
+}
+.refer-course-holder .widget-class-table .input-textarea {
+  height:92px;
+  min-width:390px;
+  font-size:13px;
+  color:#666;
+  padding-top:10px;
+  margin-bottom:10px;
+  resize:none
+}
+#shareoption .refer-course-holder .widget-class-table .input-textarea {
+  min-width:350px
+}
+#form-embed-widget #embedCode{
+  margin-top:10px
+}
+#form-refer, #form-embed-widget {
+  clear:both;
+  float:left;
+  margin-top:0px;
+  width:100%
+}
+#refer_course_holder #learner-maincontent_tab3 {
+  float:left;
+  margin-left:0;
+  padding-top:8px;
+  width:100%;
+  height:35px;
+  border-bottom:1px solid #e8e8e8
+}
+#multishareoption #refer_course_holder #learner-maincontent_tab3 {
+	height:35px
+}
+.EmbedtabNavigation {
+  margin:9px 0 0 10px;
+  list-style-type:none
+}
+.EmbedtabNavigation li {
+  display:block;
+  float:left;
+  height:35px;
+  margin:0;
+  padding:0 0 0 12px
+}
+.EmbedtabNavigation li a {
+  float:left;
+  color:#474747;
+  font-size:12px;
+  padding-left:10px;
+  height:34px;
+  border-radius: 10px 10px 0 0;
+  border:1px solid #ccc;
+  border-bottom:0;
+  background-color:#fff
+}
+.EmbedtabNavigation li.selected {
+  margin-top:1px
+}
+.EmbedtabNavigation li a span {
+  height:34px;
+  line-height:30px;
+  padding:0 10px 0 0;
+  float:left;
+  text-transform:uppercase
+}
+.EmbedtabNavigation li a span span{
+  height:34px;
+  line-height:38px;
+  padding-right:0;
+  text-align:center;
+  width:auto
+}
+#page-container .EmbedtabNavigation li a span span{
+  font:normal 12px/38px ProximaNovaBold, Arial
+}
+#multishareoption {
+  float:right
+} 
+#page-container #multishareoption {
+  float:left;
+  margin:0 0 0 20px
+}    
+#page-container #multishareoption a.multishare-link {
+  color:#fff;
+  font-family:ProximaNovaBold, Arial;
+  line-height: 40px;
+  padding: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  background:none
+} 
+.share-tab-icon-white {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png) no-repeat -162px -634px;
+  height:20px;
+  display:inline-block;
+  vertical-align:top;
+  width:17px;
+  margin-top:9px
+}
+#lnr-catalog-search #paintContentResults .ui-widget-content #shareoption td,
+#lnr-catalog-search #paintContentResults .ui-widget-content #multishareoption td,
+#page-container #lnr-catalog-search #paintContentResults .ui-widget-content #multishareoption td,
+#page-container .refer-course-holder .refer-class-table .refer-class-mtitle{
+  border:0;
+  padding:0
+}
+#lnr-catalog-search #paintContentResults .ui-widget-content #shareoption td.refer-class-mtitle,
+.refer-course-holder .refer-class-table .refer-class-mtitle {
+  padding:5px 0 0
+}
+/* #lnr-catalog-search #paintContentResults .ui-widget-content #shareoption td.refer-class-mtitle,
+#lnr-catalog-search #paintContentResults .ui-widget-content #shareoption td.refer-class-mtitle  span{
+  font:normal 12px openSansRegular, Arial;
+  color:#2d2d2d
+} */
+ .refer-course-holder .checkbox-label {
+  float:left;
+  margin:5px 0;
+  padding-left:5px;
+  font-size:12px
+}
+.refer-course-holder .dispayparam-checkbox, .refer-course-holder .dispayparam-sizeselect {
+  float:left;
+  margin-top:4px
+}
+.refer-course-holder .expertusV2PopupContainer .popupBotLeftCorner {
+  clear:both
+}
+.refer-course-holder .expertusV2PopupContainer .ui-dialog-buttonpane {
+  width:96.3%
+}
+#lnr-catalog-search #paintContentResults .ui-widget-content #shareoption td.dispayparam-sizeselect,
+#embed_widget_container .widget-class-table td.dispayparam-sizeselect {
+  padding-bottom:5px
+}
+#lnr-catalog-search #paintContentResults .ui-widget-content #shareoption td.dispayparam-rowtwo,
+#embed_widget_container .widget-class-table td.dispayparam-checkbox.dispayparam-rowtwo{
+  padding-left:5px
+}
+#lnr-catalog-search #paintContentResults .ui-widget-content #shareoption td.refer-class-col1,
+#lnr-catalog-search #paintContentResults .ui-widget-content #shareoption td.refer-class-col2,
+#lnr-catalog-search #paintContentResults .ui-widget-content #shareoption td.refer-class-col3{
+  padding-top:7px
+}
+#request_class_holder .refer-class-table .input-textarea {
+  max-width:244px;
+  min-width:244px
+}
+#request_class_holder .refer-class-table .input-text {
+  width:234px
+}
+.page-learning-catalog-search #request_class_holder .checkbox-unselected,
+.page-learning-catalog-search #request_class_holder .checkbox-selected {
+  width:auto;
+  margin-top:10px
+}
+#request_class_holder .check-label{
+  display:block;
+  margin-left:17px;
+  margin-top:-23px
+}
+.page-learning-catalog-search #request_class_holder tr.last input{
+  margin-top:3px
+}
+#request_class_holder .refer-class-table .refer-class-col1,#request_class_holder .refer-class-table .refer-class-col2,#request_class_holder .refer-class-table .refer-class-col3{
+  padding:0;
+}
+#request_class_holder .refer-class-table .refer-class-col1{
+  width:auto
+}
+#request_class_holder .refer-class-table{
+  margin-left:12px;
+  margin-bottom:10px
+}
+#request_class_holder #form-refer {
+  margin-top:5px
+}
+.refer-course-holder .access_error {
+  display: block;
+    padding-top: 70px;
+}
+#refer_course_holder .embedsharelabel{
+	  color:#666;
+	  display: inline-block;    
+    font-family: helvetica neue,helvetica,arial;
+    font-size: 13px;
+    margin-left: 3px;
+    margin-top: 4px;
+}
+/*---- Embed widget end ----*/
+/*--My learning section custom css --*/
+.page-learning-enrollment-search .refer-course-holder .refer-class-table {
+  margin-left: 0
+}
+.page-learning-enrollment-search .refer-course-holder .refer-class-table .input-text {
+  width:215px;
+}
+.page-learning-enrollment-search .refer-course-holder .refer-class-table .input-textarea { min-width: 335px;max-width: 340px }
+.page-learning-enrollment-search .expertusV2PopupContainer .refer-class-table .input-text { width:205px }
+.page-learning-enrollment-search .refer-course-holder .expertusV2PopupContainer .refer-class-table .input-textarea { min-width: 323px;max-width: 325px }
+/*.page-learning-catalog-search #page-container .refer-course-holder .refer-note .require-text{color:#666}*/
+#form-embed-widget .widgetsize-container select option{
+  width:93%;
+  border-right:1px solid #ccc
+}
+#request_class_container{
+  overflow:hidden
+}
+.refer-course-holder .expertusV2PopupContainer .checkbox-unselected{
+  background-position:0 -438px
+}
+.refer-course-holder .expertusV2PopupContainer .checkbox-selected{
+  background-position:0 -450px
+}
+.refer-course-holder .refer-note,
+.expertusV2PopupContainer div.refer-note {
+    margin: 0;
+    width: 67.2%;
+    float: none;
+}
+#refer_course_holder .expertusV2PopupContainer div.refer-note{
+  width:58%;
+  padding-top:0
+}
+.refer-course-holder .refer-note{
+  padding-top:4px
+}
+.refer-course-holder span.refer-note-text,
+.expertusV2PopupContainer .refer-note span.refer-note-text {
+    float: none;
+    margin: 0;
+    padding-right: 5px;
+    text-align: left;
+}
+.refer-course-holder .ui-dialog-buttonpane > div{
+  display:table-cell;
+  line-height: normal;
+  vertical-align: middle
+}
+#shareoption #refer_course_holder .ui-dialog-buttonpane .ui-dialog-buttonset{
+  margin-right:6px	
+}
+#request_class_holder.refer-course-holder div.refer-note{
+  width:auto	
+}
+/*!Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+ #request_course_holder .refer-class-table .input-textarea {
+  min-width:269px;
+  max-width:269px
+ }
+ #request_course_holder  .checkbox-selected,
+ #request_course_holder  .checkbox-unselected {
+  width:auto
+ }
+ .refer-course-holder .refer-class-table .input-text {
+  width:238px
+ }
+ .refer-course-holder .refer-class-table .refer-class-col1 {
+  width:100px
+ }
+ #refer_course_holder  #refer_class_container form .checkbox-unselected input, 
+ #refer_course_holder  #refer_class_container form .checkbox-selected input {
+  margin:0 0 2px 0
+ }
+ .page-learning-catalog-search #page-container #refer_course_holder  form .checkbox-unselected, 
+ .page-learning-catalog-search #page-container #refer_course_holder  form .checkbox-selected {
+  margin:5px 0 0 3px;
+  float:left
+ }
+ .page-learning-catalog-search .refer-course-holder .checkbox-label,
+ .page-learning-catalog-search #shareoption .checkbox-label{
+/* 	  	padding-left:1px; */
+	  	margin-top:2px
+ }
+  #page-container #refer_course_holder  #refer_class_container form .checkbox-unselected, 
+  #page-container #refer_course_holder  #refer_class_container form .checkbox-selected {
+    margin:4px 4px 0 0
+  }
+  .EmbedtabNavigation li a span {
+   display:block;
+  }
+  .EmbedtabNavigation li a span {
+    background-repeat: repeat
+  }
+  #refer_course_holder  form .checkbox-unselected, 
+  #refer_course_holder  form .checkbox-selected {
+   margin-right:3px 
+  }
+  .refer-course-holder .checkbox-label {
+  margin:1px 0
+
+}
+}
+/*safari hack Start*/
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0), not all and (min-resolution:.001dpcm) { @media { _:-webkit-full-screen,
+	  #refer_course_holder  form .checkbox-unselected, 
+	  #refer_course_holder  form .checkbox-selected {
+	    margin-right:3px 
+	  }
+	  .page-learning-catalog-search #page-container #refer_course_holder  form .checkbox-unselected, 
+	  .page-learning-catalog-search #page-container #refer_course_holder  form .checkbox-selected {
+ 		 margin:5px 0 0 3px;
+  		 float:left
+	  }
+	  .page-learning-catalog-search .refer-course-holder .checkbox-label {
+	  	padding-left:1px;
+	  	margin-top:3px
+      }
+}}      
+/*safari hack End*/

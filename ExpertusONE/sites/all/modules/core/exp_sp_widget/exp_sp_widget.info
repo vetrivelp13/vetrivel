@@ -1,0 +1,8 @@
+name = Widget Core
+description = Widget library support
+core = 7.x
+package = ExpertusONE Core
+dependencies[] = exp_sp_core
+dependencies[] = exp_sp_learning
+version = 1.0
+scripts[] = exp_sp_widget.js

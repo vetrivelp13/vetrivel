@@ -1,0 +1,6 @@
+name = Audit Trail
+description = Repository for Audit Trail related functionality.
+package = ExpertusONE Core
+version = VERSION
+core = 7.x
+dependencies[] = exp_sp_core

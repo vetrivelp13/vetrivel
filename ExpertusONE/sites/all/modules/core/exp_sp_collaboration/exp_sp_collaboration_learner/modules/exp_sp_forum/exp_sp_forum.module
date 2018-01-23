@@ -1,0 +1,1296 @@
+<?php
+/**
+ * ForumDetails
+ *
+ * Forum Details, which is used to list the forum/topics/comments.
+ *
+ * @package pagepackage
+ * @author Product Team (BalaG)
+ * @version 1.0
+ * @copyright Copyright (c) 2011, ExpertUs
+ * @since 04-Jan-2013
+ */
+
+/**
+ * Implementation of hook_block_info().
+ */
+function exp_sp_forum_block_info() {
+  try{
+    $blocks = array();
+    $blocks['detail_forum'] = array(
+    'info' => t('Forum Details'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,  
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/forum-list'
+    );
+
+    $blocks['detail_forum_topic'] = array(
+    'info' => t('Forum Topic Details'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,  
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/forum-topic-list/*'
+    );
+    
+    $blocks['header_search'] = array(
+    'info' => t('Forum Header Search'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/forum-list
+    learning/forum-topic-list/*'
+    );
+
+    return $blocks;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_forum_block_info', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function exp_sp_forum_menu() {
+  try{
+    $items = array();
+		
+    $items['learning/forum-list/search/all'] = array(
+        'title' => 'Forum List',
+        'page callback' => 'getForumListResults',
+        'access arguments' => array('expertus learner'),      
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_forum.inc'
+        );
+
+        $items['learning/forum-list'] = array(
+        'title' => 'Forum List',
+        'page callback' => 'empty_value',
+        'access arguments' => array('access content'),
+        'type' => MENU_CALLBACK
+        );
+
+        $items['ajax/delete-forum/%/%'] = array(
+        'title' => 'Delete Forum',
+        'page callback' => 'deleteForumDetails',
+        'page arguments' => array(2,3),
+        'access arguments' => array('expertus learner'),    
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_forum.inc'
+        );
+
+        $items['learning/forum-topic-list/%'] = array(
+        'title' => 'Forum Topic List',
+        'page callback' => 'empty_value',
+        'access arguments' => array('access content'),    
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_forum.inc'
+        );
+
+        $items['learning/forum-topic-list/search/%'] = array(
+        'title' => 'Forum Topic List',
+        'page callback' => 'getForumTopicListResults',
+        'page arguments' => array(3),
+        'access arguments' => array('access content'),    
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_forum.inc'
+        );
+
+        $items['ajax/forum-add-topic/%/%/%/%'] = array(
+        'title' => 'Add Topic',
+        'page callback' => 'getForumTopicDisplay',
+        'page arguments' => array(2,3,4,5),
+        'access arguments' => array('expertus learner'),    
+        'type' => MENU_CALLBACK
+        );
+        
+        $items['ajax/delete-topic/%/%'] = array(
+        'title' => 'Delete Topic',
+        'page callback' => 'deleteTopicDetails',
+        'page arguments' => array(2,3),
+        'access arguments' => array('expertus learner'),    
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_forum.inc'
+        );
+        
+        // POC code - HTML editor in Qtip - menupath added
+        /*$items['ajax/editorinqtip'] = array(
+          'title' => 'POC Editor in Qtip',
+          'page callback' => 'editorInQtip',
+          'page arguments' => array(),
+          'access arguments' => array('expertus learner'),
+          'type' => MENU_CALLBACK,         
+        );*/
+
+        $items['ajax/forum-comments/%/%/%/%'] = array(
+        'title' => 'Topic Comments',
+        'page callback' => 'getTopicCommentsDisplay',
+        'page arguments' => array(2,3,4,5),
+        'access arguments' => array('expertus learner'),    
+        'type' => MENU_CALLBACK
+        );
+
+        $items['ajax/topic-comments-list/%/%'] = array(
+        'title' => 'Comments List',
+        'page callback' => 'getCommentsList',
+        'page arguments' => array(2,3),
+        'access arguments' => array('access content'),    
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_forum.inc'
+        );
+
+        $items['ajax/delete-comments/%/%/%'] = array(
+        'title' => 'Delete Comments',
+        'page callback' => 'deleteCommentDetails',
+        'page arguments' => array(2,3,4),
+        'access arguments' => array('expertus learner'),    
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_forum.inc'
+        );
+        
+        $items['learning/forum-list-autocomplete'] = array(
+        'title' => 'Forum Autocomplete',
+        'page callback' => 'getForumAutocomplete',
+        'access arguments' => array('expertus learner'),    
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_forum.inc'
+        );
+        
+        $items['learning/forum-topic-list-autocomplete/%'] = array(
+        'title' => 'Topic Autocomplete',
+        'page callback' => 'getTopicAutocomplete',
+        'page arguments' => array(2),
+        'access arguments' => array('expertus learner'),    
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_forum.inc'
+        );
+
+        return $items;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_forum_menu', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+
+
+/*
+ * Implementation of hook_theme
+ */
+function exp_sp_forum_theme() {
+  try{
+    return array(
+    'exp_sp_forum-view-forum-list' => array('
+  		variables' => array('results' => array()),
+        'template' => 'exp_sp_forum-view-forum-list' 
+        )
+        );
+  } catch (Exception $ex) {
+    watchdog_exception('exp_sp_forum_theme', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+
+
+/**
+ * Callback of the List Details.
+ */
+function getForumListResults(){
+  try{
+    $lnrSrch = new ForumDetails();
+    $qry_results = $lnrSrch -> getFrmListResults();
+	$result_response= new stdClass();
+    $result_response->page    = $lnrSrch->page;
+    $result_response->total   = $lnrSrch->total_pages;
+    $result_response->records = $lnrSrch->frm_list_count;
+    $i=0;
+    
+    //------------------ Time Zone Conversion
+    $vTimeZoneUser = date_default_timezone(false);        
+    $UserPHPTimezoneName		= getUserPHPTimezoneName();
+    $vUserPHPTimezonename		= $UserPHPTimezoneName[0]->zone_name;
+    if(!$UserPHPTimezoneName[0]->zone_name){
+      $vUserPHPTimezonename = $vTimeZoneUser;
+    }
+          
+    foreach ($qry_results as $rec_results) {  
+      $rec_results->vid = $rec_results->vid;
+      $rec_results->name = $rec_results->name;
+      $rec_results->description = $rec_results->description;
+      $rec_results->num_topics = getCountTopic($rec_results->tid);
+      $rec_results->num_post = $rec_results->num_topics + getCountPost($rec_results->tid);
+      $rec_results->object_type = $rec_results->object_type;;
+      $rec_results->language = $rec_results->language_name;
+      $rec_results->format = $rec_results->format;
+      $rec_results->object_id = $rec_results->object_id;
+
+      if($rec_results->lct!=''){
+          if($vTimeZoneUser!=$vUserPHPTimezonename) {
+            $date = new DateTime($rec_results->lct, new DateTimeZone($vTimeZoneUser));
+            $date->setTimezone(new DateTimeZone($vUserPHPTimezonename));
+            $tt = $date->format('M j, Y h:i A');
+          }else{
+            $tt = $rec_results->lct;
+          }
+          $x = explode(" ",$tt);
+          $rec_results->lct = $x[0]." ".$x[1]." ".$x[2]." ".$x[3]." <span class='time-zone-text'>".$x[4]."</span>"; 
+      }
+    
+      $rec_results->row =  $i;
+      $result_response->rows[$i]['id']   = $rec_results->tid;
+      $result_response->rows[$i]['cell'] = array(
+           	'forumlist'             => theme('exp_sp_forum-view-forum-list', array('results' => $rec_results,
+           	                                                                       'more_type' => $rec_results->object_type))
+            
+      );
+      $i++;
+    }
+    echo drupal_json_output($result_response);
+  }catch (Exception $ex) {
+    watchdog_exception('getForumListResults', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/**
+ *
+ */
+function getForumTopicListResults($tId){
+  try{
+    $lnrSrch = new ForumDetails();
+    $qry_results = $lnrSrch -> getFrmTopicListResults($tId);
+    $result_response->page    = $lnrSrch->page;
+    $result_response->total   = $lnrSrch->total_pages;
+    $result_response->records = $lnrSrch->frm_topic_list_count;
+    $result_response->t_id = $tId;
+    $i=0;
+    
+    //------------------ Time Zone Conversion
+    $vTimeZoneUser = date_default_timezone(false);
+    $UserPHPTimezoneName		= getUserPHPTimezoneName();
+    $vUserPHPTimezonename		= $UserPHPTimezoneName[0]->zone_name;
+    if(!$UserPHPTimezoneName[0]->zone_name){
+      $vUserPHPTimezonename = $vTimeZoneUser;
+    }
+    
+    $forumAdminAccess = forumAdminAccess();
+          
+    foreach ($qry_results as $rec_results) {
+      $rec_results->row =  $i;
+      $result_response->rows[$i]['id']   = $rec_results->nid;
+      
+      $sltUserId = getUserIdFromDrupalUid($rec_results->userid);
+      $field = array('first_name','last_name','full_name','status');
+      $details  = getPersonDetails($sltUserId,$field);
+      $displayName = $details['first_name']." ".mb_substr($details['last_name'],0,1,'UTF-8');
+
+      if($vTimeZoneUser!=$vUserPHPTimezonename) {
+        $date = new DateTime($rec_results->created, new DateTimeZone($vTimeZoneUser));
+        $date->setTimezone(new DateTimeZone($vUserPHPTimezonename));
+        $tt = $date->format('M j, Y h:i A');
+      }else{
+        $tt = $rec_results->created;
+      }
+
+      $x = explode(" ",$tt);
+      $tdate = $x[0]." ".$x[1]." ".$x[2]." ".$x[3]." <span class='time-zone-text'>".$x[4]."</span>";
+     // expDebug::dPrint('vadivel:'.print_r(description));
+      $result_response->rows[$i]['cell'] = array(
+      'nid'                    => $rec_results->nid,
+      'title'                  => rawurlencode($rec_results->title),
+      'tid'                    => $rec_results->tid,
+      'created'                => $tdate,
+      'last_comment_timestamp' => $rec_results->last_comment_timestamp,
+      'comment_count'          => $rec_results->comment_count,
+      'description'            => rawurlencode(descController('FORUM ADD TOPIC', trim($rec_results->description))),
+//       		'description'            => 'A logo must be simple. A simple logo design allows for easy recognition and allows the logo to be versatile and memorable. Effective logos feature something unexpected or unique without being overdrawn.A logo must be simple. A simple logo design allows for easy recognition and allows the logo to be versatile and memorable. Effective logos feature something unexpected or unique without being overdrawn.',
+      'descriptionFull'        => rawurlencode($rec_results->description),
+      'user'                   => $displayName,
+      'status'	               => $details['status'],
+      'userid'                 => $rec_results->userid,
+      'sltUserId'              => core_encrypt($sltUserId),
+      'lastcmtuid'             => '',
+      'forumaccess'            =>$forumAdminAccess
+      );
+      $i++;
+    }
+    
+    echo drupal_json_output($result_response);
+  }catch (Exception $ex) {
+    watchdog_exception('getForumTopicListResults', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+//Added by Velu - this for hyperlink refer #0028796
+function getHyperlinkForForum($dissContent,$descMode){
+ 	try{ 		
+ 		$stripContent = strip_tags($dissContent);
+ 		$replaceContent = str_replace(array(' ','&nbsp;','<p>&nbsp;</p>'),' ',$stripContent);
+ 		$content = explode(" ",$replaceContent);     
+        $s1 = str_replace(array(' ','&nbsp;'),' ',$content);      
+        $dissContent = '';
+        $class = ($descMode == 'Topic') ? 'forum-topic-hyperlink' : 'forum-comment-hyperlink';
+        for( $j=0; $j<count($s1); $j++ ){
+      	$s2 = explode(".",$s1[$j]);      	
+      	if( count( array_filter($s2) ) >= 2 ){
+      		$pattern = '!https?://[^\s]+!';
+      		if (preg_match_all($pattern, $s1[$j],$matches)) {
+      			expDebug::dPrint(' $matches = ' . print_r($matches, true) , 4);
+      			list($links) = ($matches);      			
+      			$s3[$j] = "http://" . $s1[$j];      				
+      			$s1[$j] = "<a href=\"". $links[0] . "\" target='_blank' class=\"". $class . "\" >" . $s1[$j] . "</a>";			
+      		}else{
+      			if (false === strpos($s1[$j], '//:')) {
+      				$s1[$j] = 'http://' . $s1[$j];      			
+      			}      			
+				$s1[$j] = "<a href=\"". $s1[$j] . "\" target='_blank' class=\"". $class . "\" >" . $s1[$j] . "</a>";
+			}
+      	}
+      	$dissContent .= ' '.$s1[$j];
+       }
+      return $dissContent;
+	}catch (Exception $ex) {
+      	watchdog_exception('getHyperlinkForForum', $ex);
+      	expertusErrorThrow($ex);
+      } 
+} //End
+
+function exp_sp_forum_block_view_alter(&$data, $block) {
+	try{
+		 if($data['subject'] == 'catalogheadersearch' && (arg(1) == 'forum-list' || arg(1) == 'forum-topic-list')){
+		    $data['content'] = '';
+		 }
+ //print_r($data);
+ }catch (Exception $ex) {
+ 	watchdog_exception('exp_sp_forum_block_view_alter', $ex);
+ 	expertusErrorThrow($ex);
+ }
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function exp_sp_forum_block_view($delta = ''){
+  try{
+    $header_optional = array('type' => 'file', 'scope' => 'header', 'group' => JS_LIBRARY);
+    $css_module_optional = array('type' => 'file', 'group' => CSS_DEFAULT);
+    $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+    $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);     
+    $block = array();
+    global $theme_key;
+    
+    require_once('exp_sp_forum.inc');
+    drupal_add_js(drupal_get_path('module', 'exp_sp_forum') .'/exp_sp_forum.js', $js_module_optional);
+    drupal_add_js(drupal_get_path('module', 'exp_sp_my_profile').'/exp_sp_my_profile.js', array('type' => 'file', 'group' => JS_DEFAULT));
+   // drupal_add_js(drupal_get_path('module', 'exp_sp_my_profile') .'/exp_sp_my_profile.js',$js_module_optional);
+    //drupal_add_js(drupal_get_path('module', 'exp_sp_my_skill') .'/exp_sp_my_skill.js',$js_module_optional);
+   // drupal_add_js(drupal_get_path('module', 'exp_sp_my_activity') .'/exp_sp_my_activity.js',$js_module_optional);
+   
+    if($theme_key == 'expertusoneV2') {
+      drupal_add_css(drupal_get_path('module', 'exp_sp_forum') .'/exp_sp_forum_v2.css', array('type' => 'file', 'group' => CSS_THEME, 'weight'=>1300));
+     // drupal_add_css(drupal_get_path('module', 'exp_sp_my_profile') .'/exp_sp_my_profile_v2.css', $css_theme_optional);
+     // drupal_add_css(drupal_get_path('module', 'exp_sp_my_activity') .'/exp_sp_my_activity_v2.css', array('type' => 'file', 'group' => CSS_DEFAULT));
+     // drupal_add_css(drupal_get_path('module','exp_sp_my_skill') .'/exp_sp_my_skill_v2.css', array('type' => 'file', 'group' => CSS_DEFAULT));
+    } else {
+      drupal_add_css(drupal_get_path('module', 'exp_sp_forum') .'/exp_sp_forum.css', $css_theme_optional);
+     // drupal_add_css(drupal_get_path('module', 'exp_sp_my_profile') .'/exp_sp_my_profile.css', $css_theme_optional);
+     // drupal_add_css(drupal_get_path('module', 'exp_sp_my_activity') .'/exp_sp_my_activity.css', array('type' => 'file', 'group' => CSS_DEFAULT));
+     // drupal_add_css(drupal_get_path('module','exp_sp_my_skill') .'/exp_sp_my_skill.css', array('type' => 'file', 'group' => CSS_DEFAULT));
+    }
+    if(arg(1) == 'forum-list' || arg(1) == 'forum-topic-list'){
+    	enableCtool();
+    }
+    includeJqGridJsCss();
+    
+    switch ($delta) {
+      case 'detail_forum':
+        $block['subject'] = t('Forum Details');
+        $block['content'] = ' ';
+        break;
+      case 'detail_forum_topic':
+        $block['subject'] = t('Forum Topic Details');
+        $block['content'] = ' ';
+        break;
+      case 'header_search':
+        $block['subject'] = t('Forum Header Search');
+        $block['content'] = ' ';
+        break;
+    }
+    return $block;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_forum_block_view', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+// POC code - HTML editor in Qtip - ajax command to display rendered form in qtip
+function qtip_command_display($html) {
+ try {	
+  return array(
+    'command' => 'expQtipDisplay',
+    'html' => $html
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('qtip_command_display', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+// POC code - HTML editor in Qtip - menu path callback function
+/*function editorInQtip() {
+  $form_state = array(
+    'no_redirect'  => TRUE,
+    'build_info'   => array('args' => array('ajax'))
+  );
+
+  $builtForm = drupal_build_form('add_forum_topic_html', $form_state);
+  $renderedForm = drupal_render($builtForm);
+    
+  $commands = array();
+  $commands[] = qtip_command_display($renderedForm);
+  expDebug::dPrint(' $commands = ' . print_r($commands, true) , 4);
+  print ajax_render($commands);
+  exit;
+}*/
+
+/**
+ *
+ */
+function getForumTopicDisplay($fromPage,$optionValue,$tId,$nId){
+
+  try {
+
+    $form_state = array(
+   		'no_redirect'  => TRUE,
+    	'build_info'   => array('args' => array('ajax')),
+   		'entity_id'    => $tId,
+        'node_id'      => $nId,
+        'option_value' => $optionValue,
+        'from_page'    => $fromPage
+    );
+
+    $formId                 = 'add_forum_topic_html';
+    $builtForm              = drupal_build_form($formId, $form_state);
+    $renderedTabContentHTML = drupal_render($builtForm);
+    
+    $commands = array();
+    $commands[] = qtip_command_display($renderedTabContentHTML);
+    expDebug::dPrint(' $commands = ' . print_r($commands, true) , 4);
+    print ajax_render($commands);
+  
+    exit;
+     
+  } catch (Exception $ex) {
+    watchdog_exception('forumtopic', $ex);
+    expertusErrorThrow($ex);
+  }
+
+}
+
+/**
+ *
+ */
+function add_forum_topic_html($form, &$form_state) {
+ try{
+	global $theme_key;
+  $option_value = $form_state['option_value'];
+  $from_page = $form_state['from_page'];
+  $entityId = $form_state['entity_id'];
+  $nodeId = $form_state['node_id'];
+  $formName = "forumtopic";
+
+  if($option_value == "edit") {
+    $topicDetails = getTopicDetails($nodeId);
+  }
+
+  $form[$formName]['add_forum_topic_details'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div id="forum-topic"></div>',
+  );
+
+  $form[$formName]['add_forum_topic_start'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div id="admin-forum-add-topic-container" class="admin-forum-add-topic-container">',
+  );
+
+
+  $form[$formName]['forum_topic_title'] = array(
+    '#name' => 'forum_topic_title',
+	'#id' => 'forum_topic_title',
+    '#type' => 'textfield',
+    '#prefix' => '<div class="admin-forum-add-topic-list"> <label>'.t('LBL083').':<span class="addedit-mandatory">*</span></label>',
+    '#suffix' => '<div class="clearBoth"></div></div>',
+  	'#size' => 36,
+  	'#maxlength' => 300,
+    '#default_value' => $topicDetails['title'],
+  );
+
+
+  $charLimit = 5000;
+  $charLimitLeft = getEditorWordCount($topicDetails['description']);
+  	$attributes = array();
+    $attributes['data'] = 'forum_topic_desc';
+  	 addHiddenFieldToAddEditForm($form[$formName], 'ckeditor_word_count', $charLimit);
+    $form[$formName]['forum_topic_desc'] = array(
+    '#name' => 'forum_topic_desc',  
+    '#id' => 'forum_topic_desc',
+    //'#type' => 'textarea',
+    '#type' => 'text_format',
+    '#format'=> 'full_html',
+    '#prefix' => '<div class="admin-forum-add-topic-list"> <label>'.t('LBL229').':<span class="addedit-mandatory">*</span></label>',
+    '#suffix' => '<div class="catalog-desc-count"><span id="char_count_forum_topic_desc">'.$charLimitLeft.'</span>'.' ' .t('LBL419').' '.$charLimit.' '.t('LBL420').'</div><div class="clearBoth"></div></div>',
+    '#rows'=>'6',
+    '#cols'=>'50',
+    '#default_value' => $topicDetails['description'],
+    '#attributes' => $attributes
+  	);
+
+  $prefix = ''; $suffix = '';
+  if($theme_key == "expertusoneV2"){
+  	$setAttributesCancel['class'] = array('white-btn-bg-middle');
+  	$prefix = '<div class="white-btn-bg-container">  
+		      	  	<div class="white-btn-bg-left"></div>';
+	  $suffix = '<div class="white-btn-bg-right"></div>';
+  }
+  else{
+	  $setAttributesCancel['class'] = array('admin-action-button-middle-bg');
+  }
+   $setAttributesCancel['onClick'][] = 'remove_qtip("topic");return false;';
+
+  $form[$formName]['cancel_forum_topic'] = array(
+    '#type' => 'submit',
+    '#value' => t('LBL123'),
+    '#title' => t('LBL123'),
+    '#prefix' => '<div class="admin-forum-add-topic-list"><div class="addedit-form-cancel-container-actions">'. $prefix ,
+    '#suffix'=> $suffix,
+    '#name' => 'Cancel Forum Topic',
+    '#attributes' =>  $setAttributesCancel,
+  );
+
+
+  $setAttributes['class'] = array('addedit-form-expertusone-throbber admin-save-button-middle-bg');
+  $wrapperId              =	'forum-topic';
+  $setAttributes['data-wrapperid'] = array($wrapperId);
+
+  $setAttributes['onClick'][] = 'remove_forum_error_messages("topic");return false;';
+
+  $form[$formName]['forum_topic_submit'] = array(
+     '#type' => 'submit',
+     '#id'   => 'add-forum-topic-submit',
+     '#value' => t('LBL871'),
+     '#prefix' => '<div class="admin-save-pub-unpub-button-container"><div class="admin-save-button-left-bg"></div>',
+     '#suffix' => '<div class="admin-save-button-right-bg"></div></div></div></div>',
+     '#attributes' => $setAttributes,
+     '#ajax' => array(
+                  'wrapper' => 'forum-topic',
+                  'callback' => 'forum_add_topic_callback',
+                  'method' => 'replace',
+                  'effect' => 'none',
+                  'event'=>'click',
+  				  'entityId'=>$entityId,
+                  'nodeId'=>$nodeId,
+  				  'from_page'=>$from_page,
+                  'keypress' => true,
+                  'progress' => array(
+                    'type' => 'throbber',
+                    'message' => ''
+                    ),
+                    )
+                    );
+
+   $form[$formName]['add_forum_topic_end'] = array(
+    '#type' => 'markup',
+    '#markup' => '</div>',
+    );
+
+   return $form;
+   }catch (Exception $ex) {
+   	watchdog_exception('add_forum_topic_html', $ex);
+   	expertusErrorThrow($ex);
+   }
+}
+
+/**
+ *
+ */
+function forum_add_topic_callback(&$form, &$form_state){
+ try{ 
+  $entityId = $form_state['triggering_element']['#ajax']['entityId'];
+  $nodeId = $form_state['triggering_element']['#ajax']['nodeId'];
+  $fromPage = $form_state['triggering_element']['#ajax']['from_page'];
+
+  $commands = array();
+  $commands[] = ajax_command_replace('#admin-forum-add-topic-container', drupal_render($form));
+
+  $statusMsgHTML = theme('status_messages');
+
+  expDebug::dPrint(' $statusMsgHTML = ' . print_r($statusMsgHTML, true) , 4);
+
+  if (!empty($statusMsgHTML)) {
+    // Show the messages
+    $commands[] = ajax_command_html('#bubble-face-table #show_expertus_message', $statusMsgHTML);
+    // Set the trigger to remove the messages after a while
+    if (!empty($form_state['triggering_element']['#ajax']['wrapper'])) {
+      $commands[] = addedit_hide_messages($form_state['triggering_element']['#ajax']['wrapper']);
+    }
+    else {
+      $commands[] = addedit_hide_messages();
+    }
+  }
+  else{
+    if($fromPage != "frm-list") {
+      $commands[] = ajax_command_invoke(NULL, "refreshList",array($entityId));
+    }
+
+    if($fromPage == "frm-list") {
+      $commands[] = ajax_command_invoke(NULL, "redirectPage",array($entityId));
+    }
+  }
+
+
+  return array(
+        '#type' => 'ajax',
+        '#commands' => $commands
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('forum_add_topic_callback', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ *
+ */
+function add_forum_topic_html_validate($form, &$form_state) {
+ try{	
+  global $theme_key;
+  expDebug::dPrint('add_forum_topic_html_validate'.print_r($form_state['values'],true),4);
+  if(trim($form_state['values']['forum_topic_title']) == ''){
+    form_set_error('forum_topic_title',t('LBL083').t('ERR101'));
+  }
+  $description = $form_state['values']['forum_topic_desc']['value'];
+  if(trim($description) == ''){
+    form_set_error('forum_topic_desc',t('LBL229').t('ERR101'));
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('add_forum_topic_html_validate', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ *
+ */
+function add_forum_topic_html_submit($form, &$form_state) {
+	try{
+  expDebug::dPrint('add_forum_topic_html_submit : '.print_r($form_state,true) , 5);
+
+  $entityId = $form_state['entity_id'];
+  $nodeId = $form_state['node_id'];
+  $option_value = $form_state['option_value'];
+  $from_page = $form_state['from_page'];
+
+  $loggedInUserID = getIdOfLoggedInUser();
+  if($loggedInUserID > 0){
+  if($form_state['values']['forum_topic_title'] != '' && $form_state['values']['forum_topic_desc'] != '') {
+    if($option_value == "add") {
+      addTopicDetails($form, $form_state, $entityId);  // $entityId == $tid
+    }else{
+      updateTopicDetails($form, $form_state, $entityId, $nodeId);
+    }
+  }
+  }
+  $form_state['rebuild']  = TRUE;
+  }catch (Exception $ex) {
+  	watchdog_exception('add_forum_topic_html_submit', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ *
+ */
+function addTopicDetails($form, &$form_state, $entityId) {
+ try{	
+  global $theme_key;
+  $description = $form_state['values']['forum_topic_desc']['value'];
+  $title       = $form_state['values']['forum_topic_title'];
+  $tId         = $entityId;
+
+  $loggedInUserId = getIdOfLoggedInUser();
+  // Getting drupal userid
+  $userSelect = db_query('SELECT uid uid, name uname FROM users WHERE LOWER(name) = (select lower(user_name) from slt_person where id='.$loggedInUserId.')');
+  $userResult = $userSelect->fetchAll();
+  $drupalUserId = $userResult[0]->uid;
+   
+  // Construct the new node object.
+  $nodeTopic = new stdClass();
+
+  // Set the values for the node
+  $nodeTopic->title = $title;
+  $nodeTopic->body = $description;
+  $nodeTopic->type = 'forum';   // Your specified content type
+  $nodeTopic->created = time();
+  $nodeTopic->changed = time();
+  $nodeTopic->status = 1;       // To have published, else use 0
+  $nodeTopic->promote = 0;      // If you want promoted to front page use 1, else use 0
+  $nodeTopic->sticky = 0;
+  $nodeTopic->format = 1;       // Filtered HTML
+  $nodeTopic->uid = $drupalUserId;          // UID of content owner
+  $nodeTopic->language = 'en-us';
+  
+  //$nodeTopic->tid = $tId;
+
+  //$nodeTopic->taxonomy = array($tId);
+  // Save the node.
+  node_save($nodeTopic);
+  
+  //forum_node_insert($nodeTopic);
+
+  $nId =  $nodeTopic->nid;
+
+  $vId = db_query("select vid FROM node WHERE nid ='".$nId."'")->fetchField();
+  $insertTopicInForum = db_insert('forum');
+  $insertTopicFieldsInForum = array(
+                    'nid' => $nId,
+    	            'vid' => $vId,
+                    'tid' => $tId
+  );
+  $insertTopicInForum->fields($insertTopicFieldsInForum);
+  $insertTopicInForum->execute();
+
+
+  $insertTopicInTaxIndex = db_insert('taxonomy_index');
+  $insertTopicFieldsInTaxIndex = array(
+                    'nid' => $nId,
+    	            'tid' => $tId,
+                    'sticky' => 0,
+    		        'created' => time()
+  );
+  $insertTopicInTaxIndex->fields($insertTopicFieldsInTaxIndex);
+  $insertTopicInTaxIndex->execute();
+
+
+  $insertTopicInForumIndex = db_insert('forum_index');
+  $insertTopicFieldsInForumIndex = array(
+                    'nid' => $nId,
+                    'title' => $title,  // class id
+    	            'tid' => $tId,
+    		        'created' => time(),
+                    'last_comment_timestamp' => time(),
+      				'comment_count' => 0
+  );
+  $insertTopicInForumIndex->fields($insertTopicFieldsInForumIndex);
+  $insertTopicInForumIndex->execute();
+
+  $revisionId = db_query("select vid FROM node WHERE nid ='".$nId."'")->fetchField();
+  $insertTopicFieldData = db_insert('field_data_body');
+  $insertTopicFieldDataBodyFields = array(
+                    'entity_type' => 'node',
+                    'bundle' => 'forum',  // class id
+    	            	'deleted' => 0,
+    		        		'entity_id' => $nId,
+                    'revision_id' => $revisionId,
+      							'language' => 'en-us',
+                    'delta' => 0,
+                    'body_value' => $description,
+                    'body_summary' => '',
+                    'body_format' => 'filtered_html'
+  
+                    );
+  $insertTopicFieldData->fields($insertTopicFieldDataBodyFields);
+  $insertTopicFieldData->execute();
+
+
+  $nodeInsertForumTopic = db_insert('slt_node_learning_activity');
+  $nodeFieldsForumTopic = array(
+      'node_id'     => $nId,
+      'entity_id'   => $tId,  
+    	'entity_type' => 'forum-topic',
+  		'createdby'   => $drupalUserId,
+      'createdon'   => now(),
+  		'updatedby'   => $drupalUserId,
+  		'updatedon'   => now()
+  );
+  $nodeInsertForumTopic->fields($nodeFieldsForumTopic);
+  $nodeInsertForumTopic->execute();
+  }catch (Exception $ex) {
+  	watchdog_exception('addTopicDetails', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ *
+ */
+function updateTopicDetails($form, &$form_state, $entityId, $nId) {
+ try{
+  global $theme_key;
+  $description = $form_state['values']['forum_topic_desc']['value'];
+  $title       = $form_state['values']['forum_topic_title'];
+  
+  $tId         = $entityId;
+
+  $loggedInUserId = getIdOfLoggedInUser();
+  // Getting drupal userid
+  $userSelect = db_query('SELECT uid uid, name uname FROM users WHERE LOWER(name) = (select lower(user_name) from slt_person where id='.$loggedInUserId.')');
+  $userResult = $userSelect->fetchAll();
+  $drupalUserId = $userResult[0]->uid;
+
+  $forumTopicNode = db_select('slt_node_learning_activity', 'entity');
+  $forumTopicNode->innerjoin('node', 'n', 'entity.node_id=n.nid');
+  $forumTopicNode->addField('n','nid','nid');
+  $forumTopicNode->addField('n','vid','vid');
+  $forumTopicNode->condition('entity.entity_id', $entityId);
+  $forumTopicNode->condition('entity.node_id', $nId);
+  $forumTopicNode->condition('entity.entity_type', 'forum-topic');
+  $forumTopicNodeResult =  $forumTopicNode->execute()->fetchAll();
+
+  expDebug::dPrintDBAPI(' Forum Topic Node Id = ', $forumTopicNode);
+   
+  // Construct the new node object.
+  $nodeTopic = new stdClass();
+
+  // Set the values for the node
+  $nodeTopic->nid= $forumTopicNodeResult[0]->nid;
+  $nodeTopic->vid= $forumTopicNodeResult[0]->vid;
+  $nodeTopic->title = $title;
+  $nodeTopic->body = $description;
+  // $nodeTopic->type = 'forum';   // Your specified content type
+  $nodeTopic->created = time();
+  $nodeTopic->changed = time();
+  $nodeTopic->status = 1;       // To have published, else use 0
+  $nodeTopic->promote = 0;      // If you want promoted to front page use 1, else use 0
+  $nodeTopic->sticky = 0;
+  $nodeTopic->format = 1;       // Filtered HTML
+  $nodeTopic->language = 'en-us';
+  $nodeTopic->uid = $drupalUserId;
+
+  // Save the node.
+  node_save($nodeTopic);
+
+  $insertTopicInForumIndex = db_update('forum_index');
+  $insertTopicFieldsInForumIndex = array(
+                    'title' => $title,
+    		        'created' => time(),
+                    'last_comment_timestamp' => time()
+  );
+
+  $insertTopicInForumIndex->fields($insertTopicFieldsInForumIndex);
+  $insertTopicInForumIndex->condition('nid', $nId);
+  $insertTopicInForumIndex->execute();
+
+  $updateTopicFieldData = db_update('field_data_body');
+  $updateTopicFieldDataBodyFields = array(
+                    'body_value' => $description
+  );
+  $updateTopicFieldData->fields($updateTopicFieldDataBodyFields);
+  $updateTopicFieldData->condition('entity_id', $nId);
+  $updateTopicFieldData->execute();
+  }catch (Exception $ex) {
+  	watchdog_exception('updateTopicDetails', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+/**
+ *
+ */
+function getTopicCommentsDisplay($optionValue,$tId,$nId,$cId){
+
+  try {
+    $form_state = array(
+       'no_redirect'  => TRUE, // To confirm whether necessary
+       'build_info'   => array('args' => array('ajax')), // The form builder function expects the first argument to be ajax or nojs.
+       't_id'    => $tId,
+       'n_id'    => $nId,
+       'c_id'    => $cId,
+       'option_value'    => $optionValue
+    );
+
+    $formId                 = 'add_topic_comments_html';
+    $builtForm              = drupal_build_form($formId, $form_state);
+    $renderedTabContentHTML = drupal_render($builtForm);
+    
+    $commands = array();
+    $commands[] = qtip_command_display($renderedTabContentHTML);
+    expDebug::dPrint(' $commands = ' . print_r($commands, true) , 4);
+    print ajax_render($commands);    
+    
+    exit;     
+  } catch (Exception $ex) {
+    watchdog_exception('forumtopic', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/**
+ *
+ */
+function add_topic_comments_html($form, &$form_state) {
+ try{
+	global $theme_key;
+  expDebug::dPrint('add_topic_comments_html'.print_r($form_state['values'],true),4);
+  $tId = $form_state['t_id'];
+  $nId = $form_state['n_id'];
+  $cId = $form_state['c_id'];
+  $option_value = $form_state['option_value'];
+  
+  if($option_value == "reply") {
+    $commentLabel = t('LBL867');  
+  }else{
+    $commentLabel = t('LBL1140');
+  }
+
+  $formName = "topiccomment";
+
+  if($option_value == "edit") {
+    $commentsDetails = getCommentsDetails($cId);
+  }
+
+
+  $form[$formName]['add_topic_comments_details'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div id="topic-comments"></div>',
+  );
+
+  $form[$formName]['add_topic_comments_start'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div id="admin-forum-add-comment-container" class="admin-forum-add-comment-container">',
+  );
+
+
+/*  $form[$formName]['topic_comments_title'] = array(
+	'#id' => 'topic_comments_title',
+    '#type' => 'textfield',
+    '#prefix' => '<div class="admin-forum-add-comment-list"><label>'.t('LBL083').': <span class="addedit-mandatory">*</span></label>',
+    '#suffix' => '</div>',
+  	'#size' => 36,
+    '#default_value' => $commentsDetails['subject'],
+  );*/
+
+  $charLimit = 5000;
+  $charLimitLeft = getEditorWordCount($commentsDetails['description']);
+
+  $attributes = array();
+  $attributes['data'] = 'topic_comments_desc';
+  addHiddenFieldToAddEditForm($form[$formName], 'ckeditor_word_count', $charLimit);
+  $form[$formName]['topic_comments_desc'] = array(
+	'#id' => 'topic_comments_desc',
+    //'#type' => 'textarea',
+	  '#type' => 'text_format',
+    '#format'=> 'full_html',  
+    '#prefix' => '<div class="admin-forum-add-comment-list"><label>'.$commentLabel.':<span class="addedit-mandatory">*</span></label></div><div>',
+    '#suffix' => '<div class="catalog-desc-count"><span id="char_count_topic_comments_desc">'.$charLimitLeft.'</span>'.' ' .t('LBL419').' '.$charLimit.' '.t('LBL420').'</div><div class="clearBoth"></div></div>',
+    '#rows'=>'6',
+    '#cols'=>'50',
+    '#default_value' => $commentsDetails['description'],
+    '#attributes'=>$attributes
+  );
+  	
+  $prefix = ''; $suffix = '';
+  if($theme_key == "expertusoneV2"){
+  	$setAttributesCancel['class'] = array('white-btn-bg-middle');
+  	$prefix = '<div class="white-btn-bg-container">  
+		      	  	<div class="white-btn-bg-left"></div>';
+	  $suffix = '<div class="white-btn-bg-right"></div>';
+  }
+  else{
+	  $setAttributesCancel['class'] = array('admin-action-button-middle-bg');
+  }
+  
+  $setAttributesCancel['onClick'][] = 'remove_qtip("topic");return false;';
+  $form[$formName]['cancel_topic_comments'] = array(
+    '#type' => 'submit',
+    '#value' => t('LBL123'),
+    '#title' => t('LBL123'),
+    '#prefix' => '<div class="admin-forum-add-comment-list"><div class="addedit-form-cancel-container-actions">'.$prefix,
+    '#suffix' => $suffix,
+    '#attributes' => $setAttributesCancel,
+    '#name' => 'Cancel Topic Comments'
+    );
+
+
+  $setAttributes['class'] = array('addedit-form-expertusone-throbber admin-save-button-middle-bg');
+  $wrapperId              =	'topic-comments';
+  $setAttributes['data-wrapperid'] = array($wrapperId);
+  $setAttributes['onClick'][] = 'remove_forum_error_messages("comments");return false;';
+
+  $form[$formName]['topic_comments_submit'] = array(
+   '#type' => 'submit',
+   '#id'   => 'add-topic-comments-submit',
+   '#value' => t('LBL871'),
+   '#prefix' => '<div class="admin-save-pub-unpub-button-container"><div class="admin-save-button-left-bg"></div>',
+   '#suffix' => '<div class="admin-save-button-right-bg"></div></div></div></div>',
+   '#attributes' => $setAttributes,
+   '#ajax' => array(
+                'wrapper' => 'topic-comments',
+                'callback' => 'topic_add_comments_callback',
+                'method' => 'replace',
+                'effect' => 'none',
+                'event'=>'click',
+				  'tId'=>$tId,
+				  'nId'=>$nId,
+  				'option_value'=>$option_value,
+                'keypress' => true,
+                'progress' => array(
+                  'type' => 'throbber',
+                  'message' => ''
+                  ),
+                  )
+                  );
+
+   $form[$formName]['add_topic_comments_end'] = array(
+    '#type' => 'markup',
+    '#markup' => '</div>',
+     );
+     
+    return $form;
+    }catch (Exception $ex) {
+    	watchdog_exception('add_topic_comments_html', $ex);
+    	expertusErrorThrow($ex);
+    }
+}
+
+/**
+ *
+ */
+function topic_add_comments_callback(&$form, &$form_state){
+ try{	
+  $tId = $form_state['triggering_element']['#ajax']['tId'];
+  $nId = $form_state['triggering_element']['#ajax']['nId'];
+  $optionValue = $form_state['triggering_element']['#ajax']['option_value'];
+
+  $commands = array(); 
+  
+  //Addd by ganeshbabuv for avoid issue not reloading topic list after submit the discussion from salsforce in IE9
+  
+  if(!module_exists('salesforce_integration')){
+  	 $commands[] = ajax_command_replace('#admin-forum-add-comment-container', drupal_render($form));
+  }else{
+  	
+  	expDebug::dPrint('HTTP_USER_AGENT = ' . print_r($_SERVER['HTTP_USER_AGENT'],true), 5);
+  	$ie9Browser = (preg_match('/MSIE 9/',$_SERVER['HTTP_USER_AGENT'])) ? true : false;
+  	expDebug::dPrint(' $ie9Browser = ' . print_r($ie9Browser,true), 5);  
+  	
+    expDebug::dPrint(' $ses_from_salesforce = ' . $_SESSION['ses_from_salesforce'], 5);
+
+  	$formId = 'add_topic_comments_html';
+  	$builtForm = drupal_build_form($formId, $form_state); 
+
+  	if(trim($_SESSION['ses_from_salesforce'])=='1'){
+  		 if(!$ie9Browser){ // && !$ie10Browser
+  		 	$commands[] = ajax_command_replace('#admin-forum-add-comment-container', drupal_render($form));
+  		 } 
+  	}else{
+  		$commands[] = ajax_command_replace(NULL, $builtForm);
+  	} 
+  	 
+  }
+ 
+  $statusMsgHTML = theme('status_messages');
+
+  expDebug::dPrint(' $statusMsgHTML = ' . print_r($statusMsgHTML, true) , 4);
+
+  if (!empty($statusMsgHTML)) {
+    // Show the messages
+    $commands[] = ajax_command_html('#bubble-face-table #show_expertus_message', $statusMsgHTML);
+    // Set the trigger to remove the messages after a while
+    if (!empty($form_state['triggering_element']['#ajax']['wrapper'])) {
+      $commands[] = addedit_hide_messages($form_state['triggering_element']['#ajax']['wrapper']);
+    }
+    else {
+      $commands[] = addedit_hide_messages();
+    }
+  }else{
+    $commands[] = ajax_command_invoke(NULL, "refreshListAccordion",array($tId,$nId,$optionValue));
+  }
+
+  return array(
+        '#type' => 'ajax',
+        '#commands' => $commands
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('topic_add_comments_callback', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ *
+ */
+function add_topic_comments_html_validate($form, &$form_state) {
+	try{
+  global $theme_key;
+  expDebug::dPrint('add_topic_comments_html_validate'.print_r($form_state['values'],true),4);
+  $option_value = $form_state['triggering_element']['#ajax']['option_value'];
+  if($option_value == "reply") {
+    $commentLabel = t('LBL867');  
+  }else{
+    $commentLabel = t('LBL1140');
+  }
+  $comment = $form_state['values']['topic_comments_desc']['value'];
+  if(trim($comment) == ''){
+    form_set_error('topic_comments_desc',$commentLabel.t('ERR101'));
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('add_topic_comments_html_validate', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ *
+ */
+function add_topic_comments_html_submit($form, &$form_state) {
+	try{
+  expDebug::dPrint('add_topic_comments_html_submit : '.print_r($form_state,true) , 5);
+  $tId = $form_state['t_id'];
+  $nId = $form_state['n_id'];
+  $cId = $form_state['c_id'];
+  $option_value = $form_state['option_value'];
+  
+  $loggedInUserID = getIdOfLoggedInUser();
+  if($loggedInUserID > 0){ 
+  if($option_value == "add" || $option_value == "reply") {
+	addCommentsDetails($form, $form_state, $tId, $nId, $cId, $option_value);
+    }else{
+      updateCommentsDetails($form, $form_state, $tId, $nId, $cId, $option_value);
+    }
+}
+  $form_state['rebuild']  = TRUE;
+  }catch (Exception $ex) {
+  	watchdog_exception('add_topic_comments_html_submit', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ *
+ */
+function addCommentsDetails($form, &$form_state, $tId, $nId, $cId, $option_value) {
+ try{
+  global $theme_key;
+  $title       = now();//$form_state['values']['topic_comments_title'];
+  $description = $form_state['values']['topic_comments_desc']['value'];
+
+  if($option_value == "add") {
+    $cId = 0;
+  }else if($option_value == "reply") {
+    $cId = $cId;
+  }
+
+  $loggedInUserId = getIdOfLoggedInUser();
+  $userSelect = db_query('SELECT uid uid, name uname, mail email FROM users WHERE LOWER(name) = (select lower(user_name) from slt_person where id='.$loggedInUserId.')');
+  $userResult = $userSelect->fetchAll();
+  $drupalUserId = $userResult[0]->uid;
+  $uname = $userResult[0]->uname;
+  $email = $userResult[0]->email;
+  
+  $comment = new stdClass();
+  $comment->nid = $nId; // nid of a node you want to attach a comment to
+  $comment->cid = 0; // leave it as is
+  $comment->pid = $cId; // parent comment id, 0 if none
+  $comment->uid = $drupalUserId; // user's id, who left the comment
+  $comment->mail = $email; // user's email
+  $comment->name = $uname; // If user is authenticated you can omit this field, it will be auto-populated, if the user is anonymous and you want to name him somehow, input his name here
+  //$comment->thread = '01/'; // OPTIONAL. If you need comments to be threaded you can fill this value. Otherwise omit it.
+  //$comment->hostname = '127.0.01'; // OPTIONAL. You can log poster's ip here
+  $comment->created = time(); // OPTIONAL. You can set any time you want here. Useful for backdated comments creation.
+  $comment->is_anonymous = 0; // leave it as is
+  $comment->homepage = ''; // you can add homepage URL here
+  $comment->status = COMMENT_PUBLISHED; // We auto-publish this comment
+  $comment->language = LANGUAGE_NONE; // The same as for a node
+  $comment->subject = $title;
+  $comment->comment_body[$comment->language][0]['value'] = $description; // Everything here is pretty much like with a node
+  $comment->comment_body[$comment->language][0]['format'] = 'filtered_html';
+  $comment->field_custom_field_name[LANGUAGE_NONE][0]['value'] = 'Some value'; // OPTIONAL. If your comment has a custom field attached it can added as simple as this // preparing a comment for a save
+
+  comment_submit($comment);
+  comment_save($comment);
+  //expDebug::dPrint('values of comment insert'.print_r($commentId,true));
+  $lastRecorValue = db_query(
+  					"SELECT cid FROM comment
+					WHERE cid = (
+    				SELECT MAX(cid) FROM comment
+    				WHERE pid = ".$cId." AND nid = ".$nId." AND uid =".$drupalUserId.")
+  					");
+  $commentId = $lastRecorValue->FetchField();
+  insertUserPointsForEachActionsPerformed($loggedInUserId,'add_topic_comment_reply',$commentId,'insert');
+  }catch (Exception $ex) {
+  	watchdog_exception('addCommentsDetails', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+/**
+ *
+ */
+function updateCommentsDetails($form, &$form_state, $tId, $nId, $cId, $option_value) {
+	try{
+  global $theme_key;
+  $title       = now();//$form_state['values']['topic_comments_title'];
+  $description = $form_state['values']['topic_comments_desc']['value'];
+
+  $comment = comment_load($cId);
+  $comment->subject = $title;
+  $comment->comment_body[$comment->language][0]['value'] = $description;
+  comment_save($comment);
+  }catch (Exception $ex) {
+  	watchdog_exception('updateCommentsDetails', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+/**
+ *
+ */
+function getTopicDetails($topicId) {
+  try{
+    $select = db_select("forum_index","fi");
+    $select->leftJoin('field_data_body', 'fd_topic', 'fd_topic.entity_id = fi.nid');
+    $select->addField('fi','nid','nid');
+    $select->addField('fi','title','title');
+    $select->addField('fi','tid','tid');
+    $select->addField('fi','created','created');
+    $select->addField('fi','last_comment_timestamp','last_comment_timestamp');
+    $select->addField('fi','comment_count','comment_count');
+    $select->addField('fd_topic','body_value','description');
+    $select->condition('fi.nid',$topicId,'=');
+    // Execute query
+    $result = $select->execute();
+    return $result->fetchAssoc();
+  }catch (Exception $ex) {
+    watchdog_exception('getTopicDetails', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/**
+ *
+ */
+function getCommentsDetails($commentId) {
+  try{
+    $select = db_select("comment","cmt");
+    $select->leftJoin('field_data_comment_body', 'fd_cmt', 'fd_cmt.entity_id = cmt.cid');
+    $select->addField('cmt','cid','cid');
+    $select->addField('cmt','pid','pid');
+    $select->addField('cmt','nid','nid');
+    $select->addField('cmt','uid','uid');
+    $select->addField('cmt','subject','subject');
+    $select->addField('cmt','created','created');
+    $select->addField('cmt','name','name');
+    $select->addField('fd_cmt','comment_body_value','description');
+    $select->condition('cmt.cid',$commentId,'=');
+    $result = $select->execute();
+    return $result->fetchAssoc();
+  }catch (Exception $ex) {
+    watchdog_exception('getTopicDetails', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+?>

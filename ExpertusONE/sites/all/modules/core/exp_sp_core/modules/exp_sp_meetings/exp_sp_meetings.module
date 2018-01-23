@@ -1,0 +1,88 @@
+<?php 
+
+function exp_sp_meetings_init(){
+	$js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+}
+
+
+/**
+ * Implements hook_menu().
+ */
+function exp_sp_meetings_menu() {
+  try{
+  // Login pages.
+  
+  $items['learning/expertus/meeting/join/%/%'] = array(
+    'title' => t('Expertus Meeting'),
+    'page callback' => 'join_meeting',
+    'page arguments' => array(4,5),
+  	'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_meetings.inc'
+  );
+  
+  $items['expertus/meeting/end/%/%'] = array(
+    'title' => t('Expertus Meeting'),
+    'page callback' => 'expertus_end_meeting',
+    'page arguments' => array(3,4),
+  	'access arguments' => array('expertus learner'),
+    'type'=>MENU_CALLBACK,
+    'file' => 'exp_sp_meetings.inc'
+  );
+  
+  $items['webex/meeting/end/%/%/%'] = array(
+    'title' => t('WebEx Meeting'),
+    'page callback' => 'webex_end_meeting',
+    'page arguments' => array(3,4,5),
+  	'access arguments' => array('expertus learner'),
+    'type'=>MENU_CALLBACK,
+    'file' => 'exp_sp_meetings.inc'
+  );
+  
+  $items['learning/webex/meeting/join/%/%/%'] = array(
+    'title' => t('WebEx Meeting'),
+    'page callback' => 'join_webex_meeting',
+    'page arguments' => array(4,5,6),
+  	'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_meetings.inc'
+  );
+  
+  $items['learning/webex/meeting/login/%/%'] = array(
+  		'title' => t('WebEx Meeting'),
+  		'page callback' => 'login_validate',
+  		'page arguments' => array(4,5),
+  		'access arguments' => array('expertus learner'),
+  		'file' => 'exp_sp_meetings.inc'
+  );
+  
+  $items['learning/webex/meeting/%/%'] = array(
+  		'title' => t('WebEx Meeting'),
+  		'page callback' => 'webex_fail',
+  		'page arguments' => array(3,4),
+  		'access arguments' => array('expertus learner'),
+  		'file' => 'exp_sp_meetings.inc'
+  );
+  
+  $items['learning/webex/schedule/%/%'] = array(
+  		'title' => t('WebEx Meeting'),
+  		'page callback' => 'get_meetingkey',
+  		'page arguments' => array(3,4),
+  		'access arguments' => array('expertus learner'),
+  		'file' => 'exp_sp_meetings.inc'
+  );
+
+  $items['learning/live/meeting/join/%/%/%/%'] = array(
+    'title' => t('Live meeting'),
+    'page callback' => 'join_live_meeting',
+    'page arguments' => array(4,5,6,7),
+  	'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_meetings.inc'
+  );
+  
+  return $items;
+  
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_meetings_menu', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+?>

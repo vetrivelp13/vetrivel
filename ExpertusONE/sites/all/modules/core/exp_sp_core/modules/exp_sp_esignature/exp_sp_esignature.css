@@ -1,0 +1,152 @@
+.esign-wizard-class {
+  text-align : left	
+}
+.esign-title1{
+  padding-top : 5px;
+  width : 16%;
+  font-size: 13px;
+  font-weight: normal;
+  text-align: left
+}
+.esign-title2{
+  padding-top : 0;
+  width : 29%;
+  font-size: 13px;
+  font-weight: normal;
+  text-align: left
+}
+#esign-uname, #esign-pass {
+  width:180px;
+  border:1px solid #7f9db9
+}
+.esign-textbox1{
+  padding-top : 8px
+}
+.esign-textbox2{
+  padding-top : 0
+}
+#esign-wizard .require-text, div.require-text{
+  color: #FF0000;
+  font-weight: bold;
+  font-size: 13px
+}
+#esign-wizard span#esign-pass_newid{
+  padding-left : 40px;
+  margin-right : 157px 
+}
+#esign-wizard #esign-pass-error,#esign-mandatory-error{
+  display:none;
+  margin: 0;
+  min-height: 12px;
+  padding: 2px;
+  text-align : center;
+  background-color: #F9EDBE;
+  border: 1px solid #F0C36D;
+  clear: both;
+  font-size: 11px;
+  color: #222222;
+  width:115px;
+  margin-left:96px;
+  margin-top:-6px
+}
+.esign-msg-close-btn{
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/bubble_small_close.png") no-repeat 0 0;
+  cursor: pointer;
+  display: none;
+  font-weight: bold;
+  height: 15px;
+  margin: 0 2px 0 4px;
+  position: absolute;
+  right: 102px;
+  top: -5px;
+  width: 15px
+}
+#esign-wizard-dialog #esign-wizard {
+	overflow:visible
+}
+.ui-dialog .ui-dialog-buttonset button.esign-button-wizard span.ui-button-text {
+  color: #FFF
+}
+.ui-dialog .ui-dialog-buttonset button.esign-button-wizard {
+  padding: 0 5px
+}
+.ui-dialog .ui-dialog-buttonset button.esign-close-button {
+  background:none;
+  border:0;
+  padding:1px 5px;
+  font-size:12px;	
+  text-align:center;
+  font-weight:normal;
+  cursor:hand;
+  color:#4686dd;
+  margin:0 0 0 3px
+}
+.ui-dialog .ui-dialog-buttonset button.esign-close-button span.ui-button-text {
+  color: #4686DD;
+  padding:3px 0 0 0
+}
+#esign-wizard #esign-message{
+  color: #666666;
+  line-height: 20px;
+  margin: 5px 3px 0 1px;
+  min-height: 21px;
+  padding: 0 1px 1px;
+  text-align: justify;
+  font-size : 12px;	
+  width: auto
+}
+#esign-wizard .esign-labels{
+  font-size:13px;
+  font-weight:normal;
+  text-align:left;
+  width:40%
+}
+#esign-wizard-dialog .ui-dialog .ui-dialog-buttonset{
+  float: right;
+  margin-right: 4px;
+  padding-bottom:7px;
+  min-width:114px
+}
+#esign-wizard .esign-pass-txt-error {
+  border:1px solid red
+}
+#esign-wizard .esign-label-values {
+  font-size:13px;
+  color:#333;
+  padding-top:3px
+}
+#esign-wizard .esign-table {
+  margin-left: 1px;
+  margin-top: 1px;
+}
+#esign-wizard .esign-table tr td{
+  padding-left:0;
+  padding-right:0;
+  line-height:18px;
+  padding-top:4px;
+  vertical-align:top
+}
+#esign-wizard-dialog .ui-dialog-titlebar {
+  border-radius:0;
+  border:1px solid #ccc;
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png") repeat-x right -40px;
+}
+#esign-wizard-dialog .ui-dialog-titlebar .ui-dialog-title{
+  padding-top:1px
+}
+#esign-wizard-dialog .esign-field-label {
+  color:#666;
+  padding-bottom:2px
+} 
+#esign-wizard-dialog .esign-admin-save-button-left-bg {
+  margin-left:7px
+}
+#esign-wizard-dialog .esign-label-values-container {
+  padding-top:4px
+}
+/* Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+#esign-wizard-dialog .ui-dialog {
+  width:348px
+}
+}

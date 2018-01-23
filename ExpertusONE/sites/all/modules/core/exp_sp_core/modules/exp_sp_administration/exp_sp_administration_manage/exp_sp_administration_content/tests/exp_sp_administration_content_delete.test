@@ -1,0 +1,81 @@
+<?php 
+
+class AdministrationContentDeleteBase extends AdministrationContentTestHelper
+{
+	public function deleteContentTestCase($scope = 'all'){
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['contentDelete'];
+		} else {
+			$testCases = array($this->testcases['contentDelete'][$scope]);
+		}
+		
+		foreach($testCases as $test){
+			$contentTitle = $this->getContentTitle($test['id']);
+			debug("Content name to delete: " . $contentTitle);
+	
+			//drupalPost($path, $edit, $submit, $options, $headers, $form_html_id);
+			$contentId = $test['id'];
+			$deletePath = 'ajax/admincore/deleteprocessobject/' . $contentId . '/content';
+			$out = $this->drupalPost($deletePath, array(), t('Delete'));
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+	
+			$contentStatus = $this->getContentStatus($test['id']);
+			debug("Content status : " . $contentStatus);
+		}
+	
+	}
+}
+
+class AdministrationContentDeleteAll extends AdministrationContentDeleteBase
+{
+public static function getInfo() {
+		return array(
+				'name' => 'Administration - Content - Delete - AllTest',
+				'description' => 'Module : exp_sp_administration_content',
+				'group' => '1501 - Administration - Manage - Content - Delete',
+		);
+	}
+
+	public function testContentDeleteAll() {
+		$this->deleteContentTestCase('all');
+		$this->manageAdminContent();
+	}
+}
+
+class AdministrationContentDeleteCase1 extends AdministrationContentDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Content - Delete - Case 1',
+				'description' => 'Module : exp_sp_administration_content',
+				'group' => '1501 - Administration - Manage - Content - Delete',
+		);
+	}
+
+	public function testContentDeleteCase1() {
+		debug('testContentDeleteCase1 called');
+		$this->deleteContentTestCase('st_case1');
+		$this->manageAdminContent();
+	}
+}
+
+class AdministrationContentDeleteCase2 extends AdministrationContentDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Content - Delete - Case 1',
+				'description' => 'Module : exp_sp_administration_content',
+				'group' => '1501 - Administration - Manage - Content - Delete',
+		);
+	}
+
+	public function testContentDeleteCase2() {
+		debug('testContentDeleteCase2 called');
+		$this->deleteContentTestCase('st_case2');
+		$this->manageAdminContent();
+	}
+}
+
+?>

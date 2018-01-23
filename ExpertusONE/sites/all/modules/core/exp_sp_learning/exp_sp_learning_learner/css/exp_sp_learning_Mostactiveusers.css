@@ -1,0 +1,42 @@
+/*SPOTLIGHT TITLE OVERRIDES*/
+.most-active-list {
+/*  height:10px; */
+  border-left:1px solid #ccc;
+  border-right:1px solid #ccc;
+}
+.region-sidebar-second .first .block-footer-left, 
+.region-sidebar-second .first .block-footer-right,
+.region-sidebar-second .first .block-footer-middle {
+  background-image: url('');
+  padding-right: 0px;
+  padding-left: 0px;
+  height: 0px;
+}
+
+.region-sidebar-second .last .block-title-left, 
+.region-sidebar-second .last .block-title-right {
+  background-image: url('');
+  padding-right: 0px;
+  padding-left: 0px;
+}
+/*
+#main #block-exp-sp-learning-spotlight-new-courses .list-spotlight-last div.spotlight-block{
+  padding:15px 0px 10px 0px;
+}
+*/
+.region-sidebar-second .block {
+  margin-top: 0px;
+}
+.region-sidebar-second .block.first{
+  margin-top: 10px;
+}
+#block-exp-sp-learning-spotlight-new-courses img.spotlight-item-image {
+  width: 50px;
+  height: 46px;
+}
+
+
+/* New UI changes */
+#page-container .region-sidebar-second .block {
+  margin-top: 18px;
+}

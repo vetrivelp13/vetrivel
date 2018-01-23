@@ -1,0 +1,82 @@
+<?php
+/**
+ * Implementation of hook_block_info().
+ */
+function exp_sp_header_block_info() {
+	try {
+  $blocks = array();
+//   drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/exp_sp_menu/exp_sp_menu.js', 'module');
+  drupal_add_css(drupal_get_path('module', 'exp_sp_core').'/css/exp_sp_header.css');
+
+  $blocks['header'] = array(
+    'info' => t('Header'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+    'pages' => '*/preview/*'
+  );
+
+  return $blocks;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_header_block_info', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function exp_sp_header_block_view($delta = ''){
+  try{
+   $block = array();
+   $block['subject'] = "";
+   $block['content'] = _header_content();
+   return $block;
+  }catch (Exception $ex) {
+    watchdog_exception('expsp_header_blockview', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+function _header_content(){
+  try{
+  global $user;
+  global $base_url;
+  $outhtml = '';
+  if($user->uid) {
+   // list($user_id,$user_name,$userfulname) = explode("##",$_COOKIE['SPLearnerInfo']);
+    require_once "./getLearnerInfo.php";
+		$obj = new GetLearnerInfo();
+		$userfulname =  $obj->getValue('userfullname');
+    $outhtml .='<div id="page_top_links">
+      			<div class="topinfo-display topname-display"></div>
+      			<div class="top_head">';
+      			if($user->uid){
+      				if($user->picture) {
+      				  $account = user_load($user->uid);
+                          $filepath = $account->picture->uri;
+                          $alt = t("@user's picture", array('@user' => format_username($account)));
+                         // $user_img_path = file_create_url($filepath);
+      					//$outhtml .='<img id="header-profile-img" style="vertical-align:bottom;" src="'.file_create_url($filepath).'" width="32px" height="32px" alt=""/>&nbsp;&nbsp;';
+      				}else{
+      				    //$outhtml .='<img id="header-profile-img" style="vertical-align:bottom;" src="'.file_create_url('sites/default/files/pictures/default_user.png').'" width="32px" height="32px" alt=""/>&nbsp;&nbsp;';
+      				}
+      				/*if(isNotForumPage())
+      				  $outhtml .= '<span class="header-user-name">'.t("LBL195").' '.$userfulname.'</span>';*/
+      			}
+    $outhtml .='</div></div>';
+    
+    //PRODUCT VERSION WILL BE STRORED IN THIS TEXT BOX
+    $myFile = $_SERVER["DOCUMENT_ROOT"]."/VERSION.txt";
+    $theData = file_get_contents($myFile);
+    if($theData != "")
+      $outhtml .= '<input type="hidden" id="tbProdVersion" value="'.trim($theData).'" />';
+    else
+      $outhtml .= '<input type="hidden" id="tbProdVersion" value="" />';
+  }
+  return $outhtml;
+  }catch (Exception $ex) {
+    watchdog_exception('header_content', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+

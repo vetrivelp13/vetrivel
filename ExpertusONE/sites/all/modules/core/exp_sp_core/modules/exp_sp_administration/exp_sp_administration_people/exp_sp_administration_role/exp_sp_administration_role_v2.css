@@ -1,0 +1,686 @@
+#exp-sp-administration-role-attaching-user-form .ac_input {
+  width: 130px
+}
+#role-addedit-form .addedit-form-cancel-container-actions {
+  margin-right: 11px
+}
+#exp-sp-administration-role-attaching-user-form #catalog-class-addedit-form-details .add-class-button {
+  margin-right: 16px
+}
+#permissions_disp_div {
+  margin-left: 152px;
+  margin-top: -26px;
+  position: absolute
+}
+.add-permission-class {
+  height: 180px
+}
+#add-class-list-wrapper .nonlist {
+  height: 30px;
+  padding-top: 15px
+}
+.admin-pagination-role-search-go {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -482px -20px #fff;
+  border: 0;
+  cursor: pointer;
+  display: block;
+  height: 20px;
+  outline: none;
+  text-decoration: none;
+  width: 20px;
+  float: right;
+  bottom: -2px;
+  right: 30px;
+  position: relative
+}
+.display_user_list {
+  margin-top: 10px
+}
+#security-role-detail-wrapper-list #admin-add-course-training-plan .ui-jqgrid .ui-jqgrid-toppager, 
+#admin-data-grid .ui-jqgrid .ui-jqgrid-toppager {
+  height: 24px
+}
+#display-assigned-users #attach_user_list {
+  margin-right: 1px;
+  margin-top: 1px;
+  position: static
+}
+#add-user-role-page .add-class-button {
+  top: 200px;
+  right: -16px
+}
+#add-user-role-page {
+  position: relative
+}
+.theme-ctool-popup  #role-addedit-form .admin-save-button-container {
+  float: right;
+  margin: 1px 11px 5px
+}
+.theme-ctool-popup  #role-addedit-form .admin-save-pub-unpub-button-container {
+  float: inherit;
+  margin-right: 9px;
+  padding-left: 9px
+}
+#add-user-role-page #add-class-list-wrapper #search-list-class-title-keyword ul {
+  background: none;
+  border: 1px solid #CCC;
+  list-style-type: none;
+  padding: 0
+}
+.adduser-title-heading {
+  color: #2D2D2D;
+  font-family: proximanovabold;
+  font-size: 12px;
+  padding-left: 13px;
+  text-transform: uppercase
+}
+.adduser-title-heading-permission {
+  padding-left: 4px
+}
+.permission-button-size {
+  font-size: 12px
+}
+.permission-header-tr {
+  height: 35px
+}
+.permission-detail-tr-odd {
+  height: 30px
+}
+.permission-detail-tr-even {
+  height: 30px;
+  background: none;
+}
+#admin-add-permissions .certificate-column {
+  padding-top: 7px
+}
+#security-role-detail-wrapper-list {
+  min-height: 225px
+}
+#security-role-detail-wrapper {
+  min-height: 165px
+}
+#security-role-detail-wrapper-list .admin-save-button-container .narrow-search-actionbar-orange-btnBG {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -3px -1022px;
+  padding: 0 3px 0 7px
+}
+#search_addusers {
+  border: 0
+}
+#search_add_urs {
+  border: 0;
+  right: 170px;
+  top: 1px
+}
+#display-assigned-users .admin-empty-text-msg {
+  padding-top: 72px
+}
+#permissions-addedit-form-html #admin-add-permissions .jspTrack {
+  height: 175px
+}
+#role-detail-wrapper .add-user-first-btn, #role-detail-wrapper .add-user-previous-btn, #role-detail-wrapper .add-user-next-btn, #role-detail-wrapper .add-user-last-btn {
+  width: 23px;
+  height: 23px;
+  margin: 9px 0 0 5px;
+  border: 0;
+  display: block;
+  float: left;
+  opacity: 8
+}
+#role-detail-wrapper .add-user-first-btn {background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png) no-repeat -158px -253px;}
+#role-detail-wrapper .add-user-previous-btn{background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png) no-repeat -92px -302px;}
+#role-detail-wrapper .add-user-next-btn{ background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png) no-repeat -126px -302px;}
+#role-detail-wrapper .add-user-last-btn{background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png) no-repeat -158px -302px;}
+#role-detail-wrapper .add-user-next-btn, #role-detail-wrapper .add-user-last-btn {
+  padding: 0
+}
+#role-detail-wrapper .tot-txt-cls {
+  font-family: ProximaNovaBold;
+  font-size: 12px;
+  color: #474747;
+  text-transform: uppercase;
+  width: auto;
+  height: 25px;
+  margin: 9px 0 0 3px;
+  display: block;
+  float: left
+}
+#role-detail-wrapper .tot-txt-cls .form-item-add-usr-pg-txtfld {
+  display: inline;
+  margin: 0px;
+  width: auto;
+  height: 25px
+}
+#add_usr_pg_txtfld {
+  border: 1px solid #ccc;
+  height: 16px;
+  width: 20px;
+  font-family: ProximaNovaBold;
+  text-align: center;
+  margin: 0 3px 0 3px
+}
+#role-detail-wrapper .attached-course-pagination-container {
+  clear: both;
+  float: right;
+  margin-right: 7px;
+  width: 106px
+}
+#attach_user {
+  margin-right: -4px;
+  font-size: 12px
+}
+#assigned_user {
+  margin-right: -4px;
+  font-size: 12px
+}
+.button-margin-edit {
+  margin-right: -4px
+}
+.button-margin-search {
+  margin-right: 18px	
+}
+.permission-tab-icon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -4px -1908px;
+  height: 20px;
+  width: 20px
+}
+.users-tab-icon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -34px -1909px;
+  height: 20px;
+  width: 20px
+}
+#role-addedit-form .addedit-long-description-container .addedit-new-field-value {
+  width: 392px
+}
+#role-addedit-form .catalog-pub-add-list {
+  width: 75px;
+  margin-right: 9px
+}
+#role-addedit-form .catalog-pub-add-list li {
+  border-top: 1px solid #EBEBEB;
+  border-bottom: 0;
+  text-align: right
+}
+#role-addedit-form .catalog-pub-add-list li input {
+  background: none
+}
+#permission-cancel-save-btn .addedit-form-cancel-container-actions {
+  width: auto
+}
+#add-user-role-page #role-security-role-detail-wrapper-list .ui-jqgrid-bdiv,
+#add-user-role-page #security-role-detail-wrapper .ui-jqgrid-bdiv {
+  float: left
+}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class {
+  background: none;
+  border: 0;
+  color: #474747;
+  float: left;
+  font-size: 12px;
+  height: 10px;
+  text-align: left;
+  width: 66px
+}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-class-dropdown-link {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat 1px -255px;
+  cursor: pointer;
+  float: left;
+  height: 20px;
+  text-decoration: none;
+  width: 20px;
+  margin: 2px 0 0
+}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper #search-dropdwn-list-class {
+  height: 20px;
+  width: 105px;
+  margin: 0
+}
+#security-role-detail-wrapper-list #admin-add-course-training-plan,
+#security-role-detail-wrapper #admin-add-course-training-plan {
+  float: left
+}
+#security-role-detail-wrapper-list #admin-add-course-training-plan .admin-save-button-container,
+#security-role-detail-wrapper #admin-add-course-training-plan .admin-save-button-container {
+  margin: 24px 0 0 14px
+}
+#security-role-detail-wrapper-list #admin-add-course-training-plan .add-class-button,
+#security-role-detail-wrapper #admin-add-course-training-plan .role-add-user-btn {
+  margin-top: 0
+}
+#exp-sp-administration-role-attaching-user-form .ac_input {
+  width: 130px
+}
+#role-detail-wrapper #catalog-class-addedit-form-details #add-class-list-wrapper .admin_class_multi_search_container {
+  width: 315px
+}
+#role-addedit-form .addedit-form-cancel-container-actions {
+  margin-right: 11px
+}
+#exp-sp-administration-role-attaching-user-form #catalog-class-addedit-form-details .add-class-button {
+  margin-right: 16px
+}
+.add-user-delete {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/close.png") no-repeat 0 0;
+  cursor: pointer;
+  margin: 8px 10px -10px
+}
+#permissions_disp_div {
+  margin-left: 152px;
+  margin-top: -33px;
+  position: absolute
+}
+.add-permission-class {
+  height: 180px
+}
+#add-class-list-wrapper .nonlist {
+  height: 30px;
+  padding-top: 15px
+}
+.admin-pagination-role-search-go {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -482px -20px #fff;
+  border: 0;
+  cursor: pointer;
+  display: block;
+  height: 20px;
+  outline: none;
+  text-decoration: none;
+  width: 20px;
+  float: right;
+  bottom: -2px;
+  right: 30px;
+  position: relative
+}
+.display_user_list {
+  margin-top: 10px
+}
+#security-role-detail-wrapper-list #admin-add-course-training-plan .ui-jqgrid .ui-jqgrid-toppager, 
+#admin-data-grid .ui-jqgrid .ui-jqgrid-toppager {
+  height: 24px
+}
+#display-assigned-users #attach_user_list {
+  margin-right: 1px;
+  margin-top: 1px;
+  position: static
+}
+#add-user-role-page .add-class-button {
+  top: 200px;
+  right: -16px
+}
+.theme-ctool-popup  #role-addedit-form .admin-save-button-container {
+  float: right;
+  margin: 0 11px 5px 5px
+}
+.theme-ctool-popup  #role-addedit-form .admin-save-pub-unpub-button-container {
+  float: inherit;
+  margin-right: 9px;
+  padding-left: 4px
+}
+#add-user-role-page #add-class-list-wrapper #search-list-class-title-keyword ul {
+  background: #fff;
+  border: 1px solid #CCC;
+  list-style-type: none;
+  padding: 0;
+}
+#add-user-role-page .search-list-keyword {
+  position: absolute;
+  left: 4px
+}
+.adduser-table-heading {
+  width: 100%;
+  padding-left: 5px
+}
+.adduser-title-heading {
+  color: #474747;
+  font-family: proximanovabold;
+  font-size: 12px;
+  padding-left: 13px;
+  text-transform: uppercase;
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") repeat-x 0 -2453px;
+  border-left: 1px solid #E5E5E5
+}
+.adduser-title-heading-permission {
+  padding-left: 4px
+}
+#admin-add-permissions .adduser-title-heading {
+  font-weight: normal;
+  padding-left: 10px;
+  border-right: 1px solid #E5E5E5
+}
+.permission-button-size {
+  font-size: 12px
+}
+.permission-header-tr {
+  height: 26px;
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") repeat-x 0 -2453px
+}
+.permission-detail-tr-odd {
+  height: 26px
+}
+.permission-detail-tr-even {
+  height: 26px;
+  background: #F7F7F7;
+}
+#admin-add-permissions .certificate-column {
+  padding: 7px 0 0 10px;
+  height: 19px
+}
+#add-user-role-page #add-class-list-wrapper .admin-class-auto-search-container {
+  margin: -10px 111px 0
+}
+#role-detail-wrapper #add-class-list-wrapper .admin_class_ac_input_mainform,
+#add-user-role-page #add-class-list-wrapper .admin_class_ac_input_mainform {
+  height: 21px;
+  font-size: 12px;
+  border: 0;
+  position: absolute;
+  width: 159px;
+  padding-right: 16px
+}
+#add-user-role-page #add-class-list-wrapper .admin_class_ac_input_mainform {
+  width: 193px
+}
+.qtip-parent-adduser #add-user-role-page #add-class-list-wrapper .admin_class_ac_input_mainform {
+  width: 180px
+}
+#display-assigned-users #attach_user_list_div {
+  margin-right: 0;
+  margin-bottom:14px;
+  position: relative;
+  right: 176px;
+  top: 83px
+}
+#security-role-detail-wrapper-list {
+  min-height: 225px
+}
+#security-role-detail-wrapper {
+  min-height: 165px
+}
+#security-role-detail-wrapper-list .admin-save-button-container .narrow-search-actionbar-orange-btnBG {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -3px -1022px;
+  padding: 0 3px 0 7px
+}
+#search_addusers {
+  border: 0
+}
+#display-assigned-users .admin-empty-text-msg {
+  padding-top: 72px
+}
+#permissions-addedit-form-html #admin-add-permissions .jspTrack {
+  height: 175px
+}
+#role-detail-wrapper .add-user-pagination-container {
+  width: auto;
+  clear: both;
+  float: right;
+  margin-bottom: -17px
+}
+#role-detail-wrapper .attached-course-pagination-container {
+  clear: both;
+  float: right;
+  margin-right: 7px;
+  width: 106px;
+}
+#role-detail-wrapper .tot-txt-cls .form-item-add-usr-pg-txtfld {
+  display: inline;
+  margin: 0;
+  width: 40px;
+  height: 25px
+}
+#attach_user, #assigned_user {
+  margin-right: -4px;
+  font-size: 12px
+}
+.button-margin-edit {
+  margin-right: -4px
+}
+.button-margin-search {
+  margin-right: 18px
+}
+.page-administration-people-role #page-container .narrow-search-multi-action-container .active-deactive-tab-icon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -344px -200px;
+  height: 20px;
+  margin-right: 2px;
+  width: 15px
+}
+.permission-tab-icon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -159px -386px;
+  height: 20px;
+  width: 22px;
+  margin-right: 2px
+}
+#role-addedit-form .permission-tab-icon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -159px -386px;
+  height: 20px;
+  width: 22px;
+  margin-right: 2px
+}
+.users-tab-icon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -319px -181px;
+  height: 20px;
+  width: 20px
+}
+#role-addedit-form .addedit-long-description-container .addedit-new-field-value {
+  width: 392px
+}
+#role-addedit-form .catalog-pub-add-list {
+  width: 75px;
+  margin-right: 9px
+}
+#role-addedit-form .catalog-pub-add-list li input {
+  background: none
+}
+#role-detail-wrapper #catalog-class-addedit-form-details #add-class-list-wrapper .admin_class_multi_search_container {
+  left: 165px
+}
+#add-user-role-page #role-security-role-detail-wrapper-list .ui-jqgrid-hdiv,
+#add-user-role-page #security-role-detail-wrapper .ui-jqgrid-hdiv,
+#add-user-role-page #role-security-role-detail-wrapper-list .ui-jqgrid-bdiv,
+#add-user-role-page #security-role-detail-wrapper .ui-jqgrid-bdiv {
+  float: left
+}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class {
+  background: none;
+  border: 0;
+  color: #474747;
+  float: left;
+  font-size: 12px;
+  height: 10px;
+  text-align: left;
+  width: 70px
+}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-class-dropdown-link {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat 1px -255px;
+  cursor: pointer;
+  float: left;
+  height: 20px;
+  text-decoration: none;
+  width: 20px;
+  margin: 4px 0 0 -8px
+}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper #select-list-class-dropdown-list {
+  display: none;
+  left: -8px;
+  position: absolute;
+  top: 20px;
+  z-index: 100
+}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper #search-dropdwn-list-class {
+  height: 20px;
+  width: 105px;
+  margin: 0 13px
+}
+#security-role-detail-wrapper-list #admin-add-course-training-plan,
+#security-role-detail-wrapper #admin-add-course-training-plan {
+  float: left
+}
+#security-role-detail-wrapper-list #admin-add-course-training-plan .admin-save-button-container,
+#security-role-detail-wrapper #admin-add-course-training-plan .admin-save-button-container {
+  margin: 24px 0 0 10px
+}
+#security-role-detail-wrapper-list #admin-add-course-training-plan .add-class-button,
+#security-role-detail-wrapper #admin-add-course-training-plan .role-add-user-btn {
+  margin-top: 0;
+  margin-left: 5px
+}
+#security-role-detail-wrapper #catalog-class-addedit-form-details #add-class-list-wrapper #search-addusers {
+  height: 23px;
+  right: -27px
+}
+.page-administration-people-role .popups-container-newui .addedit-form-wrapper {
+  float: none
+}
+#add-user-role-page .addedit-edit-username-search-autocomplete {
+  height: 21px;
+  padding: 1px
+}
+#admin-add-permissions table {
+  border: 1px solid #E7E7E7;
+  border-width: 0 1px 1px 1px
+}
+#permission-cancel-save-btn {
+  margin-top: 10px
+}
+#page-container #admin-add-permissions .permission-header-tr .checkbox-unselected,
+#page-container #admin-add-permissions .permission-header-tr .checkbox-selected {
+  margin: 7px 0 0 10px
+}
+div.ctools-modal-content #admin-add-permissions .checkbox-unselected input,
+div.ctools-modal-content #admin-add-permissions .checkbox-selected input {
+  cursor: pointer;
+  height: 10px;
+  margin-left: -2px;
+  margin-top: -1px;
+  margin-right: -1px;
+  opacity: 0;
+  outline: none;
+  width: 10px
+}
+#security-role-detail-wrapper .ui-jqgrid-hbox .checkbox-unselected,
+#security-role-detail-wrapper .ui-jqgrid-hbox .checkbox-selected {
+  margin-top: 7px
+}
+#admin-add-permissions .checkbox-unselected,
+#admin-add-permissions .checkbox-selected {
+  margin: 8px -6px 0 7px
+}
+.narrow-search-multi-action-container #bubble-face-table #admin-add-permissions tbody tr td {
+  border: none;
+  margin-left: 10px;
+  margin-top: 8px
+}
+.page-administration-people-role div.ctools-modal-content .checkbox-selected,
+.page-administration-people-role div.ctools-modal-content .checkbox-unselected {
+  height: 12px;
+  padding: 0
+}
+.page-administration-people-role .addedit-addl-form-title .addedit-addl-form-title-text {
+  padding-left: 6px
+}
+.user-title-head-pad,
+.user-title-head-pad-username {
+  padding-left: 16px
+}
+.user-title-head-pad-username {
+  font-weight: normal;
+  color: #2d2d2d;
+  font-family: openSansRegular, Arial;
+  font-size: 12px
+}
+.user-title-head-status {
+  padding-left: 15px
+}
+#page-container #role-security-role-detail-wrapper-list th:hover,
+#page-container #security-role-detail-wrapper th:hover {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") repeat-x 0 -2453px;
+  border-right: 1px solid #E5E5E5;
+  text-align: left
+}
+#page-container #role-security-role-detail-wrapper-list .ui-jqgrid-bdiv tr:hover,
+#page-container #security-role-detail-wrapper .ui-jqgrid-bdiv tr:hover,
+#add-user-role-page .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-state-hover {
+  background: none
+}
+.page-administration-people-role #add-class-list-wrapper {
+  padding: 0 0 0 3px
+}
+.page-administration-people-role div.popups-title .popups-close {
+  margin-right: 6px
+}
+#role-detail-wrapper {
+  padding-bottom: 17px
+}
+.user-list-full-name {
+  padding-left: 13px
+}
+#role-detail-wrapper #add-class-list-wrapper .input.ac_loading,
+#add-user-role-page #add-class-list-wrapper .input.ac_loading {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/search_bg.png") repeat-x 0 -126px;
+  border: 0
+}
+#security-role-detail-wrapper  .norecords-msg-edit-page {
+  border-bottom: none
+}
+#role-detail-wrapper #catalog-class-addedit-form-details #add-class-list-wrapper #select-list-class-dropdown-list  li {
+  border-top: 1px solid #EBEBEB;
+  text-align: center
+}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper #select-list-class-dropdown-list  li {
+  text-align: center
+}
+.role_multi_search_container_add {
+  width: 301px
+}
+.qtip-parent-adduser .role_multi_search_container_add {
+  width: 331px
+}
+#add-user-role-page .admin-datagrid-pagination {
+  min-height: 123px
+}
+#page-container #add-user-role-page #catalog-class-addedit-form-details .filter-search-start-date-right-bg {
+  position: absolute;
+  right: 158px
+}
+#page-container #security-role-detail-wrapper #catalog-class-addedit-form-details #add-class-list-wrapper .filter-search-start-date-right-bg {
+  position: absolute;
+  right: 143px
+}
+#role-detail-wrapper #catalog-class-addedit-form-details .filter-search-start-date-right-bg {
+  position: absolute;
+  right: 11px
+}
+.page-administration-people-role #ctools-face-table .addedit-left-col {
+  width: 98.3%;
+  padding: 15px 0 1px 16px;
+  position: relative
+}
+.page-administration-people-role .admin-pagination-role-search-go {
+  right: 20px
+}
+.page-administration-people-role #catalog-class-addedit-form-details .admin-pagination-search-go {
+  margin-left: 155px
+}
+.page-administration-people-role #catalog-class-addedit-form-details .filter-search-start-date-right-bg {
+  float: right
+}
+.page-administration-people-role input.ac_loading,.page-administration-people-role #security-role-detail-wrapper-list input.ac_loading {
+  height:19px;
+}
+.page-administration-people-role .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-htable th div {
+  height: 26px;
+  line-height: 26px
+}
+/*!Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #add-user-role-page .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-hbox .ui-jqgrid-labels th {
+    padding: 0 0 0 4px
+  }
+  #add-user-role-page #admin-add-course-training-plan .ui-jqgrid-hbox .checkbox-selected,
+  #add-user-role-page #admin-add-course-training-plan .ui-jqgrid-hbox .checkbox-unselected {
+    margin-right: 9px
+  }
+  #role-detail-wrapper .add-user-pagination-container {
+    margin-bottom: -41px
+  }
+  #role-detail-wrapper .tot-txt-cls {
+    min-width: 66px
+  }
+}

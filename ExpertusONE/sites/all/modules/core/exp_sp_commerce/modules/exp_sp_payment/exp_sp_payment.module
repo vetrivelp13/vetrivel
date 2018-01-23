@@ -1,0 +1,1516 @@
+<?php
+
+/**
+ * Implementation of hook_init().
+ */
+function exp_sp_payment_init() {
+  require_once "exp_sp_payment.inc";
+  require_once "exp_paypalflow.inc";
+}
+
+/**
+ * Implements hook_uc_payment_gateway_alter().
+ */
+function exp_sp_payment_uc_payment_gateway() {
+	try {
+  // CyberSource APIs other than HOP require uc_credit to be enabled.
+  if (!module_exists('uc_credit')) {
+    return;
+  }
+  $gateways['exp_cybersource'] = array(
+    'title' => t('Expertus CyberSource Silent Order POST'),
+    'description' => t('Process credit card payments using the Silent Order POST service of CyberSource.'),
+    'settings' => 'clone_uc_cybersource_settings_form',
+    'credit' => 'clone_uc_cybersource_charge',
+    'credit_txn_types' => array(UC_CREDIT_AUTH_ONLY, UC_CREDIT_PRIOR_AUTH_CAPTURE, UC_CREDIT_AUTH_CAPTURE, UC_CREDIT_REFERENCE_TXN),
+  );
+
+  $gateways['exp_paymetric'] = array(
+    'title' => t('Expertus Paymetric'),
+    'description' => t('Process credit card payments using the service of Paymetric.'),
+    'settings' => 'paymetric_settings_form',
+    'credit' => 'clone_uc_paymetric_charge',
+    'credit_txn_types' => array(UC_CREDIT_AUTH_ONLY, UC_CREDIT_PRIOR_AUTH_CAPTURE, UC_CREDIT_AUTH_CAPTURE, UC_CREDIT_REFERENCE_TXN),
+  );
+
+  $gateways['exp_paypal'] = array(
+    'title' => t('Expertus Paypal'),
+    'description' => t('Process credit card payments using the service of Paypal.'),
+    'settings' => 'paypal_settings_form',
+    'credit' => 'clone_uc_paypal_charge',
+    'credit_txn_types' => array(UC_CREDIT_AUTH_ONLY, UC_CREDIT_PRIOR_AUTH_CAPTURE, UC_CREDIT_AUTH_CAPTURE, UC_CREDIT_REFERENCE_TXN),
+  );
+
+
+
+  return $gateways;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_payment_uc_payment_gateway', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+/*function exp_sp_payment_form_alter(&$form, $form_state, $form_id) {
+
+  switch($form_id){
+	case 'uc_payment_method_settings_form':
+    break;
+  }
+  return $form;
+}*/
+
+/**
+ * Adds the CyberSource fields to the payment gateway settings form.
+ */
+function clone_uc_cybersource_settings_form($form, &$form_state) {
+	try {
+  // Check for the HOP.php for Silent Order POST.
+  if (variable_get('uc_cybersource_method', 'post') == 'post' &&
+      !uc_cybersource_hop_include()) {
+    drupal_set_message(t('You must download the security script from your CyberSource account (found in Tools & Settings > Hosted Order Page > Security) and place it in the ubercart/payment/uc_cybersource directory to use the Silent Order POST. Remember to open it and replace instances of L( with csL(.'), 'error');
+  }
+
+  $form['uc_cybersource_server'] = array(
+    '#type' => 'select',
+    '#title' => t('Payment server'),
+    '#description' => t('CyberSource server used when processing payments.'),
+    '#options' => array(
+      'production' => t('Production'),
+      'test' => t('Test'),
+    ),
+    '#default_value' => variable_get('uc_cybersource_server', 'test'),
+  );
+  $form['uc_cybersource_method'] = array(
+    '#type' => 'radios',
+    '#title' => t('Payment method'),
+    '#description' => t('You must ensure your CyberSource account and web server are able to use the service you select.<br />Silent Order POST requires cURL support and a modified <a href="!url">HOP.php</a>.<br />The SOAP Toolkit API requires the SOAP and DOM extensions for PHP.', array('!url' => url('http://www.ubercart.org/contrib/139', array('absolute' => TRUE)))),
+    '#options' => array(
+      'post' => t('Silent Order POST'),
+      // 'api' => t('Simple Order API'),
+      'soap' => t('SOAP Toolkit API'),
+    ),
+    '#default_value' => variable_get('uc_cybersource_method', 'post'),
+  );
+
+  $form['uc_cybersource_avs'] = array(
+    '#type' => 'radios',
+    '#title' => t('Ensure address verification'),
+    '#options' => array(
+      'true' => t('Process transaction only if address passes verification.'),
+      'false' => t('Process transaction regardless of the result of address verification.'),
+    ),
+    '#default_value' => variable_get('uc_cybersource_avs', 'true'),
+  );
+
+  $login = _uc_cybersource_soap_login_data();
+
+  $form['soap'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('SOAP Toolkit API settings'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  $form['soap']['uc_cybersource_soap_merchant_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Merchant ID'),
+    '#default_value' => $login['merchant_id'],
+  );
+  $form['soap']['uc_cybersource_soap_transaction_key'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Transaction key'),
+    '#default_value' => $login['transaction_key'],
+  );
+  $form['soap']['uc_cybersource_soap_create_profile'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Create a CyberSource Basic Profile for every new credit card order processed.'),
+    '#default_value' => variable_get('uc_cybersource_soap_create_profile', FALSE),
+  );
+
+  $form['soap']['uc_cybersource_soap_tax_calculate'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable calculation of taxes through the CyberSource tax service.'),
+    '#default_value' => variable_get('uc_cybersource_soap_tax_calculate', FALSE),
+  );
+  $form['soap']['exp_cybersource_soap_tax_calculate'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable Expertus calculation of taxes through the CyberSource tax service.'),
+    '#default_value' => variable_get('exp_cybersource_soap_tax_calculate', FALSE),
+  );
+  $form['soap']['exp_cybersource_soap_export_compliance'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Enable Expertus export compliance through the CyberSource service.'),
+    '#default_value' => variable_get('exp_cybersource_soap_export_compliance', FALSE),
+  );
+  $form['soap']['ship_from'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Tax calculation "Ship from" address'),
+    '#description' => t('This address will be used when calculating taxes with CyberSource tax service.'),
+  );
+  $form['soap']['ship_from']['cs_ship_from_first_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('First name'),
+    '#default_value' => variable_get('cs_ship_from_first_name', ''),
+  );
+  $form['soap']['ship_from']['cs_ship_from_last_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Last name'),
+    '#default_value' => variable_get('cs_ship_from_last_name', ''),
+  );
+  $form['soap']['ship_from']['cs_ship_from_street1'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Street address'),
+    '#default_value' => variable_get('cs_ship_from_street1', ''),
+  );
+  $form['soap']['ship_from']['cs_ship_from_city'] = array(
+    '#type' => 'textfield',
+    '#title' => t('City'),
+    '#default_value' => variable_get('cs_ship_from_city', ''),
+  );
+  $form['soap']['ship_from']['cs_ship_from_zone'] = array(
+    '#type' => 'textfield',
+    '#title' => t('State/Province'),
+    '#description' => t('Enter the 2 letter abbreviation of your state or province.'),
+    '#default_value' => variable_get('cs_ship_from_zone', ''),
+    '#maxlength' => 2,
+  );
+  $form['soap']['ship_from']['cs_ship_from_postal_code'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ZIP/Postal code'),
+    '#default_value' => variable_get('cs_ship_from_postal_code', ''),
+  );
+  $form['soap']['ship_from']['cs_ship_from_country'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Country code'),
+    '#description' => t("Enter the 2 letter ISO 3166-1 code; consult Wikipedia if you don't know yours."),
+    '#default_value' => variable_get('cs_ship_from_country', ''),
+    '#maxlength' => 2,
+  );
+  $form['soap']['ship_from']['cs_ship_from_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('E-mail address'),
+    '#default_value' => variable_get('cs_ship_from_email', ''),
+  );
+
+  return $form;
+  }catch (Exception $ex) {
+  	watchdog_exception('clone_uc_cybersource_settings_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+/**
+ * Adds the CyberSource fields to the payment gateway settings form.
+ */
+function paymetric_settings_form($form, &$form_state) {
+  // Check for the HOP.php for Silent Order POST.
+  /*if (variable_get('uc_cybersource_method', 'post') == 'post' &&
+      !uc_cybersource_hop_include()) {
+    drupal_set_message(t('You must download the security script from your CyberSource account (found in Tools & Settings > Hosted Order Page > Security) and place it in the ubercart/payment/uc_cybersource directory to use the Silent Order POST. Remember to open it and replace instances of L( with csL(.'), 'error');
+  }*/
+try{
+  $form['paymetric_server'] = array(
+    '#type' => 'select',
+    '#title' => t('Payment server'),
+    '#description' => t('Paymetric server used when processing payments.'),
+    '#options' => array(
+      'production' => t('Production'),
+      'test' => t('Test'),
+    ),
+    '#default_value' => variable_get('paymetric_server'),
+  );
+
+  $form['paymetric_avs'] = array(
+    '#type' => 'radios',
+    '#title' => t('Ensure address verification'),
+    '#options' => array(
+      'true' => t('Process transaction only if address passes verification.'),
+      'false' => t('Process transaction regardless of the result of address verification.'),
+    ),
+    '#default_value' => variable_get('paymetric_avs', 'true'),
+  );
+
+  $form['paymetric_type'] = array(
+    '#type' => 'radios',
+    '#title' => t('Select the Paymetric Type'),
+    '#options' => array(
+      'dicomp' => t('Paymetric Data Intercept component.'),
+      'soapcomp' => t('Paymetric Web Service componet.'),
+    ),
+    '#default_value' => variable_get('paymetric_type', 'dicomp'),
+  );
+
+  $form['DieComm'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Data Intercept component settings'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $form['DieComm']['paymetric_di_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Paymetric DI component URL'),
+    '#description' => t('Paymetric URL used when processing payments for DI component.'),
+    '#default_value' => variable_get('paymetric_di_url'),
+  );
+
+  $form['DieComm']['paymetric_secure_method'] = array(
+    '#type' => 'radios',
+    '#title' => t('Choose security option'),
+    '#options' => array(
+      'tokenization' => t('Tokenization'),
+      'Secure3D' => t('3D Secure'),
+  		'ach' => t('ACH'),
+    ),
+    '#default_value' => variable_get('paymetric_secure_method', 'tokenization'),
+  );
+
+/*  $form['DieComm']['secure'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Data Intercept component settings'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  */
+
+  $form['DieComm']['paymetric_di_guid'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Merchant GUID'),
+    '#description' => t('Global Unique Identifier provided by Paymetric Operations.'),
+    '#default_value' => variable_get('paymetric_di_guid'),
+  );
+
+  $form['DieComm']['paymetric_di_sharedkey'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Shared Key'),
+    '#description' => t('A unique string provided by Paymetric Operations.'),
+    '#default_value' => variable_get('paymetric_di_sharedkey'),
+  );
+
+  $form['paymetric_soap'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Paymetric SOAP settings'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $form['paymetric_soap']['paymetric_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Paymetric URL'),
+    '#description' => t('Paymetric URL used when processing payments.'),
+    '#default_value' => variable_get('paymetric_url'),
+  );
+  $form['paymetric_soap']['paymetric_wsdl'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Paymetric WSDL'),
+    '#description' => t('Paymetric WSDL used when processing payments.'),
+    '#default_value' => variable_get('paymetric_wsdl'),
+  );
+
+  $form['paymetric_soap']['paymetric_merchant_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Merchant ID'),
+    '#default_value' => variable_get('paymetric_merchant_id'),
+  );
+
+  $form['paymetric_soap']['paymetric_user'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Username'),
+    '#default_value' => variable_get('paymetric_user'),
+  );
+
+   $form['paymetric_soap']['paymetric_password'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Password'),
+    '#default_value' => variable_get('paymetric_password'),
+  );
+
+  return $form;
+  }catch (Exception $ex) {
+  	watchdog_exception('paymetric_settings_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+
+/**
+ * Adds the Paypal fields to the payment gateway settings form.
+ */
+function paypal_settings_form($form, &$form_state) {
+  // Check for the HOP.php for Silent Order POST.
+  /*if (variable_get('uc_cybersource_method', 'post') == 'post' &&
+      !uc_cybersource_hop_include()) {
+    drupal_set_message(t('You must download the security script from your CyberSource account (found in Tools & Settings > Hosted Order Page > Security) and place it in the ubercart/payment/uc_cybersource directory to use the Silent Order POST. Remember to open it and replace instances of L( with csL(.'), 'error');
+  }*/
+try{
+  $form['paypal_server'] = array(
+    '#type' => 'select',
+    '#title' => t('Payment server'),
+    '#description' => t('Paypal server used when processing payments.'),
+    '#options' => array(
+      'production' => t('Production'),
+      'test' => t('Test'),
+    ),
+    '#default_value' => variable_get('paypal_server'),
+  );
+  /*
+   $form['paypal_url'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Paymetric URL'),
+    '#description' => t('Paymetric URL used when processing payments.'),
+    '#default_value' => variable_get('paymetric_url'),
+  );*/
+  
+ $form['paypal_partner'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Partner ID'),
+    '#default_value' => variable_get('paypal_partner'),
+  );
+  
+  $form['paypal_merchant_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Merchant ID'),
+    '#default_value' => variable_get('paypal_merchant_id'),
+  );
+  
+  $form['paypal_user'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Username'),
+    '#default_value' => variable_get('paypal_user'),
+  );
+  
+   $form['paypal_password'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Password'),
+    '#default_value' => variable_get('paypal_password'),
+  );
+  
+  return $form;
+  }catch (Exception $ex) {
+  	watchdog_exception('paymetric_settings_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+/**
+ * Charges card.
+ */
+function clone_uc_cybersource_charge($order_id, $amount, $data) {
+	try{
+  global $user;
+
+  $order = uc_order_load($order_id);
+
+  $amount = uc_currency_format($amount, NULL, NULL, NULL, '.');
+
+  $cc_type = NULL;
+  if (isset($order->payment_details['cc_type'])) {
+    switch (strtolower($order->payment_details['cc_type'])) {
+      case 'amex':
+      case 'american express':
+        $cc_type = '003';
+        break;
+      case 'visa':
+        $cc_type = '001';
+        break;
+      case 'mastercard':
+      case 'master card':
+        $cc_type = '002';
+        break;
+      case 'discover':
+        $cc_type = '004';
+        break;
+    }
+  }
+
+  if (is_null($cc_type)) {
+    $cc_type = _uc_cybersource_card_type($order->payment_details['cc_number']);
+    if ($cc_type === FALSE && in_array($data['txn_type'], array(UC_CREDIT_AUTH_ONLY, UC_CREDIT_AUTH_CAPTURE))) {
+      drupal_set_message(t('The credit card type did not pass validation.'), 'error');
+      watchdog('uc_cybersource', 'Could not figure out cc type: @number / @type', array('@number' => $order->payment_details['cc_number'], '@type' => $order->payment_details['cc_type']), WATCHDOG_ERROR);
+      return array('success' => FALSE);
+    }
+  }
+
+  $country = uc_get_country_data(array('country_id' => $order->billing_country));
+  if ($country === FALSE) {
+    $country = array(0 => array('country_iso_code_2' => 'US'));
+  }
+
+  // Process the charge differently depending on the CyberSource method.
+  switch (variable_get('uc_cybersource_method', 'post')) {
+    // Support for the Silent Order POST.
+    case 'post':
+      return _uc_cybersource_post_charge($order, $amount, $data, $cc_type, $country);
+
+    // Support for the SOAP Toolkit API.
+    case 'soap':
+      // TODO: Refactor to use separate function for each API type.
+      // - i.e. _uc_cybersource_charge_request_soap($order, $amount, $data);
+      // require_once(drupal_get_path('module', 'uc_cybersource') . '/SOAP.php');
+      return _clone_uc_cybersource_soap_charge($order, $amount, $data, $cc_type, $country);
+
+    case 'api':
+      $config = cybs_load_config('cybs.ini');
+      if (variable_get('uc_cybersource_server', 'test') == 'test') {
+        $config['sendToProduction'] = 'false';
+      }
+
+      $request['ccAuthService_run'] = 'true';
+      if (variable_get('uc_cybersource_transaction_type', 'sale') == 'sale') {
+        $request['ccCaptureService_run'] = 'true';
+      }
+      $request['merchantReferenceCode'] = $order_id;
+      $request['purchaseTotals_currency'] = 'USD';
+      $request['purchaseTotals_grandTotalAmount'] = $amount;
+
+      drupal_set_message('<pre>' . print_r($config, TRUE) . '</pre>');
+      drupal_set_message('<pre>' . print_r($request, TRUE) . '</pre>');
+
+      break;
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('clone_uc_cybersource_charge', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ ** method to handle paypal gateway sale transaction
+*/
+function clone_uc_paypal_charge($order_id, $amount, $data) {
+	try {
+		$taxAmt = 0;	  
+
+		//module_load_include('inc', 'exp_sp_payment', 'exp_paypalflow.inc');
+		global $user;
+
+		$order = uc_order_load($order_id);
+		$paypal_username = variable_get('paypal_username','');
+		$paypal_password = variable_get('paypal_password','');
+		$paypal_merchant_id = variable_get('paypal_merchant_id','');
+		$paypal_partner = variable_get('paypal_partner','');
+		$paypal_server = (variable_get('paypal_server', 'test') == 'test') ? 1 : 0;
+		
+		$bill_firstname = $order->billing_first_name;
+		$bill_lastname = $order->billing_last_name;
+		$bill_street1 = $order->billing_street1;
+		$bill_street2 = $order->billing_street2;
+		$bill_city = $order->billing_city;
+		$bill_state =  uc_get_zone_code($order->billing_zone);
+		$bill_postal = $order->billing_postal_code;
+		$bill_country = $billing_country[0]['country_iso_code_2'];
+		$bill_phone = $order->billing_phone;
+		$email = $order->primary_email;
+		$expMonth = ($order->payment_details['cc_exp_month'] < 10) ? '0'.$order->payment_details['cc_exp_month'] : $order->payment_details['cc_exp_month'];
+		$cc_expire = $expMonth.substr($order->payment_details['cc_exp_year'],-2,2);
+		$cvvNo = 0;
+		if (variable_get('uc_credit_cvv_enabled', TRUE)) {
+			$cvvNo = $order->payment_details['cc_cvv'];
+		}
+		
+		$comments = NULL;
+		$resultComment = db_query("SELECT message FROM {uc_order_comments} WHERE order_id = :id", array(':id' => $order->order_id));
+		if ($comment = $resultComment->fetchObject()) {
+			$comments = check_plain($comment->message);
+		}
+		// if($comments == "")
+			// $comments = "sample";
+		
+		if($order->line_items[1]["type"] == "cybersource_tax")
+			$taxAmt = $order->line_items[1]["amount"];
+
+		  // extra params 
+		$data_array = array('comment1' => $comments,
+							'comment2' => "Order Id=".$order->order_id,
+							'firstname' => $bill_firstname,
+							'lastname' => $bill_lastname,
+							'street' => $bill_street1,
+							'city' => $bill_city,
+							'state' => $bill_state,
+							'zip' => $bill_postal,
+							'email' => $email,
+							'phone' => $bill_phone,
+							'country' => $bill_country, // iso codes
+							'cvv' => $cvvNo, // for cvv validation response
+							'clientip' => getClientIP(),
+							'taxamt' => $taxAmt
+							);   
+							
+		$counter = 0;
+
+		// Add the products to the item array.
+		$request = new stdClass();
+		$request->item = array();
+		foreach ($order->products as $product) {
+			$obj = $request->item[] = new stdClass();
+			$data_array["L_NAME".$counter]=$product->title;
+			$data_array["L_AMT".$counter]=$product->price;
+			$data_array["L_QTY".$counter]=$product->qty;
+			$counter++;
+		}
+		  
+		// Add the line items to the item array.
+		foreach ((array) $order->line_items as $line_item) {
+			// Skip subtotal line items.
+			if (strpos($line_item['type'], 'subtotal') === FALSE) {
+				$data_array["L_NAME".$counter]=$line_item['title'];
+				$data_array["L_AMT".$counter]=$line_item['amount'];
+				$data_array["L_QTY".$counter]=1;
+				$counter++;
+			}
+		}
+		  
+		expDebug::dPrint('paypal sale_transaction paypal_merchant_id - ' . $paypal_merchant_id, 5);
+		expDebug::dPrint('paypal sale_transaction paypal_partner - ' . $paypal_partner, 5);
+		expDebug::dPrint('paypal sale_transaction paypal_password - ' . $paypal_password, 5);
+		expDebug::dPrint('paypal sale_transaction paypal_server (0 for live and 1 for test) current value - ' . $paypal_server, 5);
+		
+		$payf = new payflow($paypal_merchant_id, $paypal_merchant_id, $paypal_partner, $paypal_password, $paypal_server);
+		$paypalresponse = $payf->sale_transaction($order->payment_details['cc_number'],$cc_expire, $amount, $order->currency_type, $data_array);
+		expDebug::dPrint('paypal sale_transaction RESPMSG: ' . $paypalresponse["RESPMSG"], 5);
+		expDebug::dPrint('paypal sale_transaction PNREF: ' . $paypalresponse["PNREF"], 5);
+		expDebug::dPrint('paypal sale_transaction Error: ' . $payf->get_errors(), 5);
+		expDebug::dPrint('paypal sale_transaction RESPONSE: ' . print_r($paypalresponse, 1), 5);
+		
+		if (!$payf->get_errors()) {
+			// Add the request token associated with the request ID.
+			$order->data['paypal']["CC_SALE_PNREF"] = $paypalresponse["PNREF"];
+			// Save the updated data array to the database.
+			db_update('uc_orders')
+				->fields(array('data' => serialize($order->data)))
+				->condition('order_id', $order->order_id)
+				->execute();
+			$lmsUserId = getSltpersonUserId();
+			$requestdata = 'Payment Vendor=Paypal,Type=Sale,Sale Amount='.$amount.',Currency type='.$order->currency_type;
+
+			$cartPaymentlogUpdate ="call slp_createpayment_log('$order_id','CC', '$requestdata','PNREF=".$paypalresponse["PNREF"].",PPREF=".$paypalresponse["PPREF"].",RESULT=".$paypal_errormsg["RESULT"]."','$lmsUserId')";
+			db_query($cartPaymentlogUpdate);
+
+			$p_comment = t('<b>@type:</b><br />@id<br />@decision, Reason: !reason', array('@type' => 'Sale', '@id' => 'PNREF='.$paypalresponse["PNREF"].',PPREF='.$paypalresponse["PPREF"], '@decision' => $paypalresponse["RESPMSG"], '!reason' => '100'));
+
+			$result = array(
+				'success' => true,
+				'comment' => $p_comment,
+				'message' => 'o_comment',
+				'reasonCode'  =>100,
+				'uid' => $user->uid,
+			);
+			$result['cart_process'] = "processed";
+		} else {
+			$paypal_errormsg = $payf->get_errors();
+			$p_comment = t('<b>@type:</b><br />@id<br />@decision, Reason: !reason', array('@type' => 'Sale', '@id' => 'PNREF='.$paypalresponse["PNREF"].',PPREF='.$paypalresponse["PPREF"], '@decision' => $paypal_errormsg["RESPMSG"], '!reason' => $paypal_errormsg["RESULT"]));
+			 $result = array(
+				'success' => false,
+				'comment' => $p_comment,
+				'message' => $paypal_errormsg["RESPMSG"],
+				'reasonCode'  =>$paypal_errormsg["RESULT"],
+				'uid' => $user->uid,
+			);
+			 $result['cart_process'] = "unprocessed";
+		}
+		return $result;
+	} catch (Exception $ex) {
+		watchdog_exception('clone_uc_paypal_charge', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+/**
+ * Charges card for paymetric.
+ */
+function clone_uc_paymetric_charge($order_id, $amount, $data) {
+	try {
+	include_once DRUPAL_ROOT."/sites/all/services/SCSoapClient.php";
+ // Include the SOAP helper file.
+  module_load_include('inc', 'exp_sp_payment', 'exp_sp_payment.paymetric.soap');
+
+  global $user;
+  global $base_url;
+
+  $order = uc_order_load($order_id);
+
+  //$amount = uc_currency_format($amount, FALSE, FALSE, FALSE, '.');
+  $amount = round($amount, 2);
+  
+  $currency = (isset($_SESSION['admin_shop_cart_currency_code']) && !empty($_SESSION['admin_shop_cart_currency_code']))?$_SESSION['admin_shop_cart_currency_code']:$_SESSION['shop_cart_currency_code']; //multi currency related work
+
+  expDebug::dPrint("Order ID: " .print_r($order,true),4);
+  expDebug::dPrint("Amount: " .print_r($amount,true),4);
+  expDebug::dPrint("Currency: " .print_r($currency,true),4);
+  
+  $cc_type = NULL;
+  if (isset($order->payment_details['cc_type'])) {
+    switch (strtolower($order->payment_details['cc_type'])) {
+      case 'amex':
+      case 'american express':
+        $cc_type = '3000';
+        break;
+      case 'visa':
+        $cc_type = '4000';
+        break;
+      case 'mastercard':
+      case 'master card':
+        $cc_type = '5000';
+        break;
+      case 'discover':
+        $cc_type = '6000';
+        break;
+    }
+  }
+  //$card_type = $cc_type;
+  if (is_null($cc_type)) {
+    $cc_type = _uc_paymetric_card_type($order->payment_details['cc_number']);
+	// To get the name of the Credit Card Type 
+	if (isset($cc_type)) {
+    switch ($cc_type) {
+      case '3000':
+        $card_type = 'American Express';
+        break;
+      case '4000':
+        $card_type = 'Visa';
+        break;
+      case '5000':
+        $card_type = 'Mastercard';
+        break;
+      case '6000':
+        $card_type = 'Discover';
+        break;
+    }
+  }
+	expDebug::dPrint('CC Type Name------------> ' .$card_type,5);
+    if ($cc_type === FALSE && in_array($data['txn_type'], array(UC_CREDIT_AUTH_ONLY, UC_CREDIT_AUTH_CAPTURE))) {
+      drupal_set_message(t('The credit card type did not pass validation.'), 'error');
+      watchdog('uc_cybersource', 'Could not figure out cc type: @number / @type', array('@number' => $order->payment_details['cc_number'], '@type' => $order->payment_details['cc_type']), WATCHDOG_ERROR);
+      return array('success' => FALSE);
+    }
+  }
+
+  $country = uc_get_country_data(array('country_id' => $order->billing_country));
+  if ($country === FALSE) {
+    $country = array(0 => array('country_iso_code_2' => 'US'));
+  }
+  try {
+    $billing_country = uc_get_country_data(array('country_id' => $order->billing_country));
+
+    $endpoint_url = variable_get('paymetric_url','');
+    $wsdl_url = variable_get('paymetric_wsdl','');
+   	$paymetric_user = variable_get('paymetric_user','');
+   	$paymetric_password = variable_get('paymetric_password','');
+   	$paymetric_di_guid = variable_get('paymetric_di_guid','');
+   	$paymetric_merchant_id=variable_get('paymetric_merchant_id','');
+   	$cc_token = $_SESSION["cc_token"];
+   	if(empty($endpoint_url) || empty($wsdl_url) || empty($paymetric_user) || empty($paymetric_password) || empty($paymetric_di_guid) || empty($cc_token)){
+   	  $result = array(
+        'success' => false,
+        'comment' => 'p_comment',
+        'message' => 'o_comment',
+        'reasonCode'  =>999,
+        'uid' => $user->uid,
+      );
+  	  return $result;
+   	}
+
+   	$select = db_select('uc_orders','ord');
+	$select->addField('ord','created');
+	$select->condition('ord.order_id',$order_id,'=');
+	$select = $select->execute()->fetchField();
+	$order_date = date("Y-m-d\TH:i:s", $select);
+	expDebug::dPrint("Getting Order date" .$order_date,5);
+	
+   	$order->payment_details['cc_exp_month'] = $_SESSION['cc_date_exp'];
+   $bill_firstname = htmlspecialchars($order->billing_first_name,ENT_QUOTES,UTF-8);
+   $bill_lastname = htmlspecialchars($order->billing_last_name,ENT_QUOTES,UTF-8);
+   $bill_street1 = htmlspecialchars($order->billing_street1,ENT_QUOTES,UTF-8);
+   $bill_street2 = htmlspecialchars($order->billing_street2,ENT_QUOTES,UTF-8);
+   $bill_city = htmlspecialchars($order->billing_city,ENT_QUOTES,UTF-8);
+    $bill_state =  uc_get_zone_code($order->billing_zone);
+   	$bill_postal = $order->billing_postal_code;
+   	$bill_country = $billing_country[0]['country_iso_code_2'];
+    $bill_phone = $order->billing_phone;
+    $cc_expire = $order->payment_details['cc_exp_month'].'/'.substr($order->payment_details['cc_exp_year'],-2,2);
+    
+	$g_EndPoint = $endpoint_url;//'https://qa01.xipaynet.com/PMXIGGE/XiPay30WS.asmx';
+	$g_WSDL = $wsdl_url;//'XiPayWS3x.wsdl';
+	$g_User = $paymetric_user;//'paymetric\WSAPrimesysQA';//paymetric\\WSAPrimesysQA
+	$g_Password = $paymetric_password;//'password8*';
+
+	$g_Options = array('trace' => true, 'exceptions' => true);
+
+	$headers = array(
+		'Method: POST',
+		'Connection: Keep-Alive',
+		'User-Agent: PHP-SOAP-CURL',
+		'Content-Type: text/xml; charset=utf-8',
+		'SOAPAction: "Paymetric/XiPaySoap30/action/XiGGE.SoapOp"',
+	);
+
+	$request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:mes=\"http://Paymetric/XiPaySoap30/message/\">
+		   <soapenv:Header/>
+		   <soapenv:Body>
+			  <mes:SoapOp>
+				 <!--Optional:-->
+				 <mes:pPacketsIn>
+					<mes:count>1</mes:count>
+					<mes:xipayvbresult>false</mes:xipayvbresult>
+					<!--Optional:-->
+					<mes:packets>
+					   <!--Zero or more repetitions:-->
+					   <mes:ITransactionHeader>
+						<mes:MerchantID>".$paymetric_merchant_id."</mes:MerchantID>
+						<mes:CurrencyKey>".$currency."</mes:CurrencyKey>
+						<mes:Amount>".$amount."</mes:Amount>
+					    <mes:OrderDate>".$order_date."</mes:OrderDate>
+						<mes:CardHolderName>".$bill_firstname."</mes:CardHolderName>
+						<mes:CardNumber>".$cc_token."</mes:CardNumber>
+						<mes:CardType>".$card_type."</mes:CardType>
+						<mes:CardExpirationDate>".$cc_expire."</mes:CardExpirationDate>
+						<mes:CardHolderAddress1>".$bill_street1."</mes:CardHolderAddress1>
+						<mes:CardHolderAddress2>".$bill_street2."</mes:CardHolderAddress2>
+						<mes:CardHolderCity>".$bill_city."</mes:CardHolderCity>
+						<mes:CardHolderState>".$bill_state."</mes:CardHolderState>
+						<mes:CardHolderZip>".$bill_postal."</mes:CardHolderZip>
+						<mes:CardHolderCountry>".$bill_country."</mes:CardHolderCountry>
+						<mes:SalesDocNumber>".$order_id."</mes:SalesDocNumber>
+						<mes:PacketOperation>1</mes:PacketOperation>
+					   </mes:ITransactionHeader>
+					</mes:packets>
+				 </mes:pPacketsIn>
+			  </mes:SoapOp>
+		   </soapenv:Body>
+		</soapenv:Envelope>";
+	expDebug::dPrint("Paymetric payment request...");
+	expDebug::dPrint($request,4);
+	$ch = curl_init($endpoint_url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($ch, CURLOPT_POST, true );
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+	curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+	curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
+	curl_setopt($ch, CURLOPT_USERPWD, $g_User.':'.$g_Password);
+
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
+	$response = curl_exec($ch);
+	expDebug::dPrint("Paymetric payment response...");
+	expDebug::dPrint($response,4);
+	unset($_SESSION['cc_date_exp']);
+	//echo $request;
+	//echo $response;
+   }catch (Exception $exception) {
+    // Log and display errors if Ubercart is unable to connect via SOAP.
+    //watchdog('uc_cybersource', 'Unable to connect to CyberSource via SOAP.', array(), WATCHDOG_ERROR);
+    drupal_set_message(t('We apologize for the delay, but we are unable to process your credit card at this time. Please contact support team to complete your order.'), 'error');
+  }
+
+ $xml_parser = xml_parser_create();
+ xml_parse_into_struct($xml_parser, trim($response), $xml_values);
+ xml_parser_free($xml_parser);
+
+  if($xml_values[4]['value'] == '1' && $xml_values[5]['value'] == 'true'){
+	  $result = array(
+	        'success' => true,
+	        'comment' => 'p_comment',
+	        'message' => 'o_comment',
+	        'reasonCode'  =>100,
+	        'uid' => $user->uid,
+	      );
+  }
+  else{
+  	  $result = array(
+        'success' => false,
+        'comment' => 'p_comment',
+        'message' => 'o_comment',
+        'reasonCode'  =>999,
+        'uid' => $user->uid,
+      );
+  }
+
+  return $result;
+  }catch (Exception $ex) {
+  	watchdog_exception('clone_uc_paymetric_charge', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Returns the code for the credit card type.
+ */
+function _uc_paymetric_card_type($cc_number) {
+	try {
+  switch (substr(strval($cc_number), 0, 1)) {
+    case '3':
+      if (strlen($cc_number) == 14) {
+        return '005';  // Diners Club
+      }
+      elseif (strlen($cc_number) == 15) {
+        return '3000';  // AmEx
+      }
+      else {
+        return '007';  // JCB
+      }
+    case '4':
+      return '4000';  // Visa
+    case '5':
+      return '5000';  // MasterCard
+    case '6':
+      return '6000';  // Discover
+  }
+
+  return FALSE;
+  }catch (Exception $ex) {
+  	watchdog_exception('_uc_paymetric_card_type', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Handles the SOAP charge request and Ubercart order save.
+ */
+function _clone_uc_cybersource_soap_charge($order, $amount, $data, $cc_type, $country) {
+ try {
+  // Include the SOAP helper file.
+  module_load_include('inc', 'exp_sp_payment', 'exp_sp_payment.soap');
+  global $user;
+
+  // Set the URL for the CyberSource SOAP Toolkit API WSDL.
+  if (variable_get('uc_cybersource_server', 'test') == 'test') {
+    $url = 'https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.38.wsdl';
+  }
+  else {
+    $url = 'https://ics2ws.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.38.wsdl';
+  }
+
+  // Variable currency... not used atm.
+  //$currency = variable_get('uc_cybersource_currency', 'usd');
+
+  $currency = (isset($_SESSION['admin_shop_cart_currency_code']) && !empty($_SESSION['admin_shop_cart_currency_code']))?$_SESSION['admin_shop_cart_currency_code']:$_SESSION['shop_cart_currency_code']; //multi currency related work
+  $billing_country = uc_get_country_data(array('country_id' => $order->billing_country));
+  $delivery_country = uc_get_country_data(array('country_id' => $order->delivery_country));
+
+  try {
+    $soapClient = new CyberSourceSoapClient($url, array());
+
+    // To see the functions and types that the SOAP extension can automatically
+    // generate from the WSDL file, uncomment this section and check the logs.
+    // $functions = $soapClient->__getFunctions();
+    // watchdog('uc_cybersource', '<pre>' . print_r($functions, TRUE) . '</pre>');
+
+    // $types = $soapClient->__getTypes();
+    // watchdog('uc_cybersource', '<pre>' . print_r($types, TRUE) . '</pre>');
+
+    $login = _uc_cybersource_soap_login_data();
+
+    // Create the request with some meta data.
+    $request = new stdClass();
+    $request->merchantID = $login['merchant_id'];
+    $request->merchantReferenceCode = $order->order_id;
+    $request->clientLibrary = 'PHP';
+    $request->clientLibraryVersion = phpversion();
+    $request->clientEnvironment = php_uname();
+
+    // Add the credit card authorization service.
+    if (in_array($data['txn_type'], array(UC_CREDIT_AUTH_ONLY, UC_CREDIT_AUTH_CAPTURE, UC_CREDIT_REFERENCE_TXN))) {
+      $ccAuthService = new stdClass();
+      $ccAuthService->run = 'true';
+      $request->ccAuthService = $ccAuthService;
+    }
+
+    // Add the credit card capture service.
+    if (in_array($data['txn_type'], array(UC_CREDIT_PRIOR_AUTH_CAPTURE, UC_CREDIT_AUTH_CAPTURE, UC_CREDIT_REFERENCE_TXN))) {
+      $ccCaptureService = new stdClass();
+      $ccCaptureService->run = 'true';
+
+      // Add the values for prior authorization capture.
+      if ($data['txn_type'] == UC_CREDIT_PRIOR_AUTH_CAPTURE) {
+        $ccCaptureService->authRequestID = $data['auth_id'];
+        $ccCaptureService->authRequestToken = $order->data['cybersource'][$data['auth_id']];
+      }
+
+      $request->ccCaptureService = $ccCaptureService;
+
+      // Add the subscription ID for a reference transaction.
+      if ($data['txn_type'] == UC_CREDIT_REFERENCE_TXN) {
+        $recurringSubscriptionInfo = new stdClass();
+        $recurringSubscriptionInfo->subscriptionID = $data['ref_id'];
+        $request->recurringSubscriptionInfo = $recurringSubscriptionInfo;
+
+        $request->merchantReferenceCode .= ' (COF)';
+      }
+    }
+
+    // If enabled, create a subscription profile for this transaction.
+    if (variable_get('uc_cybersource_soap_create_profile', FALSE) && in_array($data['txn_type'], array(UC_CREDIT_AUTH_ONLY, UC_CREDIT_AUTH_CAPTURE))) {
+      // Skip if a profile already exists for this order.
+      if (!isset($order->data['uc_cybersource']['soap']['subscription_id'])) {
+        $recurringSubscriptionInfo = new stdClass();
+        $recurringSubscriptionInfo->amount = 0;
+        $recurringSubscriptionInfo->frequency = 'on-demand';
+        $request->recurringSubscriptionInfo = $recurringSubscriptionInfo;
+
+        $paySubscriptionCreateService = new stdClass();
+        $paySubscriptionCreateService->run = 'true';
+        $request->paySubscriptionCreateService = $paySubscriptionCreateService;
+      }
+    }
+
+    // Add the billing information.
+    $billTo = new stdClass();
+    $billTo->firstName = $order->billing_first_name;
+    $billTo->lastName = $order->billing_last_name;
+    $billTo->street1 = $order->billing_street1;
+    if ($order->billing_street2) {
+      $billTo->street2 = $order->billing_street2;
+    }
+    $billTo->city = $order->billing_city;
+    $billTo->state = uc_get_zone_code($order->billing_zone);
+    $billTo->postalCode = $order->billing_postal_code;
+    $billTo->country = $billing_country[0]['country_iso_code_2'];
+    if ($order->billing_phone) {
+      $billTo->phoneNumber = $order->billing_phone;
+    }
+    $slt_user_id  = db_query("SELECT user_id FROM slt_order WHERE uc_order_id = '".$order->order_id."' limit 1")->fetchField();
+    $org_company = db_query("SELECT org.name FROM slt_person usr INNER JOIN slt_organization org  ON (usr.org_id=org.id) WHERE usr.id=:user LIMIT 1", array(':user' => $slt_user_id))->fetchField();
+   	if (!empty($org_company)) {
+      $billTo->company = $org_company;
+    }
+    $billTo->email = $order->primary_email;
+    $billTo->customerID = $order->uid;
+    $request->billTo = $billTo;
+
+    // Add the credit card details if needed
+    if (in_array($data['txn_type'], array(UC_CREDIT_AUTH_ONLY, UC_CREDIT_AUTH_CAPTURE))) {
+      $card = new stdClass();
+      $card->accountNumber = $order->payment_details['cc_number'];
+      $card->expirationMonth = $order->payment_details['cc_exp_month'];
+      $card->expirationYear = $order->payment_details['cc_exp_year'];
+      $card->cardType = $cc_type;
+      if (variable_get('uc_credit_cvv_enabled', TRUE)) {
+        $card->cvNumber = $order->payment_details['cc_cvv'];
+      }
+      $request->card = $card;
+    }
+     // Add the Export Compliance information.
+     if(variable_get('exp_cybersource_soap_export_compliance', FALSE)){
+       $exportCompliance = new stdClass();
+       $exportCompliance->run = "true";
+       $request->exportService = $exportCompliance;
+       $exportCompliance->addressWeight= "high";
+       $exportCompliance->companyWeight= "high";
+       $exportCompliance->nameWeight= "high";
+     }
+
+
+    // Add the order total information.
+    $purchaseTotals = new stdClass();
+    $purchaseTotals->currency = $currency;
+
+  	 // Check if there is any discount line item because CyberSource API does not support negative amounts
+	 $discount_line_items = false;
+	 for ($i = 0; ($i < count($order->line_items)) && !$discount_line_items; $i++) {
+	   $line_item = $order->line_items[$i];
+	   if ($line_item['amount'] < 0)
+	      $discount_line_items = true;
+	 }
+	  $orderTotal = uc_currency_format($order->order_total, NULL, NULL, NULL, '.');
+    // Specify the total to charge if it's less than the order total.
+    /*if (($amount < $orderTotal) || $discount_line_items) {	  //|| $discount_line_items condition added for getting discounts
+      $purchaseTotals->grandTotalAmount = $order->order_total; //$amount;
+    }*/
+	$purchaseTotals->grandTotalAmount =$order->order_total;
+    $request->purchaseTotals = $purchaseTotals;
+
+    // Separately add products and line item into the request items object if
+    // we're charging the full order total.
+    if (($amount == $orderTotal) && !$discount_line_items) {
+	//if (round($amount, 2) == round($order->order_total, 2)) {
+      $request->item = array();
+      $counter = 0;
+
+      // Add the products to the item array.
+      foreach ($order->products as $product) {
+        $obj = $request->item[] = new stdClass();
+
+        $obj->productName = $product->title;
+        $obj->unitPrice = $product->price;
+        $obj->quantity = $product->qty;
+        $obj->productSKU = $product->model;
+        $obj->productCode = 'default';
+        $obj->id = $counter;
+
+        $counter++;
+      }
+
+      // Add the line items to the item array.
+      foreach ((array) $order->line_items as $line_item) {
+        // Skip subtotal line items.
+        if (strpos($line_item['type'], 'subtotal') === FALSE) {
+          $obj = $request->item[] = new stdClass();
+
+          $obj->productName = $line_item['title'];
+          $obj->unitPrice = $line_item['amount'];
+          $obj->quantity = 1;
+          $obj->productSKU = $line_item['type'] . '_' . $line_item['line_item_id'];
+          $obj->id = $counter;
+
+          $counter++;
+        }
+      }
+    }
+
+    // Add business rules.
+    $business = new stdClass();
+    $business->ignoreAVSResult = variable_get('uc_cybersource_avs', 'true') == 'true' ? 'false' : 'true';
+    $request->businessRules = $business;
+
+
+    $_SESSION['cart_cybersource'] = 0;
+    $slt_order_id  = db_query("SELECT id FROM slt_order WHERE uc_order_id = '".$order->order_id."' limit 1")->fetchField();
+    $enrRegSts = db_select('slt_enrollment','e');
+    $enrRegSts->addField('e', 'reg_status');
+    $enrRegSts->condition('e.order_id',$slt_order_id,'=');
+    $res = $enrRegSts->execute()->fetchField();
+    expDebug::dPrintDBAPI('checking the status of the enrollment',$enrRegSts);
+
+    if(($order->data['order_create_from'] == 'admin_checkout' && ($_SESSION['cart_admin_order'])) || (($_SESSION['cart_order']) && $res == 'lrn_crs_reg_rsv')){
+    	// Send the request to CyberSource and get the reply.
+    	$_SESSION['cart_cybersource'] = $order->order_id;
+    	expDebug::dPrint('Request generated to cybersource:: ' . print_r($request, 1), 4);
+    	$reply = $soapClient->runTransaction($request);
+    	expDebug::dPrint('reply generated to cybersource:: ' . print_r($reply, 1), 4);
+    	expDebug::dPrint("_clone_uc_cybersource_soap_charge  Slt order id: ".$slt_order_id,4);
+    	//$authCode = $reply->ccAuthReply->authorizationCode;
+    	$lmsUserId = getSltpersonUserId();
+    	$cybersourceRespXml = urlencode($soapClient->mResponseXML);
+    	$cartPaymentlogUpdate ="call slp_createpayment_log('$slt_order_id','CC', 'not available','$cybersourceRespXml','$lmsUserId')";
+
+    	db_query($cartPaymentlogUpdate);
+    	$cartProc = 'processed';
+    }else{
+    	if($order->data['order_create_from'] == 'admin_checkout')
+    		unset($_SESSION['cart_admin_order']);
+    	else
+    		unset($_SESSION['cart_order']);
+    	$cartProc = 'unprocessed';
+    }
+  }
+  catch (SoapFault $exception) {
+    // Log and display errors if Ubercart is unable to connect via SOAP.
+    watchdog('uc_cybersource', 'Unable to connect to CyberSource via SOAP.', array(), WATCHDOG_ERROR);
+    //drupal_set_message(t('We apologize for the delay, but we are unable to process your credit card at this time. Please contact support team to complete your order.', array('!url' => url('contact'))), 'error');
+  }
+
+  // Process a reply from CyberSource.
+  if (isset($reply)) {
+    $types = uc_credit_transaction_types();
+
+    // Create the order and payment ledger comments.
+    $o_comment = t('<b>@type:</b> @amount<br /><b>Decision: @decision</b><br /><b>Reason:</b> !reason', array('@type' => $types[$data['txn_type']], '@amount' => uc_currency_format($amount), '@decision' => $reply->decision, '!reason' => _uc_cybersource_parse_reason_code($reply->reasonCode)));
+    $p_comment = t('<b>@type:</b><br />@id<br />@decision, Reason: !reason', array('@type' => $types[$data['txn_type']], '@id' => $reply->requestID, '@decision' => $reply->decision, '!reason' => $reply->reasonCode));
+
+    if (!empty($reply->ccAuthReply->avsCode)) {
+      $o_comment .= '<br />' . t('<b>AVS:</b> @avs', array('@avs' => _uc_cybersource_parse_avs_code($reply->ccAuthReply->avsCode)));
+      $p_comment .= t(', AVS: @avs', array('@avs' => $reply->ccAuthReply->avsCode));
+    }
+    if (!empty($reply->ccAuthReply->cvCode)) {
+      $o_comment .= '<br />' . t('<b>CVV:</b> @cvv', array('@cvv' => _uc_cybersoure_parse_cvv_code($reply->ccAuthReply->cvCode)));
+      $p_comment .= t(', CVV: @cvv', array('@cvv' => $reply->ccAuthReply->cvCode));
+    }
+    if($order->data['order_create_from'] == 'admin_checkout')
+    	uc_order_comment_save($order->order_id, $user->uid, $o_comment, 'admin');
+
+    // Store the subscription ID if one was created.
+    if (isset($reply->paySubscriptionCreateReply)) {
+      // If the create request was successful...
+      if ($reply->paySubscriptionCreateReply->reasonCode == '100') {
+        $id = $reply->paySubscriptionCreateReply->subscriptionID;
+
+        // Save the subscription ID to the order's data array.
+        $order->data = uc_credit_log_reference($order->order_id, $id, $order->payment_details['cc_number']);
+
+        uc_order_comment_save($order->order_id, 0, t('<b>CyberSource profile created.</b><br /><b>Subscription ID:</b> @id', array('@id' => $id)), 'admin');
+      }
+      else {
+        uc_order_comment_save($order->order_id, 0, t('<b>Attempt to create CyberSource profile failed.</b><br /><b>Reason:</b> @code', array('@code' => $reply->paySubscriptionCreateReply->reasonCode)), 'admin');
+      }
+    }
+
+    if ($reply->decision == 'ACCEPT') {
+      $result = array(
+        'success' => TRUE,
+        'comment' => $p_comment,
+        'message' => $o_comment,
+        'reasonCode'  =>$reply->reasonCode,
+        'uid' => $user->uid,
+      );
+
+      // If this was an authorization only transaction...
+      if ($data['txn_type'] == UC_CREDIT_AUTH_ONLY) {
+        // Log the authorization to the order.
+        $order->data = uc_credit_log_authorization($order->order_id, $reply->requestID, $amount);
+
+        // Add the request token associated with the request ID.
+        $order->data['cybersource'][$reply->requestID] = $reply->requestToken;
+
+        // Save the updated data array to the database.
+        db_update('uc_orders')
+          ->fields(array('data' => serialize($order->data)))
+          ->condition('order_id', $order->order_id)
+          ->execute();
+      }
+      elseif ($data['txn_type'] == UC_CREDIT_PRIOR_AUTH_CAPTURE) {
+        uc_credit_log_prior_auth_capture($order->order_id, $data['auth_id']);
+      }
+    }
+    else {
+      $result = array(
+        'success' => FALSE,
+        'comment' => $p_comment,
+        'message' => $o_comment,
+        'reasonCode'  =>$reply->reasonCode,
+        'uid' => $user->uid,
+      );
+    }
+  }
+  else {
+    $result = array(
+      'success' => FALSE,
+      'message' => t('MSG008'),
+    );
+  }
+
+  // Don't log this as a payment if money wasn't actually captured.
+  if (in_array($data['txn_type'], array(UC_CREDIT_AUTH_ONLY))) {
+    $result['log_payment'] = FALSE;
+  }
+
+  $result['cart_process'] = $cartProc;
+
+  return $result;
+  }catch (Exception $ex) {
+  	watchdog_exception('_clone_uc_cybersource_soap_charge', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+
+	function refund_cc($slt_order_id,$order_id, $amount, $data,$currency_code)
+    {
+        $paymentGateway = variable_get('uc_payment_credit_gateway', "0");
+		if($paymentGateway == "exp_paypal"){
+			return refund_cc_paypal($slt_order_id,$order_id, $amount, $data,$currency_code);
+		}
+		else
+		{	
+		try {
+	 	global $user;
+		$order = uc_order_load($order_id);
+		$amount = uc_currency_format($amount, FALSE, FALSE, FALSE, '.');
+		// Set the URL for the CyberSource SOAP Toolkit API WSDL.
+		if (variable_get('uc_cybersource_server', 'test') == 'test') {
+			$url = 'https://ics2wstest.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.38.wsdl';
+		}
+		else {
+			$url = 'https://ics2ws.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.38.wsdl';
+		}
+		if (module_exists('exp_sp_callout') && calloutIsActive() &&  calloutEntityIsActive('cme_pmt_rfd')) {
+			$rfdDet = getCalloutEntityInfo('cme_pmt_rfd');
+			require_once DRUPAL_ROOT.$rfdDet["file"];
+			require_once DRUPAL_ROOT. '/sites/all/modules/core/exp_sp_core/modules/exp_sp_callout/exp_sp_callout.inc';
+
+			$modOrder = organizeOrderDetails($order);
+
+			$ordDet = new stdClass();
+			$ordDet->slt_order_id = $slt_order_id;
+			$ordDet->amount = $amount;
+			$ordDet->url = $url;
+			$ordDet->order_currency = $currency_code;
+			$res = processCalloutRefundRequest($modOrder,$ordDet);
+			expDebug::dPrint("Checking the call out process".print_r($res,true),4);
+
+			// Refund transaction Log entry.
+			processRefundTransactionLog($res);
+			return $res;
+		}
+		else{
+		$cc_type = NULL;
+  		if (isset($order->payment_details['cc_type']))
+  		{
+    		switch (strtolower($order->payment_details['cc_type']))
+    		{
+		      case 'amex':
+		      case 'american express':
+		        $cc_type = '003';
+		        break;
+		      case 'visa':
+		        $cc_type = '001';
+		        break;
+		      case 'mastercard':
+		      case 'master card':
+		        $cc_type = '002';
+		        break;
+		      case 'discover':
+		        $cc_type = '004';
+		        break;
+    		}
+  		}
+
+
+		  // Include the SOAP helper file.
+		  module_load_include('inc', 'exp_sp_payment', 'exp_sp_payment.soap');
+
+		  // Variable currency... not used atm.
+		  $currency = !empty($currency_code) ? $currency_code : 'usd';
+
+		//  $billing_country = uc_get_country_data(array('country_id' => $order->billing_country));
+		//  $delivery_country = uc_get_country_data(array('country_id' => $order->delivery_country));
+
+		    $res=new stdClass();
+  		try
+  		{
+   			 $soapClient = new CyberSourceSoapClient($url, array());
+   		     $login = _uc_cybersource_soap_login_data();
+
+		    // Create the request with some meta data.
+		     $request = new stdClass();
+		     $request->merchantID = $login['merchant_id'];
+		     $request->merchantReferenceCode = $order->order_id;
+		     $request->clientLibrary = 'PHP';
+		     $request->clientLibraryVersion = phpversion();
+		     $request->clientEnvironment = php_uname();
+
+   			 $ccCreditService = new stdClass();
+   			 expDebug::dPrint("test");
+   			 expDebug::dPrint($order,4);
+
+   			 $result=db_query("select responsexml from slt_payment_log where order_id=".$slt_order_id. " and type='CC' order by id desc limit 1");
+   			 $responsexml="";
+   			 foreach ($result as $row)
+			 {
+			 	$responsexml=urldecode($row->responsexml);
+			 }
+
+			 $pos1=strpos($responsexml,"<c:requestID>");
+			 $pos2=strpos($responsexml,"</c:requestID>");
+			 $pos1=$pos1+13;
+			 $requestId=substr($responsexml,$pos1,($pos2-$pos1));//$pos1,$pos2);
+			 expDebug::dPrint("request Id::".$requestId, 4);
+
+
+			 $pos1=strpos($responsexml,"<c:requestToken>");
+			 $pos2=strpos($responsexml,"</c:requestToken>");
+			 $pos1=$pos1+16;
+			 $requestToken=substr($responsexml,$pos1,($pos2-$pos1));//$pos1,$pos2);
+			 expDebug::dPrint("request token::".$requestToken, 4);
+
+			 $pos1=strpos($responsexml,"<c:reasonCode>");
+			 $pos2=strpos($responsexml,"</c:reasonCode>");
+			 $pos1=$pos1+14;
+			 $reasonCode=substr($responsexml,$pos1,($pos2-$pos1));//$pos1,$pos2);
+			 expDebug::dPrint("reason code for  already purchased transaction:".$reasonCode, 4);
+
+			 $ccCreditService->captureRequestID =$requestId;//"3262883067080176056442";//$data['auth_id'];// $transdetails->requestID;
+			 $ccCreditService->captureRequestToken  = $requestToken;//"Ahj//wSRYcMynAct6HD0IkGDJq0bNGTKvXlT20aFWTfsaGvzwCm/Y0NfntIGR+D7cMmkmVdHpLiShgTkWHDMpwHLehw9AAAA0REN";//$order->data['cybersource'][$data['auth_id']];// $transdetails->requestToken;
+			 $ccCreditService->run = "true";
+			 $request->ccCreditService = $ccCreditService;
+
+
+
+	        $purchaseTotals = new stdClass();
+			$purchaseTotals->currency = $currency;
+			$purchaseTotals->grandTotalAmount =$amount;
+			expDebug::dPrint('CYPERSOURCE DATAS------>'.print_r($purchaseTotals,1),4);
+
+			$request->purchaseTotals = $purchaseTotals;
+			$reply = $soapClient->runTransaction($request);
+
+
+			if($reply->reasonCode=='100')
+			{
+				$res->serviceresponse="success";
+			}
+			else
+			{
+				$res->serviceresponse="failure";
+			}
+			expDebug::dPrint( "cancel payment  status= $res->serviceresponse<br>", 4);
+			expDebug::dPrint( "decision = $reply->decision<br>" ,4);
+			expDebug::dPrint( "reasonCode = $reply->reasonCode<br>", 4 );
+			expDebug::dPrint( "requestID = $reply->requestID<br>" ,4);
+			expDebug::dPrint( "requestToken = $reply->requestToken<br>" ,4);
+			expDebug::dPrint( "ccAuthReply->reasonCode = " . $reply->ccAuthReply->reasonCode . "<br>",4);
+
+			$vLMSUserId     = getSltpersonUserId();
+	        $orderId        = $slt_order_id;
+	        $vreqxml        = urlencode($soapClient->getRequestXML());
+	        $type			= "CC_REFUND";
+	        $vrespxml       = urlencode($soapClient->mResponseXML);//urlencode($respxml);
+
+			try
+			{
+				$dao = new AbstractDAO();
+		        $dao->connect();
+		        $dao->beginTrans();
+		        $vFetchSQL ="call slp_createpayment_log('$orderId','$type','$vreqxml','$vrespxml','$vLMSUserId')";
+		        expDebug::dPrint("Cart payment log  DAO  ==>".$vFetchSQL, 4);
+
+		        $dao->execute($vFetchSQL);
+		        $dao->commitTrans();
+		        $dao->closeconnect();
+		     }catch (Exception $e)
+		     {
+				expDebug::dPrint($e);
+			 }
+		return $res;
+	 	}catch (SoapFault $exception)
+	 	{
+    		// Log and display errors if Ubercart is unable to connect via SOAP.
+   			 watchdog('uc_cybersource', 'Unable to connect to CyberSource via SOAP.', array(), WATCHDOG_ERROR);
+    		drupal_set_message(t('We apologize for the delay, but we are unable to process your credit card at this time. Please contact support team to complete your order.', array('!url' => url('contact'))), 'error');
+  		}
+		}
+
+  		}catch (Exception $ex) {
+  			watchdog_exception('refund_cc', $ex);
+  			expertusErrorThrow($ex);
+  		}
+	}
+}
+
+function exp_sp_payment_form_uc_cart_checkout_review_form_alter_(&$form, &$form_state) {
+	try{
+
+	}catch (Exception $ex) {
+  			watchdog_exception('exp_sp_payment_form_uc_cart_checkout_review_form_alter_', $ex);
+  			expertusErrorThrow($ex);
+  		}
+}
+
+
+	function refund_cc_paypal($slt_order_id,$order_id, $amount, $data,$currency_code)
+	{
+		try {
+			global $user;
+			$res=new stdClass(); 
+			$order = uc_order_load($order_id);
+			$amount = uc_currency_format($amount, FALSE, FALSE, NULL, '.');
+			
+			//module_load_include('inc', 'exp_sp_payment', 'exp_paypalflow.inc');
+			global $user;
+		  	global $base_url;
+			$order = uc_order_load($order_id);
+		  
+		   $paypal_username = variable_get('paypal_username','');
+		   $paypal_password = variable_get('paypal_password','');
+		   $paypal_merchant_id = variable_get('paypal_merchant_id','');
+		   $paypal_partner = variable_get('paypal_partner','');
+		   $paypal_server = (variable_get('paypal_server', 'test') == 'test') ? 1 : 0;
+		   
+			if (module_exists('exp_sp_callout') && calloutIsActive() &&  calloutEntityIsActive('cme_pmt_rfd')) {
+				$rfdDet = getCalloutEntityInfo('cme_pmt_rfd');
+				require_once DRUPAL_ROOT.$rfdDet["file"];
+				require_once DRUPAL_ROOT. '/sites/all/modules/core/exp_sp_core/modules/exp_sp_callout/exp_sp_callout.inc';
+					
+				$modOrder = organizeOrderDetails($order);
+					
+				$ordDet = new stdClass();
+				$ordDet->slt_order_id = $slt_order_id;
+				$ordDet->amount = $amount;
+				$ordDet->url = $url;
+				$res = processCalloutRefundRequest($modOrder,$ordDet);
+				expDebug::dPrint("Checking the call out process".print_r($res,true),4);
+					
+				// Refund transaction Log entry.
+				processRefundTransactionLog($res);
+				return $res;
+			}else {
+				expDebug::dPrint('paypal credit_transaction paypal_merchant_id - ' . $paypal_merchant_id, 5);
+				expDebug::dPrint('paypal credit_transaction paypal_partner - ' . $paypal_partner, 5);
+				expDebug::dPrint('paypal credit_transaction paypal_password - ' . $paypal_password, 5);
+				expDebug::dPrint('paypal credit_transaction paypal_server (0 for live and 1 for test) current value - ' . $paypal_server, 5);
+				
+				$payf = new payflow($paypal_merchant_id, $paypal_merchant_id, $paypal_partner, $paypal_password, $paypal_server);
+				$paypalresponse = $payf->credit_transaction( $order->data['paypal']["CC_SALE_PNREF"], $amount);
+			
+				expDebug::dPrint('paypal credit_transaction RESPMSG: ' . $paypalresponse["RESPMSG"], 5);
+				expDebug::dPrint('paypal credit_transaction PNREF: ' . $paypalresponse["PNREF"], 5);
+				expDebug::dPrint('paypal credit_transaction Error: ' . $payf->get_errors(), 5);
+				expDebug::dPrint('paypal credit_transaction RESPONSE: ' . print_r($paypalresponse, 1), 5);
+			    	
+				$requestdata = 'ORIGID='.$order->data['paypal']["CC_SALE_PNREF"].',Payment Vendor=Paypal,Type=Credit,Credit Amount='.$amount.',Currency type='.$currency_code;
+			    
+			    $paypalresponsedatastr = "PNREF=".$paypalresponse["PNREF"].",PPREF=".$paypalresponse["PPREF"].",RESULT=".$paypal_errormsg["RESULT"];
+			    
+			    	
+			   
+		   	   $vLMSUserId     = getSltpersonUserId(); 
+	           $orderId        = $slt_order_id;
+	           $vreqxml        = $requestdata;
+	           $type			= "CC_REFUND";
+	       	   $vrespxml       = $paypalresponsedatastr;
+	
+				try
+				{
+					$dao = new AbstractDAO();
+			        $dao->connect(); 
+			        $dao->beginTrans();  
+			        $vFetchSQL ="call slp_createpayment_log('$orderId','$type','$vreqxml','$vrespxml','$vLMSUserId')"; 
+			        expDebug::dPrint("Cart payment log  DAO  ==>".$vFetchSQL, 4);     
+			
+			        $dao->execute($vFetchSQL); 
+			        $dao->commitTrans();
+			        $dao->closeconnect();
+			        
+			        if($paypalresponse["RESPMSG"]=='Approved')
+					{
+						$res->serviceresponse="success";
+					}
+					else
+					{
+						$res->serviceresponse="failure";
+					}
+					return $res;
+			     }catch (Exception $e)
+			     {
+					expDebug::dPrint($e);
+				 }
+				 
+			}
+		
+		} catch(Exception $ex) {
+			watchdog_exception('paypal_refund_cc', $ex);
+  			expertusErrorThrow($ex);
+		}
+	}
+
+
+
+ function getClientIP() {
+		if (getenv('HTTP_CLIENT_IP')) {
+			$ip = getenv('HTTP_CLIENT_IP');
+		} elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+			$ip = getenv('HTTP_X_FORWARDED_FOR');
+		}
+		elseif (getenv('HTTP_X_FORWARDED')) {
+			$ip = getenv('HTTP_X_FORWARDED');
+		}
+		elseif (getenv('HTTP_FORWARDED_FOR')) {
+			$ip = getenv('HTTP_FORWARDED_FOR');
+		}
+		elseif (getenv('HTTP_FORWARDED')) {
+			$ip = getenv('HTTP_FORWARDED');
+		}
+		else {
+			$ip = $_SERVER['HTTP_HOST'];
+		}
+		return $ip;
+	}
+?>

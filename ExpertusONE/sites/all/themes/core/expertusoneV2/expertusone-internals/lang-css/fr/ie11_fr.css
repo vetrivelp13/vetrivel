@@ -1,0 +1,82 @@
+#edit-panes-payment-payment-method{
+  width: 46%
+}
+/*#custom_attribute_0078975*/
+.page-administration-manage-customattribute #page-container .narrow-search-actionbar-list #create-dd-list{
+  margin-left: -19px
+}
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .customattribute-basic-addedit-form-container .addedit-edit-cattr_display_opt, #customattribute-basic-addedit-form-disp .custom_attr_radio .customattribute-basic-addedit-form-container .addedit-edit-cattr_display_opt {
+    width: 90px;
+}
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .customattribute-basic-addedit-form-container .addedit-twocol-secondcol .addedit-new-field-title, #customattribute-basic-addedit-form-disp .custom_attr_radio .customattribute-basic-addedit-form-container .addedit-twocol-secondcol .addedit-new-field-title {
+    width: 98px;
+}
+.page-cart-checkout-paymethod  #uc-cart-checkout #payment-pane #payment-details{
+  width: 51%
+}
+#payment-details .order-edit-table .oet-label{
+  width:26%
+}
+.commerce-container-v2 .payment-billing-details-info{
+  width:44.5%
+}
+#page-container #myskill-parent .skill-text-box{
+  min-width:247px
+}
+input.attach-browse-hid {
+  left:55px
+}
+.qtip-content #bubble-face-table #attachment-addedit-form-html .attach-browse-hid {
+  left:50px
+}
+#schedule-qtip-popup .schedule-exportcontainer-page{
+  right:150px
+}
+#schedule-qtip-popup .schedule-list-wrapper .page-pipeline{
+  right:148px
+}
+#schedule-qtip-popup .schedule-list-wrapper .datagrid-items-list .ui-jqgrid-toppager .ui-pager-control .ui-pg-table{
+  left:214px
+}
+body.page-learning-myteam-search .search-record-paint .myteam-learning-btn{
+  margin-right:12px
+}
+#catalog-class-basic-addedit-form-container .assess-attach-grid-wrapper .enrolled-status ul.sub-menu{
+  right:266px
+}
+.page-learning-enrollment-search #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .mylearning-filter-by .filter_labelclass{
+	width :104px;
+}
+.page-learning-enrollment-search #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .mylearning-filter-by .reg.dropdown-set-wrapper .filter_labelclass,
+.page-learning-enrollment-search #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .mylearning-filter-by .textfilter-set-wrapper .filter_labelclass,
+.page-learning-enrollment-search #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .mylearning-filter-by .assignedby.dropdown-set-wrapper .filter_labelclass {
+	width:95px;
+}
+#page-container #myprograms-mylearning-filter-by .reg.dropdown-set-wrapper .filter_labelclass,
+#page-container #myprograms-mylearning-filter-by .textfilter-set-wrapper .filter_labelclass, 
+#page-container #myprograms-mylearning-filter-by .assignedby.dropdown-set-wrapper .filter_labelclass {
+  width: 96px;
+}
+#page-container #myprograms-mylearning-filter-by .reg.dropdown-set-wrapper,
+#page-container #myprograms-mylearning-filter-by .textfilter-set-wrapper, 
+#page-container #myprograms-mylearning-filter-by .assignedby.dropdown-set-wrapper {
+ width: 246px;
+} 
+/* My Learning(My Enrollments) styles End */
+/*#custom_attribute_0078975*/
+#customattribute-basic-addedit-form-container #admin-save-screen-button {
+	margin-left: 0
+}
+.page-administration-manage #carousel_container #carousel_inner {
+	width: 451px
+}
+#instructor-markcomplete-dialog .expertusV2PopupContainer #mark-complete-wizard .mark-complete-wizard-popup-label input,
+#instructor-markcomplete-dialog #mark-complete-wizard .markcompletion-attendance-fields td input{
+	margin-left : 6px;
+}
+.page-learning-my-account  #page-container #learner-myaccount-details .content #exp-sp-my-account-form .my-account-action-box{
+  margin-left:321px
+}
+.page-learning-my-account #page-container #learner-myaccount-details #wizard-form-wrapper .pref-save-cancel-container-alignment{
+  margin-left:239px
+}

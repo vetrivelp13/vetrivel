@@ -1,0 +1,2451 @@
+#webanalytics-admin-form .addedit-form-cancel-container-actions {
+  margin-right: 0
+}
+#webanalytics-admin-form .admin-save-button-container {
+  margin: 0 0 0 10px
+}
+#webanalytics-admin-form .addedit-left-col {
+  padding:20px 15px 10px;
+  width:auto;	
+  background:#FFF	
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field {
+  padding:0 0 5px 0
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field-title {
+  width:120px;
+  padding:3px 5px 5px 0;
+  line-height:14px
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .expertus-dropdown-bg {
+  overflow:hidden;
+  margin:2px 0;
+  height:18px
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-edit-textfield {
+  width:221px;
+  border: 1px solid #e5e5e5;
+  padding: 2px 0 2px 5px;
+  height: 14px
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .addedit-edit-dropdown {
+  width:250px;
+  height:18px;
+  line-height:18px;
+  color:#333;
+  font-family:openSansRegular, Arial;
+  font-size:12px;
+  font-weight:normal;
+  padding:0 0 2px 5px;
+  border-radius:10px
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .addedit-edit-googleanalytics_roles.addedit-edit-dropdown {
+ width: 228px
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .form-textarea-wrapper {
+  width: 228px;
+  padding: 0
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value textarea.addedit-edit-textarea {
+  background:#FFF;
+  border: 1px solid #e5e5e5;
+  border-radius:10px;	
+  font-family:openSansRegular, Arial;
+  font-size:12px;
+  font-weight:normal;
+  margin:2px 0;	
+  padding:0 0 2px 5px;
+  line-height:18px
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value textarea.addedit-edit-textarea {
+  min-width:228px;
+  max-width:228px;
+  overflow:hidden
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .exp-googleanalytics-roles-error {
+  border: 1px solid #fc4646;
+  border-radius:10px
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .form-type-select .ui-multiselect {
+  width:228px
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .form-type-select .ui-multiselect .ui-icon {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/select_icon.png) no-repeat 0 -1px #FFF;
+  height: 20px;
+  margin-right: 0px;
+  width: 20px;
+  position:absolute;
+  right:0;
+  top:0
+}
+#webanalytics-admin-form .expertus-dropdown-icon {
+  width:228px;
+  height:19px		
+}		
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .exp-googleanalytics-roles-error .ui-multiselect {
+  border: none
+}
+.page-administration-sitesetup-moduleinfo #webanalytics-admin-form .addedit-new-field-value {
+  padding:0;
+  float:right
+}
+.page-administration-sitesetup-moduleinfo #webanalytics-admin-form .addedit-left-col .form-item {
+  margin:0
+}
+.page-administration-sitesetup-moduleinfo #webanalytics-admin-form .addedit-form-cancel-and-save-actions-row {
+  margin:10px 0 0;
+  width:auto 
+}
+#pwdpolicy-admin-form .addedit-left-col {
+  padding:20px 15px 10px;
+  width:auto;	
+  background:#FFF;	
+  float:none
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field {
+  padding:0 0 5px 0
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field-title {
+  width:139px;
+  padding:3px 5px 5px 0;
+  line-height:14px
+}
+.page-administration-sitesetup-moduleinfo #pwdpolicy-admin-form .addedit-new-field-value {
+  padding:0;
+  float:left
+}
+.page-administration-sitesetup-moduleinfo #pwdpolicy-admin-form .addedit-left-col .form-item {
+  margin:1px 0
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .addedit-edit-pwdpolicy-name {
+  border: 1px solid #e5e5e5;
+  height: 14px;
+  padding:2px 0 2px 5px;
+  width: 401px
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .form-item-pwdpolicy-description-value {
+  width: 407px
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .catalog-desc-count {
+  font-family:openSansRegular, Arial;
+  font-size:9px;
+  color:#333
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field-two-col {
+  width: 100%;
+}
+#pwdpolicy-admin-form .addedit-twocol-firstcol {
+  width:50;
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field-two-col .addedit-new-field-title {
+  padding:5px 5px 5px 0
+}
+#pwdpolicy-admin-form .addedit-firstcol-field-value {
+  padding:0;
+  float:right
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field-two-col .addedit-edit-textfield {
+  width: 124px;
+  border: 1px solid #e5e5e5;
+  height: 14px;
+  padding:2px 0 2px 5px
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field-two-col .pwdpolicy-help-text {
+  font-size: 9px
+}
+#pwdpolicy-admin-form .addedit-twocol-secondcol {
+  width:auto;
+  float:right;
+  margin:0
+}
+#pwdpolicy-admin-form .addedit-secondcol-field-value {
+  padding:0  
+}
+.page-administration-sitesetup-moduleinfo #pwdpolicy-admin-form .addedit-form-cancel-and-save-actions-row {
+  margin:10px 0 0;
+  width:auto 
+}
+#pwdpolicy-admin-form .addedit-form-cancel-container-actions {
+  margin:0
+}
+#pwdpolicy-admin-form .admin-save-button-container {
+  margin:0 0 0 10px
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field-two-col .has-suffix .addedit-firstcol-field-value-suffix {
+  float: left;
+  padding: 5px 0 0 5px
+}
+#pwdpolicy-admin-form .crs-tab-titles-container {
+  margin: 0;
+  left: 160px;
+  position: absolute;
+  bottom: 15px
+}
+#pwdpolicy-admin-form .crs-tab-titles-container .add-pwdstrength-tab-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png) no-repeat -139px -537px;
+  height: 20px;
+  width: 20px;
+  margin-right:3px
+}
+#pwdpolicy-admin-form .crs-tab-titles-container .tab-title {
+  color: #2D2D2D;
+  cursor: pointer;
+  font-family: openSansRegular, Arial;
+  font-size: 12px;
+  font-weight: normal;
+  text-decoration: none;
+  vertical-align: top
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field-two-col .exp-pwdpolicy-roles-error {
+  border: 1px solid #fc4646
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field-two-col .form-type-select .ui-multiselect {
+  background: none;
+  border: 1px solid #e5e5e5;
+  height: 22px;
+  padding-left: 2px
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field-two-col .form-type-select .ui-multiselect .ui-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png) no-repeat -116px 1px;
+  height: 12px;
+  margin-right: 1px;
+  width: 12px
+}
+#pwdpolicy-admin-form .addedit-left-col .addedit-new-field-two-col .exp-pwdpolicy-roles-error .ui-multiselect {
+  border: none
+}
+#pwdpolicy-admin-form .addedit-left-col #two-col-row-pwdpolicy-warning-empty {
+  margin-top: -10px
+}
+#pwdpolicy-admin-form .crs-tab-titles-container .pwdstrength-admin-popup #bubble-face-table #show_expertus_message {
+  margin-left: 10px
+}
+#pwdpolicy-admin-form .crs-tab-titles-container .pwdstrength-admin-popup .qtip-close-button {
+  right: 0
+}
+#pwdpolicy-admin-form .crs-tab-titles-container .tab-title-disabled {
+  color: #999;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 26px;
+  text-decoration: none
+}
+#pwdpolicy-admin-form #pwdstrength-admin-form .addedit-left-col {
+	padding: 10px 14px 5px
+}
+#pwdstrength-admin-form .addedit-left-col .pwdstrength-admin-form-fields {
+	height: 320px;
+	width:100%
+}
+#pwdstrength-admin-form .addedit-left-col .pwdstrength-admin-form-fields .addedit-new-field-title-hint {
+	font-size: 10px;
+	color: #777
+}
+#pwdstrength-admin-form .addedit-left-col .pwdstrength-admin-form-fields .addedit-edit-textfield {
+	width: 50px
+}
+#pwdstrength-admin-form .addedit-left-col .pwdstrength-admin-form-fields .addedit-new-field-title {
+  width: auto;
+  display: block;
+  float: none;
+  padding: 0;
+  font-family:proximanovabold, arial;
+  font-size:12px;
+  font-weight:normal
+}
+#pwdstrength-admin-form .addedit-left-col .pwdstrength-admin-form-fields .addedit-new-field-title-wrapper {
+  display: block;
+  float: left;
+  padding: 5px 5px 5px 0;
+  position: relative;
+  width:84%
+}
+#pwdstrength-admin-form .addedit-left-col .pwdstrength-admin-form-fields .addedit-new-field-value {
+  margin-top:1px
+}
+#pwdstrength-admin-form .addedit-left-col .pwdstrength-admin-form-fields .addedit-edit-pwdstrength-username {
+  margin-left: 0;
+  height: 10px
+}
+#pwdstrength-admin-form .addedit-form-cancel-container-actions {
+  margin-right: 0;
+  margin-top: 5px
+}
+.page-administration-sitesetup-moduleinfo #pwdpolicy-admin-form #pwdstrength-admin-form .addedit-form-cancel-and-save-actions-row {
+  margin:5px 0 0;
+  width:auto; 
+  border-top:1px solid #e5e5e5
+}
+#pwdpolicy-admin-form #pwdstrength-admin-form .checkbox-selected {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/menu_bg1.png) no-repeat -0px -448px;
+  width:10px;
+  height:15px;
+  float:left;
+  margin:3px 0 0 22px;
+  padding:0px;
+  cursor:pointer
+}  
+#pwdpolicy-admin-form #pwdstrength-admin-form .checkbox-unselected {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/menu_bg1.png) no-repeat -0px -435px;
+  width:10px;
+  height:15px;
+  float:left;
+  margin:2px 0 0 22px;
+  padding:0px;
+  cursor:pointer
+}
+#pwdpolicy-admin-form #pwdstrength-admin-form .checkbox-selected input {
+  opacity:0;
+  filter:Alpha(Opacity=0);
+  width:10px;
+  height:10px;
+  cursor:pointer;
+  outline:none;
+  margin:0
+}
+#pwdpolicy-admin-form #pwdstrength-admin-form .checkbox-unselected input {
+  opacity:0;
+  filter:Alpha(Opacity=0);
+  width:10px;
+  height:10px;
+  cursor:pointer;
+  outline:none;
+  margin-left:0
+}
+.password-policy-admin-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -66px -444px;
+  height: 54px;
+  margin-top: 0;
+  width: 54px
+}
+.web-analytics-admin-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -4px -444px;
+  height: 54px;
+  margin-top: 0;
+  width: 54px
+}
+.ldap-admin-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -127px -444px;
+  height: 54px;
+  margin-top: 0;
+  width: 54px
+}
+.userpoint-admin-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -188px -444px;
+  height: 54px;
+  margin-top: 0;
+  width: 54px
+}
+.commerce-admin-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -369px -623px;
+  height: 54px;
+  margin-top: 0;
+  width: 54px
+}
+.rating-admin-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -338px -683px;
+  height: 54px;
+  margin-top: 0;
+  width: 54px
+}
+.chat-admin-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -308px -623px;
+  height: 54px;
+  margin-top: 0;
+  width: 54px
+}
+.audit-admin-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -248px -623px;
+  height: 54px;
+  margin-top: 0;
+  width: 54px
+}
+.esign-admin-icon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -400px -683px;
+  height: 54px;
+  margin-top: 0;
+  width: 54px
+}
+.userreg-admin-icon {
+   background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -247px -501px;
+   height: 54px;
+   margin-top: 0;
+   width: 54px;
+}
+.admincal-admin-icon {
+   background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -89px -843px;
+   height: 54px;
+   margin-top: 0;
+   width: 54px;
+}
+.contentAut-admin-icon {
+   background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/content_author_module_icon.png) no-repeat ;
+   height: 54px;
+   margin-top: 10px;
+   width: 54px;
+}
+
+.video-stream-icon{
+   background: url("/sites/default/files/images/defaulticon/Video.png") no-repeat ;
+   height: 54px;
+   margin-top: 0;
+   width: 54px;
+   background-size: contain;	
+}
+#ldap-basic-addedit-form {
+  float:none		
+}
+#ldap-basic-addedit-form .addedit-left-col {
+  padding: 20px 15px 10px;
+  width:auto;
+  background:#fff
+}
+#ldap-basic-addedit-form .addedit-new-field {
+  clear: both;
+  width: auto; 
+  float: none;
+  padding:0 0 5px
+}
+#ldap-basic-addedit-form .addedit-new-field .addedit-new-field-title {
+  width: 142px;
+  padding:3px 5px 5px 0;
+  line-height:14px;
+  text-align:left
+}
+#ldap-basic-addedit-form .addedit-new-field .addedit-new-field-value,
+#ldap-basic-addedit-form .addedit-secondcol-field-value,
+#ldap-basic-addedit-form .addedit-firstcol-field-value {
+  padding:0;
+  margin:0
+}
+.page-administration-sitesetup-moduleinfo #ldap-basic-addedit-form .addedit-left-col .form-item {
+  margin:1px 0
+}
+#ldap-basic-addedit-form .addedit-new-field-two-col input.addedit-edit-textfield {
+  width:180px;
+  padding:2px 0 2px 5px;
+  height:14px;
+  border:1px solid #e5e5e5
+}
+#ldap-basic-addedit-form .addedit-new-field-two-col .form-item-ldap-type .form-select,
+#ldap-basic-addedit-form .addedit-new-field-two-col .form-item-authenticationMode .form-select,
+#ldap-basic-addedit-form .addedit-new-field-two-col .form-item-ldapImplementation .form-select,
+#ldap-basic-addedit-form .addedit-new-field-two-col .form-item-cookieExpire .form-select {
+  width: 206px;
+  cursor:pointer;	
+  color:#333;
+  font-family:openSansRegular, Arial;
+  font-size:12px;
+  font-weight:normal;
+  height:20px;
+  padding:0 0 0 5px;
+  margin-top:0
+}
+#ldap-basic-addedit-form .addedit-left-col .addedit-new-field .addedit-firstcol-field-value .form-type-select .ui-multiselect {
+  width:189px
+}
+#ldap-basic-addedit-form .admin-save-button-container {
+  margin:0 0 0 5px
+}
+#ldap-basic-addedit-form #edit-status {
+  width: 150px
+}
+#ldap-basic-addedit-form .addedit-twocol-secondcol {
+  float:right;
+  padding-right:0
+}
+#ldap-basic-addedit-form .addedit-twocol-secondcol .addedit-new-field-title {
+  width: 90px
+}
+#ldap-basic-addedit-form .addedit-firstcol-field-value {
+  margin-top:0  	
+}
+#ldap-basic-addedit-form .addedit-pwd-fields-set-lcol {
+  width: auto
+}
+#ldap-basic-addedit-form textarea.addedit-edit-textarea {
+  width: 506px;
+  border:1px solid #e5e5e5
+}
+#ldap-basic-addedit-form input.addedit-edit-textfield {
+  width: 524px;
+  border:1px solid #e5e5e5;
+  height: 14px;
+  padding:2px 0 2px 5px
+}
+#ldap-basic-addedit-form textarea.addedit-edit-textarea {
+  height:24px;
+  line-height: 18px
+}
+#ldap-basic-addedit-form  .addedit-form-cancel-container-actions {
+  margin-right: 0
+}
+#ldap-basic-addedit-form .addedit-new-field-two-col input.addedit-edit-ac-textfield {
+  width:188px;
+  background-position: 100% 3px;
+  height: 18px;
+  padding: 0
+}
+#ldap-basic-addedit-form .addedit-new-field-two-col input.ac_loading {
+  background-position: 100% -18px;
+}
+#ldap-basic-addedit-form .addedit-new-field-two-col input.addedit-edit-dropdown {
+  width:188px;
+  margin:0;
+  padding:0;
+  height:18px
+}
+#ldap-basic-addedit-form .form-type-select select{
+  height: 22px
+}
+#ldap-basic-addedit-form .separator{
+  border-bottom: 1px dotted #CCCCCC;
+  margin: 8px 2px 8px 0
+}
+#ldap-basic-addedit-form .addedit-edit-dropdown {
+  width: 194px
+}
+#ldap-basic-addedit-form .addedit-edit-sso.addedit-edit-dropdown {
+  width: 189px
+}
+#ldap-basic-addedit-form .addedit-left-col .addedit-new-field .addedit-firstcol-field-value .form-type-select .ui-multiselect span.ui-icon {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/select_icon.png) no-repeat 0px -1px #FFF;
+  height: 20px;
+  margin-right: 0px;
+  width: 20px;
+  position:absolute;
+  right:0;
+  top:1px
+}
+.ui-multiselect-menu .ui-multiselect-checkboxes li label span {
+  font-size:12px
+}
+.theme-ctool-popup #ldap-basic-addedit-form .addedit-new-field-two-col .expertus-dropdown-bg,
+.theme-ctool-popup #ldap-basic-addedit-form .addedit-new-field-two-col .expertus-dropdown-icon  {
+  width: 189px;
+  margin-top:1px;		
+  height:22px
+}
+.theme-ctool-popup .addedit-new-field-two-col .expertus-dropdown-bg {
+  border-radius:10px; 
+  overflow:hidden
+}
+#ldap-basic-addedit-form .addedit-form-cancel-and-save-actions-row{
+  margin: 10px 2px 0 0 ;
+  width:auto
+}		 
+#ldap-basic-addedit-form .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-and-save-actions {
+  margin-right: 45px
+}
+#ldap-basic-addedit-form .addedit-form-cancel-and-save-actions .addedit-edit-cancel {
+  margin-right: 10px
+}
+#ldap-basic-addedit-form .addedit-form-cancel-and-save-actions{
+  margin-right: 41px
+}
+#ldap-basic-addedit-form .addedit-edit-cancel{
+  margin-right: 10px
+}
+#ldap-basic-addedit-form .addedit-form-cancel-container-actions{
+  float: right
+}
+#ldap-basic-addedit-form .admin-save-button-container {
+  margin-bottom: 0
+}
+#ldap-basic-addedit-form .form-item textarea.error, #ldap-basic-addedit-form .form-item input.error {
+  border: 2px solid red
+}
+.enable-configure-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -339px -185px;
+  height: 20px;
+  width: 20px
+}
+.disable-configure-icon {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -339px -185px;
+  height: 20px;
+  width: 20px
+}
+#page-container .admin-module-info .narrow-search-results-item-details {
+  padding-top: 2px
+}
+#page-container .admin-module-info .setting-disable-edit-icon{
+  margin-top: -3px
+}
+.page-administration-sitesetup-moduleinfo #page-container .enable-edit-icon {
+  background-position:-339px -187px
+}
+.page-administration-sitesetup-moduleinfo div #message-container {
+  width: 94%
+}
+.page-administration-sitesetup-moduleinfo .narrow-search-results-item-description .item-elipsis {
+  padding-left:2px;
+  padding-right:5px
+}
+.page-administration-sitesetup-moduleinfo .narrow-search-results-item-description .item-long-desc {
+  padding-right:5px
+}
+.page-administration-sitesetup-moduleinfo .narrow-search-results-item-description span.more-text {
+  width:15px;
+  height:20px;
+  vertical-align:middle;
+  line-height:8px
+}
+.page-administration-sitesetup-moduleinfo .narrow-search-results-item-description span.more-text a.show-short-text {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -400px -10px;
+  padding:0;
+  height:10px
+}
+.page-administration-sitesetup-moduleinfo .narrow-search-results-item-description span.more-text a.show-full-text {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -400px -2px;
+  padding:0;
+  height:10px
+}
+#page-container tr.ui-widget-content > td > div.narrow-search-results-item-details > div:first-child span a.narrow-search-results-item-title {
+  padding:2px 3px 0 0
+}
+.page-administration-sitesetup-moduleinfo .ui-multiselect {
+  background: -ms-linear-gradient(#fafafa,#e9e9e9);/*For IE10*/
+  background: linear-gradient(#fafafa,#e9e9e9);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#fafafa', endColorstr='#e9e9e9'); /*For IE7-8-9*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fafafa, endColorstr=#e9e9e9)";
+  color: #333;
+  display:block;
+  overflow:hidden;
+  height: 20px;
+  padding: 0 0 0 5px;
+  font-size: 12px;
+  font-weight: normal;
+  font-family:openSansRegular, Arial; 
+  position:relative;
+  border-radius: 10px 4px 4px 10px;
+  border:1px solid #e5e5e5;
+  border-right:0;
+}
+
+/*training icons start here*/
+#ticon-basic-addedit-form .addedit-left-col {
+    width: 91.5%; 
+    padding: 12px 16px 0;
+}
+#ticon-basic-addedit-form .ticon-edit-rows {
+  float:left;
+  padding-left:0;
+  width:100%
+}
+.ticon-admin-icon{
+  background: url("/sites/default/files/images/training.png") no-repeat ;
+   height: 54px;
+   margin-top: 0;
+   width: 54px;
+   background-size: contain;
+}
+
+.addedit-left-col
+#ticon-basic-addedit-form .addedit-new-field-title {
+  padding: 21px 0px 0px 0px;
+  height: 24px;
+  width: 73px;
+  font-family:openSansRegular, Arial;
+  font-size:13px;
+  color:#474747;
+  line-height:20px;
+}
+.ticon-edit-rows .addedit-new-field .addedit-twocol-firstcol{
+ width: 270px;
+ float:left;
+ display:block 
+}
+.ticon-edit-rows .addedit-new-field .addedit-twocol-firstcol .addedit-new-field-title {
+   width:90px;
+   font-family:openSansRegular, Arial;
+   font-size:12px;
+   color:#474747;
+   line-height:50px;
+   padding:0
+}
+.ticon-edit-rows .addedit-firstcol-field-value {
+    width:180px;
+    float:left;
+    padding:0
+}
+#ticon-basic-addedit-form .addedit-new-field-two-col .addedit-edit-textfield {
+    width:130px;
+}
+#ticon-basic-addedit-form .form-type-radio{
+    height:50px;
+}
+#ticon-basic-addedit-form .form-type-radio .addedit-edit-radioset{
+  float:left;
+  height:50px;
+  margin-left:0;
+  margin-right:8px;
+  margin-top:0
+}
+#ticon-basic-addedit-form .form-type-radio .form-radio + label.option {
+   line-height:50px;
+   font-family:openSansRegular, Arial;
+   font-size:12px;
+   color:#474747;
+   margin-right:0;
+   height:50px;
+   top:auto
+}
+#ticon-basic-addedit-form .addedit-twocol-secondcol {
+    width:84px;
+    float:right;
+    display:block
+}
+#ticon-basic-addedit-form .addedit-twocol-secondcol .addedit-new-field-title {
+  display: none;
+}
+
+#ticon-basic-addedit-form .addedit-twocol-secondcol .addedit-secondcol-field-value {
+    margin-top: 14px;
+    width:100%
+}
+#ticon-basic-addedit-form .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions .admin-save-button-container {
+    margin: 0 0 5px 10px;
+}
+
+#ticon-basic-addedit-form .addedit-new-field-two-col .addedit-edit-dropdown {
+    width: 130px;
+}
+#ticon-basic-addedit-form .addedit-new-field-value {
+  height: 23px;        
+  line-height: 24px
+}
+#ticon-basic-addedit-form .addedit-new-field-value .expertus-dropdown-icon {
+  line-height: 20px    
+}
+#ticon-basic-addedit-form .addedit-new-field {
+  padding-bottom: 5px;
+  clear:both;
+  width:100%;
+  padding-top:5px
+}
+#ticon-basic-addedit-form .addedit-edit-saml_e1_acs_url{
+  width:326px
+}
+
+#ticon-basic-addedit-form  .expertus-dropdown-icon{
+  width:346px
+}
+#ticon-basic-addedit-form .addedit-form-cancel-container-actions {
+  margin-top: 12px;
+}
+#ticon-basic-addedit-form .addedit-form-cancel-and-save-actions-row {
+  margin-top:10px
+}
+#ticon-basic-addedit-form .white-btn-bg-right{
+  margin-right:5px
+}
+
+#ticon-basic-addedit-form .addedit-firstcol-field-value .addedit-form-wrapper .form-type-radio label {
+    font-size: 13px
+}
+
+#ticon-basic-addedit-form .addedit-secondcol-field-value{
+
+}
+
+#ticon-basic-addedit-form .addedit-form-wrapper .form-type-radio label {
+    font-size:12px
+}
+
+#ticon-basic-addedit-form .addedit-new-field-value, 
+.addedit-firstcol-field-value, 
+.addedit-secondcol-field-value {
+    padding: 1px 1px 1px 0;
+    width: 138px;
+}
+
+#ticon-basic-addedit-form  #two-col-row-other_url_region .addedit-new-field-title{
+  display:none;
+}
+
+#ticon-basic-addedit-form #two-col-row-other_url_region .addedit-firstcol-field-value{
+       margin-top: -46px;
+       margin-left: 185px; 
+}
+#ticon-basic-addedit-form .addedit-new-field-two-col {
+    width:100%;
+}
+
+#ticon-basic-addedit-form #two-col-row-other_url_region .addedit-firstcol-field-value .addedit-edit-textfield {
+    width: 64px;
+}
+
+#ticon-basic-addedit-form #two-col-row-other_url_region .addedit-secondcol-field-value{
+ margin-right: -62px;
+ margin-top: -27px; 
+}
+
+#ticon-basic-addedit-form #two-col-row-other_url_region .addedit-secondcol-field-value .addedit-edit-textfield{
+    width: 67px;
+}
+#ticon-basic-addedit-form .container-inline .form-item {
+    margin-right: 0;
+}
+#ticon-basic-addedit-form .addedit-secondcol-field-value .form-type-file {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/btn_fileUpload.png") 100% 0 no-repeat;
+  width:64px;
+  float:left;
+  margin:0
+}
+#ticon-basic-addedit-form input.addedit-edit-file-upload {
+ font-size:12px;
+ width:100%;
+ opacity:0;
+ height:21px
+}
+
+#ticon-basic-addedit-form .delivery_icon_del {
+  width:9px;
+  margin:20px 0 0 0;
+}
+#ticon-basic-addedit-form .form-item-files-learningplan-enrollment-upload-file {
+   
+}
+#ticon-basic-addedit-form .option {
+    height: 52px;
+    float:left
+}
+#ticon-basic-addedit-form .course-training-icons-text {
+    color: #ccc;
+    display: block;
+    float: left;
+    font-family: opensansregular, Arial;
+    font-size: 10px;
+    font-weight: normal;
+    padding-right: 0;
+    text-align: left;
+    width: 115px;
+}
+
+#ticon-basic-addedit-form .helptext {
+    color:#666;
+    display: block;
+    float: left;
+    font-family:openSansRegular, Arial;
+    font-size: 9px;
+    font-weight: normal;
+    padding-right: 0;
+    text-align: left;
+    padding-left: 1px;
+    width:84px;
+    margin-top:-3px
+}
+.ticon-edit-rows .addedit-new-field .form-type-radios {
+  margin:0
+}  
+.ticon-edit-rows .addedit-new-field .form-type-radios .form-type-radio {
+  width:90px;
+  margin:0  
+}
+
+
+
+
+/* IP Ranges Css*/
+#iprange-admin-form .iprange-added-edit-link-text {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -336px -186px;
+    color: transparent;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 20px;
+    margin: 4px 0 0 1px;
+    width: 22px;
+}
+#iprange-admin-form .session-edit-delete-icons{
+    float: left;
+    padding: 2px;
+    width: 2px;
+}
+.iprange-edit-delete-icons {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -336px -181px;
+    color: transparent;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 20px;
+    margin: 4px 0 0 1px;
+    width: 22px;
+}
+.admin-addedit-iprange-details-wrapper tr td {
+    color: #000;
+    font-size: 12px;
+    text-align:left;
+    padding-bottom:0.2em;
+    font-family: openSansRegular,Arial;
+    font-weight: normal;
+}
+#show_ip_detail_message {
+    left: 0;
+    /*margin-left: auto;*/
+    margin-left:100px;
+    margin-right: auto;
+    min-height: 11px;
+    position: absolute;
+    right: 0;
+    margin-top: -10px;
+}
+#iprange-admin-form .ui-widget-content {
+    background: none;
+    border: none;
+    color: #222222;
+    margin-left:9px;
+}
+ .form-item-end-ip, .form-item-start-ip, .form-item-ip-category {
+	margin-bottom: 0;
+    margin-top: 0;
+}
+.expertus-dropdown-icon .form-item .form-type-select .form-item-ip-category {
+	margin-top:0.1em;
+}
+.admin-save-button-container1 {
+    float: right;
+    margin: 0 3px;
+}
+.addedit-form-cancel-container-actions-ip{
+	float: none;
+}
+.admin-datagrid-pagination .active-qtip-div tr td {
+	padding-left:0px;
+}
+div.ctools-modal-content .admin-addedit-iprange-details-wrapper .form-item label {
+	font-size: 12px;
+    text-align: left;
+    width: 105px;
+    font-family: openSansRegular,Arial;
+}
+div.iprange-add-another-popup-container {
+	font-family:ProximaNovaBold,Arial;
+}
+div.iprange-add-another-popup-container .addedit-form-cancel-container-actions-ip a.add-custombtn-symbol {
+	background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -493px -233px;
+    font-size: 11px;
+    height: 20px;
+    line-height: 22px;
+    padding-left: 8px;
+    padding-top: 0;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-left:10px;
+}
+#qtip_visible_disp_addsession_iprange {
+	margin: 0 auto;
+	width: 67px;
+}
+#iprange-details-fieldset-wrapper-iprange1 {
+	/* margin-left: 2px; */ 
+}
+.form-item-ip_category-list {
+	float: left;
+	width: 105px;
+}
+ .bottom-qtip-tip {
+  background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll right -1558px;
+  height: 40px;
+  width: 49px;
+}
+.bottom-qtip-tip-up {
+  background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll right -1558px;
+  height: 52px;
+  width: 64px;
+  z-index: 100;
+}
+#admin-data-grid .admin-datagrid-pagination .addedit-form-cancel-container-actions #add-iprange-details .admin-save-button-container  {
+	margin: 0px;
+}
+.crt-paint-ip_category {
+	/* margin-top:0.2px; */
+	margin-top:3.2px;
+}
+.crt-paint-ip_category .expertus-dropdown-bg {
+	 width: 230px;
+}
+.ctrDropDown123, .ctrDropDownClick123 {
+	width: 230px;
+}
+.admin-addedit-iprange-details-wrapper {
+  padding:10px 0;
+  /* width:99.3% */
+  width:100%;
+}
+.admin-datagrid-pagination .admin-datagrid-add-btn-wrapper-container_ip {
+	height: auto;
+    margin: 0 auto;
+    position: absolute;
+    text-align: center;
+    top: 168px;
+    width: 100%;
+	/* top:75px; */
+	top:49px;
+	right:0;
+}
+.add_iprange_popup{
+	width:100%;
+}
+.iprange-form-text {
+	width:230px;
+}
+.iprange-admin-icon{
+  background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -89px -785px;
+   height: 53px;
+   margin-top: 0;
+   width: 53px;
+}
+#ip_range_search_container .ip_add_multi_search_container
+{
+	padding-top:10px;
+	padding-bottom:0px;
+	padding-left:10px;
+	width:60%;
+}
+#ip_range_search_container .ip_admin_add_multi_auto_search
+{
+background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+border: 0 none;
+float: left;
+font-size: 11px;
+height: 24px;
+line-height: 28px;
+outline: medium none;
+padding-left: 0;
+width: 167px;
+}
+#ip_range_search_container #ip_search-dropdwn-list
+{
+	width:50px;
+}
+#ip_range_search_container .ip_select-list-dropdown
+{
+background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+border: 0 none;
+color: #474747;
+float: left;
+font-family: ProximaNovaBold,Arial;
+font-size: 12px;
+height: 24px;
+line-height: 23px;
+padding: 0;
+text-align: left;
+text-transform: uppercase;
+width:81px;
+}
+#ip_range_search_container .admin_add_multi_auto_search #listvalues-autocomplete
+{
+	width:154px;
+}
+
+#ip_range_search_container .admin_add_multi_auto_search #search_listvalues
+{
+	float:right;
+}
+/* End IP Ranges Css*/
+
+/* Start of Webex CSS */
+ .webex-admin-icon{
+	background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -30px -898px;
+    height: 53px;
+    margin-top: 0;
+    width: 53px;
+}
+.info-icon {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -135px -602px;
+    height: 18px;
+    margin-top: 6px;
+    width: 18px;
+    margin-left: 90px;
+}
+.webex-type{
+	margin-top:-6px;
+}
+
+/* End of Webex CSS  */
+/* custom attribute CSS #custom_attribute_0078975 */
+ .customattribute-admin-icon{
+	background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -83px -1116px;
+    height: 53px;
+    margin-top: 0;
+    width: 57px;
+    margin-left:-5px;
+}
+
+.saml-admin-icon{
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -399px -564px;
+  height: 53px;
+  margin-top: 0;
+  width: 53px
+}
+#saml-basic-addedit-form .addedit-new-field-title {
+  padding: 0px 5px 0px 16px;
+  height: 23px;
+  line-height: 24px;
+  width: 225px
+}
+#saml-basic-addedit-form .addedit-new-field-value {
+  /*height: 23px;*/
+  line-height: 24px
+}
+#saml-basic-addedit-form .addedit-new-field-value .expertus-dropdown-icon {
+  line-height: 20px	
+}
+#saml-basic-addedit-form .addedit-new-field {
+  padding-bottom: 5px	
+}
+#saml-basic-addedit-form .addedit-edit-saml_e1_acs_url{
+  width:326px
+}
+#saml-basic-addedit-form .addedit-edit-dropdown {
+  width: 347px
+}
+#saml-basic-addedit-form  .expertus-dropdown-icon{
+  width:329px
+}
+#saml-basic-addedit-form .addedit-form-cancel-container-actions {
+  margin-right: 18px
+}
+#saml-basic-addedit-form .addedit-form-cancel-and-save-actions-row {
+  float:left
+}
+#saml-basic-addedit-form .white-btn-bg-right{
+  margin-right:5px
+}
+.saml-edit-rows{
+  padding-top:21px
+}
+#saml-basic-addedit-form .addedit-new-field-value input{
+  width:326px;
+  height: auto;
+  line-height: 17px
+}
+#saml-basic-addedit-form .addedit-edit-textarea {
+    height: 17px;
+    width: 332px;
+    resize:vertical
+}
+
+/*newly added */
+.cdn-admin-icon{
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -87px -722px;
+   height: 54px;
+   margin-top: 0;
+   width: 54px;
+}
+.cdn-edit-rows{
+  padding-top:15px;
+  padding-left:4px;
+}
+#cdn-basic-addedit-form .addedit-new-field-title {
+  padding: 6px 5px 0 0;
+  height: 23px;
+  width: 114px;
+}
+
+#cdn-basic-addedit-form .addedit-new-field-two-col .addedit-edit-textfield {
+	width: 130px;
+}
+
+#cdn-basic-addedit-form .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions .admin-save-button-container {
+    margin: 0 6px 10px 8px;
+}
+
+#cdn-basic-addedit-form .addedit-new-field-two-col .addedit-edit-dropdown {
+	width: 130px;
+}
+#cdn-basic-addedit-form .addedit-new-field-value {
+  height: 23px;		
+  line-height: 24px
+}
+#cdn-basic-addedit-form .addedit-new-field-value .expertus-dropdown-icon {
+  line-height: 20px	
+}
+#cdn-basic-addedit-form .addedit-new-field {
+  padding-bottom: 5px	
+}
+#cdn-basic-addedit-form .addedit-edit-saml_e1_acs_url{
+  width:326px
+}
+/*
+#cdn-basic-addedit-form .addedit-edit-dropdown {
+  width: 150px
+}*/
+#cdn-basic-addedit-form  .expertus-dropdown-icon{
+  width:346px
+}
+#cdn-basic-addedit-form .addedit-form-cancel-container-actions {
+  margin-right: 42px
+}
+#cdn-basic-addedit-form .addedit-form-cancel-and-save-actions-row {
+  float:left;
+}
+#cdn-basic-addedit-form .white-btn-bg-right{
+  margin-right:5px
+}
+
+#cdn-basic-addedit-form .addedit-firstcol-field-value .addedit-form-wrapper .form-type-radio label {
+    font-size: 13px
+}
+
+#cdn-basic-addedit-form .addedit-secondcol-field-value{
+	width:122px;
+}
+
+#cdn-basic-addedit-form .addedit-form-wrapper .form-type-radio label {
+	font-size:12px
+}
+.theme-ctool-popup #cdn-basic-addedit-form .addedit-new-field-two-col .expertus-dropdown-bg {
+  width:135px
+}
+.page-administration-sitesetup-moduleinfo #pwdpolicy-admin-form .addedit-firstcol-field-value,.page-administration-sitesetup-moduleinfo #pwdpolicy-admin-form .addedit-secondcol-field-value {
+  width: 132px;
+}
+#cdn-basic-addedit-form .addedit-new-field-value, .addedit-firstcol-field-value, .addedit-secondcol-field-value {
+    padding: 1px 1px 1px 0;
+    width: 138px;
+}
+
+#cdn-basic-addedit-form  #two-col-row-other_url_region .addedit-new-field-title{
+  display:none;
+}
+
+#cdn-basic-addedit-form #two-col-row-other_url_region .addedit-firstcol-field-value{
+       margin-top: -46px;
+       margin-left: 185px; 
+}
+
+#cdn-basic-addedit-form .addedit-new-field-two-col {
+    width: 539px;
+}
+
+#cdn-basic-addedit-form #two-col-row-other_url_region .addedit-firstcol-field-value .addedit-edit-textfield {
+    width: 64px;
+}
+
+#cdn-basic-addedit-form #two-col-row-other_url_region .addedit-secondcol-field-value{
+ margin-right: -62px;
+ margin-top: -27px; 
+}
+
+#cdn-basic-addedit-form #two-col-row-other_url_region .addedit-secondcol-field-value .addedit-edit-textfield{
+    width: 67px;
+}
+#cdn-basic-addedit-form .container-inline .form-item {
+	margin-right: 0;
+}
+
+
+/*newly added for USPS API Module*/
+.uspsapi-admin-icon{
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -29px -1116px;
+   height: 54px;
+   margin-top: 0;
+   width: 54px;
+}
+.uspsapi-edit-rows{
+  padding-top:15px;
+  padding-left:4px;
+}
+
+#uspsapi-basic-addedit-form .uspsapi-edit-rows .addedit-edit-uspsapi_id{
+	width: 120px;
+}
+
+#uspsapi-basic-addedit-form .addedit-left-col {
+    padding: 0 0 0 15px;
+}
+
+
+#uspsapi-basic-addedit-form .uspsapi-master-text{
+    color: #777;
+    font-family: openSansRegular,Arial;
+    font-size: 11px;
+    padding: 0 0 5px;
+    text-transform: uppercase;
+}
+
+#uspsapi-basic-addedit-form .addedit-new-field-title {
+  padding: 6px 5px 0 0;
+  height: 23px;
+  width: 114px;
+}
+
+#uspsapi-basic-addedit-form .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions .admin-save-button-container {
+    margin: 0 6px 10px 8px;
+}
+
+#uspsapi-basic-addedit-form .addedit-new-field-two-col .addedit-edit-dropdown {
+	width: 130px;
+}
+#uspsapi-basic-addedit-form .addedit-new-field-value {
+  height: 23px;
+  line-height: 24px
+}
+#uspsapi-basic-addedit-form .addedit-new-field-value .expertus-dropdown-icon {
+  line-height: 20px
+}
+#uspsapi-basic-addedit-form .addedit-new-field {
+  padding-bottom: 5px
+}
+
+#uspsapi-basic-addedit-form  .expertus-dropdown-icon{
+  width:346px
+}
+
+#uspsapi-basic-addedit-form .addedit-form-cancel-container-actions {
+  margin-right: 26px
+}
+
+#uspsapi-basic-addedit-form .addedit-form-cancel-and-save-actions-row {
+  float:left;
+}
+
+#uspsapi-basic-addedit-form .white-btn-bg-right{
+  margin-right:5px
+}
+
+#uspsapi-basic-addedit-form .addedit-secondcol-field-value{
+	width:122px;
+}
+
+#uspsapi-basic-addedit-form .addedit-form-wrapper .form-type-radio label {
+	font-size:12px
+}
+.theme-ctool-popup #uspsapi-basic-addedit-form .addedit-new-field-two-col .expertus-dropdown-bg {
+  width:135px
+}
+
+#uspsapi-basic-addedit-form .addedit-new-field-value, .addedit-firstcol-field-value, .addedit-secondcol-field-value {
+    padding: 1px 1px 1px 0;
+    width: 138px;
+}
+
+#uspsapi-basic-addedit-form .addedit-new-field-two-col {
+    width: 539px;
+}
+
+#uspsapi-basic-addedit-form .container-inline .form-item {
+	margin-right: 0;
+}
+
+/*Salesforce*/
+.page-administration-sitesetup #exp-sp-administration-module-info-salesforce-integration-form .addedit-left-col {
+    width: 93.3%;
+} 
+
+.sf-admin-icon{
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -27px -786px;
+   height: 54px;
+   margin-top: 0;
+   width: 54px;
+}
+.sf-edit-rows{
+  padding-top:15px;
+  padding-left:4px;
+}
+#sf-basic-addedit-form .addedit-new-field-value {
+  /*height: 23px;*/
+  line-height: 24px;
+}
+#sf-basic-addedit-form .addedit-new-field-value .expertus-dropdown-icon {
+  line-height: 20px;
+}
+#sf-basic-addedit-form .addedit-new-field {
+  padding-bottom: 5px;	
+}
+#sf-basic-addedit-form .addedit-new-field-title {
+  width: 160px;
+}
+#sf-basic-addedit-form .addedit-form-cancel-container-actions {
+  margin-right: 24px;
+}
+#sf-basic-addedit-form .addedit-form-cancel-and-save-actions-row {
+  float:left;
+}
+#sf-basic-addedit-form .white-btn-bg-right{
+  margin-right:5px;
+}
+.sf-edit-rows{
+  padding-top:10px;
+}
+#sfserver-basic-addedit-form .addedit-form-wrapper .form-type-radio, .addedit-form-wrapper .form-type-checkbox{
+    padding: 3px 0 0 0;
+}
+#sf-basic-addedit-form .addedit-new-field-value input{
+  width:504px; 
+  height: auto;
+  line-height: 17px;
+}
+#sf-basic-addedit-form .addedit-edit-textarea {
+    height: 17px;
+    width: 332px;
+}
+#sf-basic-addedit-form .addedit-new-field-value, .addedit-firstcol-field-value, .addedit-secondcol-field-value {
+    padding: 1px 1px 1px 0;
+    width: 104px;
+}
+
+#sf-basic-addedit-form .sf-feed-trigger-text-msg {
+	height: 100px;
+}
+
+#sf-basic-addedit-form .sf-table-heading .check-attributes > input {
+ font-size:12px;
+ border-radius: 10px;
+ padding-left: 2px;
+ border: 1px solid #E5E5E5;
+}
+
+#sf-basic-addedit-form .addedit-new-field-value .addedit-edit-salesforce_feed_trigger_option, .addedit-edit-checkbox{
+	width:0px;
+}
+/*SF scrolling fix */
+#sf-basic-addedit-form, #tableholder, #multi_sf_org_setup_div .jspContainer .jspVerticalBar .jspTrack .jspDrag{
+       border-radius: 5px;
+}
+
+#sf-basic-addedit-form, #tableholder, #multi_sf_org_setup_div .jspContainer{
+       width: 676px;
+}
+
+/* Starting of Table creation css */
+.group-table-heading {
+  border-bottom: 1px solid #E5E5E5;
+  border-left: 1px solid #E5E5E5;
+  border-right: 1px solid #E5E5E5;
+  width: 90%;
+  margin-left:9px
+}
+
+#sfserver-basic-addedit-form .heading-background-class {
+	background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif")	repeat-x 0 -2453px;
+	border-color: #E5E5E5 #DADADA #E5E5E5 #E5E5E5;
+	border-style: solid;
+	border-width: 0 1px 0 0;
+	height: 25px
+}
+
+.heading-background-class-title {
+	background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif")	repeat-x 0 -2453px;
+	border-color: #E5E5E5 #DADADA #E5E5E5 #E5E5E5;
+	border-style: solid;
+	border-width: 0 0 0 1px;
+	height: 25px
+}
+
+#sfserver-basic-addedit-form  .group-title-heading {
+	color: #666;
+	font-family: proximanovabold;
+	font-size: 12px;
+	font-weight: normal;
+	text-transform: uppercase
+}
+
+#sf-basic-addedit-form .sf-table-heading .check-attributes > input.sfrow-error-check,#sf-basic-addedit-form .sfrow-error-check{
+	border: 1px solid #fc4646;
+}
+
+/*test currency - sf */
+
+#sf-detail-wrapper .sf-table-heading .rowtbody .check-attributes {
+	padding-left: 0px
+}
+#sf-detail-wrapper .sf-table-heading .rowtbody .check-attributes span {
+	padding-left: 4px
+}
+#sf-detail-wrapper .addedit-form-cancel-and-save-actions-row{
+   margin-top: 10px;
+}
+.page-administration-sitesetup-config .theme-ctool-popup .block-footer-right{
+  margin-top: -10px;
+  float: right;
+  right: 0;
+  position: relative
+}
+#sf-detail-wrapper #qtip_sf_disp_add_sf .admin-sf-save-button-middle-bg{
+	background:#27245E;
+  	border:1px solid #27245E;
+  	border-radius:6px;
+    color: #fff;
+    cursor: pointer;
+    float: left;
+    font-family: ProximaNovaBold,Arial;
+    font-size: 12px;
+    margin: 0;
+    padding:0 10px;
+    text-align: center;
+    text-transform: uppercase;
+    height: 21px;
+    line-height: 21px;
+}
+#sf-detail-wrapper #qtip_sf_disp_add_currency #visible-group-add-sf.admin-sf-save-button-middle-bg {
+	border: 0;
+	height: 24px;
+    line-height: 24px;
+}
+.page-administration-sitesetup #exp-sp-administration-module-info-salesforce-integration-form .addedit-left-col {
+    width: 93.3% !important;
+} 
+/* horizontal scroll bar related work*/
+.jspHorizontalBar {
+  background: none repeat scroll 0 0 none;
+  bottom: 0;
+  height: 9px;
+  left: 9px;
+  position: absolute;
+  width: 100%
+}
+.jspVerticalBar *,.jspHorizontalBar * {
+  margin: 0;
+  padding: 0
+}
+.jspCap {
+  display: none
+}
+.jspHorizontalBar .jspCap {
+  float: left
+}
+
+.jspHorizontalBar .jspTrack,.jspHorizontalBar .jspDrag {
+  float: left;
+  height: 100%
+}
+.jspHorizontalBar .jspArrow {
+  float: left;
+  height: 100%;
+  width: 16px
+}
+/* horizontal scroll bar related work*/
+.sf-table-heading {
+  border-bottom: 1px solid #E5E5E5;
+  border-left: 1px solid #E5E5E5;
+  border-right: 1px solid #E5E5E5;
+}
+
+#sf-detail-wrapper .addedit-form-cancel-container-actions {
+  float: right;
+  margin-right: 30px;
+  position: relative;
+  top: 7px
+}
+
+#sf-detail-wrapper .pop-addedit-form-cancel-container-actions {
+  float: right;
+  position: relative;
+  top: 7px
+}
+
+#sf-detail-wrapper .heading-background-class {
+	background:	url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif")	repeat-x 0 -2453px;
+	border-color: #E5E5E5 #DADADA #E5E5E5 #E5E5E5;
+	border-style: solid;
+	border-width: 0 1px 0 0;
+	height: 25px
+}
+
+#sf-detail-wrapper  .sf-title-heading {
+	color: #666;
+	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	text-transform: uppercase
+}
+
+#sf-detail-wrapper .even-list-class {
+	background: #F5F5F5
+}
+
+#sf-detail-wrapper .addedit-form-cancel-container-actions {
+	float: right;
+	margin-right: 0;
+	position: relative;
+	top: 7px
+}
+
+#sf-detail-wrapper .addedit-left-col {
+	top: 9px
+}
+
+#admin-add-scroll {
+	height: auto;
+	max-height: 150px;
+	width: 282px;
+	border-right: 1px solid #ccc;
+}
+
+#admin-add-currecny #sf-td-table {
+	border-bottom: 1px solid #e5e5e5;
+	border-left: 1px solid #e5e5e5;
+}
+
+.sf-header-tr {
+	background: rgba(0, 0, 0, 0)	url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif")	repeat-x scroll 0 -2453px;
+	height: 26px;
+}
+
+#bubble-face-table #admin-add-sf .adduser-title-heading,#admin-add-sf .adduser-title-heading{
+	border-right: 1px solid #e5e5e5;
+	border-left: 1px solid #e5e5e5;
+	font-size: 12px;
+	font-weight: normal;
+	padding-left: 4px;
+}
+
+.adduser-title-heading {
+	color: #2d2d2d;
+	font-family: ProximaNovaBold, Arial;
+	font-size: 12px;
+	padding-left: 13px;
+	text-transform: uppercase;
+}
+
+#sf-detail-wrapper .cremove {
+	float: left;
+	overflow: hidden;
+	width: 20px;
+}
+
+#sf-detail-wrapper .enable-delete-icon {
+	background: rgba(0, 0, 0, 0)	url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png")	no-repeat scroll -362px -183px;
+	display: block;
+	height: 20px;
+	text-indent: -3000px;
+	width: 20px;
+}
+
+#sf-detail-wrapper .enable-delete-icon.disable-delete-link {
+	background: rgba(0, 0, 0, 0)	url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png")		no-repeat scroll -415px -219px;
+	cursor: auto;
+	display: block;
+	height: 20px;
+	text-indent: -3000px;
+	width: 20px;
+}
+
+#admin-add-sf .sf-muliselect {
+	margin-left: 12px;
+}
+
+#admin-add-scroll .multichk{
+	margin-left: 22px;
+}
+#sf-detail-wrapper .currency-override-bold{
+	font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+	text-transform: none;
+}
+.sf-col-container{
+  display:inline-block;
+  width:100%
+}
+.sf-code{
+  width:40px;
+  display:inline-block
+}
+.sf-symbol{
+  width:40px;
+  display:inline-block
+}
+.ffy-name{
+  width:135px;
+  display:inline-block
+}
+/* Currency */
+
+#sf-detail-wrapper  .sf-title-heading {
+	color: #666;
+	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	text-transform: uppercase
+}
+
+#sfserver-basic-addedit-form .even-list-class {
+	background: #F5F5F5
+}
+
+#sfserver-basic-addedit-form .addedit-form-cancel-container-actions {
+	float: right;
+	margin-right: -2px;
+	position: relative;
+	top: 0px;
+	width:102px;
+}
+
+.check-attributes {
+	color: #2D2D2D;
+	font-size: 12px;
+	padding-left: 15px
+}
+
+#sfserver-basic-addedit-form .addedit-left-col {
+	top: 9px
+}
+
+div.ctools-modal-content #sfserver-basic-addedit-form .checkbox-unselected input{
+	cursor: pointer;
+	height: 12px;
+	margin: 3px 0 0;
+	opacity: 0;
+	outline: none;
+	width: 15px
+}
+
+div.ctools-modal-content #sfserver-basic-addedit-form .checkbox-selected input{
+	cursor: pointer;
+	height: 12px;
+	margin: 3px 0 0;
+	opacity: 0;
+	outline: none;
+	width: 15px
+}
+
+.fade-out-title-container.admin-narrow-search-fadeout-container {
+	max-width: 570px
+}
+
+.fade-out-title-container.admin-config-group-check-attributes-title-fadeout-container{
+	max-width: 310px
+}
+
+#sfserver-basic-addedit-form .even-list-class .fade-out-title-container.admin-config-group-check-attributes-title-fadeout-container .fade-out-image{
+	background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/title_gradient.png")	no-repeat right -60px
+}
+
+.page-administration-sitesetup-config #exp-sp-administration-group-addedit-form .admin-save-button-container{
+	margin-left: 10px
+}
+
+/* End of Table creation css */
+
+
+/* End for Salesforce */
+/*Start of share module*/
+.share-admin-icon{
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -29px -1058px;
+   height: 54px;
+   margin-top: 0;
+   width: 54px;
+}
+.share-table-heading {
+  border-bottom: 1px solid #E5E5E5;
+  border-left: 1px solid #E5E5E5;
+  border-right: 1px solid #E5E5E5;
+  width: 90%;
+  margin-left:6px
+}
+#share-basic-addedit-form .heading-background-class {
+  background: -ms-linear-gradient(#fefefe,#ebebeb);/*For IE10*/
+  background: linear-gradient(#fefefe,#ebebeb);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#fefefe', endColorstr='#ebebeb'); /*For IE7-8-9*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fefefe, endColorstr=#ebebeb)";
+  border-color: #E5E5E5 #DADADA #E5E5E5 #E5E5E5;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  height: 25px
+}
+.heading-background-class-title{
+  background: -ms-linear-gradient(#fefefe,#ebebeb);/*For IE10*/
+  background: linear-gradient(#fefefe,#ebebeb);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#fefefe', endColorstr='#ebebeb'); /*For IE7-8-9*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fefefe, endColorstr=#ebebeb)";
+  border-color: #E5E5E5 #DADADA #E5E5E5 #E5E5E5;
+  border-style: solid;
+  border-width: 1px 0 0 1px;
+  height: 25px
+}
+#share-basic-addedit-form .share-title-heading{
+  color: #666;
+  font-family: proximanovabold;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: uppercase
+}
+#share-basic-addedit-form .even-list-class {
+	background: #F5F5F5
+}
+#share-basic-addedit-form .addedit-form-cancel-container-actions {
+  float: right;
+  margin-right: 30px;
+  position: relative;
+  top:0px
+}
+#share-basic-addedit-form .addedit-left-col .check-attributes {
+  color: #2D2D2D;
+  font-size: 12px;
+  padding-left: 15px
+}
+#share-basic-addedit-form .addedit-left-col{
+  top:9px
+}
+/* end of Share module*/
+
+.adfs-admin-icon{
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -399px -623px;
+  height: 53px;
+  margin-top: 10px;
+  width: 53px;
+}	
+#adfs-basic-addedit-form .addedit-new-field-title {
+  padding: 9px 5px 4px 16px;
+  width: 156px
+}
+#adfs-basic-addedit-form .addedit-form-cancel-and-save-actions-row {
+  float:left
+}
+#adfs-basic-addedit-form .addedit-edit-dropdown {
+  width: 363px
+}
+#adfs-basic-addedit-form .expertus-dropdown-icon{
+  width:346px
+}
+#adfs-basic-addedit-form .white-btn-bg-right{
+  margin-right:10px
+}
+#adfs-basic-addedit-form .addedit-form-cancel-container-actions {
+  margin-right: 26px
+}
+.adfs-edit-rows{
+  padding-top:21px
+}
+#adfs-basic-addedit-form .addedit-new-field-value input,
+#adfs-basic-addedit-form #edit-adfs-e1-prp-url{
+  width:344px
+}
+#pwdstrength-admin-form-fields .form-item-pwdstrength-username label {
+  width: 328px;
+  margin-right: 13px
+}
+.page-administration-sitesetup-moduleinfo tr.ui-widget-content > td > div.narrow-search-results-item-details > div:first-child span span {
+  padding-top:3px
+}
+.ui-multiselect-menu .ui-multiselect-checkboxes{
+  border:1px solid #E5E5E5
+}
+.fade-out-title-container.admin-narrow-search-fadeout-container{
+  max-width:445px
+}
+.page-administration-sitesetup-moduleinfo #page-container .narrow-search-results-item-action {
+  border:none
+}
+#exp-sp-administration-module-saml-form .admin-save-button-container {
+  margin:0 0 0 10px
+}
+
+/* SEO Css */
+
+#metatag-basic-addedit-home-form #meta-form-container div.form-textarea-wrapper { 
+  border:1px solid #e5e5e5;
+  border-radius:10px;
+  /*display: inline-block;
+  display:block;
+  margin-right: -25px;*/
+  overflow:hidden;
+}
+
+#metatag-basic-addedit-home-form .addedit-left-col{
+	padding: 15px 0 19px 16px;
+}
+
+#metatag-basic-addedit-catalog-form .addedit-left-col {
+    padding: 0;
+}
+
+#metatag-settings-screen-home-wrapper .admin-desc-character-count {
+  padding-top: 3px;
+}
+
+#metatag-settings-screen-catalog-wrapper .admin-desc-character-count {
+  padding-top: 3px;
+}
+
+
+#metatag-basic-addedit-home-form .addedit-left-col #meta-form-container #metatag-basic-addedit-home-form-disp .addedit-form-main-container .round-corner-left {
+	border-radius: 0 10px 0 0;
+}
+
+#metatag-basic-addedit-home-form #metatag-basic-addedit-catalog-form #meta-form-container .addedit-form-main-container .round-corner-left {
+   border-radius: 10px 10px 0 0;
+}
+
+#metatag-settings-screen-home-wrapper .addedit-long-description-container .addedit-new-field-value {
+    width: 417px;
+}
+
+/*To align char count along with the text area*/
+#metatag-settings-screen-catalog-wrapper .addedit-long-description-container .addedit-new-field-value {
+    width: 417px;
+}
+
+#metatag-basic-addedit-home-form #meta-form-container .metatag-edit-rows {
+  padding-top: 0px;
+}
+
+#metatag-basic-addedit-home-form #meta-form-container .addedit-edit-textarea {
+  resize:none;
+  border: 0;
+  max-width: 393px;
+  min-width: 415px;
+  padding-top: 7px;
+  line-height:16px
+}
+
+#metatag-basic-addedit-form-disp
+{
+	clear:both;
+}
+#metatag-basic-addedit
+{
+	padding-top:10px;
+	width:100px;
+	float:left;
+}
+#metatag-basic-addedit-form .metatag-edit-rows
+{
+	padding-top: 6px;
+    width: 101px;
+}
+
+#metatag-basic-addedit-form li span.selected
+{
+-moz-border-bottom-colors: none;
+-moz-border-left-colors: none;
+-moz-border-right-colors: none;
+-moz-border-top-colors: none;
+background-color: #fff;
+border-color: #ccc -moz-use-text-color #ccc #ccc;
+border-image: none;
+border-radius: 5px 0 0 5px;
+border-style: solid none solid solid;
+border-width: 1px 0 1px 1px;
+padding-top: 0;
+position: relative;
+width: 99px; //Changed as part of Metatag Enhancement
+z-index: 1;
+}
+
+#metatag-basic-addedit-form li span
+{
+display: block;
+height: 35px;
+padding: 0;
+}
+#metatag-basic-addedit-form li span.selected input.form-submit
+{
+color: #474747;
+margin: 2px 0 2px 2px;
+padding: 7px 0 7px 6px;
+background:#fff none repeat scroll 0 0;
+}
+
+#metatag-basic-addedit-form li span input.form-submit
+{
+color: #474747;
+margin: 2px 0 2px 2px;
+padding: 7px 0 7px 6px;
+background:#fff none repeat scroll 0 0;
+}
+
+#metatag-basic-addedit-form ul li
+{
+padding-left:6px;
+display: block;
+list-style-type: none;
+min-height: 35px;
+position: relative;	
+}
+
+#metatag-settings-home-screen-wrapper .metatag-settings-form-wrapper
+{
+float: left;
+margin-bottom: 0;
+width: auto;
+}
+
+#metatag-settings-screen-wrapper .metatag-settings-form
+{
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+clear: none;
+float: left;
+padding: 0 2px 1px 9px;
+width: 545px;
+}
+
+#metatag-basic-addedit-form-disp .addedit-form-main-container
+{
+float: left;
+margin: 10px 10px 0;
+width: 559px;
+}
+
+#metatag-basic-addedit-form-container
+{
+background: #fff none repeat scroll 0 0;
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+float: left;
+min-height: 91px;
+padding: 1px 0 4px 25px;
+width: 532px;
+}
+
+#metatag-basic-addedit-form-container .admin-save-button-container1
+{
+	margin: 0 3px 0 10px
+}
+.metatag-edit-rows ul
+{
+	width:100px;
+}
+#metatag-basic-addedit-form .addedit-form-cancel-container-actions {
+    float: inherit;
+    margin-left: 440px;
+    margin-right: 7px;
+    position: relative;
+}
+#metatag-basic-addedit-form-disp .round-corner-footer-left
+{
+	height:8px;
+	margin-left:0px;
+}
+#metatag-basic-addedit-form .metatag-edit-rows .catalog-course-basic-addedit-action-disp ul
+{
+	width:100px;
+}
+
+/*home form css*/
+
+.metatag-basic-addedit-form-container div.error {
+    margin-bottom: -1px;
+}
+
+/*Text Field right adjustment*/
+#metatag-basic-addedit-home-form-disp .metatag-basic-addedit-form-container .addedit-new-field .addedit-new-field-value input.addedit-edit-textfield, .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-password-password, .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-cpassword-confirm_password, .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-edit-ac-textfield, .addedit-left-col .addedit-new-field .addedit-new-field-value .form-type-file input.addedit-edit-file-upload {
+    /*width: 408px;*/
+    width: 413px;
+}
+#metatag-basic-addedit-catalog-form-disp .metatag-basic-addedit-form-container .addedit-new-field .addedit-new-field-value input.addedit-edit-textfield, .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-password-password, .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-cpassword-confirm_password, .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-edit-ac-textfield, .addedit-left-col .addedit-new-field .addedit-new-field-value .form-type-file input.addedit-edit-file-upload {
+    width: 413px;
+}
+.addedit-left-col #metatag-basic-addedit-home-form-disp .addedit-new-field .addedit-new-field-value textarea.addedit-edit-textarea {
+    min-height: 80px;
+}
+
+#metatag-settings-screen-home-wrapper .addedit-long-description-container {
+    margin-top: 15px;
+}
+
+#metatag-basic-addedit-home-form-disp
+{
+	clear:both;
+}
+#metatag-basic-addedit
+{
+	padding-top:10px;
+	width:100px;
+	float:left;
+}
+#metatag-basic-addedit-home-form .metatag-edit-rows
+{
+	padding-top: 6px;
+    width: 101px;
+}
+
+#metatag-basic-addedit-home-form li span.selected
+{
+-moz-border-bottom-colors: none;
+-moz-border-left-colors: none;
+-moz-border-right-colors: none;
+-moz-border-top-colors: none;
+background-color: #fff;
+/*border-color: #ccc -moz-use-text-color #ccc #ccc;*/
+border-color: #ccc;
+border-image: none;
+border-radius: 5px 0 0 5px;
+border-style: solid none solid solid;
+border-width: 1px 0 1px 1px;
+padding-top: 0;
+position: relative;
+width: 99px; //Changed as part of Metatag Enhancement
+z-index: 1;
+}
+
+#metatag-basic-addedit-home-form li span
+{
+display: block;
+height: 35px;
+padding: 0;
+}
+#metatag-basic-addedit-home-form li span.selected input.form-submit
+{
+color: #474747;
+margin: 2px 0 2px 2px;
+padding: 7px 0 7px 6px;
+background:#fff none repeat scroll 0 0;
+}
+
+#metatag-basic-addedit-home-form li span input.form-submit
+{
+color: #474747;
+margin: 2px 0 2px 2px;
+padding: 7px 0 7px 6px;
+background:#fff none repeat scroll 0 0;
+}
+
+#metatag-basic-addedit-home-form ul li
+{
+/*padding-left:6px;*/
+padding-left:0;
+display: block;
+list-style-type: none;
+min-height: 35px;
+position: relative;	
+}
+
+#metatag-settings-home-screen-wrapper .metatag-settings-form-wrapper
+{
+float: left;
+margin-bottom: 0;
+width: auto;
+}
+
+#metatag-settings-screen-wrapper .metatag-settings-form
+{
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+clear: none;
+float: left;
+padding: 0 2px 1px 9px;
+width: 545px;
+}
+
+#metatag-basic-addedit-home-form-disp .addedit-form-main-container
+{
+float: left;
+/*margin: 10px 10px 0;*/
+margin: 10px 0 0 -1px;
+width: 559px;
+}
+
+#metatag-basic-addedit-home-form-container
+{
+background: #fff none repeat scroll 0 0;
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+float: left;
+min-height: 178px;
+padding: 1px 0 4px 4px;
+width: 553px;
+}
+
+#metatag-basic-addedit-form-container .admin-save-button-container1
+{
+	margin: 0 3px 0 10px
+}
+.metatag-edit-rows ul
+{
+	width:100px;
+	margin-left: 0px;
+}
+#metatag-basic-addedit-home-form .addedit-form-cancel-container-actions {
+    float: inherit;
+   /* margin-left: 440px;*/
+    margin-right: 22px;
+    position: relative;
+}
+#metatag-basic-addedit-home-form-disp .round-corner-footer-left
+{
+	height: 8px;
+    margin-left: -26px;
+    margin-right: -1px;
+    margin-bottom: -12px;
+}
+#metatag-basic-addedit-home-form .metatag-edit-rows .catalog-course-basic-addedit-action-disp ul
+{
+	width:100px;
+}
+
+/*Catalog Form css*/
+
+#metatag-settings-screen-catalog-wrapper .addedit-long-description-container {
+    margin-top: 15px;
+}
+.addedit-left-col #metatag-basic-addedit-catalog-form-disp .addedit-new-field .addedit-new-field-value textarea.addedit-edit-textarea {
+    min-height: 80px;
+}
+
+#metatag-basic-addedit-catalog-form-disp{
+	clear:both;
+}
+#metatag-basic-addedit{
+	padding-top:10px;
+	width:100px;
+	float:left;
+}
+#metatag-basic-addedit-catalog-form .metatag-edit-rows{
+	padding-top: 6px;
+    width: 101px;
+}
+
+#metatag-basic-addedit-catalog-form li span.selected{
+-moz-border-bottom-colors: none;
+-moz-border-left-colors: none;
+-moz-border-right-colors: none;
+-moz-border-top-colors: none;
+background-color: #fff;
+/*border-color: #ccc -moz-use-text-color #ccc #ccc;*/
+border-color: #ccc;
+border-image: none;
+border-radius: 5px 0 0 5px;
+border-style: solid none solid solid;
+border-width: 1px 0 1px 1px;
+padding-top: 0;
+position: relative;
+width: 99px; //Changed as part of Metatag Enhancement
+z-index: 1;
+}
+
+#metatag-basic-addedit-catalog-form li span{
+display: block;
+height: 35px;
+padding: 0;
+}
+#metatag-basic-addedit-catalog-form li span.selected input.form-submit{
+color: #474747;
+margin: 2px 0 2px 2px;
+padding: 7px 0 7px 6px;
+background:#fff none repeat scroll 0 0;
+}
+
+#metatag-basic-addedit-catalog-form li span input.form-submit{
+color: #474747;
+margin: 2px 0 2px 2px;
+padding: 7px 0 7px 6px;
+background:#fff none repeat scroll 0 0;
+}
+
+#metatag-basic-addedit-catalog-form ul li{
+padding-left:0px;
+display: block;
+list-style-type: none;
+min-height: 35px;
+position: relative;	
+}
+
+#metatag-settings-home-screen-wrapper .metatag-settings-form-wrapper{
+float: left;
+margin-bottom: 0;
+width: auto;
+}
+
+#metatag-settings-screen-wrapper .metatag-settings-form{
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+clear: none;
+float: left;
+padding: 0 2px 1px 9px;
+width: 545px;
+}
+
+#metatag-basic-addedit-catalog-form-disp .addedit-form-main-container{
+float: left;
+margin: 10px 0px 0 -1px;
+width: 559px;
+}
+
+#metatag-basic-addedit-home-form-container{
+background: #fff none repeat scroll 0 0;
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+float: left;
+min-height: 178px;
+padding: 1px 0 4px 4px;
+width: 553px;
+}
+
+#metatag-basic-addedit-form-container .admin-save-button-container1{
+	margin: 0 3px 0 10px
+}
+.metatag-edit-rows ul{
+	width:100px;
+}
+#metatag-basic-addedit-catalog-form .addedit-form-cancel-container-actions {
+    float: inherit;
+   /* margin-left: 440px;*/
+    margin-right: 22px;
+    position: relative;
+}
+#metatag-basic-addedit-catalog-form-disp .round-corner-footer-left{
+	height: 8px;
+    margin-left: -26px;
+    margin-right: -1px;
+    margin-bottom: -12px;
+}
+#metatag-basic-addedit-catalog-form .metatag-edit-rows .catalog-course-basic-addedit-action-disp ul{
+	width:100px;
+}
+/*new*/
+/* #metatag-basic-addedit-catalog-form .admin-save-button-container{ */
+/* 	margin-left: 10px; */
+/* } */
+
+#metatag-basic-addedit-form-container .addedit-new-field-title {
+	/*width: 74px;*/
+	width: 88px;
+}
+#metatag-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row {
+    float: right;
+    width: auto;
+}
+#metatag-basic-addedit-form-container .admin-save-button-container {
+    margin-left: 10px;
+} 
+.popups-body #metatag-basic-addedit-home-form #meta-form-container div.form-textarea-wrapper.error {
+  padding:0;
+  border:1px solid #f00;
+  margin-top:0
+}
+.metatag-admin-icon {
+    background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -89px -898px;
+    height: 54px;
+    margin-top: 0;
+    width: 54px;
+}
+/* End SEO Css*/
+
+
+/*!Chrome Fixes starts here */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	#pwdstrength-admin-form .addedit-left-col .pwdstrength-admin-form-fields .addedit-new-field-value {
+	  margin-top:0;
+	  margin-right:15px
+     }
+	#saml-basic-addedit-form .addedit-edit-saml_e1_acs_url{
+      width:344px
+    }
+	#saml-basic-addedit-form .addedit-edit-dropdown {
+	  width: 330px
+    }
+	#saml-basic-addedit-form  .expertus-dropdown-icon{
+	  width:329px
+    }
+	#adfs-basic-addedit-form .expertus-dropdown-icon,
+    #adfs-basic-addedit-form .addedit-edit-dropdown {
+	  width:357px
+    }
+    #saml-basic-addedit-form .addedit-form-cancel-container-actions {
+ 	  margin-right: 19px
+    }
+	#adfs-basic-addedit-form .addedit-form-cancel-container-actions {
+ 	  margin-right: 18px
+    }
+	#adfs-basic-addedit-form .addedit-new-field-title {
+ 	  width: 152px
+    }
+	#adfs-basic-addedit-form .addedit-new-field-value input,
+	#adfs-basic-addedit-form #edit-adfs-e1-prp-url{
+ 	  width:354px
+   }
+   #pwdstrength-admin-form .addedit-left-col .pwdstrength-admin-form-fields .addedit-new-field-title-wrapper{
+     width:81%   
+   }
+   #iprange-admin-form.admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td
+   {
+   padding-left:0px;
+   }
+   #sf-basic-addedit-form .addedit-new-field-value .addedit-edit-salesforce_feed_trigger_option, .addedit-edit-checkbox {
+   	width:14px;
+   }
+   #iprange-admin-form .session-edit-delete-icons{
+    float: left;
+    padding: 2px 0px 0px 11px;
+    width: 2px;
+}
+}
+/*  Chrome Fixes ends here */
+
+/*safari hack Start*/
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0), not all and (min-resolution:.001dpcm) { @media { _:-webkit-full-screen,
+#iprange-admin-form.admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td
+   {
+   padding-left:0px;
+   }
+#iprange-admin-form .session-edit-delete-icons{
+    float: left;
+    padding: 2px 0px 0px 11px;
+    width: 2px;
+    }
+}}
+/*safari hack End*/
+
+
+/*IE9 SF site setting pop-up checkbox fix*/
+@media screen and (min-width:0\0) {
+#sf-basic-addedit-form .addedit-new-field-value .addedit-edit-salesforce_feed_trigger_option, .addedit-edit-checkbox{
+	width:13px;
+}	
+}
+}
+
+#webex-detail-wrapper .addedit-new-field .form-type-textfield .addedit-edit-textfield{
+	width:245px;
+}
+
+#webex-detail-wrapper .addedit-left-col .addedit-new-field-title{
+	line-height:20px;
+}
+
+
+/********* Webex CSS Starts  *********/
+
+#webex-detail-wrapper .addedit-left-col .form-radios {
+	float: left;
+    margin: -28px 0 10px 0;
+}
+
+#webex-detail-wrapper .addedit-left-col .form-item-webex-radio {
+	float: left;
+    margin-left: 129px;
+    position: relative;
+    width: 65%;
+}
+#webex-detail-wrapper .addedit-new-field-title {
+	width: 130px;
+}
+
+
+#webex-detail-wrapper .narrow-search-filterset-item-label {
+	margin: -2px 10px 0 3px;
+}
+
+#webex-detail-wrapper .addedit-form-cancel-and-save-actions-row {
+	margin-left: -29px;
+}
+
+#webex-detail-wrapper .addedit-form-cancel-container-actions .exp-addedit-form-cancel-button {
+	margin-right: 9px;
+}
+
+#webex-detail-wrapper .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-edit-textfield, .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-password-password, .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-cpassword-confirm_password, .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-edit-ac-textfield, .addedit-left-col .addedit-new-field .addedit-new-field-value .form-type-file input.addedit-edit-file-upload{
+width:246px;	
+}
+
+#webex-detail-wrapper .webex-type {
+	margin-bottom: 3px;
+	margin-top: 7px;
+	
+}
+
+#webex-detail-wrapper .addedit-form-cancel-and-save-actions-row {
+	margin-top: 10px;
+}
+
+#webex-detail-wrapper .addedit-left-col {
+	padding-bottom: 8px;
+	padding-top: 10px;
+	width: auto;
+}
+
+/********* Webex CSS Ends  *********/

@@ -1,0 +1,4 @@
+name = ExpertusONE Guide Lines
+package = ExpertusONE Core
+description = Provides users to see guidelines about ExpertusONE features
+core = 7.x

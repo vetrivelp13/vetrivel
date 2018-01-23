@@ -1,0 +1,36 @@
+/* Admin Calendar Styles starts here */
+#admincalendarsettingdiv {
+  width:270px
+}
+#admincalendarsettingdiv div.links {
+  width:200px
+}
+.viewreportorderpopupdiv .orders div.links .list-item {
+    width: 104px;
+}
+#calendarprimaryview .fc-agendaDay-view .fc-head div.fc-widget-header th.fc-axis{
+  min-width:60px
+} 
+/* Added/Changed by ganesh on May 9th 2017 for #73716 */
+
+.page-admincalendar #block-system-main-menu {
+  /*width: 71.5%;*/
+ width: 63.5% 
+}  
+.page-admincalendar .narrow-search-calendar-filter-block{
+	 width: 36%  
+}  
+
+.page-admincalendar #select-list-calendar-dropdown-list{
+	left:14px; 
+}
+.page-admincalendar #select-list-calendar-dropdown-list li { 
+ width:137px  
+}
+.page-admincalendar .select-list-dropdown-calendar{
+	width:150px 
+}
+.page-admincalendar #block-exp-sp-administration-root-admin-calendar-filter .select-list-dropdown-calendar .fade-out{
+	background:none;
+}
+/* Admin Calendar Styl5es ends here */

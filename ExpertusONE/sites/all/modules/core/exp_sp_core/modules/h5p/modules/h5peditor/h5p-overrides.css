@@ -1,0 +1,1831 @@
+@font-face {
+  font-family: "ProximaNovaBold";
+  src: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/font/PTS75F.ttf");
+ } 
+.h5p-editor-iframe .h5p-dialog-wrapper .h5p-dialog-inner .h5peditor-label {
+  font-family:ProximaNovaBold, Arial
+}
+.label {
+  color:#474747;
+  float:left;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  font-weight:normal;
+  text-align:left;
+  width:100px
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close #vtip {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -142px -1501px;	
+  position:absolute;
+  top:-14px;
+  left:20px;
+  width:32px;
+  height:14px
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.AdvancedText-CourPres #vtip { 
+  /* left:22px  */
+  left:0px 
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.ContinuousText-CourPres #vtip { 
+  left:32px 
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.Link-CourPres #vtip { 
+  /* left:56px  */
+  left:32px 
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.Image-CourPres #vtip { 
+ /* left:86px */
+  left:62px 
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.Video-CourPres #vtip { 
+  /* left:118px */
+  left:95px 
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.Audio-CourPres #vtip { 
+/*   left:146px */
+  left:125px 
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.GoToSlide-CourPres #vtip { 
+ /*   left:178px */
+  left:156px  
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.Blanks-CourPres #vtip { 
+  /* left:211px */
+  left:189px 
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.SingleChoiceSet-CourPres #vtip { 
+ /*  left:244px */
+  left:221px 
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.Summary-CourPres #vtip { 
+  left:118px
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.DragText-CourPres #vtip { 
+ /* left:277px */
+  left:256px 
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.MarkTheWords-CourPres #vtip { 
+ /* left:310px */
+  left:288px 
+}
+
+
+
+
+/* 
+AdvancedText-CourPres
+ContinuousText-CourPres
+Link-CourPres
+Image-CourPres
+Video-CourPres
+GoToSlide-CourPres
+Audio-CourPres
+
+SingleChoiceSet-CourPres
+
+TwitterUserFeed-CourPres
+AppearIn-CourPres
+Dialogcards-CourPres 
+*/
+
+/* .coursepresentation .h5p-course-presentation .h5p-wrapper {
+  min-height:480px
+}
+.coursepresentation .h5p-course-presentation .h5p-wrapper .h5p-box-wrapper {
+  height:100%
+} */
+
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close  {
+  max-width:510px;
+  position:absolute;
+  border-radius:6px;
+  border:1px solid #ddd;
+  left:5px;
+  top:45px
+} 
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.AdvancedText-CourPres {
+  max-width:350px
+}
+.h5p-course-presentation .ui-dialog-buttons.Link-CourPres.h5p-dialog-no-close {
+  max-width:375px
+}
+.h5p-course-presentation .ui-dialog-buttons.GoToSlide-CourPres.h5p-dialog-no-close {
+  max-width:300px;
+  min-width:300px
+}
+.h5p-course-presentation.editor .ui-dialog-buttons.Image-CourPres.h5p-dialog-no-close {
+  max-width:286px;
+  min-width:286px
+}
+.h5p-course-presentation .ui-dialog-buttons.Video-CourPres.h5p-dialog-no-close,
+.h5p-course-presentation .ui-dialog-buttons.Audio-CourPres.h5p-dialog-no-close {
+  max-width:332px;
+  min-width:332px
+}
+.h5p-course-presentation .ui-dialog-buttons.Blanks-CourPres.h5p-dialog-no-close {
+  max-width:500px;
+  min-width:500px
+}
+.h5p-course-presentation .ui-dialog-buttons.Blanks-CourPres.h5p-dialog-no-close .pre-inner-dialog {
+  max-height:200px
+}
+.h5p-course-presentation .ui-dialog-buttons.Blanks-CourPres.h5p-dialog-no-close .pre-inner-dialog .form-item-question-row,
+.h5p-course-presentation .ui-dialog-buttons.Blanks-CourPres.h5p-dialog-no-close .pre-inner-dialog .form-item-statements-row,
+.h5p-course-presentation .ui-dialog-buttons.Blanks-CourPres.h5p-dialog-no-close .pre-inner-dialog .statements_container {
+  min-width:475px;
+  max-width:475px
+}
+.h5p-course-presentation .ui-dialog-buttons.DragText-CourPres.h5p-dialog-no-close,
+.h5p-course-presentation .ui-dialog-buttons.MarkTheWords-CourPres.h5p-dialog-no-close {
+  max-width:510px;
+  min-width:510px
+}
+.h5p-course-presentation .ui-dialog-buttons.SingleChoiceSet-CourPres.h5p-dialog-no-close {
+  max-width:520px;
+  min-width:520px
+}
+/* .h5p-course-presentation .ui-dialog-buttons.Summary-CourPres.h5p-dialog-no-close,
+.h5p-course-presentation .ui-dialog-buttons.DragText-CourPres.h5p-dialog-no-close,
+.h5p-course-presentation .ui-dialog-buttons.MarkTheWords-CourPres.h5p-dialog-no-close {
+  left:218px
+} */
+/* .h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.SingleChoiceSet-CourPres {
+  max-height:300px
+} */
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.SingleChoiceSet-CourPres .pre-inner-dialog {
+  max-height:350px;
+  overflow-x:hidden;
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.DragText-CourPres .pre-inner-dialog {
+  
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.DragText-CourPres .h5p-markthewords-editor,
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.MarkTheWords-CourPres .h5p-markthewords-editor,
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.GoToSlide-CourPres .h5p-markthewords-editor {
+  margin-top:0
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.DragText-CourPres .h5p-markthewords-editor input#taskDescription,
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.DragText-CourPres .h5p-markthewords-editor textarea#formattextbox,
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.MarkTheWords-CourPres .h5p-markthewords-editor input#taskDescription,
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.MarkTheWords-CourPres .h5p-markthewords-editor textarea#formattextbox {
+  min-width:390px;
+  max-width:390px;
+  font-family:openSansRegular, Arial;
+  font-size:12px;
+  line-height:16px;
+  border:1px solid #dbdbdb;
+  background:#fff;
+  border-radius:6px;
+  color:#474747
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.DragText-CourPres .h5p-markthewords-editor textarea#formattextbox,
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.MarkTheWords-CourPres .h5p-markthewords-editor textarea#formattextbox {
+  min-height:100px
+}
+.h5p-presentation-wrapper .h5p-slides-wrapper .h5p-dragtext-outer-element .h5p-element-inner .h5p-question-introduction,
+.h5p-presentation-wrapper .h5p-slides-wrapper .h5p-dragtext-outer-element .h5p-element-inner .h5p-question-content,
+.h5p-presentation-wrapper .h5p-slides-wrapper .h5p-dragtext-outer-element .h5p-element-inner .h5p-question-buttons,
+.h5p-presentation-wrapper .h5p-slides-wrapper .h5p-markthewords-outer-element .h5p-element-inner .h5p-question-introduction,
+.h5p-presentation-wrapper .h5p-slides-wrapper .h5p-markthewords-outer-element .h5p-element-inner .h5p-question-content, 
+.h5p-presentation-wrapper .h5p-slides-wrapper .h5p-markthewords-outer-element .h5p-element-inner .h5p-question-buttons {
+  margin:0 5px
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.DragText-CourPres .h5p-markthewords-editor .h5p-errors,
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.MarkTheWords-CourPres .h5p-markthewords-editor .h5p-errors {
+  display:none
+}
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.DragText-CourPres .pre-inner-dialog .h5peditor-field-description,
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.DragText-CourPres .pre-inner-dialog .customlabeltext,
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.MarkTheWords-CourPres .pre-inner-dialog .h5peditor-field-description,
+.h5p-course-presentation .ui-dialog-buttons.h5p-dialog-no-close.MarkTheWords-CourPres .pre-inner-dialog .customlabeltext {
+  color:#555555;
+  font-size:9px;
+  margin-top:2px
+}
+
+.h5p-course-presentation .ui-widget-header {
+  border-bottom:1px solid #ddd;
+  font-size:12px;
+  border-radius:6px 6px 0 0;
+  display:none
+}
+.h5p-course-presentation .ui-dialog-content {
+  padding:5px 10px
+}
+.h5p-course-presentation .ui-dialog-content span.h5peditor-label {
+  color:#474747;
+  float:left;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  font-weight:normal;
+  text-align:left;
+  width:100px
+}
+.h5p-course-presentation .ui-dialog-content input.h5peditor-text {
+  max-width:284px;
+  min-width:284px;
+  border-radius:6px;
+  font-size:12px;
+  padding:2px 3px;
+  background:#fff;
+  border:1px solid #dbdbdb;
+  font-family:openSansRegular,Arial;
+  color:#474747
+}
+.h5p-course-presentation .Image-CourPres .ui-dialog-content input.h5peditor-text,
+.h5p-course-presentation .GoToSlide-CourPres .ui-dialog-content input.h5peditor-text {
+  max-width:180px;
+  min-width:180px
+}
+.h5p-course-presentation .ui-dialog-content .field.number input.h5peditor-text {
+  max-width:50px;
+  min-width:50px
+}
+.h5peditor-field-description {
+  margin-left:100px;
+  max-width:284px
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .field.boolean label.h5peditor-label {
+  font-size:11px;
+  color:#474747;
+  line-height:20px;
+  font-weight:normal
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .field.boolean label.h5peditor-label input[type="checkbox"] {
+  margin:1px 5px 4px 0
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-link-widget {
+  clear:both;
+  float:left
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-link-widget .h5p-link-protocol-selector {
+  float:left;
+  width:270px
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-link-widget .h5p-link-url {
+  float:left;
+  margin-right:0
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-link-widget .h5p-link-url span.h5peditor-label {
+  width:60px
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-link-widget .h5p-link-url input.h5peditor-text {
+  min-width:224px;
+  max-width:224px
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-link-widget .h5p-link-protocol-selector select,
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-image-editor .h5p-editor-dialog.h5p-open .field.select .h5peditor-label-wrapper select {
+  float:left;
+  font-family:openSansRegular,Arial;
+  font-size:13px;
+  height:28px;
+  margin:0;
+  padding:0
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-image-editor .h5p-editor-dialog.h5p-open .field.select .h5peditor-label-wrapper select {
+  min-width:440px;
+  max-width:440px
+}
+.h5p-course-presentation .h5p-dialog-no-close.	 .h5p-image-editor .file,
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-image-editor .h5p-editor-image-buttons {
+  float:left;
+  margin-right:10px
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .libwrap .h5p-copyright-button {
+  display:none
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-image-editor .file a.add {
+  background:#fff;
+  border:1px solid #ccc;
+  border-radius:6px; 
+  color:#474747;
+  font-family:openSansRegular,Arial;
+  font-size:12px;
+  font-weight:bold;
+  height:auto;
+  padding:5px 5px 2px;
+  text-align:center;
+  width:auto;
+  background-color:rgba(128, 128, 128, 0.19);
+}
+/* .h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-image-editor .file :after{
+   content: 'Upload';
+} */
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-image-editor .h5p-editor-image-buttons .h5p-copyright-button {
+  padding:0 5px 1px 0;
+  margin-bottom:0
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-image-editor .h5p-editor-dialog.h5p-open {
+  border-radius:6px;
+  padding:24px 10px 10px
+}
+.h5p-course-presentation .h5p-dialog-no-close.ui-dialog-buttons .h5p-image-editor .h5p-editor-dialog.h5p-open .h5peditor-text {
+  min-width:440px;
+  max-width:440px
+}
+.h5p-course-presentation .h5p-dialog-no-close .bgrow .field.number,
+.h5p-course-presentation .h5p-dialog-no-close .bgrow .field.boolean {
+  float:left;
+  margin-right:20px
+}
+.h5p-course-presentation .ui-dialog-buttonpane {
+  border-radius:0 0 6px 6px;
+  padding:5px 10px 10px 0
+}
+.h5p-course-presentation .ui-dialog-buttonset button.h5p-remove,
+.h5p-course-presentation .ui-dialog-buttonset button.h5p-remove:hover { 
+  background:#fff;
+  border:1px solid #dbdbdb;
+  color:#474747;
+  border-radius:4px;
+  font-family:ProximaNovaBold,Arial;
+  font-weight:normal;
+  font-size:12px;
+  text-transform:uppercase
+}
+.h5p-course-presentation .ui-dialog-buttonset button.h5p-done,
+.h5p-course-presentation .ui-dialog-buttonset button.h5p-done:hover { 
+  background:#27245e;
+  border:1px solid #27245e;
+  color:#fff;
+  border-radius:4px;
+  font-family:ProximaNovaBold,Arial;
+  font-weight:normal;
+  font-size:12px;
+  text-transform:uppercase
+}
+.h5p-course-presentation .ui-dialog-buttonset button {
+  font-family:ProximaNovaBold,Arial;
+  font-size:12px;
+  font-weight:normal;
+  padding:0;
+  margin:0 0 0 10px
+}
+.h5p-course-presentation .ui-dialog-buttonset button .ui-button-text {
+  padding:2px 6px
+}
+.h5p-course-presentation .h5peditor-dragnbar {
+  height:30px;
+  margin-top:6px;
+  z-index:2;
+  padding:0;
+  width:100%
+}
+.h5p-course-presentation .h5peditor-dragnbar .h5p-footer-toggle-keywords {
+  width:24px;
+  float:left;
+  border-bottom:0;
+  margin-top:3px;
+  margin-left:3px;
+  padding:0 5px
+}
+.h5p-course-presentation .h5peditor-dragnbar .h5p-footer-toggle-keywords:before {
+  font-family:'H5PFontAwesome4';
+  font-size:19px;
+  content:"\f0c9";
+  padding:0;
+  line-height:27px;
+  color:#474747
+}
+.h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-keywords {
+  width:38px;
+  padding:0 5px
+}
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li .h5p-dragnbar-a.h5p-dragnbar-keywords:before {
+  font-size:19px
+}
+.h5p-course-presentation .h5p-dragnbar-ul {
+  float:left
+}
+.h5p-coursepresentation-editor .editor.h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.h5p-dragnbar-left,
+.h5p-coursepresentation-editor .editor.h5p-course-presentation .h5peditor-dragnbar .h5p-footer-toggle-keywords {
+  display:none
+}
+.h5p-coursepresentation-editor .editor.h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.pre-icons {
+  margin-left:5px
+}
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li,
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li-ul .h5p-dragnbar-li:first-child {
+  border-radius:0
+}
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li:first-child {
+  border-radius:6px 0 0 0
+}
+/* .h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li:last-child {
+  border-radius:0 6px 0 0
+} */
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li .h5p-dragnbar-a {
+  font-size:19px
+}
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li .h5p-dragnbar-a::before {
+  font-size:22px
+}
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li .h5p-dragnbar-a.h5p-dragnbar-link-button::before,
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li .h5p-dragnbar-a.h5p-dragnbar-image-button::before,
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li .h5p-dragnbar-a.h5p-dragnbar-video-button::before,
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li .h5p-dragnbar-a.h5p-dragnbar-gotoslide-button::before,
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li .h5p-dragnbar-a.h5p-dragnbar-audio-button::before {
+  font-size:19px
+}
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li .h5p-dragnbar-a::after {
+  font-size:16px
+}
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li .h5p-dragnbar-a.h5p-dragnbar-more-button,
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li-ul .h5p-dragnbar-li a {
+  padding:5px 9px
+}
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li-ul .h5p-dragnbar-li {
+  border-top:1px solid #ddd;
+  border-left:1px solid #ddd;
+  border-right:1px solid #ddd
+}
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li-ul .h5p-dragnbar-li:last-child {
+  border-radius:0 0 6px 6px
+}
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li-ul {
+  right:-1px
+}
+.h5p-dragnbar .h5p-dragnbar-ul .h5p-dragnbar-li {
+  background:none;
+  border-bottom:0;
+  border-left:0;
+  border-right:0
+}
+/* .h5p-course-presentation .h5p-slides-wrapper .h5p-slide {
+  margin-top:30px
+} */
+.h5p-course-presentation .h5p-keywords-wrapper {
+  left:0;
+  border:1px solid #ddd;
+  top:0px;
+}
+.h5p-course-presentation .h5p-settings-wrapper {
+  /*margin-top:30px */
+}
+.h5p-course-presentation .h5p-settings-wrapper .h5p-bg-selector-content .h5peditor-field-description {
+  margin-left:0
+}
+.h5p-course-presentation .h5p-dragnbar-ul .h5p-keywords-dropdown label {
+  font-family:opensansregular,Arial;
+  font-size:13px
+}
+.h5p-course-presentation .ui-widget-overlay.ui-front {
+  background:none
+}
+.h5p-course-presentation .h5p-presentation-wrapper {
+  margin-top:0;
+  border:1px solid #ddd;
+  border-radius:0
+}
+.h5p-course-presentation .h5p-presentation-wrapper,
+.h5p-course-presentation .h5p-progressbar,
+.h5p-course-presentation .h5p-footer {
+  width:auto;
+  margin-right:14px
+}
+.h5p-course-presentation .h5p-progressbar {
+  border-radius:0 0 6px 6px;
+  height:6px;
+  background:#7f7f7f
+}
+.h5p-course-presentation .h5p-progressbar .h5p-progressbar-part:first-child {
+  border-radius:0 0 0 6px
+}
+.h5p-course-presentation .h5p-progressbar .h5p-progressbar-part:last-child {
+  border-radius:0 0 6px 6px;
+  border-right:0
+}
+.h5p-course-presentation .h5p-progressbar .h5p-progressbar-part {
+  border-right:2px solid #fff
+}
+.h5p-course-presentation .h5p-progressbar .h5p-progressbar-part-show { 
+  background:#27245e
+}
+.h5p-course-presentation .h5p-progressbar .h5p-progressbar-part .h5p-progressbar-part-has-task {
+  width:3px;
+  height:3px;
+  border:2px solid #fff
+}
+.h5p-course-presentation .h5p-footer .h5p-footer-center-adjusted {
+  color:#474747;
+  font-weight:bold;
+  font-size:13px
+}
+.h5p-course-presentation .h5p-footer .h5p-footer-previous-slide,
+.h5p-course-presentation .h5p-footer .h5p-footer-next-slide {
+  color:#474747;
+  outline:none
+}
+.h5p-course-presentation .h5p-slidecontrols {
+  margin:3px 0;
+  float:left !important;
+  bottom:-1px;
+  border-bottom:0;
+  border-radius:0 6px 0 0;
+  background:none;
+/*  border-left:1px solid #ddd;*/
+  padding-left:3px;
+  position:relative;
+}
+.h5p-course-presentation .h5p-slidecontrols .h5p-slidecontrols-button {
+  background:none;
+  border:0;
+  height:24px;
+  line-height:26px;
+  padding:0 6px;
+  margin:0;
+  width:auto
+}
+.h5p-course-presentation .h5p-slidecontrols .h5p-slidecontrols-button:before {
+  font-size:19px
+}
+.h5p-course-presentation .h5p-slidecontrols .h5p-slidecontrols-button.h5p-slidecontrols-button-background:before,
+.h5p-course-presentation .h5p-slidecontrols .h5p-slidecontrols-button.h5p-slidecontrols-button-clone:before,
+.h5p-course-presentation .h5p-slidecontrols .h5p-slidecontrols-button.h5p-slidecontrols-button-add:before {
+  font-size:16px
+}
+.h5p-course-presentation .h5p-slidecontrols-button.h5p-slidecontrols-button-background.active, 
+.h5p-course-presentation .h5p-keywordcontrols-button:hover {
+  border-radius:0
+}
+.h5p-course-presentation .h5p-box-wrapper, 
+.h5p-course-presentation .h5p-presentation-wrapper, 
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-slides-wrapper .h5p-current.global {
+  background:#fff; 
+  box-shadow:none
+}
+.h5p-coursepresentation-editor .h5peditor-form {
+  padding:0
+}
+.h5p-coursepresentation-editor .h5peditor-form .h5p-course-presentation {
+  margin-top:0
+}
+.h5p-course-presentation .GoToSlide-CourPres .field.boolean  {
+  position:relative
+}
+.h5p-course-presentation .GoToSlide-CourPres .field.boolean label.h5peditor-label {
+  position:absolute;
+  top:-33px;
+  left:220px
+}
+.h5p-standalone .h5p-slides-wrapper .h5p-slide {
+  margin-top:0
+}
+.h5p-course-presentation .libwrap .h5p-errors {
+  font-size:12px;
+  margin-left:150px;
+  padding-top:3px
+}
+.h5p-course-presentation .libwrap .h5p-errors p {
+  margin-bottom:5px;
+  line-height:16px
+}
+.h5p-coursepresentation-editor .cke_chrome {
+  padding: 0 3px 3px;
+}
+.h5p-course-presentation .h5p-element.h5p-transparent .h5p-element-inner.h5p-link a {
+  font-family:openSansRegular, Arial;
+  text-decoration:underline;
+  color:#474747;
+  line-height:18px;
+  font-size:13px;
+  padding:5px;
+  display:block;
+}
+/* CSS for Single Choice set starts here */
+
+/* .SingleChoiceSet-CourPres .h5peditor-interaction-label .ckeditor { */
+.SingleChoiceSet-CourPres .questioncontainer .ckeditor {
+  min-width:370px;
+  max-width:370px;
+  float:left;
+  margin-right:0;
+  line-height:17px;
+  margin-left:0;
+  padding:2px 3px;
+  font-size:12px;
+  border-radius:10px;
+  border:1px solid #e5e5e5; 
+  background:#fff;
+  color:#474747
+}
+.SingleChoiceSet-CourPres .questionset:nth-child(1) .questioncontainer .ckeditor {
+  min-width:385px;
+  max-width:385px;
+}
+.SingleChoiceSet-CourPres .questionandanswers .answercontainerwrapper .h5peditor-label{
+ /* margin-left: 43px */
+}
+.SingleChoiceSet-CourPres .ui-dialog-content .single-choice-container .questioncontainer label.h5peditor-label {
+ /* width:150px */
+ width:77px
+}
+.SingleChoiceSet-CourPres .single-choice-container .questioncontainer span.h5peditor-label {
+  padding-top:1px
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .questioncontainer {
+  margin:0;
+  position:relative
+}	
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .answercontainerwrapper .ans-set {
+  clear:both;
+  font-size:12px;
+  color:#474747
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .answercontainerwrapper .ans-set .ans-label {
+  font-weight:normal;
+  float:left;
+  width:75px;
+  padding-top:5px;
+  font-family:ProximaNovaBold,Arial
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .answercontainerwrapper .ans-set .option-set {
+  float:left; 
+  width:486px;
+  position:relative;
+  margin-bottom: -10px;
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .questionset {
+  border-bottom:1px solid #ddd;
+  float:left;
+  margin-bottom:10px;
+  padding-bottom:11px;
+  width:494px
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .questionset:last-child { 
+  margin-bottom:20px
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .answercontainerwrapper .ans-set .option-set .h5peditor-label {
+  float:left;
+  width:75px;
+  font-weight:normal;
+  margin-left:0; 
+  font-family:openSansRegular, Arial;  
+  font-size: 11px; 
+  line-height:18px;
+  padding-top:6px
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .ans-set .option-set .ckeditor {
+  float:left;
+  min-width:320px;
+  max-width:320px;
+  margin-right:5px ;
+  padding:2px 3px;
+  font-size:12px;
+  border-radius:10px;
+  border:1px solid #e5e5e5;
+  margin-bottom:5px;
+  background:#fff;
+  color:#474747
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .answercontainerwrapper .ans-set .option-set span.ans-correct {
+  float:left;
+  padding-top:5px;
+  text-align:right; 
+  font-family:openSansRegular, Arial;
+  font-size:11px;
+  color:#555     
+}
+.SingleChoiceSet-CourPres .ui-dialog-buttonpane .ui-dialog-buttonset {
+  margin-right:10px
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .answercontainerwrapper .answercontainer {
+  clear:both;
+  margin:0 0 8px 0
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .addedit-form-cancel-container-actions {
+  position:relative;
+  margin-left:143px;
+  margin-top:-5px;
+  float:left
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .addedit-form-cancel-container-actions .admin-save-pub-unpub-button-container {
+
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .addedit-form-cancel-container-actions .admin-save-pub-unpub-button-container.btn-answer {
+  float:left;
+  margin-top:0;
+  border:0
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .addedit-form-cancel-container-actions .admin-save-pub-unpub-button-container.btn-question {
+  width:auto;
+  float:left;
+  margin-left:-50%
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .addedit-form-cancel-container-actions .admin-save-pub-unpub-button-container.btn-question .admin-save-button-left-bg {
+  display:none
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .addedit-form-cancel-container-actions .admin-save-pub-unpub-button-container.btn-question #addquestion_btn {
+  font-weight:bold;
+  margin-left:-25px
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .addedit-form-cancel-container-actions .admin-save-pub-unpub-button-container.btn-answer #addquestion_btn.addedit-edit-contentauthor-basic-save {
+  border:0;
+  padding:0;
+  font-family:ProximaNovaBold,Arial;
+  font-weight:normal;
+  font-size:12px;
+  color:#474747;
+  background:#fff;
+  padding-right:10px;
+  padding:2px;
+  float:left;
+  margin-left:-47px;
+}
+.SingleChoiceSet-CourPres .single-choice-container .questionandanswers .addedit-form-cancel-container-actions .admin-save-pub-unpub-button-container.btn-answer .btn-question #addquestion_btn.addedit-edit-contentauthor-basic-save {
+  border:1px solid #ddd;
+  padding:2px 5px
+}
+.h5p-dialog-inner {
+  max-height:315px
+}
+.SingleChoiceSet-CourPres .questionset .addedit-form-cancel-container-actions .btn-answer  #pub-unpub-action-btn {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat 4px -2599px;
+  width:15px;
+  float:left;
+  height:15px;
+  margin-top:3px;
+  cursor:pointer
+}
+.SingleChoiceSet-CourPres .questionset .addedit-form-cancel-container-actions .btn-answer .btn-question #pub-unpub-action-btn {
+  display:none
+}
+.SingleChoiceSet-CourPres .questionset .addedit-form-cancel-container-actions .btn-question .e1-tip {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -142px -1501px;	
+  margin-top:0;
+  margin-left:0;
+  position:absolute;
+  top:12px;
+  width:30px; 
+  height:12px
+} 
+.SingleChoiceSet-CourPres .close_icon_ques_ans {
+  display:inline-block;
+  text-decoration:none;
+  text-indent:-2000px;
+  overflow:hidden;
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -365px -186px;
+  width:14px;
+  height:14px;
+  margin-top:5px;
+  position:absolute;
+  margin-left:3px
+ 
+}
+.SingleChoiceSet-CourPres .option-set .close_icon_ques_ans {
+  position:relative;
+  margin-left:0;
+  margin-top:3px;
+  right:auto
+}
+.h5p-course-presentation .SingleChoiceSet-CourPres .single-choice-container .questionandanswers .questionset:last-child {
+  border-bottom:0;
+  padding-bottom:0;
+  margin-bottom:0
+}
+/* CSS for Single Choice set ends here */
+
+/* hide presentation editor keyword list tool */
+
+/* h5p library drop down hide*/
+.h5p-coursepresentation-editor #h5peditor-library {
+  display:none
+}
+.h5p-editing-image-button {
+  display:none
+}
+#contentauthor-presentation-addedit-form .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions {
+  width:14%
+}
+.loaderimg {
+  background: transparent url("/sites/all/themes/core/AdministrationTheme/images/loader.gif") no-repeat top center;
+  height: 50px;
+  margin-left: 18px
+}
+.loadercontent {
+  border: solid 1px #fff;
+  position: absolute;
+  background-color: #fff;
+  opacity: .50;
+  filter: Alpha(Opacity=70) 
+}
+.h5p_overlay {
+  background-color:#ddd;
+  opacity:0.5
+}
+.h5p_int_overlay {
+  width:702px;
+  height:100%;
+  background:#000;
+  opacity:0.5;
+  left:5px;
+  position:absolute
+}
+.h5peditor-interactions .h5p-ie-transparent-background .h5p_int_overlay ~ .label-container,
+.h5peditor-interactions .h5p-ie-transparent-background .h5p_int_overlay ~ .link-container  {
+ /*  left:107px; */
+  left:282px;
+  top:90px
+}
+.h5peditor-interactions .h5p-ie-transparent-background .h5p_int_overlay ~ .text-container,
+.h5peditor-interactions .h5p-ie-transparent-background .h5p_int_overlay ~ .mark-the-words-container,
+.h5peditor-interactions .h5p-ie-transparent-background .h5p_int_overlay ~ .drag-text-container {
+ /*  left:65px; */
+  left:210px;
+  top:40px
+}
+.h5peditor-interactions .h5p-ie-transparent-background .h5p_int_overlay ~ .image-container  {
+ /*  left:65px; */
+  left: 288px;
+  top:60px
+}
+.h5peditor-interactions .h5p-ie-transparent-background .h5p_int_overlay ~ .single-choice-set-container
+{
+  /* left:65px;
+  top:-10px */
+  left:210px;
+  top:25px
+}
+
+.h5peditor-interactions .h5p-ie-transparent-background .h5p_int_overlay ~ .fill-in-the-blanks-container{
+  /* left:65px;
+  top:35px;	 */
+  left:210px;
+  top:50px;	
+}
+.h5peditor-interactions .h5p-ie-transparent-background .h5p_int_overlay ~ .go-to-question-container{
+  left:274px;
+  top:50px;	
+}
+
+.e1_h5p_error {
+  height:auto;
+  background-color:none;
+  position:absolute;
+  top:17px;
+  width:96%;
+  left:10px;
+  z-index:10;
+  padding-top:0
+}
+#show_expertus_message div.messages ul {
+  margin:0 1px 0 2px
+}
+#show_expertus_message {
+  min-height:16px;
+  left:0;
+  margin-left:auto;
+  margin-right:auto;
+  position:absolute;
+  right:0;
+  width:96%
+}
+#message-container .messages {
+  display:table;
+  clear:both;
+  padding:0 0 0 5px;
+  min-height:14px;
+  letter-spacing:.5px;
+  font-size:11px;
+  border:1px solid #f0c36d;
+  background-color:#f9edbe;
+  margin:0 auto;
+  position:relative;
+  z-index:101;
+  overflow:visible;
+  background-image:none;
+  color:#222;
+  text-align:center
+}
+#message-container .msg-close-btn {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/bubble_small_close.png") no-repeat 0 0;
+  cursor:pointer;
+  font-weight:bold;
+  width:15px;
+  margin:0 2px 0 4px;
+  height:15px;
+  position:absolute;
+  right:-12px;
+  top:-6px
+}
+p#vtip {
+  display:none;
+  position:absolute;
+  padding:8px;
+  left:5px;
+  font-size:11px;
+  background-color:white;
+  border:1px solid #a6c9e2;
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  z-index:9999;
+  color:#333;
+  margin-top:13px;
+  font-weight:normal;
+  word-wrap: break-word
+}
+p#vtip img {
+  display:none
+}
+p#vtip #vtipArrow {
+  position:absolute;
+  top:-10px
+} 
+p#vtip #vtipArrow.vtip-arrow {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -151px -1893px;
+  width:20px;
+  height:11px
+}
+.deleteicon {
+  display:inline-block;
+  text-decoration:none;
+  text-indent:-2000px;
+  overflow:hidden;
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -362px -183px;
+  width:14px;
+  height:14px;
+  margin-top:4px
+}
+.table-container {
+  max-width:510px
+}
+.gotoques_choice_separator {
+  border-bottom: 1px solid #ddd;
+  height:30px;
+  clear:both;
+  margin-bottom:10px
+}
+.expertusV2PopupContainer .ui-dialog-content,
+.expertusV2PopupContainer .ui-dialog-buttonpane {
+  background:#fff
+}
+#admin-data-grid .user-enrollment-div-cls .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+  background:none
+}
+.ui-widget-content .ui-state-highlight, .ui-state-highlight {
+  background:none
+}
+.ui-jqgrid {
+  font-size: 11px
+}
+.filter-wrapper,
+.mceEditor tr.mceLast,
+#page-container .catalog-desc-count {
+  display:none
+}
+.expertusV2PopupContainer .ui-dialog-title, .refer-course-holder .expertusV2PopupContainer .ui-dialog-titlebar-close {
+  color: #fff;
+  font-family: ProximaNovaBold,Arial;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 28px;
+  text-transform: uppercase
+}
+.ui-dialog .ui-dialog-title {
+  float: left;
+  margin: 0.1em 16px 0.2em 0
+}
+.expertusV2PopupContainer .ui-widget-header {
+  border: 0 none;
+  height: 29px
+}
+.page-administration .unique-delete-class .expertusV2PopupContainer .ui-dialog-content {
+  background: #f5f5f5;
+  clear:both
+}
+/* CSS for Delete Interaction popup starts here - Abhishek */
+.expertusV2PopupContainer .popupLeftCorner {
+  background-color: #27245e;
+  border: 1px solid #27245e;
+  border-radius: 10px 10px 0 0;
+  height:39px;
+  padding-left:10px
+}
+.expertusV2PopupContainer .popupRightCorner {
+  height:39px;
+  padding-right:10px
+}
+#delete-object-dialog .ui-dialog .ui-dialog-titlebar {
+  border-radius:0
+}
+.expertusV2PopupContainer .ui-widget-header {
+  height:29px;
+  border:0
+}
+.expertusV2PopupContainer .ui-dialog-content,
+.expertusV2PopupContainer .ui-dialog-buttonpane {
+  background:#fff
+}
+#delete-object-dialog #delete-msg-wizard table {
+  table-layout:fixed
+}
+#delete-object-dialog .commanTitleAll{
+  color:#474747;
+  font-family:openSansRegular, Arial;
+  font-size:12px;
+  text-transform:none;
+  overflow-wrap: break-word;
+  word-wrap: break-word
+}
+.ui-widget-header,
+.ui-widget-content,
+.ui-dialog .ui-dialog-content,
+.ui-dialog .ui-dialog-buttonpane {
+  background:none;
+  border:0
+}
+.expertusV2PopupContainer .ui-dialog-buttonpane .ui-dialog-buttonset{
+  margin-right:1px
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { 
+  float:right
+}
+#page-container .white-btn-bg-left,
+.white-btn-bg-left,
+.expertusV2PopupContainer .white-btn-bg-left {
+  display:none
+}
+#delete-object-dialog .ui-dialog-buttonset .white-btn-bg-middle {
+  padding:2px 4px 2px
+}
+.expertusV2PopupContainer .ui-dialog-buttonset .removebutton.white-btn-bg-middle,
+.expertusV2PopupContainer .ui-dialog-buttonset-post-assessment .white-btn-bg-middle {
+  margin-right:10px
+}
+#page-container .white-btn-bg-middle,
+.white-btn-bg-middle,
+.expertusV2PopupContainer .ui-dialog-buttonset .white-btn-bg-middle,
+.expertusV2PopupContainer .ui-dialog-buttonset-post-assessment .white-btn-bg-middle {
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  color:#474747;
+  text-align:center;
+  text-transform:uppercase;
+  line-height:16px;
+  background:#fff;
+/*   margin:0; */
+  border:1px solid #dedede;
+  border-radius:6px;
+  padding:3px 6px 2px;
+  float:left;
+  cursor:pointer
+}
+.expertusV2PopupContainer .admin-save-button-left-bg,
+.admin-save-button-left-bg,
+#page-container .admin-edit-button-left-bg,
+#page-container .admin-save-button-left-bg {
+  display:none
+}
+#delete-object-dialog .ui-dialog-buttonset .admin-save-button-middle-bg{
+  margin-top:0
+}
+.expertusV2PopupContainer .ui-dialog-buttonset button.admin-save-button-middle-bg,
+.expertusV2PopupContainer .ui-dialog-buttonset-post-assessment button.admin-save-button-middle-bg{
+  padding:2px 6px 1px
+}
+.expertusV2PopupContainer .ui-dialog-buttonset button,
+#page-container .admin-save-button-middle-bg,
+#page-container .admin-edit-button-middle-bg,
+.refer-course-holder .ui-dialog-buttonset button.admin-save-button-middle-bg,
+.expertusV2PopupContainer .ui-dialog-buttonset-post-assessment button,
+.refer-course-holder .ui-dialog-buttonset-post-assessment button.admin-save-button-middle-bg,
+.admin-save-button-middle-bg  {
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  color:#FFF;
+  text-align:center;
+  text-transform:uppercase;
+  line-height:16px;
+  background:#27245E;
+  margin:0;
+  border:1px solid #27245E;
+  border-radius:6px;
+  padding:3px 6px 2px;
+  float:left;
+  cursor:pointer
+}
+.expertusV2PopupContainer .admin-save-button-right-bg,
+.admin-save-button-right-bg,
+#page-container .admin-save-button-right-bg,
+#page-container .admin-edit-button-right-bg {
+  display:none
+}
+.expertusV2PopupContainer .popupBotLeftCorner {
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 0 0 10px 10px;
+  height:9px;
+  padding-left:9px
+}
+.expertusV2PopupContainer .popupBotRightCorner {
+  height:9px;
+  padding-right:10px;
+  margin-right:-1px
+}
+.expertusV2PopupContainer .popupBotmiddle {
+  height:8px
+}
+.expertusV2PopupContainer .ui-widget-header .ui-icon {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -426px -128px;
+  height:15px;
+  overflow:hidden;
+  width:17px
+}
+.ui-dialog .ui-dialog-titlebar-close span {
+  display:block;
+  margin:1px
+}
+.expertusV2PopupContainer .ui-dialog-title,
+.refer-course-holder .expertusV2PopupContainer .ui-dialog-titlebar-close {
+  color:#FFF;
+  font-size:13px;
+  text-transform:uppercase;
+  font-weight:normal;
+  font-family:ProximaNovaBold, Arial;
+  line-height:28px
+}
+.expertusV2PopupContainer .ui-dialog-content,
+.expertusV2PopupContainer .ui-dialog-buttonpane {
+  background:#fff
+}
+.ui-dialog .ui-dialog-titlebar-close {
+  right:-3px
+}
+.ui-dialog .ui-dialog-titlebar-close {
+  position: absolute;
+  right: .3em;
+  top: 50%;
+  width: 19px;
+  margin: -10px 0 0 0;
+  padding: 1px;
+  height: 18px
+}
+.ui-widget-header a {color: #222222/*{fcHeader};;; */;}
+.expertusV2PopupContainer .ui-dialog-buttonpane {
+  margin-top:0px
+}
+#page-container .white-btn-bg-right,
+.white-btn-bg-right,
+.expertusV2PopupContainer .white-btn-bg-right {
+  display:none
+}	
+.expertusV2PopupContainer .ui-dialog-buttonset .removebutton.white-btn-bg-middle {
+  margin-right:10px
+}
+/* CSS for Delete Interaction popup ends here  */
+.AdvancedText-CourPres, 
+.Link-CourPres, 
+.Video-CourPres, 
+.Audio-CourPres, 
+.Image-CourPres, 
+.GoToSlide-CourPres, 
+.Blanks-CourPres,
+.SingleChoiceSet-CourPres, 
+.DragText-CourPres, 
+.MarkTheWords-CourPres, 
+.ContinuousText-CourPres, 
+.Summary-CourPres {
+  background-color:#fff;
+  z-index:101
+}
+.addanother {
+  color:#474747;
+  font-family:ProximaNovaBold,Arial;
+  font-size:12px;
+  font-weight:normal;
+  text-align:left;
+  width:100px;
+  float:left
+}
+/* ADDING CSS - 02-03-2017 */
+
+.h5p-course-presentation .GoToSlide-CourPres .field.boolean label.h5peditor-label{
+  line-height: 23px
+}
+.h5p-course-presentation .Blanks-CourPres .ui-widget-content .form-item-add-another-row {
+  margin-left:100px
+}
+.h5p-course-presentation .Blanks-CourPres .ui-widget-content .statements_container span.h5peditor-label {
+  width:90px;
+  margin-left:10px;
+  font-family:opensansregular,Arial;
+  font-weight:normal
+}
+.h5p-course-presentation .Blanks-CourPres .ui-dialog-content input.h5peditor-text {
+  max-width:352px;
+  min-width:352px
+}
+.h5p-course-presentation .Blanks-CourPres .ui-widget-content .form-item-question-row input.h5peditor-text, 
+.h5p-course-presentation .Blanks-CourPres .ui-dialog-content .statements_container .form-item-statement-text:first-child input.h5peditor-text {
+  max-width:370px;
+  min-width:370px
+}
+.h5p-course-presentation .Blanks-CourPres.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+  margin-right:10px
+}
+.h5p-course-presentation .Blanks-CourPres .ui-dialog-content  img.info-enr-upload {
+  margin-left:-28px;
+  margin-top:4px;
+  margin-bottom:-2px
+}
+.h5p-course-presentation .Link-CourPres .ui-dialog-content span.h5peditor-label {
+  width:70px
+}
+.h5p-course-presentation .Link-CourPres .ui-dialog-content .embed-msg-style{
+  padding-left:23px;
+  color:#555
+}
+.h5p-course-presentation .SingleChoiceSet-CourPres .questionandanswers .answercontainerwrapper .ans-set .option-set .h5peditor-label{
+  float:left;
+  width:90px;
+  font-weight:normal;
+  margin-left:10px;
+  font-family:openSansRegular, Arial;
+  font-size: 12px;
+  line-height:18px;
+  padding-top:2px
+}
+.h5p-course-presentation .Image-CourPres .ui-dialog-content span.h5peditor-label {
+  width:86px
+}
+.h5p-course-presentation .h5p-presentation-wrapper, .h5p-course-presentation .h5p-progressbar, .h5p-course-presentation .h5p-footer{
+	margin-right: 8px;
+}
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar {
+  width:738px;
+  background:#f0f0ee;
+  border:1px solid #ddd;
+  border-bottom:0;
+  border-radius:6px 6px 0 0 
+}
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.h5p-dragnbar-left li,
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.pre-icons li {
+  margin-top:3px;
+  margin-bottom:3px;
+  height:23px
+}
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.h5p-dragnbar-left li .h5p-dragnbar-a,
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.pre-icons li .h5p-dragnbar-a {
+  padding:0 6px;
+  height:23px;
+  width:auto
+}
+/* .h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.h5p-dragnbar-left li:last-child .h5p-dragnbar-a,
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.pre-icons li:last-child .h5p-dragnbar-a {
+  border-right:1px solid #ddd;
+} */
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.h5p-dragnbar-left li:last-child .h5p-dragnbar-a:before,
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.pre-icons li .h5p-dragnbar-a:before {
+  line-height:23px
+}
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.h5p-dragnbar-left li:last-child div.h5p-dragnbar-a:before {
+  font-size:18px
+}
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul.h5p-dragnbar-left li:last-child div.h5p-dragnbar-a:after {
+  font-size:14px;
+  line-height:22px
+}
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-footer-toggle-keywords:before {
+  font-size:18px;
+  line-height:24px
+}
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-ul li .h5p-dragnbar-a:hover,
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-footer-toggle-keywords:hover,
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-slidecontrols .h5p-slidecontrols-button:hover {
+  background:#ddd;
+  border-radius:0
+}
+.h5p-coursepresentation-editor .h5p-course-presentation .h5peditor-dragnbar .h5p-dragnbar-li:last-child {
+  padding-right:3px;
+  border-right:1px solid #ddd;
+  margin-right:3px
+}
+.h5p-slidecontrols {
+  
+}
+.h5p-coursepresentation-editor .addedit-form-cancel-and-save-actions-row {
+  
+}
+.h5p-interactive-video .Fullsc + .h5p-controls + .h5p-dialog-wrapper .h5p-dialog .h5p-dialog-close {
+  top:-14px
+}
+.h5p-interactive-video .Fullsc + .h5p-controls + .h5p-dialog-wrapper .h5p-dialog[data-lib="H5P.SingleChoiceSet"] .h5p-dialog-close {
+  top:-5px
+}
+.h5p-interactive-video .h5p-video-wrapper .h5p-overlay .h5p-nil-interaction .h5p-interaction-label {
+
+}
+.h5p-course-presentation .Image-CourPres .afterUpload #tmpdata2 {
+  width:180px
+} 
+.h5p-course-presentation .Image-CourPres .form-item-image .afterUpload #tmpdata2 a {
+  background-position:-368px -186px
+} 
+.h5p-course-presentation .Image-CourPres .afterUpload #tmpdata2 .image-popup-title-fadeout-container {
+  max-width:162px;
+  margin-top:0;
+  font-size:12px;
+  font-family:openSansRegular,Arial;
+  color:#474747
+}
+.h5p-course-presentation .Image-CourPres .pre-inner-dialog .h5peditor-interaction-hover {
+  margin-bottom:0
+}
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .field.boolean,
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .field.boolean {
+  clear:both
+}
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .field.boolean .h5peditor-label,
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .field.boolean .h5peditor-label {
+  width:100px;
+  color:#474747;
+  float:left;
+  font-family:ProximaNovaBold,Arial;
+  font-size:12px;
+  font-weight:normal;
+  text-align:left;
+}
+
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .form-item-check,
+.h5p-course-presentation .Image-CourPres .pre-inner-dialog .form-item-check,
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .form-item-check {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/menu_bg1.png") no-repeat 2px -436px;
+  height:14px;
+  float:left;
+  margin-top:7px
+}
+.h5p-course-presentation .Image-CourPres .pre-inner-dialog .form-item-check.uncheckPause,
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .form-item-check.uncheckPause, 
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .form-item-check.uncheckAutoplay,
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .form-item-check.uncheckPause, 
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .form-item-check.uncheckAutoplay {
+  background-position:2px -436px
+}
+.h5p-course-presentation .Image-CourPres .pre-inner-dialog .form-item-check.checkPause,
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .form-item-check.checkPause, 
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .form-item-check.checkAutoplay,
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .form-item-check.checkPause, 
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .form-item-check.checkAutoplay {
+  background-position:2px -448px
+}
+.h5p-course-presentation .Image-CourPres .pre-inner-dialog .form-item-check input[type="checkbox"],
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .form-item-check input[type="checkbox"],
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .form-item-check input[type="checkbox"] {
+  display:block;
+  float:left;
+  height:12px;
+  margin:0;
+  opacity:0;
+  width:12px
+}
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .form-item-check .customlabeltextVid,
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .form-item-check .customlabeltextVid {
+  clear:none;
+  display:block;
+  float:left;
+  padding:2px 0 3px;
+  margin-left:0;
+  color:#555
+}
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .afterUpload #tmpdata3,
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .afterUpload #tmpdata2,
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .afterUpload #tmpdata3 {
+  width:220px
+}
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .afterUpload #tmpdata3 .image-popup-title-fadeout-container,
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .afterUpload #tmpdata2 .image-popup-title-fadeout-container, 
+.h5p-course-presentation .Audio-CourPres .pre-inner-dialog .afterUpload #tmpdata3 .image-popup-title-fadeout-container {
+  max-width:200px
+}
+.h5p-course-presentation .h5p-dialog-no-close .pre-inner-dialog .addanother {
+  color:#474747
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element .h5p-element-inner.h5p-blanks,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element .h5p-element-inner.h5p-drag-text,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element .h5p-element-inner.h5p-mark-the-words {
+  padding:5px
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-blanks .h5p-question-introduction,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-drag-text .h5p-question-introduction,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-mark-the-words .h5p-question-introduction {
+  font-family:openSansRegular, Arial;	
+  font-size:13px;
+  line-height:18px;
+  font-weight:bold;
+  margin-bottom:10px;
+  color:#474747
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-drag-text .h5p-question-introduction p {
+  font-weight:bold;
+  padding:5px 0
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-blanks .h5p-question-content,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-drag-text .h5p-question-content,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-mark-the-words .h5p-question-content {
+  font-family:openSansRegular, Arial;
+  font-size:13px;
+  line-height:18px;
+  margin-bottom:10px;
+  color:#474747
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-drag-text .h5p-drag-inner .h5p-drag-draggables-container {
+  clear:both;
+  float:left;
+  margin-bottom:15px;
+  width:100%
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-drag-text .h5p-drag-inner .h5p-drag-draggables-container .h5p-drag-draggable-wide-screen {
+  float:left
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-drag-text .h5p-drag-inner .h5p-drag-droppable-words {
+  clear:both;
+  width:100%;
+  float:left
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-slides-wrapper .h5p-element.h5p-dragnbar-element {
+  background:#fff
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-buttons {
+  float:right
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-blanks .h5p-question-buttons button,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-drag-text .h5p-question-buttons button,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-mark-the-words .h5p-question-buttons button,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-single-choice-set .h5p-question-buttons button.h5p-joubelui-button,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-single-choice-set .h5p-sc-solution-view-header button,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-summary-slide .h5p-summary-footer button {
+  border-radius:6px;
+  cursor:pointer;
+  font-family:ProximaNovaBold,Arial;
+  font-size:12px;
+  line-height:16px;
+  margin-left:0;
+  margin-top:1px;
+  padding:2px 6px;
+  text-align:center;
+  text-transform:uppercase;
+  height:auto
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-blanks .h5p-question-buttons button.h5p-joubelui-button,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-drag-text .h5p-question-buttons button.h5p-joubelui-button,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-mark-the-words .h5p-question-buttons button.h5p-joubelui-button,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-single-choice-set .h5p-question-buttons button.h5p-joubelui-button,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-single-choice-set .h5p-sc-solution-view-header button,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-summary-slide .h5p-summary-footer button.h5p-joubelui-button {  
+  background:#27245e;
+  border:1px solid #27245e;
+  color:#fff;
+/*   background:#fff;     // Close button style
+  border:1px solid #e5e5e5;
+  color:#2d2d2d; */
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-blanks .h5p-question-buttons .h5p-question-check-answer:before,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-drag-text .h5p-question-buttons .h5p-question-check-answer:before,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-mark-the-words .h5p-question-buttons .h5p-question-check-answer:before,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-buttons button.h5p-joubelui-button:before,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-summary-slide .h5p-summary-footer button.h5p-joubelui-button:before,
+.h5p-course-presentation .h5p-wrapper .h5p-progressbar .progressbar-part-summary-slide .summary-slide-left-svg,
+.h5p-course-presentation .h5p-wrapper .h5p-progressbar .progressbar-part-summary-slide .summary-slide-right-svg,
+.h5p-course-presentation .h5p-wrapper .h5p-footer .h5p-footer-right-adjusted .h5p-footer-print {
+  display:none
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-feedback .h5p-question-feedback-container .h5p-question-feedback-content {
+  font-weight:normal;
+  font-style:normal;
+  text-align:center;
+  width:100%;
+  color:#aaa;
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-summary-slide .h5p-summary-footer {
+  margin-bottom:10px;
+  margin-right:10px;
+  float:right
+}
+.h5p-course-presentation .h5p-summary-slide .h5p-summary-table-holder {
+  font-family:openSansRegular,Arial;
+  font-size:18px;
+  color:#474747
+}
+.h5p-course-presentation .h5p-summary-slide .h5p-summary-table-holder .h5p-score-table {
+  
+}
+.h5p-course-presentation .h5p-summary-slide .h5p-summary-table-holder .h5p-score-table td,
+.h5p-course-presentation .h5p-summary-slide .h5p-summary-table-holder .h5p-summary-total-table .h5p-summary-score-bar {
+  padding:5px 0;
+  border-top:1px solid #ddd
+}
+.h5p-course-presentation .h5p-summary-slide .h5p-summary-table-holder .h5p-summary-total-table td.h5p-summary-task-title {
+  padding:5px 20px;
+  text-align:right;
+  font-weight:bold;
+  border-top:1px solid #ddd
+}
+.h5p-course-presentation .h5p-summary-score-meter {
+  background:#eee;
+  border-radius:6px
+}
+.h5p-course-presentation .h5p-summary-score-meter > span {
+  background:#86D752;
+  border-radius:6px
+}
+.h5p-course-presentation .h5p-summary-slide .h5p-score-message .joubel-progress-circle-active-border {
+  background:#86D752;
+}
+.h5p-course-presentation .h5p-footer.h5p-footer-solution-mode {
+  background:#fff;
+  color:#474747;
+  font-size:12px
+}
+.h5p-course-presentation .h5p-footer .h5p-footer-exit-solution-mode-text {
+  font-weight:bold;
+  font-family:openSansRegular,Arial;
+  font-size:13px;
+  color:#474747;
+}
+
+/*.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-buttons button.h5p-question-check-answer::after {
+  content:"Check"
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-buttons button.h5p-question-try-again::after {
+  content:"Try Again"
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-buttons button.h5p-question-show-solution::after {
+  content:"Show Solution"
+}*/
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-buttons button.h5p-question-iv-continue::after {
+  content:"Continue"
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-buttons button.h5p-question-check-answer {
+  width:55px
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-buttons button.h5p-question-try-again {
+  width:75px
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-buttons button.h5p-question-show-solution {
+  width:110px
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-buttons button.h5p-question-iv-continue {
+  width:75px
+}
+/* ADDING FOR PRESENTATION OVERLAY*/
+
+.h5p-course-presentation .h5p_int_overlay{
+	width: 738px;
+    height:500px;
+    background: #000;
+    opacity: 0.5; 
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    z-index: 10007; 
+}
+.h5p-course-presentation  .h5p_int_overlay ~ .AdvancedText-CourPres,
+.h5p-course-presentation  .h5p_int_overlay ~ .Link-CourPres,
+.h5p-course-presentation  .h5p_int_overlay ~ .Image-CourPres,
+.h5p-course-presentation  .h5p_int_overlay ~ .Blanks-CourPres,
+.h5p-course-presentation  .h5p_int_overlay ~ .SingleChoiceSet-CourPres,
+.h5p-course-presentation  .h5p_int_overlay ~ .DragText-CourPres,
+.h5p-course-presentation  .h5p_int_overlay ~ .MarkTheWords-CourPres,
+.h5p-course-presentation  .h5p_int_overlay ~ .GoToSlide-CourPres,
+.h5p-course-presentation  .h5p_int_overlay ~ .Summary-CourPres{
+  left: 118px;
+  top: 68px;
+  z-index: 10008; 
+}
+.h5p-course-presentation  .h5p_int_overlay ~ .DragText-CourPres,
+.h5p-course-presentation  .h5p_int_overlay ~ .MarkTheWords-CourPres,
+.h5p-course-presentation  .h5p_int_overlay ~ .Summary-CourPres{
+    margin-left: -66px;
+}
+
+.h5p-course-presentation  .h5p_int_overlay ~.Video-CourPres,
+.h5p-course-presentation  .h5p_int_overlay ~.Audio-CourPres{
+  margin-left: 118px;
+  margin-top: 68px;
+  z-index: 10008; 
+}
+.h5p-course-presentation .h5p-blanks .h5p-question-feedback .h5p-joubelui-score-bar {
+  display:none
+}
+.h5p-course-presentation .h5p-blanks .h5p-question-feedback .h5p-question-feedback-content {
+  color: #aaa;
+  font-style:normal;
+  font-weight:normal;
+  text-align:center;
+  width:100%;
+}
+.h5p-course-presentation .h5p-blanks .h5p-question-content > div {
+  border-bottom:1px solid #e5e5e5; 
+  margin-right:0;
+  padding:8px 0 3px
+}
+.h5p-course-presentation .h5p-question-feedback .h5p-question-feedback-container .h5p-joubelui-score-bar {
+  display:none
+}
+.h5p-course-presentation .h5p-question-feedback,
+.h5p-course-presentation .h5p-question-feedback .h5p-question-feedback-content {
+  margin-top:0
+}
+.h5p-course-presentation .h5p-single-choice-set .h5p-sc-result-container {
+  transform:none;
+  height: inherit; /*fix for #0084292*/
+}
+.h5p-course-presentation .h5p-single-choice-set .h5p-sc-result-container .h5p-sc-feedback-container{
+ height: 82%;	
+}
+.h5p-course-presentation .h5p-single-choice-set .h5p-question-feedback-content {
+  padding:20px 10px
+}
+.h5p-course-presentation .h5p-single-choice-set .h5p-question-content .h5p-sc-set-progress {
+  /*display:none*/
+}
+.h5p-course-presentation .h5p-single-choice-set .h5p-sc-solution-answer {
+  padding:2px 9px
+}
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner.h5p-single-choice-set .h5p-sc-solution-view-header button::before {
+/*  content:"Back"; */
+  width:75px;
+  font-family:proximanovabold,Arial;
+  padding-right:0
+}
+.h5p-presentation-wrapper .h5p-dragnbar-element .h5p-single-choice-set .h5p-question-content .initialized .h5p-sc-slide {
+  width:100%
+} 
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-dragnbar-element .h5p-single-choice-set {
+  max-width:100%
+}
+.h5p-presentation-wrapper .h5p-dragnbar-element .h5p-single-choice-set .h5p-question-content .h5p-sc-question {
+  padding-left:5px;
+  font-weight:bold
+}
+.h5p-presentation-wrapper .h5p-dragnbar-element .h5p-single-choice-set .h5p-question-content li.h5p-sc-alternative {
+  margin-left:5px
+}
+.cke_editor_formattextbox_presentation .cke_inner .cke_contents.cke_reset {
+  min-height:60px;
+  max-height:60px
+}
+body#page-container > .h5p-coursepresentation-editor .h5peditor-form {
+  z-index:101
+}
+#delete-object-dialog .popupLeftCorner .ui-widget-header {
+  height:26px
+}
+#delete-object-dialog #delete-msg-wizard td.commanTitleAll {
+  text-align:center;
+  padding:20px;
+  font-size:13px
+}
+#delete-object-dialog .ui-dialog-buttonpane {
+  padding:5px 10px 10px;
+  border-radius:0 0 6px 6px
+}
+#delete-object-dialog .popupBotLeftCorner {
+  display:none
+}
+#delete-object-dialog .ui-widget-content.ui-corner-all {
+  box-shadow:0 0 4px #bbb;
+ /* border:1px solid #ddd;*/
+  border-radius:10px;
+  padding:0;	
+}
+#delete-object-dialog .ui-widget-content.ui-corner-all .popupLeftCorner {
+  padding-left:0;
+  border-radius: 6px 6px 0 0;  
+}
+#delete-object-dialog .ui-widget-content.ui-corner-all .popupRightCorner {
+  padding-right:0
+}
+#delete-object-dialog .ui-widget-content.expertusV2PopupContainer .ui-dialog-title {
+  line-height:23px
+}
+/* .cke_editor_formattextbox_presentation .cke_inner .cke_combo_button:focus {
+  border:1px solid red
+} 
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-outer {
+  border:1px solid #ddd;
+  border-radius:10px;
+}*/
+.h5p-course-presentation .h5p-wrapper .h5p-slides-wrapper .h5p-element {
+  /*background:rgba(0, 0, 0, 0) none repeat scroll 0 0; h5pcustomization apply box background */
+  background-color:#fff;
+ border-radius:10px;
+  box-shadow:0 0 5px #777
+}
+.h5p-no-frame .h5p-course-presentation .h5p-presentation-wrapper .h5p-single-choice-set .h5p-question-content .initialized .h5p-sc-slide,
+.h5p-no-frame .h5p-course-presentation .h5p-presentation-wrapper .h5p-singlechoiceset-outer-element  .h5p-single-choice-set {
+  width:100%;
+  max-width:100%
+}
+.h5p-single-choice-set .h5p-question-content .initialized .h5p-sc-slide{
+	  width:290px;
+}
+.h5p-course-presentation .h5p-single-choice-set .h5p-sc-set-wrapper .h5p-sc-question {
+  margin-left:10px;
+  font-weight:bold
+}
+.h5p-course-presentation .h5p-single-choice-set .h5p-sc-set-wrapper ul.h5p-sc-alternatives li.h5p-sc-alternative {
+  margin-left:5px
+}
+/* fill in the blanks label width */
+.h5p-course-presentation .Blanks-CourPres .ui-dialog-content .form-item-statements-row span.h5peditor-label.h5peditor-required  {
+	width:155px;
+}
+/*!Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .h5p-course-presentation .Video-CourPres .pre-inner-dialog .form-item-check .customlabeltextVid,
+  .h5p-course-presentation .Audio-CourPres .pre-inner-dialog .form-item-check .customlabeltextVid {
+	margin-left:5px
+  }
+	.h5p-course-presentation .Video-CourPres .pre-inner-dialog .form-item-check.uncheckPause,
+	.h5p-course-presentation .Video-CourPres .pre-inner-dialog .form-item-check.checkPause {
+		-webkit-margin-before:0px
+	}
+}
+
+/* hide fullscreen button */
+.h5p-course-presentation .h5p-footer .h5p-footer-toggle-full-screen {
+  display: none;
+  text-align: right;
+}
+/* apply margin for presntation preview. It should not affect editor. */
+.h5p-standalone .h5p-presentation-wrapper,
+.h5p-standalone .h5p-progressbar,
+.h5p-standalone .h5p-footer {
+  margin-left:14px;
+}
+.h5p-standalone .h5p-presentation-wrapper {
+  margin-top:14px;
+}
+
+.h5p-course-presentation .AdvancedText-CourPres .defaultSkin table.mceLayout {
+  border:0;
+  max-width:332px;
+  margin-top:5px
+}
+.h5p-course-presentation .AdvancedText-CourPres .defaultSkin table.mceLayout tr.mceFirst td.mceToolbar {
+  border-radius: 6px 6px 0 0;
+  border:1px solid #ccc;
+  border-bottom:0
+}
+.h5p-course-presentation .AdvancedText-CourPres .defaultSkin .mceIframeContainer {
+  border:1px solid #ccc;
+  border-radius:0 0 6px 6px;
+  overflow:hidden
+}
+.help-text-h5p-drop
+{
+ border-radius: 12px;
+ border: 1px solid #ddd;
+}
+.help-text-h5p-drag
+{
+ border-radius: 12px;
+ border: 1px solid #c6c6c6;
+ background: #ddd;
+ text-align: center; 
+ margin :0px 3px 0px;
+ width:50px;
+}
+
+.reducedh5pbuttonsize
+{
+	font-size:10px !important;
+	width:auto  !important;
+}
+
+.addedit-new-field-title
+{
+	margin-left:15px;
+}
+
+.h5peditor-interactions
+{
+	margin-right:12px;
+}
+.fade-desc
+{
+    background: -ms-linear-gradient(to right,transparent,#000 80%,#000);
+    background: linear-gradient(to right,transparent,#000 80%,#000);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#00f3f3f3',endColorstr='#000000');
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=1,startColorstr=#00f3f3f3,endColorstr=#000000)";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 70px;
+    height: 21px;
+}
+	.h5p-dialog-title::before{
+		content: none;
+	}
+	.h5p-gotoquestion-text{
+	margin-left: 2px;
+	}
+.h5p-course-presentation .Image-CourPres .ui-dialog-content .h5peditor-interaction-audio-pause span.h5peditor-label img{
+ cursor: pointer; 
+ margin-left: 10px;
+ margin-bottom: -2px
+}
+
+/*MSIE x icon issue in textbox */
+input[type=text]::-ms-clear { display: none; }

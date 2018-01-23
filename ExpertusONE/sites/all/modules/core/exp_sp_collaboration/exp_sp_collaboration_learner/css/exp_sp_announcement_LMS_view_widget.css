@@ -1,0 +1,171 @@
+.announce_page_disable, .announce_page_enable {
+  background:transparent url(/sites/all/themes/core/expertusone/expertusone-internals/images/Circle_bg.png) no-repeat scroll -63px -3px;
+  float:left;
+  width:15px;
+  height:15px;
+  font-size:.9em;
+  line-height: 15px;
+}
+.announce_page_enable {
+  background:transparent url(/sites/all/themes/core/expertusone/expertusone-internals/images/Circle_bg.png) no-repeat scroll -47px -3px;
+  color:#000;
+}
+.announce_page_disable a, .announce_page_enable a {
+  color: #000;
+  display: inline-block;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+}
+.announce_page_enable a {
+  color: #FFF;
+}
+.announce_scroll {
+  position:relative;
+  float:left;
+  display:block;
+  margin:0 5px;
+}
+.announce-desc {
+  background:url("images/slide-textBG.png") repeat-y left top;
+  min-height:99px;
+  height: auto;
+  position:absolute;
+  width: 98.5%;
+  text-align:left;
+  line-height:21px;
+  top:275px;
+  left:0;
+  overflow:hidden;
+  padding:10px 0 10px 10px;
+  *padding-bottom:0;
+}
+.announce-desc-mxhi{
+	min-height: 108px;
+}
+
+.announcement-short-desc {
+  padding:5px 0 0 0;
+  min-height:72px;
+  height: auto;
+  color: #FFF;
+}
+ .announce-desc .announce-desc-heading {
+  display: block;
+}
+.roundbox-ml {
+  position:relative;
+}
+.cCorner10 {
+  background: #fff;
+  width: 700px;
+  min-height: 394px;
+  height: auto;
+  position: relative;
+}
+.announce-short-desc-text {
+  width:100%;
+  padding:0 0 10px 0;
+  text-align: justify;
+  color:#fff;
+  overflow:hidden;
+  height:72px;
+}
+.announcement_scroll_links {
+  display:block;
+  padding:40px 5px 0 0;
+  float:right;
+}
+.announce-desc-title {
+  font-weight:bold;
+  font-size:34px;
+  color:#fff;
+  line-height:32px;
+  display:block;
+  text-shadow:1px 2px 0 #000;
+}
+#block-exp-sp-announcement-learner-announcement1 {
+  margin:0;
+  *margin-top: 10px;
+  min-height: 394px;
+  height: auto;
+}
+
+.announcement-popup{
+  cursor: pointer;
+  vertical-align:bottom;
+  margin-left:-2px;
+}
+.show-short-text{
+  padding-bottom:2px;
+  margin-left:-2px;
+  *padding-bottom:0;
+}
+.show-full-text{
+  padding-bottom:1px;
+  *padding-bottom:0;
+  padding-left:1px;
+}
+.announcement-short-desc .long-desc-toggle{
+  display: none;
+}
+.announcement-maincontainer{
+  margin-bottom:10px;
+}
+#page-container .cCorner10 {
+  background: #fff;
+  width: 621px;
+  min-height: 423px;
+  height: auto;
+  position: relative;
+}
+#page-container .announcemnt-img {
+	border-radius: 10px;	
+}
+#page-container .announce-desc {
+  padding: 7px 0 10px 10px;
+  position: absolute;
+  top: 297px;
+  width: 611px;
+  text-align: left;
+  border-radius: 10px;
+}
+#page-container .announce-desc-pager{
+  background: url("") repeat;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  top: 354px;
+}
+#page-container .announce_page_enable{
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -482px -46px;
+  float:left;
+  width:8px;
+  height:8px;
+  line-height: 15px;
+}
+#page-container .announce_page_disable {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -492px -46px;
+  float:left;
+  width:8px;
+  height:8px;
+  line-height: 15px;
+}
+#page-container .announce_scroll {
+  position:relative;
+  float:left;
+  display:block;
+  margin:0 3px;
+}
+#page-container #block-exp-sp-announcement-learner-announcement1 {
+  margin:0;
+  *margin-top: 10px;
+  min-height: 423px;
+  height: auto;
+}
+

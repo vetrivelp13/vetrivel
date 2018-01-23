@@ -1,0 +1,14 @@
+.page-learning-enrollment-search #page-container .block-title .learner-filter-container #myenrollment-mylearning-filter-by.mylearning-filter-by{
+  width: 570px
+}
+#page-container #myenrollment-mylearning-filter-by .filter_labelclass{
+  width:106px
+}
+#page-container #myenrollment-mylearning-filter-by .reg.dropdown-set-wrapper .filter_labelclass,
+#page-container #myenrollment-mylearning-filter-by .textfilter-set-wrapper .filter_labelclass, 
+#page-container #myenrollment-mylearning-filter-by .assignedby.dropdown-set-wrapper .filter_labelclass {
+  width: 95px;
+}
+#refer_course_holder .expertusV2PopupContainer div.refer-note{
+  width:56%
+}

@@ -1,0 +1,169 @@
+.h5p-interactive-video .h5p-dialog.h5p-big.text-container{
+	max-width: 531px;
+}
+.h5p-dialog-wrapper .h5p-dialog-inner .h5peditor-label{
+	    width: 110px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.label-container{
+	    max-width: 384px;
+}
+.h5peditor-interactions.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog.image-container .h5p-dialog-popup{
+	width: 368px;
+}
+.h5p-dialog.image-container .h5p-dialog-inner .form-item-image #uploadimage{
+	    max-width: 146px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.image-container{
+	    max-width: 383px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.link-container{
+	max-width: 384px;
+}
+.h5p-dialog.image-container .h5p-dialog-inner .form-item-image #uploadimage{
+	    left: 56px;
+}
+ .h5p-dialog-wrapper .single-choice-set-container .h5p-dialog-inner .h5peditor-label{
+	width: 100px;
+}
+.h5p-dialog.link-container .h5peditor-interaction-url .customlabelurl{
+	margin-left: 130px;
+}
+.h5p-course-presentation .SingleChoiceSet-CourPres .answercontainerwrapper span.h5peditor-label{
+	width: 147px;
+}
+.h5p-course-presentation .Blanks-CourPres .ui-dialog-content span.h5peditor-label.h5peditor-required{
+	/*width:100px;*/
+}
+.h5p-course-presentation .Blanks-CourPres .form-item-statements-row span.h5peditor-label{
+	width: 175px;
+}
+.Image-CourPres #uploadimage{
+	    max-width: 147px;
+}
+.h5p-course-presentation.editor .ui-dialog-buttons.Image-CourPres.h5p-dialog-no-close{
+	    min-width: 308px;
+	        max-width: 308px;
+}
+.h5p-course-presentation .Image-CourPres .ui-dialog-content span.h5peditor-label{
+	    width: 107px;
+}
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .field.boolean .h5peditor-label{
+	    width: 130px;
+}
+.Video-CourPres #uploadimage{
+	       left: 33px;
+	           max-width: 250px;
+}
+.Audio-CourPres #uploadimage{
+	    max-width: 147px;
+}
+.h5p-course-presentation .Blanks-CourPres .ui-dialog-content .form-item-statements-row span.h5peditor-label.h5peditor-required{
+	width: auto;
+    margin-right: 10px;
+}
+.h5p-dialog-inner .single-choice-container .h5peditor-interaction-duration span.h5peditor-label,
+.h5p-dialog-inner .single-choice-container .h5p-image-radio-button-group div.h5peditor-label{
+	width: 121px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.single-choice-set-container{
+	    max-width: 555px;
+}
+.h5p-dialog-inner .questionandanswers .answercontainerwrapper .ans-label .h5peditor-label{
+	width:146px;
+}
+.fill-in-the-blanks-container .h5p-dialog-inner .form-item-question-row .h5peditor-label{
+	width:110px;
+}
+.mark-the-words-container .h5p-dialog-inner .h5p-markthewords-editor .h5peditor-label,
+.drag-text-container .h5p-dialog-inner .h5p-markthewords-editor .h5peditor-label{
+	width:110px;
+}
+.h5p-interactive-video .h5p-big.mark-the-words-container .h5p-dialog-inner .libwrap,
+.h5p-interactive-video .h5p-big.drag-text-container .h5p-dialog-inner .libwrap{
+	width: 490px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.mark-the-words-container,
+.h5p-interactive-video .h5p-dialog.h5p-big.drag-text-container{
+	    max-width: 518px;
+}
+.h5p-dialog-wrapper .h5p-dialog-inner .form-item-label-row .h5peditor-label{
+	width:110px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.go-to-question-container{
+	max-width:387px;
+}
+.h5p-dialog.go-to-question-container .h5p-dialog-inner .choices_container .form-item-option-row .form-item-goto-label{
+	width:110px;
+}
+.h5p-dialog.go-to-question-container .h5p-dialog-inner .choices_container .form-item-option-row .form-item-goto-label span.h5peditor-label{
+	width:60px;
+}
+
+/*Adding for Buttons for Preview - Video*/
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-iv-continue,
+.h5p-interactive-video .h5p-video-wrapper .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-iv-continue,
+.h5p-interactive-video .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-show-solution, 
+.h5p-interactive-video .h5p-video-wrapper .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-show-solution,
+.h5p-interactive-video .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-try-again,
+.h5p-interactive-video .h5p-video-wrapper .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-try-again,
+.h5p-interactive-video .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-check-answer,
+.h5p-interactive-video .h5p-dialog-interaction.h5p-blanks .h5p-question-buttons button.h5p-question-check-answer, 
+.h5p-interactive-video .h5p-dialog-interaction.h5p-mark-the-words .h5p-question-buttons button.h5p-question-check-answer, 
+.h5p-interactive-video .h5p-dialog-interaction.h5p-drag-text .h5p-question-buttons button.h5p-question-check-answer{
+	height: 38px;
+	font-size: 11px !important;
+}
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-iv-continue, 
+.h5p-interactive-video .h5p-video-wrapper .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-iv-continue{
+	width:88px  !important;
+}
+.h5p-interactive-video .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-show-solution, 
+.h5p-interactive-video .h5p-video-wrapper .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-show-solution,
+.h5p-interactive-video .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-try-again,
+.h5p-interactive-video .h5p-video-wrapper .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-try-again
+{
+  width: 86px !important;
+}
+.h5p-interactive-video .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-check-answer,
+.h5p-interactive-video .h5p-dialog-interaction.h5p-blanks .h5p-question-buttons button.h5p-question-check-answer, 
+.h5p-interactive-video .h5p-dialog-interaction.h5p-mark-the-words .h5p-question-buttons button.h5p-question-check-answer, 
+.h5p-interactive-video .h5p-dialog-interaction.h5p-drag-text .h5p-question-buttons button.h5p-question-check-answer{
+	width: 72px !important;
+}
+/* .h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-iv-continue, 
+.h5p-interactive-video .h5p-video-wrapper .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-iv-continue,
+.h5p-interactive-video .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-show-solution, 
+.h5p-interactive-video .h5p-video-wrapper .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-show-solution,
+.h5p-interactive-video .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-try-again,
+.h5p-interactive-video .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-check-answer,
+.h5p-interactive-video .h5p-dialog-interaction.h5p-blanks .h5p-question-buttons button.h5p-question-check-answer, 
+.h5p-interactive-video .h5p-dialog-interaction.h5p-mark-the-words .h5p-question-buttons button.h5p-question-check-answer, 
+.h5p-interactive-video .h5p-dialog-interaction.h5p-drag-text .h5p-question-buttons button.h5p-question-check-answer{
+	font-size: 11px !important;
+} */
+.h5peditor-label .info-enr-upload{
+	margin:5px 6px 0 0;
+}
+.h5p-image-radio-button-group .h5peditor-required{
+	margin-left:-27px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.single-choice-set-container .h5p-image-radio-button-group .h5peditor-required{
+	margin-left:-36px;
+}
+.single-choice-container .h5peditor-label .info-enr-upload{
+	margin:5px 15px 0 0;
+}
+.h5p-interactive-video .fill-in-the-blanks-container .form-item-statements-row img{	
+    margin-left: 3px;
+}
+
+.Video-CourPres .customlabelfileuploadhelp{
+	    white-space: pre-wrap;
+}
+.h5p-course-presentation .ui-dialog-buttons.Video-CourPres.h5p-dialog-no-close{
+	 min-width: 362px;
+	        max-width: 362px;
+}
+.h5p-course-presentation .Video-CourPres .pre-inner-dialog .afterUpload #tmpdata3 .image-popup-title-fadeout-container{
+	    max-width: 173px;
+}

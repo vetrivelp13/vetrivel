@@ -1,0 +1,143 @@
+<?php 
+class AdministrationCertificateTemplateCreateBase extends AdministrationCertificateTemplateTestHelper
+{
+	public function createCertificateTemplateTestCase($scope = 'all') {
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['certificateTemplateCreate'];
+		} else {
+			$testCases = array($this->testcases['certificateTemplateCreate'][$scope]);
+		}
+		
+		foreach($testCases as $test){
+			
+			// Unset unwanted fields
+			unset($test['id']);
+			
+			//Get course id
+			$path = '//*[@id="qtip_addtemplate_visible_disp__cre_ntn"]';
+			$addClassObj = $this->getQtipAttributes($path,'onmousedown');
+			
+			//Add qtip popup for class
+			$qtipDef = array(
+					'tipWidth'=>$addClassObj['wBubble'],
+					'tipTop'=>787,
+					'tipLeft'=>139.767,
+					'tipId'=>$addClassObj['catalogVisibleId'],
+					'tipObjectId'=>$addClassObj['courseId'],
+					'tipTableWidht'=>373,
+					'tipContentId'=>$addClassObj['popupDispId'],
+					'tipEntityType'=>'cre_sys_obt_cls',
+					'tipClass'=>'qtip-parent',
+					'tipPos'=>'bottomRight'
+			
+			);
+			
+			
+			$this->addQtipModel($qtipDef);
+				
+			// Keep final content including qtip popup for multiple test
+			$qtipContent = $this->content;
+			
+			//Reset content with the qtip
+			$this->content = $qtipContent;
+		
+			//Get empty form
+			$post_field = array('wrapper'=>'paintContent'.$addClassObj['popupDispId']);
+		
+			$out = $this->drupalPostAJAX(null,$edit,'Add Template','?q='.$addClassObj['url'],array(),array(),'',$post_field);
+		
+			$this->verbose('Class Empty Form: ' . $this->getUrl() . '<hr />' . $this->content);
+		
+			// Get Form id and wrapper id
+			$formIds = $this->xpath('//*[@id="paintContent'.$addClassObj['popupDispId'].'"]/*[@class="addedit-form-wrapper"]/form');
+			$formId = (string) $formIds[0]['id'];
+			
+			$wrapIds = $this->xpath('//*[@id="paintContent'.$addClassObj['popupDispId'].'"]/*[@class="addedit-form-wrapper"]');
+			$wrapId = (string) $wrapIds[0]['id'];
+		
+			// Save form
+			$param = array(
+					"form_id"=>"exp_sp_administration_notification_attaching_template_addedit_form",
+					"_triggering_element_name"=>"save",
+					"_triggering_element_value"=>"Save",
+			);
+			$post_field = array('submit'=>$param,	'wrapper'=>$wrapId);
+			$out = $this->drupalPostAJAX(null,$test,'Save','?q=system/ajax',array(),array(),$formId,$post_field);
+		
+			$this->verbose('Class Save: ' . $this->getUrl() .
+					'<hr />' . $this->content);
+		
+			// Check any validation error occurs
+			$error = '';
+			$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+			foreach($isError as $err){
+				$error .= (string) $err[0]->span;
+			}
+		
+			// General response validation
+			$this->assertResponse(200,'Form Repainted successfully');
+			$txt = 'saved successfully';
+			$this->assertText(t($txt),'updated successfully','catalog_admin');
+			$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+			$webError = "Website encountered an unexpected error";
+			$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+		}
+	}
+
+}
+
+class AdministrationCertificateTemplateCreateAll extends AdministrationCertificateTemplateCreateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - CertificateTemplate - Create - All Tests',
+				'description' => 'Module : exp_sp_administration_notification_template',
+				'group' => '1505 - Administration - Manage - CertificateTemplate - Create',
+		);
+	}
+	
+	public function testCertificateTemplateCreateAll() {
+		$this->manageAdminCertificate();
+		debug('testAdminCertificateTemplateCreateAll called');
+		$this->createCertificateTemplateTestCase('all');
+	}
+}
+
+class AdministrationCertificateTemplateCreateCase1 extends AdministrationCertificateTemplateCreateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - CertificateTemplate - Create - Case 1',
+				'description' => 'Module : exp_sp_administration_notification_template',
+				'group' => '1505 - Administration - Manage - CertificateTemplate - Create',
+		);
+	}
+
+	public function testCertificateTemplateCreateCase1() {
+		$this->manageAdminCertificate();
+		$this->manageAdminCertificateTemplate('case1');
+		debug('testCertificateTemplateCreateCase1 called');
+		$this->createCertificateTemplateTestCase('st_case1');
+	}
+}
+
+class AdministrationCertificateTemplateCreateCase2 extends AdministrationCertificateTemplateCreateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - CertificateTemplate - Create - Case 2',
+				'description' => 'Module : exp_sp_administration_notification_template',
+				'group' => '1505 - Administration - Manage - CertificateTemplate - Create',
+		);
+	}
+
+	public function testCertificateTemplateCreateCase2() {
+		$this->manageAdminCertificate();
+		$this->manageAdminCertificateTemplate('case2');
+		debug('testCertificateTemplateCreateCase2 called');
+		$this->createCertificateTemplateTestCase('st_case2');
+	}
+}
+?>

@@ -1,0 +1,91 @@
+.h5p-interactive-video .h5p-dialog.h5p-big.text-container{
+	max-width: 570px;
+}
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog .h5peditor-interaction-pause label.h5peditor-label {
+  width: 110px;
+}
+.text-container .h5p-dialog-inner .h5peditor-label{
+	width: 116px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.link-container{
+	max-width: 420px;
+}
+.h5p-dialog.link-container .h5peditor-interaction-url .customlabelurl {
+	width: 218px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.label-container {
+	max-width: 385px;
+}
+.h5p-dialog.image-container .h5p-dialog-inner .h5p-image-radio-button-container,
+.h5p-dialog.single-choice-set-container .h5p-dialog-inner .h5p-image-radio-button-container,
+.h5p-dialog.fill-in-the-blanks-container .h5p-dialog-inner .h5p-image-radio-button-container {
+	margin-left: 17px;
+}
+.h5p-interactive-video .h5p-dialog.single-choice-set-container .h5p-dialog-inner .h5peditor-interaction-duration label.h5peditor-label-wrapper .h5peditor-text#durationfrom,
+.h5p-interactive-video .h5p-dialog.fill-in-the-blanks-container .h5p-dialog-inner .h5peditor-interaction-duration label.h5peditor-label-wrapper .h5peditor-text#durationfrom {
+	margin-left: 22px;
+}
+.image-container .h5p-image-radio-button-group .h5peditor-label .info-enr-upload,
+.single-choice-set-container .h5p-image-radio-button-group .h5peditor-label .info-enr-upload,
+.fill-in-the-blanks-container .h5p-image-radio-button-group .h5peditor-label .info-enr-upload,
+.mark-the-words-container .h5p-image-radio-button-group .h5peditor-label .info-enr-upload,
+.drag-text-container .h5p-image-radio-button-group .h5peditor-label .info-enr-upload{
+	margin: 5px 4px 0 0;
+}
+.image-container .h5p-image-radio-button-group .h5peditor-required,
+.single-choice-set-container .h5p-image-radio-button-group .h5peditor-required,
+.fill-in-the-blanks-container .h5p-image-radio-button-group .h5peditor-required,
+.mark-the-words-container .h5p-image-radio-button-group .h5peditor-required, 
+.drag-text-container .h5p-image-radio-button-group .h5peditor-required{
+	max-width: 30px;
+	margin: -4px 0 0 -25px;
+}
+.h5p-dialog.image-container .h5p-dialog-inner .form-item-image #uploadimage {
+	margin-left: 17px;
+}
+.h5p-course-presentation .Link-CourPres .ui-dialog-content .embed-msg-style {
+	width: 218px;
+}
+.h5p-course-presentation .Image-CourPres .ui-dialog-content span.h5peditor-label .medium-vtip {
+	margin-left: 10px;
+}
+.h5p-interactive-video .h5p-dialog-wrapper .single-choice-set-container .h5p-dialog-inner .single-choice-container .questionandanswers .questionset:nth-child(1) .questioncontainer .ckeditor,
+.h5p-dialog-wrapper .single-choice-container .questionandanswers .ans-set .option-set .ckeditor,
+.h5p-dialog-wrapper .single-choice-container .questionandanswers .addedit-form-cancel-container-actions .admin-save-pub-unpub-button-container.btn-answer #addquestion_btn.addedit-edit-contentauthor-basic-save,
+.single-choice-set-container .h5p-dialog-inner .single-choice-container .OptionalLabel .ckeditor {
+	margin-left: 21px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.single-choice-set-container {
+	max-width: 530px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.fill-in-the-blanks-container {
+	max-width: 535px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.fill-in-the-blanks-container .form-item-question-row label.h5peditor-label-wrapper .h5peditor-text,
+.h5p-interactive-video .h5p-dialog.h5p-big.fill-in-the-blanks-container .statements_container .form-item-statement-text:nth-child(1) label.h5peditor-label-wrapper .h5peditor-text,
+.h5p-interactive-video .h5p-dialog.h5p-big.fill-in-the-blanks-container label.h5peditor-label-wrapper .h5peditor-text {
+	margin-left: 17px;
+}
+.h5p-dialog.fill-in-the-blanks-container .h5p-dialog-inner .form-item-add-another-row {
+	margin-left: 122px;
+}
+.h5p-course-presentation .Blanks-CourPres .ui-dialog-content .form-item-statements-row span.h5peditor-label.h5peditor-required {
+	width: 104px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.image-container label.h5peditor-label-wrapper .h5peditor-text,
+.h5p-interactive-video .h5p-dialog.h5p-big.image-container .h5p-dialog-inner .h5peditor-interaction-duration label.h5peditor-label-wrapper .h5peditor-text {
+	margin-left: 17px;
+}
+.h5p-interactive-video .h5p-dialog.h5p-big.image-container {
+	max-width: 413px;
+}
+.h5peditor-interactions.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog.image-container .h5p-dialog-popup {
+	width: 400px;
+}
+.h5p-interactive-video .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-try-again,
+.h5p-course-presentation .h5p-presentation-wrapper .h5p-element-inner .h5p-question-buttons button.h5p-question-try-again {
+	width: 116px;
+}
+.Video-CourPres .customlabelfileuploadhelp{
+	width: 180px;
+}

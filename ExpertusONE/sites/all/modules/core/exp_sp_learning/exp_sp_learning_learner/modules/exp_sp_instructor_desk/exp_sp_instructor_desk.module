@@ -1,0 +1,429 @@
+<?php
+/**
+ * Implementation of hook_init().
+ */
+function exp_sp_instructor_desk_init() {
+  try{
+  global $user;
+  if((arg(1) == 'enrollment-search') && ($user->uid==0)) {
+    $query = array('destination' => "learning/enrollment-search");
+    //drupal_goto('learning/login', array('query' => $query));
+    drupal_goto('/', array('query' => $query));
+  }
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_instructor_desk_init', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+/**
+ * Implementation of hook_block_info().
+ */
+function exp_sp_instructor_desk_block_info() {
+  try{
+  $blocks = array();
+  $blocks['tab_instructor_desk'] = array(
+    'info' => t('Instructor Desk'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/enrollment-search',
+  );
+  $blocks['tab_instructor_desk_customized'] = array(
+  		'info' => t('Instructor Desk Customized'),
+  		'cache' => DRUPAL_CACHE_PER_ROLE,
+  		'visibility' => BLOCK_VISIBILITY_LISTED,
+  		'pages' => 'learning/enrollment-search',
+  );
+  return $blocks;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_instructor_desk_block_info', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function exp_sp_instructor_desk_menu() {
+  try{
+  $items = array();
+  
+  $items['learning/instructor-classes/all'] = array(
+    'title' => 'Search Catalog',
+    'page callback' => 'getInstructorClasses',
+    'access arguments' => array('expertus learner'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_instructor_desk.inc'
+  );  
+  $items['learning/instructor-classes-learners/%'] = array(
+    'title' => 'Search Catalog',
+    'page callback' => 'getInstructorClassLearnerResults',
+    'access arguments' => array('expertus learner'),
+  	'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_instructor_desk.inc'
+  );  
+  $items['learning/instructor/cancel-classes/%/%/%/%/%/%'] = array (
+    'title' => 'Cancel Class for a user',
+    'page callback' => 'cancelUserRegistrationFromClass',
+    'page arguments' => array(3,4,5,6,7,8),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_instructor_desk.inc'
+	);
+  $items['learning/instructor/learner-markcomplete/%/%/%/%/%'] = array (
+    'title' => 'Mark Complete Course-Class for a user',
+    'page callback' => 'markCompleteUserFromCourseClass',
+    'page arguments' => array(3,4,5,6,7),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_instructor_desk.inc'
+  );  
+    $items['learning/instructor/update-attendance/%/%/%'] = array (
+    'title' => 'Mark Complete Course-Class for a user',
+    'page callback' => 'updateAttendanceStatus',
+    'page arguments' => array(3,4,5),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_instructor_desk.inc'
+  );  
+    $items['learning/instructor/text-search'] = array (
+    		'title' => 'Search based on text',
+    		'page callback' => 'getAutocompleteForInst',
+    		'type' => MENU_CALLBACK,
+    		'access arguments' => array('expertus learner'),
+    		'file' => 'exp_sp_instructor_desk.inc'
+    );
+    $items['learning/instructor/location/autocomplete'] = array (
+    		'title' => 'Search based on text',
+    		'page callback' => 'getAutocompleteForLoc',
+    		'type' => MENU_CALLBACK,
+    		'access arguments' => array('expertus learner'),
+    		'file' => 'exp_sp_instructor_desk.inc'
+    );
+  return $items;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_instructor_desk_menu', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function exp_sp_instructor_desk_block_view($delta = ''){
+  try{
+  $userId = getSltpersonUserId();
+  $is_instructor = is_instructor($userId);
+  expDebug::dPrint('Is_instructor : ' . $is_instructor , 4);
+  if ($is_instructor) {
+    require_once('exp_sp_instructor_desk.inc');
+    $header_optional = array('type' => 'file', 'scope' => 'header', 'group' => JS_LIBRARY);
+    $css_module_optional = array('type' => 'file', 'group' => CSS_DEFAULT);
+    $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+    $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+    global $theme_key, $user_preference;
+    $block = array();
+    switch ($delta) {
+     case 'tab_instructor_desk':
+     case 'tab_instructor_desk_customized':
+        includeJqGridJsCss();
+        drupal_add_library('system', 'ui.datepicker');
+        drupal_add_js(drupal_get_path('module', 'exp_sp_lnrcalendar') .'/exp_sp_lnrcalendar.js', $js_module_optional);
+        drupal_add_css(drupal_get_path('module', 'exp_sp_core').'/css/calender_style_v2.css',$css_theme_optional);
+        drupal_add_css(drupal_get_path('module', 'exp_sp_lnrcalendar') .'/exp_sp_lnrcalendar_v2.css', $css_theme_optional);
+        
+        drupal_add_js(drupal_get_path('module', 'exp_sp_instructor_desk').'/exp_sp_instructor_desk.js', $js_module_optional);
+        drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/exp_sp_mylearning.js',$js_module_optional);
+        if($theme_key == 'expertusoneV2') {
+        //NEWUI THEME STYLE SHEET	
+        drupal_add_css(drupal_get_path('module', 'exp_sp_instructor_desk').'/exp_sp_instructor_desk_v2.css', $css_module_optional);
+        }else{
+        drupal_add_css(drupal_get_path('module', 'exp_sp_instructor_desk').'/exp_sp_instructor_desk.css', $css_module_optional);
+    	}
+    	if(module_exists('exp_sp_esignature')){  
+    	if($theme_key == 'expertusoneV2') {
+        //NEWUI THEME STYLE SHEET	 	   
+  		 drupal_add_css(drupal_get_path('module', 'exp_sp_esignature') .'/exp_sp_esignature_v2.css', array('type' => 'file', 'group' => CSS_DEFAULT));
+    	}else{
+         drupal_add_css(drupal_get_path('module', 'exp_sp_esignature') .'/exp_sp_esignature.css', array('type' => 'file', 'group' => CSS_DEFAULT));	
+    	}
+  		}
+        $outhtml = ($theme_key == 'expertusoneV2' && !isset($user_preference['mylearning_left']['tab_instructor_desk_customized'])) ? "" : "<div id='instructor-tab-inner'></div>";
+        $block['content'] = $outhtml;
+        break;
+        
+        
+    }
+    return $block;
+  }
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_instructor_desk_block_view', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Callback for user search for particular class
+ */
+function getInstructorClassLearnerResults($classId){
+  try{
+  require_once('exp_sp_instructor_desk.inc');
+  $qry_search_results = getClassLearnerResults($classId);
+  $srch_result_response_learners->total   = $qry_search_results['total_pages'];
+  $srch_result_response_learners->records = $qry_search_results['count'];
+  $srch_result_response_learners->page    = $qry_search_results['page'];
+  $srch_result_response_learners->classId = $classId;
+  $srch_result_response_learners->seatDetails =  $qry_search_results['seat_details'];
+  $srch_result_response_learners->enrolledcount = $qry_search_results['enrolled_count'];
+  $srch_result_response_learners->class_status = $qry_search_results['class_status'];
+  $srch_result_response_learners->enrollid = $enrolled;
+  $srch_result_response_learners->maxCapacity = $qry_search_results['maxCapacity'];
+  
+  expDebug::dPrint('Instructor results in ILT: '.print_r($qry_search_results['result'], true) , 5);
+  $sessionFlag= false;
+  $classDetails = getCatalogClassDetails($classId);
+  $srch_result_response_learners->delivery_type = $classDetails['delivery_type'];
+  expDebug::dPrint('$classDetails : '.print_r($classDetails, true), 4);
+  if ($classDetails['delivery_type'] == 'lrn_cls_dty_ilt' || $classDetails['delivery_type'] == 'lrn_cls_dty_vcl') {
+  	$ifClassValid = checkClassValidity($classId, $classDetails['delivery_type']);
+  	expDebug::dPrint('$ifClassValid : '.print_r($ifClassValid, true), 4);
+  	$sessionFlag = $ifClassValid->flag;
+  }
+  $_SESSION['jq_count'] = array();
+  $i=0;
+
+  foreach ($qry_search_results['result'] as $rec_search_results) {
+    //$srch_result_response_learners->rows[$i]['id']   = 'tr_'.$i;
+    $srch_result_response_learners->rows[$i]['id']   = $rec_search_results->enrollid;
+    $srch_result_response_learners->rows[$i]['cell'] = array(
+         'LearnerId'  	 	 	=> $rec_search_results->learnerid,
+         'Name'          	 	=> ucwords(strtolower($rec_search_results->name)),
+    		 'FullName'       	=> ucwords(strtolower($rec_search_results->fullname)),
+         'EnrolledDate'  	  => $rec_search_results->enrolleddate,
+         'Status'         	=> $rec_search_results->status,
+         'StatusText'     	=> $rec_search_results->statustext,
+         'CompStatus'    	  => $rec_search_results->compstatus,
+         'CompStatusText'	  => $rec_search_results->compstatustext,
+     	   'Mro'           		=> $rec_search_results->mro,
+         'ClassId'       	  => $rec_search_results->classid,
+    	   'ClassTitle'    	  => $rec_search_results->classtitle,
+    		'ClassStatus'    	  => $rec_search_results->classstatus,
+         'EnrollId'      	  => $rec_search_results->enrollid,
+         'MasterEnrollId'	  => $rec_search_results->masterenrollid,
+         'Mandatory'     	  => $rec_search_results->mandatory,
+         'BaseType'      	  => $rec_search_results->basetype,
+         'UserName'   			=> $rec_search_results->username,
+         'Attendance'   		=> $rec_search_results->attendance,
+         'CompStatusCount' 	=> $rec_search_results->compstatuscount,
+    		 'IsSessionStart'  	=> $rec_search_results->issessionstart, 
+    		 'PreScore'       	=> $rec_search_results->prescore,
+    		 'PreStatus'      	=> $rec_search_results->prestatus,
+    		 'sessionFlag'      => $sessionFlag,
+         'labelmsg'      		=> array(
+        						'enrolled_on'      => t('LBL025'),
+        						'seats'            => t('LBL106'),
+        						'name'             => t('LBL107'),
+        						'status'           => t('LBL102'),
+            				'action'           => t('LBL108'),
+								    'cancel'           => t('LBL109'),
+            				'mark_completion'  => t('LBL110'),
+              			'roster'           => t('LBL275'),
+   								  'err_no_learner'   => t('ERR074'),
+    							  'total_seats'  	   => t('LBL128'),
+    							  'enrolled_seats'   => t('LBL129'),
+  								  'pending'          => t('Pending'),
+		)
+    );
+    $i++;    
+  }
+  echo drupal_json_encode($srch_result_response_learners);
+  }catch (Exception $ex) {
+    watchdog_exception('getInstructorClassLearnerResults', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+
+function exp_sp_instructor_desk_cron(){
+	expDebug::dPrint('testing New Cron');
+	include_once ($_SERVER ["DOCUMENT_ROOT"] . '/mobile/GCM.php');
+	try {
+		$timeZone = date_default_timezone ( false );
+		$defaultTimezone = ($timeZone == 'Asia/Kolkata') ? 'Asia/Calcutta' : $timeZone;
+		
+		
+		$qry = "SELECT splitz.attr2 AS phptimezone, cls.id AS class_id, cls.title AS class_title, ses.timezone AS timezone,
+				 cls.delivery_type AS delivery_type, CONCAT(DATE_FORMAT(ses.start_date, _utf8'%Y-%m-%d'), ' ', ses.start_time, ':00') AS start_date_time,
+				 CONCAT(DATE_FORMAT(IF(ses.end_date IS NULL or ses.end_date = '', ses.start_date, ses.end_date), _utf8'%Y-%m-%d'), ' ', ses.end_time, ':00') AS end_date_time
+				FROM 
+				slt_course_class cls
+				LEFT OUTER JOIN slt_course_class_session ses ON cls.id=ses.class_id and 
+				ses.id = (select id from slt_course_class_session where class_id = ses.class_id order by CONCAT(DATE_FORMAT(IF(ses.end_date IS NULL or ses.end_date = '', ses.start_date, ses.end_date), _utf8'%Y-%m-%d'), ' ', ses.end_time, ':00') desc limit 1)
+				LEFT OUTER JOIN slt_profile_list_items splitz ON ses.timezone = splitz.code  AND ses.timezone IS NOT NULL  AND splitz.lang_code = 'cre_sys_lng_eng'
+				WHERE ( (cls.status = 'lrn_cls_sts_atv') OR (cls.status = 'lrn_cls_sts_itv') )AND (cls.delivery_type IN  ('lrn_cls_dty_ilt', 'lrn_cls_dty_vcl')) 
+				having (start_date_time < IFNULL(CONVERT_TZ(now(), '". $defaultTimezone."' ,(select pro1.attr2 from slt_profile_list_items pro1 where pro1.code= ses.timezone)),NOW())  
+				and end_date_time > IFNULL(CONVERT_TZ(now(),'". $defaultTimezone."' ,(select pro1.attr2 from slt_profile_list_items pro1 where pro1.code= ses.timezone)),NOW())  )";
+		$qry_res  = db_query($qry);
+		
+		
+		expDebug::dPrintDBAPI ( '$select $qry_res$qry_res$qry_res', $qry_res );
+		
+		$sessionsList = $qry_res->fetchAll();
+		
+		
+		
+// 		$selectCls = db_select ( 'slt_course_class', 'cls' );
+// 		$selectCls->leftjoin ( 'slt_course_class_session', 'ses', 'cls.id=ses.class_id and ses.id = (select id from slt_course_class_session where class_id = ses.class_id order by start_date desc limit 1)' );
+// 		$selectCls->leftjoin ( 'slt_profile_list_items', 'splitz', 'ses.timezone = splitz.code  AND ses.timezone IS NOT NULL  AND splitz.lang_code = \'cre_sys_lng_eng\'' );
+// 		$selectCls->addField ( 'splitz', 'attr2', 'phptimezone' );
+// 		$selectCls->addField ( 'cls', 'id', 'class_id' );
+// 		$selectCls->addField ( 'cls', 'title', 'class_title' );
+// 		$selectCls->addExpression ( "CONCAT(DATE_FORMAT(ses.start_date, _utf8'%Y-%m-%d'), ' ', ses.start_time, ':00')", 'start_date_time' );
+// 		$selectCls->addExpression ( "CONCAT(DATE_FORMAT(ses.start_date, _utf8'%Y-%m-%d'), ' ', ses.end_time, ':00')", 'end_date_time' );
+// 		// Added by Vincent on Nov 01, 2013 for #0028593
+// 		$selectCls->addField ( 'ses', 'timezone', 'timezone' );
+// 		$selectCls->addField ( 'cls', 'delivery_type', 'delivery_type' );
+// 		$selectCls->condition(db_or()->condition('cls.status', 'lrn_cls_sts_atv', '=' )
+// 								     ->condition('cls.status', 'lrn_cls_sts_itv', '=' ));
+// 		$selectCls->condition ( 'cls.delivery_type', array (
+// 				'lrn_cls_dty_ilt',
+// 				'lrn_cls_dty_vcl' 
+// 		), 'IN' );
+// 		$selectCls->groupBy ( "ses.class_id");
+// 		expDebug::dPrintDBAPI ( '$select updateClassAsCompleted', $selectCls );
+// 		$sessionsList = $selectCls->execute ()->fetchAll ();
+		
+		
+		
+		
+		
+		expDebug::dPrint ( '$sessionsList updateClassAsCompleted = ' . print_r ( $sessionsList, true ), 3 );
+		$classIds = '';
+		$open_survey_threshold = getConfigValue('open_survey_threshold');
+		expDebug::dPrint ( '$open_survey_threshold = ' .$open_survey_threshold , 4 );
+		foreach ( $sessionsList as $session ) {
+			$totalduration = '';
+			$elapsedTime = '';
+			$percentcompletion = '';
+			$query = db_select ( 'slt_survey', 'sur' );
+			$query->join ( 'slt_survey_mapping', 'map', 'sur.id=map.survey_id' );
+			$query->addField ( 'sur', 'id', 'surveyId' );
+			$query->condition ( 'map.object_type', 'cre_sys_obt_cls', '=' );
+			$query->condition ( 'sur.status', 'sry_det_sry_atv', '=' );
+			$query->condition ( 'sur.type', 'sry_det_typ_ass', '!=' );
+			$query->condition ( 'map.object_id', $session->class_id, '=' );
+			expDebug::dPrintDBAPI ( '$select survey query', $query );
+			$AssqryRes = $query->execute ()->fetchAll ();
+			expDebug::dPrint ( '$survey = ' . print_r ( $AssqryRes, true ), 4 );
+			
+			$selectsmt = db_select ( 'slt_notification', 'noti' );
+			$selectsmt->addField ( 'noti', 'id', 'id' );
+			$selectsmt->condition ( 'noti.msg_id', 'open_survey_mobile','=' );
+			$selectsmt->condition ( 'noti.custom0', $session->class_id,'=' );
+			expDebug::dPrintDBAPI ( '$select slt_notification query', $selectsmt );
+			
+			$notificationid = $selectsmt->execute ()->fetchAll ();
+			expDebug::dPrint ( '$survey = ' . print_r ( $notificationid, true ), 4 );
+			
+			
+			if (! empty ( $AssqryRes ) && empty ($notificationid)) {
+				if (empty ( $session->phptimezone )) {
+					$curDateTimeUX = time ();
+					$sesStartDateTimeUX = strtotime ( $session->start_date_time );
+					$sesEndtDateTimeUX = strtotime ( $session->end_date_time );
+					expDebug::dPrint ( 'sesStartDateTimeUX = ' . $sesStartDateTimeUX, 4 );
+					expDebug::dPrint ( 'sesEndtDateTimeUX = ' . $sesEndtDateTimeUX, 4 );
+					$totalduration = $sesStartDateTimeUX->diff ( $sesEndtDateTimeUX );
+					$elapsedTime = $sesStartDateTimeUX->diff ( $curDateTimeUX );
+					$hours = $totalduration->format ( '%h' );
+					$minutes = $totalduration->format ( '%i' );
+					$totalduration = $hours * 60 + $minutes;
+					expDebug::dPrint ( 'totalduration = ' . $totalduration, 4 );
+					$hours = $elapsedTime->format ( '%h' );
+					$minutes = $elapsedTime->format ( '%i' );
+					$elapsedTime = $hours * 60 + $minutes;
+					expDebug::dPrint ( 'elapsedTime = ' . $elapsedTime, 4 );
+					$percentcompletion = round ( ($elapsedTime / $totalduration) * 100 );
+					expDebug::dPrint ( '$percentcompletion = ' . $percentcompletion, 4 );
+					if ($sesEndtDateTimeUX < $curDateTimeUX) {
+						expDebug::dPrint ( 'Class delivered', 4 );
+						continue ;
+					}
+						
+					
+				} else {
+					// Get current datetime in the VC & ILTtimezone
+					$sessionTZ = new DateTimeZone ( $session->phptimezone );
+					$curDateTimeInSessionTZ = new DateTime ( null, $sessionTZ );
+					// Convert session start datetime and end datetime to DateTime objects for comparing
+					$sesStartDateTimeInSessionTZ = new DateTime ( $session->start_date_time, $sessionTZ );
+					$sesEndDateTimeInSessionTZ = new DateTime ( $session->end_date_time, $sessionTZ );
+					expDebug::dPrint ( '$curDateTimeInSessionTZ = ' . $curDateTimeInSessionTZ->format ( 'Y-m-d H:i:sP' ), 4 );
+					expDebug::dPrint ( 'sesStartDateTimeInSessionTZ = ' . $sesStartDateTimeInSessionTZ->format ( 'Y-m-d H:i:sP' ), 4 );
+					expDebug::dPrint ( '$sesEndDateTimeInSessionTZ = ' . $sesEndDateTimeInSessionTZ->format ( 'Y-m-d H:i:sP' ), 4 );
+					$totalduration = $sesStartDateTimeInSessionTZ->diff ( $sesEndDateTimeInSessionTZ );
+					$elapsedTime = $sesStartDateTimeInSessionTZ->diff ( $curDateTimeInSessionTZ );
+					$hours = $totalduration->format ( '%h' );
+					$minutes = $totalduration->format ( '%i' );
+					$totalduration = $hours * 60 + $minutes;
+					expDebug::dPrint ( 'totalduration = ' . $totalduration, 4 );
+					$hours = $elapsedTime->format ( '%h' );
+					$minutes = $elapsedTime->format ( '%i' );
+					$elapsedTime = $hours * 60 + $minutes;
+					expDebug::dPrint ( 'elapsedTime = ' . $elapsedTime, 4 );
+					$percentcompletion = round ( ($elapsedTime / $totalduration) * 100 );
+					expDebug::dPrint ( '$percentcompletion = ' . $percentcompletion, 4 );
+					
+					if ($sesEndDateTimeInSessionTZ < $curDateTimeInSessionTZ) {
+						expDebug::dPrint ( 'Class delivered', 4 );
+ 						continue ;
+					}
+						
+
+				}
+				
+ 				if ($percentcompletion > $open_survey_threshold) {
+					expDebug::dPrint ( 'Send Notification' );				
+					$select = db_select ( 'slt_enrollment', 'enroll' );
+					$select->addField ( 'per', 'id', 'LearnerId' );
+					$select->addField ( 'enroll', 'id', 'EnrollId' );
+					$select->addField ( 'enroll', 'master_enrollment_id', 'MasterEnrollId' );
+					$select->addField ( 'enroll', 'reg_status', 'Status' );
+					$select->addField ( 'enroll', 'comp_status', 'CompStatus' );
+					$select->addField ( 'enroll', 'class_id', 'ClassId' );
+					$select->addField ( 'per', 'user_name', 'UserName' );
+					$select->addField ( 'per', 'full_name', 'FullName' );
+					$select->addField ( 'mobattend', 'status', 'Attendance' );
+					$select->addField ( 'mobattend', 'reached', 'reached' );
+					$select->join ( 'slt_person', 'per', 'per.id = enroll.user_id' );
+					$select->join ( 'slt_course_class', 'cls', 'cls.id = enroll.class_id' );
+					$select->leftjoin ( 'slt_mobile_ilt_attendance', 'mobattend', 'mobattend.regid = enroll.id' );
+					$select->leftJoin ( 'slt_profile_list_items', 'pro', 'per.job_title = pro.code' );
+					$select->condition ( 'enroll.class_id', $session->class_id );
+					$select->where ( "enroll.class_id=:classid AND enroll.reg_status IN ('lrn_crs_reg_cnf','lrn_crs_reg_can','lrn_crs_reg_wtl')", array (
+							':classid' => $session->class_id
+					) );
+					$result = $select->execute ()->fetchAll ();
+					expDebug::dPrintDBAPI ( "Instructor getClassLearnerQuery Query: ", $select );
+					expDebug::dPrint ( '$Userlist = ' . print_r ( $result, true ), 4 );
+					
+					
+					foreach ($result as $enrolledUser)
+					{
+						$updateUserId = 1;
+						insertNotification('Opensurveymobile', $session->class_id.'~~'.$session->class_title, $enrolledUser->enrollid, $enrolledUser->learnerid, $updateUserId);
+						
+					}
+ 				}
+			}
+		}
+	} catch ( Exception $ex ) {
+		watchdog_exception ( 'updateClassAsCompleted Main function', $ex );
+		expertusErrorThrow ( $ex );
+	}
+	
+}
+
+
+
+?>

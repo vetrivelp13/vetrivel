@@ -1,0 +1,1144 @@
+<?php
+/**
+ * Implementation of hook_init().
+ */
+function exp_sp_administration_setup_init() {
+	try {
+  if(arg(0)=='administration' && arg(1) == 'people' && arg(2) == 'setup'){
+    global $theme_key;
+    $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+    drupal_add_js(drupal_get_path('module', 'exp_sp_administration_setup') .'/exp_sp_administration_setup.js', $js_module_optional);
+    if($theme_key == 'expertusoneV2')
+      drupal_add_css(drupal_get_path('module', 'exp_sp_administration_setup') .'/exp_sp_administration_setup_v2.css', $css_theme_optional);
+    else
+      drupal_add_css(drupal_get_path('module', 'exp_sp_administration_setup') .'/exp_sp_administration_setup.css', $css_theme_optional);
+  }
+  } catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_setup_init', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function exp_sp_administration_setup_menu() {
+try {
+  $items = array();
+
+  $items['administration/people/setup'] = array(
+    'title' => t('LBL1021'),
+    'page callback' => 'empty_value',
+    'access callback' => 'user_access',
+    'access arguments' => array('Setup Admin Perm'),
+    'type' => MENU_CALLBACK
+  );
+
+  /*$items['administration/sitesetup/setup'] = array(
+   'title' => t('setup'),
+   'page callback' => 'empty_value',
+   'access callback' => 'user_access',
+   'access arguments' => array('Setup Admin Perm'),
+   'type' => MENU_CALLBACK
+   );*/
+
+  $items['administration/people/setup/search/all'] = array(
+    'title' => 'Fetch module list to display in JQGrid',
+    'page callback' => 'sendSetUpListToJqGrid',
+    'access callback' => 'user_access',
+    'access arguments' => array('Setup Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_setup.inc'
+    );
+    $items['administration/people/setup/%/%/%ctools_js/addedit'] = array(
+    'title' => 'Add / Edit Notification',
+    'page callback' => 'exp_sp_administration_setup_display_addedit_form',
+    'page arguments' => array(3,4,5),
+    'access callback' => 'user_access',
+    'access arguments' => array('Setup Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_setup.inc'
+    );
+    $items['administration/people/setup/textfilter-autocomplete'] = array(
+    'title' => 'Search By Text Filter Autocomplete',
+    'page callback' => 'getSetUpListValuesTextFilterAutoComplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('Setup Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_setup.inc',
+    );
+    $items['administration/people/setup/list-addedit/%/%/%'] = array(
+    'title' => 'Add List Values',
+    'page callback' => 'addListValuesDetails',
+  	'page arguments' => array(4,5,6,7),
+    'access callback' => 'user_access',
+    'access arguments' => array('Setup Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_setup.inc'
+    );
+    
+    $items['administration/people/setup/list-autocomplete'] = array(
+    		'title' => 'List Values Autocomplete',
+    		'page callback' => 'getSetupListEntitiesAutoComplete',
+    		'access callback' => 'user_access',
+    		'access arguments' => array('Setup Admin Perm'),
+    		'type' => MENU_CALLBACK,
+    		'file' => 'exp_sp_administration_setup.inc'
+    );
+    $items['administration/people/setup/list-search/%/%'] = array(
+    		'title' => 'List Values Autocomplete callback',
+    		'page callback' => 'add_list_search_callback',
+    		'access callback' => 'user_access',
+    		'access arguments' => array('Setup Admin Perm'),
+    		'type' => MENU_CALLBACK,
+    		'file' => 'exp_sp_administration_setup.inc'
+    );
+
+    return $items;
+    } catch (Exception $ex) {
+    	watchdog_exception('exp_sp_administration_setup_menu', $ex);
+    	expertusErrorThrow($ex);
+    }
+}
+
+function exp_sp_administration_setup_permission() {
+	try {
+  return array(
+    'Setup Admin Perm' => array(
+      'title' => t('Setup Admin Perm')
+  )
+  );
+  } catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_setup_permission', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_administration_setup_display_addedit_form($argType, $argCode ,$js = NULL) {
+	try {
+  global $theme_key;
+
+  include_once(drupal_get_path('module', 'exp_sp_administration_setup') .'/exp_sp_administration_setup.inc');
+  
+  // Default modalTheme is ExpertusCToolsModalTheme (see exp_sp_core_extend_ctools_ajax.js:Drupal.CTools.Modal.show())
+  $catalog_style = array(
+    'ctools-admin-setup-addedit-wrapper' => array(
+      'modalSize' => array(
+        'width' => 400,
+        'minHeight' => 'auto',
+  ),
+  )
+  );
+
+  drupal_add_js($catalog_style, 'setting');
+  $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+  if($theme_key == 'expertusoneV2')
+  drupal_add_css(drupal_get_path('module', 'exp_sp_administration_setup') .'/exp_sp_administration_setup_v2.css', $css_theme_optional);
+  else
+  drupal_add_css(drupal_get_path('module', 'exp_sp_administration_setup') .'/exp_sp_administration_setup.css', $css_theme_optional);
+  $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+  drupal_add_js(drupal_get_path('module', 'exp_sp_administration_setup') .'/exp_sp_administration_setup.js', $js_module_optional);
+
+  if ($js) {
+    $argsList = array();
+    
+    // Multi language Support
+    if($argType == 'Department'){
+    	$argType = t('LBL179');
+    }else if($argType == 'Employment Type'){
+    	$argType = t('LBL174');
+    }else if($argType == 'Job Role'){
+    	$argType = t('LBL133');
+    }else if($argType == 'Job Title'){
+    	$argType = t('LBL073');
+    }else if($argType == 'User Type'){
+    	$argType = t('LBL173');
+    }
+     
+    // Prepare list of forms to be displayed in the modal
+    $formIdList = array(
+    array('id' => 'exp_sp_administration_setup_addedit_form',
+                        'title' => t($argType),'arg_type' => $argType,'arg_code' => $argCode)
+    );
+
+    exp_ctools_modal_multi_ajaxonly_forms_display($formIdList, $argsList);
+  }
+  else {
+    throw new Exception('exp_sp_administration_setup_display_addedit_form');
+  }
+  } catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_setup_display_addedit_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_administration_setup_addedit_form($form, &$form_state) {
+  try{  	
+    include_once(drupal_get_path('module', 'exp_sp_administration_setup') .'/exp_sp_administration_setup.inc');
+    global $theme_key;
+    $userId = getIdOfLoggedInUser();
+    
+    $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+    $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+    if($theme_key == 'expertusoneV2') {
+    	drupal_add_css(drupal_get_path('module', 'exp_sp_administration_catalog_access') .'/exp_sp_administration_catalog_access_v2.css', $css_theme_optional);
+    }else {
+    	drupal_add_css(drupal_get_path('module', 'exp_sp_administration_catalog_access') .'/exp_sp_administration_catalog_access.css', $css_theme_optional);
+    }
+    
+    //drupal_add_js(drupal_get_path('module', 'exp_sp_administration_catalog_access') .'/exp_sp_administration_catalog_access.js', $js_module_optional);
+    drupal_add_js(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_data_grid.js', $js_module_optional);
+    drupal_add_js(drupal_get_path('module', 'exp_sp_administration') . '/exp_sp_administration.js', $js_module_optional);
+    
+    
+    $form = array();
+    //#36300: Issue in Tool tip incorrectly showing in Peoples settings page. Class added to the form to bind the ajaxComplete method
+    $form['#attributes']['class'] = array('exp_sp_administration_setup_addedit_form');
+    $listId = '';
+    if(arg(4)) {
+      $listCode = arg(4);
+    }else if($form_state['input']['hiddenlisttype']){
+      $listCode = $form_state['input']['hiddenlisttype'];
+    }else{
+      $listCode = $form_state['code'];
+    }
+   $searchText = ($form_state['values']['listvalues-autocomplete'] != t('LBL970').' '. t('LBL107')) ? $form_state['input']['listvalues-autocomplete'] : '';
+    $listValuesDetails = getListValueSetUpDetailList($listCode,'COUNT',0,0,$searchText); //change by ayyappans for 43739
+
+    addHiddenFieldToAddEditForm($form, 'hiddenlisttype',$listCode);
+    $form['#prefix'] = '<div id="list-values-detail-wrapper">';
+    $form['#suffix'] = '</div>';
+    $form['#attributes']['autocomplete'] = 'off';
+    $form['edit-list-details-start'] = array(
+          '#prefix' => "<div id='list-values-addedit-form-details' class='list-form-class'>",
+    );
+//41477: Mandatory field not working properly, doesn't show any error message in people setting    
+//     if(!empty($listId)) {
+//       $form_state['storage']['list_id'] = $listId;
+//     }
+//     else{
+//       $listId = $form_state['list_id'];
+//       $form_state['storage']['list_id'] = $listId;
+//     }
+    if(!empty($form_state['mode'])){
+      $displayMode = $form_state['mode'];
+      $form_state['storage']['mode'] = $displayMode;
+    }else{
+      $displayMode = 'add';
+      $form_state['storage']['mode'] = $displayMode;
+    }   
+    if(isset($addAttributes))
+    unset($addAttributes['onclick']);
+    // A common class for all addedit form submit buttons and ajax enabled fields for showing expertusone throbber.
+    // $addAttributes['class'][] = 'addedit-form-expertusone-throbber narrow-search-actionbar-orange-btnBG';
+    $addAttributes['class'][] = 'narrow-search-actionbar-orange-btnBG';
+    //$addAttributes['onclick'][] = '$(document).ready(function(){ addClassDetails('.$courseId.') }); remove_messages("class");';
+    // Communicate the wrapper to javascript for showing the expertusone throbber via HTML data tag
+
+    $form['add-list-values'] = array(
+      '#type' => 'markup',
+      '#markup' => '<div id="add-list-values-wrapper">'
+      );
+      $wrapperId = 'list-values-detail-wrapper';
+      
+      $paintMultiAction  = "<div id='search-list-title-keyword' class='search-list-keyword' style='display:block;'>";
+      $paintMultiAction .= "<span id='search-dropdwn-list'>";
+      $paintMultiAction .= "<input type='hidden' id='listvalues-autocomplete_hidden' value='".t('LBL970').' '.t('LBL107')."' />";
+      $paintMultiAction .= "<span id='select-list-dropdown' class='select-list-dropdown'>".t('LBL107')."</span>";
+      $paintMultiAction .= "</span></div>";
+      
+      $form[$formName]['enroll_multi_search_container'] = array(
+      		'#type' => 'markup',
+      		'#markup' => '<div class="admin_add_multi_search_container">',
+      );
+      $form[$formName]['more_add_enrolluser_search'] = array(
+      		'#type' => 'markup',
+      		'#markup' => $paintMultiAction,
+      );
+      
+      $acMenuPath = 'administration/people/setup/list-autocomplete';
+      
+      $form[$formName]['add_enrolluser_search'] = array(
+      		'#type' => 'markup',
+      		'#markup' => '<div class="admin_add_multi_auto_search">',
+      );
+      
+      $autoCompleteAttributes['class'][] = 'admin_ac_input_mainform';
+      $autoCompleteAttributes['onkeypress'][]   = 'disableEnrterKey(event);';
+      //$autoCompleteAttributes['onkeydown'][]  = '$("body").data("mulitselectdatagrid").multiSelectSearchBoxKeyDown(event)';
+      addACFieldForMultiSelect($form[$formName], 'listvalues-autocomplete', $acMenuPath, '', '', '', array(),
+      		array('entity_id'  =>  "'$listCode'", 'entity_type' => "'$listCode'"), false, false,
+      		t('LBL970').' '.t('LBL107'), $autoCompleteAttributes,256); //0054796: 'Employment type does not exist' message is displayed while ceating a new user. 
+      removeGreyTextClassOfAutoComplete($form[$formName], $form_state, 'listvalues-autocomplete', t('LBL970').' '.t('LBL107'));	//change by ayyappans for 45823: UI issues in Admin User screen
+     
+      
+      $searchAttributes['class'][] = 'admin-pagination-search-go';
+      $searchAttributes['class'][] = 'addedit-form-expertusone-throbber';
+      //$searchAttributes['data-wrapperid'] = 'role-detail-wrapper';
+      $searchAttributes['data-wrapperid'][] = $wrapperId;
+      $form[$formName]['search_listvalue'] = array(
+        '#type' => 'button',
+        '#id'   => 'search_listvalues',
+        '#title' => t('LBL304'),
+        '#value' => ' ',
+        '#name' => 'Search List values',
+        '#attributes' => $searchAttributes,
+        '#ajax' => array(
+        		'wrapper' => $wrapperId,
+        		'callback' => 'add_list_search_callback',
+        		'method' => 'replace',
+        		'effect' => 'none',
+        		'event'=>'click',
+        		'list_code' =>$listCode,
+        		'searchText'=> $form_state['values']['listvalues-autocomplete_hide'],
+        		'keypress' => true,
+        		'progress' => array(
+        				'type' => 'throbber',
+        				'message' => ''
+        		),
+        )
+      );
+      $form[$formName]['add_enrolluser_search1'] = array(
+      		'#type' => 'markup',
+      		'#markup' => '</div>',
+      );
+      $form[$formName][] = array(
+      		'#type' => 'markup',
+      		'#markup' => '<div class="filter-search-start-date-right-bg"></div><div class="clearBoth"></div></div><div class="clearBoth"></div>',
+      );        
+      expDebug::dPrint("QWERTY".$form_state['values']['listvalues-autocomplete'],4);
+      if($displayMode != 'view' && ($listValuesDetails <= 0) && empty($searchText)){
+    	  $paintDivs = '<div class="admin_add_multi_search_container" style="display:none;">';
+    	  $form[$formName]['enroll_multi_search_container'] = array(
+    	      		'#type' => 'markup',
+    	      		'#markup' => $paintDivs,
+    	      );
+    	  
+        $addAttributes['data-wrapperid'] = array($wrapperId);
+        //41477: Mandatory field not working properly, doesn't show any error message in people setting
+        $entityId          	 =  ($listId == '') ? 0 : $listId;
+        $entityType        	 = $listCode;
+        $qtipIdInit        	 = $entityId.'_'.$entityType;
+        $qtipOptClassObj     = "{'url':'administration/people/setup/list-addedit/".$entityType."/".$listId."/".$entityType."','popupDispId':'qtip_addlistvalues_visible_disp_".$qtipIdInit."','catalogVisibleId':'qtipAttachIdqtip_listvalues_visible_disp_".$qtipIdInit."','wBubble':330,'hBubble':'auto','tipPosition':'bottomRight','qtipClass':'qtip-parent-addlistvalue','courseId':'".$listId."'}";
+  
+        
+        
+        switch($entityType){
+        case 'cre_usr_dpt':
+        	$title = 'Department';
+        	if($title = 'Department'){
+        		$title=t('LBL179');
+        	}
+        	break;
+        case 'cre_usr_etp':	
+        	$title = 'Employment Type';
+        	if($title = 'Employment Type'){
+        		$title=t('LBL174');
+        	}
+        	break;
+        case 'cre_usr_jrl':	
+        	$title = 'Job Role';
+        	if($title = 'Job Role'){
+        		$title=t('LBL133');
+        	}
+        	break;
+        case 'cre_usr_jtl':	
+        	$title = 'Job Title';
+        	if($title = 'Job Title'){
+        		$title=t('LBL073');
+        	}
+        	break;
+        case 'cre_usr_ptp':	
+        	$title = 'User Type';
+        	if($title = 'User Type'){
+        		$title=t('LBL173');
+        	}
+        	break;
+        default:
+        	$title = '';
+        }
+        
+        $form['add-listvalues-button'] = array(
+          		'#type' => 'markup',
+          		'#prefix' => "<div id='qtip_addlistvalues_visible_disp_".$qtipIdInit."' onmousedown =\"closeListValuesQtipPopUp(); $('#root-admin').data('narrowsearch').getBubblePopup(".$qtipOptClassObj."); return false;\"  class='admin-save-button-container add-class-button'><div class='narrow-search-actionbar-orange-btnLeft'></div><div class='narrow-search-actionbar-orange-btnBG' style='text-transform:capitalize;'>",
+          		'#suffix' => t("LBL287").' '.t($title).'</div><div class="narrow-search-actionbar-orange-btnRight"></div></div>',
+          		'#value' => t("LBL287").' '.t($title),
+          		'#name' => "Add",
+          		'#limit_validation_errors' => array(),
+          		'#attributes' => $addAttributes,
+          );
+        /*
+        $qtipOptClassObj     = "{'entityId':".$entityId.",'entityType':'".$entityType."',
+        													'url':'administration/people/setup/list-addedit/".$entityType."/".$listId."/".$entityType."',
+													        'popupDispId':'qtip_addlistvalues_visible_disp_".$qtipIdInit."',
+													        'catalogVisibleId':'qtipAttachIdqtip_listvalues_visible_disp_".$qtipIdInit."',
+													        'wBubble':330,'hBubble':'auto','tipPosition':'bottomRight',
+													        'wid':330,'heg':'100','postype':'middle','poslwid':'',
+													        'qdis':'','linkid':'visible-content-ctool-tags-".$entityId."'}";
+        $form['add-listvalues-button'] = array(
+          '#type' => 'markup',
+          '#prefix' => "<div style='padding:25px;'><div id='qtip_addlistvalues_visible_disp_".$qtipIdInit."'class='add-class-button' style='position: absolute;margin-left: 95px;'>
+        		<a id='visible-content-ctool-tags-".$entityId."' class='admin-save-button-container' onclick = \"callVisibility(".$qtipOptClassObj.");\">
+        		<div class='narrow-search-actionbar-orange-btnLeft'></div><div class='narrow-search-actionbar-orange-btnBG'>",
+        	'#suffix' => t("LBL386").'</div><div class="narrow-search-actionbar-orange-btnRight"></div></a>
+        		<span id="visible-popup-'.$entityId.'" class="qtip-popup-visible" style="display:none; position:absolute; left:0px;top:0">
+        		</span></div></div>',
+          '#value' => t("LBL386"),
+          '#name' => "Add Another",
+          '#limit_validation_errors' => array(),
+          '#attributes' => $addAttributes,
+        ); */ 
+      }
+      /* ------------------------------------Start Pagination----------------------------*/
+
+      $pg_page     = 1;
+      $start       = 0;
+      $limit       = 5;
+      $addListValuesCount = $listValuesDetails;
+      
+      if( $addListValuesCount > 0 ){
+        $total_pages = ceil($addListValuesCount/$limit);
+      }else{
+        $total_pages = 0;
+      }
+
+      if($pg_page > $total_pages) {
+        $pg_page = $total_pages;
+      }
+      if(!empty($form_state['storage']['page'])) {
+        $pg_pagenew  = $form_state['storage']['page'];
+        if($pg_pagenew > $total_pages){
+          $pg_page  = $form_state['storage']['page']- 1;
+          $form_state['storage']['page'] = $pg_page;
+         // $start    = ($limit * $pg_page) - $limit ;
+        }else{
+          $pg_page  = $form_state['storage']['page'];//$form_state['question_pgn_page'];
+          //$start    = ($limit * $pg_page) - $limit ;
+        }
+      }
+      // Added by Vincent on 02, Jan 2014 for #0029687: Refresh on Admin Enrollments page
+      if($total_pages > 0){
+	  	$start    = getOffsetOfFirstRecordInPage($pg_page, $total_pages, $limit, $addListValuesCount,false);
+      }
+      if($start < 0) {
+        $start = 0;
+      }
+
+      
+      if($addListValuesCount > 5 ){
+        $displayPageStyle = "display:block;";
+      }else{
+        $displayPageStyle = "display:none;";
+      }
+      $setupList = getListValueSetUpDetailList($listCode,'LIST', $start, $limit,$searchText);
+      //api related work
+      //53653: Empty Row found in Department/Employment type/User Type in People -> setting.
+      unset($setupList['totalrow']);
+      /* ------------------------------------End Pagination----------------------------*/
+      if($addListValuesCount == 0){
+        if (!empty($searchText) || !empty($title)) {
+          $userListMsg = t('MSG403').'.';
+        }
+//        else {
+//          //$userListMsg = t('MSG381').'.';
+//        }
+        $form['no-list-values'] = array(
+          '#type' => 'item',    
+          '#prefix' => '<div class="clearBoth"></div><div class="nonlist" id="no-list-values-setup">' .  $userListMsg,
+          '#suffix' => '</div>',  
+        );
+      }
+      else{
+        $deleteTxt = "<td width='5%' class='adduser-title-heading'>&nbsp;</td>";
+         
+        $form['heading-add-listsetup'] = array(
+                '#type' => 'markup',
+                '#prefix' => "<div class='edit-adduser-list'><table class='addlist-table-heading' cellpadding='0' cellspacing='0' border='0' width='100%'>
+                             <th width='76%' style='padding-left: 15px;' class='adduser-title-heading list-header heading-background-class'>".t('LBL107')."</th>
+                			 <th width='24%' style='padding-left: 0px; text-align:center;' class='adduser-title-heading user-list-header heading-background-class'>".t('LBL108')."</th>",
+                			 
+        );
+
+
+        for($i=0;$i<count($setupList);$i++) {
+          $uniqueId = $listId.'-'.$setupList[$i]->id.'-';
+          $dynamic_cos_id      =    $setupList[$i]->id;
+          $dynamic_div         =	"delete_all_".$uniqueId;
+          $classOddEven = ($i%2) ? 'even-list-class' : 'odd-list-class';
+          expDebug::dPrint('odee even class'.$classOddEven);
+          expDebug::dPrint("setup detils".print_r($setupList,true),5);
+          $sumEdit = $setupList[$i]->sumedit;
+          $sumDelete = $setupList[$i]->sumdelete;
+
+          //$username = $setupList[$i]->name;
+          $displayName  = titleController('ADMIN-SETUP-NAME', htmlspecialchars($setupList[$i]->name),25); 
+
+          $form['edit-addlist-name-setup'.$i] = array(
+	               								'#type' => 'markup',
+                    							'#prefix' =>  "<tr class='".$classOddEven."' style='height: 33px;'><td width='70%' style='padding-left:15px;' class='user-list-detail'>",
+          /**#36300: Issue in Tool tip incorrectly showing in Peoples*/		
+                   								'#suffix' =>  "<span class='vtip' title='".htmlspecialchars($setupList[$i]->name, ENT_QUOTES, 'UTF-8')."'>$displayName</span></td>", 
+          );
+          $entityId          	 =  $setupList[$i]->id;
+          $entityType        	 = $setupList[$i]->code;
+          $qtipIdInit        	 = $entityId.'_'.$entityType;
+		  //$codeValue = 1;
+          $qtipOptClassObj     = "{'entityId':".$entityId.",'entityType':'".$entityType."',
+          													'url':'administration/people/setup/list-addedit/".$listCode."/".$entityId."/".$entityType."',
+													          'popupDispId':'qtip_addlistvalues_visible_disp_".$qtipIdInit."',
+													          'catalogVisibleId':'qtipAttachIdqtip_listvalpeoedit_visible_disp_".$qtipIdInit."',
+													          'wBubble':330,'hBubble':'auto','qtipClass':'qtip-parent-editlistvalue','tipPosition':'bottomRight',
+													          'linkid':'edit-list-values-".$i."'}";
+          													          
+          $attributesEdit = array();
+          $attributesEdit['class'][] = 'addedit-form-expertusone-throbber';
+          //$attributesEdit['class'][] = 'attached-course-previous-btn';
+          if(isset($sumEdit) && $GLOBALS["user"]->uid != 1){
+          if($sumEdit == 1){
+          		$attributesEdit['onclick'][] = "closeListValuesQtipPopUp(); $('#root-admin').data('narrowsearch').getBubblePopup(".$qtipOptClassObj."); return false;";
+          }
+          }else{
+          	$attributesEdit['onclick'][] = "closeListValuesQtipPopUp(); $('#root-admin').data('narrowsearch').getBubblePopup(".$qtipOptClassObj."); return false;";
+          }
+         
+          if($theme_key == 'expertusoneV2'){
+          	
+          	if(isset($sumEdit) && $GLOBALS["user"]->uid != 1){
+		          	if($sumEdit == 1){
+		            $attributesEdit['class'][] = 'enable-edit-icon';
+		          	}else{
+		          		$attributesEdit['class'][] = 'disable-edit-icon';
+		          	}
+          	}else{
+          		$attributesEdit['class'][] = 'enable-edit-icon';
+          	}
+          }else{
+            $attributesEdit['class'][] = 'admin-action-button-edit';
+          }
+          if(isset($sumEdit) && $GLOBALS["user"]->uid != 1){
+          if($sumEdit == 1){
+		          $form['edit-group-list-values'.$i] = array(
+		          '#type' => 'button',
+				 			'#name' => 'edit-list-values-'.$i,
+		          '#id' => 'edit-list-values-'.$i,
+		          '#prefix' => "<td align='center'><div id='qtip_addlistvalues_visible_disp_".$qtipIdInit."' class='attached-list-container'><div class='edit-button-list-values'>
+		          							<span class='vtip' title='".t('LBL063')."'>",//(PR) Page :'.$pg_page." || start : ".$start 
+		          '#suffix' => "</span></div>",
+		          '#value' => ($theme_key == 'expertusoneV2')? ' ' :t('LBL063'), //attach_crs_pg_previous
+		          '#name' => 'edit-group-list-values',
+		          '#attributes' => $attributesEdit,
+		          '#ajax' => array(
+		            'wrapper' => $wrapperId,
+		            'event'=>'click',
+		   					'list_id' =>$listId,
+		            'list_code' => $listCode,
+		            'loop_id'   =>$i,
+		            'listvalues_id'   =>$setupList[$i]->id,
+		            'listvalues_code'   =>$setupList[$i]->code,
+		            'progress' => array(
+		              'type' => 'throbber',
+		              'message' => ''
+		              ),
+		              )
+		              );
+          }else{
+          	$attributesEdit['onclick'][]="";
+          	$form['edit-group-list-values'.$i] = array(
+          			'#type' => 'button',
+          			'#name' => 'edit-list-values-'.$i,
+          			'#id' => 'edit-list-values-'.$i,
+          			'#prefix' => "<td align='center'><div class='attached-list-container'><div class='edit-button-list-values'>
+          			<span class='vtip' title='".t('LBL063')."'>",//(PR) Page :'.$pg_page." || start : ".$start
+          			'#suffix' => "</span></div>",
+          			'#value' => ($theme_key == 'expertusoneV2')? ' ' :t('LBL063'), //attach_crs_pg_previous
+          			'#name' => 'edit-group-list-values',
+          			'#attributes' => $attributesEdit,      
+          			'#disabled' => true,          			 
+          	);
+          }
+          }else{
+          	expDebug::dPrint("sdfsdf");
+          	$form['edit-group-list-values'.$i] = array(
+          			'#type' => 'button',
+          			'#name' => 'edit-list-values-'.$i,
+          			'#id' => 'edit-list-values-'.$i,
+          			'#prefix' => "<td align='center'><div id='qtip_addlistvalues_visible_disp_".$qtipIdInit."' class='attached-list-container'><div class='edit-button-list-values'>
+          			<span class='vtip' title='".t('LBL063')."'>",//(PR) Page :'.$pg_page." || start : ".$start
+          			'#suffix' => "</span></div>",
+          			'#value' => ($theme_key == 'expertusoneV2')? ' ' :t('LBL063'), //attach_crs_pg_previous
+          			'#name' => 'edit-group-list-values',
+          			'#attributes' => $attributesEdit,
+          			'#ajax' => array(
+          					'wrapper' => $wrapperId,
+          					'event'=>'click',
+          					'list_id' =>$listId,
+          					'list_code' => $listCode,
+          					'loop_id'   =>$i,
+          					'listvalues_id'   =>$setupList[$i]->id,
+          					'listvalues_code'   =>$setupList[$i]->code,
+          					'progress' => array(
+          							'type' => 'throbber',
+          							'message' => ''
+          					),
+          			)
+          	);
+          }
+              $form['edit-delete-seperator-pipe-line'.$i] = array(
+             '#type' => 'markup',
+             '#prefix' => '<div class="seperator-edit-delete">|</div>',
+              );
+               
+              $deleteAttributes = array();
+              $deleteAttributes['class'][]   = 'addedit-form-expertusone-throbber';
+              $deleteAttributes['class'][]   = 'admin-delete-img';
+              $deleteAttributes['data-wrapperid'] = array($wrapperId);
+              $groupAvailable = Groups_availablecheck($entityType,$listCode);
+              expDebug::dPrint('$groupAvailable : '.$groupAvailable, 4);
+              if($theme_key == 'expertusoneV2'){
+              	if(isset($sumDelete) && $GLOBALS["user"]->uid != 1){
+              	if($groupAvailable == 0 && $sumDelete == 1){
+              		$deleteClass   = 'enable-delete-icon delete-class-button vtip';//#36300: Issue in Tool tip incorrectly showing in Peoples settings page, vtip class added to the delete icon
+              	}else{
+              		$deleteClass   = 'disable-delete-icon vtip';
+              	}
+              	}else{
+              		$deleteClass   = 'enable-delete-icon delete-class-button vtip';//#36300: Issue in Tool tip incorrectly showing in Peoples settings page, vtip class added to the delete icon
+              	}
+              	
+              }else{
+              	if($groupAvailable == 0 && $sumDelete == 1){
+              		$deleteClass   = 'add-user-delete vtip';//#36300: Issue in Tool tip incorrectly showing in Peoples settings page, vtip class added to the delete icon
+              	}else{
+              		$deleteClass   = 'add-user-delete-disable';
+              	}
+              }
+              $onclick='';
+              if(isset($sumDelete) && $GLOBALS["user"]->uid != 1){
+              if($groupAvailable == 0 && $sumDelete == 1){
+              	//$onclick = 'onclick="$(\'#deleteAddedList-'.$i.'\').click();"';
+              	
+              	//#49145: Issue in Admin people Setup Page don't delete the record Depatment, Job Role & Title with mapped in Users. 
+          		$var_chk_values_mapped_to_user_data = chkValuesMappedtoUserData($listCode, $setupList[$i]->id);
+          		if($var_chk_values_mapped_to_user_data > 0)
+          			$deleteClass   = 'disable-delete-icon';
+          		else
+              	$onclick = 'onclick="$(\'#root-admin\').data(\'narrowsearch\').displayDeleteWizard(\''. t('MSG357') . ' &quot;' . htmlspecialchars(addslashes($setupList[$i]->name), ENT_QUOTES, 'UTF-8') .'&quot;\','.$setupList[$i]->id.',\''.$listCode.'\'); return false;"';
+              }
+              }else{
+              	$onclick = 'onclick="$(\'#root-admin\').data(\'narrowsearch\').displayDeleteWizard(\''. t('MSG357') . ' &quot;' . htmlspecialchars(addslashes($setupList[$i]->name), ENT_QUOTES, 'UTF-8') .'&quot;\','.$setupList[$i]->id.',\''.$listCode.'\'); return false;"';
+      	       }
+
+              $form['delete-group-list-values-button-start-'.$setupList[$i]->id] = array(
+                	'#type' => 'markup',
+                    '#prefix' => '<div class="'.$deleteClass.'"'.$onclick.' title='.t("LBL286").'>&nbsp;</div><span style="display:none;">',
+              );
+              if(isset($sumDelete) && $GLOBALS["user"]->uid != 1){
+              if($sumDelete == 1){
+              $form['delete-group-listvalues-button-'.$setupList[$i]->id] = array(
+              		'#type' => 'checkbox',
+              		'#name' => 'deleteAddedList-'.$setupList[$i]->id,
+              		'#id' => 'deleteAddedList-'.$setupList[$i]->id,
+              		'#suffix' => '</span></td></tr>',
+              		'#attributes' => $deleteAttributes,
+              		'#ajax' => array(
+              				'callback'  => 'exp_sp_administration_listvalues_delete_callback',
+              				'wrapper'   =>$wrapperId,
+              				'loop_id'   =>$i,
+              				'listvalues_id'   =>$setupList[$i]->id,
+              				'listvalues_code' => $setupList[$i]->code,
+              				'list_id'   =>$listId,
+              				'list_code' => $listCode,
+              				'event'     => 'click',
+              		),
+              );
+              }else{
+              	$form['delete-group-listvalues-button-'.$setupList[$i]->id] = array(
+              			'#type' => 'checkbox',
+              			'#name' => 'deleteAddedList-'.$setupList[$i]->id,
+              			'#id' => 'deleteAddedList-'.$setupList[$i]->id,
+              			'#suffix' => '</span></td></tr>',
+              			'#attributes' => $deleteAttributes,              			
+              	);
+              }
+              }else{
+              	$form['delete-group-listvalues-button-'.$setupList[$i]->id] = array(
+              			'#type' => 'checkbox',
+              			'#name' => 'deleteAddedList-'.$setupList[$i]->id,
+              			'#id' => 'deleteAddedList-'.$setupList[$i]->id,
+              			'#suffix' => '</span></td></tr>',
+              			'#attributes' => $deleteAttributes,
+              			'#ajax' => array(
+              					'callback'  => 'exp_sp_administration_listvalues_delete_callback',
+              					'wrapper'   =>$wrapperId,
+              					'loop_id'   =>$i,
+              					'listvalues_id'   =>$setupList[$i]->id,
+              					'listvalues_code' => $setupList[$i]->code,
+              					'list_id'   =>$listId,
+              					'list_code' => $listCode,
+              					'event'     => 'click',
+              			),
+              			);
+              }
+
+               
+        }
+        $form['heading-add-listsetup-end'] = array(
+                '#type' => 'markup',
+                '#suffix' =>  "</table>", 
+        );
+      }
+      $result = adminVisibilityForGlobalAdd($listCode);
+      $addvisible =  $result[0]->addvisible;
+      expDebug::dPrint('create privilege ' . $addvisible,4);
+      if($listValuesDetails > 0 ){
+      	if($addvisible >0 || $GLOBALS["user"]->uid == 1){
+	        $addedAttributes = array();
+	        //$listCount = (count($listValuesDetails)+1);
+	        expDebug::dPrint('count values within the list values'.$listCount);
+	        $addedAttributes['data-wrapperid'] = array($wrapperId);
+	        $entityId          	 = ($listId)?$listId:0;
+	        $entityType        	 = $listCode;
+	        $qtipIdInit        	 = $entityId.'_'.$entityType;
+	        $qtipOptClassObj     = "{'url':'administration/people/setup/list-addedit/".$entityType."/".$listId."/".$entityType."','popupDispId':'qtip_addlistvalues_visible_disp_".$qtipIdInit."','catalogVisibleId':'qtipAttachIdqtip_listvalues_visible_disp_".$qtipIdInit."','wBubble':332,'hBubble':'auto','tipPosition':'bottomLeft','qtipClass':'qtip-parent-addlistvalue','courseId':'".$listId."'}";
+	        $form['add-listvalues-button'] = array(
+	        		'#type' => 'markup',
+	        		'#prefix' => "<div id='qtip_addlistvalues_visible_disp_".$qtipIdInit."' onmousedown =\"closeListValuesQtipPopUp(); $('#root-admin').data('narrowsearch').getBubblePopup(".$qtipOptClassObj."); return false;\"  class='admin-save-button-container add-another-button add-custombtn-symbol'>",
+	        		'#suffix' => t("LBL386").'</div>',
+	        		'#value' => t("LBL386"),
+	        		'#name' => "Add Another",
+	        		'#limit_validation_errors' => array(),
+	        		'#attributes' => $addedAttributes,
+	        );
+      	}else{
+      		$addedAttributes['data-wrapperid'] = array($wrapperId);
+      		$entityId          	 = ($listId)?$listId:0;
+      		$entityType        	 = $listCode;
+      		$qtipIdInit        	 = $entityId.'_'.$entityType;
+      		//$qtipOptClassObj     = "{'url':'administration/people/setup/list-addedit/".$entityType."/".$listId."/".$entityType."','popupDispId':'qtip_addlistvalues_visible_disp_".$qtipIdInit."','catalogVisibleId':'qtipAttachIdqtip_listvalues_visible_disp_".$qtipIdInit."','wBubble':332,'hBubble':'auto','tipPosition':'bottomLeft','qtipClass':'qtip-parent-addlistvalue','courseId':'".$listId."'}";
+      		$form['add-listvalues-button'] = array(
+      				'#type' => 'markup',
+      				'#prefix' => "<div id='qtip_addlistvalues_visible_disp_".$qtipIdInit."' class='admin-save-button-container add-another-button add-custombtn-symbol-greyout'>",
+      				'#suffix' => t("LBL386").'</div>',
+      				'#value' => t("LBL386"),
+      				'#name' => "Add Another",
+      				'#limit_validation_errors' => array(),
+      				'#attributes' => $addedAttributes,
+      		);
+      	}
+       /* $qtipOptClassObj     = "{'entityId':".$entityId.",'entityType':'".$entityType."',
+												        'url':'administration/people/setup/list-addedit/".$entityType."/".$listId."/".$entityType."',
+												        'popupDispId':'qtip_addlistvalues_visible_disp_".$qtipIdInit."',
+												        'catalogVisibleId':'qtipAttachIdqtip_listvalues_visible_disp_".$qtipIdInit."',
+												        'wid':310,'heg':'100','postype':'bottomleft','poslwid':'','qdis':'ctool',
+												        'linkid':'visible-setting-ctool-tags-".$entityId."'}";
+        $form['add-listvalues-button'] = array(
+        		'#type' => 'markup',
+        		'#prefix' => "<div style='position: absolute;margin-left: 5px;' id='qtip_addlistvalues_visible_disp_".$qtipIdInit."' class='admin-save-button-container add-another-button add-custombtn-symbol'>
+        		<a id='visible-setting-ctool-tags-".$entityId."' class=\"tab-title\" onclick = \"callVisibility(".$qtipOptClassObj.");\">".t("LBL386")."</a>
+        		<span id='visible-popup-".$entityId."' class='qtip-popup-visible' style='display:none; position:relative; left:0px; top:0px;'></span>",
+        		'#suffix' => '</div>',
+        		'#value' => t("LBL386"),
+        		'#name' => "Add Another",
+        		'#limit_validation_errors' => array(),
+        		'#attributes' => $addedAttributes,
+        );*/
+      }
+      
+      $select = db_select('slt_profile_list_items', 'pro');
+      $select->addField('pro','id',	'id');
+      $select->condition('pro.code', $listCode, '=');
+      $id = $select->execute()->fetchField();      
+      
+      
+     /* $entityId          	 = $id;//.',"'.$entityType
+      if(!empty($entityId)){
+      	$entityId = $entityId;
+      } else{
+      	$entityId = 0;
+      }
+      
+      $entityType        	 = $listCode;
+      $qtipIdInit        	 = $entityId.'_'.$entityType;
+      
+      $qtipOptAccessObj      = "{'entityId':".$entityId.",'entityType':'$entityType','url':'administration/catalogaccess/qtip_visible_disp_".$qtipIdInit."/".$entityId."/".$entityType."/".$entityId."','popupDispId':'qtip_visible_disp_".$qtipIdInit."','catalogVisibleId':'qtipAccessqtip_visible_disp_".$qtipIdInit."','wBubble':780,'hBubble':'auto','tipPosition':'bottomCorner','qtipClass':'admin-qtip-access-parent'}";
+      
+      $form['addedit-left-col-extend-func'] = array(
+      		'#type' => 'markup',
+      		'#markup' => '<div class="crs-tab-titles-container"><div class="access-tab-icon"></div>'.
+      		"<div id='qtip_visible_disp_".$qtipIdInit."' onmousedown =\"$('#root-admin').data('narrowsearch').getBubblePopup(".$qtipOptAccessObj.");\" class=\"tab-title\">".t('LBL642')."</div>".
+      		'</div>',
+      );*/
+
+      /* ------------------------------------Start Pagination----------------------------*/
+      $attributesPrev = array();
+      $attributesPrev['class'][] = 'addedit-form-expertusone-throbber';
+      $attributesPrev['class'][] = 'add-list-first-btn';
+      $attributesPrev['data-wrapperid'] = 'add-list-values-wrapper';
+       
+      if($pg_page == 1) {
+      	$form['addlist-pagination-first'] = array(
+      			'#type' => 'markup',
+      			'#markup' => '<div class="add-list-pagination-container" style="'.$displayPageStyle.'"><span class="add-list-first-btn"></span>', //start
+      	);
+      }else{
+      	$form['addlist-pagination-first'] = array(
+      			'#type' => 'button',
+      			'#id' => 'add_lst_pg_first',
+      			'#prefix' => '<div class="add-list-pagination-container" style="'.$displayPageStyle.'">',//(PR) Page :'.$pg_page." || start : ".$start
+      			'#suffix' => '',
+      			'#name' => 'add_list_pagination_first',
+      			'#attributes' => $attributesPrev,
+      			'#ajax' => array(
+      					'wrapper' => $wrapperId,
+      					'callback' => 'add_list_pagination_callback',
+      					'method' => 'replace',
+      					'effect' => 'none',
+      					'event'=>'click',
+      					'question_pgn_page' => 1,
+      					'list_id' =>$listId,
+      					'list_code' => $listCode,
+      					'keypress' => true,
+      					'progress' => array(
+      							'type' => 'throbber',
+      							'message' => ''
+      					),
+      			)
+      	);
+      }
+      
+      $attributesPrev = array();
+      $attributesPrev['class'][] = 'addedit-form-expertusone-throbber';
+      $attributesPrev['class'][] = 'add-list-previous-btn';
+      $attributesPrev['data-wrapperid'] = 'add-list-values-wrapper';
+       
+      if($pg_page == 1) {
+        $form['addlist-pagination-previous'] = array(
+                 '#type' => 'markup',
+                 '#markup' => '<span class="add-list-previous-btn"></span>', //start
+        );
+      }else{
+        $form['addlist-pagination-previous'] = array(
+                '#type' => 'button',
+                '#id' => 'add_lst_pg_previous',
+                '#prefix' => ' ',//(PR) Page :'.$pg_page." || start : ".$start 
+                '#suffix' => ' ',
+                '#name' => 'add_list_pagination_previous',
+                '#attributes' => $attributesPrev,
+                '#ajax' => array(
+                  'wrapper' => $wrapperId,
+                  'callback' => 'add_list_pagination_callback',
+                  'method' => 'replace',
+                  'effect' => 'none',
+                  'event'=>'click',
+   				        'question_pgn_page' => ($pg_page-1),
+   				       'list_id' =>$listId,
+        'list_code' => $listCode,
+                  'keypress' => true,
+                  'progress' => array(
+                    'type' => 'throbber',
+                    'message' => ''
+                    ),
+                    )
+                    );
+      }
+       
+
+      $attributesCenter = array();
+      $attributesCenter['class'][] = 'addedit-form-expertusone-throbber';
+      $attributesCenter['class'][] = 'addedit-page-text';
+      $attributesCenter['data-wrapperid'] = $wrapperId;
+      $prefixPage = ($theme_key == 'expertusoneV2')? '<span style="margin-right: 3px;">'.t('LBL989').'</span>' : '';
+
+      $form['addlist-pagination-total-txt-1'] = array(
+              '#type' => 'textfield',
+              '#id' => 'add_lst_pg_txtfld',
+              '#name' => 'add_lst_pg_txtfld',
+              '#prefix' => '<div class="tot-txt-cls">'.$prefixPage,
+              '#suffix' =>  '<span class= "pagination-total-pages">'.t('LBL981').' '.$total_pages.'</span></div>', 
+              '#value' => $pg_page,
+              '#attributes' => $attributesCenter,
+              '#size' => 1,
+              '#ajax' => array(
+                     'callback' => 'add_list_pagination_callback',
+                   	 'wrapper' => $wrapperId,
+              		 'keypress' => true,
+                     'question_pgn_page' => $pg_page,
+   				           'list_id' =>$listId,
+      					   'list_code' => $listCode,
+                     	   'event' => 'change', 
+      ),
+
+      );
+       
+       
+      $attributesNxt = array();
+      $attributesNxt['class'][] = 'addedit-form-expertusone-throbber';
+      $attributesNxt['class'][] = 'add-list-next-btn';
+      $attributesNxt['data-wrapperid'] = $wrapperId;
+
+      if($pg_page == $total_pages) {
+        $form['addlist-pagination-next'] = array(
+                 '#type' => 'markup',
+                '#markup' => '<span class="add-list-next-btn"></span>',
+        );
+      }else{
+        $form['addlist-pagination-next'] = array(
+                 '#type' => 'button',
+                '#id' => 'add_lst_pg_next',
+                '#prefix' => ' ',//(NX) Page :'.$pg_page." || start : ".$start 
+                //'#suffix' => '</div>',
+        				'#suffix' => ' ',
+                '#value' => ' ', //add_usr_pg_next
+                '#name' => 'add_list_pagination_next',
+                '#attributes' => $attributesNxt,
+                '#ajax' => array(
+                  'wrapper' => $wrapperId,
+                  'callback' => 'add_list_pagination_callback',
+                  'method' => 'replace',
+                  'effect' => 'none',
+                  'event'=>'click',
+                  'question_pgn_page' => ($pg_page+1),
+   				        'list_id' =>$listId,
+        'list_code'   => $listCode,
+                  'keypress' => true,
+                  'progress' => array(
+                    'type' => 'throbber',
+                    'message' => ''
+                    ),
+                    )
+                    );
+      }
+      
+      $attributesNxt = array();
+      $attributesNxt['class'][] = 'addedit-form-expertusone-throbber';
+      $attributesNxt['class'][] = 'add-list-last-btn';
+      $attributesNxt['data-wrapperid'] = $wrapperId;
+      
+      if($pg_page == $total_pages) {
+      	$form['addlist-pagination-last'] = array(
+      			'#type' => 'markup',
+      			'#markup' => '<span class="add-list-last-btn"></span></div>',
+      	);
+      }else{
+      	$form['addlist-pagination-last'] = array(
+      			'#type' => 'button',
+      			'#id' => 'add_lst_pg_last',
+      			'#prefix' => ' ',//(NX) Page :'.$pg_page." || start : ".$start
+      			'#suffix' => '</div>',
+      			'#value' => ' ', //add_usr_pg_next
+      			'#name' => 'add_list_pagination_last',
+      			'#attributes' => $attributesNxt,
+      			'#ajax' => array(
+      					'wrapper' => $wrapperId,
+      					'callback' => 'add_list_pagination_callback',
+      					'method' => 'replace',
+      					'effect' => 'none',
+      					'event'=>'click',
+      					'question_pgn_page' => $total_pages,
+      					'list_id' =>$listId,
+      					'list_code'   => $listCode,
+      					'keypress' => true,
+      					'progress' => array(
+      							'type' => 'throbber',
+      							'message' => ''
+      					),
+      			)
+      	);
+      }
+      /* ------------------------------------End Pagination----------------------------*/
+      return $form;
+
+  } catch (Exception $ex) {
+    watchdog_exception('exp_sp_administration_setup_addedit_form', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_administration_setup_addedit_form_validate($form, &$form_state){
+	try {
+  if ($form_state['triggering_element']['#id'] == 'add_lst_pg_txtfld') { expDebug::dPrint("Validate herrrrr : 3");
+  $form_state['display_class']   = TRUE;
+  $form_state['rebuild']         = TRUE;
+  $form_state['storage']['step'] = 'view';
+  $form_state['storage']['page'] = $form_state['input']['add_lst_pg_txtfld'];//$form_state['triggering_element']['#ajax']['question_pgn_page'];//
+  return;
+  }
+
+  if ($form_state['triggering_element']['#id'] == 'add_lst_pg_next') { expDebug::dPrint("Validate herrrrr : 1");
+  $form_state['display_class']   = TRUE;
+  $form_state['input']           = array();
+  $form_state['values']          = array();
+  $form_state['rebuild']         = TRUE;
+  $form_state['storage']['step'] = 'view';
+  $form_state['storage']['page'] = $form_state['triggering_element']['#ajax']['question_pgn_page'];
+  return;
+  }
+
+  if ($form_state['triggering_element']['#id'] == 'add_lst_pg_previous') {expDebug::dPrint("Validate herrrrr : 2");
+  $form_state['display_class']   = TRUE;
+  $form_state['input']           = array();
+  $form_state['values']          = array();
+  $form_state['rebuild']         = TRUE;
+  $form_state['storage']['step'] = 'view';
+  $form_state['storage']['page'] = $form_state['triggering_element']['#ajax']['question_pgn_page'];
+  return;
+  }
+  if ($form_state['triggering_element']['#id'] == 'add_lst_pg_first') {
+  	expDebug::dPrint("Validate herrrrr : 1");
+  	$form_state['display_class']   = TRUE;
+  	$form_state['input']           = array();
+  	$form_state['values']          = array();
+  	$form_state['rebuild']         = TRUE;
+  	$form_state['storage']['step'] = 'view';
+  	$form_state['storage']['page'] = $form_state['triggering_element']['#ajax']['question_pgn_page'];
+  	return;
+  }
+  
+  if ($form_state['triggering_element']['#id'] == 'add_lst_pg_last') {
+  	expDebug::dPrint("Validate herrrrr : 2");
+  	$form_state['display_class']   = TRUE;
+  	$form_state['input']           = array();
+  	$form_state['values']          = array();
+  	$form_state['rebuild']         = TRUE;
+  	$form_state['storage']['step'] = 'view';
+  	$form_state['storage']['page'] = $form_state['triggering_element']['#ajax']['question_pgn_page'];
+  	return;
+  }
+  } catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_setup_addedit_form_validate', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+/*
+ * call back for delete the list values
+ */
+function exp_sp_administration_listvalues_delete_callback($form, &$form_state) {
+  try {
+    $triggeringElement = $form_state['triggering_element'];
+     
+    $listId = $triggeringElement['#ajax']['listvalues_id'];
+    $listCode = $triggeringElement['#ajax']['listvalues_code'];
+    $code = $triggeringElement['#ajax']['list_code'];
+    $entityType = $triggeringElement['#ajax']['listvalues_code'];
+    $count = chkValuesMappedtoUserData($triggeringElement['#ajax']['list_code'], $listId);
+    $error_msg = '';
+    if($count<=0){
+	    deleteListValues($listId,$entityType);
+    }else{
+    	$msg ='';
+    	if($triggeringElement['#ajax']['list_code'] == "cre_usr_jtl")
+    		$msg = t('LBL073').' '.t('ERR252');
+    	elseif($triggeringElement['#ajax']['list_code'] == "cre_usr_dpt")
+    		$msg = t('LBL179').' '.t('ERR252');
+    	elseif($triggeringElement['#ajax']['list_code'] == "cre_usr_etp")
+    		$msg = t('LBL174').' '.t('ERR252');
+    	elseif($triggeringElement['#ajax']['list_code'] == "cre_usr_ptp")
+    		$msg = t('LBL173').' '.t('ERR252');
+    	elseif($triggeringElement['#ajax']['list_code'] == "cre_usr_jrl")
+    	{
+    		$msg = t('LBL133').' '.t('ERR252');
+    	}
+    	if($msg!='')
+    		$error_msg = '<div id="show_expertus_message"><div id="message-container" style="visibility: visible; position:absolute;width:90%;"><div class="messages error"><ul><li class=""><span>'.$msg.'</span></li></ul><div onclick="$(\'body\').data(\'learningcore\').closeErrorMessage();" class="msg-close-btn"></div></div></div></div>';
+    }
+    $min_form_state = array(
+    		'ajax' => TRUE,
+    		're_render' => TRUE,
+    		'no_redirect' => TRUE,
+    		'code' => $code,
+    		'list_id' => $listId,
+    		'list_type' =>  $listCode,
+    		'build_info' => array('args' => array('ajax'))
+    );
+    
+    $form_state = $min_form_state;
+    
+    $formId = 'exp_sp_administration_setup_addedit_form';
+    $builtForm = drupal_render(drupal_build_form($formId, $form_state));
+    
+    $commands = array();
+    $commands[] = ajax_command_invoke('#delete-msg-wizard', 'remove');
+    $commands[] = ajax_command_insert("#show_expertus_message", $error_msg, null);
+    $commands[] = ajax_command_replace(NULL, $builtForm);
+    return array(
+    		'#type' => 'ajax',
+    		'#commands' => $commands
+    );
+  } catch (Exception $ex) {
+    watchdog_exception('exp_sp_administration_listvalues_delete_callback', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+function add_list_pagination_callback($form, &$form_state){
+	try {
+  expDebug::dPrint('page call'.print_r($form_state,true));
+  $listCode = $form_state['triggering_element']['#ajax']['list_code'];
+  $question_pgn_page = $form_state['triggering_element']['#ajax']['question_pgn_page'];
+
+  $form_state = array();
+
+  $form_state['rebuild'] = TRUE;
+
+  $min_form_state = array(
+       'ajax' => TRUE, 
+       're_render' => TRUE, 
+       'no_redirect' => TRUE, 
+       'list_id' => $listId,
+       'code' => $listCode,
+       'question_pgn_page' => $question_pgn_page,
+       'build_info' => array('args' => array('ajax'),'question_pgn_page' => $question_pgn_page) 
+  );
+
+  $form_state = $min_form_state;
+
+  //$form_state['storage']['page'] = $question_pgn_page;
+
+  $formId = 'exp_sp_administration_setup_addedit_form';
+  $builtForm = drupal_build_form($formId, $form_state);
+
+  $commands = array();
+  $commands[] = ajax_command_replace(NULL, drupal_render($builtForm));
+
+  return array(
+            '#type' => 'ajax',
+            '#commands' => $commands
+  );
+  } catch (Exception $ex) {
+  	watchdog_exception('add_list_pagination_callback', $ex);
+  	expertusErrorThrow($ex);
+  }
+
+}
+/*
+ * function for delete the list values.
+ * The values will be deleted from slt_profile_list_items
+ */
+function deleteListValues($entityId,$entityType) {
+  try { 
+  if(!empty($entityId)){
+  	//0042387: Issue in people ->setting attributes
+  	db_update('slt_profile_list_items')
+  	->fields(array(	'is_active' => 'N'))
+  	->condition('id', $entityId)
+  	->condition('code', $entityType)
+  	->execute();
+  }
+  //Audit Trail Entry
+  make_audit_trail_entries($entityId, getIdOfLoggedInUser() ,null,$entityId, 'deleted', $entityType, 'exp_sp_administration_setup',
+   'DeletedListValues', array('user_list'));
+  //return $userDelete;
+  } catch (Exception $ex) {
+  	watchdog_exception('deleteListValues', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+/**
+ * function to remove the default text grey class if the search value is not given.
+ */
+function removeGreyTextClassOfAutoComplete(&$form, $form_state, $element, $defaultValue, $className = 'input-field-grey') {
+	if(isset($form_state['values'][$element]) && $form_state['values'][$element] != $defaultValue) {
+		$greyClass = array_search($className, $form[$element]['#attributes']['class']);
+		unset($form[$element]['#attributes']['class'][$greyClass]);
+	}
+}
+?>

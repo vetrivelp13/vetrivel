@@ -1,0 +1,43 @@
+/* Admin Calendar Styles starts here */
+#admincalendarsettingdiv {
+  width:230px;
+  right:-78px;
+}
+#admincalendarsettingdiv div.links {
+  width:160px;  
+}
+.viewreportorderpopupdiv .orders div.links .list-item {
+    width: 140px;
+}
+.ac_order_links {
+   width: 45px;
+}
+#calendarprimaryview .fc-agendaDay-view .fc-head div.fc-widget-header th.fc-axis{
+  min-width:77px
+}
+/* Admin Calendar Styles ends here */
+
+/* Chrome hack Start */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #calendarprimaryview .fc-agendaDay-view .fc-head div.fc-widget-header th.fc-axis{
+    min-width:79px
+  }
+  .narrow-search-calendar-filter-block {
+  	width: 28.5%
+  }	
+  .select-list-dropdown-calendar {
+  	padding: 5px 10px 5px 0
+  }
+}
+/* Chrome hack End */
+
+/*safari hack Start*/
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0), not all and (min-resolution:.001dpcm) { @media { _:-webkit-full-screen,
+	.narrow-search-calendar-filter-block {
+  		width: 28.5%
+  	}	
+  	.select-list-dropdown-calendar {
+  		padding: 5px 10px 5px 0
+  	}
+}}
+/*safari hack End*/

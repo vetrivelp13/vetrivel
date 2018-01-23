@@ -1,0 +1,5 @@
+name = Automated Logout
+description = Adds automated timed logout to ExpertusONE
+core = 7.x
+dependencies[] = exp_sp_core
+configure = admin/config/people/exp_sp_session_timeout

@@ -1,0 +1,335 @@
+<?php
+class AdministrationAssessmentQuestionTestHelper extends ExpertusWebTestCase {
+	private $searchResultContent = null;
+	protected $testcases = array ();
+	public $listContent = '';
+	private $srcParam = array (
+			'title' => '', // Title base search
+			'announcementdaterange' => '', // date range on announcement
+			'announcementlang' => 'cre_sys_lng_eng', // Selected languages pipe separated
+			'sortby' => 'desc', // Sort by option
+			'announcemanage' => 'cre_sys_fop_me' 
+	);
+	public function setUp() {
+		parent::setUp ();
+		$this->drupalLogin ( $this->admin ); // login as admin
+		$this->getAssessmentQuestionsTestCases ();
+		// set refer to prevent access denied error
+		$this->setHttpReferer ( 'learning/enrollment-search' );
+	}
+	public function manageAdminAssessmentQuestions($scope = 'basic') {
+		
+		// Get Main HTML content
+		$this->drupalPost ( 'administration/assessment/assessmentquestions' );
+		$content = $this->content;
+		
+		// Get Filters
+		$this->drupalGetAJAX ( 'administration/search-filter/assessmentquestions' );
+		$this->content = drupal_json_decode ( $this->content );
+		
+		// Update filters with existing response
+		$replArray = array (
+				'rendered_narrow_search_filters' => 'narrow-search',
+				'rendered_main_div' => 'root-admin-results',
+				'rendered_tab_content_main' => 'tab-content-main',
+				'rendered_narrow_search_sortbar' => 'admin-maincontent_tab',
+				'rendered_narrow_search_actionbar' => 'sort-bar-V2' 
+		);
+		
+		$this->updateSearchFilters ( $content, $replArray, 'div', 'tag', 'div' );
+		
+		$this->displayTagsById ( 'narrow-search' );
+		$this->displayTagsById ( 'root-admin-results' );
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases ['assessmentQuestionList'];
+		} else {
+			$testCases = array (
+					$this->testcases ['assessmentQuestionList'] [$scope] 
+			);
+		}
+		
+		// Get search results
+		foreach ( $testCases as $test ) {
+			$this->getAdministrationAssessmenQuestionsList ( $test );
+		}
+	}
+	public function getAdministrationAssessmenQuestionsList($opt = array()) {
+		$opt = array_merge ( $this->basicParam, $opt );
+		$this->listContent = $this->content;
+		$srcRc = $this->drupalGetAJAX ( 'administration/assessment/assessmentquestions/search/all/', array (
+				'query' => $opt 
+		) );
+		$this->updateSearchResults ( $this->listContent, $srcRc, 'narrow-search-results-holder' );
+	}
+	protected function getAssessmentQuestionsTestCases() {
+		$rand = $this->randomName ( 10 );
+		$this->testcases = array (
+				'assessmentQuestionList' => array (
+						'basic' => array (),
+						'case1' => array () 
+				),
+				'assessmentQuestionCreate' => array (
+						'st_case1' => array (
+								"question_txt" => 'st_case1 question text - ' . $rand,
+								"question_type" => 'sry_qtn_typ_yno',
+								"answerchoices[choices]" => 1,
+								"lang_code" => 'cre_sys_lng_eng',
+								"entity_value" => 'sry_det_typ_ass_qus' 
+						),
+						'st_case2' => array (
+								"question_txt" => 'st_case2 question text - ' . $rand,
+								"question_type" => 'sry_qtn_typ_yno',
+								"answerchoices[choices]" => 1,
+								"lang_code" => 'cre_sys_lng_eng',
+								"entity_value" => 'sry_det_typ_ass_qus' 
+						) 
+				),
+				'assessmentQuestionUpdate' => array (
+						'st_case1' => array (
+								"question_txt" => 'st_case1 question changed ' . $rand,
+								"question_type" => 'sry_qtn_typ_yno',
+								"answerchoices[choices]" => 1,
+								"id" => $this->getAssessmentQuestionId ( 'st_case1' ) 
+						),
+						'st_case2' => array (
+								"question_txt" => 'st_case2 question changed ' . $rand,
+								"question_type" => 'sry_qtn_typ_yno',
+								"answerchoices[choices]" => 1,
+								"id" => $this->getAssessmentQuestionId ( 'st_case2' ) 
+						) 
+				),
+				'assessmentQuestionDelete' => array (
+						'st_case1' => array (
+								'id' => $this->getAssessmentQuestionId ( 'st_case1' ) 
+						),
+						'st_case2' => array (
+								'id' => $this->getAssessmentQuestionId ( 'st_case2' ) 
+						) 
+				),
+				'assessmentQuestionView' => array (
+						'st_case1' => array (
+								'id' => $this->getAssessmentQuestionId ( 'st_case1' ) 
+						) 
+				),
+				'assessmentQuestionStatus' => array (
+						'st_case1' => array (
+								'id' => $this->getAssessmentQuestionId ( 'st_case1' ) 
+						),
+						'st_case2' => array (
+								'id' => $this->getAssessmentQuestionId ( 'st_case2' ) 
+						) 
+				) 
+		);
+	}
+	public function getAssessmentQuestionTitle($assessmentQuesId = '') {
+		$assessmentTitle = db_query ( "SELECT question_txt FROM slt_survey_questions WHERE survey_type = :type AND id = :assessment_ques_id", array (
+				':type' => 'sry_det_typ_ass',
+				':assessment_ques_id' => $assessmentQuesId 
+		) )->fetchField ();
+		return $assessmentTitle;
+	}
+	public function getAssessmentQuestionStatus($assessmentQuesId = '') {
+		$assessmentStatus = db_query ( "SELECT status FROM slt_survey_questions WHERE survey_type = :type AND id = :assessment_ques_id", array (
+				':type' => 'sry_det_typ_ass',
+				':assessment_ques_id' => $assessmentQuesId 
+		) )->fetchField ();
+		return $assessmentStatus;
+	}
+	
+	// To check how many assessment having this question
+	public function getAssessmentQuestionCount($assessmentQuesId = '') {
+		$questionCount = db_query ( "SELECT count(question_id) FROM slt_survey_groups_questions WHERE question_id = :assessmentQuesId", array (
+				':assessmentQuesId' => $assessmentQuesId 
+		) )->fetchField ();
+		return $questionCount;
+	}
+	public function getAssessmentQuestionId($search_str = '') {
+		$select = db_select ( 'slt_survey_questions', 'survey_ques' );
+		$select->addField ( 'survey_ques', 'id', 'id' );
+		$select->condition ( 'survey_ques.survey_type', 'sry_det_typ_ass' );
+		$select->condition ( 'survey_ques.status', 'sry_qtn_sts_del', '!=' );
+		$select->condition ( 'survey_ques.question_txt', '%' . db_like ( $search_str ) . '%', 'LIKE' );
+		$select->orderBy ( 'survey_ques.id', 'DESC' );
+		$select->range ( 0, 1 );
+		$assessmentQuestionId = $select->execute ()->fetchField ();
+		return $assessmentQuestionId;
+	}
+}
+class AdministrationAssessmentQuestionListBase extends AdministrationAssessmentQuestionTestHelper {
+}
+class AdministrationAssessmentQuestionListAll extends AdministrationAssessmentQuestionListBase {
+	public static function getInfo() {
+		return array (
+				'name' => 'Administration - AssessmentQuestions - List - All Tests',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1402 - Administration - Assessment - AssessmentQuestions - List' 
+		);
+	}
+	public function testAssessmentQuestionsListAll() {
+		debug ( 'testAdminAssessmentQuestionsListAll called' );
+		$this->manageAdminAssessmentQuestions ( 'all' );
+	}
+}
+class AdministrationAssessmentQuestionListCase1 extends AdministrationAssessmentQuestionListBase {
+	public static function getInfo() {
+		return array (
+				'name' => 'Administration - AssessmentQuestions - List - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1402 - Administration - Assessment - AssessmentQuestions - List' 
+		);
+	}
+	public function testAssessmentQuestionsListCase1() {
+		debug ( 'testAdminAssessmentQuestionsListCase1 called' );
+		$this->manageAdminAssessmentQuestions ( 'case1' );
+	}
+}
+
+/**
+ * AssessmentQuestion view test cases
+ * Created By :Maheswari.M
+ * Created Date:21.12.2016
+ */
+class AdministrationAssessmentQuestionViewBase extends AdministrationAssessmentQuestionTestHelper {
+	public function viewAssessmentQuestionTestCase($scope) {
+		$ctoolModel = array (
+				'modelWidth' => 890,
+				'modelClass' => 'ctools-modal-ctools-viewscreen-wrapper',
+				'modelTitle' => t ( 'View' ),
+				'contentWidth' => 680,
+				'contentMhight' => 335,
+				'outerHeight' => 620,
+				'outerWidth' => 336,
+				'blockHeight' => 1232,
+				'blockWidth' => 1343,
+				'modelTop' => 150,
+				'modelLeft' => 226.5,
+				'docHeight' => 1232,
+				'docWidth' => 1343 
+		);
+		$this->addCtoolModelContent ( $ctoolModel );
+		
+		$modelContent = $this->content;
+		
+		$testCases = $this->testcases ['assessmentQuestionView'] [$scope];
+		if ($testCases ['id'] == 'null' || $testCases ['id'] == '') {
+			debug ( 'there is no assessment question exists' );
+		} else {
+			// Reset content with the ctool model
+			$this->content = $modelContent;
+			
+			// Get empty form
+			$post_field = array (
+					'wrapper' => 'paint-narrow-search-results' 
+			);
+			$viewId = $testCases ['id'];
+			
+			$out = $this->drupalPostAJAX ( null, $edit, 'Save', '?q=administration/assessment/assessmentquestions/view-question/ajax/addedit/' . $viewId . '/sry_det_typ_ass/sry_det_typ_ass_qus', array (), array (), '', $post_field );
+			$this->verbose ( 'Request to: ' . $this->getUrl () . '<hr />' . $this->content );
+			// Do General validations
+			$this->assertResponse ( 200, 'Form Rended successfully' );
+			$webError = "Website encountered an unexpected error";
+			$this->assertNoText ( t ( $webError ), 'Web errors not found', 'catalog_admin' );
+		}
+	}
+}
+class AdministrationAssessmentQuestionViewCase1 extends AdministrationAssessmentQuestionViewBase {
+	public static function getInfo() {
+		return array (
+				'name' => 'Administration - AssessmentQuestions - View - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1402 - Administration - Assessment - AssessmentQuestions - View' 
+		);
+	}
+	public function testAssessmentQuestionViewCase1() {
+		debug ( 'testAssessmentQuestionViewCase1 called' );
+		$this->manageAdminAssessmentQuestions ( 'case1' );
+		$this->viewAssessmentQuestionTestCase ( 'st_case1' );
+	}
+}
+
+/**
+ * AssessmentQuestion change status test cases
+ * Created By :Maheswari.M
+ * Created Date:29.12.2016
+ * To check the functionality for the AssessmentQuestion question publish/unpublish .
+ */
+class AdministrationAssessmentQuestionStatusBase extends AdministrationAssessmentQuestionTestHelper {
+	public function statusAssessmentQuestionTestCase($scope = 'all') {
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases ['assessmentQuestionStatus'];
+		} else {
+			$testCases = array (
+					$this->testcases ['assessmentQuestionStatus'] [$scope] 
+			);
+		}
+		
+		foreach ( $testCases as $test ) {
+			$assessmentId = $test ['id'];
+			if ($assessmentId != '') {
+				// checking the status if the question attached any assessment
+				$num_question = $this->getAssessmentQuestionCount ( $assessmentId );
+				if ($num_question == 0) {
+					// if question not attached,we can publish/unpublish
+					$status = $this->getAssessmentQuestionStatus ( $assessmentId );
+					$this->changeStatus ( $assessmentId, $status );
+					$status = $this->getAssessmentQuestionStatus ( $assessmentId );
+					$this->changeStatus ( $assessmentId, $status );
+					$this->content = $this->listContent;
+					$this->getAdministrationAssessmenQuestionsList ();
+				} else {
+					// if question is attach,we can't publish/unpublish
+					debug ( 'Assessment Question not able to publish/unpublish,because it attached to assessment' );
+				}
+			} else
+				debug ( 'The assessment question id not found' );
+		}
+	}
+	// change the assessment question status
+	public function changeStatus($assessmentId, $status) {
+		if ($status == 'sry_qtn_sts_atv') {
+			// question is alreay published ,need to unpublish
+			$this->changeAssessmentQuestionStatus ( $assessmentId );
+			$this->assertResponse ( 200, 'AssessmentQuestion status unpublished successfully' );
+		} else {
+			// question is unpublish
+			$this->changeAssessmentQuestionStatus ( $assessmentId );
+			$this->assertResponse ( 200, 'AssessmentQuestion status published successfully' );
+		}
+	}
+	public function changeAssessmentQuestionStatus($assessmentId) {
+		$this->drupalPostAJAX ( null, $edit, 'Save', '?q=ajax/administration/survey/survey-assessment-questions/publish-and-unpublish/' . $assessmentId, array (), array (), '', $post_field );
+	}
+}
+class AdministrationAssessmentQuestionStatusCase1 extends AdministrationAssessmentQuestionStatusBase {
+	public static function getInfo() {
+		return array (
+				'name' => 'Administration - AssessmentQuestions - Status - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1402 - Administration - Assessment - AssessmentQuestions - Status' 
+		);
+	}
+	public function testAssessmentQuestionPublishCase1() {
+		debug ( 'testAssessmentQuestionPublishCase1 called' );
+		$this->manageAdminAssessmentQuestions ( 'case1' );
+		$this->statusAssessmentQuestionTestCase ( 'st_case1' );
+	}
+}
+class AdministrationAssessmentQuestionStatusCase2 extends AdministrationAssessmentQuestionStatusBase {
+	public static function getInfo() {
+		return array (
+				'name' => 'Administration - AssessmentQuestions - Status - Case 2',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1402 - Administration - Assessment - AssessmentQuestions - Status' 
+		);
+	}
+	public function testAssessmentQuestionPublishCase2() {
+		debug ( 'testAssessmentQuestionPublishCase1 called' );
+		$this->manageAdminAssessmentQuestions ( 'case1' );
+		$this->statusAssessmentQuestionTestCase ( 'st_case2' );
+	}
+}
+
+?>

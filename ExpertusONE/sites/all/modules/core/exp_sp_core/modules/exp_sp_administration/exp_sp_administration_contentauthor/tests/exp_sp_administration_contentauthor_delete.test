@@ -1,0 +1,108 @@
+<?php
+
+class AdministrationContentAuthorDeleteBase extends AdministrationContentAuthorTestHelper
+{
+	public function deleteContentAuthorTestCase($scope = 'all'){
+
+		// Get Main HTML content
+		$this->drupalPost('administration/contentauthor/video');
+		$content = $this->content;
+		
+		// Get Filters
+		$this->drupalGetAJAX('administration/search-filter/video');
+		$this->content = drupal_json_decode($this->content);
+			
+		//Update filters with existing response
+		$replArray = array(
+				'rendered_narrow_search_filters' => 'narrow-search',
+				'rendered_main_div' => 'root-admin-results',
+				'rendered_tab_content_main' => 'tab-content-main',
+				'rendered_narrow_search_sortbar' => 'admin-maincontent_tab',
+				'rendered_narrow_search_actionbar' => 'sort-bar-V2'
+		);
+			
+		$this->updateSearchFilters($content, $replArray, 'div', 'tag', 'div' );
+		
+		$this->displayTagsById('narrow-search');
+		$this->displayTagsById('root-admin-results');
+	
+		
+		
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['contentDelete'];
+		} else {
+			$testCases = array($this->testcases['contentDelete'][$scope]);
+		}
+
+		foreach($testCases as $test){
+			$contentTitle = $this->getContentTitle($test['id']);
+			debug("Content name to delete: " . $contentTitle);
+
+			//drupalPost($path, $edit, $submit, $options, $headers, $form_html_id);
+			$contentId = $test['id'];
+			//$contentId = 'ZZ34ZZ3958aedc8e27c9fa';
+			$deletePath = 'ajax/admincore/deleteprocessobject/' . $contentId . '/Content';
+			              //ajax/admincore/deleteprocessobject/ZZ34ZZa083aeae03e757c5/Content
+			$out = $this->drupalPost($deletePath, array(), t('Delete'));
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+
+			$contentStatus = $this->getContentStatus($test['id']);
+			debug("Content status : " . $contentStatus);
+		}
+
+	}
+}
+
+class AdministrationContentAuthorDeleteAll extends AdministrationContentAuthorDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Content Author - Delete - AllTest',
+				'description' => 'Module : exp_sp_administration_contentauthor',
+				'group' => '1601 - Administration - Content Author - Video - Delete',
+		);
+	}
+
+	public function testContentAuthorDeleteAll() {
+		$this->deleteContentAuthorTestCase('all');
+		$this->manageAdminContentAuthor();
+	}
+}
+
+class AdministrationContentAuthorDeleteCase1 extends AdministrationContentAuthorDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Content Author - Delete -Case 1',
+				'description' => 'Module : exp_sp_administration_contentauthor',
+				'group' => '1601 - Administration - Content Author - Video - Delete',
+		);
+	}
+
+	public function testContentAuthorDeleteCase1() {
+		debug('deleteContentAuthorTestCase1 called');
+		$this->deleteContentAuthorTestCase('st_case1');
+		$this->manageAdminContentAuthor();
+	}
+}
+
+class AdministrationContentAuthorDeleteCase2 extends AdministrationContentAuthorDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Content Author - Delete -Case 2',
+				'description' => 'Module : exp_sp_administration_contentauthor',
+				'group' => '1601 - Administration - Content Author - Video - Delete',
+		);
+	}
+
+	public function testContentAuthorDeleteCase2() {
+		debug('deleteContentAuthorTestCase2 called');
+		$this->deleteContentAuthorTestCase('st_case2');
+		$this->manageAdminContentAuthor();
+	}
+}
+
+?>

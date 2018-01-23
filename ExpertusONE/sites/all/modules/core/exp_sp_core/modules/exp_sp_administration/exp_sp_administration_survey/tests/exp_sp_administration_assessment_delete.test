@@ -1,0 +1,81 @@
+<?php 
+
+class AdministrationAssessmentDeleteBase extends AdministrationAssessmentTestHelper
+{
+	public function deleteAssessmentTestCase($scope = 'all'){
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['assessmentDelete'];
+		} else {
+			$testCases = array($this->testcases['assessmentDelete'][$scope]);
+		}
+		
+		foreach($testCases as $test){
+			$assessmentTitle = $this->getAssessmentTitle($test['id']);
+			debug("Assessment name to delete: " . $assessmentTitle);
+	
+			//drupalPost($path, $edit, $submit, $options, $headers, $form_html_id);
+			$assessmentId = $test['id'];
+			$deletePath = 'ajax/admincore/deleteprocessobject/' . $assessmentId . '/SurAss';
+			$out = $this->drupalPost($deletePath, array(), t('Delete'));
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+	
+			$assessmentStatus = $this->getAssessmentStatus($test['id']);
+			debug("Assessment status : " . $assessmentStatus);
+		}
+	
+	}
+}
+
+class AdministrationAssessmentDeleteAll extends AdministrationAssessmentDeleteBase
+{
+public static function getInfo() {
+		return array(
+				'name' => 'Administration - Assessment - Delete - AllTest',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1401 - Administration - Assessment - AssessmentDetails - Delete',
+		);
+	}
+
+	public function testAssessmentDeleteAll() {
+		$this->deleteAssessmentTestCase('all');
+		$this->manageAdminAssessment();
+	}
+}
+
+class AdministrationAssessmentDeleteCase1 extends AdministrationAssessmentDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Assessment - Delete - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1401 - Administration - Assessment - AssessmentDetails - Delete',
+		);
+	}
+
+	public function testAssessmentDeleteCase1() {
+		debug('testAdminAssessmentListCase1 called');
+		$this->deleteAssessmentTestCase('st_case1');
+		$this->manageAdminAssessment();
+	}
+}
+
+class AdministrationAssessmentDeleteCase2 extends AdministrationAssessmentDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Assessment - Delete - Case 2',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1401 - Administration - Assessment - AssessmentDetails - Delete',
+		);
+	}
+
+	public function testAssessmentDeleteCase2() {
+		debug('testAdminAssessmentListCase1 called');
+		$this->deleteAssessmentTestCase('st_case2');
+		$this->manageAdminAssessment();
+	}
+}
+
+?>

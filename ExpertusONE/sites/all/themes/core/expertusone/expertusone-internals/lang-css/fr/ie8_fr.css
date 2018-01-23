@@ -1,0 +1,353 @@
+/* Common styles Start */
+/* Common styles End */
+
+
+/* Home Page Widgets Start */
+/* Home Page Widgets End */
+
+
+/* Course/Class/Tp Details Start */
+/* Course/Class/Tp Details End */
+
+
+/* Sign In styles Start */
+/* Sign In styles End */
+
+
+/* Register styles Start */
+/* Register styles End */
+
+
+/* Forget Password styles Start */
+body.page-user-password .my-forgot-pass-frm .form-actions {
+    margin-top: 10px;
+    margin-left: -20px
+}
+/* Forget Password styles End */
+
+/* Reset Password styles Start */
+body.page-learning-reset-password #reset-password .reset-pass-table .reset-pass-table-col1 {
+    width: 55%
+}
+/* Reset Password styles End */
+
+/* Account styles Start */
+.my-account-wrapper #addedit-account-details-page .form-item-SmsAlertCheck{
+  margin-left:174px
+}
+/* Account styles End */
+
+
+/* Catalog styles Start */
+.content #lnr-catalog-search .srch-filter-heading{
+  font-size:13px
+}
+/* Catalog styles End */
+
+/* Profile styles Start */
+#exp-sp-my-skill-set-add-form #myskill-parent .disp-label {
+  width: 142px
+}
+#myskill-parent .learner-save-skill-button .addedit-form-cancel-container-actions {
+  margin-right: 2px
+}
+#block-exp-sp-user-catalog-online #catalog-users #catalog-user-search-list li.eol-search-input input {
+  width: 142px
+}
+#exp-sp-my-profile-form #myprofile-parent .del-link {
+  margin: -20px 102px 0
+}
+.page-learning-my-profile .dsiplay-other-set {
+  width: 150px
+}
+#myskill-parent .prof-label{
+  line-height:30px
+}
+#myprofile-skill-details .myskill-table .skillname-set{
+ width : 270px;
+}
+/* Profile styles End */
+
+
+/* Discussions styles Start */
+#content #block-exp-sp-forum-detail-forum-topic .admin-forum-topic-detail-action-btn #bubble-face-table  .addedit-form-cancel-container-actions {
+   width:129px
+}
+#admin-forum-add-comment-container .admin-forum-add-comment-list .addedit-form-cancel-container-actions .admin-action-button-middle-bg{
+    margin-right:5px
+}
+/* Discussions styles End */
+
+
+/* Team styles Start */
+#block-exp-sp-myteam-tab-manager-view #lnr-myteam-search .usr-enroll-grid-header-grey-cls{
+  font-size:8px;
+  position:absolute;
+  left:-2px;
+  text-indent:9px
+}
+#lnr-myteam-search #paintContentResults .cus-accord .ui-jqgrid-hbox .ui-th-column{
+  padding-right:2px
+}
+/* Team styles End */
+
+
+/* Shopping Cart styles Start */
+/* Shopping Cart styles End */
+
+
+/* My Learning(My Enrollments) styles Start */
+
+/* My Learning(My Enrollments) styles End */
+
+
+/* My Learning(My Programs) styles Start */
+.page-learning-enrollment-search #my-team-dialog .course-available-seats {
+  margin-left: -19px;
+  width: auto
+}
+#enroll-result-container #gbox_paintEnrollmentResults .ui-jqgrid-bdiv{
+  overflow:hidden
+}
+/* My Learning(My Programs) styles End */
+
+
+/* My Learning(My Classes) styles Start */
+#instructor-markcomplete-dialog .ui-dialog .ui-dialog-buttonpane {
+  min-height: 25px;	
+  padding-bottom: 20px 	
+}
+#block-exp-sp-instructor-desk-tab-instructor-desk #instructor-result-container .enroll-action .enroll-drop-down-list {
+  margin-right:4px
+}
+/* My Learning(My Classes) styles End */
+
+
+/* My Learning(My Transcripts) styles Start */
+/* My Learning(My Transcripts) styles End */
+
+
+/* My Learning(My CalEndar) styles Start */
+/* My Learning(My CalEndar) styles End */
+
+
+/* Chat styles Start */
+/* Chat styles End */
+
+
+/* Learning(Course) styles Start */
+.page-administration-learning-catalog #catalog-class-basic-addedit-form-container .admin-datagrid-session-with-addanother.virtualclass-session #more-wrapper-div{
+  right:21px
+}
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .virtualclass-session .session-edit-delete-icons {
+  margin-left: -29px
+}
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .admin-datagrid-pagination .admin-datagrid-session-with-addanother.virtualclass-session .session-added-edit-link-text {
+  margin: 0 33px 0 -22px
+}
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .admin-datagrid-pagination .admin-datagrid-session-with-addanother.virtualclass-session .ui-jqgrid .ui-jqgrid-bdiv .ui-jqgrid-btable tr td .admin-pagination-action-link {
+  margin-left: 3px
+}
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .attachment-empty-column-height {
+  height: 26px
+}
+#catalog-attachment-disp-container .attachment-empty-column-height {
+  height: 15px
+}
+.addedit-form-cancel-and-save-actions-row .resize-save_btn4{
+  width:150px
+}
+/*#session_detail_container_sample #add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-time-zone-list label{
+  width:95px;
+  margin-right:-22px
+}
+#session_detail_container_sample #add-session-details .admin-addedit-session-details-wrapper #session_presenter_url{
+  margin-left:2px
+}
+#session_detail_container_sample #add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper #session_presenter_url{
+  margin-left:4px
+}
+#session_detail_container_sample #add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-time-zone-list label {
+  width: 97px
+}
+#session_detail_container_sample  #add-session-details #meeting-type-addwebEx .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown{
+  margin-left: 38px
+}*/
+#admin-data-grid .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table{
+  right:3px
+}
+#admin-data-grid .admin-datagrid-pagination.enrolluser-class-grid-wrapper .ui-jqgrid-hdiv .ui-jqgrid-hbox .ui-jqgrid-labels th div{
+  padding:0
+}
+/* Learning(Course) styles End */
+
+/* Learning(Class) styles Start */
+/* Learning(Class) styles End */
+
+
+/* Learning(Training Plan) styles Start */
+.page-administration-learning .clone-class-scroll-list  .clone-label-list{
+  width:86%
+}
+/* Learning(Training Plan) styles End */
+
+
+/* People(User) styles Start */
+.page-administration-people .admin-save-pub-unpub-button-container {
+  padding-left:6px
+}
+.page-administration-people .edit-catalog-course-save-publish{
+  padding-left:5px
+}
+.addedit-form-cancel-and-save-actions-row .resize-save_btn4{
+  width:155px
+}
+/* People(User) styles End */
+
+
+/* People(Organization) styles Start */
+/* People(Organization) styles End */
+
+/* People(Groups) styles Start */
+.page-administration-people-group #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class{
+  width:92px;
+  padding-left:2px
+}
+#add-user-role-page #add-class-list-wrapper #search-list-class-title-keyword ul{
+  margin-left:0
+}
+.permission-theader-first{
+  width:26%
+}
+.page-administration #add-user-role-page #add-class-list-wrapper .admin-class-auto-search-container .crecls-loader-hidder{
+  right:210px
+}
+.page-administration-people-group .ui-multiselect-con-class{
+  min-width:257px;
+  max-width:257px
+}
+.page-administration-people-group .attr-pane #autocomplete input#multiautocomplete{
+  min-width:230px;
+  max-width:230px
+}
+/* People(Groups) styles End */
+
+/* People(settings) styles Start */
+#list-values-addedit-form-details .seperator-edit-delete{
+  margin-top:2px
+}
+/* People(settings) styles End */
+
+
+/* Survey/Assessment styles Start */
+.page-administration-survey ul.catalog-pub-add-list {
+  width:126px
+}
+.page-administration-assessment-assessmentdetails ul.catalog-pub-add-list {
+  width:126px
+}
+.page-administration-assessment-assessmentquestions #survey-question-basic-addedit-form .assessment-answer-choice-textarea {
+  max-width:275px;
+  min-width:275px
+}
+.page-administration-assessment-assessmentquestions #survey-question-basic-addedit-form .mch-correct-answer-checkbox {
+  width:85px
+}
+/* Survey/Assessment styles End */
+
+
+/* Manage(Content) styles Start */
+.page-administration-manage-content #upload_detail_container .wrapper-browse-url #BrowserVisible {
+  width: 350px
+}
+.page-administration-manage-content #upload_detail_container .wrapper-browse-url #FileField {
+  width: 280px
+}
+.page-administration-manage-content #upload_detail_container #edit-content-data-url {
+  right: 10px;
+  width: 346px
+}
+/* Manage(Content) styles End */
+
+
+/* Manage(Location) styles Start */
+/* Manage(Location) styles End */
+
+
+/* Manage(Banner) styles Start */
+/* Manage(Banner) styles End */
+
+
+/* Manage(Notification/Certificate) styles Start */
+#modal-content #viewnotification-detail-wrapper .detail-code {
+    width:85px
+}
+/* Manage(Notification/Certificate) styles End */
+
+/* Commerce(Order) styles Start */
+.page-administration-order .admin_add_multi_search_container{
+  width:62%
+}
+.user-information-container-form label{
+  width:140px
+}
+#admin_order #productorg-pane .user-information-container-form input{
+  margin-top:5px
+}
+/* Commerce(Order) styles End */
+
+/* Commerce(Discount) styles Start */
+.page-administration-commerce-discounts #discount-basic-addedit-form-container .admin-discounts-trainings-wrapper .admin_add_multi_search_container {
+  width: 69%;
+}
+#admin-data-grid .discount-grid-wrapper .ui-jqgrid-hbox input.multiselect-selectall{
+  margin-left:-4px
+}
+#discount-basic-addedit-form-container .admin-save-pub-unpub-button-container .admin-save-button-middle-bg{
+  padding-right:5px
+}
+/* Commerce(Discount) styles End */
+
+/* Commerce(Tax) styles Start */
+.page-administration-commerce-tax #catalog-question-basic-addedit-form .admin-save-pub-unpub-button-container .edit-catalog-course-save-publish,
+.page-administration-commerce-tax .pub-unpub-only-save-btn{
+  float:none
+}
+/* Commerce(Tax) styles End */
+
+/* Commerce(Settings) styles Start */
+#payment-check-details .form-item label{
+  width:113px
+}
+#payment-check-details .postal-code-col .form-item label {
+  width:108px
+}
+#payment-check-details .uc-check-mailing-city,
+#payment-check-details .uc-check-mailing-postal-code{
+  width:120px
+}
+/* Commerce(Settings) styles End */
+
+/* Reports styles Start */
+.section-reports #report-add-wizard #report-query-details #set_report_type {
+  width: 200px
+}
+.section-reports #report-query-details button.ui-multiselect {
+  width: 200px
+}
+.page-reports #searchReportsRecordsPaint #create-schedule-addedit-form .addedit-new-field-value textarea.addedit-edit-textarea {
+    max-width: 410px;
+    min-width: 410px;
+}
+.page-reports #searchReportsRecordsPaint #create-schedule-addedit-form .addedit-new-field-value .addedit-edit-textfield {
+    width: 410px
+}
+/* Reports styles End */
+
+
+/* Reserved Block CSS Start - Here we can create a new block CSS styles*/
+/* Reserved Block CSS End */
+
+#esign-wizard-dialog .ui-dialog div.ui-dialog-buttonset {
+  min-width:135px
+}

@@ -1,0 +1,685 @@
+#order-basic-addedit-form-container .cart-review td.products {
+  width:160px
+}
+#order-basic-addedit-form-container .cart-review td.code {
+
+}
+#order-basic-addedit-form-container .cart-review td.deliverytype {
+  width:92px
+}
+#order-basic-addedit-form-container .cart-review td.location {
+  width:70px
+}
+#order-basic-addedit-form-container .cart-review td.price {
+  width:60px
+}
+#order-basic-addedit-form-container .cart-review td.price.refund {
+  width:70px
+}
+#order-basic-addedit-form-container .commerce-container-override {
+  padding:2px 20px 2px 0
+}
+#order-basic-addedit-form-container .commerce-container {
+  padding:10px 20px 10px 0
+}
+#order-detail-container .two-column-container-view .first-col-container-view,
+#order-detail-container .two-column-container-view .second-col-container-view {
+  float:left;
+  margin-bottom:6px;
+  margin-top:6px;
+  width:49%
+}
+#order-detail-container .two-column-container-view label {
+  width:120px;
+  float:left;
+  font-size:12px;
+  font-weight:normal;
+  color:#666
+}
+#order-detail-container .two-column-container-view .first-col-container-view .first-col-value-view,
+#order-detail-container .two-column-container-view .second-col-container-view .second-col-value-view {
+  font-size:12px;
+  font-weight:normal;
+  float:left;
+  color:#333
+}
+#order-detail-container .view-mode-field-value-txt {
+  color:#333
+}
+#order-basic-addedit-form-container .commerce-container .payment-user-details-wrapper {
+  border:0;
+  border-bottom:1px dotted #CCC;
+  margin:0;
+  width:100%
+}
+.cls-pay-show {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif") no-repeat left -1467px;
+  cursor:pointer;
+  float:left;
+  height:11px;
+  margin:0 0 5px 1px;
+  padding-left:12px;
+  color:#333
+}
+.cls-pay-hide {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif")  no-repeat left -1425px;
+  cursor:pointer;
+  float:left;
+  height:11px;
+  margin:0 0 0 1px;
+  padding-left:12px;
+  color:#333
+}
+.commerce-container .payment-user-details-wrapper .cls-pay-hide,
+.commerce-container .payment-user-details-wrapper .cls-pay-show,
+#order-basic-addedit-form-container .commerce-container .payment-user-details-wrapper .cls-hide,
+#order-basic-addedit-form-container .commerce-container .payment-user-details-wrapper .cls-show {
+  margin:10px 0 0
+}
+#order-basic-addedit-form-container .addedit-form-cancel-container-actions {
+  margin-right:20px
+}
+#order-basic-addedit-form-container .addedit-new-field .addedit-new-field-value .resizable-textarea .addedit-edit-admin_comment {
+  min-width:480px;
+  max-width:491px;
+  height:22px;
+  border:1px solid #7F9DB9;
+  padding-left:4px;
+  padding-top:2px;
+  font-size:12px;
+  font-weight:normal;
+  width:491px
+}
+.narrow-search-multi-action-container .orderchange-tab-icon {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -33px -1933px;
+  height:20px;
+  width:20px
+}
+#order-basic-addedit-form-container .paint-payment-details-list {
+  display:block
+}
+#order-basic-addedit-form-container .commerce-container .payment-billing-details-info {
+  padding-right:15px
+}
+#order-basic-addedit-form-container .commerce-container .payment-billing-details-info table td:nth-child(1) {
+  max-width:100px
+}
+#order-basic-addedit-form-container .commerce-container .payment-user-details-info table td:nth-child(1) {
+  max-width:115px
+}
+#order-basic-addedit-form-container .commerce-container .payment-user-details-info {
+  margin:0 0 0 -5px
+}
+#order-basic-addedit-form-disp {
+  margin-top:-9px
+}
+#order-basic-addedit-form-container .cart-cancel {
+  padding-left:8px;
+  float:right;
+  padding-right:5px
+}
+#order-basic-addedit-form-container .refund-price {
+  width:57px;
+  float:left;
+  text-align:right
+}
+#order-basic-addedit-form-container .cart-cancel a {
+  color:#4686DD;
+  text-decoration:none;
+  cursor:pointer
+}
+#order-basic-addedit-form-container .ref-subtotal {
+  font-family:helvetica neue, helvetica, arial;
+  font-size:12px;
+  text-transform:uppercase;
+  padding:5px
+}
+#order-basic-addedit-form-container .ref-subtotal .uc-price {
+  text-align:right;
+  padding:4px 5px 4px 5px;
+  width:57px;
+  float:right
+}
+.admin-order-user-sel {
+  text-align:right;
+  width:100%
+}
+.admin-order-product-sel {
+  float:right;
+  margin:6px 11px 0 0
+}
+.order-divider {
+  height:8px;
+  border:0;
+  border-bottom:1px dotted #E7E7E7;
+  margin:7px
+}
+#admin_order .cart-review td.products {
+  width:42%
+}
+.commerce-container #admin_order tbody td.deliverytype {
+  width:160px
+}
+#admin_order .cart-review th.products {
+  width:42%
+}
+.commerce-container #admin_order tbody th.deliverytype {
+  width:160px
+}
+#admin_order #edit-panes-payment-payment-method .form-item-panes-payment-payment-method {
+  width:100%
+}
+#admin_order #payment-pane #payment-details {
+  clear:none;
+  border:0
+}
+.commerce-container #admin_order #admin_order_render_user_select_disp td,
+.commerce-container #admin_order #admin_order_render_product_select_disp td {
+  padding:0
+}
+#admin_order #uc-cart-checkout-form .admin_add_multi_auto_search .form-item {
+  margin:0
+}
+#admin_order #uc-cart-checkout-form #admin-data-grid  .admin_add_multi_auto_search .ac_input {
+  position:relative;
+  width:130px
+}
+#admin_order #uc-cart-checkout-form .admin_add_multi_search_container .form-submit {
+  margin:0
+}
+#admin_order #uc-cart-checkout-form .ui-jqgrid-btable .ui-state-hover {
+  background:none;
+  border:0
+}
+#admin_order #uc-cart-checkout-form #admin_user_addorder_container .admin-datagrid-save-cancel-button-align-bottom,
+#admin_order #uc-cart-checkout-form #admin_product_addorder_container .admin-datagrid-save-cancel-button-align-bottom {
+  clear:both;
+  float:right;
+  margin-top:1px;
+  right:-5px;
+  width:100px
+}
+#admin_order #uc-cart-checkout-form #admin_user_addorder_container .admin-save-button-container,
+#admin_order #uc-cart-checkout-form #admin_product_addorder_container .admin-save-button-container {
+  margin:0
+}
+#admin_order .admin-order-qtip-select {
+  color:#4686DD;
+  cursor:pointer;
+  font-size:13px;
+  padding-right:4px
+}
+#select-order-dialog .admin-select-user-order {
+  color:#4686DD;
+  cursor:pointer;
+  float:left;
+  text-decoration:none
+}
+#select-order-dialog
+#admin_order_product_select #admin-data-grid #search-dropdwn-list {
+  width:120px
+}
+#admin_order_product_select #admin-data-grid #select-list-dropdown {
+  width:98px
+}
+#admin_order_product_select #admin-data-grid #select-list-dropdown-list {
+  width:120px
+}
+#admin_order_product_select #admin-data-grid #select-list-dropdown-list li {
+  width:auto
+}
+.admin-order-qtip-minheight {
+  min-height:280px
+}
+#admin_user_addorder_container  .ui-jqgrid .ui-jqgrid-hdiv,
+#admin_product_addorder_container .ui-jqgrid .ui-jqgrid-hdiv {
+  margin-top:5px;
+  background:none;
+  border:0
+}
+#admin_user_addorder_container  .ui-jqgrid .ui-jqgrid-bdiv,
+#admin_product_addorder_container .ui-jqgrid .ui-jqgrid-bdiv {
+  background:none;
+  border:0
+}
+#admin_order .cart-review td.price-override {
+  width:137px
+}
+#admin_order .cart-review th.admin-remove {
+  border:0
+}
+#admincheckout-form-bottom {
+  text-align:right;
+  padding:10px 10px 0 0;
+  height:32px
+}
+#admin_order  #uc-cart-checkout > div {
+  padding:0
+}
+#admin_order #payment-pane {
+  width:100%;
+  margin:15px 10px 5px
+}
+.commerce-container #admin_order .admin-discount-subtotal {
+  padding-top:15px
+}
+#admin_order #payment-pane #payment-details {
+  margin-top:-25px;
+  width:45%
+}
+#admin_order #uc-cart-checkout span.expertus-dropdown-checkout-bg {
+  margin-right:20px
+}
+#admin_order #uc-cart-checkout .form-item-panes-billing-billing-country .expertus-dropdown-icon-country,
+#admin_order #uc-cart-checkout .form-item-panes-billing-billing-zone .expertus-dropdown-icon-state {
+  right:20px
+}
+#admin_order #billing-address-pane .expertus-dropdown-bg-country,
+#admin_order #billing-address-pane .expertus-dropdown-bg-state {
+  margin-right:21px
+}
+#admin_order #billing-address-pane input, #admin_order #billing-pane select {
+  margin-right:20px
+}
+#admin_order #billing-pane {
+  width:55%;
+  float:left
+}
+#admin_order #clone_cart-pane {
+  margin-left:10px;
+  padding:10px 0
+}
+#admin_order #clone_cart-pane .fieldset-wrapper {
+  width:99%
+}
+#admincheckout-form-bottom .learner-shopping-cart-back-btn {
+  padding-left:4px
+}
+#admin_order .commerce-container {
+  padding:10px 8px 5px 10px
+}
+.commerce-container #admincheckout-form-bottom .form-actions .addedit-form-cancel-container-actions {
+  margin-right:5px
+}
+.commerce-container #admincheckout-form-bottom .addedit-form-cancel-container-actions .admin-action-button-middle-bg {
+    padding-top:0px;
+}
+#admin_order .divider-margin {
+  margin-bottom:10px
+}
+#admin_order .divider-top-margin {
+  margin-top:10px
+}
+#admin_order .admin-cart-payment-pane {
+  float:left;
+  width:auto
+}
+#admin_order .admin-cart-payment-pane .form-item-panes-payment-payment-method {
+  color:#2D2D2D;
+  font-size:12px;
+  padding:2px 0
+}
+#admin_product_addorder_container #multi-class-container {
+  left:-104px
+}
+#admin_product_addorder_container #multi-class-container .course-level p {
+  text-align:left;
+  padding:0;
+  color:#666
+}
+#admin-data-grid #admin_product_addorder_container #multi-class-container #show_expertus_tp_message .error {
+  display:table
+}
+#admin_order #multi-class-container #bubble-face-table td {
+  line-height:22px
+}
+#admin_order #multi-class-container #bubble-face-table .bubble-b {
+  height:20px
+}
+.admin-order-step div {
+  padding:0 0 5px 0
+}
+#admin_order #multi-class-container .qtip-tip {
+  bottom:-29px
+}
+#admin_order #uc-cart-checkout-form #admin_user_addorder_container .input-field-grey,
+#admin_order #uc-cart-checkout-form #admin_product_addorder_container .input-field-grey {
+  color:#ccc;
+  font-size:11px;
+  font-style:italic
+}
+#admin_order_product_select a {
+  text-decoration:none;
+  float:right
+}
+#admin_order #productorg-pane,
+#admin_order #order-payment-details,
+#admin_order #comments-pane {
+  width:99%;
+  margin:0 10px
+}
+#admin_order #billing-pane {
+  width:99%;
+  margin:0 10px 10px
+}
+#admin_order #productorg-pane .user-information-container-form input {
+  float:right;
+  margin-right:20px;
+  width:306px;
+  border:1px solid #CCC
+}
+#admin_order #productorg-pane .user-information-container-form .edit-panes-full-name {
+  margin-right:16px
+}
+#admin_order #billing-pane .form-item-panes-billing-select-address {
+  width:50%
+}
+#admin_order #billing-pane .form-item-panes-billing-select-address label {
+  line-height:23px
+}
+#admin_order #billing-pane #billing-address-pane .form-item {
+  width:50%;
+  float:left;
+  clear:none
+}
+#admin_order #billing-pane #billing-address-pane .form-item .expertus-dropdown-bg-state {
+  position:relative
+}
+#admin_order #billing-pane #billing-address-pane .form-item .expertus-dropdown-icon-state {
+  right:0
+}
+.commerce-container #admin_order .form-item-panes-payment-payment-method {
+  width:40%
+}
+.page-administration-order .cart-step {
+  font-size:13px
+}
+.page-administration-order #uc-cart-checkout .cart_head {
+  font-size:13px
+}
+#select-order-dialog .admin_add_multi_auto_search .ac_input {
+  color:#474747
+}
+#select-order-dialog .ui-dialog .ui-dialog-content {
+  overflow:hidden
+}
+#paintAdminOrderResults #admin-data-grid .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table {
+  right:17px
+}
+#admin_order .user-information-container-form span {
+  color:#666
+}
+#admin_order .order-admin-header {
+  color:#666;
+  float:left;
+  font-size:13px;
+  font-weight:bold;
+  line-height:25px;
+  margin-bottom:8px;
+  margin-top:5px;
+  padding-right:10px;
+  text-transform:capitalize;
+  width:82%
+}
+#admin_order .admin-hdr {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png") repeat-x right -38px #000;
+  border-bottom:1px solid #CCC;
+  clear:both;
+  font-size:14px;
+  font-weight:normal;
+  height:31px;
+  line-height:31px;
+  margin:0;
+  padding:0 0 1px 10px
+}
+.commerce-container #admin_order .form-item-panes-payment-payment-method {
+  margin-top:2px;
+}
+#admin_order #uc_cc_info .form-item .form-text {
+  width:178px;
+  border:1px solid #CCC
+}
+.page-administration-order .commerce-container {
+  padding:0
+}
+.commerce-container #admin_order tbody td {
+  padding:5px 0 5px 5px
+}
+.narrow-search-actionbar-orange-btnLeft {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -107px -747px;
+  float:left;
+  height:22px;
+  width:7px
+}
+#admin_order .narrow-search-actionbar-orange-btnBG {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -3px -945px;
+  border:0;
+  color:#FFF;
+  cursor:pointer;
+  float:left;
+  font-size:12px;
+  font-weight:bold;
+  height:22px;
+  line-height:21px;
+  margin:0;
+  padding:0 3px 0 12px
+}
+.narrow-search-actionbar-orange-btnRight {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -121px -747px;
+  float:left;
+  height:22px;
+  width:7px
+}
+.commerce-container #admin_order label {
+  color:#666
+}
+#admin_order .admin-order-discount-apply {
+  cursor:pointer;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  color:#4686dd;
+  border:0;
+  height:33px;
+  background:none;
+  padding:0
+}
+#admin_order .admin-order-discount-code {
+  color:#474747;
+  margin-top:7px;
+  width:94px
+}
+#admin_order #uc_discounts-pane {
+  width:97%
+}
+#admin_order #uc_discounts-pane .fieldset-wrapper {
+  width:50%
+}
+.page-administration-order .cart-step-region {
+  margin-left:5px;
+  width:100%
+}
+#admin_order .discount-codes-wrapper .form-item .form-textarea {
+  min-height:30px;
+  width:350px;
+  resize:vertical
+}
+#admin_order .order-method-title {
+  clear:both;
+  color:#474747;
+  font-size:12px;
+  float:left;
+  line-height:30px;
+  padding:0 10px 0 0;
+  text-align:left;
+  width:120px
+}
+#admin_order .order-method-data {
+  color:#2D2D2D;
+  float:left;
+  font-size:12px;
+  padding:7px 0;
+  width:auto
+}
+#select-order-dialog #paintAdminOrderResults {
+  padding:0;
+  overflow:visible
+}
+#add_product_form_wrapper {
+  padding:10px
+}
+.page-administration-order-create #admin_order .cart-review .subtotal .uc-price {
+  margin-right:48px;
+  width:70px
+}
+#admin_order .user-information-container-form .user-info-mandatory {
+  color:#FF0000
+}
+.order-user-auto {
+  border-bottom:1px dotted #ddd;
+  font-size:13px;
+  color:#2d2d2d
+}
+.order-user-auto h4.fname-bold {
+  font-size:13px;
+  font-weight:normal;
+  margin:3px 0
+}
+.order-user-auto strong {
+  font-weight:normal
+}
+.order-user-auto .fname-detail {
+  clear:both;
+  padding:0 5px 5px 0;
+  color:#777
+}
+.order-user-auto .fname-detail .username-class {
+  padding-right:5px
+}
+.order-user-auto .fname-detail .org-name {
+  padding-left:5px
+}
+.page-administration-order-create .ac_results .ac_over {
+  background:#eee;
+  color:#2d2d2d
+}
+.page-administration-order-pay .commerce-container thead th.price,
+.page-administration-order-pay .commerce-container #admin_order tbody td {
+  padding-right:10px
+}
+#admin_order #uc-cart-checkout #productorg-pane .fieldset-wrapper .user-information-container-form {
+  float:left;
+  width:50%
+}
+#admin_order #uc-cart-checkout #uc_discounts-pane .addedit-form-cancel-container-actions {
+  margin-top:0
+}
+#order-detail-container .orderpaymentdetailpo {
+  float:left;
+  width:480px;
+  word-wrap:break-word
+}
+#admin_order .cart-review th.deliverytype {
+  width:25%;
+}
+.commerce-container #admin_order .cart-review thead {
+  border-bottom:1px solid #ccc
+}
+.page-administration-order .shoppingcart-hdr {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png") repeat-x right -39px #000;
+  border-bottom:1px solid #CCC;
+  float:left;
+  margin-top:0;
+  padding-top:5px;
+  width:100%
+}
+.commerce-container #admin_order .cart-review thead th {
+  padding:5px 5px 10px
+}
+#select-order-dialog .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  line-height:27px;
+  height:20px;
+  padding-left:0
+}
+#select-order-dialog .ui-dialog {
+  overflow:visible
+}
+#datagrid-div-add-product-admin-order {
+  position:relative
+}
+#paintAdminOrderResults .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-htable th div {
+  padding-left:0;
+  line-height:26px
+}
+#select-order-dialog .ui-dialog-buttonset {
+  bottom:15px;
+  margin-top:0;
+  position:relative
+}
+#admin_product_addorder_container .admin-datagrid-pagination .ui-jqgrid .ui-jqgrid-bdiv {
+  margin-bottom:-10px
+}
+.page-administration-order-finish .commerce-message-wrapper{
+	padding-left:10px
+}
+.page-administration-order .cart-step-region div {padding:0 0 5px}
+.fade-out-title-container.admin-narrow-search-fadeout-container{
+  max-width:550px
+}
+.fade-out-title-container.exp-sp-cart-module-title-fadeout-container{
+  max-width:150px
+}
+.fade-out-title-container.admin-narrow-search-edit-tooltip-code-fadeout-container{
+  max-width:100px
+}
+.fade-out-title-container.cart-order-fadeout-container{
+  max-width:250px
+}
+.fade-out-title-container.cart-order-user-name-fadeout-container{
+  max-width:170px
+}
+.fade-out-title-container.cart-order-billing-name-fadeout-container{
+  max-width:210px
+}
+#order-basic-addedit-form-container .commerce-container .payment-billing-details-info table.order-review-table .title-col,
+#order-basic-addedit-form-container .commerce-container .payment-user-details-info table.order-review-table .title-col{
+  width:25%
+}
+.fade-out-title-container.class-title{
+  max-width:150px
+}
+.fade-out-title-container.class-code{
+  max-width:110px
+}
+.fade-out-title-container.delivery-type{
+  max-width:90px
+}
+.fade-out-title-container.language{
+  max-width:80px
+}
+.fade-out-title-container.product-price{
+  max-width:70px
+}
+.fade-out-title-container.product-status{
+  max-width:80px
+}
+.fade-out-title-container.add-product-to-cart,
+.fade-out-title-container.order-added-to-cart{
+  max-width:100px
+}
+.fade-out-title-container.exp-sp-cart-module-classcode-fadeout-container{
+  max-width:80px
+}
+.page-administration-commerce-order .narrow-search-results-item-detail span{
+  float:left;
+}
+.fade-out-title-container.order-payment-status-fadeout-container{
+   float:left;
+   margin-left:5px;
+   max-width:80px
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #admin_order #uc_cc_info .form-item .form-text {
+    width:177px
+  }
+  .page-administration-order .cart-step-region div {padding:0 0 5px}
+}

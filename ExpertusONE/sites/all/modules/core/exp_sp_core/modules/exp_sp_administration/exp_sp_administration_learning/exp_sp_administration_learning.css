@@ -1,0 +1,350 @@
+.multi-class-container-cls {
+  width: 700px;
+  background: #FFF;
+  height: 290px;
+  overflow: hidden
+}
+#multi-class-container .title_close {
+  background: url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -129px -16px;
+  height: 14px;
+  margin: 2px 2px 0 1px;
+  float: left;
+  width: 12px;
+  text-decoration: none
+}
+#multi-class-container .title_open {
+  background: url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -120px -14px;
+  height: 14px;
+  margin-left: 1px;
+  margin: 2px 5px 0 1px;
+  float: left;
+  width: 9px;
+  text-decoration: none
+}
+#multi-class-container .lp-reg-class-title {
+  line-height: 20px;
+  font-size: 14px;
+  color: #333;
+  text-align: left
+}
+#multi-class-container .course-info {
+  width: 580px;
+  text-align: left;
+  color: #333
+}
+#multi-class-container .course-level,
+#multi-class-container .class-level {
+  padding-left: 15px
+}
+#multi-class-container .class-details-info {
+  width: 100%
+}
+#multi-class-container .enroll-show-morecourse {
+  margin-left: 1px
+}
+#multi-class-container .enroll-show-morecourse tr td div.set-height-column-right {
+  padding-bottom: 6px
+}
+#bubble-face-table .multi-class-container-cls tr td {
+  height: auto
+}
+#multi-class-container .enroll-show-morecourse tr td {
+  padding: 0;
+  color: #666;
+  height: auto;
+  vertical-align: top
+}
+#multi-class-container .enroll-show-morecourse tr td.course-sub-class-detail {
+  padding-top: 0
+}
+#multi-class-container .pipeline {
+  color: #999;
+  margin: 0 7px
+}
+#multi-class-container .item-title-code {
+  padding-top: 4px;
+  font-size: 13px;
+  color: #999
+}
+#multi-class-container .course-desc-info {
+  color: #666;
+  padding: 6px 0 9px;
+  font-size: 13px
+}
+#multi-class-container .class-level .class-details-info {
+  font-size: 13px;
+  border-bottom: 1px solid #ccc
+}
+#multi-class-container .class-level .course-delivery-info {
+  clear: both;
+  margin-left: 16px;
+  padding-bottom: 5px
+}
+#multi-class-container .class-level .course-detail-col1,
+#multi-class-container .class-level .course-detail-col2 {
+  width: 45%;
+  padding-top: 5px
+}
+#multi-class-container .class-level .course-detail-col3 {
+  width: 5%;
+  padding-top: 5px
+}
+#multi-class-container .lp-course-class-list-accord {
+  width: 100%;
+  height: 120px
+}
+#multi-class-container .set-height-column-left {
+  float: left;
+  display: block
+}
+#multi-class-container .set-height-column-right {
+  border-bottom: 1px solid #ccc;
+  width: 97%;
+  float: left
+}
+#multi-class-container .course-sub-class-detail .course-delivery-info {
+  border-bottom: 1px solid #ccc
+}
+#multi-class-container .class-details-info .cls-description {
+  border-bottom: 1px solid #ccc;
+  color: #666;
+  font-size: 13px
+}
+#multi-class-container .cls-description .sessionDet {
+  width: 100%;
+  clear: both;
+  padding-bottom: 2px;
+  padding-top: 7px;
+  float: left
+}
+#multi-class-container .cls-description .sessName {
+  float: left;
+  width: 40%
+}
+#multi-class-container .cls-description .sessDay {
+  float: left;
+  width: 5%
+}
+#multi-class-container .cls-description .sessDate {
+  float: left;
+  width: 55%
+}
+#multi-class-container .cls-description .cls-lang {
+  padding-top: 8px;
+  clear: both
+}
+#multi-class-container .cls-description .enroll-loc-details {
+  margin-top: 5px
+}
+#multi-class-container .enroll-loc-details .enroll-location-text {
+  padding-bottom: 5px
+}
+#multi-class-container .cls-description .time-zone-text {
+  font-size: 10px
+}
+#multi-class-container .no-item-found {
+  color: #999;
+  font-size: 12px;
+  text-align: center;
+  padding-bottom: 5px;
+}
+#multi-class-container .time-zone-text {
+  font-size: 10px
+}
+#multi-class-container .class-level .sub-course-class .cls-description {
+  padding-bottom: 8px;
+  display: block
+}
+#multi-class-container {
+  left: -598px;
+  position: absolute;
+  top: -397px;
+  z-index: 1000
+}
+#multi-class-container .tp-bubble-popup-multi-register {
+  position: relative;
+  height: 350px
+}
+.bubble-qtip-button-close {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/bubble_close.png") no-repeat 0 21px;
+  height: 40px;
+  position: absolute;
+  right: -5px;
+  top: -16px;
+  width: 20px;
+  cursor: pointer
+}
+#program-tp-basic-addedit-form-container #multi-class-container .tp-bubble-popup-multi-register .qtip-tip {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/bubble_arrow.png") no-repeat 0px 3px
+}
+#multi-class-container .qtip-tip {
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  margin: 0px auto;
+  line-height: 0.1px;
+  font-size: 1px;
+  bottom: -29px;
+  right: 20px;
+  visibility: visible
+}
+#multi-class-container .multi-select-class-wrapper {
+  font-size: 13px;
+  color: #333;
+  height: 310px
+}
+#multi-class-container .bubble-c .addedit-form-cancel-container-actions {
+  margin-right: 0;
+  font-size: 13px
+}
+#multi-class-container .bubble-c .addedit-form-cancel-container-actions .admin-action-button-middle-bg {
+  padding-right: 10px
+}
+.scroll-pane {
+  width: 100%;
+  height: 290px;
+  overflow: hidden
+}
+.horizontal-only {
+  height: auto;
+  max-height: 200px
+}
+.jspContainer {
+  overflow: hidden;
+  position: relative
+}
+.jspPane {
+  position: absolute
+}
+.jspVerticalBar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 9px;
+  height: 100%;
+  background: #fff
+}
+.jspHorizontalBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: #fff;
+  visibility: hidden
+}
+.jspVerticalBar *,
+.jspHorizontalBar * {
+  margin: 0;
+  padding: 0
+}
+.jspCap {
+  display: none
+}
+.jspHorizontalBar .jspCap {
+  float: left
+}
+#multi-class-container .jspTrack {
+  height: 288px
+}
+.jspTrack {
+  position: relative
+}
+.jspTrack:hover {
+  background: #f6f6f6;
+  border: 1px solid #d4d4d4;
+  position: relative
+}
+.jspDrag {
+  background: #cbcbcb;
+  border-left: 1px solid #b7b7b7;
+  border-right: 1px solid #cbcbcb;
+  border-top: 1px solid #cbcbcb;
+  border-bottom: 1px solid #cbcbcb;
+  position: relative;
+  top: 0;
+  left: 0;
+  cursor: pointer
+}
+.jspDrag:hover {
+  background: #939393;
+  border: 1px solid #646464;
+  position: relative;
+  top: 0;
+  left: 0;
+  cursor: pointer
+}
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag {
+  float: left;
+  height: 100%
+}
+.jspArrow {
+  background: #50506d;
+  text-indent: -20000px;
+  display: block;
+  cursor: pointer
+}
+.jspArrow.jspDisabled {
+  cursor: default;
+  background: #80808d
+}
+.jspVerticalBar .jspArrow {
+  height: 10px
+}
+.jspHorizontalBar .jspArrow {
+  width: 16px;
+  float: left;
+  height: 100%
+}
+.jspVerticalBar .jspArrow:focus {
+  outline: none
+}
+.jspCorner {
+  background: #eeeef4;
+  float: left;
+  height: 100%
+}
+.enroll-show-morecourse,
+.lnr-tainingplan-register,
+.lp-course-class-list-accord {
+  width: 99%;
+  height: auto
+}
+#my-team-dialog .ac_input {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% 3px;
+  padding-top: 0
+}
+#my-team-dialog .ac_loading {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% -18px;
+  padding-top: 0
+}
+#my-team-dialog #data-table-page-view select {
+  height: 20px
+}
+#my-team-dialog .ui-jqgrid .ui-pg-table.ui-pg-input {
+  padding-top: 1px;
+}
+.section-administration .catalog-course-basic-addedit-form-container .exportcontainer-page-pipe-delimter {
+  border-left: 0;
+  margin: 0;
+  height: auto
+}
+.section-administration .catalog-course-basic-addedit-form-container .page-pipeline {
+  color: #999;
+  font-weight: normal;
+  position: absolute;
+  right: -2px;
+  top: 2px;
+  z-index: 1
+}
+.page-administration-learning-program .catalog-course-basic-addedit-form-container .exportcontainer-page {
+  right: 183px
+}
+/*!chrome Hack*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .page-administration-learning-catalog .catalog-course-basic-addedit-form-container .exportcontainer-page {
+    top: 3px;
+    right: 173px
+  }
+}

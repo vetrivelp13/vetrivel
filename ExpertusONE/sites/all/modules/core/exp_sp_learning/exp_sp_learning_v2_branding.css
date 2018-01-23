@@ -1,0 +1,615 @@
+#lnr-tainingplan-register .lp-reg-class-title {
+  line-height:20px;
+  font-size:14px;
+  color:#333;
+  text-align:left
+}
+#lnr-tainingplan-register .course-info {
+  width:580px;
+  text-align:left;
+  color:#333
+}
+#my-team-dialog .course-level,
+#my-team-dialog .class-level,
+#lnr-tainingplan-register .course-level,
+#lnr-tainingplan-register .class-level{
+  padding-left:14px
+}
+#lnr-tainingplan-register .class-details-info {
+  width:100%
+}
+#lnr-tainingplan-register .enroll-show-morecourse {
+  margin-left:1px
+}
+#lnr-tainingplan-register .enroll-show-morecourse tr td {
+  padding:5px 0 0 0;
+  color:#666;
+  vertical-align:top
+}
+#lnr-tainingplan-register .enroll-show-morecourse tr td.course-sub-class-detail {
+  padding-top:0
+}
+#lnr-tainingplan-register .pipeline {
+  color:#999;
+  margin:0 7px
+}
+#lnr-tainingplan-register .item-title-code {
+  padding-top:4px;
+  font-size:13px;
+  color:#999
+}
+#lnr-tainingplan-register .course-desc-info {
+  color:#666;
+  padding:6px 0 9px 0;
+  font-size:13px
+}
+#lnr-tainingplan-register .class-level .class-details-info {
+  font-size:13px;
+  border-bottom:1px solid #ccc
+}
+#lnr-tainingplan-register .class-level .course-delivery-info {
+  clear:both;
+  margin-left:16px;
+  padding-bottom:5px
+}
+#lnr-tainingplan-register .class-level .course-detail-col1 {
+  width:60%;
+  padding-top:5px
+}
+#lnr-tainingplan-register .class-level .course-detail-col2 {
+  width:35%;
+  padding-top:5px
+}
+#lnr-tainingplan-register .class-level .course-detail-col3 {
+  width:5%;
+  padding-top:5px
+}
+.enroll-show-morecourse{
+  height:auto;
+  width:100%
+}
+.lnr-tainingplan-register,
+.lp-course-class-list-accord {
+  width:100%;
+  height:500px
+}
+#my-team-dialog .lp-course-class-list-accord{
+  height:auto;
+}
+.set-height-column-left {
+  float:left;
+  width:2%;
+  display:block
+}
+.set-height-column-right {
+  border-bottom:1px solid #ccc;
+  width:75%;
+  float:left
+}
+.course-sub-class-detail .course-delivery-info {
+  border-bottom:1px solid #ccc
+}
+.class-details-info .cls-description {
+  border-bottom:1px solid #ccc;
+  color:#666;
+  font-size:13px
+}
+#lnr-tainingplan-register .cls-description .sessionDet {
+  width:100%;
+  clear:both;
+  padding-bottom:2px;
+  padding-top:7px;
+  float:left
+}
+#lnr-tainingplan-register .cls-description .sessName {
+  float:left;
+  width:40%
+}
+#lnr-tainingplan-register .cls-description .sessDay {
+  float:left;
+  width:5%
+}
+#lnr-tainingplan-register .cls-description .sessDate {
+  float:left;
+  width:55%
+}
+#lnr-tainingplan-register .cls-description .cls-lang {
+  padding-top:8px;
+  clear:both
+}
+#lnr-tainingplan-register .cls-description .enroll-loc-details {
+  margin-top:5px
+}
+#lnr-tainingplan-register .enroll-loc-details .enroll-location-text {
+  padding-bottom:5px
+}
+#lnr-tainingplan-register .cls-description .time-zone-text {
+  font-size:10px
+}
+#lnr-tainingplan-register .no-item-found {
+  color:#999;
+  font-size:12px;
+  text-align:center;
+  padding-bottom:5px
+}
+.time-zone-text {
+  font-size:10px
+}
+#lnr-tainingplan-register .class-level .sub-course-class .cls-description {
+  padding-bottom:8px;
+  display:block
+}
+.ctool-video-modal .ctools-sample-modal-content .popups-title .modal-title {
+  width:467px
+}
+.ctool-video-modal .ctools-sample-modal-content .modal-content,
+.ctool-video-modal .ctools-sample-modal-content .youtube-video-container,
+.ctool-video-modal .ctools-sample-modal-content .exp-jwplayer-container {
+  background:#000
+}
+
+div.no-access {
+  color:#999;
+  font-weight:bold;
+  padding:10px;
+  text-align:center;
+  width:100%;
+  height:200px;
+  padding:35px 3px
+}
+.no-video-found {
+  color:#fff;
+  text-align:center;
+  font-size:18px;
+  padding-top:150px;
+  font-family:helvetica neue,helvetica,arial;
+  display:block
+}
+.ctool-video-modal #show_expertus_message {
+  display:none
+}
+.expertusV2PopupContainer #lnr-tainingplan-register .title_close {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat right -1421px;
+  height:14px;
+  margin:2px 2px 0 1px;
+  float:left;
+  width:12px;
+  text-decoration:none
+}
+.expertusV2PopupContainer #lnr-tainingplan-register .title_open {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat right -1494px;
+  float:left;
+  height:14px;
+  margin:2px 5px 0 1px;
+  text-decoration:none;
+  width:9px;
+}
+.bottom-qtip-tip-right {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -11px -1563px;
+  height:76px;
+  width:70px;
+  z-index:100
+}
+#select-class-dialog #show_expertus_message {
+  top:39px
+}
+.page-learning-catalog-search #show_expertus_message {
+  top:0
+}
+#lnr-tainingplan-register .enroll-loc-details td{
+  width:500px
+}
+#page-container #content .section #enroll-result-container,
+#page-container #content .section #enroll-lp-result-container,
+#page-container #content .section #instructor-result-container {
+  width:100.8%
+}
+#page-container #content .section #enroll-result-container.clsenroll-result-container,
+#page-container #content .section #enroll-lp-result-container.clsenroll-lp-result-container,
+#page-container #content .section #instructor-result-container.clsinstructor-result-container{
+	width:100%
+}
+#page-container #content .block-exp-sp-lnrenrollment #learner-maincontent_tab3,
+#page-container #content #enroll-lp-result-container #learningplan-maincontent,
+#page-container #content #instructor-result-container #instructor-maincontent_tab {
+  float:left;
+  margin-left:0;
+  padding-top:0;
+  width:100%;
+  height:44px;
+  background:#f5f5f5;
+  border-bottom:1px solid #e8e8e8
+}
+#page-container #content .block-exp-sp-lnrenrollment #enroll-result-container .EnrolltabNavigation,
+#page-container .EnrolltabNavigation-Ins {
+  margin:9px 0 0 10px
+}
+#page-container #content .block-exp-sp-lnrenrollment #enroll-result-container .EnrolltabNavigation li,
+#page-container .EnrolltabNavigation-Ins li {
+  padding:0 0 0 5px
+}
+#page-container #content .section #enroll-result-container,
+#page-container #content .section #instructor-result-container {
+  border-left:1px solid #E6E6E6;
+  border-right:1px solid #e7e7e7
+}
+#page-container #expertus-online-users .expertus-no-online-users-msg {
+  border-left:1px solid #E7E7E7;
+  border-right:1px solid #E5E5E5;
+  color:#2d2d2d
+}
+#page-container #learner-enrollment .block-title,
+#page-container #learner-learningplan .block-title,
+#page-container #learner-instructor .block-title {
+  width:auto;
+  float:none;
+  padding:0 0 0 7px
+}
+#page-container .enroll-sort-by-container,
+#page-container .instructor-sort-by-container {
+  border-bottom:0;
+  margin-left:20px;
+  padding:0;
+  text-align:left;
+  width:66px;
+  float:right;
+  height:39px;
+  line-height:39px
+}
+#page-container #enroll-noresult-msg,
+#page-container #enroll-lp-result-container #enroll-lp-noresult-msg,
+#page-container #ClassDetailsMainDiv {
+  color:#777;
+  font-size:12px;
+  margin-top:-37px
+}
+.page-learning-enrollment-search #page-container #ClassDetailsMainDiv {
+  margin-top:-38px
+}
+#page-container .enroll-sort-by-container .sort-by-links,
+#page-container .instructor-sort-by-container .sort-by-links {
+  list-style-type:none;
+  float:left;
+  line-height:1.1em;
+  border:1px solid #ebebeb;
+  position:absolute;
+  background:#ffffff;
+  top:39px;
+  z-index:10000;
+  display:none;
+  width:123px;
+  text-indent:0;
+  border-radius:0 0 10px 10px;
+  left:-52px
+}
+#page-container .enroll-main-list,
+#page-container .enroll-lp-main-list {
+  position:absolute;
+  right:0px;
+  z-index:1000
+}
+#page-container .clsContentFull .enroll-main-list, #page-container .enroll-lp-main-list {
+    right: 7px
+}
+#page-container #enroll-result-container div.fivestar-summary span.empty,
+#page-container #enroll-lp-result-container div.fivestar-summary span.empty {
+  margin-right:0
+}
+.jspContainer {
+    overflow:hidden;
+    position:relative
+}
+.jspPane {
+    position:absolute
+}
+.jspVerticalBar {
+    background:#FFF;
+    height:100%;
+    position:absolute;
+    right:0;
+    top:0;
+    width:9px
+}
+.jspCap {
+    display:none
+}
+.jspVerticalBar *, .jspHorizontalBar * {
+    margin:0;
+    padding:0
+}
+.jspTrack {
+    position:relative
+}
+.jspDrag {
+    background:#CBCBCB;
+    border-color:#CBCBCB #CBCBCB #CBCBCB #B7B7B7;
+    border-left:1px solid #B7B7B7;
+    border-right:1px solid #CBCBCB;
+    border-style:solid;
+    border-width:1px;
+    cursor:pointer;
+    left:0;
+    position:relative;
+    top:0
+}
+
+.page-node .filter-wrapper, .mceEditor tr.mceLast {
+    display:block;
+}
+/*-- my learn widget customization --*/
+.page-learning-enrollment-search #page-container .sort-by-text {
+    min-width: 50px;
+}
+.clsLeftEmpty{
+	width:650px;
+	padding:10px;
+	border:1px solid #E7E7E7;
+	border-radius:10px
+}
+.clsFullEmpty{
+	width:920px;
+	padding:10px;
+  border:1px solid #E7E7E7;
+  border-radius:10px
+}
+.delete-widget, .delete-widget-disabled {
+    display: block;
+    float: left;
+    height: 38px;
+    margin: 0 2px;
+    padding: 0 10px 0 0;
+    width: 24px;
+}
+.flt_right {
+    float: right;
+}
+.widget-delete-button {
+    color: #fff;
+    cursor: hand;
+    font-size: 12px;
+    float: right;
+    text-decoration: none;
+    display: block;
+}
+.delete-widget-disabled .widget-delete-button { color: #ccc; }
+.page-learning-enrollment-search #highlight-list,
+.page-learning-enrollment-search #sidebar_second-list {
+    margin: 0;
+    padding: 0;
+}
+.page-learning-enrollment-search .placeholder,
+.salesforce-widget .placeholder{background-color: #f9f9f9; border: 1px dashed #ccc; }
+.page-learning-enrollment-search .enroll-sort-bylist {
+     display: block;
+    float: left;
+    width:60%;
+}
+#block-exp-sp-learning-tab-user-customization
+{
+	float: right;
+    margin-top: 10px;
+	width: 40px;
+}
+#block-exp-sp-learning-tab-user-customization .region-sidebar-widget-bg, .block-content-main {
+	border: 0;
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+}
+#user-preference-settings {
+	display: block;
+    float: left;
+}
+#page-container #user-preference-settings  #manage-dd-list,
+#widget #user-preference-settings  #manage-dd-list {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    display: block;
+    top: 0;
+    right: -12px;
+    width: 145px;
+    padding: 4px 0;
+    position: absolute;
+    visibility: hidden;
+    z-index: 1001;
+}
+#delete-msg-wizard .del_panel {
+	color: #474747;
+	font-family: ProximaNovaBold,Arial;
+    font-size: 12px;
+}
+#page-container #user-preference-settings .manage-dd-list-arrow, #widget #user-preference-settings .manage-dd-list-arrow { left: 95px }
+#page-container #user-preference-settings #manage-dd-list li, #widget #user-preference-settings #manage-dd-list li {  float: left; width:100%;  padding:0; margin: 0 }
+#user-preference-settings #manage-dd-list li .dropdown-title,
+#user-preference-settings #manage-dd-list li .dropdown-msg  {
+	color: #474747;
+	cursor: pointer;
+    float: left;
+    text-align: left;
+    font-family: ProximaNovaBold,Arial;
+    font-size: 12px;
+    height: 23px;
+    line-height: 23px;
+    padding-left: 10px;
+    text-decoration: none;
+    width: 100%
+}
+#user-preference-settings #manage-dd-list li .dropdown-msg { width: 98%;   padding-left: 5px;  font-family: ProximaNova,Arial; font-size: 13px; }
+.page-learning-enrollment-search #user-preference-settings .admin-save-button-middle-bg { font-size: 11px }
+#user-preference-settings #manage-dd-list div.manage-dd-list-close  {
+    background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/bubble_close.png") no-repeat scroll 1px 1px;
+    cursor: pointer;
+    height: 15px;
+    position: absolute;
+    right: -10px;
+    top: -8px;
+    width: 15px;
+}
+
+#user-preference-settings .my-account-arrow-new{
+    background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll right -1495px;
+    display: inline-block;
+    float: right;
+    height: 10px;
+    width: 10px;
+    margin-top:3px;
+}
+#user-preference-settings .disabled {
+	background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -369px -55px;
+}
+#user-preference-settings .settingicon {
+	background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll -158px -830px;
+    cursor: pointer;
+    height: 20px;
+    width: 32px;
+    display: block;
+    float: left;
+}
+#user-preference-settings .dropdown-title { 	float: left; }
+#user-preference-settings .panel-add-container { float: right }
+.page-learning-enrollment-search #block-exp-sp-lnrenrollment-tab-my-enrollment, .page-learning-enrollment-search #block-exp-sp-lnrlearningplan-tab-my-learningplan,
+.page-learning-enrollment-search #block-exp-sp-administration-announcement-announcement, .page-learning-enrollment-search #block-exp-sp-lnrcalendar-tab-my-calendar,
+.page-learning-enrollment-search #block-exp-sp-mytranscript-mytranscript, .page-learning-enrollment-search #block-exp-sp-instructor-desk-tab-instructor-desk {
+	margin-bottom: 10px;
+	margin-top:0px;
+}
+.page-learning-enrollment-search .region-sidebar-second .block.first {
+	margin-top:0px;
+}
+.page-learning-enrollment-search #main-wrapper {
+	margin-top: 10px;
+}
+.page-learning-enrollment-search #content .enroll-disable-right-region {
+	margin-top: 0;
+}
+#page-container #learner-enrollment .block-title,
+#page-container #learner-learningplan .block-title,
+#page-container #learner-instructor .block-title,
+#page-container #div_announcement .block-title,
+#page-container #block-exp-sp-lnrcalendar-tab-my-calendar .block-title,
+#page-container #div_my_transcript .block-title,
+#page-container #block-exp-sp-whoisonline-online .block-title {
+ cursor: move;
+ }
+.inactiveLink {
+   pointer-events: none;
+   cursor: default;
+}
+#widget #user-preference-settings  #manage-dd-list { top: 33px }
+/*-- my learn widget customization --*/
+}
+.ctool-video-modal .theme-ctool-popup {
+    margin: 0 auto;
+}
+/*************** My learning ***********************/
+.clsContentFull #paintEnrollmentResults .enroll-class-title .exp-sp-lnrenrollment-enrollsinses {
+  max-width:380px;
+}
+.clsContentFull #paintEnrollmentResults .exp-sp-lnrenrollment-wbt-course-title {
+    max-width: 600px;
+}
+.clsContentFull #paintEnrollmentLPResults .exp_sp_lnrmyprogram_title_lrn_tpm_ovr_enr,
+.clsContentFull #paintEnrollmentLPResults .exp_sp_lnrmyprogram_title_lrn_tpm_ovr_cmp {
+  max-width:470px;
+}
+#page-container .clsContentFull #enroll-lp-result-container #paintEnrollmentLPResults .course-level .enroll-show-moreclass #enr-moreclass-columnone .item-title .exp-sp-lnrmyprogram-enroll-fulltitle{
+  max-width: 455px;
+}
+.clsContentFull #paintInstructorResults .enroll-course-title .exp-sp-instructor-desk-enroll-fullsinglesession {
+   max-width: 405px;
+}
+.clsContentFull #paintInstructorResults .exp-sp-instructor-desk-session-head {
+    max-width: 310px;
+}
+.clsContentFull #paintEnrollmentResults .exp-sp-lnrenrollment-sesions-head {
+    max-width: 300px;
+}
+.clsContentFull #paintEnrollmentResults .exp-sp-lnrenrollment-classCode, .clsContentFull #paintEnrollmentResults .exp-sp-lnrenrollment-classloc {
+   max-width: 170px;
+}
+.clsContentFull #paintEnrollmentLPResults .enroll-show-moreclass .exp-sp-lnrmyprogram-traning-plan-cls-titlist {
+    max-width: 725px;
+}
+.clsContentFull #paintEnrollmentLPResults .enroll-show-moreclass .exp-sp-lnrmyprogram-traning-plan-cls-grp-title {
+    max-width: 500px;
+}
+.clsContentFull #paintEnrollmentLPResults .enroll-show-moreclass .enroll-session-details .exp-sp-lnrmyprogram-session-title {
+    max-width: 340px;
+}
+.clsContentFull #paintEnrollmentLPResults .enroll-show-moreclass .exp-sp-lnrmyprogram-class-code, .clsContentFull #paintEnrollmentLPResults .enroll-show-moreclass .exp-sp-lnrmyprogram-class-location {
+  max-width: 205px;
+}
+.clsContentFull #paintEnrollmentLPResults .exp-sp-lnrmyprogram-prg-code {
+  max-width: 250px;
+}
+.clsContentFull #paintEnrollmentLPResults .exp-sp-lnrmyprogram-prg-code-right-false {
+  max-width: 200px;
+}
+.clsContentFull #paintInstructorResults .exp-sp-instructor-desk-class-code, .clsContentFull #paintInstructorResults .exp-sp-instructor-desk-class-location {
+  max-width: 175px;
+}
+.clsContentFull #paintEnrollmentResults .enroll-class-title .exp-sp-lnrenrollment-enrollmulses {
+  max-width: 380px;
+}
+.clsContentFull #paintInstructorResults .enroll-course-title .exp-sp-instructor-desk-enroll-fullmultiplesession {
+   max-width: 405px;
+}
+.clsContentFull #paintInstructorResults .instructor-learner-tab .learners-for-classes .exp-sp-instructor-desk-name-scheduled {
+  max-width:95px;
+}
+.clsContentFull #paintEnrollmentResults .exp-sp-lnrenrollment-enrollfulltitle {
+  max-width: 680px;
+}
+.clsContentFull #paintEnrollmentLPResults .enroll-show-moreclass .exp-sp-lnrmyprogram-enroll-fulltitle {
+    max-width: 710px;
+}
+.clsContentFull #paintEnrollmentLPResults .enroll-show-moreclass .exp-sp-lnrmyprogram-class-code, .clsContentFull #paintEnrollmentLPResults .enroll-show-moreclass .exp-sp-lnrmyprogram-class-location {
+	max-width: 560px;
+}
+#multi-select-class-wrapper .enroll-show-morecourse .fade-out-title-container.tp-view-module-title,
+.enroll-show-morecourse .fade-out-title-container.tp-view-module-title {
+  max-width:640px;
+  display:inline-block;
+  margin-bottom:-8px
+}
+#multi-select-class-wrapper .enroll-show-morecourse .fade-out-title-container.tp-view-course-title,
+.enroll-show-morecourse .fade-out-title-container.tp-view-course-title {
+  max-width:640px;
+  display:table;
+  margin-bottom:-8px
+}
+#multi-select-class-wrapper .enroll-show-morecourse .item-title-code .fade-out-title-container.tp-view-course-code,
+.enroll-show-morecourse .item-title-code .fade-out-title-container.tp-view-course-code {
+  max-width:240px;
+  display:inline-block;
+  margin-bottom:-8px
+}
+#multi-select-class-wrapper .enroll-show-morecourse .fade-out-title-container.tp-view-class-code,
+.enroll-show-morecourse .fade-out-title-container.tp-view-class-code  {
+  max-width:240px;
+  display:inline-block;
+  margin-bottom:-8px
+}
+#multi-select-class-wrapper .enroll-show-morecourse .course-sub-class-detail .fade-out-title-container.tp-view-class-title,
+.enroll-show-morecourse .course-sub-class-detail .fade-out-title-container.tp-view-class-title {
+  max-width:395px;
+  display:inline-block;
+  margin-bottom:-8px
+}
+.lnr-tainingplan-register tbody{
+  min-width:712px;
+  display:table
+}
+.page-administration-learning-program .qtip-error-msg-display .placeholder,
+.page-administration-learning-catalog .qtip-error-msg-display .placeholder{
+  background:none;
+  border:0
+}
+.page-learning-enrollment-search #div_my_transcript .fadeout-my-transcript-fadeout-container {
+  max-width:185px;
+  display:inline-block;
+  text-indent:1px
+}
+.page-learning-enrollment-search #div_my_transcript .fadeout-my-transcript-fadeout-container .fade-out-image {
+  background-position:right -100px;
+  height:30px;
+  margin-top:1px
+}

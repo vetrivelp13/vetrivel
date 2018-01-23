@@ -1,0 +1,6 @@
+name = Role Administration
+description = Responsible for security roles 
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration_people
+version = VERSION
+core = 7.x

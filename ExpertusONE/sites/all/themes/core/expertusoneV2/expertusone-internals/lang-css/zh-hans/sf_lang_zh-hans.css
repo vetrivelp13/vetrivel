@@ -1,0 +1,76 @@
+/* Catalog */
+#page-container #lnr-catalog-search .find-trng-sort-text {
+   /*  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 50px -2816px !important; */
+} 
+ 
+ /* My Learning */
+ 
+.page-learning-enrollment-search #page-container .sort-by-text{
+	 /* background-position: 54px -2816px !important; */
+}
+
+#page-container .enroll-sort-bylist {
+	/* right: 10px !important; */
+}
+
+#user-preference-settings #manage-dd-list {
+    min-width: 120px !important;
+}
+
+.salesforce-widget #myteam-find-trng-sort-display .find-trng-sort-text{
+	background-position: 54px -2816px
+}
+
+#page-container .sort-by-text{
+	/* width: 82px !important; */
+}
+
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -72px !important;
+}
+
+/* Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -44px !important;
+	  
+}
+}
+
+/* IE9 Hack */
+.iframe-mylearning #page-container .enroll-sort-bylist{
+	right:0\9 !important;
+}
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -83px\9 !important;
+}
+
+/* IE 10 & Above*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+.iframe-mylearning #page-container .enroll-sort-bylist{
+	right:25px !important;	
+}
+
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -52px !important;
+}
+
+}
+
+
+/*Safari*/
+
+@media screen and (min-color-index:0) and(-webkit-min-device-pixel-ratio:0) { @media
+{
+#page-container .enroll-sort-bylist {
+	/* right: 25px !important; */
+}
+
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -56px !important;
+}
+
+.page-learning-enrollment-search #page-container .sort-by-text{
+	/*  background-position: 68px -2816px !important; */
+}
+}}

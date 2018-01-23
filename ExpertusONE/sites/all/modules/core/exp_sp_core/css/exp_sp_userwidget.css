@@ -1,0 +1,162 @@
+/* User Profile Style start here */
+
+.UserProfile_box {
+  width:auto;
+  height:auto;
+  padding:4px 8px 8px 8px;
+}
+.UserProfile_box table {
+  border-collapse:separate;
+}
+.UserProfileInfo {
+  width:100%;
+  height:auto;
+  overflow:hidden;
+  padding:0 0 0 0px;
+}
+.UserProfileMenu {
+  width:100%;
+  margin:0;
+  padding:5px 0 0 0;
+  float:left;
+}
+.UserProfileContent {
+  width:100%;
+  overflow:hidden;
+  background:#f6f4fa;
+  display:none;
+}
+.UserHeader {
+  font-size:12px;
+  color:#2e2e2e;
+}
+.UserProfileText {
+  font-size:11px;
+  padding:0px 0 0px 7px;
+}
+.UserIdentificationBox {
+  border:1px solid #b3b3b3;
+  width:63px;
+  float:left;
+  height:auto;
+  padding:2px;
+  margin:3px 0px 0px 5px;
+}
+.UserIdentification-online {
+  width:23px;
+  height:31px;
+  margin:0 0 0 7px;
+  background: url("images/status_online.png") no-repeat;
+}
+.UserIdentification-offline {
+  width:22px;
+  height:16px;
+  float:left;
+  height:16px;
+  margin:3px 0 0 0px;
+  background: url("images/status_offline.png") no-repeat center top;
+}
+.UserIdentificationText {
+  font-size:11px;
+  padding:3px 0 0 3px;
+  text-align:center;
+  float:left;
+}
+/* User Profile heading Menu list */
+
+.UserProfileList {
+  list-style-type:none;
+  margin:0;
+  padding:0px;
+  /* float:left; */
+  float:right;
+}
+.UserProfileList li{
+   display:inline;
+   margin:0px 0 4px 0px;
+   width:22px;
+   height:22px;
+   float:left;
+}
+
+.UserProfileList li a{
+  font-size:12px;
+  text-decoration:none;
+  color:#000;
+  padding:0px 0 0 0;
+  width:22px;
+  height:22px;
+  float:left;
+}
+
+
+
+.EditMyProfile {      /* User Profile Menu list Images */
+  background: url("images/EditMyProfile.png") no-repeat left center;
+}
+.UserProfileChat {
+  background: url("images/UserProfileChat.png") no-repeat left center;
+}
+.UserProfileEmail {
+  background: url("images/UserProfileEmail.png") no-repeat left center;
+}
+
+/* User Profile Content styles */
+.UserDescription {
+  font-size:11px;
+  color:#4a494b;
+  font-weight:bold;
+}
+.UserDetails {
+  font-size:11px;
+  color:#4a494b;
+}
+.StarImg {
+  background: url("images/StarImg.png") no-repeat;
+  width:16px;
+  height:16px;
+  display:block;
+}
+.UserProfileDetails {
+  background:none repeat scroll 0 0 #F6F4FA;
+  border-top:1px solid #B3B3B3;
+  clear:both;
+  float:left;
+  text-align:center;
+  width:100%;
+}
+.UserProfileDetails a, .UserProfileDetails a:hover{
+	color:#000;
+	text-decoration:none;
+}
+.UserProfileDetailsTxt{
+  color:#2E2E2E;
+  cursor:pointer;
+  float:left;
+  font-size:12px;
+  font-weight:bold;
+  padding:5px 0;
+  text-align:center;
+  text-decoration:none;
+  width:98%;
+  background: url("images/UserArrow.png") no-repeat right center;
+}
+
+.UserProfileDetailsUp {
+  background: url("images/arrow-up.png") no-repeat right center;
+}
+.qtip-contentWrapper {
+  /*border:0 none;*/
+  border : solid 1px #BEBEBE;
+}
+.qtip-title {
+  font-size:12px;
+  padding:7px 5px;
+  background:none;
+}
+.qtip-button {
+  background: url("images/Close_Btn.gif") no-repeat left top;
+  width:20px;
+  height:20px;
+  cursor:pointer;
+}

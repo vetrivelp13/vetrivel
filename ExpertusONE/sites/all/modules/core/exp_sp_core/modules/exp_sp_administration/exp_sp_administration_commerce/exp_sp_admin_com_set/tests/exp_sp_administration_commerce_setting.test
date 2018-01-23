@@ -1,0 +1,295 @@
+<?php 
+
+class AdministrationCommerceSettingTestHelper extends ExpertusWebTestCase {
+	private $searchResultContent=null;
+	
+	protected $testcases = array();
+
+	
+	private $srcParam = array(
+			'title'=>'',		// Title base search
+			'announcementdaterange'=>'',		// date range on announcement
+			'announcementlang'=>'cre_sys_lng_eng', 	// Selected languages pipe separated
+			'sortby'=> 'desc',		//	Sort by option
+			'announcemanage' => 'cre_sys_fop_me'
+	);
+
+	public function setUp() {
+		parent::setUp();
+		$this->drupalLogin($this->admin); // login as admin
+		$this->getCommerceSettingTestCases();
+		// set refer to prevent access denied error
+		$this->setHttpReferer('learning/enrollment-search');
+	}
+	
+	public function manageAdminCommerceSetting($scope = 'basic') {
+	
+		// Get Main HTML content
+		$this->drupalPost('administration/commerce/setting');
+		$content = $this->content;
+	
+		// Get Filters
+		$this->drupalGetAJAX('administration/search-filter/setting');
+		$this->content = drupal_json_decode($this->content);
+			
+		//Update filters with existing response
+		$replArray = array(
+				'rendered_narrow_search_filters' => 'narrow-search',
+				'rendered_main_div' => 'root-admin-results',
+				'rendered_tab_content_main' => 'tab-content-main',
+				'rendered_narrow_search_sortbar' => 'admin-maincontent_tab',
+				'rendered_narrow_search_actionbar' => 'sort-bar-V2'
+		);
+			
+		$this->updateSearchFilters($content, $replArray, 'div', 'tag', 'div' );
+	
+		$this->displayTagsById('narrow-search');
+		$this->displayTagsById('root-admin-results');
+	
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['setList'];
+		} else {
+			$testCases = array($this->testcases['setList'][$scope]);
+		}
+		
+		//Get search results
+		foreach($testCases as $test){
+			$this->getAdministrationCommerceSettingList($test);
+		}
+	}
+	
+	public function getAdministrationCommerceSettingList($opt = array()){
+		$opt = array_merge($this->basicParam, $opt);
+		$content = $this->content;
+		$srcRc = $this->drupalGetAJAX('administration/commerce/setting/search/all',array('query'=>$opt));
+		$this->updateSearchResults($content,$srcRc,'narrow-search-results-holder');
+	}
+	
+	
+	public function openCommerceSettingModal($section = 'all') {
+		
+		switch ($section) {
+			case 'countrysetting':
+				$modalClass = 'ctools-modal-ctools-admin-country-setting-addedit-scroll-wrapper';
+				$modalTitle = 'Country Settings';
+				$modalWidth = '540';
+				$modalHeight = '607';
+				break;
+			case 'paymentmethod':
+				$modalClass = 'ctools-modal-ctools-admin-payment-method-addedit-scroll-wrapper';
+				$modalTitle = 'Payment Method';
+				$modalWidth = '770';
+				$modalHeight = '319';
+				break;
+			case 'cancellationpolicy':
+				$modalClass = 'ctools-modal-ctools-admin-cancellation-policy-addedit-scroll-wrapper';
+				$modalTitle = 'Cancellation Policy';
+				$modalWidth = '670';
+				$modalHeight = '316';
+				break;
+			default:
+				break;	
+		}
+		
+		$ctoolModel = array(
+				'modelWidth' => 890,
+				'modelClass' => $modalClass,
+				'modelTitle' => t($modalTitle),
+				'contentWidth' => $modalWidth,
+				'contentMhight' => $modalHeight,
+				'outerHeight' => 620,
+				'outerWidth' => 336,
+				'blockHeight' => 1232,
+				'blockWidth' => 1343,
+				'modelTop' => 150,
+				'modelLeft' => 226.5,
+				'docHeight' => 1232,
+				'docWidth' => 1343
+		);
+		
+		$this->addCtoolModelContent($ctoolModel);
+	
+		$modelContent = $this->content;
+		
+		//Reset content with the ctool model
+		$this->content = $modelContent;
+
+		//Get empty form
+		$post_field = array('wrapper'=>'paint-narrow-search-results');
+
+		$out = $this->drupalPostAJAX(null, $edit,'Save','?q=administration/commerce/setting/'.$section.'/ajax/addedit',array(),array(),'',$post_field);
+
+		$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+
+		// Do General validations
+		$this->assertResponse(200,'Form Rended successfully');
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+	
+	}
+	
+	
+	public function openCommerceSettingQTip($scope = 'all') {
+		
+		$idPath = ($section == 'check') ? 'visible-ctools-check' : 'visible-ctools-credit';
+		$path = '//*[@id="' . $idPath . '"]';
+		$addClassObj = $this->getQtipAttributes($path,'onclick');
+		
+		
+		//Add qtip popup for class
+		$qtipDef = array(
+				'tipWidth'=>$addClassObj['wBubble'],
+				'tipTop'=>128,
+				'tipLeft'=>139.767,
+				'tipId'=>$addClassObj['catalogVisibleId'],
+				'tipObjectId'=>$addClassObj['courseId'],
+				'tipTableWidht'=>373,
+				'tipContentId'=>$addClassObj['popupDispId'],
+				'tipEntityType'=>'cre_sys_obt_cls',
+				'tipClass'=>'qtip-parent',
+				'tipPos'=>'bottomRight'
+		
+		);
+		
+		$this->addQtipModel($qtipDef);
+		 
+		// Keep final content including qtip popup for multiple test
+		$qtipContent = $this->content;
+		
+		//Reset content with the ctool model
+		$this->content = $qtipContent;
+	}
+
+	protected function getCommerceSettingTestCases(){
+		$rand = $this->randomName();
+		$this->testcases = array(
+				'setList' => array(
+						'basic' => array(),
+						'case1' => array(),
+				),		
+				'setCountry' => array(
+		  			'us'	=> $this->getCountryDetails('United States'),
+					'in'	=> $this->getCountryDetails('India'),
+				),
+				'setPayMethod' => array(
+					'cybersource' => array( 'uc_payment_credit_gateway' => 'exp_cybersource',
+											'exp-card-types[]' => array('visa', 'mastercard', 'discover', 'amex'),
+											'uc_credit_encryption_path' => '/path/to/encryption/key/',
+											'uc_credit_cvv_enabled' => 1,
+											'params' => array(
+												'uc_cybersource_server' => 'test',
+												'uc_cybersource_soap_merchant_id' => 'test-merchant',
+												'uc_cybersource_soap_transaction_key' => 'test-key',
+												'exp_cybersource_soap_tax_calculate' => 0				
+											)
+										),
+					'paymetric' => array( 'uc_payment_credit_gateway' => 'exp_paymetric',
+							'exp-card-types[]' => array('visa', 'mastercard', 'discover', 'amex'),
+							'uc_credit_encryption_path' => '/path/to/encryption/key/',
+							'uc_credit_cvv_enabled' => 1,
+							'params' => array(
+									'uc_cybersource_server' => 'test',
+									'uc_cybersource_soap_merchant_id' => 'test-merchant',
+									'uc_cybersource_soap_transaction_key' => 'test-key',
+									'exp_cybersource_soap_tax_calculate' => 0
+							)
+					),		
+					'paypal' => array( 'uc_payment_credit_gateway' => 'exp_paypal',
+							'exp-card-types[]' => array('visa', 'mastercard', 'discover', 'amex'),
+							'uc_credit_encryption_path' => '/path/to/encryption/key/',
+							'uc_credit_cvv_enabled' => 1,
+							'params' => array(
+									'uc_cybersource_server' => 'test',
+									'uc_cybersource_soap_merchant_id' => 'test-merchant',
+									'uc_cybersource_soap_transaction_key' => 'test-key',
+									'exp_cybersource_soap_tax_calculate' => 0
+							)
+					),	
+					'check'	 => array(
+						'uc_check_mailing_name' => 'Mailing Name',
+							'uc_check_mailing_street1' => 'Street 1',
+							'uc_check_mailing_street2' => 'Street 2',
+							'country' => 'India',
+							'state' => 'Tamilnadi',
+							'uc_check_mailing_city' => '',
+							'uc_check_mailing_postal_code' => ''
+					)				
+				),
+				'setCancelPolicy' => array(
+					'lrn_cls_dty_ilt' => array('cpolicy-deduct-percentage' => 5, 'cpolicy-days-before' => 5),
+					'lrn_cls_dty_vcl' => array('cpolicy-deduct-percentage' => 5, 'cpolicy-days-before' => 5),
+					'lrn_cls_dty_vod' => array('cpolicy-deduct-percentage' => 5, 'cpolicy-days-before' => 5),
+					'lrn_cls_dty_wbt' => array('cpolicy-deduct-percentage' => 5, 'cpolicy-days-before' => 5),
+					'cre_sys_obt_trp' => array('cpolicy-deduct-percentage' => 5, 'cpolicy-days-before' => 5),
+				),
+		);
+	}
+	
+	/*public function getCommerceSettingTitle($settingId = '') {
+		$settingTitle = db_query("SELECT country FROM slt_setting_settings WHERE id = :setting_id", array(':setting_id' => $settingId ))->fetchField();
+		return $settingTitle;
+	}
+	
+	public function getCommerceSettingStatus($settingId = '') {
+		$settingStatus = db_query("SELECT status FROM slt_setting_settings WHERE id = :setting_id", array(':setting_id' => $settingId ))->fetchField();
+		return $settingStatus;
+	}*/
+	
+	public function getCountryDetails($search_str = '') {
+		$select = db_select('uc_countries', 'con');
+		$select->addField('con', 'country_id', 'id');
+		$select->addField('con', 'country_name', 'name');
+		$select->addField('con', 'country_iso_code_3', 'code');
+		$select->condition('con.country_name', $search_str);
+		$select->orderBy('con.country_id', 'DESC');
+		$select->range(0,1);
+		$result = $select->execute()->fetchAssoc();
+		return $result;
+	}
+}
+
+
+class AdministrationCommerceSettingListBase extends AdministrationCommerceSettingTestHelper
+{
+	
+}
+
+class AdministrationCommerceSettingListAll extends AdministrationCommerceSettingListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - CommerceSetting - List - All Tests',
+				'description' => 'Module : exp_sp_administration_commerce_setting',
+				'group' => '1704 - Administration - Manage - CommerceSetting - List',
+		);
+	}
+	
+	public function testCommerceSettingListAll() {
+		debug('testAdminCommerceSettingListAll called');
+		$this->manageAdminCommerceSetting('all');
+	}
+}
+
+class AdministrationCommerceSettingListCase1 extends AdministrationCommerceSettingListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - CommerceSetting - List - Case 1',
+				'description' => 'Module : exp_sp_administration_commerce_setting',
+				'group' => '1704 - Administration - Manage - CommerceSetting - List',
+		);
+	}
+
+	public function testCommerceSettingListCase1() {
+		debug('testAdminCommerceSettingListCase1 called');
+		$this->manageAdminCommerceSetting('case1');
+	}
+}
+
+
+
+
+
+
+?>

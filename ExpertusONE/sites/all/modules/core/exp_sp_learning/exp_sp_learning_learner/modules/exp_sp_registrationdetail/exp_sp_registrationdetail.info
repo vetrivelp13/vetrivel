@@ -1,0 +1,8 @@
+name = Registration Details 
+description = Responsible for rendering registration details.
+package = ExpertusONE Learning
+dependencies[] = exp_sp_core
+version = VERSION
+core = 7.x
+
+

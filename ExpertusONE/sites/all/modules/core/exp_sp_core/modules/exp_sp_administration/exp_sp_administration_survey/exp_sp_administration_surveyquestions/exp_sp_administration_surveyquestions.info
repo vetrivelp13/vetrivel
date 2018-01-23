@@ -1,0 +1,16 @@
+name = Survey Questions Administration
+description = Responsible for survey questions administration
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration_survey
+testing_api = 2.x
+files[] = exp_sp_administration_surveyquestions.inc
+files[] = tests/exp_sp_administration_surveyquestions.test
+files[] = tests/exp_sp_administration_surveyquestions_create.test
+files[] = tests/exp_sp_administration_surveyquestions_update.test
+files[] = tests/exp_sp_administration_surveyquestions_delete.test
+files[] = tests/exp_sp_administration_assessmentquestions.test
+files[] = tests/exp_sp_administration_assessmentquestions_create.test
+files[] = tests/exp_sp_administration_assessmentquestions_update.test
+files[] = tests/exp_sp_administration_assessmentquestions_delete.test
+version = VERSION
+core = 7.x

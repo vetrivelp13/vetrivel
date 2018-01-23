@@ -1,0 +1,81 @@
+<?php 
+
+class AdministrationSurveyDeleteBase extends AdministrationSurveyTestHelper
+{
+	public function deleteSurveyTestCase($scope = 'all'){
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['surveyDelete'];
+		} else {
+			$testCases = array($this->testcases['surveyDelete'][$scope]);
+		}
+		
+		foreach($testCases as $test){
+			$surveyTitle = $this->getSurveyTitle($test['id']);
+			debug("Survey name to delete: " . $surveyTitle);
+	
+			//drupalPost($path, $edit, $submit, $options, $headers, $form_html_id);
+			$surveyId = $test['id'];
+			$deletePath = 'ajax/admincore/deleteprocessobject/' . $surveyId . '/SurAss';
+			$out = $this->drupalPost($deletePath, array(), t('Delete'));
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+	
+			$surveyStatus = $this->getSurveyStatus($test['id']);
+			debug("Survey status : " . $surveyStatus);
+		}
+	
+	}
+}
+
+class AdministrationSurveyDeleteAll extends AdministrationSurveyDeleteBase
+{
+public static function getInfo() {
+		return array(
+				'name' => 'Administration - Survey - Delete - AllTest',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1301 - Administration - Survey - SurveyDetails - Delete',
+		);
+	}
+
+	public function testSurveyDeleteAll() {
+		$this->deleteSurveyTestCase('all');
+		$this->manageAdminSurvey();
+	}
+}
+
+class AdministrationSurveyDeleteCase1 extends AdministrationSurveyDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Survey - Delete - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1301 - Administration - Survey - SurveyDetails - Delete',
+		);
+	}
+
+	public function testSurveyDeleteCase1() {
+		debug('testAdminSurveyListCase1 called');
+		$this->deleteSurveyTestCase('st_case1');
+		$this->manageAdminSurvey();
+	}
+}
+
+class AdministrationSurveyDeleteCase2 extends AdministrationSurveyDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Survey - Delete - Case 2',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1301 - Administration - Survey - SurveyDetails - Delete',
+		);
+	}
+
+	public function testSurveyDeleteCase2() {
+		debug('testAdminSurveyListCase1 called');
+		$this->deleteSurveyTestCase('st_case2');
+		$this->manageAdminSurvey();
+	}
+}
+
+?>

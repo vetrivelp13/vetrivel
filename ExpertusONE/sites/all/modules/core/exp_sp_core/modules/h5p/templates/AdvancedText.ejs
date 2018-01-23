@@ -1,0 +1,72 @@
+ <a id="control-close" class="qtip-close-button" onclick="closeH5PIcon(this)"></a>
+ <div class="e1_h5p_error" style="height:auto;margin-top: -17px;"></div>
+
+<!-- 	<script type="text/javascript" src="/misc/jquery.js?v=1.4.4"></script>
+	<script type="text/javascript" src="/misc/jquery.once.js?v=1.2"></script>
+	<script type="text/javascript" src="/misc/drupal.js?ony5fl"></script>
+-->
+<script>    
+/*Drupal.wysiwyg = Drupal.wysiwyg || { 'instances': {} };
+Drupal.wysiwyg.editor = Drupal.wysiwyg.editor || { 'init': {}, 'attach': {}, 'detach': {}, 'instance': {} };
+Drupal.wysiwyg.plugins = Drupal.wysiwyg.plugins || {};
+Drupal.settings.wysiwyg = {"configs":{"tinymce":{ "mode" : "specific_textareas","id": "edit-short-description-value","language":"en","popup_css":"http://testing.exphosted.com/sites/all/libraries/tinymce/jscripts/tiny_mce/themes/advanced/skins/default/dialog_theme2.css","theme":"advanced","skin":"default","theme_advanced_buttons1":"bold,italic,underline,fontselect,fontsizeselect,forecolor,backcolor","formatfiltered_html":{"button_tile_map":true,"document_base_url":"/","mode":"none","plugins":"","theme":"advanced","width":"100%","strict_loading_mode":true,"convert_urls":false,"entities":"160,nbsp,173,shy,8194,ensp,8195,emsp,8201,thinsp,8204,zwnj,8205,zwj,8206,lrm,8207,rlm","theme_advanced_resize_horizontal":false,"theme_advanced_resizing_use_cookie":false,"theme_advanced_statusbar_location":"bottom","theme_advanced_resizing":1,"theme_advanced_toolbar_location":"top","theme_advanced_toolbar_align":"left","theme_advanced_buttons1":"bold,italic,underline,fontselect,fontsizeselect,forecolor,backcolor","theme_advanced_buttons2":"","theme_advanced_buttons3":""},"formatfull_html":{"button_tile_map":true,"document_base_url":"/","mode":"none","plugins":"","theme":"advanced","width":"100%","strict_loading_mode":true,"convert_urls":false,"entities":"160,nbsp,173,shy,8194,ensp,8195,emsp,8201,thinsp,8204,zwnj,8205,zwj,8206,lrm,8207,rlm","apply_source_formatting":"0","convert_fonts_to_spans":"1","language":"en","paste_auto_cleanup_on_paste":"0","preformatted":"0","remove_linebreaks":"1","verify_html":true,"content_css":"/sites/all/modules/core/exp_sp_core/modules/exp_sp_administration/exp_sp_administration_learning/exp_sp_administration_data_grid_v2.css,/sites/all/modules/core/exp_sp_core/modules/exp_sp_administration/exp_sp_administration_view_v2.css,/sites/all/modules/core/exp_sp_core/modules/exp_sp_administration/exp_sp_administration_v2.css,/sites/all/modules/core/exp_sp_core/modules/exp_sp_administration/exp_sp_administration_catalog_access/exp_sp_administration_catalog_access_v2.css,/sites/all/modules/core/exp_sp_core/modules/exp_sp_administration/exp_sp_administration_learning/exp_sp_administration_learning_v2.css,/sites/all/modules/core/exp_sp_core/modules/exp_sp_administration/exp_sp_administration_learning/exp_sp_administration_program/exp_sp_administration_program_v2.css,/sites/all/modules/core/exp_sp_core/modules/exp_sp_administration/exp_sp_administration_learning/exp_sp_administration_program/font-awesome.min.css,/sites/all/modules/core/exp_sp_core/modules/exp_sp_administration/exp_sp_administration_learning/exp_sp_administration_program/exp_sp_administration_program_roster_v2.css,/sites/all/modules/core/exp_sp_core/modules/exp_sp_administration/exp_sp_administration_survey/exp_sp_administration_surveyquestions/exp_sp_administration_surveyquestions_v2.css,/sites/all/modules/core/exp_sp_core/js/exp_sp_jquery/exp_multiselect/css/jquery.expertus.multiselect.css,/sites/all/themes/core/AdministrationTheme/calender_style.css,/sites/all/modules/core/exp_sp_core/js/videojs/video-js.min.css,/sites/all/modules/core/exp_sp_core/modules/exp_sp_administration/exp_sp_administration_manage/exp_sp_administration_content/exp_sp_administration_content_v2.css","extended_valid_elements":"","theme_advanced_resize_horizontal":false,"theme_advanced_resizing_use_cookie":false,"theme_advanced_statusbar_location":"bottom","theme_advanced_resizing":"1","theme_advanced_toolbar_location":"top","theme_advanced_toolbar_align":"left","theme_advanced_blockformats":"p,address,pre,h2,h3,h4,h5,h6,div","theme_advanced_buttons1":"bold,italic,underline,fontselect,fontsizeselect,forecolor,backcolor","theme_advanced_buttons2":"","theme_advanced_buttons3":""},"formatplain_text":{"button_tile_map":true,"document_base_url":"/","mode":"none","plugins":"","theme":"advanced","width":"100%","strict_loading_mode":true,"convert_urls":false,"entities":"160,nbsp,173,shy,8194,ensp,8195,emsp,8201,thinsp,8204,zwnj,8205,zwj,8206,lrm,8207,rlm","theme_advanced_resize_horizontal":false,"theme_advanced_resizing_use_cookie":false,"theme_advanced_statusbar_location":"bottom","theme_advanced_resizing":1,"theme_advanced_toolbar_location":"top","theme_advanced_toolbar_align":"left","theme_advanced_buttons1":"bold,italic,underline,fontselect,fontsizeselect,forecolor,backcolor","theme_advanced_buttons2":"","theme_advanced_buttons3":""}}},"plugins":[],"disable":"Disable rich-text","enable":"Enable rich-text","triggers":{"edit-short-description-format--2":{"field":"edit-short-description-value","formatfiltered_html":{"editor":"tinymce","status":1,"toggle":1,"resizable":1,"format":"formatfiltered_html","trigger":"edit-short-description-format--2","field":"edit-short-description-value"},"formatfull_html":{"editor":"tinymce","status":1,"toggle":0,"resizable":1,"format":"formatfull_html","trigger":"edit-short-description-format--2","field":"edit-short-description-value"},"formatplain_text":{"editor":"tinymce","status":1,"toggle":1,"resizable":1,"format":"formatplain_text","trigger":"edit-short-description-format--2","field":"edit-short-description-value"}}}};
+window.tinyMCEPreInit = {"base":"\/sites\/all\/libraries\/tinymce\/jscripts\/tiny_mce","suffix":"","query":""};
+
+*/
+
+</script>
+<%
+	console.log('$("#tinymceloaded").size():'+$("#tinymceloaded").size());
+	if($("#tinymceloaded").size() == 0)
+	{
+%>
+	<!-- <script src='/sites/all/libraries/tinymce/jscripts/tiny_mce/tiny_mce.js' id='tinymceloaded'></script>
+	<script src='/sites/all/modules/core/exp_sp_core/modules/wysiwyg/editors/js/tinymce-3.js'></script>
+	<script src='/sites/all/modules/core/exp_sp_core/modules/wysiwyg/editors/js/none.js'></script>
+	<script src='/modules/filter/filter.js'></script>
+	<script src='/sites/all/modules/core/exp_sp_core/modules/wysiwyg/wysiwyg.js'></script>
+	<script src='/sites/all/libraries/tinymce/jscripts/tiny_mce/langs/en.js'></script>
+	<script src="/sites/all/libraries/tinymce/jscripts/tiny_mce/themes/advanced/h5peditor_template_src.js"></script> -->
+	<%
+	}
+	%>
+	
+	
+
+	
+    
+
+
+<textarea class="mceEditor" id="edit-short-description-value" rows=4 cols=80>
+<%= GLOBALPARAMS_H5P.action.params.text %>
+</textarea>
+
+<script>
+  function editorOnClick(id)
+   {
+	try{
+	if(document.getElementById('cursor_id')!= null){//id == 'edit-message-value'){
+		$('#cursor_id').val(id);
+	}
+	$('#message-container').remove();
+	}catch(e){
+			// To Do
+		}
+   }
+   
+   
+ 
+$(document).ready(function(){
+	tinymce.editors = [];
+	tinymce.EditorManager.editors = [];
+	$("#edit-short-description-value_parent").remove(); 
+	tinymce.EditorManager.execCommand('mceRemoveControl',true, "edit-short-description-value");
+		
+			
+	tinymce.init(Drupal.settings.wysiwyg.configs.tinymce);
+	window.setTimeout(function(){
+		// $(".defaultSkin").not(':last').remove();
+		
+	},50);
+})
+</script>

@@ -1,0 +1,24 @@
+<?php
+
+class ReferCourseTestCase extends DrupalUnitTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Refer Course Unit Tests',
+      'description' => 'Unit test all class details helper functions',
+      'group' => 'exp_sp_refer_course',
+    );
+  }  
+  
+  public function testPlaceHolderTestReferClass() {
+    
+    module_load_include('inc', 'exp_sp_refer_course', 'exp_sp_refer_course');
+    
+    $this->assertTrue(true,
+                      $message = "Currently, there is no function for unit testing in exp_sp_refer_course.inc.",
+                      $group = 'exp_sp_refer_course');
+  }
+  
+}
+
+?>

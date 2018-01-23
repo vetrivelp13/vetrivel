@@ -1,0 +1,775 @@
+/**
+ * @file
+ * CSS targeted specifically for Internet Explorer 7 (and earlier) for Windows.
+ *
+ * Any CSS in this file will apply to all versions of IE before IE 8. You can
+ * target specific versions of IE by using conditional comments. See your
+ * sub-theme's .info file for an easy way to use them.
+ */
+
+
+/*
+ * Tabs
+ */
+
+ul.primary li a,
+ul.primary li a .tab,
+ul.secondary li a,
+ul.secondary li a .tab {
+  cursor: pointer;
+}
+
+/*
+ * Drupal nodes
+ */
+
+.node-unpublished>* {
+  position: relative; /* Otherwise these elements will appear below the "Unpublished" text. */
+}
+
+/*
+ * Drupal admin tables
+ */
+tr.even th,
+tr.even td,
+tr.odd th,
+tr.odd td {
+  border-bottom: 1px solid #ccc; /* IE doesn't display borders on table rows */
+}
+.my-login-links-actions {
+  clear: both;
+  width: 100%;
+}
+
+/* My Learning page IE 7 hack */
+
+#gbox_paintEnrollmentResults #pager {
+  z-index:-1;
+}
+#gbox_paintEnrollmentLPResults #pager-lp {
+  z-index:-1;
+} 
+#content #block-exp-sp-lnrenrollment-tab-my-enrollment {
+  margin-top: 10px; 
+}
+
+/* Learning Request Override Style */
+.req-table .req-table-col3 .form-type-textfield .form-text,
+.req-table .req-table-col3 .form-textarea-wrapper .form-textarea {
+	width:97%;
+}
+/* Loading IE7 Fixes */
+div#paintContentResults_toppager .ui-jqgrid .ui-jqgrid-bdiv {
+    overflow: visible;
+    position: relative; 
+    padding-top:20px;
+}
+div#paintContentResults_toppager .ui-jqgrid .ui-jqgrid-hdiv {
+  position: absolute;
+  z-index: 100;
+}
+/* Ends here */
+.enroll-action .enroll-drop-down-list {
+  border-top: 2px solid #cccccc;
+ }
+ #enroll-lp-result-container .enroll-action .enroll-drop-down-list {
+  border-top: 2px solid #cccccc;
+ }
+
+.ui-jqgrid .ui-jqgrid-bdiv {
+	position: static;
+}
+.myteam-more-action .myteam-more-drop-down-list {
+	line-height: 20px;
+	margin: 0 0 0 -1px;
+}
+/* fix for shopping cart alignment issue in ie7 */
+#uc_discounts-pane .form-textarea-wrapper textarea {
+  height: 16px;
+  width: 361px;
+  overflow: auto;
+}
+.commerce-container #uc-cart-checkout .uc-store-address-field .form-item label {
+  width: 110px;
+}
+#uc_termsofservice_agreement_checkout-pane input.form-checkbox, 
+.form-item-panes-payment-payment-mentod input.form-radio {
+  /* float:left; */
+  padding: 0;
+  margin: 0;
+  float: none;
+  /* margin-right: 5px; */
+}
+#productorg-pane DIV {
+  padding-top: 2px;
+}
+#billing-pane .form-item-panes-billing-select-address LABEL {
+  padding-top:6px;
+}
+
+.addedit-left-col .admin-course-edit-button-container{
+  margin-right: 6px;
+ }
+.popups-container #catalog-question-basic-addedit-form .addedit-form-cancel-container-actions .admin-save-button-container,
+.addedit-form-cancel-container-actions .admin-save-button-container,
+#admin-data-grid .admin-datagrid-pagination .addedit-form-cancel-container-actions .admin-save-button-container,
+#admin-data-grid .addedit-form-cancel-container-actions .admin-action-button-middle-bg {
+  float: left;
+  margin: 0 7px 0 5px;
+}
+#admin-add-questions-survey-assessment .admin-pagination-action-link,
+#admin-add-course-training-plan .admin-pagination-action-link,
+#admin-data-grid .admin-datagrid-pagination .admin-pagination-action-link {
+  background-position:0px 0px;
+  height:29px;
+}
+#admin-data-grid .datagrid-type-content .admin-pagination-action-link {
+  background-position:0px 10px;
+  height:29px;
+}
+.popups-container #exp-sp-administration-survey-assesment-question-form #admin-data-grid .admin-save-button-container {
+  margin: 0 15px 10px 0;
+}
+#admin-data-grid .admin-save-button-container {
+  float: right;
+  margin: 0 10px 0 0;
+}
+.popups-container #exp-sp-administration-survey-assesment-question-form #admin-data-grid #attach_btngrid .admin-save-button-container {
+  margin: 0 8px 10px 0;
+}
+.popups-container #catalog-survey-assesment-basic-addedit-form .addedit-form-cancel-container-actions {
+  margin-right: 15px;
+}
+#add-facility-list-wrapper .add-class-button, 
+#view-tp-list-wrapper .add-class-button,
+#add-class-list-wrapper .add-class-button {
+  margin: 0 5px 0 0;
+}
+.popups-container #exp-sp-administration-survey-assesment-question-form #admin-data-grid .add-class-button {
+  margin: 0 18px 0 0;
+}
+#catalog-class-addedit-form-details .addedit-twocol-secondcol .addedit-new-field-class-fee {
+  margin-left: 59px;
+}
+#catalog-class-addedit-form-details .addedit-twocol-secondcol .addedit-new-field-class-fee div label {
+  padding-right: 20px;
+}		
+/*#modal-content .addedit-addl-form-title {
+  width: 97.8%;
+}*/
+#update-checkout-buttons .leaner-shopping-action-wrapper .addedit-form-cancel-container-actions {
+  width: 224px;
+}
+#program-tp-basic-addedit-form-disp .attachment-details-row,
+#program-tp-basic-addedit-form-container .addedit-new-field {
+  width: 100%;
+}
+#program-tp-basic-addedit-form-disp .addedit-new-field-two-col .addedit-twocol-secondcol {
+  margin-right: 47px;
+}
+#catalog-course-basic-addedit-form-disp .form-item-crs-description-value .addedit-edit-crs_description,
+#catalog-course-basic-addedit-form-disp .form-item-crs-short-description .addedit-edit-crs_short_description,
+.form-item-additional-info .addedit-edit-additional_info {
+  width: 388px;
+  height: 40px;  
+}
+#program-trainingplan-addedit-form-details #no-courses-list {
+  margin: 20px auto;
+}
+#program-trainingplan-addedit-form-details .addedit-training-program-course-list .delete-group-list-right {
+  vertical-align: bottom;
+}
+#program-tp-basic-addedit-form-disp .tag-details-row .addedit-edit-ac-textfield,
+#program-tp-basic-addedit-form-disp .assessment-details-row .addedit-edit-ac-textfield,
+#program-tp-basic-addedit-form-disp .survey-details-row .addedit-edit-ac-textfield,
+#program-tp-basic-addedit-form-disp .register-details-row .addedit-edit-ac-textfield,
+#program-tp-basic-addedit-form-disp .prerequisite-details-row .addedit-edit-ac-textfield {
+  width: 485px;
+}
+#catalog-class-basic-addedit-form-container .wbt-details-row .ac_input {
+  width: 550px;
+}
+.block #narrow_search_hideshow .narrow-search-filterset-daterange-empty {
+  margin-top: -1px;
+}
+#ui-datepicker-div .ui-datepicker-header .ui-datepicker-title {
+  padding: 4px 0 0 0;
+}
+#addedit-twocol-export-compliance #edit-export-compliance {
+  float: right;
+  margin-top: 5px;
+}
+#addedit-twocol-export-compliance #edit-export-compliance + label {
+  margin-left: 10px;
+}
+.narrow-search-results .paint-narrow-search-results {
+  min-height: 60px;
+}
+#program-addedit-form #two-col-row-expires_in_days_end_date .form-item-end-date img {
+  margin-top: -5px;
+}
+#user-basic-addedit-form #adddedit-state-wrapper,
+#organization-addedit-form #adddedit-state-wrapper,
+#resource-facility-addedit-form-details #adddedit-state-wrapper {
+  width: auto;
+}
+/* JQUERY POPUP ALIGNMENT FIXES IE7 SATART*/
+.ui-dialog .ui-dialog-title {
+  color: #333333;
+  float: none;
+  font-size:14px;
+  font-weight: bold;
+  padding: 0;
+  text-align: left;
+  text-transform: uppercase;
+}
+.ui-helper-clearfix { display: "." ; }
+#esign-wizard-dialog .ui-dialog .ui-dialog-buttonpane {
+  padding-top: 3em;
+  width: 331px;
+  height:auto;
+}
+#esign-wizard-dialog .ui-dialog .ui-dialog-buttonset {
+  margin-top:-30px;
+}
+/* JQUERY POPUP ALIGNMENT FIXES IE7 END*/
+
+/* MY ACCOUNT IE 7 FORM WIDGET UI FIXES */
+.my-account-action-box {
+  right: 428px;
+}
+.my-account-box .my-account-title .action-button .my-account-cancel-button,
+.my-account-box .my-account-title .action-button .admin-save-button-container {
+  float:left;
+}
+.my-account-edit-button {
+  float:left;
+  margin-left:5px;
+}
+#program-tp-basic-addedit-form-disp > #program-tp-basic-addedit-form-container > .prerequisite-fieldset-wrapper > .prerequisite-details-row {
+  margin-left: 0;
+}
+.ui-datepicker-header .ui-datepicker-next-hover {
+  margin-left: 21px;
+}
+.my-profile-action-box .admin-save-button-container {
+  float:left;
+  padding-left:5px;
+  padding-bottom:15px;
+}
+#exp-sp-administration-program-group-attachment-form .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions {
+  width: 160px;
+  float: left;
+}
+#esign-wizard-dialog #esign-wizard #esign-pass-error,
+#esign-wizard-dialog #esign-wizard #esign-mandatory-error {
+  width: 530px;
+}
+.refer-course-holder .ui-dialog-buttonpane {
+  height: 30px;
+}
+.popups-container #user-org-addedit-form #two-col-row-hire_date_terminated_date {
+  width: auto;
+}
+#user-org-addedit-form #two-col-row-hire_date_terminated_date .addedit-twocol-secondcol {
+  width: 56%;
+}
+#user-org-addedit-form #two-col-row-hire_date_terminated_date .addedit-twocol-secondcol .addedit-new-field-title {
+  width: 32%;
+}
+#esign-wizard-dialog .ui-dialog-buttonset button:first-child span {
+  color: #4686DD;
+  padding: 3px 0 0 0;
+}
+#esign-wizard-dialog .ui-dialog-buttonset button:first-child {
+  border: 0;
+  background: none;
+  padding-right: 10px;
+}
+
+/* datatable issue IE 7 SURVEY, EQUIVALENCE, ASSESSMENT, PREREQUISITE, CONTNET, ENROLL USER, TP ENROLL USER */
+#admin-data-grid .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  border-left: 0px solid #FFFFFF;
+  border-right: 0px solid #FFFFFF;
+  border-top: 0px solid #ffffff;
+  border-bottom: 0px solid #cccccc;
+  color: #333333;
+}
+#admin-data-grid .admin-datagrid-pagination .datagrid-type-enrolluser .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  border: 0 solid #FFFFFF;
+  color: #333333;
+  height: 10px;
+}
+#admin-data-grid .datagrid-type-enrolluser .ui-jqgrid-btable tr.ui-row-ltr td {
+  padding: 1px 0 2px 5px;
+}
+.attachment-details-row .addedit-edit-attachment .form-type-radio label {
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  margin-right: 5px;
+  color: #666666;
+  font-size: 13px;
+}
+html>body .admin-tab-list-row .add-tags-delete-action-button {
+  width:8%;
+}
+#esign-uname,
+#esign-pass {
+  width:228px;
+  border:1px solid #7f9db9;
+}
+#catalog-roster-form .addedit-form-cancel-container-actions {
+  width:120px;
+}
+#catalog-roster-form .addedit-form-cancel-container-actions .admin-save-button-container {
+  margin-right:0px;
+}
+#program-tp-basic-addedit-form-disp #addedit-form-wrapper .admin-course-edit-button-container {
+  float: right;
+  padding-right: 0;
+  position: relative;
+  right: -94px;
+  top: -25px;
+}
+.survey-main-holder .ui-dialog .ui-dialog-buttonpane {
+  height: 20px;
+}
+#roster-container-div .ui-jqgrid-btable tr.jqgrow td {
+  border-top:1px solid #cccccc;
+  border-bottom:1px solid #cccccc;
+  border-left:0px solid #cccccc;
+  border-right:0px solid #cccccc;
+  color:#333333;
+  padding: 8px 0px 8px 4px;
+  white-space: normal;
+  font-size: 12px;
+} 
+#catalog_roster_container .ui-jqgrid-bdiv {
+  overflow: hidden;
+  width:763px; 
+  border-left:1px solid #cccccc;
+  border-right:1px solid #cccccc;
+  border-top:0px solid #cccccc;
+  border-bottom:0px solid #cccccc;
+}
+#gview_roster-result-container tr.ui-search-toolbar,
+#gview_program-roster-result-container tr.ui-search-toolbar {
+  border:1px solid #eeeeee;
+}
+#gview_roster-result-container .ui-jqgrid-hbox tr.ui-search-toolbar th,
+#gview_program-roster-result-container .ui-jqgrid-hbox tr.ui-search-toolbar th {
+  border-top:0px solid #eeeeee;
+}
+.ui-jqgrid-hdiv .ui-jqgrid-hbox input.multiselect-selectall {
+  margin-top: 0;
+}
+#catalog-class-addedit-form-details .addedit-new-field-currency-type .addedit-new-field-currency-type-select {
+	position: relative;
+    top: 0;
+    width: 60px;
+}
+#exp-sp-administration-catalog-class-title-form .addedit-new-field-currency-type .form-item-currency-type .addedit-new-field-currency-type-select {
+  font-weight: normal;
+  height: 21px;
+}
+#catalog-class-addedit-form-details #admin-addedit-session-details-wrapper .admin-delete-img {
+    margin-right: 0;
+}
+div#reset-form-wrapper #reset-password table.reset-pass-table {
+  width: 300px;
+  margin: 15px 15px;
+}
+#resource-facility-addedit-form-details .edit-class-list {
+  width: 98%;
+}
+.ui-dialog .ui-dialog-buttonpane {
+  height: 20px;
+}
+#program-tp-basic-addedit-form-container #notification-fieldset-wrapper .addedit-check-notification-firstcol {
+  width: 49%;
+}
+#enroll-lp-result-container .sessionDet {
+  width: 100%;
+}
+.ui-dialog-buttonpane .ui-dialog-buttonset .close-btn-lnrenrollment {
+  position: static;
+}
+*+html .admin-custom-required-col2 {
+  width:56%;
+}
+*+html .custom-details-row .admin-add-button-container {
+  margin-right:10px;
+}
+#question_answer_container .add_question_options {
+  width: auto;
+} 
+#answer_type_container .delete-choice-btn {
+  margin-left: 0;
+}
+#program-roster-form span{
+  width: 337px;
+  float: left;
+  height: 30px;
+  margin-left: 5px;
+}
+.root-admin-block .clr-txt {
+  width: 25px;
+}
+.admin-roster-wrapper span.admin-roster-col1 {
+  width: 375px;
+  float: left;
+  height: 30px;
+  margin-left: 5px;
+  position:relative;  
+}
+#reset-password .reset-pass-btn-cont .admin-save-button-container .control-div {
+  float:left;
+  padding-right:0px;
+  width:51px;
+}
+#esign-wizard .esign-labels{
+  font-size: 13px;
+  font-weight: normal;
+  text-align: left;
+  width : 12%;
+  height : 31px;
+}
+.addedit-form-main-container #program-tp-basic-addedit-form-container #admin_list_values_container .catalog-pub-add-list {
+  top: 36px;
+}
+#narrow-search-results-holder .crs-publish-btn {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/action.png") no-repeat scroll 0 0 transparent;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  width: 87px;
+  cursor: pointer;
+  padding: 0px 5px;
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  word-wrap: break-word;
+}
+/*#narrow-search-results-holder .action-crs-publish-btn {
+  line-height:18px;
+}*/
+#narrow-search-results-holder .crs-unpublish-btn {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/UnPublished.png") no-repeat scroll 0 0 transparent;
+  color: #83B038;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  width: 87px;
+  cursor: pointer;
+  padding: 0px 5px;
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  word-wrap: break-word;
+}
+/*#narrow-search-results-holder .action-crs-unpublish-btn {
+  line-height:18px;
+}*/
+#narrow-search-results-holder .crs-pub-enrolled-btn {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/action_disable.png") no-repeat scroll 0 0 transparent;
+  border: 0 none;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 0px 05px;
+  text-align: center;
+  width: 87px;
+  height: 40px;
+  display: block;
+  line-height: 40px;
+  word-wrap: break-word;
+}
+#narrow-search-results-holder .hide-show-txt-ie7-fix {
+  line-height:18px;
+}
+#catalog-course-basic-addedit-form .addedit-form-main-container {
+  margin-bottom: 0;
+}
+#modal-content #catalog-course-basic-addedit-form .addedit-left-col {
+  padding: 25px 0 25px 25px;
+}
+#catalog-course-basic-addedit-form .pub-unpub-only-save-btn {
+  padding-left: 5px; 
+  text-align: left;
+}
+#user-basic-addedit-form  .addedit-form-cancel-container-actions{
+  float:left;
+}
+#user-basic-addedit-form  .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions {
+  float:right;
+  margin-right:12px;
+}
+.my-account-action-box .admin-save-button-container,
+.my-profile-action-box .admin-save-button-container {
+  margin: 0;
+}
+#block-exp-sp-my-profile-my-details .form-item-org-other-manager #edit-org-other-manager,
+#block-exp-sp-my-profile-my-details .form-item-org-other-organizations #edit-org-other-organizations {
+  width: 400px;
+}
+#user-basic-addedit-form textarea.addedit-edit-textarea,
+#user-basic-addedit-form input.addedit-edit-textfield {
+  width:521px;
+}
+#user-basic-addedit-form img {
+  display: none;
+}
+#user-basic-addedit-form .addedit-twocol-secondcol {
+  float:right;
+  padding-right:20px;
+}
+#user-basic-addedit-form #userbasic-custom-fields .addedit-new-field {
+  width:670px;
+}
+.addedit-customfields-wrapper .addedit-new-field-value .addedit-form-cancel-container-actions {
+  float: left;
+}
+#organization-addedit-form .add-class-button .admin-custom-field-addbtn-middle-bg {
+  padding: 0;
+}
+#modal-content #organization-addedit-form .addedit-form-cancel-container-actions {
+  margin-right: 34px;
+}
+#organization-addedit-form .addedit-customfields-wrapper .addedit-new-field-value .addedit-edit-textarea {
+  width: 389px;
+}
+#user-basic-addedit-form .addedit-left-col {
+  width: 97%;
+  padding-left: 15px;
+}
+#organization-addedit-form #two-col-row-type_costcenter img,
+#organization-addedit-form #two-col-row-parent_contactperson img {
+  float: left;
+}
+#catalog-class-basic-addedit-form-container #admin-data-grid .admin_add_multi_search_container .admin-pagination-search-go,
+#catalog-class-basic-addedit-form-container #admin-data-grid .admin_add_multi_search_container {
+  float: left;
+}
+#catalog-class-basic-addedit-form-container .enrolled-selection {
+  margin-top: -12px;
+}
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .enrolled-status ul.sub-menu {
+  margin-top: 20px;
+}
+#location-basic-addedit-form #two-col-row-loc_state_disp img {
+  float: left;
+}
+
+.popups-container #program-addedit-form input.addedit-edit-datefield + img {
+  top: 4px;
+}
+
+#program-tp-basic-addedit-form-container .addedit-new-field-traninig-program-expires {
+  width: auto;
+}
+.popups-container #program-addedit-form .addedit-new-field-two-col .addedit-edit-dropdown {
+  margin-top: 2px;
+  height: 21px;
+}
+#tp-custom-fields .addedit-new-field-title {
+  padding-top: 1px;
+}
+.popups-container #program-addedit-form .addedit-customfields-wrapper .addedit-new-field-value .addedit-edit-textarea {
+  height: 17px;
+  width: 389px;
+}
+#edit-lang-dropdown-select_title {
+  width: 70px;
+}
+.tag-details-row .form-item .admin-addedit-tags-ac-input {
+  width: 97%;
+}
+.tag-fieldset-wrapper .tag-details-row table + table {
+  width: 38%;
+}
+#ctools-face-table {
+  min-width: auto;
+} 
+.my-forgot-pass-frm .admin-save-button-container {
+  float:none;
+}
+#comments-pane .fieldset-wrapper .form-item-panes-comments-comments textarea {
+  width: 956px;
+}
+#cart-form-pane #cart-form-buttons .leaner-shopping-action-wrapper .addedit-form-cancel-container-actions {
+  width: 209px;
+}
+/* ONLY FOR COURSE/CLASS WIDGET */
+#catalog-class-basic-addedit-form-container .crs-tab-titles-container {
+  position:relative;
+  padding-bottom:25px;	
+}
+#two-col-row-lang_code_status_status_temp select.addedit-edit-delivery_type {
+  width:176px;
+}
+#catalog-class-basic-addedit-form-container .addedit-new-field-two-col .addedit-edit-dropdown {
+  width:115px;
+}
+.qtip .qtip-tip {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/bubble_arrow.png") no-repeat -1px 5px;
+  margin-left:-32px;
+}
+.edit-class-list .admin-add-edit-button {
+  margin:15px 45px 0px 0px;
+}
+#access-control .mro ul.sub-menu { display: none; position: absolute; z-index: 1000; border: 1px solid #ececec; top:18px; left:0px;}
+
+body .admin-popup-course-class-with-scroll {
+  height: auto; 
+  overflow: hidden;
+  width:850px;
+}
+#access-control .admin-access-jobrole-field {
+  width:238px;
+  border-radius:0px;
+  border-left:1px solid #666666;
+  border-right:1px solid #666666;
+  border-top:1px solid #666666;
+  border-bottom:1px solid #cccccc;
+}
+#access-control #jobroles,
+#access-control #usertype {
+  margin-top: 1px;
+}
+#my-team-dialog .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+  margin: 2px 0px;
+}
+.ui-dialog-content #paintCatalogHeader .search-cat-keyword {
+  top: 12px;
+  right: 10px;
+}
+.catalog-class-basic-addedit-form-disp .admin-datagrid-session-with-addanother #admin-addedit-session-ilt-details-wrapper {
+  margin-left: -8px;
+}
+.modal-content #survey_attach_questions_dt .ac_input {
+  width: 63%;
+  margin-left: -6px;
+}
+.admin-datagrid-session-with-addanother #admin-addedit-session-vc-details-wrapper .admin-session-label-delete .form-item input {
+  width: 187px;
+}
+#survey-question-basic-addedit-form .catalog-pub-add-list .save-pub-unpub-sub-menu input,
+#banner-basic-addedit-form .catalog-pub-add-list .save-pub-unpub-sub-menu input,
+#location-basic-addedit-form .catalog-pub-add-list .save-pub-unpub-sub-menu input,
+#content-addedit-form .catalog-pub-add-list .save-pub-unpub-sub-menu input,
+#notification-basic-addedit-form .catalog-pub-add-list .save-pub-unpub-sub-menu input {
+  width: 110px;
+}
+.addedit-left-col .addedit-form-main-container {
+  float: none;
+}
+.admin-popup-container #program-addedit-form + .addedit-addl-form-title {
+  position: static;
+}
+.catalog-course-basic-addedit-form-container .catalog-pub-add-list li input {
+  width: 130px;
+  height: 18px;
+  z-index: 1000;
+}
+.catalog-course-basic-addedit-form-container .catalog-pub-add-list li.cancelledandsave input {
+  width: 135px;
+}
+.catalog-course-basic-addedit-form-container .catalog-pub-add-list li.completedandsave input {
+  height: 10px;
+}
+#attach_course_dt .edit-attachcourse-list .attachcourse-table-heading {
+	margin-top: 15px;
+}
+.region .block-exp-sp-my-profile {
+    margin-top: 10px;
+}
+#add-picture-button .pipe-type {
+ line-height: 23px;
+}
+.del-link {
+  margin:-19px 0px 0px 69px;		
+}	
+.learner-forum-desc-container .admin-forum-action-link-container .form-text,
+.learner-forum-desc-container .admin-forum-add-topic-container .admin-forum-add-topic-list .form-text {
+  width:356px;
+}	
+.myskill-table .skillname-set {
+  width: 296px;
+}
+/* MY ACCOUNT OVERRIDE STYLE FOR IE 7  START HERE */
+.my-account-title .action-button input.my-account-cancel-button {
+  padding:0px 0px 0 0px;
+}
+.my-account-action-box {
+  right:368px;
+}
+/* MY ACCOUNT OVERRIDE STYLE FOR IE 7  END HERE */
+
+/* MY CLASS INSTRUCTOR STYLE  START */
+.mark-complete-wizard-popup-label span {
+  vertical-align: middle;
+  line-height:20px;
+}
+.mark-complete-wizard-popup-label input {
+  margin:0px 0px 0px 0px;
+}
+/* MY CLASS INSTRUCTOR STYLE  END */
+#drupalchat-wrapper #drupalchat .chatbox {
+  overflow: hidden;
+  width: 220px;
+}
+#chatpanel .subpanel_title_text .signin-signout-arrow,
+#chatpanel .subpanel_title_text .chatMinMaxBtn {
+  position: relative;
+  top: -30px;
+}
+#drupalchat #chatpanel .subpanel {
+  z-index: -1;
+}
+.my-profile-wrapper #myprofile-parent .my-profile-useraction-box .action-button {
+  width: 113px;
+}
+#exp-sp-my-skill-set-add-form #myskill-parent .prof-parent,
+#exp-sp-my-skill-set-add-form #myskill-parent .disp-parent {
+  float: left;
+  margin-top: 3px;
+}
+#exp-sp-my-skill-set-add-form #myskill-parent .disp-parent .disp-label {
+  width: 107px;
+}
+#narrow-search-results .paint-narrow-search-results #bubble-face-table .ui-jqgrid tr.ui-row-ltr td {
+  vertical-align: middle;
+}
+/* fix for ticket 0023136*/
+
+#catalog-admin-style .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-next {
+  margin-left: 27px;
+}
+.enroll-datatable-column2 {
+  width:11%;
+}
+/* fix for ticket 0023728*/
+.catalog-class-basic-addedit-form-disp .catalog-course-basic-addedit-action-disp ul li input.selected {
+  padding-left:11px;
+}
+/* fix for ticket 0023896*/
+.refer-course-holder .refer-class-table .input-text {
+  width: 237px;
+}
+/* fix for ticket 0023626 */
+.enroll-main-list {
+  width:73px;
+}	
+/*fix for ticket 0023837 */
+#addedit-account-details-pass-policy {
+  padding-top:130px;
+}
+#addedit-account-details-pass-policy #password-policy-restrictions-acc {
+  padding-left:5px;
+}
+/*fix for ticket 0023104 */
+#instructor-result-container .enroll-main-list {
+  width:auto;
+}

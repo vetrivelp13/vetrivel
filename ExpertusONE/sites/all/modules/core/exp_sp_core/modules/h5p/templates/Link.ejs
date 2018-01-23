@@ -1,0 +1,47 @@
+<%
+   
+	var urlStr = "";
+	try
+	{
+		
+		if(GLOBALPARAMS_H5P.action.params.length == 0)
+			urlStr = "";
+		else
+			urlStr = GLOBALPARAMS_H5P.action.params.linkWidget.url;
+	}catch(e){}
+	
+	
+	 if(GLOBALPARAMS_H5P.action.params.contenttype == "presentation")
+	{
+%>
+    <a id="control-close" class="qtip-close-button" onclick="closeH5PIcon(this)"></a>
+    <div class="e1_h5p_error" style="height:auto;margin-top: -17px;"></div>
+     <%
+    }
+    if(GLOBALPARAMS_H5P.action.params.title == undefined || GLOBALPARAMS_H5P.action.params.title == "undefined")
+    	GLOBALPARAMS_H5P.action.params.title = "";
+    %>
+
+
+<div class="field text h5peditor-interaction-label">
+	<label class="h5peditor-label-wrapper">
+		<span class="h5peditor-label h5peditor-required"><%=window.parent.Drupal.t('LBL3034')%>:</span>
+		<input class="h5peditor-text" id="titleid" type="text" value="<%=decodeURIComponent(GLOBALPARAMS_H5P.action.params.title)%>" maxlength="100">
+	</label>
+	<div class="h5p-errors"></div>
+	<div class="h5peditor-field-description"></div>
+</div>
+<div class="field text h5peditor-interaction-url" >
+	<label class="h5peditor-label-wrapper">
+		<span class="h5peditor-label h5peditor-required"><%=window.parent.Drupal.t('LBL611')%>:</span>
+   		<input class="h5peditor-text" id="urlid" type="text"  maxlength="255" value="<%=urlStr%>" >   
+		<span class="customlabelurl embed-msg-style"><%=window.parent.Drupal.t('MSG801')%></span>
+	</label>
+</div> 
+  
+   
+<script>
+ns.$(".h5p-image-radio-button-container").width("183");
+ns.$(".displayas").css("width","20px");
+vtip();
+</script>

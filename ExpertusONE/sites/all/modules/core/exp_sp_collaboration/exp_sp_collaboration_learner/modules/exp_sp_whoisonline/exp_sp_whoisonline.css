@@ -1,0 +1,126 @@
+#expertus-online-users {
+  min-height: 100px
+}
+#expertus-online-users .block-title {
+  text-indent: 10px
+}
+#expertus-online-users #expertus-online-users-list {
+  padding: 10px 10px 0px 10px;
+  background: #fff;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  min-height: 80px
+}
+#expertus-online-users #expertus-online-datatable-pager {
+  position: relative
+}
+#expertus-online-users #expertus-online-datatable-pager_center {
+  width: 100%;
+  float: right
+}
+#expertus-online-users #expertus-online-datatable-pager_center .ui-pg-table {
+  float: right
+}
+#expertus-online-users .ui-jqgrid .ui-pg-table {
+  position: static
+}
+#expertus-online-users #expertus-online-datatable-pager_left,
+#expertus-online-users #expertus-online-datatable-pager_right,
+#expertus-online-users #last_expertus-online-datatable-pager,
+#expertus-online-users #first_expertus-online-datatable-pager,
+#expertus-online-users #expertus-online-users-jqgrid_id { 
+  display: none
+}
+#expertus-online-users .ui-jqgrid .ui-separator,
+#expertus-online-users #expertus-online-datatable-pager,
+#expertus-online-users #gview_expertus-online-users-jqgrid .ui-state-default,
+#expertus-online-users #expertus-online-users-jqgrid .ui-state-hover {
+  border:0
+}
+#expertus-online-users #next_expertus-online-datatable-pager span,
+#expertus-online-users #prev_expertus-online-datatable-pager span,
+#expertus-online-users #expertus-online-datatable-pager,
+#expertus-online-users #expertus-online-users-jqgrid .ui-state-hover {
+  background: none
+}
+#expertus-online-users #prev_expertus-online-datatable-pager {
+  background: url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -91px -302px;
+  width: 24px;
+  height: 18px;
+  border: 0 none;
+  opacity: 8;
+  filter: Alpha(Opacity=100)
+}
+#expertus-online-users #next_expertus-online-datatable-pager {
+  background: url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -126px -302px;
+  width: 22px;
+  height: 18px;
+  padding-right: 8px;
+  border: 0;
+  opacity: 8;
+  filter: Alpha(Opacity=100)
+}
+#expertus-online-users .exp-whoisonline-user-rec {
+  padding: 5px 0;
+  border-bottom: 1px dotted #ccc
+}
+#expertus-online-users .exp-whoisonline-user-first-rec {
+  padding-top: 0
+}
+#expertus-online-users .exp-who-is-online-last-rec {
+  padding-bottom: 0;
+  border-bottom: 0
+}
+#expertus-online-users .expertus-no-online-users-msg {
+  background: #ffffff;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  width: 99.4%;
+  padding:12px 0 5px;
+  color: #999999;
+  text-align: center
+}
+#block-exp-sp-whoisonline-online h2.block-title {
+  text-transform: capitalize
+}
+/* New UI theme Override style */
+#page-container .most-active-user .profile-item .profile-image {
+  display: block;
+  float: left;
+  height: 35px;
+  width: 40px;	
+  padding-left: 10px
+}
+#page-container .most-active-user .profile-item .profile-image img {
+    cursor: pointer;
+    height: 35px;
+    width: 40px
+}
+#page-container .most-active-user .profile-item .profile-desc {
+    float: left;
+    padding: 4px 0 0 14px;
+    text-align: left;
+    width: 160px
+}
+#page-container .most-active-user .profile-item .user-name {
+    clear: both;
+    display: inline-block;
+    line-height: 1.2em;
+    padding: 0 0 3px;
+    text-decoration: none;
+    color: #474747;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase
+}
+#page-container #expertus-online-users .exp-whoisonline-user-rec {
+    border-bottom: 1px dotted #ededed;
+    padding: 22px 0
+}
+#page-container #expertus-online-users .exp-whoisonline-user-first-rec {
+    padding-top: 22px
+}
+#page-container #expertus-online-users .exp-who-is-online-last-rec {
+    border-bottom: 0;
+    padding-bottom: 12px
+}

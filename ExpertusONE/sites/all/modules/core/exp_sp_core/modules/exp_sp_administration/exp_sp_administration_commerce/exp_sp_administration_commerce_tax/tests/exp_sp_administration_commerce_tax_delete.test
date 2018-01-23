@@ -1,0 +1,79 @@
+<?php 
+
+class AdministrationTaxDeleteBase extends AdministrationTaxTestHelper
+{
+	public function deleteTaxTestCase($scope = 'all'){
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['taxDelete'];
+		} else {
+			$testCases = array($this->testcases['taxDelete'][$scope]);
+		}
+		
+		foreach($testCases as $test){
+			$taxTitle = $this->getTaxTitle($test['id']);
+			debug("Tax name to delete: " . $taxTitle);
+	
+			//drupalPost($path, $edit, $submit, $options, $headers, $form_html_id);
+			$taxId = $test['id'];
+			$deletePath = 'ajax/admincore/deleteprocessobject/' . $taxId . '/Tax';
+			$out = $this->drupalPost($deletePath, array(), t('Delete'));
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+	
+			$taxStatus = $this->getTaxStatus($test['id']);
+			debug("Tax status : " . $taxStatus);
+		}
+	
+	}
+}
+
+class AdministrationTaxDeleteAll extends AdministrationTaxDeleteBase
+{
+public static function getInfo() {
+		return array(
+				'name' => 'Administration - Tax - Delete - AllTest',
+				'description' => 'Module : exp_sp_administration_tax',
+				'group' => '1703 - Administration - Manage - Tax - Delete',
+		);
+	}
+
+	public function testTaxDeleteAll() {
+		$this->deleteTaxTestCase('all');
+		$this->manageAdminTax();
+	}
+}
+
+class AdministrationTaxDeleteCase1 extends AdministrationTaxDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Tax - Delete - US',
+				'description' => 'Module : exp_sp_administration_tax',
+				'group' => '1703 - Administration - Manage - Tax - Delete',
+		);
+	}
+
+	public function testTaxDeleteCase1() {
+		debug('testTaxDeleteCase1 called');
+		$this->deleteTaxTestCase('us');
+	}
+}
+
+class AdministrationTaxDeleteCase2 extends AdministrationTaxDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Tax - Delete - IN',
+				'description' => 'Module : exp_sp_administration_tax',
+				'group' => '1703 - Administration - Manage - Tax - Delete',
+		);
+	}
+
+	public function testTaxDeleteCase2() {
+		debug('testTaxDeleteCase2 called');
+		$this->deleteTaxTestCase('in');
+	}
+}
+
+?>

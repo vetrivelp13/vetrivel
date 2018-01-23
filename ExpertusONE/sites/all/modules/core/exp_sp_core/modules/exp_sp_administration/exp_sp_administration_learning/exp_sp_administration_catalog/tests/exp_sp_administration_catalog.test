@@ -1,0 +1,1219 @@
+<?php 
+/**
+ * Aministration Catalog Listing 
+ * @author Vincent
+ *
+ */
+class adminCatalogList extends ExpertusWebTestCase {
+	protected $group = 'Administration - Learning - Course/Class';
+	
+	protected $searchResultContent=null;
+	
+	protected $testcases = array();
+	
+	protected $crsCount = 0;
+	
+	protected $courseId;
+	
+	protected $classId;
+	
+	private $srcParam = array(
+		'title'=>'',		// Title base search
+		'dl_type'=>'',	// Delivery types pipe separated
+		'ob_type'=>'',	// TP tpes pipe separated
+		'all_mro_type'=>'',		// All available MRO types
+		'mro_type'=>'', 	// MRO type pipe separaed
+		'all_lg_type'=>'cre_sys_lng_eng|cre_sys_lng_gzh', 	// All available languages
+		'lg_type'=>'cre_sys_lng_eng', 	// Selected languages pipe separated
+		'price'=>'$0-$10000',		// Price fileter (min and max values separted by -)
+		'startdate'=>'',		// Start date mm-dd-yyyy
+		'enddate'=>'',			// End date mm-dd-yyyy
+		'location'=>'',			// Location search
+		'rating_type'=>'',		// Rating value pipe separated	
+		'all_jr_type'=>'',	// All available Job Role
+		'jr_type'=>'',		// Job Role search pipe separated
+		'all_cy_type'=>'',	// All available currency
+		'cy_type'=>'',		// Currency search pipe separated
+		'tag'=>'',			// Tag base search
+		'sortby'=>'',		//	Sort by option
+	);
+	
+	public static function getInfo() {
+    return array(
+      'name' => 'Course/Class Listing',
+      'description' => 'Catalog Administration, search course and class',
+      'group' => 'Administration - Learning - Course/Class',
+    );
+  }
+  
+  public function setUp(){
+  	// User Authentication
+  	$user = $this->getUserList(1);
+  	$usr = new stdClass();
+  	$usr->name =  $user[0]->username;
+  	$usr->pass_raw = 'welcome';
+  	$this->drupalLogin($usr);
+  	
+  	parent::setUp();
+  }
+  
+  public function testCatalogSearch(){
+  	$test = $this->getTestCases();
+  	$this->catalogSearch();
+  	//TODO: below search filter validation tests needs to be extend like learner catalog search
+  	foreach($test['filters'] as $tc){
+  		list($test,$msg,$grp) = $tc;
+  		$this->assertRaw($test,$msg,$grp);
+  	}
+  }
+  
+	protected function catalogSearch(){
+  	$this->setHttpReferer('administration/learning/catalog');
+  	// Get Main HTML content
+  	$this->drupalPost('administration/learning/catalog');
+		$content = $this->content;
+		
+		// Get Filters
+  	$this->drupalGetAJAX('administration/search-filter/catalog');
+  	$this->content = drupal_json_decode($this->content);
+  	
+  	//Update filters with existing response
+  	$replArray = array(
+  		'rendered_narrow_search_filters' => 'narrow-search',
+  		'rendered_main_div' => 'root-admin-results',
+  		'rendered_tab_content_main' => 'tab-content-main',
+  		'rendered_narrow_search_sortbar' => 'admin-maincontent_tab',
+  		'rendered_narrow_search_actionbar' => 'sort-bar-V2'
+  	);
+  	
+  	$this->updateSearchFilters($content, $replArray, 'div', 'tag', 'div' );
+		
+		$this->displayTagsById('narrow-search');
+		$this->displayTagsById('root-admin-results');
+		
+		//Get search results
+		$this->getCatalogList();
+  }
+
+  /**
+   * List admin catalog search results
+   * @param $opt
+   * @return unknown_type
+   */
+  protected function getCatalogList($opt = array()){
+  	$opt = array_merge($this->basicParam,$opt);
+  	$content = $this->content;
+  	$srcRc = $this->drupalGetAJAX('administration/learning/catalog/search/all/',array('query'=>$opt));
+  	$this->updateSearchResults($content,$srcRc,'narrow-search-results-holder');
+  }
+  
+/**
+   * Create class
+   * @param $testc 
+   * 		String - the test name to pickup 
+   * @return unknown_type
+   */
+  protected function classCreation($testc=''){
+  	//Get course id
+		$path = '//*[@id="qtip_addclass_visible_disp__cre_sys_obt_cls"]';
+  	$addClassObj = $this->getQtipAttributes($path,'onmousedown');
+		
+  	//Add qtip popup for class
+  	$qtipDef = array(
+  		'tipWidth'=>$addClassObj['wBubble'],
+  		'tipTop'=>787,
+  		'tipLeft'=>139.767,
+  		'tipId'=>$addClassObj['catalogVisibleId'],
+  		'tipObjectId'=>$addClassObj['courseId'],
+  		'tipTableWidht'=>373,
+  		'tipContentId'=>$addClassObj['popupDispId'],
+  		'tipEntityType'=>'cre_sys_obt_cls',
+  		'tipClass'=>'qtip-parent',
+  		'tipPos'=>'bottomRight'
+  		
+  	);
+
+  	$this->addQtipModel($qtipDef);
+  	
+  	// Keep final content including qtip popup for multiple test
+  	$qtipContent = $this->content;
+  	
+  	$testc = empty($testc) ? 'singleClassCreate' : $testc;
+  	// Test start
+  	foreach($this->testcases[$testc] as $test){
+  		//Reset content with the qtip 
+  		$this->content = $qtipContent;
+  		
+	  	//Get empty form
+	  	$post_field = array(
+											'wrapper'=>'paintContent'.$addClassObj['popupDispId']);
+	  	
+	  	$out = $this->drupalPostAJAX(null,$edit,'Add Class','?q='.$addClassObj['url'],array(),array(),'',$post_field);
+	  	
+	  	$this->verbose('Class Empty Form: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+	  	// Get Form id and wrapper id
+			$formIds = $this->xpath('//*[@id="paintContent'.$addClassObj['popupDispId'].'"]/*[@class="addedit-form-wrapper"]/form');
+  		$formId = (string) $formIds[0]['id'];
+  		$wrapIds = $this->xpath('//*[@id="paintContent'.$addClassObj['popupDispId'].'"]/*[@class="addedit-form-wrapper"]');
+  		$wrapId = (string) $wrapIds[0]['id'];
+	  	
+  		// Save form
+	  	$param = array(
+									"form_id"=>"exp_sp_administration_catalog_class_addedit_form",
+									"_triggering_element_name"=>"save",
+									"_triggering_element_value"=>"Save",
+							);
+	  	$post_field = array('submit'=>$param,	'wrapper'=>$wrapId);
+			//expDebug::dPrint(" POST FIELDS  --- ".print_r($post_field,true),1);
+	  	$out = $this->drupalPostAJAX(null,$test['input'],'Save','?q=system/ajax',array(),array(),$formId,$post_field);
+	  	
+	  	$this->verbose('Class Save: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+  		// Check any validation error occurs 
+	  	$error = '';
+	  	$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+	  	foreach($isError as $err){
+	  		$error .= (string) $err[0]->span;
+	  	}
+	  	
+	  	// General response validation
+	  	$this->assertResponse(200,'Form Repainted successfully');
+	  	$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+	  	$webError = "Website encountered an unexpected error";
+	  	$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+	  	
+	  	foreach($test['results'] as $str=>$msg){
+	  		$this->assertText(t($str),$msg,'catalog_admin');
+	  	}
+	  	// TODO: test needs to be extend to validate all possible use cases.
+	  	
+	  	if($test['info']['session']==true){
+		  	
+		  	// Session/Content creation or associate
+		  	switch($test['input']['delivery_type']){
+		  		case 'lrn_cls_dty_ilt':
+		  			$this->ILTVCSessionCreate('','ILT');
+		  			break;
+		  		case 'lrn_cls_dty_vcl':
+		  			$this->ILTVCSessionCreate('','VC');
+		  			break;
+		  		case 'lrn_cls_dty_wbt':
+		  			$this->WBTVODcontentAssociate('','WBT');
+		  			break;
+		  		case 'lrn_cls_dty_vod':
+		  			$this->WBTVODcontentAssociate('','VOD');
+		  			break;
+		  	}
+	  	}
+	  	
+	  	if($test['info']['publish']==true){
+		  	// Publish(Show in catalog) the class
+		  	// Get Details page
+		  	
+		  	// Get Form id and wrapper id
+				$formIds = $this->xpath('//*[@id="paintContent'.$addClassObj['popupDispId'].'"]//*[@class="addedit-form-wrapper"]/form');
+	  		$formId = (string) $formIds[0]['id'];
+	  		$wrapIds = $this->xpath('//*[@id="paintContent'.$addClassObj['popupDispId'].'"]//*[@class="addedit-form-wrapper"]');
+	  		$wrapId = (string) $wrapIds[0]['id'];
+	  		
+		  	$param = array(
+										"form_id"=>"exp_sp_administration_catalog_class_addedit_form",
+										"_triggering_element_name"=>"details",
+										"_triggering_element_value"=>"Details",
+		  							"attr_action" => 'sessiondetail',
+								);
+		  	$post_field = array('submit'=>$param,	'wrapper'=>$wrapId);
+				$edit = array(
+					"entity_value" => 'cre_sys_obt_cls'
+				);
+				
+		  	$out = $this->drupalPostAJAX(null,$edit,null,'?q=system/ajax',array(),array(),$formId,$post_field);
+		  	
+		  	$this->verbose('Class Detail page: ' . $this->getUrl() .
+		                         '<hr />' . $this->content);
+		  	
+	  		// Check any validation error occurs 
+		  	$error = '';
+		  	$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+		  	foreach($isError as $err){
+		  		$error .= (string) $err[0]->span;
+		  	}
+		  	
+		  	// General response validation
+		  	$this->assertResponse(200,'Form Repainted successfully');
+		  	$txt = 'updated successfully';
+		  	$this->assertText(t($txt),'Updated changes successfully','catalog_admin');
+		  	$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+		  	$webError = "Website encountered an unexpected error";
+		  	$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+		  	
+		  	// Save form (activate)
+		  	$param = array(
+										"form_id"=>"exp_sp_administration_catalog_class_addedit_form",
+										"_triggering_element_name"=>"saveandshow",
+										"_triggering_element_value"=>"Save and Show in Catalog",
+								);
+				// Get Form id and wrapper id
+				$formIds = $this->xpath('//*[@id="paintContent'.$addClassObj['popupDispId'].'"]//*[@class="addedit-form-wrapper"]/form');
+	  		$formId = (string) $formIds[0]['id'];
+	  		$wrapIds = $this->xpath('//*[@id="paintContent'.$addClassObj['popupDispId'].'"]//*[@class="addedit-form-wrapper"]');
+	  		$wrapId = (string) $wrapIds[0]['id'];
+	  		//expDebug::dPrint("FORM ID ".$formId." -- Wrapper id - ".$wrapId,1);
+		  	$post_field = array('submit'=>$param,	'wrapper'=>$wrapId);
+
+		  	$out = $this->drupalPostAJAX(null,null,'Save','?q=system/ajax',array(),array(),$formId,$post_field);
+		  	
+		  	$this->verbose('Class Activate: ' . $this->getUrl() .
+		                         '<hr />' . $this->content);
+	  		// Check any validation error occurs 
+		  	$error = '';
+		  	$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+		  	foreach($isError as $err){
+		  		$error .= (string) $err[0]->span;
+		  	}
+		  	
+		  	// General response validation
+		  	$this->assertResponse(200,'Form Repainted successfully');
+		  	$txt = 'updated successfully';
+		  	$this->assertText(t($txt),'Updated changes successfully','catalog_admin');
+		  	$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+		  	$webError = "Website encountered an unexpected error";
+		  	$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+	  	}
+  	} // End of class creation test case
+  }
+  
+  protected function WBTVODcontentAssociate($test='',$type){
+  	$contantbase = $this->content;
+  	$testc = !empty($test) ? $test : ($type == 'WBT' ? 'singleWBTlesson' : 'singleVODlesson' );
+  	foreach($this->testcases[$testc] as $tc){
+  		//Get Content List
+  		$formIds = $this->xpath('//*[@id="paintContentqtip_addclass_visible_disp__cre_sys_obt_cls"]//*[@class="addedit-form-wrapper"]/form');
+	  	$formId = (string) $formIds[0]['id'];
+
+	  	$param = array(
+									"form_id"=>"exp_sp_administration_catalog_class_addedit_form",
+									"_triggering_element_name"=>"Add content",
+									"_triggering_element_value"=>"Add Content",
+							);
+	  	$post_field = array('submit'=>$param,	'wrapper'=>'admin-data-grid');
+
+	  	$out = $this->drupalPostAJAX(null,array(),'Add content','?q=system/ajax',array(),array(),$formId,$post_field);
+	  	$this->verbose('List Contents: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+
+	  	$formIds = $this->xpath('//*[@id="paintContentqtip_addclass_visible_disp__cre_sys_obt_cls"]//div[@class="catalog-course-basic-addedit-action-disp"]');
+	  	$divId = (string) $formIds[0]['id'];
+
+	  	$clsId = explode('-',$divId);
+	  	
+	  	//expDebug::dPrint("Content list $url ".print_r($clsId,1),1);
+	  	$bParam = $this->basicParam;
+	  	$gUrl = 'administration/multiselect-grid/edit/content//'.$clsId[7].'/cre_sys_obt_cls/0';
+  		$content = $this->content;
+  		$srcRc = $this->drupalGetAJAX($gUrl,array('query'=>$bParam));
+  		//expDebug::dPrint("Content list 2 $gUrl -- ".print_r($srcRc,1),1);
+  		
+  		$wraper = '//*[@id="datagrid-container-content-'.$clsId[7].'-cre_sys_obt_cls"]';
+  		//expDebug::dPrint("Content list 3 ".print_r($wraper,1),1);
+  		$flist = array(
+  			'code'=>'Title',
+  			'type_name'=>'Type',
+  			'total_lesson'=>'Lesson',
+  			'max_attempts'=>array("Attempts"=>'<input type="text" onblur="$(\'body\').data(\'mulitselectdatagrid\').setContentAttempts(this);" onkeypress="return $(\'body\').data(\'mulitselectdatagrid\').onlyNumbers(event);" size="5" id="content-maxattempt-{#id#}" name="content-maxattempt-{#id#}" class="input-box-rounded-corner">'),
+  			'validity_days'=>array('Validity(days)'=>'<input type="text" onkeypress="return $(\'body\').data(\'mulitselectdatagrid\').onlyNumbers(event);" size="5" id="content-validitydays-{#id#}" name="content-validitydays-{#id#}" class="input-box-rounded-corner">'),
+  			'Action' => array('MultiselectCheck' => '<input type="checkbox" name="multiselect-singlecheck-content-'.$clsId[7].'-cre_sys_obt_cls_{#MultiselectCheck#}" value="{#MultiselectCheck#}">',
+  		  									'ShowDelete' => '')
+  		);
+  		$this->updateGrid($content,$flist,$srcRc,$wraper);
+	  	$this->verbose('Render grid: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	//Save Content 
+  		$formIds = $this->xpath('//*[@id="paintContentqtip_addclass_visible_disp__cre_sys_obt_cls"]//*[@class="addedit-form-wrapper"]/form');
+	  	$formId = (string) $formIds[0]['id'];
+
+	  	//SET input values to the form elements
+	  	$inputs['hidden_idlist_content-'.$clsId[7].'-cre_sys_obt_cls'] = $tc['input']['id'];
+	  	$cids = explode(',',$tc['input']['id']);
+	  	$ainputs = array();
+  		foreach($cids as $i=>$c){
+	  		if(isset($tc['input']['attempt']) && !empty($tc['input']['attempt'])){
+		  		$attempts = explode(',',$tc['input']['attempt']);
+		  		$inputs['content-maxattempt-'.$c] = $attempts[$i];
+		  		$ainputs['content-maxattempt-'.$c.'-hidden'] = $attempts[$i];
+		  	}
+  			if(isset($tc['input']['validity']) && !empty($tc['input']['validity'])){
+		  		$validites = explode(',',$tc['input']['validity']);
+		  		$inputs['content-validitydays-'.$c] = $validites[$i];
+		  	}
+	  	}
+	  	
+	  	$param = array(
+									"form_id"=>"exp_sp_administration_catalog_class_addedit_form",
+									"_triggering_element_name"=>"set-content",
+									"_triggering_element_value"=>"Add Content",
+							);
+			$param = array_merge($param,$ainputs);
+	  	$post_field = array('submit'=>$param,	'wrapper'=>'admin-data-grid');
+	  	
+	  	$out = $this->drupalPostAJAX(null,$inputs,'Attach content','?q=system/ajax',array(),array(),$formId,$post_field);
+	  	$this->verbose('Save Selected Contents: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+	  	// List saved content
+	  	/*$formIds = $this->xpath('//*[@id="paintContentqtip_addclass_visible_disp__cre_sys_obt_cls"]//div[@class="catalog-course-basic-addedit-action-disp"]');
+	  	$divId = (string) $formIds[0]['id'];
+
+	  	$clsId = explode('-',$divId);*/
+	  	
+	  	$bParam = $this->basicParam;
+	  	$gUrl = 'administration/multiselect-grid/view/content//'.$clsId[7].'/cre_sys_obt_cls/'.$tc['input']['id'];
+  		$content = $this->content;
+  		$srcRc = $this->drupalGetAJAX($gUrl,array('query'=>$bParam));
+  		//expDebug::dPrint("Content list 2 $gUrl -- ".print_r($srcRc,1),1);
+  		
+  		$wraper = '//*[@id="datagrid-container-content-'.$clsId[7].'-cre_sys_obt_cls"]';
+  		//expDebug::dPrint("Content list 3 ".print_r($wraper,1),1);
+  		$flist = array(
+  			'code'=>'Title',
+  			'type_name'=>'Type',
+  			'total_lesson'=>'Lesson',
+  			'max_attempts'=>"Attempts",
+  			'validity_days'=>"Validity(days)",
+  			'Action' => array('MultiselectCheck',
+  		  									'ShowDelete' )
+  		);
+  		$this->updateGrid($content,$flist,$srcRc,$wraper);
+	  	$this->verbose('Render grid: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+  	}
+  }
+  /**
+   * Create ILT/VC Session for a class
+   * @param $test 
+   * 		String - the test name to pickup 
+   * @param $type String
+   * 		Session type ILT or VC
+   * @return unknown_type
+   */
+  protected function ILTVCSessionCreate($test='',$type){
+  	//Get Add class details
+  	$path = $type == 'ILT' ? '//*[@class="add_session_popup"]//a' : '//li[@id="lrn_cls_vct_exp"]';
+  	//expDebug::dPrint("PATH -- ".$path,1);
+  	$tipAtr = $this->getQtipAttributes($path,'onclick');
+  	//expDebug::dPrint("ATTRS -- ".print_r($tipAtr,1),1);
+  	//Add qtip popup for class
+  	$qtipDef = array(
+  		'tipWidth'=>$tipAtr['wBubble'],
+  		'tipTop'=>0,
+  		'tipLeft'=>-208,
+  		'tipId'=>$tipAtr['catalogVisibleId'],
+  		'tipObjectId'=>$tipAtr['entityId'],
+  		'tipTableWidht'=>480,
+  		'tipContentId'=>$tipAtr['popupDispId'],
+  		'tipEntityType'=>$tipAtr['entityType'],
+  		'tipClass'=>'admin-qtip-access-parent',
+  		'tipPos'=>'tipfaceMiddleRight'
+  		
+  	);
+  	
+  	$this->addQtipModel2($qtipDef,$path);
+  	$this->verbose('Render grid: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+  	$testc = !empty($test) ? $test : ($type == 'ILT' ? 'singleILTsession' : 'singleVCsession' );
+  	foreach($this->testcases[$testc] as $tc){
+  		//Get empty form
+	  	$post_field = array('wrapper'=>'paintContent'.$qtipDef['tipContentId']);
+	  	
+	  	$out = $this->drupalPostAJAX(null,$edit,'Add Session','?q='.$tipAtr['url'],array(),array(),'',$post_field);
+	  	
+	  	$this->verbose('Session Empty Form: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	// Get Form id and wrapper id
+			$formIds = $this->xpath('//*[@id="paintContentqtip_addclass_visible_disp__cre_sys_obt_cls"]//*[@class="addedit-form-wrapper"]/form');
+  		$formId = (string) $formIds[0]['id'];
+  		$wrapIds = $this->xpath('//*[@id="paintContentqtip_addclass_visible_disp__cre_sys_obt_cls"]//*[@class="addedit-form-wrapper"]');
+  		$wrapper = (string) $wrapIds[0]['id'];
+	  	$param = array(
+									"form_id"=>"add_class_session_html",
+									"_triggering_element_name"=>"set-session",
+									"_triggering_element_value"=>"Done",
+							);
+	  	$post_field = array('submit'=>$param,	'wrapper'=>'catalog-class-basic-addedit-form-container');
+
+	  	$out = $this->drupalPostAJAX(null,$tc['input'],'Done','?q=system/ajax',array(),array(),$formId,$post_field);
+	  	$this->verbose('Session Save: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+	  	//Load session grid
+	  	$urlSplit = explode('/',$tipAtr['url']);
+	  	$bParam = $this->basicParam;
+	  	$bParam['sidx'] = 'start_date';
+	  	$bParam['sord'] = 'asc';
+	  	$gUrl = 'administration/multiselect-grid/view/session//'.$urlSplit[3].'/cre_sys_obt_cls/0';
+  		$content = $this->content;
+  		$srcRc = $this->drupalGetAJAX($gUrl,array('query'=>$bParam));
+  		
+  		$wraper = '//*[@id="datagrid-container-session-'.$urlSplit[3].'-cre_sys_obt_cls"]';
+  		$flist = array(
+  			'title'=>'Session Name',
+  			'start_date'=>'Starts On',
+  			'start_time'=>'From',
+  			'end_time'=>"To",
+  			'full_name'=>'Instrctor',
+  			'Action' => array('Edit','More','Delete')
+  		);
+  		$this->updateGrid($content,$flist,$srcRc,$wraper);
+	  	$this->verbose('Render grid: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+  	}
+  	
+  }
+  
+  /**
+   * Create Course
+   * @param $testc 
+   * 		String - the test name to pickup 
+   * @return unknown_type
+   */
+  protected function createCourse($testc=''){
+		// Add ctool model container 
+  	$ctoolModel = array(
+  		'modelWidth' => 890,
+  		'modelClass' => 'ctool-login-modal',
+  		'modelTitle' => 'Course',
+  		'contentWidth' => 845,
+  		'contentMhight' => 335,
+  		'outerHeight' => 479,
+  		'outerWidth' => 890,
+  		'blockHeight' => 1232,
+  		'blockWidth' => 1343,
+  		'modelTop' => 150,
+  		'modelLeft' => 226.5,
+  		'docHeight' => 1232,
+  		'docWidth' => 1343
+  	);
+  	$this->addCtoolModelContent($ctoolModel);
+  	
+  	// Keep content with ctool model for multiple test
+  	$modelContent = $this->content;
+  	
+  	$testc = empty($testc) ? $this->testcases['singleCourseCreate'] : $testc;
+  	// Start test
+  	foreach($testc as $test){
+  		//Reset content with the ctool model
+  		$this->content = $modelContent;
+  		
+	  	//Get empty form
+	  	$post_field = array(
+											'wrapper'=>'paint-narrow-search-results');
+	  	
+	  	$out = $this->drupalPostAJAX(null,$edit,'Save','?q=administration/learning/course-class/ajax/addedit',array(),array(),'',$post_field);
+	  	
+	  	$this->verbose('Empty Course Form: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	
+	  	// Do General validations
+	  	$this->assertResponse(200,'Form Rended successfully');
+	  	$webError = "Website encountered an unexpected error";
+	  	$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+	  	
+	  	//If Compliance
+	  	if($test['input']['course_compliance']==1){
+	  		// Load compliance details
+		  	$param = array(
+										"form_id"=>"exp_sp_administration_catalog_course_addedit_form",
+										"_triggering_element_name"=>"course_compliance",
+								);
+				//expDebug::dPrint("TEST CASE COURSE CREATE ".print_r($test,1),1);
+		  	$post_field = array('submit'=>$param,	'wrapper'=>'catalog-course-basic-addedit-form');
+		  	$out = $this->drupalPostAJAX(null,$test['input'],'Save','?q=system/ajax',array(),array(),'',$post_field);
+		  	$this->verbose('Course Save: ' . $this->getUrl() .
+		                         '<hr />' . $this->content);
+			  	//Check if any error thrown 
+		  	$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+		  	$error = '';
+		  	if(sizeOf($isError) > 0){
+		  		$error = (string) $isError[0];
+		  	}
+		  	$this->assertResponse(200,'Form Repainted successfully');
+		  	$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+		  	$webError = "Website encountered an unexpected error";
+		  	$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+		  	
+		  	// Check if all the fields are populated for compliance course
+		  	
+		  	// Check lable Complete By present or not
+		  	$this->assertText(t('Complete By'),'Completed by lable found', 'catalog_admin');
+		  	
+		  	// Check Days and Date radio buttons present or not for compliance completed
+		  	$chBox = $this->xpath('//input[@type="radio" and @name="compliance_completed" and @value="date"]')? TRUE: FALSE;
+		  	// $chBoxTxt = $this->xpath('//div[@class="form-item-compliance-completed"]/label');
+		  	$this->assertTrue($chBox,'Complaince completed radio botton for completed DATE found','catalog_admin');
+		  	
+		  	$chBox = $this->xpath('//input[@type="radio" and @name="compliance_completed" and @value="days"]')? TRUE: FALSE;
+		  	$this->assertTrue($chBox,'Complaince completed radio botton for completedDAYS found','catalog_admin');
+		  	
+		  	// Check Days and Date radio button present or not for compliance validity
+		  	$chBox = $this->xpath('//input[@type="radio" and @name="compliance_validity" and @value="date"]')? TRUE: FALSE;
+		  	$this->assertTrue($chBox,'Complaince completed radio botton for validity DATE found','catalog_admin');
+		  	
+		  	$chBox = $this->xpath('//input[@type="radio" and @name="compliance_validity" and @value="days"]')? TRUE: FALSE;
+		  	$this->assertTrue($chBox,'Complaince completed radio botton validity DAYS found','catalog_admin');
+	  	}
+	  	
+	  	// Save form
+	  	$param = array(
+									"form_id"=>"exp_sp_administration_catalog_course_addedit_form",
+									"_triggering_element_name"=>"saveandpublish",
+									"_triggering_element_value"=>"Save and Publish",
+							);
+
+	  	$post_field = array('submit'=>$param,	'wrapper'=>'catalog-course-basic-addedit-form');
+	  	$out = $this->drupalPostAJAX(null,$test['input'],'Save','?q=system/ajax',array(),array(),'',$post_field);
+	  	$this->verbose('Course Save: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+	  		  	
+	  	//Check if any error thrown 
+	  	$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+	  	$error = '';
+	  	if(sizeOf($isError) > 0){
+	  		$error = (string) $isError[0];
+	  	}
+	  	$this->assertResponse(200,'Form Repainted successfully');
+	  	$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+	  	$webError = "Website encountered an unexpected error";
+	  	$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+	  	// Validation
+	  	//expDebug::dPrint("COURSE TEST RESULT CASE ".print_r($test['results'],1),1);
+  		foreach($test['results'] as $str=>$msg){
+	  		$this->assertText(t($str),$msg,'catalog_admin');
+	  	}
+  	}
+  }
+  
+  /**
+   * Get Location details
+   * @param $opt
+   * 		(string) - Field name should be return, if omitted all the fields will be return
+   * @param $con
+   * 		(string) - Additional condition if anything needs to be added
+   * @return (string/array) - result field / result set 
+   */
+  protected function getLocation($opt='',$con = ''){
+  	$sel = db_select('slt_location','loc');
+  	$sel->addField('loc','name','name');
+  	$sel->addField('loc','id','id');
+  	$sel->addField('loc','timezone','timezone');
+  	$sel->condition('loc.status','lrn_res_loc_atv','=');
+  	if(!empty($con))
+  		$sel->where($con);
+  	$rst = $sel->execute()->fetchAll();
+
+  	if(!empty($opt)){
+  		return $rst[0]->$opt;
+  	}
+  	return $rst;
+  }
+  
+	protected function editCourse(){
+  	$this->courseId = $this->id[0];
+  	// Get course id (encrypted) to edit
+  	$crsId = core_encrypt($this->courseId);
+  	
+  	// Get URL for a course to edit
+  	$path = '//a[@id="visible-ctools-'.$crsId.'"]';
+  	//$xpath = new DOMXPath($dom);
+  	$node = $this->xpath($path);
+  	$url = (string) $node[0]['href'];
+  	
+  	$url = str_replace('nojs','ajax',$url);
+  	
+  	// Add ctool model container 
+  	$ctoolModel = array(
+  		'modelWidth' => 890,
+  		'modelClass' => 'ctool-login-modal',
+  		'modelTitle' => 'Course',
+  		'contentWidth' => 845,
+  		'contentMhight' => 335,
+  		'outerHeight' => 479,
+  		'outerWidth' => 890,
+  		'blockHeight' => 1232,
+  		'blockWidth' => 1343,
+  		'modelTop' => 150,
+  		'modelLeft' => 226.5,
+  		'docHeight' => 1232,
+  		'docWidth' => 1343
+  	);
+  	$this->addCtoolModelContent($ctoolModel);
+  	
+  	// Keep content with ctool model for multiple test
+  	$modelContent = $this->content;
+  	$testc = empty($testc) ? 'singleCourseEdit' : $testc;
+  	// Start test
+  	foreach($this->testcases[$testc] as $test){
+  		//Reset content with the ctool model
+  		$this->content = $modelContent;
+  		
+	  	//Get edit form
+	  	$post_field = array(
+											'wrapper'=>'paint-narrow-search-results');
+	  	
+	  	$out = $this->drupalPostAJAX(null,$edit,'Save',$url,array(),array(),'',$post_field);
+	  	
+	  	// Load class list
+	  	$url = '?q=administration/class-pagination/'.$crsId.'/0/0&_search=false&nd=1465187685290&rows=5&page=1&sidx=&sord=asc';
+
+	  	$post_field = array(
+											'wrapper'=>'admin-course-class-list-pagination-wrapper');
+	  	$content = $this->content;
+	  	$out = $this->drupalPostAJAX(null,$edit,'Save',$url,array(),array(),'',$post_field);
+	  	
+	  	//admin-course-class-list-ZZ34ZZ9b7d44de2d21cd00-pagination
+	  	
+  	 	$this->updateSearchResults($content,$out,'admin-course-class-list-'.$crsId.'-pagination');
+	  	
+	  	$this->verbose('Empty Course Form: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	
+	  	// Do General validations
+	  	$this->assertResponse(200,'Form Rended successfully');
+	  	$webError = "Website encountered an unexpected error";
+	  	$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+	  	
+	  	// Save form
+	  	$param = array(
+									"form_id"=>"exp_sp_administration_catalog_course_addedit_form",
+									"_triggering_element_name"=>"saveandpublish",
+									"_triggering_element_value"=>"Save",
+							);
+	  	$post_field = array('submit'=>$param,	'wrapper'=>'catalog-course-basic-addedit-form');
+	  	$out = $this->drupalPostAJAX(null,$test,'Save','?q=system/ajax',array(),array(),'',$post_field);
+	  	$this->verbose('Course Save: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+	  		  	
+	  	//Check if any error thrown 
+	  	$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+	  	$error = '';
+	  	if(sizeOf($isError) > 0){
+	  		$error = (string) $isError[0];
+	  	}
+	  	$this->assertResponse(200,'Form Repainted successfully');
+	  	$txt = 'updated successfully';
+	  	$this->assertText(t($txt),'Updated changes successfully','catalog_admin');
+	  	$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+	  	$webError = "Website encountered an unexpected error";
+	  	$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+  	}
+  }
+  
+/**
+   * Edit class
+   * @param $testc 
+   * 		String - the test name to pickup 
+   * @return unknown_type
+   */
+  protected function classEdit($testc=''){
+  	//Get Class Id
+  	$clssel = db_select('slt_course_class','cls');
+  	$clssel->addField('cls','id');
+  	$clssel->addField('cls','title');
+  	$clssel->condition('cls.status','lrn_cls_sts_del','!=');
+  	$clssel->condition('cls.course_id',$this->courseId,'=');
+  	$clsDt = $clssel->execute()->fetchAll();
+  	
+  	$clsId = core_encrypt($clsDt[0]->id);
+		$path = '//input[@id="edit-class-list-button-'.$clsId.'"]';
+  	
+		$addClassObj = $this->getQtipAttributes($path,'onmousedown');
+  	//Add qtip popup for class
+  	$qtipDef = array(
+  		'tipWidth'=>$addClassObj['wBubble'],
+  		'tipTop'=>787,
+  		'tipLeft'=>139.767,
+  		'tipId'=>$addClassObj['catalogVisibleId'],
+  		'tipObjectId'=>$addClassObj['courseId'],
+  		'tipTableWidht'=>373,
+  		'tipContentId'=>$addClassObj['popupDispId'],
+  		'tipEntityType'=>'cre_sys_obt_cls',
+  		'tipClass'=>'qtip-parent',
+  		'tipPos'=>'bottomRight'
+  		
+  	);
+
+  	$this->addQtipModel($qtipDef);
+  	
+  	// Keep final content including qtip popup for multiple test
+  	$qtipContent = $this->content;
+  	
+  	$testc = empty($testc) ? 'singleClassEdit' : $testc;
+  	// Test start
+  	foreach($this->testcases[$testc] as $test){
+  		//Reset content with the qtip 
+  		$this->content = $qtipContent;
+  		
+	  	//Get empty form
+	  	$post_field = array(
+											'wrapper'=>'paintContent'.$addClassObj['popupDispId']);
+	  	
+	  	$out = $this->drupalPostAJAX(null,$edit,'Add Class','?q='.$addClassObj['url'],array(),array(),'',$post_field);
+	  	
+	  	$this->verbose('Class Empty Form: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+	  	// Get Form id and wrapper id
+			$formIds = $this->xpath('//*[@id="paintContent'.$addClassObj['popupDispId'].'"]/*[@class="addedit-form-wrapper"]/form');
+  		$formId = (string) $formIds[0]['id'];
+  		$wrapIds = $this->xpath('//*[@id="paintContent'.$addClassObj['popupDispId'].'"]/*[@class="addedit-form-wrapper"]');
+  		$wrapId = (string) $wrapIds[0]['id'];
+  		// Save form
+	  	$param = array(
+									"form_id"=>"exp_sp_administration_catalog_class_addedit_form",
+									"_triggering_element_name"=>"saveandshow",
+									"_triggering_element_value"=>"Save",
+							);
+	  	$post_field = array('submit'=>$param,	'wrapper'=>$wrapId);
+
+	  	$out = $this->drupalPostAJAX(null,$test,'Save','?q=system/ajax',array(),array(),$formId,$post_field);
+	  	
+	  	$this->verbose('Class Save: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+  		// Check any validation error occurs 
+	  	$error = '';
+	  	$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+	  	foreach($isError as $err){
+	  		$error .= (string) $err[0]->span;
+	  	}
+	  	
+	  	// General response validation
+	  	$this->assertResponse(200,'Form Repainted successfully');
+	  	$txt = 'updated successfully';
+	  	$this->assertText(t($txt),'Updated changes successfully','catalog_admin');
+	  	$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+	  	$webError = "Website encountered an unexpected error";
+	  	$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+	  	
+	  	
+  	}
+  }
+  
+  /**
+   * Test cases for Admin Catalog Search
+   * @return Array
+   */
+  private function getTestCases(){
+  	$this->testcases = array(
+  		'filters' => array(
+  			// Validate Filters 
+  			array('<div class="srch-filter-heading">Refine</div>','Refine filter herader available',$this->group),
+  			
+  			// Validate type filter options
+  			array('<span id="catalogtype_filterset_title" class="cls-show" onclick=\'$("#root-admin").data("narrowsearch").showHide("catalogtype_filterset_title", "catalogtype_filterset");\'>','Type filter expand/collapse available',$this->group),
+  			array('<a class="narrow-search-filterset-heading">Type</a>','Type filter herader available',$this->group),
+  			array('<input id="radio_Course" class="narrow-search-filterset-radio" name="catalogtype" type="radio" checked value="Course" onclick=\'$("#root-admin").data("narrowsearch").showHideCourseClass(this.value); $("#root-admin").data("narrowsearch").narrowSearch();\'>','Type filter Course radio button available',$this->group),
+  			array('<span class="title-lengthy-text">Course</span>','Type filter Course text available',$this->group),
+  			array('<input id="radio_Class" class="narrow-search-filterset-radio" name="catalogtype" type="radio" value="Class" onclick=\'$("#root-admin").data("narrowsearch").showHideCourseClass(this.value); $("#root-admin").data("narrowsearch").narrowSearch();\'>','Type filter Class radio button available',$this->group),
+  			array('<span class="title-lengthy-text">Class</span>','Type filter Class text available',$this->group),
+  		),
+  	);
+  	
+  	return $this->testcases;
+  }
+}	// End of adminCatalogList
+
+class adminCatalogCreate extends adminCatalogList {
+		
+	public static function getInfo() {
+    return array(
+      'name' => 'Course Creation',
+      'description' => 'Catalog Administration, Create Course and Class',
+      'group' => 'Administration - Learning - Course/Class',
+    );
+  }
+  
+  /**
+   * Test for single course creation
+   * @return unknown_type
+   */
+  public function testCourseCreation(){
+  	// Prepare test cases
+  	$this->getTestCases();
+  	
+  	$this->catalogSearch();
+  	$this->searchResultContent = $this->content;
+  	$this->createCourse();
+  }
+  
+  public function testCourseValidate(){
+  	// Prepare test cases
+  	$this->getTestCases();
+  	
+  	// Before class create need to create course
+  	$this->catalogSearch();
+  	$this->searchResultContent = $this->content;
+  	$this->createCourse($this->testcases['courseValidation']);
+  	// End of course creation
+
+  }
+  
+  public function testCourseAccess(){
+  	// Prepare test cases
+  	$this->getTestCases();
+  	$tc[] = $this->testcases['singleCourseCreate'][0];
+  	//expDebug::dPrint("SELECTED TEST -- ".print_r($tc,1),1);
+  	//expDebug::dPrint("ALL TEST -- ".print_r($this->testcases['singleCourseCreate'],1),1);
+  	$this->catalogSearch();
+  	$this->searchResultContent = $this->content;
+  	$this->createCourse($tc);
+  	//expDebug::dPrint("Course Created .................",1);
+  	
+  	$formIds = $this->xpath('//div[@id="catalog-course-basic-addedit-form"]/form');
+  	$formId = (string) $formIds[0]['id'];
+  	$cid = $this->xpath('//input[@name="mapped_course_id"]');
+  	$this->courseId = (string) $cid[0]['value'];
+  	$crsId = core_encrypt($this->courseId);
+  	
+  	// Save form
+  	$param = array(
+								"form_id"=>"exp_sp_administration_catalog_course_addedit_form",
+								"_triggering_element_name"=>"Edit Course",
+								"_triggering_element_value"=>"",
+						);
+
+  	$post_field = array('submit'=>$param,	'wrapper'=>'catalog-course-basic-addedit-form');
+  	$out = $this->drupalPostAJAX(null,array(),'Save','?q=system/ajax',array(),array(),$formId,$post_field);
+  	$this->verbose('Course Save: ' . $this->getUrl() .
+                         '<hr />' . $this->content);
+  	
+  	// Check any validation error occurs 
+  	$error = '';
+  	$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+  	foreach($isError as $err){
+  		$error .= (string) $err[0]->span;
+  	}
+  	
+  	$this->assertResponse(200,'Form Repainted successfully');
+  	$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+	  	
+	  $path1 = '//a[@id="visible-course-'.$crsId.'"]';
+	  
+		$this->getAccessPopup($path1);
+		
+		$accessContent = $this->content;
+		//$url .= '&page=1&rows=15&type=any';
+		$args = array('page'=>1,'rows'=>15,'type'=>'any');
+		$acList = $this->listAccess($path1,'group',$args);
+		$acList += $this->listAccess($path1,'group',$args);
+		
+		$path = '//div[@id="group-control"]/div[@id="sel-unsel-grplist"]/div[@id="ui-multiselect-con"]/div[@id="container"]';
+  	$this->checkUncheckAccess($path,'select',array('3'=>'','4'=>'Optional','5'=>'Mandatory'),$option);
+  	$this->checkUncheckAccess($path,'unselect',array('4'=>'Optional'),$option);
+  	
+  	$this->submitAccess($path1);
+  	$this->content = $accessContent;
+  	$acList = $this->listAccess($path1,'group',$args);
+  }
+  
+	/**
+   * Test for single class creation
+   * @return unknown_type
+   */
+  public function testSingleCourseClassCreate(){
+  	// Prepare test cases
+  	$this->getTestCases();
+  	
+  	// Before class create need to create course
+  	$this->catalogSearch();
+  	$this->searchResultContent = $this->content;
+  	$this->createCourse();
+  	// End of course creation
+  	
+  	//Call class Creation
+  	$this->classCreation();
+  }
+  
+  /**
+   * List of test cases
+   * @return unknown_type
+   */
+  private function getTestCases(){
+  	$t = time();
+  	$loc = $this->getLocation();
+  	$fd = $this->getRandomDateTime('date');
+  	$ft[0] = $this->getRandomDateTime('time');
+  	$ft[1] = $this->getRandomDateTime('time');
+  	$tz = $this->getTimeZone(3);
+  	
+  	$scorm = db_query("select id from slt_content_master where type = 'lrn_cnt_typ_srm_s12' and status = 'lrn_cnt_sts_atv' limit 10")->fetchAll();
+  	//expDebug::dPrint("LIST OF SCORM CONTENTS -- ".print_r($scorm,1),1);
+  	$tincan = db_query("select id from slt_content_master where type = 'lrn_cnt_typ_srm_tnc' and status = 'lrn_cnt_sts_atv' limit 10")->fetchAll();
+  	$vod = db_query("select id from slt_content_master where type = 'lrn_cnt_typ_vod' and status = 'lrn_cnt_sts_atv' limit 10")->fetchAll();
+  	$kc = db_query("select id from slt_content_master where type = 'lrn_cnt_typ_knc' and status = 'lrn_cnt_sts_atv' limit 10")->fetchAll();
+  	
+		$this->testcases = array(
+	  	'singleCourseCreate' => array(
+				array(
+					'input'=>array(
+										"crs_title" =>'SimpleTest_'.$t,
+										"crs_code" =>'ST'.$t,
+			  						"crs_short_description[value]"=>'SimpleTest course created by test '.$t, 
+			  						"course_compliance" => 0,
+			  						"crs_author_vendor" => '',
+			  						"crs_language"=>'cre_sys_lng_eng',
+			  						"crs_status_hid" =>'lrn_crs_sts_itv'),
+	  			'results'=>array(
+	  					'updated successfully.'=> 'Course Created Successfully'
+	  				)
+				),
+				array(
+					'input'=>array(
+										"crs_title" =>'SimpleTest_'.($t+rand(1,99)),
+										"crs_code" =>'ST'.($t+rand(1,99)),
+			  						"crs_short_description[value]"=>'SimpleTest course created by test '.($t+rand(1,99)), 
+			  						"course_compliance" => 1,
+			  						"crs_author_vendor" => '',
+			  						"crs_language"=>'cre_sys_lng_eng',
+			  						"crs_status_hid" =>'lrn_crs_sts_itv'),
+	  			'results'=>array(
+	  					'updated successfully.'=> 'Course Created Successfully'
+	  				)
+				),
+				// TODO: Continue other test cases
+	  	),
+	  	
+	  	'singleClassCreate' => array(
+	  		array(
+	  			'input'=>array(
+	  								"title" =>'SimpleTest_Class_'.($t+rand(1,99)),
+	  								"code" =>'STC_'.($t+rand(1,99)),
+	  								"short_description[value]"=>'SimpleTest Class created by test '.($t+rand(1,99)),
+	  								"lang_code"=>'cre_sys_lng_eng',
+	  								"delivery_type" => "lrn_cls_dty_ilt",
+	  								"min_seats" => '',
+	  								"max_seats"=>'20',
+	  								"waitlist_count" =>'',
+	  								"new_location"=>$loc[0]->name,
+	  								"reg_end_date"=>'',
+	  								"price"=>'',
+	  								"currency_type"=>'USD',
+	  								'author_vendor'=>'',"class_location"=>$loc[0]->id), // ILT CLASS
+		  		'results'=>array(
+	  					'updated successfully.'=>'Class Created Successfully'
+	  				),
+	  			'info'=>array('session'=>true,'publish'=>true)
+	  		),
+	  		array(
+	  			'input'=>array(
+	  								"title" =>'SimpleTest_Class_'.($t+rand(1,99)),
+	  								"code" =>'STC_'.($t+rand(1,99)),
+	  								"short_description[value]"=>'SimpleTest Class created by test '.($t+rand(1,99)),
+	  								"lang_code"=>'cre_sys_lng_eng',
+	  								"delivery_type" => "lrn_cls_dty_vcl",
+	  								"min_seats" => '',
+	  								"max_seats"=>'20',
+	  								"waitlist_count" =>'',
+	  								"reg_end_date"=>'',
+	  								"price"=>'',
+	  								"currency_type"=>'USD',
+	  								'author_vendor'=>''), // VC CLASS
+		  		'results'=>array(
+	  					'updated successfully.'=>'Class Created Successfully'
+	  				),
+	  			'info'=>array('session'=>true,'publish'=>true)
+	  		),
+	  		array(
+	  			'input'=>array(
+	  								"title" =>'SimpleTest_Class_'.($t+rand(1,99)),
+	  								"code" =>'STC_'.($t+rand(1,99)),
+	  								"short_description[value]"=>'SimpleTest Class created by test '.($t+rand(1,99)),
+	  								"lang_code"=>'cre_sys_lng_eng',
+	  								"delivery_type" => "lrn_cls_dty_wbt",
+	  								"reg_end_date"=>'',
+	  								"price"=>'',
+	  								"currency_type"=>'USD',
+	  								'author_vendor'=>''), // WBT CLASS
+		  		'results'=>array(
+	  					'updated successfully.'=>'Class Created Successfully'
+	  				),
+	  			'info'=>array('session'=>true,'publish'=>true)
+	  		),
+	  	
+	  		array(
+	  			'input'=>array(
+	  								"title" =>'SimpleTest_Class_'.($t+rand(1,99)),
+	  								"code" =>'STC_'.($t+rand(1,99)),
+	  								"short_description[value]"=>'SimpleTest Class created by test '.($t+rand(1,99)),
+	  								"lang_code"=>'cre_sys_lng_eng',
+	  								"delivery_type" => "lrn_cls_dty_vod",
+	  								"reg_end_date"=>'',
+	  								"price"=>'',
+	  								"currency_type"=>'USD',
+	  								'author_vendor'=>''), // WBT CLASS
+		  		'results'=>array(
+	  					'updated successfully.'=>'Class Created Successfully'
+	  				),
+	  			'info'=>array('session'=>true,'publish'=>true)
+	  		),
+	  		// TODO: Continue other test cases
+	  	),
+	  	
+	  	'singleILTsession' => array(
+	  		array(
+	  			'input'=>array(
+	  								"session_name"=>"STest_".$t."_ses1", 
+	  								"start_date"=>$fd,
+	  								"start_hours"=>($ft[0]<$ft[1]?$ft[0]:$ft[1]),
+	  								"end_hours"=>($ft[0]>$ft[1]?$ft[0]:$ft[1]),
+	  								"hid_instructor_id"=>''),
+	  			'results'=>array(''),
+	  		)
+	  	),
+	  	
+	  	'singleVCsession' => array(
+	  		array(
+	  			'input'=>array(
+	  								"session_name"=>"STest_".$t."_ses1", 
+	  								"start_date"=>$fd,
+	  								"start_hours"=>($ft[0]<$ft[1]?$ft[0]:$ft[1]),
+	  								"end_hours"=>($ft[0]>$ft[1]?$ft[0]:$ft[1]),
+	  								"time_zone_list"=>$tz[0]['code'],
+	  								"hid_instructor_id"=>''),
+	  			'results'=>array(''),
+	  		)
+	  	),
+	  	
+	  	'singleWBTlesson' => array(
+	  		array(
+	  			'input'=>array(
+	  								"id" => $scorm[array_rand($scorm)]->id,
+	  								"attempt" => 5,
+	  								"validity" => 6
+	  								),
+	  			'results'=>array(''),
+	  		)
+	  	),
+	  	
+	  	'singleVODlesson' => array(
+	  		array(
+	  			'input'=>array(
+	  								"id" => $vod[array_rand($vod)]->id,
+	  								"attempt" => 5,
+	  								"validity" => 6
+	  								),
+	  			'results'=>array(''),
+	  		)
+	  	),
+	  	
+	  	'courseValidation' => array(
+  				array(
+		  			'input'=>array(
+		  								"crs_code" =>'ST'.($t+rand(1,99)),
+				  						"crs_short_description[value]"=>'SimpleTest course created by test '.($t+rand(1,99)), 
+				  						"course_compliance" => 0,
+				  						"crs_author_vendor" => '',
+				  						"crs_language"=>'cre_sys_lng_eng',
+				  						"crs_status_hid" =>'lrn_crs_sts_itv'),
+	  				'results'=>array(
+	  					'Title is required'=>'Title mandatory check done'
+	  				)
+		  		),
+	  			array(
+		  			'input'=>array(
+		  								"crs_title" =>'SimpleTest_'.($t+rand(1,99)),
+				  						"crs_short_description[value]"=>'SimpleTest course created by test '.($t+rand(1,99)), 
+				  						"course_compliance" => 0,
+				  						"crs_author_vendor" => '',
+				  						"crs_language"=>'cre_sys_lng_eng',
+				  						"crs_status_hid" =>'lrn_crs_sts_itv'),
+	  				'results'=>array(
+	  					'Code is required'=>'Code mandatory check done'
+	  				)
+		  		),
+  				array(
+		  			'input'=>array(
+		  								"crs_title" =>'SimpleTest_'.($t+rand(1,99)),
+		  								"crs_code" =>'ST'.($t+rand(1,99)),
+				  						"course_compliance" => 0,
+				  						"crs_author_vendor" => '',
+				  						"crs_language"=>'cre_sys_lng_eng',
+				  						"crs_status_hid" =>'lrn_crs_sts_itv'),
+	  				'results'=>array(
+	  					'Description is required'=>'Discription mandatory check done'
+	  				)
+		  		),
+		  		array(
+		  			'input'=>array(
+		  								"crs_title" =>'SimpleTest_'.($t+rand(1,99)),
+		  								"crs_code" =>'ST'.($t+rand(1,99)),
+				  						"crs_short_description[value]"=>'SimpleTest course created by test '.($t+rand(1,99)), 
+				  						"course_compliance" => 0,
+				  						"crs_author_vendor" => '',
+				  						"crs_language"=>'0',
+				  						"crs_status_hid" =>'lrn_crs_sts_itv'),
+	  				'results'=>array(
+	  					'Language is required'=>'Language mandatory check done'
+	  				)
+		  		),
+	  	)
+  	);
+  }
+} // END of class adminCatalogCreate
+
+class adminCatalogEdit extends adminCatalogList {
+	
+	public static function getInfo() {
+    return array(
+      'name' => 'Course and Class Edit',
+      'description' => 'Catalog Administration, Edit Course and Class',
+      'group' => 'Administration - Learning - Course/Class',
+    );
+  }
+  
+  /**
+   * Test for single course creation
+   * @return unknown_type
+   */
+  public function testCourseCreation(){
+  	// Prepare test cases
+  	$this->getTestCases();
+  	
+  	$this->catalogSearch();
+  	$this->searchResultContent = $this->content;
+  	$this->crsCount = count($this->id);
+  	if($this->crsCount > 0){
+  		$this->editCourse();
+  		$this->classEdit();
+  	}
+  }
+  
+  private function getTestCases(){
+  	$t = time();
+  	//$loc = $this->getLocation();
+  	$fd = $this->getRandomDateTime('date');
+  	$ft[0] = $this->getRandomDateTime('time');
+  	$ft[1] = $this->getRandomDateTime('time');
+		$this->testcases = array(
+	  	'singleCourseEdit' => array(
+	  		array("crs_short_description[value]"=>'SimpleTest course created by test - Edit check ')
+	  	),
+	  	
+	  	'singleClassEdit' => array(
+	  		array("short_description[value]"=>'SimpleTest Class created by test - Class edited ') // ILT CLASS
+	  	),
+	  	
+	  	'singleILTsession' => array(
+	  		array("start_date"=>$fd,"start_hours"=>($ft[0]<$ft[1]?$ft[0]:$ft[1]),"end_hours"=>($ft[0]>$ft[1]?$ft[0]:$ft[1]),"hid_instructor_id"=>'')
+	  	),
+  	);
+  }
+}
+?>

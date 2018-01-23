@@ -1,0 +1,12 @@
+name = Commerce Tax Details Administration 
+description = Responsible for commerce tax administration.
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration_commerce
+testing_api = 2.x
+files[] = exp_sp_administration_commerce_tax.inc
+files[] = tests/exp_sp_administration_commerce_tax.test
+files[] = tests/exp_sp_administration_commerce_tax_create.test
+files[] = tests/exp_sp_administration_commerce_tax_update.test
+files[] = tests/exp_sp_administration_commerce_tax_delete.test
+version = VERSION
+core = 7.x

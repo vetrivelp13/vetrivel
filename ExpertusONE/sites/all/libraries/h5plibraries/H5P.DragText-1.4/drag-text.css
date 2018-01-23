@@ -1,0 +1,261 @@
+/* IcoMoon font licensed under the GNU General Public License: http://www.gnu.org/licenses/gpl.html */
+@font-face {
+  font-family: 'icomoon-blanks';
+  src:url('/sites/all/libraries/h5plibraries/H5P.DragText-1.4/fonts/icomoon.eot');
+  src:url('/sites/all/libraries/h5plibraries/H5P.DragText-1.4/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+  url('/sites/all/libraries/h5plibraries/H5P.DragText-1.4/fonts/icomoon.woff') format('woff'),
+  url('/sites/all/libraries/h5plibraries/H5P.DragText-1.4/fonts/icomoon.ttf') format('truetype'),
+  url('/sites/all/libraries/h5plibraries/H5P.DragText-1.4/fonts/icomoon.svg#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* The main containers for the module, specific to this module. */
+.h5p-drag-text {
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+
+.h5p-drag-text .h5p-drag-inner p {
+  font-size: 1em;
+  font-weight: normal;
+  padding: 0;
+  margin: 0 0 1em;
+}
+
+.h5p-drag-text button.h5p-drag-button:before {
+  font-family: 'H5PFontAwesome4';
+  padding-right: 0.5em;
+}
+
+/* Button icons */
+.h5p-drag-text .h5p-drag-check-button:before {
+  content: "\f058";
+}
+.h5p-drag-text .h5p-drag-retry-button:before {
+  content: "\f021";
+}
+.h5p-drag-text .h5p-drag-show-solution-button:before {
+  content: "\f06e";
+}
+
+/* Buttons starting state: */
+.h5p-drag-text .h5p-drag-check-button {
+  display: inline-block;
+}
+.h5p-drag-text .h5p-drag-retry-button {
+  display: none;
+}
+.h5p-drag-text .h5p-drag-show-solution-button {
+  display: none;
+}
+
+/* Tooltip styling */
+.h5p-drag-text .joubel-tip-container {
+  top: -1.2em;
+  right: -1.2em;
+  position: absolute;
+  z-index: 4;
+}
+
+/* Feedback for dropzones */
+.h5p-drag-text .h5p-drag-correct-feedback:before {
+  position: absolute;
+/*   right: 0.3em;
+  font-family: 'H5PFontAwesome4';
+  content: "\f00c"; */
+  color: #255c41;
+}
+
+.h5p-drag-text .h5p-drag-wrong-feedback:before {
+  position: absolute;
+/*   right: 0.3em;
+  font-family: 'H5PFontAwesome4';
+  content: "\f00d"; */
+  color: #b71c1c;
+}
+
+/* Dropzone styling */
+.h5p-drag-text .h5p-drag-dropzone-container {
+  position: relative;
+  display: inline;
+  padding-right: 0.1em;
+}
+.h5p-drag-text .h5p-drag-dropzone {
+  position:relative;
+   top: -0.1em;
+  width: 10em;
+  line-height:16px;
+  padding:3px 0;
+  background-color: #f5f5f5;
+  border:1px solid #ddd;
+  border-radius: 12px; 
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+  margin-right:5px;
+  margin-bottom:5px;
+  height:16px;
+}
+
+.h5p-drag-text .h5p-drag-dropzone.h5p-drag-correct-feedback {
+  background: #9dd8bb;
+  border:1px solid #9dd8bb;
+}
+
+.h5p-drag-text .h5p-drag-dropzone.h5p-drag-wrong-feedback {
+  background: #f7d0d0;
+  border:1px solid #f7d0d0;
+}
+
+/* .h5p-drag-text .h5p-drag-dropzone:before {
+  line-height: 1.25;
+} */
+
+/* Draggable styling */
+.h5p-drag-text .h5p-drag-draggables-container {
+  position: relative;
+  padding-top: 0.5em;
+  display: inline-block;
+}
+
+.h5p-drag-text .h5p-drag-draggables-container.hide {
+  display: none;
+}
+
+.h5p-drag-text .h5p-drag-draggable {
+  line-height:16px;
+  cursor: pointer;
+  border-radius:12px;
+  padding:3px 10px;
+  margin:3px 5px 3px 0;
+  vertical-align: top;
+  text-align: center;
+  display: inline-block;
+  border: 1px solid #c6c6c6;
+  overflow: hidden;
+  background: #ddd;
+  box-shadow: 0 0 0.3em #ddd;
+  z-index: 3;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+.h5p-drag-text .h5p-drag-draggable:not(.ui-state-disabled):hover {
+  border: 1px solid #ddd;
+  color: #474747;
+  background: #f5f5f5;
+}
+.h5p-drag-text .h5p-drag-draggable.h5p-drag-dropped {
+  width:auto;
+  margin:-4px 0 0 0;
+  padding:3px 10px;
+  white-space: nowrap;
+  color: #474747;
+  border: 1px solid #c6c6c6;
+  background: #ddd;
+}
+.h5p-drag-text .h5p-drag-draggable.h5p-drag-dropped:not(.ui-state-disabled):hover {
+  border: 1px solid #c6c6c6;
+  color: #474747;
+  background: #ddd;
+}
+/* .h5p-drag-text .h5p-drag-draggable.ui-draggable-dragging {
+  opacity: 0.5;
+  box-shadow: 0em 0em 0.8em rgba(0,0,0,0.5);
+} */
+.h5p-drag-text .h5p-drag-draggable.ui-state-disabled {
+  opacity: 1;
+}
+
+.h5p-drag-text .h5p-drag-dropped.h5p-drag-draggable-correct {
+  padding: 3px 10px;
+  color: #255c41;
+  border: none;
+  box-shadow: none;
+  line-height:16px;
+  background: none;
+  text-align:center;
+  width:auto;
+  margin:-4px 0 0 -2px;
+}
+
+.h5p-drag-text .h5p-drag-dropped.h5p-drag-draggable-wrong {
+  padding: 3px 10px;
+  border: none;
+  color: #b71c1c;
+  box-shadow: none;
+  line-height:16px;
+  background: none;
+  text-align:center;
+  width:auto;
+  margin:-4px 0 0 -2px;
+}
+
+/* Show solution container */
+.h5p-drag-text .h5p-drag-show-solution-container {
+  position: relative;
+  color: #255c41;
+  font-weight:normal;
+  display: inline;
+  padding:3px 10px;
+  border:1px solid #9dd8bb;
+  border-radius:12px
+}
+
+.h5p-drag-text .h5p-drag-droppable-words {
+  line-height: 1.75;
+}
+
+.h5p-drag-text .ui-draggable-dragging {
+  z-index: 2;
+}
+
+.h5p-drag-text .h5p-drag-task {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+}
+
+/* Wide Screen css : */
+.h5p-drag-text .h5p-drag-wide-screen {
+  float: right;
+  padding-top: 0em;
+}
+
+.h5p-drag-text .h5p-drag-draggable-wide-screen {
+  display: block;
+}
+
+.h5p-drag-text .h5p-drag-dropzone.ui-droppable.ui-droppable-disabled.ui-state-disabled{
+  opacity: 1;
+}
+
+/* Use ellipsis for long draggables */
+.h5p-drag-text .h5p-drag-draggable.h5p-drag-dropped.truncate {
+  text-overflow: ellipsis;
+}
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog[data-lib="H5P.DragText"] .h5p-dialog-popup .h5p-dialog-interaction.h5p-drag-text .h5p-question-introduction {
+  margin:5px 10px 10px 0
+}
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog[data-lib="H5P.DragText"] {
+  width:325px
+}
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog[data-lib="H5P.DragText"] .h5p-dialog-inner {
+  width:315px
+}
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog[data-lib="H5P.DragText"] .h5p-dialog-popup .h5p-dialog-interaction.h5p-drag-text {
+  max-height:250px;
+  overflow:auto;
+  margin:0 5px 0 10px
+}
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog[data-lib="H5P.DragText"] .h5p-dialog-popup .h5p-dialog-interaction.h5p-drag-text .h5p-question-buttons {
+  margin:0 5px 10px 0
+}
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog[data-lib="H5P.DragText"] .h5p-dialog-popup .h5p-dialog-interaction.h5p-drag-text .h5p-question-buttons button:last-child {
+  margin-right:5px
+}
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog[data-lib="H5P.DragText"] .h5p-dialog-popup .h5p-dialog-interaction.h5p-drag-text .h5p-drag-task {
+  margin-bottom:10px
+}

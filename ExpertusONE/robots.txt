@@ -1,0 +1,81 @@
+#
+# robots.txt
+###
+# This file is to prevent the crawling and indexing of certain parts
+# of your site by web crawlers and spiders run by sites like Yahoo!
+# and Google. By telling these "robots" where not to go on your site,
+# you save bandwidth and server resources.
+#
+# This file will be ignored unless it is at the root of your host:
+# Used:    http://example.com/robots.txt
+# Ignored: http://example.com/site/robots.txt
+#
+# For more information about the robots.txt standard, see:
+# http://www.robotstxt.org/wc/robots.html
+#
+# For syntax checking, see:
+# http://www.sxw.org.uk/computing/robots/check.html
+
+User-agent: *
+Allow: /
+Allow: /?q=learning/catalog-search/
+
+User-agent: *
+Disallow: /?q=administration/
+Disallow: /?q=admin/
+Disallow: /?q=aicc/
+Disallow: /?q=ajax/
+Disallow: /?q=autocomplete/
+Disallow: /?q=batch/
+Disallow: /?q=canvas/
+Disallow: /?q=cardinality/
+Disallow: /?q=cart-callout/
+Disallow: /?q=cart/
+Disallow: /?q=reports/
+Disallow: /?q=catalog/
+Disallow: /?q=comment/
+Disallow: /?q=context_ui_editor/
+Disallow: /?q=context_ui_form/
+Disallow: /?q=context_ui_plugins/
+Disallow: /?q=context-ui/
+Disallow: /?q=ctools_ajax_sample/
+Disallow: /?q=cybersource/
+Disallow: /?q=drupalchat/
+Disallow: /?q=expertus/
+Disallow: /?q=field/
+Disallow: /?q=file/
+Disallow: /?q=filter/
+Disallow: /?q=fivestar/
+Disallow: /?q=forum/
+Disallow: /?q=generic/
+Disallow: /?q=home/
+Disallow: /?q=image_captcha/
+Disallow: /?q=libraries-test-module/
+Disallow: /?q=learning/
+Disallow: /?q=myentity/
+Disallow: /?q=name/
+Disallow: /?q=node/
+Disallow: /?q=oauth/
+Disallow: /?q=openid/
+Disallow: /?q=people/
+Disallow: /?q=portalpages/
+Disallow: /?q=roles/
+Disallow: /?q=salesforce/
+Disallow: /?q=saml20/
+Disallow: /?q=search/
+Disallow: /?q=sessiontimeout/
+Disallow: /?q=share/
+Disallow: /?q=sso/
+Disallow: /?q=subtotal/
+Disallow: /?q=summary/
+Disallow: /?q=system/
+Disallow: /?q=taxonomy_term/
+Disallow: /?q=taxonomy/
+Disallow: /?q=user_reg_link_callback/
+Disallow: /?q=user-preference/
+Disallow: /?q=user/
+Disallow: /?q=views/
+Disallow: /?q=webex/
+Disallow: /?q=widget/
+Disallow: /?q=wysiwyg-test/
+Disallow: /?q=wysiwyg/

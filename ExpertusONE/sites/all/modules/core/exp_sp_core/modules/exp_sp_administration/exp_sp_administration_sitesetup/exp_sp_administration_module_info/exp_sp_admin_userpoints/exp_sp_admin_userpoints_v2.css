@@ -1,0 +1,355 @@
+#userpoints-admin-form .addedit-left-col .addedit-new-field-title {
+  width:260px;
+  color:#474747;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  font-weight:normal
+}
+#userpoints-admin-form .addedit-new-field-title-user-points {
+  width:auto;
+  padding:6px 5px 4px 0;
+  color:#474747;
+  font-size:12px;
+  font-weight:normal;
+  text-align:left;
+  display:inline;
+  float:left
+}
+#userpoints-admin-form .addedit-new-field-value {
+  margin:3px 0 0 5px;
+  float:right
+}
+#userpoints-admin-form .addedit-form-cancel-and-save-actions-row {
+  margin:10px 0 0 0
+}
+#userpoints-admin-form .addedit-form-cancel-container-actions .admin-action-button-middle-bg {
+  margin-top:0;
+  margin-right:0;  
+  background:none;
+  border:none;
+  padding:0
+}
+#userpoints-admin-form .addedit-new-field-value input {
+  width:60px
+}
+#userpoints-admin-form .addedit-form-cancel-container-actions {
+  float:right;
+  margin-right:0;
+  position:relative
+}
+#userpoints-admin-form .addedit-empty-points-textfield {
+  color:#ccc;
+  height:17px;
+  font-size:12px
+}
+#userpoints-admin-form .points-badges-seperator {
+  border-top:1px dotted #EFEFEF;
+  width:335px
+}
+#userpoints-admin-form .white-btn-bg-container {
+  float:left;
+  margin-right:5px
+}
+#userpoints-admin-form .badges-qtip-link {
+  font-weight:bold
+}
+#user-points .points-row1 {
+  width:100%;
+  border-bottom:1px solid #CCC
+}
+#user-points .points-row1-column-1 {
+  border-right:1px solid #E5E5E5;
+  display:inline-block;
+  height:42px;
+  width:50%
+}
+#user-points .points-row1-column-2 {
+  position:absolute;
+  width:50%;
+  display:inline;
+  height:42px
+}
+#user-points .user-points-result-widget {
+  border-left:1px solid #E5E5E5;
+  border-right:1px solid #E5E5E5
+}
+#user-points .points-row2 {
+  width:100%;
+  border-bottom:1px solid #CCC
+}
+#user-points .points-row2-column-1 {
+  display:inline-block;
+  width:32%;
+  border-right:1px solid #E5E5E5;
+  height:42px
+}
+#user-points .points-row2-column-2 {
+  position:absolute;
+  display:inline;
+  width:20%
+}
+#user-points .points-row2-column-3 {
+  position:absolute;
+  display:inline;
+  width:34%
+}
+#user-points .points-row2-column-1-sharedisable {
+  display:inline-block;
+  width:50%;
+  border-right:1px solid #E5E5E5;
+  height:42px
+}
+#user-points .points-row2-column-3-sharedisable {
+    display: inline;
+    height: 42px;
+    position: absolute;
+    width: 50%;
+}
+#user-points .column-action-points {
+  font-family:ProximaNovaBold, Arial;
+  text-align:center;
+  color:#828282;
+  font-weight:normal;
+  margin-top:7px;
+  font-size:14px
+}
+#user-points .column-action-text {
+  color:#474747;
+  font-family:ProximaNovaBold, Arial;
+  text-align:center;
+  text-transform:uppercase;
+  font-weight:normal
+}
+#user-points .badges-spacing {
+  display:inline-block;
+  margin-right:15px;
+  margin-left:15px
+}
+#userpoints-leaderboard .leader-board-result {
+  border-left:1px solid #E5E5E5;
+  border-right:1px solid #E5E5E5
+}
+#usr-leader-board-list .ui-widget-content #leader-board-users-jqgrid .exp-user-leaderboard-rec {
+  border-bottom:1px solid #E5E5E5;
+  height:50px;
+  padding:13px 14px
+}
+#usr-leader-board-list .ui-widget-content #leader-board-users-jqgrid .exp-leaderboard-last-rec {
+  border-bottom:0;
+  height:41px
+}
+#userpoints-leaderboard .ui-state-default {
+  position:absolute
+}
+#userpoints-leaderboard .current-badge {
+  float:right;
+  margin:3px
+}
+#userpoints-leaderboard .user-desc {
+  float:left;
+  padding-left:10px;
+  padding-top:0;
+  text-align:left;
+  width:auto
+}
+#userpoints-leaderboard .ui-state-hover {
+  background:none;
+  border:0
+}
+#catalog-lb-user-list li.eol-search-input input,
+#catalog-lb-user-list li.eol-search-input {
+  width:148px;
+  background:#FFF
+}
+#catalog-lb-user-list .ac_input {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% 4px;
+  padding-top:0
+}
+#userpoints-leaderboard #catalog-lb-user-list input.ac_loading {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% -16px #fff;
+  padding-top:0;
+  line-height:21px;
+  height:21px;
+  position:relative;
+  z-index:2000
+}
+#userpoints-leaderboard .ui-state-highlight, .ui-widget-content .ui-state-highlight {
+  border:0
+}
+#userpoints-leaderboard .overallusersearchlist {
+  margin:-34px 2px 0 59px;
+  float:right
+}
+#userpoints-leaderboard .overallusersearchlist ul.eol-search-profiles li.eol-search-input input {
+  background:#FFF;
+  color:#999;
+  font-family:openSansRegular, Arial;
+  font-size:12px;
+  font-style:normal;
+  margin:1px 0 0;
+  padding-left:0;
+  padding-right:15px;
+  height:21px;
+  width:116px
+}
+#userpoints-leaderboard .overallusersearchlist ul.eol-search-profiles li.eol-search-input {
+  background:none;
+  border:0;
+  float:left;
+  font-size:11px;
+  height:24px;
+  line-height:28px;
+  outline:medium none;
+  padding-left:0;
+  width:136px
+}
+#userpoints-leaderboard .overallusersearchlist ul.eol-search-profiles li.user-search-rightcorner {
+  background-color:#fff;
+  display:block;
+  height:24px;
+  outline:medium none;
+  position:relative;
+  text-decoration:none;
+  width:auto;
+  z-index:1000;
+  border-radius:0 15px 15px 0;
+  border:1px solid #e5e5e5;
+  border-left:0
+}
+#userpoints-leaderboard .overallusersearchlist ul.eol-search-profiles li.user-search-rightcorner a {
+  margin:0
+}
+#userpoints-leaderboard .overallusersearchlist ul.eol-search-profiles li.eol-search-input span {
+  background-color:#fff;
+  float:left;
+  font-size:11px;
+  height:24px;
+  line-height:28px;
+  padding-left:15px;
+  width:123px;
+  border-radius:15px 0 0 15px;
+  border:1px solid #e5e5e5;
+  border-right:0
+}
+.overallusersearchlist .eol-search-profiles li.eol-search-go a {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -394px -218px;
+  display:block;
+  width:20px
+}
+.overallusersearchlist .eol-search-profiles li.eol-search-go.user-search-rightcorner a {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -487px -18px;
+  display:block;
+  width:23px
+}
+#userpoints-leaderboard .lb-no-users-msg {
+  background:none;
+  border-left:1px solid #e5e5e5;
+  border-right:1px solid #e5e5e5;
+  color:#464646;
+  padding:12px 0 5px;
+  text-align:center;
+  width:99.4%
+}
+#userpoints-admin-form .addedit-left-col {
+  padding:20px 15px 10px 15px;
+  width:auto
+}
+#userpoints-admin-form .addedit-left-col .user-points-master-text, #userpoints-admin-form .addedit-left-col .user-points-badge-text {
+  font-family:openSansRegular, Arial;
+  font-size:11px;
+  color:#777;
+  padding:0 0 5px 0;
+  text-transform:uppercase
+}
+#userpoints-leaderboard .user-desc .lb-user-name {
+  color:#474747;
+  font-family:ProximaNovaBold, Arial;
+  font-size:13px;
+  text-transform:uppercase
+}
+#userpoints-admin-form {
+  background:#fff
+}
+#userpoints-admin-form .admin-save-button-container {
+  margin:0 0 0 5px
+}
+#users-points-view #badges-view .badge-common-image {
+  width:70px;
+  height:60px;
+  display:inline-block;
+  padding:0 1px 0;
+  margin-bottom:5px
+}
+.badge-common-image.registration {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/profile_badges.png") no-repeat center 0
+}
+.badge-common-image.finisher {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/profile_badges.png") no-repeat center -60px
+}
+.badge-common-image.judge {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/profile_badges.png") no-repeat center -120px
+}
+.badge-common-image.expert {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/profile_badges.png") no-repeat center -180px
+}
+.badge-common-image.blogger {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/profile_badges.png") no-repeat center -240px
+}
+#users-points-view-row3 {
+  margin-top:7px;
+  color:#777
+}
+.theme-ctool-popup #userpoints-admin-form .white-btn-bg-container {
+  margin-left:0
+}
+#usr-leader-board-list .job-title {
+  margin-top:5px
+}
+#usr-leader-board-list .job-title .points-text {
+  font-size:14px;
+  color:#828282;
+  font-family:ProximaNovaBold, Arial
+}
+#usr-leader-board-list #leader-board-users-jqgrid td {
+  border:0
+}
+#userpoints-leaderboard .admin-module-info-userpoints-username {
+  max-width:200px
+}
+#userpoints-leaderboard .leader-board-result .ui-state-hover .admin-module-info-userpoints-username .fade-out-image {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/title_gradient.png") no-repeat right 0  
+}
+.page-learning-my-profile #block-exp-sp-admin-userpoints-userpoints h2.block-title{
+  text-indent:2px
+}
+#userpoints-leaderboard .leader-board-result .ui-jqgrid .ui-jqgrid-btable,
+#userpoints-leaderboard .leader-board-result .ui-jqgrid .ui-jqgrid-htable{
+  border-collapse: collapse;
+}
+#userpoints-leaderboard .leader-board-result .ui-jqgrid .ui-jqgrid-htable th,
+#userpoints-leaderboard .leader-board-result .ui-jqgrid .ui-jqgrid-btable td{
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#userpoints-leaderboard .user-profile-link .limit-title-row {
+  min-width:200px;
+  max-width:200px;
+}
+#userpoints-leaderboard .user-profile-link .limit-title-row .limit-title{
+ word-wrap: break-word;
+ display:block;
+ width:190px
+}
+/*Viswanathan added for #75085*/
+#userpoints-leaderboard .user-profile-link .job-title {
+  margin-top:0
+}
+.logged-in #userpoints-leaderboard .user-profile-link .job-title {
+  margin-top:-2px;
+}
+/*!Chrome Hack*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+   #userpoints-admin-form {
+   min-height: 455px
+   }
+}   

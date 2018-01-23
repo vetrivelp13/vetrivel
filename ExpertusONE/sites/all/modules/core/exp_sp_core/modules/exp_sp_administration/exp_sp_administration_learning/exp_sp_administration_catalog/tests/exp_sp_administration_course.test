@@ -1,0 +1,229 @@
+<?php 
+
+class AdministrationCourseTestHelper extends ExpertusWebTestCase {
+	
+	private $searchResultContent=null;
+	
+	protected $testcases = array();
+
+	
+	private $srcParam = array(
+			'title'=>'',		// Title base search
+			'announcementdaterange'=>'',		// date range on announcement
+			'announcementlang'=>'cre_sys_lng_eng', 	// Selected languages pipe separated
+			'sortby'=> 'desc',		//	Sort by option
+			'announcemanage' => 'cre_sys_fop_me'
+	);
+
+	public function setUp() {
+		parent::setUp();
+		$this->drupalLogin($this->admin); // login as admin
+		$this->getCourseTestCases();
+		// set refer to prevent access denied error
+		$this->setHttpReferer('learning/enrollment-search');
+	}
+	
+	public function manageAdminCourse($scope = 'basic') {
+	
+		// Get Main HTML content
+		$this->drupalPost('administration/learning/catalog');
+		$content = $this->content;
+	
+		// Get Filters
+		$this->drupalGetAJAX('administration/search-filter/catalog');
+		$this->content = drupal_json_decode($this->content);
+			
+		//Update filters with existing response
+		$replArray = array(
+				'rendered_narrow_search_filters' => 'narrow-search',
+				'rendered_main_div' => 'root-admin-results',
+				'rendered_tab_content_main' => 'tab-content-main',
+				'rendered_narrow_search_sortbar' => 'admin-maincontent_tab',
+				'rendered_narrow_search_actionbar' => 'sort-bar-V2'
+		);
+			
+		$this->updateSearchFilters($content, $replArray, 'div', 'tag', 'div' );
+	
+		$this->displayTagsById('narrow-search');
+		$this->displayTagsById('root-admin-results');
+	
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['courseList'];
+		} else {
+			$testCases = array($this->testcases['courseList'][$scope]);
+		}
+		
+		//Get search results
+		foreach($testCases as $test){
+			$this->getAdministrationCourseList($test);
+		}
+	}
+	
+	public function getAdministrationCourseList($opt = array()){
+		$opt = array_merge($this->basicParam, $opt);
+		$content = $this->content;
+		$srcRc = $this->drupalGetAJAX('administration/learning/catalog/search/all/',array('query'=>$opt));
+		$this->updateSearchResults($content,$srcRc,'narrow-search-results-holder');
+	}
+
+	protected function getCourseTestCases(){
+		$rand = $this->randomName();
+		$this->testcases = array(
+				'courseList' => array(
+						'basic' => array(),
+						'case1' => array(),
+						'case2' => array(),
+				),		
+				'courseCreate' => array(
+		  				'st_case1' => array(
+		  						"crs_title"							=> 'st_case1 course - '.$rand, 
+		  						"crs_code" 							=> 'st_case1 course - '.$rand, 
+		  						"crs_language"						=> 'cre_sys_lng_eng',
+		  						"crs_short_description[value]"		=> 'st_case1 description - '.$rand,
+		  						"entity_value"						=> 'cre_sys_obt_crs',
+		  				 ),
+						'st_case2' => array(
+		  						"crs_title"							=> 'st_case2 course - '.$rand, 
+		  						"crs_code" 							=> 'st_case2 course - '.$rand, 
+		  						"crs_language"						=> 'cre_sys_lng_eng',
+		  						"crs_short_description[value]"		=> 'st_case1 description - '.$rand,
+		  						"entity_value"						=> 'cre_sys_obt_crs',
+						),
+				),
+				'courseUpdate' => array(
+						'st_case1' 	=> array(
+							"crs_title"				=> 'st_case1 course changed- '.$rand,
+							"id"					=> $this->getCourseId('st_case1'),	
+						 ),
+						'st_case2' => array(
+							"crs_title"				=> 'st_case2 course changed- '.$rand,
+							"id"					=> $this->getCourseId('st_case2'),
+						),
+				),
+				'courseDelete' => array(
+						'st_case1' 	=> array( 'id' => $this->getCourseId('st_case1') ),
+						'st_case2' 	=> array( 'id' => $this->getCourseId('st_case2') ),
+				),
+				'courseView' => array(
+						'st_case1' 	=> array( 'id' => $this->getCourseId('st_case1') ),
+				),
+		);
+	}
+	
+	public function getCourseTitle($courseId = '') {
+		$courseTitle = db_query("SELECT title FROM slt_course_template WHERE id = :course_id", array(':course_id' => $courseId ))->fetchField();
+		return $courseTitle;
+	}
+	
+	public function getCourseStatus($courseId = '') {
+		$courseStatus = db_query("SELECT status FROM slt_course_template WHERE id = :course_id", array(':course_id' => $courseId ))->fetchField();
+		return $courseStatus;
+	}
+	
+	public function getCourseId($search_str = '') {
+		$select = db_select('slt_course_template', 'crs');
+		$select->addField('crs', 'id', 'id');
+		$select->condition('crs.title', '%' . db_like($search_str) . '%', 'LIKE');
+		$select->orderBy('crs.id', 'DESC');
+		$select->range(0,1);
+		$courseId = $select->execute()->fetchField();
+		return $courseId;
+	}
+	
+	/**
+	 *  Export functionality test case
+	 *  Created By :Maheswari.M
+	 *  Created Date:02.01.2017
+	 */
+	
+	
+	public function exportOrganizations($opt='csv'){
+		debug('Organization Id -->'.print_r($this->id,1),4);
+		$selOrganizationQry = db_select('slt_organization', 'per');
+		$selOrganizationQry->addField('per', 'name', 'name');
+		$selOrganizationQry->condition('per.id', $this->id, 'IN');
+		$selOrganizationRes = $selOrganizationQry->execute()->fetchAll();
+		debug('Organization Name List-->'.print_r($selOrganizationRes,1),4);
+		if($opt=='csv'){
+			//customized the drupalGet() using options parameter
+			$this->drupalGet('administration/people/organization/export',array('filewrite'=>1,'testCase'=>'csv'));
+			if ($this->assertResponse(200) == 'pass') {
+				foreach ($selOrganizationRes as $organizationName){
+					$this->assertRaw($organizationName->name, 'Contents of the exported file has '.$organizationName->name.' and it is correct.');
+				}
+					
+			}
+		}
+		elseif($opt=='pdf'){
+			$this->drupalGet('administration/people/organization/print',array('filewrite'=>1,'testCase'=>'pdf'));
+			if ($this->assertResponse(200) == 'pass') {
+				debug($this->content);
+				foreach ($selOrganizationRes as $organizationName){
+					$this->assertText($organizationName->name, 'Contents of the exported file has '.$organizationName->name.' and it is correct.');
+				}
+					
+			}
+		}
+	
+	}
+}
+
+
+class AdministrationCourseListBase extends AdministrationCourseTestHelper
+{
+	
+}
+
+class AdministrationCourseListAll extends AdministrationCourseListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Course - List - All Tests',
+				'description' => 'Module : exp_sp_administration_catalog',
+				'group' => '1101 - Administration - Learning - Course - List',
+		);
+	}
+	
+	public function testCourseListAll() {
+		debug('testCourseListAll called');
+		$this->manageAdminCourse('all');
+	}
+}
+
+class AdministrationCourseListCase1 extends AdministrationCourseListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Course - List - Case 1',
+				'description' => 'Module : exp_sp_administration_catalog',
+				'group' => '1101 - Administration - Learning - Course - List',
+		);
+	}
+
+	public function testCourseListCase1() {
+		debug('testCourseListCase1 called');
+		$this->manageAdminCourse('case1');
+	}
+}
+
+class AdministrationCourseListCase2 extends AdministrationCourseListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Course - List - Case 2',
+				'description' => 'Module : exp_sp_administration_catalog',
+				'group' => '1101 - Administration - Learning - Course - List',
+		);
+	}
+
+	public function testCourseListCase2() {
+		debug('testCourseListCase2 called');
+		$this->manageAdminCourse('case2');
+	}
+}
+
+
+
+
+?>

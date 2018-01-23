@@ -1,0 +1,57 @@
+﻿a
+{
+    outline: none;
+}
+div.menuTree
+{
+    width: 250px;
+   
+	background-image:url(../images/bg.gif);
+}
+div.menuTree UL
+{
+    font-size: 100%;
+    padding: 0px;
+    margin: 0px;
+    display:none;
+}
+div.menuTree UL LI
+{
+    list-style: none;
+    padding: 0px;
+    padding-left: 20px;
+    margin: 0px;
+    white-space: nowrap;
+    line-height: 20px;
+}
+div.menuTree UL LI.parent A
+{
+    color:#ffffff;
+    text-decoration: none;
+    padding: 0px 2px;
+	
+}
+div.menuTree UL LI.parent A:hover
+{
+    font-weight: bold;
+    font-size: 110%;	
+}
+div.menuTree UL LI.child A
+{
+    color:#ffffff;
+    text-decoration: none;
+    padding: 0px 2px;
+}
+div.menuTree UL LI.child A:hover
+{
+    font-weight: bold;
+    font-size: 110%;
+}
+div.menuTree UL LI.parent
+{
+    background: url(../images/collapsed_image.gif) left top no-repeat;
+}
+div.menuTree UL LI.expanded
+{
+    background: url(../images/expended_image.gif) left top no-repeat;
+}

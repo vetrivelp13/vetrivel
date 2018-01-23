@@ -1,0 +1,169 @@
+<?php
+/**
+ * Implementation of hook_block_info().
+ */
+function exp_sp_announcement_block_info() {
+	try{
+  $blocks = array();
+ 
+  $blocks['learner_announcement1'] = array(
+    'info' => t('Learner Announcements Block Type-1'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => '<front>'
+  );
+  $blocks['learner_announcement2'] = array(
+    'info' => t('Learner Announcements Block Type-2'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+    'pages' => '<front>'
+  );
+  $blocks['learner_mylearning_announcement'] = array(
+    'info' => t('Learner Announcements Mylearning Type-3'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+	'pages' => 'learning/enrollment-search
+    *'
+  );
+  
+  return $blocks;
+	}catch(Exception $ex) {
+  	watchdog_exception('exp_sp_announcement_block_info', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+/**
+ * Implements hook_block_configure().
+ */
+function exp_sp_announcement_block_configure($delta = '') {
+	try{
+  global $user;
+  $form = array();
+  switch ($delta) {
+    case 'learner_announcement1':
+      $form['exp_sp_announcement_block_seconds_pager'] = array(
+        '#type' => 'select',
+        '#title' => t('Elapsed time'),
+  	  	'#description' => t('Number of seconds interval to display every announcement'),
+        '#default_value' => variable_get('exp_sp_announcement_block_seconds_pager', 0),
+        '#options' => drupal_map_assoc(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
+      );
+      $form['exp_sp_announcement_block_no_of_display'] = array(
+        '#type' => 'select',
+        '#title' => t('Number of Announcement'),
+  	  	'#description' => t('Number of announcement to display.'),
+        '#default_value' => variable_get('exp_sp_announcement_block_no_of_display', 0),
+        '#options' => drupal_map_assoc(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
+      );
+    break;
+    case 'learner_mylearning_announcement':
+      $form['exp_sp_mylearning_announcement_block_max_list_count'] = array(
+        '#type' => 'select',
+        '#title' => t('No of announcement items'),
+        '#default_value' => variable_get('exp_sp_mylearning_announcement_block_max_list_count', 5),
+        '#options' => drupal_map_assoc(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)),
+        '#description' => t('Maximum number of My Learning Announcement details to be displayed.')
+      );
+      break;
+  }
+  return $form;
+  }catch(Exception $ex) {
+  	watchdog_exception('exp_sp_announcement_block_configure', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+/**
+ * Implements hook_block_save().
+ */
+function exp_sp_announcement_block_save($delta = '', $edit = array()) {
+ try {
+	global $user;
+
+  switch ($delta) {
+    case 'learner_announcement1':
+      variable_set('exp_sp_announcement_block_seconds_pager', ($edit['exp_sp_announcement_block_seconds_pager']*1000));
+	  variable_set('exp_sp_announcement_block_no_of_display', $edit['exp_sp_announcement_block_no_of_display']);
+    break;
+    case 'learner_mylearning_announcement':
+      variable_set('exp_sp_mylearning_announcement_block_max_list_count', $edit['exp_sp_mylearning_announcement_block_max_list_count']);
+    break;
+  }
+  }catch(Exception $ex) {
+  	watchdog_exception('exp_sp_announcement_block_save', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function exp_sp_announcement_menu($delta = '') {
+  try{
+  $items = array();
+  
+  $items['learning/announcement'] = array (
+    'title' => 'Fetch the list of announcement details',
+  	'page callback' => 'getMylearningAnnouncements',
+  	'type' => MENU_CALLBACK,
+  	'access arguments' => array('expertus learner'),
+  	'file' => 'exp_sp_announcement.inc'
+  );
+  
+  return $items;
+  }catch(Exception $ex) {
+  	watchdog_exception('exp_sp_announcement_menu', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function exp_sp_announcement_block_view($delta = ''){
+	try{
+   global $theme_key;
+  $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+  $css_module_optional = array('type' => 'file', 'group' => CSS_DEFAULT);
+  
+  $block = array();
+  
+  require_once('exp_sp_announcement.inc');
+  drupal_add_js(drupal_get_path('module', 'exp_sp_collaboration_learner').'/js/exp_sp_announcement/exp_sp_announcement.js', array('type' => 'file', 'group' => JS_DEFAULT));
+  if($theme_key == 'expertusoneV2'){
+  drupal_add_css(drupal_get_path('module', 'exp_sp_collaboration_learner').'/css/exp_sp_announcement_LMS_view_widget_v2.css', array('type' => 'file', 'group' => CSS_THEME, 'weight'=>1300));
+  }
+  else
+  {
+   drupal_add_css(drupal_get_path('module', 'exp_sp_collaboration_learner').'/css/exp_sp_announcement_LMS_view_widget.css', array('type' => 'file', 'group' => CSS_THEME));
+  }
+  switch ($delta) {
+    case 'learner_announcement1':
+      $block['subject'] = " ";
+      $block['content'] = " ";
+      $block['results'] = getAnnouncements();
+      expDebug::dPrint('$announceRes $block[results] = ' . print_r($block['results'], true),5);
+      break;
+    case 'learner_announcement2':
+      $block['subject'] = " ";
+      $block['content'] = getAnnouncements();
+      break;
+    case 'learner_mylearning_announcement':
+      drupal_add_js(drupal_get_path('module', 'exp_sp_announcement').'/exp_sp_mylearning_announcment.js',$js_module_optional);
+      if($theme_key == 'expertusoneV2'){
+      drupal_add_css(drupal_get_path('module', 'exp_sp_announcement').'/exp_sp_mylearning_announcment_v2.css',$css_module_optional);
+      }else
+      {
+       drupal_add_css(drupal_get_path('module', 'exp_sp_announcement').'/exp_sp_mylearning_announcment.css',$css_module_optional);	
+      }  
+      includeJqGridJsCss();
+
+      $block['subject'] = t('LBL196');
+      $block['content'] = " ";
+      break;
+  }
+  return $block;
+  }catch(Exception $ex) {
+  	watchdog_exception('exp_sp_announcement_block_view', $ex);
+  	expertusErrorThrow($ex);
+  }
+}

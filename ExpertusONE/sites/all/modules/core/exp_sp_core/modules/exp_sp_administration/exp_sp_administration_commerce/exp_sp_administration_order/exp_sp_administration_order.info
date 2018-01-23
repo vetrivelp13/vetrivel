@@ -1,0 +1,7 @@
+name = Commerce Order Details Administration 
+description = Responsible for commerce order administration.
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration_commerce
+dependencies[] = exp_sp_commerce
+version = VERSION
+core = 7.x

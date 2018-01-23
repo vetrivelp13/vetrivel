@@ -1,0 +1,79 @@
+::-ms-reveal, ::-ms-clear {
+  display: none
+}
+.admin-surass-auto-search-container .admin-pagination-surass-search-go {
+  right :15px;
+  margin-left:0px;
+}
+.mypgm-recertify .fade-out-title-container.exp-sp-mylearning-menulist{
+  text-indent:4px
+}
+.page-administration-commerce-setting .datagrid-payment-method-commerce .ui-jqgrid tr.jqgrow td{
+	height:auto
+}
+.page-administration #paint-narrow-search-results .narrow-search-results-item-detail .narrow-search-results-item-detail-pipe-line {
+  margin-top:0;
+}
+.fade-out-title-container.narrow-search-organization-type-fadeout-container{
+  margin-bottom:-7px
+}
+#instructor-markcomplete-dialog #ui-dialog-title-mark-complete-wizard .exp-sp-instructor-desk-markcompletion-dialog-class-title {
+  margin-bottom:-18px
+}
+ .page-learning-catalog-search  .cp-menu-detail .clsConentValidtiy,
+ .page-learning-learning-plan-details .cp-menu-detail .clsConentValidtiy,
+ .page-learning-course-details .cp-menu-detail .clsConentValidtiy,
+  .page-learning-class-details  .cp-menu-detail .clsConentValidtiy,
+ .page-learning-catalog-search #cp-modalcontainer .cp-menulist li:first-child .cp-menu-detail .clsConentValidtiy,
+ .page-learning-class-details .cp-menulist li:first-child .cp-menu-detail .clsConentValidtiy,
+ .page-learning-learning-plan-details .cp-menulist li:first-child .cp-menu-detail .clsConentValidtiy,
+ .page-learning-course-details .cp-menulist li:first-child .cp-menu-detail .clsConentValidtiy{
+    right:33px;
+ } 
+ .ctools-admin-iprange-modal .theme-ctool-popup .popup-block-footer-middle{
+	margin-left:9px;
+}
+#page-container #learner-myaccount-details .content #exp-sp-my-account-form .my-account-action-box {
+  margin-left:226px
+}
+#page-container #learner-myaccount-details #wizard-form-wrapper .pref-save-cancel-container-alignment{
+  margin-left:283px
+}
+
+#catalog-class-basic-addedit-form-container.catalog-course-basic-addedit-form-container.enroll-user-edit-datagrid #admin-data-grid .enrolluser-class-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr td:first-child,
+#catalog-class-basic-addedit-form-container.catalog-course-basic-addedit-form-container.enroll-user-edit-datagrid #admin-data-grid .enrolluser-class-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr td:nth-child(2),
+#catalog-class-basic-addedit-form-container.catalog-course-basic-addedit-form-container.enroll-user-edit-datagrid #admin-data-grid .enrolluser-class-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr td:nth-child(3),
+#catalog-class-basic-addedit-form-container.catalog-course-basic-addedit-form-container.enroll-user-view-datagrid #admin-data-grid .enrolluser-class-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr td:first-child ,
+#catalog-class-basic-addedit-form-container.catalog-course-basic-addedit-form-container.enroll-user-view-datagrid #admin-data-grid .enrolluser-class-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr td:nth-child(2),
+#catalog-class-basic-addedit-form-container.catalog-course-basic-addedit-form-container.enroll-user-view-datagrid #admin-data-grid .enrolluser-class-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr td:nth-child(5),
+#catalog-class-basic-addedit-form-container.catalog-course-basic-addedit-form-container.enroll-user-view-datagrid #admin-data-grid .enrolluser-class-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr td:nth-child(9) {
+   min-width: auto;
+   max-width: inherit
+}
+#security-role-detail-wrapper-list #admin-add-course-training-plan .admin-save-button-container #edit-cancel-assigneduser-edit-mode,
+#security-role-detail-wrapper-list #admin-add-course-training-plan .admin-save-button-container .admin-save-button-container{
+  margin-top:24px;
+}
+#lnr-myteam-search #searchRecordsPaint #paintContentResults .dd-btn .dd-arrow {
+  height:28px
+}
+.page-administration.page-administration-people-group #group-control #ui-multiselect-con .checkbox-unselected,
+.page-administration.page-administration-people-group #group-control #ui-multiselect-con .checkbox-selected,
+.page-administration #ui-multiselect-con .checkbox-unselected,
+.page-administration #ui-multiselect-con .checkbox-selected{
+  margin-top:6px;
+  width:15px;
+  padding-left:0
+}
+.page-administration.page-administration-people-group #group-control #ui-multiselect-con .checkbox-unselected input,
+.page-administration.page-administration-people-group #group-control #ui-multiselect-con .checkbox-selected input,
+.page-administration #ui-multiselect-con .checkbox-unselected input,
+.page-administration #ui-multiselect-con .checkbox-selected input{
+  margin-right:5px
+}
+.page-administration-manage-customattribute .bottom-qtip-tip-visible{
+	margin-top: -3px;
+}
+.uploadBtnArrowVid  a {
+    top: 1px;
+}

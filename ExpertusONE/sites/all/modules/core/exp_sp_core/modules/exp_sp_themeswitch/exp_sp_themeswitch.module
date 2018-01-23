@@ -1,0 +1,42 @@
+<?php
+/**
+* Implements hook_custom_theme().
+*/
+function exp_sp_themeswitch_custom_theme() {
+	try{
+  if( (arg(0) == 'portalpages') ) { //change to admin theme
+		return 'AdministrationTheme';
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_themeswitch_custom_theme', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+* Implements hook_menu_alter().
+*/
+function exp_sp_themeswitch_menu_alter(&$items) {
+	try{
+  $items['node'] = array(
+    'page callback' => 'empty_value',
+    'access arguments' => array('access content'),
+    'menu_name' => 'navigation',
+    'type' => MENU_CALLBACK,
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_themeswitch_menu_alter', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function empty_value() {
+	try{
+  drupal_set_title('');
+  return '';
+  }catch (Exception $ex) {
+  	watchdog_exception('empty_value', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+?>

@@ -1,0 +1,259 @@
+<?php
+/**
+ * Implements hook_init().
+ */
+function exp_sp_tour_init() {
+	try {
+		add_person_preference(getIdOfLoggedInUser());
+		$css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+		$js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+		drupal_add_js(drupal_get_path('module', 'exp_sp_tour') . '/introjs/intro.js', $js_module_optional);
+		drupal_add_css(drupal_get_path('module', 'exp_sp_tour') . '/introjs/introjs.css', $css_module_optional);
+		drupal_add_js(drupal_get_path('module', 'exp_sp_tour') . '/exp_sp_tour.js', $js_module_optional);
+		drupal_add_css(drupal_get_path('module', 'exp_sp_tour') . '/exp_sp_tour.css', $css_module_optional);
+	} catch(Exception $ex) {
+		expDebug::dPrint('Expection in exp_sp_tour_init ' . $ex->getMessage(), 1);
+		watchdog_exception('exp_sp_tour_init', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+function exp_sp_tour_menu() {
+	$items = array();
+	$items['tour-form-configuration'] = array(
+  		'title' => t('Tour Form'),
+  		'page callback' => 'configuration_list',
+  		'access callback' => TRUE,
+  	);
+  	$items['tour-form-configuration/delete/%'] = array(
+  		'title' => t('Delete Item'),
+  		'page callback' => 'drupal_get_form',
+  		'page arguments' => array('item_delete_confirm', 2),
+  		'access callback' => TRUE,
+  		'type' => MENU_CALLBACK,
+	);
+  	$items['tour-form-configuration/add/item'] = array(
+  		'title' => t('Add Item'),
+  		'page callback' => 'drupal_get_form',
+  		'page arguments' => array('item_add_confirm'),
+  		'access callback' => TRUE,
+  		'type' => MENU_CALLBACK,
+  	);
+  	$items['tour-form-configuration/edit'] = array(
+  		'title' => t('Edit Item'),
+  		'page callback' => 'drupal_get_form',
+  		'page arguments' => array('item_edit_confirm',2),
+  		'access callback' => TRUE,
+  		'type' => MENU_CALLBACK,
+  	);
+	return $items;
+}
+function exp_sp_tour_js_alter(&$javascript) {
+	$page = ($_GET['q'] == 'node' || $_GET['q'] == 'home') ? '' : $_GET['q'];
+	$loggedUserId = getIdOfLoggedInUser();
+	$column_name = '';
+	if (strpos($page, 'learning/catalog-search') !== false) {
+		$page = preg_replace("/\|.+/", "", $page);
+		$page = str_replace("/Search",'',$page);
+	}
+	switch($page) {
+		case 'learning/catalog-search':
+			$column_name = 'catalog_visited';
+		break;
+		
+		case 'learning/enrollment-search':
+			$column_name = 'mylearning_visited';
+			break;
+	}
+	
+
+	$query = db_select('slt_tour_config_details', 'u');
+	$query->fields('u', array('intro', 'element', 'position', 'display_order'));
+	$query->condition('url', $page);
+	$query->orderBy('display_order');
+// 	expDebug::dPrintDBAPI('select tour details ', $query);
+	$result = $query->execute()->fetchAll();
+// 	expDebug::dPrint('$result ' . $page . print_r($result, 1), 5);
+	$tourconfig = array();
+	foreach($result as $key => $val) {
+		$guide = new stdClass();
+		$guide->intro = t($val->intro);
+		if($val->element == 'introtext') {
+			$guide->welcomeText = true;
+		} else {
+			$guide->element = $val->element;
+			$guide->position = $val->position;
+		}
+		$guide->displayOrder = $val->display_order;
+		$tourconfig[] = $guide;
+	}
+	expDebug::dPrint('result' . print_r($tourconfig, 1), 5);
+	if($result) {
+		$select = db_select("slt_person_preference", 'person_per');
+		$select->fields('person_per', array('id', 'user_id', $column_name));
+		$select->condition('person_per.user_id',$loggedUserId,'=');
+		expDebug::dPrintDBAPI('select tour details ',$select);
+		$result = $select->execute()->fetch();
+		
+		$auto_start = (($result->$column_name == null || $result->$column_name == 0) ? 1 : 0);
+		update_person_preference($loggedUserId, $column_name);
+		
+		drupal_add_js(array('exp_sp_tour' => array('tourconfig' => json_encode($tourconfig),'auto_start' => $auto_start, 'url' => $_GET['q'])), 'setting');
+	}
+}
+function configuration_list() {
+	$header = array('INTRO', 'ELEMENT', 'POSITION', 'DISPLAY ORDER', 'URL', 'Operations');
+	$select = db_select("slt_tour_config_details", 'tour');
+	$select->fields('tour', array('id', 'intro', 'element', 'position', 'display_order', 'url'));
+	$results = $select->execute()->fetchAll();
+	expDebug::dPrintDBAPI('select intro ', $select);
+// 	expDebug::dPrint('select tour result ' . print_r($results, 1), 5);
+	$rows = array();
+	foreach($results as $key) {
+		$code = $key->intro;
+		$name = $key->element;
+		$position = $key->position;
+		$display_order = $key->display_order;
+		$url = $key->url;
+		$rows[] = array($code, $name, $position, $display_order, $url, "<a href='?q=tour-form-configuration/edit/{$key->id}'>" . t('Edit') . "</a> | <a href='?q=tour-form-configuration/delete/{$key->id}'>" . t('Delete') . "</a>");
+	}
+	$rowAddlink = '<a class =tour-config-add href=?q=tour-form-configuration/add/item>' . t('Add') . '</a>';
+	return theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('class' => array('tour-table-config')))) . $rowAddlink;
+}
+
+function item_delete_confirm($form ,&$form_state, $id) {
+	$form['item_id'] = array(
+		'#type' => 'value',
+		'#value' => $id
+	);
+	drupal_set_message($id);
+	return confirm_form($form, t('Are you sure you want to delete ' . $product_code . ' Item?'), isset($_GET['destination']) ? $_GET['destination'] : "tour-form-configuration", t('This action cannot be undone.'), t('Delete'), t('Cancel'));
+}
+
+function item_delete_confirm_submit($form, &$form_state) {
+	$form_values = $form_state['values'];
+	if($form_state['values']['confirm']) {
+		$id = $form_state['values']['item_id'];
+		$delete = db_delete('slt_tour_config_details')->condition('id', $id, '=')->execute();
+	}
+	drupal_goto("tour-form-configuration");
+	drupal_set_message(t('Item has been deleted successfully.'));
+}
+
+function item_edit_confirm($form, &$form_state, $product_code) {
+	$product_code = arg(2);
+	$code = '';
+	$name = '';
+	$object_type = '';
+	$results = db_query("SELECT * from {slt_tour_config_details} WHERE id='{$product_code}'");
+	foreach($results as $key) {
+		$code = $key->intro;
+		$element = $key->element;
+		$position = $key->position;
+		$url = $key->url;
+	}
+	$form = array();
+
+	$form['intro']=array(
+		'#title'=>t('Intro').'<span class="tour-help-text">(The help text which needs to displayed in Tour guidelines)</span>',
+		'#type'=>'textarea',
+		'#value'=>$code
+	);
+	$form['element']=array(
+		'#title'=>t('Element').'<span class="tour-help-text">(element must be a valid jQuery selector)</span>',
+		'#type'=>'textfield',
+		'#value'=>$element
+	);
+	$form['position']=array(
+		'#title' => t('Position').'<span class="tour-help-text">(position can be right, left, bottom, top)</span>',
+		'#type'=>'textfield',
+		'#value'=>$position
+	);
+	$form['url']=array(
+		'#title'=>t('URL').'<span class="tour-help-text">(e.g. learning/catalog-search or leave blank for home page)</span>',
+		'#type'=>'textfield',
+		'#value'=>$url
+	);
+	$form['delete_submit'] = array(
+		'#type' => 'submit',
+		'#value' => t('Save'),
+	);
+	$form['actions'] = array('#type' => 'actions');
+	return $form;
+}
+
+function item_add_confirm($form, &$form_state) {
+	$form = array();
+	$form['intro']=array(
+		'#title'=>t('Intro').'<span class="tour-help-text">(The help text which needs to displayed in Tour guidelines)</span>',
+		'#type'=>'textarea',
+	);
+	$form['element']=array(
+		'#title'=>t('Element').'<span class="tour-help-text">(element must be a valid jQuery selector)</span>',
+		'#type'=>'textfield',
+	);
+	$form['position']=array(
+		'#title'=>t('Position').'<span class="tour-help-text">(position can be right, left, bottom, top)</span>',
+		'#type'=>'textfield',
+	);
+	$form['display_order']=array(
+		'#title'=>t('Display Order'),
+		'#type'=>'textfield',
+	);
+	$form['url']=array(
+		'#title'=>t('URL').'<span class="tour-help-text">(e.g. learning/catalog-search or leave blank for home page)</span>',
+		'#type'=>'textfield',
+	);
+	$form['add_submit'] = array(
+		'#type' => 'submit',
+		'#value' => t('Save'),
+	);
+	return $form;
+}
+
+function item_add_confirm_submit($form, &$form_state) {
+	$form_values = $form_state['values'];
+	$intro = $form_state['values']['intro'];
+	$element = $form_state['values']['element'];
+	$position = trim($form_state['values']['position']);
+	$display_order = $form_state['values']['display_order'];
+	$url = $form_state['values']['url'];
+	$created_by = getIdOfLoggedInUser();
+	$created_on = now();
+	$insert = db_insert('slt_tour_config_details')
+	->fields(array(
+		'intro' => $intro,
+		'element' => $element,
+		'position' => $position,
+		'display_order' => $display_order,
+		'url' => $url,
+		'created_by' => $created_by,
+		'created_on' => $created_on,
+		'updated_by' => $created_by,
+		'updated_on' => $created_on,
+	));
+	expDebug::dPrintDBAPI('insert intro ', $insert);
+	$insert->execute();
+	drupal_goto("tour-form-configuration");
+	drupal_set_message(t('Item has added updated successfully.'));
+}
+
+function item_edit_confirm_submit($form, &$form_state) {
+	$form_values = $form_state['values'];
+	$intro = $form_state['input']['intro'];
+	$element = $form_state['input']['element'];
+	$position = trim($form_state['input']['position']);
+	$url = $form_state['input']['url'];
+	$updated_by = getIdOfLoggedInUser();
+	$updated_on = now();
+	$id = db_update('slt_tour_config_details')
+	->fields(array(
+		'intro' => $intro,
+		'element' => $element,
+		'position' => $position,
+		'url' => $url,
+		'updated_by' => $updated_by,
+		'updated_on' => $updated_on,
+	))->condition('id', arg(2))->execute();
+	drupal_set_message(t('Item has been updated successfully.'));
+	drupal_goto("tour-form-configuration");
+}

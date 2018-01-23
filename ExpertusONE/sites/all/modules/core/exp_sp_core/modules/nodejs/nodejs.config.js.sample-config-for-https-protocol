@@ -1,0 +1,31 @@
+/*
+ * For a more fully commented example see the file nodejs.config.js.example in the root of this module
+ */
+settings = {
+  //"scheme" : "http"
+  "scheme" : "https"
+  , "port" : 8080
+  , "host" : "localhost"
+  , "sslKeyPath" : "pass.key"
+  , "sslCertPath" : "JLBN.crt"
+  , "passPhrase" : "Expertus"
+  , "serviceKey" : "DUMMY-SERVICE-KEY"
+  , "flashPolicy" : {
+      "port" : 10843
+  }
+  , "backend" : {
+      //"port" : 80
+      "port" : 443
+      //, "scheme" : "http"
+      , "scheme" : "https"
+      , "host" : "localhost"
+  }
+  , "debug" : true
+  , "eraseDrupalAuthAfter" : 120000 // Wait time (milli-seconds) before re-confirming and invalidating a drupal authentication record for a user session
+                                    // after loosing all sockets. (default 2 min)
+  , "drupalchatNodejs" : {
+      "showUserPicture" : true
+    , "eraseUserAfter" : 45000 // Wait time (milli-seconds) before re-confirming and invalidating chat user details and announce the user as having gone
+                               // offline on detecting no socket connection for that that user. (default: 45 sec)
+  }
+};

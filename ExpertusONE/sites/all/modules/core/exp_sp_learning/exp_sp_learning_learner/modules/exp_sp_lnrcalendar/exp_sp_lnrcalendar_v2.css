@@ -1,0 +1,556 @@
+.eventdot {
+  margin-top: 4px;
+  font-weight: bold;
+  display: inline-block;
+  height: 10px;
+  width: 10px
+}
+.upevtdot {
+  background: url(images/upevtdot.png) no-repeat
+}
+.todaydot {
+  background: url(images/todaydot.png) no-repeat
+}
+#catalog-admin-cal {
+  padding: .5em .5em 0 .5em
+}
+#cal-legent-tr-height {
+  height: 8px;
+  /*margin-top:-18px*/
+}
+/*.cal-legent-td {
+  width: 85px
+}*/
+.cal-legent-td-tdy{
+	width:45px
+}
+.cal-legent-td-upcg{
+	width:64px
+}
+.cal-legent-td-reg{
+	width:69px
+}
+.cal-legent-td-comp
+{
+	width:70px;
+	
+}
+.cal-legent-td-tdy,
+.cal-legent-td-upcg,
+.cal-legent-td-reg,
+.cal-legent-td-comp{
+	float:left;
+}
+.cal-legent-td-tdy,
+.cal-legent-td-upcg,
+.cal-legent-td-reg{
+	padding-right:2px;
+}
+
+
+#catalog-admin-cal .ui-datepicker-inline {
+  display: inline-block
+}
+#catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.datepicker-withdata span.ui-state-default {
+  background: #4686DD
+}
+#catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-registered span.ui-state-default {
+  background: #7BD148;
+  color: #FFF;
+  cursor: pointer
+}
+#catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-unregistered span.ui-state-default {
+  background: #FA573C;
+  color: #FFF;
+  cursor: pointer
+}
+#catalog-admin-cal .ui-datepicker-calendar tr th span {
+  font-size: 12px;
+  font-weight: normal;
+  color: #474747;
+  padding: 6px 0;
+  display: block;
+  font-family: ProximaNovaBold;
+  text-transform: uppercase
+}
+#catalog-admin-style .ui-datepicker-inline .ui-datepicker-header .ui-datepicker-next {
+  margin-left: 27px
+}
+#catalog-admin-style #catalog-admin-cal .ui-datepicker .ui-datepicker-title {
+  margin-left: 35px
+}
+#catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.ui-datepicker-today span.ui-state-default {
+  background: #FFAD46;
+  color: #FFF;
+  cursor: pointer
+}
+#catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-completed span.ui-state-default {
+  background: #4986E7;
+  color: #FFF;
+  cursor: pointer
+}
+#catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-instructor span.ui-state-default {
+  background: #C8BFE7;
+  color: #FFF;
+  cursor: pointer
+}
+#catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.combo-instructor span.ui-state-default,
+#catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.combo-reg span.ui-state-default,
+#catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.combo-unreg span.ui-state-default,
+#catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.combo-comp span.ui-state-default {
+  overflow: hidden;
+  cursor: pointer
+}
+#catalog-admin-cal .ui-datepicker-header {
+  background: #4686DD
+}
+#catalog-admin-cal .ui-datepicker-prev .ui-icon-circle-triangle-w,
+#catalog-admin-cal .ui-datepicker-next .ui-icon-circle-triangle-e {
+  margin-top: -7px
+}
+#catalog-admin-style td.ui-state-disabled span.ui-state-default {
+  border: 1px solid #a5c9e3;
+  padding: 6px;
+  color: #246BA1;
+  text-align: center
+}
+#catalog-admin-style .ui-datepicker-inline .ui-datepicker-header {
+  padding: 4px
+}
+#catalog-admin-style .ui-datepicker {
+  margin: 6px 6px 0 6px;
+  width: 93.1%;
+  border: 1px solid #a5c9e3
+}
+#catalog-admin-cal .tooltipmid .splitter {
+  display: block;
+  clear: both;
+  positon: relative;
+  width: 100%;
+  height: 0;
+  font-size: 1px;
+  line-height: 0
+}
+.qtip-contentWrapper .mycalendar-tooltip {
+  width: 100%;
+  font-size: 12px
+}
+.qtip-contentWrapper .mycalendar-class-title {
+  color: #333333;
+  width: 130px;
+  word-wrap: break-word;
+  display: block
+}
+.qtip-contentWrapper .registered,
+.qtip-contentWrapper .not-registered,
+.qtip-contentWrapper .completed,
+.qtip-contentWrapper .instructor {
+  color: #7BD148;
+  padding-right: 10px;
+  text-align: right;
+  vertical-align: top
+}
+.qtip-contentWrapper .not-registered {
+  color: #FA573C;
+}
+.qtip-contentWrapper .completed {
+  color: #4986E7;
+}
+.qtip-contentWrapper .instructor {
+  color: #C8BFE7;
+}
+.qtip-contentWrapper .mycalendar-class-schedule {
+  color: #999;
+  font-size: 11px
+}
+.qtip-contentWrapper .mycalqtiptop {
+  width: 257px;
+  height: 40px
+}
+.qtip-contentWrapper .mycalqtipmid {
+  width: 229px;
+  height: auto;
+  padding: 0 10px 0 18px
+}
+.qtip-contentWrapper .mycalqtipbottom {
+  width: 257px;
+  height: 21px
+}
+#catalog-admin-cal-legend .mycalendar-class-types {
+  color: #333;
+  font-size: 10px
+}
+.first-row-cell {
+  margin-left: 5px;
+  padding-bottom: 5px;
+ /* margin-top:10px;*/
+  margin-bottom:10px;
+}
+.mycalendar-class-types {
+  padding-left: 4px
+}
+/*.mycalendar-class-types today {
+  width:10px;
+}*/
+#block-exp-sp-lnrcalendar-tab-my-calendar .block-footer-left {
+  height: 9px
+}
+/*#block-exp-sp-lnrcalendar-tab-my-calendar h2.block-title {
+  text-indent: 2px
+}*/
+#page-container #catalog-admin-cal {
+  padding-bottom: 10px;
+  height:225px;
+}
+#page-container #catalog-admin-style .ui-datepicker {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%
+}
+#page-container #catalog-admin-style {
+  margin: 0;
+  border-width: 1px 0 0 0
+}
+#page-container #catalog-admin-cal-legend {
+  border-bottom: 0;
+ /*padding-bottom: 16px*/
+}
+#page-container #catalog-admin-style .ui-datepicker-inline .ui-datepicker-header {
+  padding: 4px 0
+}
+#page-container #catalog-admin-style .ui-datepicker td {
+  border: 1px solid #D8D8D8;
+  padding: 0
+}
+#page-container #catalog-admin-style .ui-datepicker-calendar {
+  margin-bottom: 6px
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.ui-datepicker-today span.ui-state-default,
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-registered span.ui-state-default,
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-unregistered span.ui-state-default,
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-instructor span.ui-state-default,
+#page-container #catalog-admin-style #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-completed span.ui-state-default {
+  color: #2D2D2D;
+  cursor: pointer
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.ui-datepicker-today span.ui-state-default {
+  background: #fff;
+  border: 2px solid #0599D6
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-completed span.ui-state-default {
+  background: #fff;
+  border: 2px solid #00A172;
+  color: #2D2D2D
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-registered span.ui-state-default {
+  background: #fff;
+  border: 2px solid #FFCC00
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-unregistered span.ui-state-default {
+  background: #fff;
+  border: 2px solid #E30F7A
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-instructor span.ui-state-default {
+  background: #fff;
+  border: 2px solid #C8BFE7
+}
+#page-container #catalog-admin-style #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.cell-completed span.ui-state-default {
+  background: #fff;
+  border: 2px solid #00AB79
+}
+#page-container .todaydot,
+#page-container .regdot,
+#page-container .updot,
+#page-container .compdot,
+#page-container .instructordot {
+  border: 1px solid #b2b2b2;
+  height: 8px;
+  vertical-align: top;
+  width: 8px
+}
+#page-container .todaydot {
+  background: #0599D6
+}
+#page-container .regdot {
+  background: #FFCC00;}
+
+#page-container .updot {
+  background: #E30F7A
+}
+#page-container .compdot {
+  background: #00A172
+}
+#page-container .instructordot {
+  background: #C8BFE7
+}
+#page-container #catalog-admin-style .ui-datepicker-prev {
+  margin-left: 20px
+}
+#page-container #catalog-admin-style .ui-datepicker-prev:hover {
+  margin-left: 20px;
+  margin-top: -4px
+}
+#page-container #catalog-admin-style .ui-datepicker-next {
+  margin-left: 12px
+}
+#page-container #catalog-admin-style .ui-datepicker-next:hover {
+  margin-left: 12px;
+  margin-top: -4px
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-prev .ui-icon-circle-triangle-w {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat left -1296px
+}
+#page-container #catalog-admin-style .ui-datepicker-next .ui-icon-circle-triangle-e {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat right -1320px
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker .ui-datepicker-title {
+  margin-left: 29px
+}
+#page-container #catalog-admin-style .ui-datepicker-header a,
+#page-container #catalog-admin-style .ui-datepicker-header a:hover {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  top: 17px
+}
+#page-container #catalog-admin-style .ui-datepicker-header a:hover {
+  top: 21px
+}
+#catalog-admin-style .ui-datepicker .ui-datepicker-title select.ui-datepicker-month, #catalog-admin-style .ui-datepicker .ui-datepicker-title select.ui-datepicker-year {
+  position: relative;
+  top: 2px
+}
+#page-container .calendar-session-head {
+  color: #474747;
+    font-family: ProximaNovaBold,Arial;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+#page-container .calendar-session-details:first-child {
+  border-top: 0
+}
+#page-container .calendar-session-details {
+  border-top: 1px solid #EDEDED;
+  width: 100%
+}
+#page-container .calendar-session-details {
+  padding: 8px 12px 15px 12px
+}
+#page-container .calendar-session-details-list {
+  margin: 14px 0 0 10px;
+  color: #2d2d2d;
+}
+#page-container .eventCodeseperator {
+  padding: 0 5px
+}
+#page-container .session-details-list table.calendar-session-details:first-child {
+  border-top: 1px solid #E5E5E5;
+}
+#page-container #catalog-admin-cal-legend .mycalendar-class-types {
+  color: #909090;
+  font-size: 10px
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.selectDateTD span.ui-state-default {
+  background: #fafafa;
+  font-weight: bold
+}
+.session-details-list {
+	max-height: 192px;
+	overflow: hidden;
+	width: 250px;
+	margin: 0 0 0 auto;
+	/* border-right: 1px solid #EDEDED*/
+}
+#catalog-admin-cal-session-details .jspDrag {
+	border-radius: 10px;
+	height: 115px;
+	margin-top: 10px
+}
+.calendar-mandatory-bg,
+.calendar-recommended-bg {
+  display: block;
+  float: right;
+  font-size: 10px;
+  height: 18px;
+  margin-left: 5px;
+  margin-top: -3px;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-align: center;
+  text-indent: -2000px;
+  width: 19px
+}
+.calendar-mandatory-bg {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -134px -1927px
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.combo-reg span.ui-state-default {
+  border: 2px solid #ffcc00
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.combo-unreg span.ui-state-default {
+  border: 2px solid #e30f7a
+}
+#page-container #catalog-admin-style #catalog-admin-cal .ui-datepicker-calendar tr td.combo-comp span.ui-state-default {
+  border: 2px solid #00a172
+}
+#block-exp-sp-lnrcalendar-tab-my-calendar .calendar-session-details-list .calendar-js-title-restriction-session-head {
+  max-width:170px;
+  display:inline-block;
+  margin-bottom:-3px
+}
+#block-exp-sp-lnrcalendar-tab-my-calendar .calendar-session-details-list .eventCodetitle .calendar-js-title-restriction {
+  max-width:60px;
+  display:inline-block;
+  margin-bottom:-3px  
+}
+#block-exp-sp-lnrcalendar-tab-my-calendar .calendar-session-details-list .eventCodetitle, 
+#block-exp-sp-lnrcalendar-tab-my-calendar .calendar-session-details-list .eventCodeseperator,
+#block-exp-sp-lnrcalendar-tab-my-calendar .calendar-session-details-list .mycalendar-class-action {
+  float:left;
+  text-align:left
+}
+#catalog-admin-cal-session-details .location-session-detail #bubble-face-table td{
+	font-size:9.5px
+}
+.session-details-list  .calendar-session-details-list td.tz{
+	font-size:9.5px;
+}
+#catalog-admin-cal-session-details .location-session-detail #bubble-face-table #paintContentVisiblePopup {
+    font-size: 9px;
+}
+
+/* Styles for misalignment of text rows in Narrow Search Page starts here */
+#page-container .calendar-session-head {
+  font-size:13px
+}
+#page-container .calendar-session-details-list {
+  margin:12px 0 10px 8px
+}
+#page-container .calendar-session-details td {
+  vertical-align:top
+}
+#page-container .calendar-session-details > tbody > tr > td > div {
+  margin: 14px 0 10px 0;
+  width: 34px;
+  height: 34px
+}
+/* #page-container .calendar-session-details .ilt-icon {
+  background-position:-241px -742px
+}
+#page-container .calendar-session-details .vcl-icon {
+  background-position:-205px -742px
+} */
+#page-container .calendar-session-details .calendar-session-details-list .eventCodetitle,
+#page-container .calendar-session-details .calendar-session-details-list .eventCodeseperator,
+#page-container .calendar-session-details .calendar-session-details-list .mycalendar-class-action {
+  font-size:12px;
+  color:#999;
+  margin-top:-2px
+ }
+#page-container .calendar-session-details .calendar-session-details-list td {
+  vertical-align:top;
+}
+
+/* Styles for misalignment of text rows in Narrow Search Page ends here */
+
+/* Trunk8 Fadeout for Title and Description texts starts here */
+#page-container .calendar-session-details td.calendar-session-head .limit-title-row {
+  max-width:180px;
+  min-width:180px;
+  padding-bottom:3px;
+  margin-right:12px;
+  word-wrap:break-word
+}
+#page-container .calendar-session-details td.calendar-session-head .limit-title-row .limit-title {
+  line-height:15px;
+  display:block
+}
+/* Trunk8 Fadeout for Title and Description texts ends here */
+/* My calendar New theme for my learning start here*/
+#user-mycalendar-settings .calendaricon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -280px -791px;
+  cursor: pointer;
+   width:23px;
+  height:23px;
+  display: block;
+  float: left;
+  margin:7px
+}
+.page-learning-enrollment-search .mylearning-mycalendar-customization{
+  margin-top: 0
+}
+#calendar_new{
+  background: #fff none repeat scroll 0 0;
+  float: left;
+  min-height: 200px;
+  width: 260px;
+  margin: 0;
+  padding: 0;
+  position:relative;
+  display:block;
+  margin-top:10px
+}
+#calendar_custom{
+  display:block
+}
+#calendar_new.mylearning-calendar-tab{
+  min-height: 245px;
+  width: 260px;
+  z-index: 1001
+}
+#block-exp-sp-lnrcalendar-mycalendar-mylearning .mylearning-calendar-tab{
+  position: absolute;
+  top: 37px;
+  right:0;
+  border: 1px solid #ccc;
+  box-shadow: 0 6px 6px -6px black;
+  
+/*   padding-bottom:10px */
+}
+/*#block-exp-sp-lnrcalendar-mycalendar-mylearning #catalog-admin-style .ui-datepicker .ui-datepicker-title select.ui-datepicker-month,
+#block-exp-sp-lnrcalendar-mycalendar-mylearning #catalog-admin-style .ui-datepicker .ui-datepicker-title select.ui-datepicker-year {
+  border:1px solid #ccc;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+   background: #ffffff url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat  55px -2822px; 
+  text-indent: 0.01px;
+  text-overflow: "";
+  font-size:12px;
+  border-radius:4px;
+  height:26px;
+  padding-left:3px
+}*/
+#page-container #block-exp-sp-lnrcalendar-mycalendar-mylearning #catalog-admin-style .ui-datepicker-inline .ui-datepicker-header{
+  padding-top:2px
+}
+#block-exp-sp-lnrcalendar-mycalendar-mylearning .calendar-session-details-list .calendar-js-title-restriction-session-head {
+  max-width:170px;
+  display:inline-block;
+  margin-bottom:-3px
+}
+#block-exp-sp-lnrcalendar-mycalendar-mylearning .calendar-session-details-list .eventCodetitle .calendar-js-title-restriction {
+  max-width:90px;
+  display:inline-block;
+  margin-bottom:-4px  
+}
+#block-exp-sp-lnrcalendar-mycalendar-mylearning .calendar-session-details-list .eventCodetitle, 
+#block-exp-sp-lnrcalendar-mycalendar-mylearning .calendar-session-details-list .eventCodeseperator,
+#block-exp-sp-lnrcalendar-mycalendar-mylearning .calendar-session-details-list .mycalendar-class-action {
+  float:left;
+  text-align:left
+}
+#page-container #block-exp-sp-lnrcalendar-mycalendar-mylearning #catalog-admin-cal{
+  min-height:auto;
+  height:auto;
+  padding:0
+}
+#block-exp-sp-lnrcalendar-mycalendar-mylearning #catalog-admin-cal .ui-datepicker-inline {
+  display: block
+}
+/* My calendar New theme for my learning end here*/
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+/*   #page-container #catalog-admin-style .ui-datepicker-header a:hover {
+    top: 19px
+  } */
+  }

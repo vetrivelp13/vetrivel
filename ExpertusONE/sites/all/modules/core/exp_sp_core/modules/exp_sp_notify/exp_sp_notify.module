@@ -1,0 +1,1035 @@
+<?php
+include_once DRUPAL_ROOT."/sites/all/services/SCSoapClient.php";
+function exp_sp_notify_cronjob() {
+  try{
+  $x;
+  if (function_exists('sendMessageToUser')){
+    //get the list of notifications to be sent
+    $config=getConfig("exp_sp");
+    $url=$config["service_url"]."?actionkey=".$config["actionkey"];
+    expDebug::dPrint('Notification URL'. $url , 4);
+    if(!isset($_COOKIE['SPCertificate'])){
+	    $requestXML = getRequestXML_authenticateNotify($username,120);
+	    expDebug::dPrint('Notification RequestURL');
+	    expDebug::dPrint($requestXML , 4);
+	    $xmlstr = SCSoapClient::connect(null,$url,$requestXML,'','');
+	    expDebug::dPrint('xmlstring');
+	    expDebug::dPrint($xmlstr , 4);
+	    $cert='';
+	    if($xmlstr && strlen($xmlstr)>0) {
+	      $dom = new DOMDocument('1.0','UTF-8');
+	      $dom->loadXML($xmlstr);
+	      $cert=$dom->getElementsByTagName("SPCertificate")->item(0)->nodeValue;
+	    }
+	    expDebug::dPrint($cert , 4);
+    }else{
+    	$cert=$_COOKIE['SPCertificate'];
+    }
+    $url=$config["service_url"]."?actionkey=".$config["notificationserviceno"]."&certificateid=".$cert;
+    expDebug::dPrint($url , 4);
+    $requestXML = getNotificationRequestXML();
+    $xmlstr = SCSoapClient::connect(null,$url,$requestXML,'','');
+    expDebug::dPrint('Output : getNotificationRequestXML()');
+    expDebug::dPrint($xmlstr , 4);
+    if($xmlstr && strlen($xmlstr)>0) {
+
+      $dom = new DOMDocument('1.0','UTF-8');
+      $dom->loadXML($xmlstr);
+      $itemNodes=$dom->getElementsByTagName("Item");
+      foreach($itemNodes as $item) {
+        //variables used to send the message notification
+        $add_text='';$type=''; $message = new StdClass(); $object=new StdClass(); $senduser=new StdClass();$tokenstr='';
+        //key1|value1~|key2|value2~|key3|value3
+        $notificationsubject='';$notificationtemplate='';
+        $dtCd='wbt';
+        //variables to update the send status of the notification
+        $notifyId='';$sendFlag='';$remarks='';
+        $senduser->uid=1;
+        try {
+          $notifyInfo=$item->childNodes;
+          foreach ($notifyInfo as $notify){
+            expDebug::dPrint($notify->nodeName.'=>'.$notify->nodeValue , 4);
+            switch($notify->nodeName){
+              case 'id':
+              	$notifyId=$notify->nodeValue;
+              	break;
+              case 'msg_id':
+              	$type = $notify->nodeValue;
+              	break;
+              case 'token_str':
+              	$tokenstr= $notify->nodeValue;
+              	break;
+              case 'send_to_email':
+              	$senduser->mail=$notify->nodeValue;
+              	break;
+              case 'send_to_email_cc':
+                $senduser->mail_cc=$notify->nodeValue;
+                break;
+              case 'custom0':
+                if($notify->nodeValue == 1) {
+              	  $senduser->mail=variable_get('site_mail','info@expertus.com');
+                }
+              	break;
+              case 'send_to_id':
+              	$senduser->uid=$notify->nodeValue;
+              	break;
+              case 'additional_text':
+              	$add_text=rawurldecode(html_entity_decode( $notify->nodeValue, ENT_QUOTES, "utf-8" ));
+              	break;
+              case 'notification_subject':
+              	$notificationsubject=$notify->nodeValue;
+              	break;
+              case 'notification_template':
+              	$notificationtemplate=$notify->nodeValue;
+              	break;
+                case 'created_by':
+              	//$created_by=$notify->nodeValue;
+              	$created_by=1;
+              	break;
+
+              case 'ical' :
+              	$iCal = $notify->nodeValue;
+              	break;
+            }
+          }
+          $tokenSplit = array();
+          $fileName = "";
+          if($tokenstr != null && $tokenstr != ''){
+            $tokenArr=explode('~|',$tokenstr);
+            for($i=0;$i<count($tokenArr);$i++) {
+              $keyVal=explode('>|',$tokenArr[$i]);
+              expDebug::dPrint('toketn $keyVal'.print_r($keyVal, true),4);
+              if($keyVal[0]!= 'Actions') {
+                // If a date, use correct date format
+                switch ($keyVal[0]) {
+
+                  case 'session_startdate':
+                  case 'session_enddate':
+                  case 'learning_dateend':
+                  case 'learning_datestart':
+                    if($keyVal[0] == 'session_startdate' && $type =='class_cancel'){
+                     $keyVal[1] = dateTimeStrToUnivShort(trim($keyVal[1]), true, false, false, false); //Do not show time
+                    }
+                    else{
+                     $keyVal[1] = dateTimeStrToUnivShort(trim($keyVal[1]), true, true, false, false); // Show time
+                    }
+                    break;
+                  case 'order_date':
+                  case 'tp_expirydate':
+                  case 'course_completed_date':
+                    $keyVal[1] = dateTimeStrToUnivShort(trim($keyVal[1]), true, false, false, false); // Do not show time
+                    break;
+                  case 'order_refnumber': // ticket #0024165 - special characters in order comments cause mail to be incompletely rendered in outlook
+                  	$keyVal[1] = check_plain($keyVal[1]);
+                  	break;
+                  case 'job_file_name':
+                  	$fileName = $keyVal[1];
+                  	break;
+                } // End switch
+
+                $tokenSplit[$keyVal[0]]=(!empty($keyVal[1])) ? $keyVal[1] : ' ';
+                expDebug::dPrint('toketn $tokenSplit'.print_r($tokenSplit, true),4);
+
+
+                if($keyVal[0]=='dtcd'){
+                  $dtCd=$keyVal[1];
+				}
+  			  }
+            } // End for loop
+          }
+
+          expDebug::dPrint('exp_sp_notify.module : $tokenSplit = ' . print_r($tokenSplit, true) , 4);
+
+          expDebug::dPrint($senduser , 4);
+          $splitSubject = explode('#',$notificationsubject);
+          expDebug::dPrint('exp_sp_notify.module : $splitSubject = ' . print_r($splitSubject, true) , 4);
+          $keywords = array();
+          $exactArr = Array();
+          for($i=0;$i<count($splitSubject);$i++) {
+            if (strlen($splitSubject[$i]) > 2 && $splitSubject[$i][0] == '@' &&  substr($splitSubject[$i], -1) == '@') {
+              $str = ereg_replace('@','',$splitSubject[$i]);
+              $keywords[] = ereg_replace('@','',$splitSubject[$i]);
+              $dispSubject = $tokenSplit[$str];
+              if(!$tokenSplit[$str]){
+                if($str == 'cmp_name'){
+                  $dispSubject = variable_get('site_name', 'ExpertusONE');
+                }
+                else {
+                  $dispSubject = '-';
+                }
+              }
+            }else {
+              $dispSubject = $splitSubject[$i];
+            }
+            $exactArr[] = $dispSubject;
+          }
+          $notificationsubjectFinal = implode('',$exactArr);
+
+          $splitContent = explode('#',$notificationtemplate);
+          expDebug::dPrint('exp_sp_notify.module : $splitContent = ' . print_r($splitContent, true) , 4);
+          $exactTemplate = Array();
+          for($i=0; $i<count($splitContent); $i++) {
+            if(strlen($splitContent[$i]) > 2 && $splitContent[$i][0] == '@' &&  substr($splitContent[$i], -1) == '@') {
+              $strTemplate = ereg_replace('@', '', $splitContent[$i]);
+              if($strTemplate == 'group_data' || $strTemplate == 'group_discount_data' || $strTemplate == 'group_sessiondata' || $strTemplate == 'group_instructordata' || $strTemplate == 'group_tax_data') {
+                $groupDataSplit = explode('~@', $tokenSplit[$strTemplate]);
+                $newArrKey = Array();
+              	for($n = 0; $n < count($groupDataSplit); $n++) {
+                    $groupArr=explode('~~', $groupDataSplit[$n]);
+                    for($j = 0; $j < count($groupArr); $j++){
+                      $groupVal = explode('<|', $groupArr[$j]);
+                      $val1 = $groupVal[0];
+                      $val2 = $groupVal[1];
+                      expDebug::dPrint(' ($val1, $val2) = ("' . $val1 . '", "' . $val2 . '")' , 4);
+                      if($val1 == 'tax_title' && !empty($notifyId)) {
+                      	$select = db_select('slt_notification','sn');
+                      	$select->innerJoin('slt_profile_list_items', 'spli', 'spli.code = sn.lang_code');
+                      	$select->innerJoin('locales_target', 'lotar', 'lotar.language = spli.attr1');
+                      	$select->innerJoin('locales_source', 'losou', 'lotar.lid = losou.lid');
+                      	$select->addField('lotar','translation', 'translation');
+                      	$select->condition('losou.source', 'Tax', '=');
+                      	$select->condition('sn.id',$notifyId, '=');
+                      	expDebug::dPrintDBAPI ( 'select query for tax title', $select );
+                      	$result = $select->execute()->fetchAssoc();
+                      	expDebug::dPrint('check for tax title in multi language= ' . print_r($result, true) , 4);
+						$val2  = $result['translation'];
+                      }
+                      // If session_startdate or session_enddate, use the correct date format
+                      switch ($val1) {
+                        case 'session_startdate':
+                        case 'session_enddate':
+                        $val2 = dateTimeStrToUnivShort(trim($val2), true, false, false, false); // Don't show time
+                        break;
+                      }
+
+
+                      $newArrKey[$val1][] =  $val2;
+                    }
+              	}
+              	$arKey = array_keys($newArrKey);
+              	foreach($arKey as $valT){
+                  $tokenSplit[$valT] = implode("<br>", $newArrKey[$valT]); // Save new (token,value) pair in $tokenSplit
+                  $splitContent[$i] = $tokenSplit[$valT] ; // This does not seem getting used anywhere.
+              	}
+              }
+
+
+              if($tokenSplit[$strTemplate]) {
+                if ($strTemplate !='group_data' && $strTemplate !='group_discount_data' && $strTemplate !='group_sessiondata' && $strTemplate != 'group_instructordata' && $strTemplate != 'group_tax_data'){
+                  $dispTemplate = $tokenSplit[$strTemplate];
+                }
+                else{
+                  $dispTemplate = '';
+                }
+              }else{ // $strTemplate does not have a value. Check if $strTemplate is to be processed in code.
+                global $base_url;
+                expDebug::dPrint(' $base_url = ' . print_r($base_url, true) , 4);
+                expDebug::dPrint(' $strTemplate = ' . print_r($strTemplate, true) . ', $dispTemplate before = ' . print_r($dispTemplate, true) , 4);
+                switch ($strTemplate) {
+                  case 'logo_path':
+                    // $dispTemplate = '<img src="'.getContentUploadPath().'/notification_logo.png"></img>';
+                   /**
+                    * 0040106: The upload customer logo in the site should be used for the notification(amaran)
+                    */
+                   // $currentDefaultThemePath = $base_url.base_path().drupal_get_path('theme',variable_get('theme_default', NULL));
+                    $dispTemplate = '<img src="'.get_logo_path().'"></img>';
+                    break;
+                  case 'cmp_name':
+                    $dispTemplate = variable_get('site_name', 'ExpertusONE');
+                    break;
+                  case 'reply_to':
+                    $dispTemplate = $config["reply_to"];
+                    break;
+                  case 'site_url':
+                    $dispTemplate = '<a href="'.$base_url.'">'.variable_get('site_name', 'ExpertusONE').'</a>';
+                    break;
+                  case 'about_us':
+                    $dispTemplate = '<a href="'.$base_url.'/?q=node/1">'.t('About Us').'</a>';
+                    break;
+                  case 'user_account':
+                    $dispTemplate = '<a href="'.$base_url.'/?q=learning/my-account">'.t('Account').'</a>';
+                    break;
+                  case 'my_learning':
+                    $dispTemplate = '<a href="'.$base_url.'/?q=learning/enrollment-search">'.t('My Enrollment').'</a>';
+                    break;
+                  case 'req_new_pwd':
+                    $dispTemplate = '<a href="'.$base_url.'/?q=user/password">'.t('Request new password').'</a>';
+                    break;
+                  case 'subject_name':
+                    $dispTemplate = '<a style="font-family:arial,helvetica,sans-serif" href="'.$base_url.'"></a>';
+                    break;
+                  case 'site_link':
+                    $dispTemplate = $base_url;
+                    break;
+                  case 'survey_logo_path':
+                    $dispTemplate = '<img border="0" src="'.getNotificationImagePath().'/survey_notification.png"></img>';
+                    break;
+                  case 'catalog_search':
+                    //$dispTemplate = '<a href="'.$base_url.'/?q=learning/catalog-search">'.t('CATALOG').'</a>';
+                    $dispTemplate = t('CATALOG');
+                    break;
+                  case 'my_programs':
+                    $dispTemplate = '<a href="'.$base_url.'/?q=learning/enrollment-search">'.t('LBL023').'</a>';
+                    break;
+                  case 'my_transcripts':
+                    $dispTemplate = '<a href="'.$base_url.'/?q=learning/enrollment-search">'.t('LBL009').'</a>';
+                    break;
+                  case 'my_certificates':
+                    $dispTemplate = '<a href="'.$base_url.'/?q=learning/my-profile">'.t('LBL877').'</a>';
+                    break;
+                  case 'my_team':
+                    $dispTemplate = '<a href="'.$base_url.'/?q=learning/myteam-search">'.t('My Team').'</a>';
+                    break;
+                  default: // Unrecognized token
+                    $dispTemplate = '-';
+
+                } // end switch
+             }
+           }
+           else {
+             $dispTemplate = $splitContent[$i];
+           }
+           expDebug::dPrint(' $dispTemplate after = ' . print_r($dispTemplate, true) , 4);
+           $exactTemplate[] = $dispTemplate;
+          } // loop ends
+          expDebug::dPrint(' $exactTemplate = ' . print_r($exactTemplate, true) , 4);
+          $notificationTemplateFinal = implode('',$exactTemplate);
+          expDebug::dPrint(' $notificationTemplateFinal = ' . print_r($notificationTemplateFinal, true) , 4);
+  				if(empty($x)){ $x = getPageLayoutStyle(); }
+          $notificationTemplateFinal = $x.$notificationTemplateFinal."</td></tr></table>";
+
+          //Start # Added by Velu #0030384
+          sendSMStoUser($notifyId,$tokenSplit);
+          //End # Added by Velu #0030384
+
+          //certification_expired push notification
+          expDebug::dPrint('$notifyId$notifyId$notifyId' . print_r($type, true) , 4);
+
+          if($type == "certification_expire"){
+              expDebug::dPrint('Inside certification_expire', 4);
+              sendPushNotificationtoUser($notifyId,$type,$tokenSplit);
+          }
+          //end certification_expired push notification
+
+          $message->subject = $notificationsubjectFinal;
+          $message->body	= $notificationTemplateFinal;
+          if (!empty($tokenSplit['SharefromName']) && !empty($tokenSplit['SharefromId'])) {
+            $message->sendmail_from = $tokenSplit['SharefromName'] . '<' . $tokenSplit['SharefromId'] . '>';
+          }
+          $message->sendmail_to = $senduser->mail;
+
+          $ccValueExplode = array_filter(explode(',', $senduser->mail_cc));
+          if(($key = array_search($message->sendmail_to,$ccValueExplode )) !== false) {
+          	unset( $ccValueExplode[$key]);
+          }
+          $senduser->mail_cc = implode(',', $ccValueExplode);
+
+          $message->cc = $senduser->mail_cc;
+          $message->notify_id = $notifyId;
+          $message->send = 'sendMessageToUser';  // Save send email function name in message
+
+          // iCalendar
+          if (!empty($iCal)) {
+          	$message->ical = $iCal;
+          }
+          if(!empty($fileName)){
+          	$message->attachment = $fileName;
+          }
+
+          // Queue the message
+          $mailQueue = DrupalQueue::get('exp_email');
+          expDebug::dPrint('$mailQueue = ' . print_r($mailQueue, true), 5);
+          $mailQueue->createItem($message);
+          updateNotificationStatus($notifyId, 'Q', '');
+
+	/*
+	          $timeStamp = time();
+	          expDebug::dPrint('Timestamp Value:');
+	          expDebug::dPrint($timeStamp , 4);
+	          if($sendreturn){
+	            expDebug::dPrint("INSERT INTO pm_message (author,subject,body,format,timestamp) VALUES($created_by,'".$notificationsubjectFinal."','".$notificationTemplateFinal."','full_html',".$timeStamp.");" , 4);
+	            $msgLastInsertId = db_insert('pm_message') // Table name no longer needs {}
+	            ->fields(array(
+	              'author' => $created_by,
+	              'subject' => $notificationsubjectFinal,
+	              'body' => $notificationTemplateFinal,
+	              'format' => 'full_html',
+	              'timestamp' => $timeStamp,
+	            ))
+	            ->execute();
+	            expDebug::dPrintDBAPI("Lastinset Id:", $msgLastInsertId);
+	            if($senduser->uid=='1'){
+	              db_query("INSERT INTO pm_index (mid,thread_id,recipient,is_new,type) VALUES(".$msgLastInsertId.",".$msgLastInsertId.",".$senduser->uid.",1,'user')");
+	              db_query("INSERT INTO pm_tags_index(tag_id,uid,thread_id) VALUES(1,".$senduser->uid.",".$msgLastInsertId.")");
+	            }else{
+	            	if($senduser->uid ==''){
+	            		$senduser->uid=0;
+	            	}
+	        		db_query("INSERT INTO pm_index (mid,thread_id,recipient,is_new,type) VALUES(".$msgLastInsertId.",".$msgLastInsertId.",$created_by,0,'user')");
+	        		db_query("INSERT INTO pm_index (mid,thread_id,recipient,is_new,type) VALUES(".$msgLastInsertId.",".$msgLastInsertId.",".$senduser->uid.",1,'user')");
+	        		db_query("INSERT INTO pm_tags_index(tag_id,uid,thread_id) VALUES(1,".$senduser->uid.",".$msgLastInsertId.")");
+	            }
+	          }
+
+		  		//update the send status
+		  		$param=new StdClass();
+		  		$param->notificationId=$notifyId;
+		  		$param->sendFlag=$sendreturn?'Y':'E';
+		  		$param->remarks=$sendreturn?'':'Error Occured when sending message to user.';
+		  		$updateRequest=getUpdateNotificationRequestXML($param);
+		  		expDebug::dPrint("Update notification requext xml");
+		  		expDebug::dPrint($updateRequest , 4);
+		  		$updateResponse=SCSoapClient::connect(null,$url,$updateRequest,'','');
+		  		expDebug::dPrint($updateResponse , 4);*/
+        }
+        catch (Exception $ex) {
+        	expDebug::dPrint("Exception occured when processing notification id " . $notifyId , 4);
+          expertusLogError($ex);
+        }
+      }
+    }
+  }
+  }catch (Exception $ex) {
+    watchdog_exception('NotifyCron', $ex);
+    expertusErrorThrow($ex);
+  }
+}//End of exp_sp_notify_cron()
+
+//Start # Added by Velu #0030384
+/* function sendSMStoUser($notifyId,$tokenString){
+
+ 	try{
+ 		include_once $_SERVER["DOCUMENT_ROOT"]."/apis//sendsms/ExpertusONESMSAPI.php";
+
+ 		// Create an object for the current API
+		$obj = new ExpertusONESMSAPI();
+
+		expDebug::dPrint(' sendSMStoUser $notifyId = '.$notifyId);
+
+		$select = db_select('slt_notification','notify');
+		$select->leftJoin('slt_notification_info', 'info', 'info.notification_code = notify.msg_id');
+		$select->leftJoin('slt_notification_frame', 'frame', 'frame.notification_id = info.id AND frame.lang_code = notify.lang_code');
+		$select->leftJoin('slt_person', 'person', 'person.id = notify.user_id');
+
+		$select->addField('frame', 'sms_message', 'sms_message');
+		$select->addField('person', 'first_name', 'first_name');
+		$select->addField('person', 'mobile_no', 'mobile_no');
+		$select->addField('person', 'sms_alert', 'sms_alert');
+
+		$select->condition('notify.id', $notifyId, '=');
+		$select->condition('notify.send_status','N', '=');
+
+		$results = $select->execute()->fetchAssoc();
+		expDebug::dPrintDBAPI(' sendSMStoUser $select = ' ,$select);
+		expDebug::dPrint(' sendSMStoUser $results = '.print_r($results,true),5);
+
+		// Remove #@ and @# from SMS text
+		$smsMessage = str_replace(array("#@","@#,","@#.","@#"),'',$results['sms_message']);
+
+		// Explode SMS text after removed #@ and @# from message text
+		$expSmsMessage = explode(" ",$smsMessage);
+		$expSmsMessage = array_values(array_filter($expSmsMessage));
+		expDebug::dPrint(' sendSMStoUser $expSmsMessage = ' .print_r($expSmsMessage,true),5);
+
+		// Make SMS text as a associative array values
+		foreach ($expSmsMessage as $key => $value) {
+			$assocArrSmsMessage[$value] = $value;
+		}// end foreach
+		expDebug::dPrint(' sendSMStoUser $assocArrSmsMessage before string replace = ' .print_r($assocArrSmsMessage,true),5);
+
+		// $tokenString from slt_notification
+		expDebug::dPrint(' sendSMStoUser $tokenSplit = ' .print_r($tokenString,true),5);
+
+	 	foreach($tokenString as $key => $value){
+		if($key == $assocArrSmsMessage[$key]){
+	            $assocArrSmsMessage[$key] = $value;
+	        }// end if
+		}// end foreach
+		expDebug::dPrint(' sendSMStoUser $assocArrSmsMessage after string replace = ' .print_r($assocArrSmsMessage,true),5);
+
+		// Final SMS text with replaced token string
+		$finalSMSMessage = implode(" ",$assocArrSmsMessage);
+		expDebug::dPrint(' sendSMStoUser $finalSMSMessage = '.$finalSMSMessage);
+
+		// Get SMS configuration details from exp_sp.ini
+		$config = getConfig("exp_sp");
+		expDebug::dPrint(' sendSMStoUser $config = ' .print_r($config,true),5);
+
+		// For clicking URL go to notification details
+		$finalSMSMessage = titleController('EXP-SP-NOTIFY-MODULE-FINALMESSAGE',$finalSMSMessage,80).' '.t('LBL1236').' ('.$config['admin_site_url'].'/sms.php?id='.$notifyId.')';
+		expDebug::dPrint(' sendSMStoUser with URL finalSMSMessage = '.$finalSMSMessage);
+
+		/*
+		 * sms_api_flag = True
+		 * Mobile No. Should not be empty
+		 * SMS Subscription should be checked
+		 * SMS text should not be empty
+		 */
+
+		/*if($config['sms_api_flag'] == 1 && !empty($results['mobile_no']) && $results['sms_alert'] == 'Y' && !empty($smsMessage)){
+
+			expDebug::dPrint(' sendSMStoUser Validation Success ');
+
+			// Set parameters for the API in ExpertusONESMSAPI
+			$obj->setProvider($config['sms_api_name']);
+
+			//For gateway160
+			if($config['sms_api_name'] == 'gateway160'){
+				expDebug::dPrint(' sendSMStoUser Gateway clickatell ');
+				$obj->setDetailsForGateway160Provider($config['sms_api_path'],$config['sms_api_uname'],$config['sms_api_key']);
+			}// end if
+
+			//For clickatell
+			if($config['sms_api_name'] == 'clickatell'){
+				expDebug::dPrint(' sendSMStoUser Gateway clickatell ');
+				$obj->setDetailsForClickATellProvider($config['sms_api_path'],$config['sms_api_id'],$config['sms_api_uname'],$config['sms_api_key']);
+			}// end if
+
+			// Call send SMS from ExpertusONESMSAPI
+			$obj->sendSMS($results['mobile_no'],$finalSMSMessage);
+
+		}else{
+			expDebug::dPrint(' sendSMStoUser Validation Failed ');
+		}// end if
+
+
+	}catch (Exception $ex) {
+		watchdog_exception('sendSMStoUser', $ex);
+		expertusErrorThrow($ex);
+	}// end catch
+
+} */
+//End # Added by Velu #0030384
+
+
+/*function sendPushNotificationtoUser($notifyId, $type, $tokenString) {
+	try {
+
+		expDebug::dPrint ( 'Inside sendPushnotification', 4 );
+
+		expDebug::dPrint ( 'sendPushnotification $notifyId = ' . $notifyId );
+
+		$select = db_select ( 'slt_notification', 'notify' );
+		$select->addField ( 'notify', 'user_id', 'user_id' );
+		$select->condition ( 'notify.id', $notifyId, '=' );
+		$results = $select->execute ()->fetchAssoc ();
+		expDebug::dPrintDBAPI ( ' sendPushnotification $select = ', $select );
+		expDebug::dPrint ( ' sendPushnotification $results = ' . print_r ( $results, true ), 5 );
+		$userId = $results ['user_id'];
+		expDebug::dPrint ( ' sendPushnotification UserId = ' . $userId, 5 );
+
+		$action_detail = 'objID1>|' . $tokenString ['program_id'] . '~|objID2>|~|objID3>|~|objID4>|' .$type. '~|objID5>|';
+
+		$updStmt = db_update ( 'slt_notification' );
+		$updStmt->fields ( array (
+				'detail_value' => $action_detail,
+				'mobile' => 1,
+				'updated_by' => null,
+				'updated_on' => now ()
+		) );
+
+		$updStmt->condition ( 'id', $notifyId );
+		expDebug::dPrintDBAPI ( '$updStmt', $updStmt );
+		$result = $updStmt->execute ();
+		expDebug::dPrint ( '$result = ' . $result );
+
+		$drupalUser = getDrupalUserForNotificationInsert ( $userId );
+		$fireMobileNotification = checkForManageNotification ( $userId, $type );
+
+		expDebug::dPrint ( ' fireMobileNotification  = ' . $fireMobileNotification, 5 );
+
+		if ($fireMobileNotification === true || $fireMobileNotification == true) {
+			$list = explode ( '~|', $tokenString );
+			$result = array ();
+
+			$notif_type = $type;
+
+			foreach ( $list as $pair ) {
+				$arr = explode ( ">|", $pair );
+				$arr [1] && ($result [$arr [0]] = $arr [1]);
+			}
+
+			$selectCrsId = db_select ( 'slt_mobiledevice_tokens', 'gcm' );
+			$selectCrsId->addField ( 'gcm', 'gcm_regid' );
+			$selectCrsId->condition ( 'gcm.name', $drupalUser ['full_name'], '=' );
+			$selectCrsId->groupBy ( 'gcm.id' );
+			$registatoin_ids = $selectCrsId->execute ()->fetchAll ();
+			expDebug::dPrint ( 'Reggggg idd =' . print_r ( $registatoin_ids, true ), 4 );
+
+			for($j = 0; $j < count ( $registatoin_ids ); $j++) {
+
+				$message = "";
+				$select = db_select ( 'slt_notification_info', 'info' );
+				$select->leftJoin ( 'slt_notification_frame', 'frame', 'frame.notification_id = info.id' );
+				$select->addField ( 'frame', 'notification_subject', 'notification_subject' );
+				$select->condition ( 'info.notification_code', $type );
+				$select->condition ( 'frame.lang_code', 'cre_sys_lng_eng' );
+				expDebug::dPrintDBAPI ( 'narrow search sql query-->>', $select );
+				$notification_subject = $select->execute ()->fetchField ();
+				// $message = getNotificationSubject($tokenString,$notification_subject);
+
+				$splitSubject = explode ( '#', $notification_subject );
+				$keywords = array ();
+				$exactArr = Array ();
+				for($i = 0; $i < count ( $splitSubject ); $i++) {
+					if (strlen ( $splitSubject [$i] ) > 2 && $splitSubject [$i] [0] == '@' && substr ( $splitSubject [$i], - 1 ) == '@') {
+						$str = ereg_replace ( '@', '', $splitSubject [$i] );
+						$keywords [] = ereg_replace ( '@', '', $splitSubject [$i] );
+						$dispSubject = $tokenString [$str];
+						if (! $tokenString [$str]) {
+							if ($str == 'cmp_name') {
+								$dispSubject = variable_get ( 'site_name', 'ExpertusONE' );
+							} else {
+								$dispSubject = $tokenString [$str];
+							}
+						}
+					} else {
+						$dispSubject = $splitSubject [$i];
+					}
+					$exactArr [] = $dispSubject;
+				}
+				$notificationsubjectFinal = implode ( '', $exactArr );
+				expDebug::dPrint ( 'Notification subject ajayyyyyy= ' . $notificationsubjectFinal, 4 );
+				$message = $notificationsubjectFinal;
+
+				expDebug::dPrint ( 'Learning message ajay = ' . $message . $registatoin_ids [$j]->gcm_regid);
+				if (strpos ( $registatoin_ids [$j]->gcm_regid, '~~ios' ) !== false) {
+					// Put your device token here (without spaces):
+					$regIdArray = explode ( '~~', $registatoin_ids [$j]->gcm_regid );
+					include_once ($_SERVER ["DOCUMENT_ROOT"] . '/mobile/GCM.php');
+					$gcm = new GCM ();
+					$logged_in_user = "";
+
+					$deviceToken = $regIdArray [0];
+					$result = $gcm->send_notificationAPN ( $deviceToken, $message, $action_detail, $type, $notifyId );
+				} else {
+					include_once ($_SERVER ["DOCUMENT_ROOT"] . '/mobile/GCM.php');
+					$gcm = new GCM ();
+					expDebug::dPrint ( 'Innnnnn =' . print_r ( $registatoin_ids [$j]->gcm_regid, true ), 4 );
+
+					$message = array (
+							"message" => $message
+					);
+					$result = $gcm->send_notification ( $registatoin_ids [$j]->gcm_regid, $message, $action_detail, $type, $notifyId );
+				}
+			}
+		}
+	} catch ( Exception $e ) {
+		    watchdog_exception('sendPushNotificationtoUser', $ex);
+    		expertusErrorThrow($ex);
+	}
+}
+
+
+function getPageLayoutStyle(){
+  try{
+  $config=getConfig("exp_sp");
+  $data = file_get_contents(path_to_theme()."/expertusone-internals/css/layout-fixed.css", FILE_USE_INCLUDE_PATH);
+  $data = stripslashes($data);
+  $str_start = stripos($data,"body");
+  $str_end = (stripos($data,"}",$str_start) - $str_start) + 1;
+  $resString = substr($data,$str_start,$str_end);
+
+  if (stripos($resString,"background") != -1) {
+  	$str_start = stripos($resString,"background")+10;
+  	$str_end = (stripos($resString,";",$str_start) - $str_start) + 1;
+  	$resString = substr($resString,$str_start,$str_end);
+  }
+
+  $resString = substr($resString,stripos($resString,":")+1);
+  $resString = str_replace(";","",$resString);
+
+  $resStrArray = explode(" ",trim($resString));
+  $background_position = "";
+  foreach($resStrArray as $elem => $value) {
+  	if (is_numeric(stripos($value,"url"))) {
+
+  	  $background_image = str_replace("url(","",$value);
+  		$background_image = str_replace(")","",$background_image);
+  		$background_image = str_replace("'","",$background_image);
+  		$background_image = str_replace('"','',$background_image);
+  		if(is_numeric(stripos($background_image,"http"))) {
+  		  $background_image =  ' background="'.$background_image.'"';
+  		} else {
+  		  $background_image = str_replace("../","",$background_image);
+  		  if(isset($background_image)) {
+            $background_image = ' background="'.$config['admin_site_url'].'/'.path_to_theme().'/expertusone-internals/'.$background_image.'"';
+        }
+  		}
+
+  	} else if (is_numeric(stripos($value,"#"))) {
+  		$background_color = "background-color: ".$value."; ";
+  	} else if (is_numeric(stripos($value,"repeat"))) {
+  		$background_repeat = "background-repeat: ".$value."; ";
+  	} else if (is_numeric(stripos($value,"scroll")) || is_numeric(stripos($value,"fixed"))) {
+  		$background_attachment = "background-attachment: ".$value."; ";
+  	} else {
+  		$background_position .= " ".$value;
+  	}
+  }
+
+  $background_position = "background-position: ".$background_position."; ";
+
+  $style = ' style ="'.$background_color.$background_repeat.$background_attachment.$background_position.'" ';
+
+  $noti_frame  = '<table width="100%" cellpadding="0" cellspacing="0" border="0" '.$style.' '.$background_image.'>';
+  $noti_frame .= '<tr><td style="padding: 15px;">';
+
+  return $noti_frame;
+  }catch (Exception $ex) {
+    watchdog_exception('getPageLayoutStyle', $ex);
+    expertusErrorThrow($ex);
+  }
+}*/
+
+/**
+ * Get all the notification which are having 'send_status' as 'N'
+ */
+/*function getNotificationRequestXML() {
+  try{
+  $xml = '<?xml version="1.0" encoding="ISO-8859-1"?>';
+  $xml .= '<SOAP-ENV:Envelope xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  $xml .= '<SOAP-ENV:Body>';
+  $xml .= '<getNotificationsRequest>';
+  $xml .= '<sendFlag>N</sendFlag>';
+  $xml .= '</getNotificationsRequest>';
+  $xml .= '</SOAP-ENV:Body>';
+  $xml .= '</SOAP-ENV:Envelope>';
+  return $xml;
+  }catch (Exception $ex) {
+    watchdog_exception('getNotificationRequestXML', $ex);
+    expertusErrorThrow($ex);
+  }
+}*/
+
+/**
+ * Update notification 'send_status' as 'Y' or 'E'
+ *
+ * @param object type $param - it cotains notification id, remarks and status
+ */
+/* function getUpdateNotificationRequestXML($param) {
+  try{
+  $xml = '<?xml version="1.0" encoding="ISO-8859-1"?>';
+  $xml .= '<SOAP-ENV:Envelope xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  $xml .= '<SOAP-ENV:Body>';
+  $xml .= '<updateNotificationRequest>';
+  $xml .= '<notificationId>'.$param->notificationId.'</notificationId>';
+  $xml .= '<sendFlag>'.$param->sendFlag.'</sendFlag>';
+  $xml .= '<remarks>'.$param->remarks.'</remarks>';
+  $xml .= '</updateNotificationRequest>';
+  $xml .= '</SOAP-ENV:Body>';
+  $xml .= '</SOAP-ENV:Envelope>';
+  return $xml;
+  }catch (Exception $ex) {
+    watchdog_exception('getUpdateNotificationRequestXML', $ex);
+    expertusErrorThrow($ex);
+  }
+} */
+
+/**
+ * Checks authentication for sending notification
+ *
+ * @param Integer $valid - password validity time
+ */
+/* function getRequestXML_authenticateNotify($valid) {
+  try{
+  //expDebug::dPrint("inside getRequestXML_authenticateNotify");
+  $xml = '<?xml version="1.0" encoding="ISO-8859-1"?>';
+  $xml .= '<SOAP-ENV:Envelope xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+  $xml .= '<SOAP-ENV:Body>';
+  $xml .= '<Authenticate>';
+  $xml .= '<Username>guest</Username>';
+  $xml .= '<Password>welcome</Password>';
+  $xml .= '<Locale>en_US</Locale>';
+  $xml .= '<ValidityInMin>'.$valid.'</ValidityInMin>';
+  $xml .= '<isGlobal>true</isGlobal>';
+  $xml .= '</Authenticate>';
+  $xml .= '</SOAP-ENV:Body>';
+  $xml .= '</SOAP-ENV:Envelope>';
+  return $xml;
+  }catch (Exception $ex) {
+    watchdog_exception('getRequestXML_authenticateNotify', $ex);
+    expertusErrorThrow($ex);
+  }
+} */
+
+/*
+ * Worker for exp_email queue.
+*/
+/* function sendMessageToUser($message) {
+  try {
+  	expDebug::dPrint('$message = ' . print_r($message, true), 5);
+
+  	$subjectStr = '=?UTF-8?B?' . base64_encode($message->subject) . '?=';
+
+	  $from = $message->sendmail_from;
+	  if (empty($from)) {
+	  	$from_opt = exp_sp_notify_sender();
+	  	$from = $from_opt['from'];
+	  }
+
+	  $headers = 'From: ' . $from . "\r\n";
+		if (!empty($message->cc)) {
+	    $headers .= 'Cc: ' . $message->cc . "\r\n";
+	  }
+	  $headers .= 'MIME-Version: 1.0' . "\r\n";
+
+	  if (!empty($message->ical)) {
+	  	$iCalObj = unserialize($message->ical);
+	  	expdebug::dPrint('$iCalObj = ' . print_r($iCalObj, true), 4);
+	  	$iCalArr = (array) $iCalObj;
+	  	expdebug::dPrint('$iCalArr = ' . print_r($iCalArr, true), 4);
+	  	$mixedboundary = 'boundary-mixed-' . ($random_hash = md5(time()));
+	  	$headers .= 'Content-Type: multipart/mixed; boundary="' . $mixedboundary . '"' . "\r\n";
+      $bodyStr = '--' . $mixedboundary . "\r\n" .
+                 'Content-Type: text/html; charset=UTF-8' . "\r\n" .
+                 'Content-Transfer-Encoding: base64' . "\r\n\r\n" .
+                 rtrim(chunk_split(base64_encode($message->body))) . "\r\n\r\n" .
+                 '--' . $mixedboundary;
+      $cancelIdx = 1;
+      $publishIdx = 1;
+      foreach ($iCalArr as $iCalWithType) {
+      	$iCal = base64_decode($iCalWithType->ical); // for debugging
+      	expDebug::dPrint('$iCal = ' . print_r($iCal, true), 4);
+      	expDebug::dPrint('$iCal type = ' . print_r($iCalWithType->type, true), 4);
+      	if ($iCalWithType->type == 'publish') {
+      		//$icsAttachmentName = 'event' . $publishIdx; 
+      		$icsAttachmentName = 'event'; // #52682 - File name change from event1.ics to event.ics
+      		$publishIdx++;
+      	}
+      	else {
+      		//$icsAttachmentName = 'cancelEV' . $cancelIdx;
+      		$icsAttachmentName = 'cancelEV'; // #52682 - File name change from cancelEV.ics to cancelEV.ics
+      		$cancelIdx++;
+      	}
+      	$icsAttachmentName .= '.ics';
+
+      	$bodyStr .=  "\r\n";
+      	$bodyStr .= 'Content-Type: text/calendar; charset=UTF-8; name="' . $icsAttachmentName . '"' . "\r\n" .
+                    'Content-Transfer-Encoding: base64' . "\r\n" .
+                    'Content-Disposition: attachment' . "\r\n\r\n" .
+                    // @TOCHECK: 'Pragma: no-cache' . //http://stackoverflow.com/questions/6429907/exporting-single-google-calendar-events-to-ics
+                    // @TOCHECK: 'Expires: 0' . //http://stackoverflow.com/questions/6429907/exporting-single-google-calendar-events-to-ics
+                    chunk_split($iCalWithType->ical) . "\r\n" .
+                    '--' . $mixedboundary;
+      	$i++;
+      }
+      $bodyStr .='--';
+	  }else if(!empty($message->attachment)){
+	  	$util=new GlobalUtil();
+	  	$config=$util->getConfig();
+	  	ini_set('memory_limit', '512M');
+	  	$fileName = explode('_',$message->attachment);
+	  	$flName = array_splice($fileName,-3,count($fileName),array('.csv'));
+	  	$flName = implode('_',$fileName);
+	  	$flName = str_replace($config['dataload_file_path'].'/', ' ', substr_replace($flName, now().'.csv', strpos($flName,'.csv')));
+	  	expDebug::dPrint('File name generated '.$flName);
+      $mixedboundary = 'boundary-mixed-' . ($random_hash = md5(time()));
+	  	$headers .= 'Content-Type: multipart/mixed; boundary="' . $mixedboundary . '"' . "\r\n";
+       $bodyStr = '--' . $mixedboundary . "\r\n" .
+                 'Content-Type: text/html; charset=UTF-8' . "\r\n" .
+                 'Content-Transfer-Encoding: base64' . "\r\n\r\n" .
+                 rtrim(chunk_split(base64_encode($message->body))) . "\r\n\r\n" .
+                 '--' . $mixedboundary;
+      	$bodyStr .=  "\r\n";
+
+      $bodyStr .= "Content-Type: text/csv; name=\"".$flName."\"\r\n";
+      $bodyStr .= "Content-Transfer-Encoding: base64" . "\r\n" ;
+      $bodyStr .= "Content-Disposition: attachment name=\"".$flName."\"" . "\r\n\r\n".
+      		rtrim(chunk_split(base64_encode(file_get_contents($message->attachment)))). "\r\n\r\n" . '--' . $mixedboundary;
+      $bodyStr .='--'."\n";
+
+      expDebug::dPrint('$bodyStr = 444 ' . $bodyStr, 5);
+
+	  }
+	  else {
+		  $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+		  $headers .= 'Content-Transfer-Encoding: base64' . "\r\n\r\n"; // added for ticket #0027445
+		  $bodyStr = rtrim(chunk_split(base64_encode($message->body)));  // message body encoded+chunk_split+rtrim for ticket #0027445
+	  }
+
+	  expDebug::dPrint('$headers = ' . $headers, 5);
+	  expDebug::dPrint('$subjectStr = ' . $subjectStr, 5);
+	  expDebug::dPrint('$bodyStr = ' . $bodyStr, 5);
+
+	  $sentStatus = mail($message->sendmail_to, $subjectStr, $bodyStr, $headers);
+	  expDebug::dPrint('Email sent status = ' . $sentStatus, 4);
+	  ini_set('memory_limit', '128M');
+	  if ($sentStatus) {
+	  	updateNotificationStatus($message->notify_id, 'Y', '');
+	  }
+	  else {
+	  	updateNotificationStatus($message->notify_id, 'E', 'Error Occured when sending message to user.');
+	  }
+  }catch (Exception $ex) {
+    watchdog_exception('sendMessageToUser', $ex);
+    expertusErrorThrow($ex);
+  }
+} */
+
+/*
+ * @Method : exp_sp_notify_mail()
+ * @Description : hook_mail() implemented to modify the sender email.
+ */
+/* function exp_sp_notify_mail($key, &$message, $params) {
+  try{
+  expDebug::dPrint(" Hook exp_sp_notify_mail() : key" . print_r($key, true) , 4);
+  expDebug::dPrint(" Hook exp_sp_notify_mail() : message" . print_r($message, true) , 4);
+  expDebug::dPrint(" Hook exp_sp_notify_mail() : params" . print_r($params, true) , 4);
+  // The below makes site_name appear in Outlook inbox instead of e-mail address
+  $message['headers']['From'] = variable_get('site_name', 'ExpertusONE') . ' <' . variable_get('site_mail', 'info@expertusone.com') . '>';
+  //The below makes site_name [site_mail] displayed for From: as you open the e-mail
+  $message['headers']['Sender'] = variable_get('site_name', 'ExpertusONE') . ' <' . variable_get('site_mail', 'info@expertusone.com') . '>';
+  // These two apparently are not needed, but keeping them set to the same as From and Sender above.
+  $message['headers']['Return-Path'] = variable_get('site_name', 'ExpertusONE') . ' <' . variable_get('site_mail', 'info@expertusone.com') . '>';
+  $message['from'] = variable_get('site_name', 'ExpertusONE') . ' <' . variable_get('site_mail', 'info@expertusone.com') . '>';
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_notify_mail', $ex);
+    expertusErrorThrow($ex);
+  }
+} */
+
+/* function exp_sp_notify_sender(){
+  try{
+  expDebug::dPrint(" Hook exp_sp_notify_mail() : key" . print_r($key, true) , 4);
+  expDebug::dPrint(" Hook exp_sp_notify_mail() : message" . print_r($message, true) , 4);
+  expDebug::dPrint(" Hook exp_sp_notify_mail() : params" . print_r($params, true) , 4);
+  // The below makes site_name appear in Outlook inbox instead of e-mail address
+  $message['headers']['From'] = variable_get('site_name', 'ExpertusONE') . ' <' . variable_get('site_mail', 'info@expertusone.com') . '>';
+  //The below makes site_name [site_mail] displayed for From: as you open the e-mail
+  $message['headers']['Sender'] = variable_get('site_name', 'ExpertusONE') . ' <' . variable_get('site_mail', 'info@expertusone.com') . '>';
+  // These two apparently are not needed, but keeping them set to the same as From and Sender above.
+  $message['headers']['Return-Path'] = variable_get('site_name', 'ExpertusONE') . ' <' . variable_get('site_mail', 'info@expertusone.com') . '>';
+  $message['from'] = variable_get('site_name', 'ExpertusONE') . ' <' . variable_get('site_mail', 'info@expertusone.com') . '>';
+  return $message;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_notify_sender', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+ */
+/**
+ * Update notification status
+ */
+/* function updateNotificationStatus($notifyId, $status, $remark) {
+  try {
+    //update the send status for the notification in slt_notification to Q
+    $updStmt = db_update('slt_notification');
+    $updStmt->fields(array(
+      'send_status' => $status,
+      'remarks' => $remark,
+      'updated_by' => null,
+      'updated_on' => now(),
+    ));
+    $updStmt->condition('id', $notifyId);
+    expDebug::dPrintDBAPI('$updStmt', $updStmt);
+    $result = $updStmt->execute();
+    expDebug::dPrint('$result = ' . $result);
+  }
+  catch (Exception $ex) {
+    watchdog_exception('updateNotificationStatus', $ex);
+    expertusErrorThrow($ex);
+  }
+} */
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+/* function exp_sp_notify_cron_queue_info() {
+	try{
+	require_once('sites/all/services/GlobalUtil.php');
+  $batchSize = 100; // one cron.php instance sends maximum these many mails
+  $gutil = new GlobalUtil();
+  $expConfig = $gutil->getConfig();
+  $configBatchSize = trim($expConfig['email_queue_batch_size']) + 0; // the maximum number of items that can be be picked up from
+                                                                     // the queue for processing by cron.php within the 'time' registered
+                                                                     // below with drupal.
+  if (!empty($configBatchSize)) {
+    $batchSize = $configBatchSize;
+  }
+  expDebug::dPrint('$batchSize = ' . $batchSize, 4);
+
+  $throttleTime = 30; //milliseconds
+  $gutil = new GlobalUtil();
+  $expConfig = $gutil->getConfig();
+  $configThrottleTime = trim($expConfig['email_queue_throttle_time']) + 0; // the time in milliseconds for which the queue worker will
+                                                                           // be made to wait before it picks up the next job from the
+                                                                           // queue for processing.
+  if (!empty($configThrottleTime)) {
+    $throttleTime = $configThrottleTime;
+  }
+  expDebug::dPrint('$throttleTime = ' . $throttleTime, 4);
+
+  $timeSliceForQueue = 120; // unit: seconds, default: 2 min
+  $itemLeaseTime = 300; // unit: seconds, default: 5 min
+  $semaphoreLockTimeout = $timeSliceForQueue + $itemLeaseTime + $throttleTime + 60; // in sec
+
+  $queues['exp_email'] = array(
+    'worker callback' => 'exp_email_queue_worker',
+    'time' => $timeSliceForQueue, // unit: seconds
+    'batch_size' => $batchSize, // unit: seconds
+    'item_lease_time' => $itemLeaseTime, // unit: seconds. Has a value which is greater than the maximum (worst) amount of time
+                                         // the queue worker needs to process one item.
+    'throttle' => $throttleTime, // unit: milliseconds. Introduces a delay in the processing of successive jobs from the queue in cron.php
+    'lock_timeout' => $semaphoreLockTimeout, // unit: seconds. Should be greater than time + item_lease_time + throttle (if present).
+                                             // When present, will activate a semaphore lock so that only one instance of cron.php processes
+                                             // items from the queue at any point of time.
+  );
+
+  return $queues;
+  }
+  catch (Exception $ex) {
+  	watchdog_exception('exp_sp_notify_cron_queue_info', $ex);
+  	expertusErrorThrow($ex);
+  }
+} */
+
+/**
+ * Implements hook_cron_queue_info_alter().
+ */
+/* function exp_sp_notify_cron_queue_info_alter(&$queues) {
+	try{
+  // Make exp_email the first queue to be processed by cron.php.
+  expDebug::dPrint('$queues = ' . print_r($queues, true), 5);
+  $emailQueue = $queues['exp_email'];
+  unset($queues['exp_email']);
+  $queues = array('exp_email' => $emailQueue) + $queues;
+  expDebug::dPrint('$queues before returning = ' . print_r($queues, true), 5);
+  }
+  catch (Exception $ex) {
+  	watchdog_exception('exp_sp_notify_cron_queue_info_alter', $ex);
+  	expertusErrorThrow($ex);
+  }
+} */
+
+/**
+ * Worker for exp_email queue.
+ */
+/* function exp_email_queue_worker($message) {
+	try {
+    // Raise PHP max_execution_time
+    // PHP set_time_limit() updates max_execution_time.
+    // See http://stackoverflow.com/questions/8914257/difference-between-set-time-limit-and-ini-setmax-execution-time
+    drupal_set_time_limit(300); // 5 min (keeping it same as item lease time)
+
+		// Include module specific files where the send function is defined
+		require_once(drupal_get_path('module', 'exp_sp_lnrreports') . '/exp_sp_lnrreports.inc');
+
+    // Send message
+    expDebug::dPrint('$message->send = ' . $message->send, 4);
+    call_user_func($message->send, $message);
+
+    // Restore PHP max_execution_time
+    drupal_set_time_limit(240); // Restore to a lower value but give suffient time to cron.php to do any remaining tasks
+	}
+  catch (Exception $ex) {
+    watchdog_exception('exp_email_queue_worker', $ex);
+    expertusLogError($ex);
+
+    // Restore PHP max_execution_time
+    drupal_set_time_limit(240); // Restore to a lower value but give suffient time to cron.php to do any remaining tasks
+
+    // Cannot die as it will interrupt cron.php.
+  }
+} */
+?>

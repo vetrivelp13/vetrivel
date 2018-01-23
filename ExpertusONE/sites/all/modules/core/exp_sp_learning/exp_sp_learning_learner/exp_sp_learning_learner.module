@@ -1,0 +1,2004 @@
+<?php 
+/**
+ * This module file is require to support other sub modules
+ * 
+ * NOTE: PLEASE DO NOT DELETE THIS UNTILL ALL THE SUB MODULES ARE DELETED.
+ * 
+ */
+function getClassSessionblockDetails($courseID,$classID,$delivery_type_code){
+	global $theme_key;
+	$userId = getSltpersonUserId();
+	$timezone_details = getPersonDetails($userId);
+	$sessionArr = array();
+	$sessionInsArr = array();
+	$sessionInsIDArr = array();
+	$inc=0;
+	$i=0;
+	$session_records = getSessionDetails($courseID,$classID,$delivery_type_code,'','','class_details');
+	expDebug::dPrint('class session data info--->'.print_r($session_records,1) , 4);
+	foreach($session_records as $sessDet) {
+		$sessionArr[$inc]['title']                =   $sessDet['session_title'];
+		$sessionArr[$inc]['session_id']           =   $sessDet['session_id'];
+		$sessionArr[$inc]['facilityid']           =   $sessDet['facility_id'];
+		$sessionArr[$inc]['start_date']           =   $sessDet['session_start_format'];
+		$sessionArr[$inc]['start_time']           =   $sessDet['session_start_time_format'];
+		$sessionArr[$inc]['start_time_format']    =   $sessDet['session_start_time_form'];
+		$sessionArr[$inc]['end_time']             =   $sessDet['session_start_end_format'];
+		$sessionArr[$inc]['end_time_format']      =   $sessDet['session_end_time_form'];
+		$sessionArr[$inc]['sess_timezone']        =   $sessDet['sess_timezone'];
+		$sessionArr[$inc]['session_end_date_format'] =   $sessDet['session_end_date_format'];
+		$sessionArr[$inc]['location_name']         =   $sessDet['session_name'];
+		$sessionArr[$inc]['location_address1']     =   $sessDet['session_address1'];
+		$sessionArr[$inc]['location_address2']     =   $sessDet['session_address2'];
+		$sessionArr[$inc]['location_country']      =   $sessDet['session_country'];
+		$sessionArr[$inc]['location_state']        =   $sessDet['session_state'];
+		$sessionArr[$inc]['location_city']         =   $sessDet['session_city'];
+		$sessionArr[$inc]['location_zipcode']      =   $sessDet['session_zipcode'];
+		$sessionArr[$inc]['location_code']          =   $sessDet['session_code'];
+		$sessionArr[$inc]['session_instructor_name'] =   $sessDet['session_instructor_name'];
+		$sessionArr[$inc]['user_tz']                 =   $sessDet['user_tz'];
+		$sessionArr[$inc]['user_tzcode']                 =   $sessDet['user_tzcode'];
+		$sessionArr[$inc]['tz_code']              =   $sessDet['tz_code'];
+		//Added by Vincent on Oct 28, 2013 for #0028593
+		$sessionArr[$inc]['ilt_start_date']       =   $sessDet['ilt_session_start_format'];
+		$sessionArr[$inc]['ilt_start_time']       =   $sessDet['ilt_session_start_time_format'];
+		$sessionArr[$inc]['ilt_start_time_format']=   $sessDet['ilt_session_start_time_form'];
+		$sessionArr[$inc]['ilt_end_time']         =   $sessDet['ilt_session_start_end_format'];
+		$sessionArr[$inc]['ilt_end_time_format']  =   $sessDet['ilt_session_end_time_form'];
+		$sessionArr[$inc]['ilt_session_end_date_format'] =   $sessDet['ilt_session_end_date_format'];
+		$sessionArr[$inc]['session_day']			= date('D', strtotime($sessDet['session_start_format']));
+		$sessionArr[$inc]['session_display_time'] =  $sessionArr[$inc]['session_day'] . ' ' . $sessDet['session_start_format'] . ' ' . $sessDet['session_start_time_format'] . ' <span class="meridian-time time-zone-text">' . $sessDet['session_start_time_form'] . '</span> ' .' '. drupal_strtolower(t('LBL621')) . ' ' .  $sessDet['session_start_end_format'] .  ' <span class="meridian-time time-zone-text">' . $sessDet['session_end_time_form'] . '</span>' ;/*Viswanathan added for #76619,#76437,#76441 */
+		$session_instructor_id_arr = explode(',',$sessDet['session_instructor_id']);
+		$session_instructor_name_arr = explode(',',$sessDet['session_instructor_name']);
+		$session_instructor_uri_arr = explode('|~|',$sessDet['session_instructor_uri']);
+		$instructor_job_title_arr = explode('|~|',$sessDet['job_title']);
+		$j=0;
+		if($sessDet['session_instructor_id']!=''){
+			foreach ($session_instructor_id_arr as  $ins_id){
+				if(!in_array($ins_id, $sessionInsIDArr)){
+					$sessionInsIDArr[] = $ins_id;
+					$sessionInsArr[$i]['ins_id'] = $ins_id;
+					$sessionInsArr[$i]['ins_name'] = $session_instructor_name_arr[$j];
+					$sessionInsArr[$i]['ins_job_title'] = $instructor_job_title_arr[$j];
+					if($theme_key == 'expertusoneV2'){
+						if (!empty($session_instructor_uri_arr[$j])){
+							$sessionInsArr[$i]['ins_uri'] = file_create_url($session_instructor_uri_arr[$j]);
+							$sessionInsArr[$i]['ins_pic_width'] = 50;
+							$sessionInsArr[$i]['ins_pic_height'] = 50;
+							$sessionInsArr[$i]['ins_pic_default'] = 0;
+						}
+						else{
+							$sessionInsArr[$i]['ins_uri'] = file_create_url('sites/default/files/pictures/expertusonev2_default_user.png');
+							$sessionInsArr[$i]['ins_pic_width'] = 36;
+							$sessionInsArr[$i]['ins_pic_height'] = 36;
+							$sessionInsArr[$i]['ins_pic_default'] = 1;
+						}
+					}
+					$i++;
+				}
+				$j++;
+			}		
+		}
+		if($delivery_type_code == 'lrn_cls_dty_ilt'){ // 
+			$sess_start_time_loc 		= (strlen($sessDet["ilt_session_start_time_format"]) == 4) ? str_pad($sessDet["ilt_session_start_time_format"],5,0,STR_PAD_LEFT) : $sessDet["ilt_session_start_time_format"];
+			$sess_end_time_loc 			= (strlen($sessDet["ilt_session_start_end_format"]) == 4) ? str_pad($sessDet["ilt_session_start_end_format"],5,0,STR_PAD_LEFT) : $sessDet["ilt_session_start_end_format"];
+			$ses_st_time_format_loc 	= $sessDet["ilt_session_start_time_form"];
+			$ses_end_time_format_loc 	= $sessDet["ilt_session_end_time_form"];
+			$startdate_loc 				= $sessDet["ilt_session_start_format"];
+			$sessDet_code 				= $sessDet["session_code"]; 
+			$tz_code 					= $sessDet["tz_code"]; 
+			$location_details 			= $startdate_loc .' '. $sess_start_time_loc .' '. '<span class="time-zone-text">'.$ses_st_time_format_loc.'</span>'. ' '. drupal_strtolower(t('LBL621')). ' ' .$sess_end_time_loc.' <span class="time-zone-text">'.$ses_end_time_format_loc.'</span> '.$sessDet_code.' '.$tz_code.'';
+			expDebug::dPrint('fifth: '.print_r($location_details, true) , 4);
+		}
+		                                    					
+		if($delivery_type_code == 'lrn_cls_dty_ilt' && $sessDet["sess_timezone"]!= $timezone_details['attr2']){ 
+			expDebug::dPrint('licationformat inside');
+			$sessionArr[$inc]['tz_location_info'] = qtip_popup_paint($sessDet["session_id"],$location_details,'',1);
+		}
+		
+		$inc++;
+	}
+	$sessDetails = new stdClass();
+	$sessDetails ->  sessionArr = $sessionArr;
+	$sessDetails ->  sessionInsArr = $sessionInsArr;
+	return $sessDetails;		
+}
+
+/* get full details of class pass class and user if. */
+function getFullClassDetails($class_id,$callfrom=''){
+	try {
+		// declare the class detail object
+		$header_details = new stdClass();
+		$userId = getSltpersonUserId();
+		$person_details = getPersonDetails($userId);
+		$records = getClassDetailsInfo($class_id, '',$userId,'',$callfrom);
+		$class_details = $records[0];
+		expDebug::dPrint('class Details data info--->'.print_r($class_details,1) , 4);
+		$class_details->description = trim($class_details->description);
+		if($class_details->currency_symbol == '' || $class_details->currency_symbol == null) {
+			$class_details->currency_type = ''; // 0056924 - default $ removal
+		}else{
+			$class_details->currency_type = $class_details->currency_symbol;
+		}
+		if(is_null($class_details->export_compliance)){
+			$class_details->export_compliance = 'N';
+		}
+		if(is_null($class_details->price)){
+			$class_details->price = '0.00';
+		}
+		if ($class_details->delivery_type_code == 'lrn_cls_dty_ilt' || $class_details->delivery_type_code == 'lrn_cls_dty_vcl') {
+			$sessionDetails = getClassSessionblockDetails($class_details->crs_id,$class_details->classid,$class_details->delivery_type_code);
+			$header_details->sessionDetailInfo  = $sessionDetails->sessionArr;
+			$header_details->sessionInsInfo 	= $sessionDetails->sessionInsArr;
+			if (empty($class_details->locationid)) {
+				$class_details->locationaddr1 = '';
+				$class_details->locationaddr2 = '';
+				$class_details->citystate = '';
+				$class_details->locationzip = '';
+				$class_details->locationcountryname = '';
+			}
+			else {
+				if (empty($class_details->locationname)) {
+					$class_details->locationname = '-';
+				}
+				$locCityState = array();
+				if(!empty($class_details->locationcity)) {
+					$locCityState[] = $class_details->locationcity;
+				}
+				if(!empty($class_details->locationstate)) {
+					$locCityState[] = $class_details->locationstate;
+				}
+				$class_details->citystate = (count($locCityState)>1) ?  implode(", ", $locCityState) : $locCityState[0];
+			}
+			expDebug::dPrint('Start date---------------->'.print_r($header_details->sessionDetailInfo,1));
+			$cnt_sess = count($header_details->sessionDetailInfo);
+			if($cnt_sess>1){
+				if($class_details->delivery_type_code == 'lrn_cls_dty_ilt' && ($header_details->sessionDetailInfo[0]['user_tzcode'] != $header_details->sessionDetailInfo[0]['tz_code'])){
+					$location_details 			= $header_details->sessionDetailInfo[0]['ilt_session_end_date_format'] .' '. $header_details->sessionDetailInfo[0]['ilt_start_time'] .' '. '<span class="time-zone-text">'.$header_details->sessionDetailInfo[0]['ilt_start_time_format'].'</span>'.' '. drupal_strtolower(t('LBL621')).' '. $header_details->sessionDetailInfo[$cnt_sess-1]['ilt_start_date'].' '.$header_details->sessionDetailInfo[$cnt_sess-1]['ilt_end_time']. ' <span class="time-zone-text">'.$header_details->sessionDetailInfo[$cnt_sess-1]['ilt_end_time_format'].'</span> '.$header_details->sessionDetailInfo[0]['location_code'].' '.$header_details->sessionDetailInfo[0]['tz_code'];//.$sessDet_code.' '.$tz_code.'';
+					$tz_location_info = qtip_popup_paint($header_details->sessionDetailInfo[0]["session_id"].'_'.$header_details->sessionDetailInfo[$cnt_sess-1]["session_id"],$location_details,'',1);
+				}else 
+					$tz_location_info = '';
+				$header_details->sessionDetailsHeader			= $header_details->sessionDetailInfo[0]['session_end_date_format'].' '.$header_details->sessionDetailInfo[0]['start_time']. ' '. '<span class="meridian-time time-zone-text">'.$header_details->sessionDetailInfo[0]['start_time_format'].' </span>'.' '. drupal_strtolower(t('LBL621')).' '. $header_details->sessionDetailInfo[$cnt_sess-1]['start_date'].' '.$header_details->sessionDetailInfo[$cnt_sess-1]['end_time']. ' '. '<span class="meridian-time time-zone-text">'.$header_details->sessionDetailInfo[$cnt_sess-1]['end_time_format'].' </span>'.' '.'<span class="time-zone-offset">'.$header_details->sessionDetailInfo[0]['user_tz'].' '.$header_details->sessionDetailInfo[0]['user_tzcode'].' </span>';
+				$header_details->LocsessionDetailsHeader   = $tz_location_info;
+				//$header_details->sessionDetails 			= $header_details->sessionDetailInfo[0]['start_date'].' '.strtolower(t('LBL621')).' '. $header_details->sessionDetailInfo[$cnt_sess-1]['start_date'];
+				$header_details->sessionDetails   = $header_details->sessionDetailInfo[0]['session_end_date_format'].' '.$header_details->sessionDetailInfo[0]['start_time']. ' '. '<span class="time-zone-text">'.$header_details->sessionDetailInfo[0]['start_time_format'].' </span>'.' '. drupal_strtolower(t('LBL621')).' '. $header_details->sessionDetailInfo[$cnt_sess-1]['start_date'].' '.$header_details->sessionDetailInfo[$cnt_sess-1]['end_time']. ' '. '<span class="time-zone-text">'.$header_details->sessionDetailInfo[$cnt_sess-1]['end_time_format'].' </span>'.''.$header_details->sessionDetailInfo[$cnt_sess-1]['tz_location_info'];
+			}else{
+				$header_details->sessionDetails 			= $header_details->sessionDetailInfo[0]['session_end_date_format'].' '.$header_details->sessionDetailInfo[0]['start_time']. ' '. '<span class="time-zone-text">'.$header_details->sessionDetailInfo[0]['start_time_format'].' </span>'.' '. drupal_strtolower(t('LBL621')).' ' .$header_details->sessionDetailInfo[0]['end_time']. ' '. '<span class="time-zone-text">'.$header_details->sessionDetailInfo[0]['end_time_format'].' </span>'.''.$header_details->sessionDetailInfo[0]['tz_location_info'];
+				
+				//Header details
+				if($class_details->delivery_type_code == 'lrn_cls_dty_ilt' && ($header_details->sessionDetailInfo[0]['user_tzcode']!= $header_details->sessionDetailInfo[0]['tz_code'])){
+					$location_details 			= $header_details->sessionDetailInfo[0]['ilt_session_end_date_format'] .' '. $header_details->sessionDetailInfo[0]['ilt_start_time'] .' '. '<span class="time-zone-text">'.$header_details->sessionDetailInfo[0]['ilt_start_time_format'].'</span>'.' '.drupal_strtolower(t('LBL621')).' '.$header_details->sessionDetailInfo[$cnt_sess-1]['ilt_end_time']. ' <span class="time-zone-text">'.$header_details->sessionDetailInfo[0]['ilt_end_time_format'].'</span> '.$header_details->sessionDetailInfo[0]['location_code'].' '.$header_details->sessionDetailInfo[0]['tz_code'];//.$sessDet_code.' '.$tz_code.'';
+					$tz_location_info = qtip_popup_paint($header_details->sessionDetailInfo[0]["session_id"].'_header',$location_details,'',1);
+				}else 
+					$tz_location_info = '';
+				$header_details->sessionDetailsHeader		    = $header_details->sessionDetailInfo[0]['session_end_date_format'].' '.$header_details->sessionDetailInfo[0]['start_time']. ' '. '<span class="meridian-time time-zone-text">'.$header_details->sessionDetailInfo[0]['start_time_format'].' </span>'.' '. drupal_strtolower(t('LBL621')).' ' .$header_details->sessionDetailInfo[0]['end_time']. ' '. '<span class="meridian-time time-zone-text">'.$header_details->sessionDetailInfo[0]['end_time_format'].' </span>'.' '.'<span class="time-zone-offset">'.$header_details->sessionDetailInfo[0]['user_tz'].' '.$header_details->sessionDetailInfo[0]['user_tzcode'].' </span>';
+				$header_details->LocsessionDetailsHeader   = $tz_location_info;
+			}
+			
+			//expDebug::dPrint('Start test---------------->'.$header_details->sessionDetailsHeader );
+			
+	// 		if (empty($class_details->startdatetime)||empty($class_details->enddatetime))
+	// 			$header_details->sessionDetails 			= '-';
+	// 		else
+	// 			$header_details->sessionDetails 			= dateTimeStrToUnivShort($class_details->startdatetime, 'Y','TRUE',false,false)." - ". dateTimeStrToUnivShort($class_details->enddatetime, 'Y','TRUE',false,false);
+					
+			$header_details->available_seats   				= getAvailableSeats($class_details->classid);
+			$header_details->waitlist_seats    				= getWaitlistCatalogInfo($class_details->classid);
+			$header_details->citystate 						= $class_details->citystate;
+			
+		}
+		else {
+			$class_details->sessionDetails   = '-';
+			$class_details->sessionDetailInfo = '-';
+			$class_details->available_seats  = '-';
+			$class_details->waitlist_seats   = '-';
+		}
+		$header_details->multi_register 					= is_multiregistration_allowed($class_details->classid);
+		
+		
+		
+		
+		
+		
+		$header_details->node_id						= $class_details->node_id;
+		$header_details->class_id						= $class_details->classid;
+		$header_details->course_id 						= $class_details->crs_id;
+		$header_details->data_title 					= $class_details->title;
+		$header_details->data_code 						= $class_details->code;
+		$header_details->data_desc						= $class_details->description;
+		$header_details->data_trunk8 					= ($callfrom == 'course_class_list') ? 'lmt-crs-cls': (($callfrom == 'lrnplan_course_class_list') ? 'lmt-lrp-crs-cls' : 'lmt-cls');
+		$header_details->duration 					    = $class_details->duration;
+		$header_details->export_compliance 				= $class_details->export_compliance;
+		$header_details->currency_type					= $class_details->currency_type;
+		$header_details->is_compliance 					= $class_details->is_compliance;
+		$header_details->catalog_data_price 			= $class_details->price;
+		$header_details->delivery_type_code				= $class_details->clsdeliverytype;
+		$header_details->class_lang						= $class_details->clslang;
+		$header_details->mro_id							= $class_details->mro_id;
+		$header_details->entity_id 						= $class_details->classid;
+		$header_details->user_id 						= $userId;
+		$header_details->preRequiste					= $class_details->prerequisites;
+		$header_details->Equivalence					= $class_details->equivalence;
+	// prerequisite action button related work commented.	
+	// 	$header_details->preRequiste_status = true;
+	// 	$header_details->preRequiste_label = t("LBL230");
+	// 	foreach ($class_details->prerequisites  as $preclassdet){
+	// 		$class_ids_arr = getClassIds($preclassdet->course_id,'course_page_view');
+	// 		$class_ids ='';
+	// 		foreach ($class_ids_arr as $ids){
+	// 			$class_ids = ($class_ids=='')?$ids->classid:'-'.$ids->classid;
+	// 		}
+	// 		expDebug::dPrint('class id Details : = ' . print_r($class_ids, true) , 3);
+	// 		$getpreRegister  = $getRegister  = getRegisteredOrNotForCourseLevel($preclassdet->course_id,$class_ids,'','catalog-search','','','lnr-Catalog',NULL);
+	// 		foreach ($getpreRegister as $regdetails){
+	// 			if($regdetails->enrolled_status=='lrn_crs_reg_cnf'){
+	// 				$header_details->preRequiste_status = false;
+	// 				$header_details->preRequiste_label = t('Registered');
+	// 			}
+	// 		}
+	// 		expDebug::dPrint(' get Prerequisite classDetails : = '.$preclassdet->course_id. print_r($getpreRegister, true) , 3);
+	// 	}
+	//Check Recuring registration
+		$rec_cls_count = surveyBusinessRuleMapping($header_details->class_id, 'cre_sys_obt_cls', 'cre_sys_brl_rra');
+		$header_details->recuring_class_flag = false;
+		if($rec_cls_count > 0){
+			$header_details->recuring_class_flag = true;
+		}
+		
+	// prerequisite action button related work commented.
+		$course_details  = getCourseInfo($header_details->course_id);
+		$getRegister  = getRegisteredOrNot($header_details->course_id,$header_details->class_id,'',$header_details->widget,$header_details->is_compliance,'','lnr-Catalog',NULL);
+		$header_details->complete_by = '';
+		if(!empty($course_details->compliance_completed)){
+			if($course_details->compliance_completed == 'days' && ($getRegister->comp_status == 'lrn_crs_cmp_enr' || ($getRegister->comp_status == 'lrn_crs_cmp_inp'))){
+				$header_details->complete_by = date('M d, Y', strtotime($getRegister->reg_date. ' + '.$course_details->complete_days.' days'));
+			}else if($course_details->compliance_completed == 'hire_days' && !empty($person_details['hire_date'])){
+				$header_details->complete_by = date('M d, Y', strtotime($person_details['hire_date']. ' + '.$course_details->complete_days.' days'));
+			}else if ($course_details->compliance_completed == 'date'){
+				$header_details->complete_by = date('M d, Y', strtotime($course_details->complete_date));
+				
+			}
+			
+		}
+		if(!empty($course_details->validity_days || $course_details->validity_date) && ($getRegister->comp_status == 'lrn_crs_cmp_cmp')){
+			if(!empty($course_details->validity_days)){
+				$header_details->validity = date('M d, Y', strtotime($getRegister->comp_date. ' + '.$course_details->validity_days.' days'));
+			}else if($course_details->validity_date){
+				$header_details->validity = date('M d, Y', strtotime($course_details->validity_date));
+			}
+				
+		}
+		
+		$header_details->course_details 	 =	$course_details;
+		$header_details->mroImageClass					= '';
+		
+		//Mandatory course check
+			$recom_course = 0;
+			$man_course = 0;
+			$mrovalue = explode(',', $header_details->mro_id);
+			if(in_array('cre_sys_inv_rec', $mrovalue)) {
+				$recom_course = 1;
+			}
+			if(in_array('cre_sys_inv_man', $mrovalue)) {
+				$man_course = 1;
+			}
+			
+		if($man_course == 0) {
+			require_once (drupal_get_path('module', 'exp_sp_myteam') . '/exp_sp_myteam-catalog-search.inc');
+			$header_details->mandatory_value = myteamFetchEnrollment($header_details->course_id, $header_details->class_id, $userId);	
+		} else {
+			$header_details->mandatory_value = 'Y';
+		}
+		
+		if ($callfrom == 'course_class_list' || $callfrom == 'lrnplan_course_class_list') {
+			$header_details->content_detail_class = 'content-detail-code';
+			$mroImageClassArr['cre_sys_inv_com'] =  ''; 
+			$mroImageClassArr['cre_sys_inv_man'] =  '<div class="catalog-course-role-access-bg"><span class="catalog-course-mandatory-bg-left"></span><span class="catalog-course-mandatory-bg-middle">M</span><span class="catalog-course-mandatory-bg-right"></span></div>';
+		//	$mroImageClassArr['cre_sys_inv_opt'] =  '<div class="catalog-course-role-access-bg"><span class="catalog-course-optional-bg-left"></span><span class="catalog-course-optional-bg-middle">O</span><span class="catalog-course-optional-bg-right"></span></div>';
+			$mroImageClassArr['cre_sys_inv_rec'] =  '<div class="catalog-course-role-access-bg"><span class="catalog-course-recommended-bg-left"></span><span class="catalog-course-recommended-bg-middle">R</span><span class="catalog-course-recommended-bg-right"></span></div>';
+		} else {
+			$header_details->content_detail_class = 'content-detail-code';
+			$mroImageClassArr['cre_sys_inv_com'] =  '<div class="catalog-course-compliance-role-bg"><span class="catalog-course-compliance-bg-left"></span><span class="catalog-course-compliance-bg-middle">'.t('Compliance').'</span><span class="catalog-course-compliance-bg-right"></span></div>';
+			$mroImageClassArr['cre_sys_inv_man'] =  '<div class="catalog-course-role-access-bg"><span class="catalog-course-mandatory-bg-left"></span><span class="catalog-course-mandatory-bg-middle">'.t('Mandatory').'</span><span class="catalog-course-mandatory-bg-right"></span></div>';
+		//	$mroImageClassArr['cre_sys_inv_opt'] =  '<div class="catalog-course-role-access-bg"><span class="catalog-course-optional-bg-left"></span><span class="catalog-course-optional-bg-middle">'.strtolower(t('Optional')).'</span><span class="catalog-course-optional-bg-right"></span></div>';
+			$mroImageClassArr['cre_sys_inv_rec'] =  '<div class="catalog-course-role-access-bg"><span class="catalog-course-recommended-bg-left"></span><span class="catalog-course-recommended-bg-middle">'.t('Recommended').'</span><span class="catalog-course-recommended-bg-right"></span></div>';
+		}
+		$mroImageClass = empty($header_details->mro_id) ? '' : $mroImageClassArr[$header_details->mro_id];
+		$mroImageClass .= '<div class="clearBoth"></div>';
+		if($header_details->mandatory_value == "Y") {
+			$mroImageClass = $mroImageClassArr['cre_sys_inv_man'];
+		}
+		if($header_details->is_compliance==1){
+			$mroImageClass = $mroImageClassArr['cre_sys_inv_com'];
+		}
+		if($header_details->is_compliance==1 || !empty($header_details->mro_id) || $header_details->mandatory_value == "Y")
+			$header_details->mroImageClass					=    $mroImageClass;
+		
+		$header_details->additional_info 		= ($class_details->addn_catalog_show==1)? $class_details->additional_info : '';
+	
+		
+		//initializing the class statistics info
+		$statistics = new stdClass();
+		$header_details->statistics->content_count 		= 0;
+		$header_details->statistics->session_count 		= 0;
+		$header_details->statistics->duration 			= '';
+		if ($header_details->delivery_type_code == 'lrn_cls_dty_ilt' || $header_details->delivery_type_code == 'lrn_cls_dty_vcl'){
+			$header_details->statistics->session_count  = $cnt_sess;
+			$header_details->statistics->duration		= getSessionDuration($header_details->class_id);
+		}else{
+			if($class_details->duration!=''){
+				$header_details->statistics->duration		= $class_details->duration;
+			}
+		}
+		
+		$header_details->statistics->prerequisite 	= (count($class_details->prerequisites)>0) ? t('Yes') : t('LBL679');
+		$header_details->statistics->equivalence	= (count($class_details->equivalence)>0) ? t('Yes') : t('LBL679');
+		$deliverytypeVal=getProfileListItemAttr($header_details->delivery_type_code);
+		$header_details->statistics->delivery_type='';
+		if($deliverytypeVal == 'WBT')
+			$header_details->statistics->delivery_type = t("LBL1129");
+		else if($deliverytypeVal == 'VC')
+			$header_details->statistics->delivery_type = t("Virtual Class");
+		else if($deliverytypeVal == 'ILT')
+			$header_details->statistics->delivery_type = t("Classroom");
+		else if($deliverytypeVal == 'VOD')
+			$header_details->statistics->delivery_type = t("Video");
+		$header_details->statistics->language		= t(getProfileListItemName($header_details->class_lang));
+		$forum_taxonomy_data_id = GetForumTopicListForDetail('catalog',$header_details->course_id);
+		$header_details->statistics->discussion_topics = getCountTopic($forum_taxonomy_data_id[0]->tid);
+		$survey_count 		= getSurveyAssesmentCount($header_details->class_id,'cre_sys_obt_cls','sry_det_typ_sry');
+		$assessment_count 	= getSurveyAssesmentCount($header_details->class_id,'cre_sys_obt_cls','sry_det_typ_ass');
+		
+		$header_details->statistics->survey = ($survey_count > 0) ? $survey_count : t('LBL679'); 
+		$header_details->statistics->assessment = ($assessment_count > 0) ? $assessment_count : t('LBL679'); 
+		
+		$header_details->share_icon 					= false;
+		if(!empty($userId) && (! isset($_SESSION['widgetCallback']) || ($_SESSION['widgetCallback'] != true)))
+				$header_details->share_icon 				= true;
+		
+		$header_details->cls_class_code 				= 'CLASS-DETAIL-CLASS-CODE';
+		if($header_details->statistics->session_count>1)
+			$header_details->cls_class_code 			= 'CLASS-DETAIL-CLASS-CODE-MULTI';
+		//icon details
+		$header_details->icon_class						=  getTypeImageClass($header_details->delivery_type_code);
+		$header_details->icon_title						=  $header_details->statistics->delivery_type;
+	
+		//Class Information variables.
+		$header_details->data_enroll_on					= dateTimeStrToUnivShort($class_details->reg_date, 'Y','TRUE',false,false);
+		//$class_details->data_comp_by 					= $class_details->crs_id;
+		$header_details->data_comp_on 					= dateTimeStrToUnivShort($class_details->comp_on, 'Y','TRUE',false,false);
+		$header_details->data_starts_on 				= $class_details->sessionDetails;
+		$header_details->registration_end_on 			= (!empty($class_details->registration_end_on)) ? strftime("%b %d, %Y",strtotime($class_details->registration_end_on)) : $class_details->registration_end_on;
+		$header_details->content_detail_container_class = (!empty($class_details->registration_end_on)) ? 'reg-end' : '';
+		$header_details->cls_count = 1;
+	
+		$header_details->widget							= 'catalog-search';
+		$header_details->widgetId 						= ($callfrom == 'course_class_list') ? 'course-details-display-content' : 'class_details_display_area';
+		$header_details->view_from 						= 'details';
+	
+		$header_details->start_rate_setting				= array(
+															'content_type' => 'Class',
+															'content_id' => $header_details->node_id,
+															'stars' => 5,
+															'autosubmit' => TRUE,
+															'allow_clear' => FALSE,
+															'required' => FALSE,
+															'tag' => 'vote',
+															'style' => 'average',
+															'text' => 'average',
+															'enable_rate' => 'disable',
+															'startype' => $header_details->delivery_type_code,
+													);
+			$header_details->delType					= t('Class');
+			$header_details->qtipIdInit        			= $header_details->entity_id.'_cre_sys_obt_cls';
+			$header_details->qtipOptAccessObj      		= "{'entityId':".$header_details->entity_id.",
+											              'entityType':'cre_sys_obt_cls',
+											              'popupDispId':'widget_share_qtip_visible_disp_$header_details->qtipIdInit',
+											              'wid':440,
+											              'heg':'350',
+											              'postype':'middle',
+											              'linkid':'widget-share-$header_details->entity_id',
+														  'callFrom' : 'detail_page'}";
+	
+		
+		if($hideButton != 'hide'){
+			if($callfrom!='')
+				commonCourseClassAction($header_details,$callfrom);
+			else
+				commonCourseClassAction($header_details,'class_details');
+		}
+		if ($callfrom == 'course_class_list' || $callfrom == 'lrnplan_course_class_list'){
+			$tags  = getCatalogTags($header_details->entity_id,'Class');
+			$tagString  = '';
+			if(!empty($tags)){
+				$tagString  = implode(", ",$tags);
+			}
+			//For getting attachments
+			$header_details->attachments 	= getAttachmentsInfo($header_details->entity_id,'Class');
+			$header_details->numAttachments	= count($header_details->attachments);
+			$header_details->tagString=$tagString;
+			$header_details->has_instructor = 'no';
+			if(count($header_details->sessionInsInfo)>0){
+				$header_details->has_instructor = 'yes';
+				$header_details->instructors = $header_details->sessionInsInfo;
+			}
+		}
+		if ($callfrom == 'lrnplan_course_class_list'){
+			
+			$prgmap_cond = $class_details->program_id;
+			$enr_id = $getRegister->enrolled_id;
+			$master_enrollment_id = $getRegister->master_enrollment_id;
+			$recertifyPath = $class_details->recertify_path;
+
+			if(!empty($master_enrollment_id)) {
+				require_once(drupal_get_path('module', 'exp_sp_lnrlearningplan').'/exp_sp_lnrlearningplan.inc');
+				$enforceSequence = getEnforceSequenceStatus($prgmap_cond);
+				
+				if($enforceSequence == 'Y') {
+					// get next launchable sequence
+					$nextlaunch = get_course_sequence($master_enrollment_id, $recertifyPath);
+					expDebug::dPrint("nextlaunch details---->" . print_r($nextlaunch, 1), 4);
+					
+					// get current launched sequence
+					$currentlaunch = get_course_sequence($master_enrollment_id, $recertifyPath, $enr_id);
+					expDebug::dPrint("currentlaunch details---->" . print_r($currentlaunch, 1), 4);
+					
+					$prevCompStatus = (($currentlaunch->sequence <= $nextlaunch->sequence) ? '' : 'notallow');
+					if((empty($nextlaunch) && $currentlaunch->is_required == 'N') || ($currentlaunch->comp_status == 'lrn_crs_cmp_cmp'))
+					    $prevCompStatus = '';
+					$prevClassTitle = $nextlaunch->cls_title;
+					$prevClassStatus = $nextlaunch->comp_status;
+				}
+			}
+			
+			$header_details->prev_comp_status = $prevCompStatus;
+			$header_details->cls_title = addslashes(($class_details->title));
+			$header_details->prev_class_title = addslashes($prevClassTitle);
+			$header_details->prev_class_status = $prevClassStatus;
+			
+			expDebug::dPrint('Full Class details inside loop----> ' . print_r($header_details, true), 4);
+		}
+		
+		expDebug::dPrint('Full Class details----> '.print_r($header_details, true), 4);
+		return $header_details;
+	}catch (Exception $ex) {
+	    watchdog_exception('getFullClassDetails', $ex);
+	    expertusErrorThrow($ex);
+	}
+}
+function commonCourseClassAction(&$header_details,$callfrom=''){
+	try {
+		global $catalog_reg;
+		global $theme_key;
+		$condCount = (($catalog_reg == 'Course' && $header_details->cls_count == 1 && $header_details->widgetId == 'lnr-catalog-search')
+				|| ($catalog_reg == 'Course' && $header_details->widgetId != 'lnr-catalog-search') || $header_details != 'Course') ? 1 : 0;
+		$userId                       = getSltpersonUserId();
+		
+		if($catalog_reg == 'Course' && $header_details->widget == 'catalog-search'){
+			$courseID 	   = $header_details->course_id;
+			$classID 	   = $header_details->class_id;
+			$classID 	   = str_replace(',', '-', $classID);
+			$entityColor   = ($theme_key == "expertusoneV2" && $header_details->cls_count == 1) ? 'learning-type-crs currency-override-bold' : '' ;
+			$pastDateCount = ($header_details->cls_count == 1) ? checkPastDateOrNot($classID,$header_details->delivery_type_code) : 0;
+		}else {
+			$courseID 	   = $header_details->course_id;
+			$classID 	   = $header_details->class_id;
+			$entityColor 	= ($theme_key == "expertusoneV2") ? 'learning-type-'.array_pop(explode('_',$header_details->delivery_type_code)).' currency-override-bold' : '' ;
+			$pastDateCount  = checkPastDateOrNot($classID,$header_details->delivery_type_code);
+		}
+		
+		$passData     = "data={'NodeId':'".$header_details->node_id."','ClassId':'".$classID."','CourseId':'".$courseID."'}";
+		$preRequisite = checkCatalogPrerequisite($courseID,'cre_sys_obt_crs');
+		if($catalog_reg == 'Course') {
+			$getRegister  = getRegisteredOrNotForCourseLevel($courseID,$classID,'',$header_details->widget,$header_details->is_compliance,'','lnr-Catalog',NULL);
+		} else {
+			$getRegister  = getRegisteredOrNot($courseID,$classID,'',$header_details->widget,$header_details->is_compliance,'','lnr-Catalog',NULL);
+		}
+		//Class enrolled related variables.
+	// 	$header_details->enrolled_id         			= $getRegister->enrolled_id;
+	// 	$header_details->comp_status         			= $getRegister->comp_status;
+	// 	$header_details->enrolled_status     			= $getRegister->enrolled_status;
+	// 	$header_details->waitlist_flag       			= $getRegister->waitlist_flag;
+	// 	$header_details->waitlist_priority   			= $getRegister->waitlist_priority;
+	// 	$header_details->master_enrollment_id    		= $getRegister->master_enrollment_id;
+		
+		expDebug::dPrint('get regeiser not value: ' . print_r($getRegister, 1), 4);
+		if ($header_details->delivery_type_code == "lrn_cls_dty_ilt" || $header_details->delivery_type_code == "lrn_cls_dty_vcl") {
+			require_once(drupal_get_path('module', 'exp_sp_administration').'/exp_sp_administration.inc');
+			$classSessions = checkClassValidity($classID, $header_details->delivery_type_code);
+			$sessionInProgress = (($classSessions->futureSessions + $classSessions->inProgressSessions) > 0 && ($classSessions->pastSessions + $classSessions->inProgressSessions) > 0 ) ? true : false; // Any one of future or in-progress session is available.
+		}
+		//$clsId = ($results->cls_count > 1) ? explode('-',$classID) : $classID;
+		if($header_details->cls_count > 1)
+			$clsId = explode('-',$classID);
+		else
+			$clsId[] = $classID;
+		$getEnrollCnt = getEnrolledCount($courseID,$userId,$clsId, $catalog_reg);
+		//complianceExpiryandRegisterCount($courseID,'',$userId);
+		expDebug::dPrint('$catalog_reg : '.$catalog_reg.' results->widgetId : '.$header_details->widgetId.' $courseID : '.$courseID.' $classID : '.$classID,4);
+		$registerEndDateCheck = 0;
+		
+		$header_details->hideButton = 'show';
+		if( !empty($_SESSION['widget']['catalog_display_parameters']) &&  $_SESSION['widget']['catalog_display_parameters']['show_button']==false){
+			$header_details->hideButton = 'hide';
+		} expDebug::dPrint('widget class and Course : '.print_r($_SESSION['widget'], true).'$hideButton : '.$hideButton, 4);
+		$header_details->hideDesc= 'show';
+		if( !empty($_SESSION['widget']['catalog_display_parameters']) &&  $_SESSION['widget']['catalog_display_parameters']['show_description']== false){
+			$header_details->hideDesc = 'hide';
+		}
+		if($condCount == 1){
+			$timeZone = date_default_timezone(false);
+			$defaultTimezone = ($timeZone == 'Asia/Kolkata') ? 'Asia/Calcutta' : $timeZone;
+			$defaultDateTimezone = ($header_details->session_details->session_timezone) ? $header_details->session_details->session_timezone : $defaultTimezone;
+			$sessionTZ = new DateTimeZone($defaultDateTimezone);
+			$startdate = new DateTime(null,$sessionTZ) ;
+		
+			//Changed for #0064685
+			//$startdate = $startdate->format('Y-m-d');
+			$startdate = format_date(time(), 'custom', 'Y-m-d');
+		
+			if($header_details->registration_end_on !='' || $header_details->registration_end_on != null) {
+				if (strtotime($header_details->registration_end_on) < strtotime($startdate)) {
+					$registerEndDateCheck = 1;
+				}
+			}
+		}
+		if($catalog_reg == 'Course') {
+			if($header_details->cls_count == 1 || $header_details->view_from == 'details') {
+				$header_details->enrolled_id         = $getRegister[0]->enrolled_id;
+				$header_details->comp_status         = $getRegister[0]->comp_status;
+				$header_details->enrolled_status     = $getRegister[0]->enrolled_status;
+				$header_details->waitlist_flag       		 = $getRegister[0]->waitlist_flag;
+				$header_details->waitlist_priority   = $getRegister[0]->waitlist_priority;
+				$header_details->master_enrollment_id= $getRegister[0]->master_enrollment_id;
+			} else {
+				$header_details->enrolled_id         = '';
+				$header_details->comp_status         = '';
+				$header_details->enrolled_status     = '';
+				$header_details->waitlist_flag       = '';
+				$header_details->waitlist_priority   = '';
+				$header_details->master_enrollment_id= '';
+			}
+		} else {
+			$header_details->enrolled_id        	 = $getRegister->enrolled_id;
+			$header_details->comp_status        	 = $getRegister->comp_status;
+			$header_details->enrolled_status     	 = $getRegister->enrolled_status;
+			$header_details->waitlist_flag      	 = $getRegister->waitlist_flag;
+			$header_details->waitlist_priority  	 = $getRegister->waitlist_priority;
+			$header_details->master_enrollment_id    = $getRegister->master_enrollment_id;
+		}
+		$header_details->action_variables->showTpprogress 			= false;
+		if(isset($_REQUEST['programId']) && !empty($_REQUEST['programId']) && $callfrom == 'lrnplan_course_class_list'){
+			$master_enroll_details= getClassRegisterOrNotForParticularProgram($_REQUEST['programId'],$header_details->class_id,$userId);
+			expDebug::dPrint('master_enroll_details RESULTs---->'.print_r($master_enroll_details,true),4);
+			$header_details->master_enrollment_id = $master_enroll_details[0]->master_enroll_id;
+			$header_details->enrolled_id          = $master_enroll_details[0]->enroll_id;
+			$header_details->comp_status          = $master_enroll_details[0]->comp_status;
+			$header_details->enrolled_status      = $master_enroll_details[0]->enrolled_status;
+			$header_details->waitlist_flag        = $master_enroll_details[0]->waitlist_flag;
+			$header_details->waitlist_priority    = $master_enroll_details[0]->waitlist_priority;
+			if($master_enroll_details[0]->overall_status == 'lrn_tpm_ovr_enr' ||  $master_enroll_details[0]->overall_status == 'lrn_tpm_ovr_inp' || $master_enroll_details[0]->overall_status == 'lrn_tpm_ovr_att' || $master_enroll_details[0]->overall_status == 'lrn_tpm_ovr_cmp' || $master_enroll_details[0]->overall_status == 'lrn_tpm_ovr_exp' )
+				$header_details->action_variables->showTpprogress 			= true;
+		}
+		
+		$header_details->action_variables->enrolled_status 	 = $header_details->enrolled_status;
+		$header_details->action_variables->master_enrollment_id 	 = $header_details->master_enrollment_id;
+		$header_details->is_cart_added       = isCartAdded($header_details->node_id);
+		$showContentAttempts		  = false;
+		if ($header_details->enrolled_id && ($header_details->delivery_type_code == 'lrn_cls_dty_wbt' || $header_details->delivery_type_code == 'lrn_cls_dty_vod' || $header_details->delivery_type_code =='lrn_cls_dty_wbt,lrn_cls_dty_vod')) {
+			if(isset($_REQUEST['programId']) && !empty($_REQUEST['programId']) && $callfrom == 'lrnplan_course_class_list'){
+				$header_details->progress		  = getProgressFromEnrollmentId($header_details->enrolled_id,$header_details->master_enrollment_id);
+			}else{			
+			$enrolled_class_id		  = getClassEnrollmentId($header_details->course_id, $header_details->class_id, $userId);
+			expDebug::dPrint('Class enrolled ID ---> '.print_r($enrolled_class_id, true), 4);
+			
+			if ($enrolled_class_id > 0 ) {
+				$header_details->enrolled_id	  = $enrolled_class_id;
+				$header_details->progress		  = getProgressFromEnrollmentId($header_details->enrolled_id);
+			} else {
+				$header_details->enrolled_id	  = getMasterEnrollmentStatus($header_details->master_enrollment_id, $header_details->enrolled_id);
+				$header_details->progress		  = getProgressFromEnrollmentId($header_details->enrolled_id,$header_details->master_enrollment_id);
+			}
+			}
+			expDebug::dPrint('final Class enrolled ID ---> '.print_r($header_details->enrolled_id, true), 4);
+			require_once(drupal_get_path('module', 'exp_sp_lnrenrollment').'/exp_sp_launch.inc');
+			$header_details->launch_info 					= getLaunchDetail($header_details->enrolled_id);
+			expDebug::dPrint('Class Launch INFO ---> '.print_r($header_details->launch_info, true), 4);
+			$header_details->statistics->content_count = count($header_details->launch_info);
+			$single_content_class 	  = ($header_details->statistics->content_count == 1 ) ? 1 : 0;
+			if ($single_content_class) {
+				$IsLaunchable	= $header_details->launch_info['0']['IsLaunchable'];
+				$attemptLeft 	= $header_details->launch_info['0']['AttemptLeft'];
+				$validDays		= $header_details->launch_info['0']['daysLeft'];
+				$validDayString = ($validDays == 1) ? t('LBL910') : t('LBL605');
+				$crsClassId		= 	$header_details->course_id . '_' .  $header_details->class_id;
+			}
+		}elseif($header_details->delivery_type_code == 'lrn_cls_dty_ilt' || $header_details->delivery_type_code == 'lrn_cls_dty_vcl' ){
+			if(isset($_REQUEST['programId']) && !empty($_REQUEST['programId']) && $callfrom == 'lrnplan_course_class_list'){
+				$header_details->progress		  = getProgressFromEnrollmentId($header_details->enrolled_id,$header_details->master_enrollment_id);
+			}else{
+				$enrolled_class_id		  = getClassEnrollmentId($header_details->course_id, $header_details->class_id, $userId);
+				expDebug::dPrint('Class enrolled ID ---> '.print_r($enrolled_class_id, true), 4);
+					
+				if ($enrolled_class_id > 0 ) {
+					$header_details->enrolled_id	  = $enrolled_class_id;
+					$header_details->progress		  = getProgressFromEnrollmentId($header_details->enrolled_id);
+				} else {
+					$header_details->enrolled_id	  = getMasterEnrollmentStatus($header_details->master_enrollment_id, $header_details->enrolled_id);
+					$header_details->progress		  = getProgressFromEnrollmentId($header_details->enrolled_id,$header_details->master_enrollment_id);
+				}
+			}
+		}
+		$header_details->data_validity			 		= $validDays.' '.$validDayString;
+		$header_details->data_attempt_left			 	= $attemptLeft;
+		$header_details->data_content_version		 	= $header_details->launch_info['0']->VersionNum;
+		// expDebug::dPrint("Validity DAYS --- >> ".$validDays);
+		// expDebug::dPrint("Validity DAYS --- >> ".print_r($results->launch_info,true),4);
+		//$results->waitlist_seats = getWaitlistCatalogInfo($results->cls_id);
+		$waitlist   = 0;
+		$waitlist_register = 0;
+		$waitlisted = (($header_details->enrolled_status == 'lrn_crs_reg_wtl') || ($header_details->waitlist_flag == 'lrn_crs_reg_wtl') ) ? 1 : 0;
+		if($condCount == 1){
+			if(($header_details->delivery_type_code == "lrn_cls_dty_ilt" || $header_details->delivery_type_code == "lrn_cls_dty_vcl") && (($header_details->available_seats == 0) || ($header_details->enrolled_status == 'lrn_crs_reg_wtl') || ($header_details->waitlist_flag == 'lrn_crs_reg_wtl'))) {
+				$waitlist_register  = $header_details->waitlist_seats;
+				$waitlist           = 1;
+			}
+		}
+		
+		
+		expDebug::dPrint('checking the dprint values to be printed in catalog common action 22'.print_r($getRegister,true));
+		//42055: Provide an option in the admin share widget screen to pass site url
+		$referer_url = $_SERVER['HTTP_REFERER'];
+		expDebug::dPrint('results->comp_status----->'.print_r($header_details->comp_status,true),4);
+		expDebug::dPrint('results->delivery_type_code----->'.print_r($header_details,true),4);
+	if ($header_details->multi_register == 1) {
+				if(!empty($header_details->enrolled_id)){
+				 $enrollmentDetails = getEnrollmentDetailsForNotifications($header_details->enrolled_id);
+				 $header_details->comp_status = $enrollmentDetails['comp_status'];
+				}
+				if (!empty(GetIfExpired($courseID,$userId) || !empty(CheckCourseCompExpiry($courseID))) && ($header_details->enrolled_id != '' || $header_details->enrolled_id != null || $header_details->enrolled_id != 0)){
+					$ifexpired = 1;
+					$msg = t('Registered');
+				}else if(!empty(GetIfExpired($courseID,$userId) || !empty(CheckCourseCompExpiry($courseID))) && ($header_details->enrolled_id == '' || $header_details->enrolled_id == null || $header_details->enrolled_id == 0)){
+					$ifexpired = 1;
+					$msg = t('Register');
+				}
+			} else{
+				if (!empty(GetIfExpired($courseID,$userId) || !empty(CheckCourseCompExpiry($courseID)) ) && ($header_details->enrolled_id == '' || $header_details->enrolled_id == null || $header_details->enrolled_id == 0)){
+					$ifexpired = 1;
+					$msg = t('Register');
+				}
+			}
+		expDebug::dPrint('results check expiry mea ss----->'.$msg);
+		expDebug::dPrint('results check expiry numnerr----->'.$ifexpired);
+		$regstatusArray = array('lrn_crs_reg_ppm');
+		$statusArray = array('lrn_crs_cmp_enr','lrn_crs_cmp_inp');
+		$allow_recertify = 0;
+		if(isset($_REQUEST['programId']) && !empty($_REQUEST['programId']) && $callfrom == 'lrnplan_course_class_list'){		
+			$module_seq = getModuleId($userId, $_REQUEST['programId']);
+			if(count($module_seq)>0) {
+				$module_path = $module_seq[0]->recertify_path;
+			}
+			$recertifyValue = ($module_path).'-R';
+			$NextmoduleAvailable =getCourseMappingCount($_REQUEST['programId'],$recertifyValue);
+			$resultsMasterEnroll = getObjectRegisteredOrNot($_REQUEST['programId'],'',$module_path);
+			if($resultsMasterEnroll->object_type == 'cre_sys_obt_crt' && $resultsMasterEnroll->master_enrolled_status == 'lrn_tpm_ovr_cmp')
+				$allow_recertify = getRecertifyBeforeCertifyExpired($resultsMasterEnroll->comp_date, $resultsMasterEnroll->expires_in_value ,$resultsMasterEnroll->expires_in_unit);
+		
+		}
+		if(($header_details->enrolled_id != '' || $header_details->enrolled_id != null || $header_details->enrolled_id != 0) 
+				&& ($header_details->multi_register == 0 || ($header_details->multi_register == 1 && in_array($header_details->comp_status,$statusArray) || in_array($enrollmentDetails['reg_status'],$regstatusArray))|| $callfrom=='lrnplan_course_class_list') && $header_details->comp_status != 'lrn_crs_cmp_exp' && $ifexpired !=1) {
+					if((($header_details->comp_status == 'lrn_crs_cmp_cmp' && $allow_recertify == 1 ) || ($resultsMasterEnroll->master_enrolled_status == 'lrn_tpm_ovr_exp'))  && $NextmoduleAvailable>0 ) {
+						$header_details->action_variables->showTpprogress = false;
+						$regMsg = t('Register');
+					}else if ($resultsMasterEnroll->object_type == 'cre_sys_obt_crt' && $resultsMasterEnroll->master_enrolled_status == 'lrn_tpm_ovr_exp'){
+						$regMsg = t('Completed');
+					}
+					else if($header_details->comp_status == 'lrn_crs_cmp_cmp') {
+						$regMsg = t('Completed');
+					}else {
+						$regMsg = (($header_details->enrolled_status == 'lrn_crs_reg_wtl') ||($header_details->waitlist_flag == 'lrn_crs_reg_wtl'))? t('LBL190') : t('Registered');
+					}
+			$waitlist_register  = ($regMsg !== t('LBL190')) ? 0 : $waitlist_register; //Waitlisted
+			$seatDisplay        = ($regMsg == t('LBL190')) ? true : false;  //Waitlisted
+			$course_com_cnt = getCourseCompletedCount($courseID,$userId);
+			expDebug::dPrint('$header_details->comp_status---->'.print_r($header_details->comp_status,true),4);
+			/*if($catalog_reg == 'Course'  && $results->cls_count > 1  ){
+				$courseCnt = ($header_details->comp_status == 'lrn_crs_cmp_cmp') ? 'Y' : '';
+				if(($catalog_reg == 'Course' && $header_details->cls_count <= 1) || ($catalog_reg != 'Course' && $getEnrollCnt != $header_details->cls_count)) {
+					$header_details->action_variables->id="registerCls_".$header_details->class_id;
+					$header_details->action_variables->class=($getEnrollCnt == $header_details->cls_count) ? 'action-btn-disable' : 'action-btn';;
+					$header_details->action_variables->action="$('body').data('learningcore').callEquivalencePopup('".$header_details->widgetId."','".$userId."','".$courseID."','".$classID."','".$waitlist."','".$header_details->enrolled_status."','fromCourselvl','".$courseCnt."');";
+					$header_details->action_variables->action_label=t($regMsg);
+					
+				}else if(($results->delivery_type_code == 'lrn_cls_dty_wbt' || $results->delivery_type_code == 'lrn_cls_dty_vod' || $results->delivery_type_code =='lrn_cls_dty_wbt,lrn_cls_dty_vod') && ( $results->comp_status =='lrn_crs_cmp_enr' || $results->comp_status =='lrn_crs_cmp_inp' ||($course_com_cnt < $getEnrollCnt))){
+					$header_details->action_variables->id="registerCls_".$header_details->class_id;
+					$header_details->action_variables->class='action-btn';
+					$header_details->action_variables->action="$('body').data('learningcore').showSelectClass('".$userId."','".courseID."');";
+					$header_details->action_variables->action_label=t('LBL199');
+				}else{
+					$header_details->action_variables->id="registerCls_".$header_details->class_id;
+					$header_details->action_variables->class='action-btn-disable';
+					$header_details->action_variables->action="$('body').data('learningcore').showSelectClass('".$userId."','".courseID."');";
+					$header_details->action_variables->action_label=t($regMsg);
+				 } 
+			}
+			else {*/
+				if(($header_details->delivery_type_code == 'lrn_cls_dty_wbt' || $header_details->delivery_type_code == 'lrn_cls_dty_vod') && ( $header_details->comp_status =='lrn_crs_cmp_enr' || $header_details->comp_status =='lrn_crs_cmp_inp')){
+					$res = registeredToLaunch($userId,$header_details->class_id,$header_details->course_id,$header_details->enrolled_id,$header_details->delivery_type_code,'',$regMsg,$callfrom);
+					$launch_detail_arr = explode('" ',$res[0]);
+					expDebug::dPrint('OVERE ALL RESULTs---->'.print_r($launch_detail_arr,true),4);
+					expDebug::dPrint('OVERE ALL RESULTs---->'.print_r($res,true),4);
+					if($callfrom=='lrnplan_course_class_list'){
+						$check_program_register_flag = false;
+						if(isset($_REQUEST['programId']) && !empty($_REQUEST['programId'])){
+							$header_details->comp_status = $header_details->comp_status;
+							//$master_enroll_details= getClassRegisterOrNotForParticularProgram($_REQUEST['programId'],$header_details->class_id,$userId);
+							if($master_enroll_details[0]->overall_status == 'lrn_tpm_ovr_enr' ||  $master_enroll_details[0]->overall_status == 'lrn_tpm_ovr_inp' || $master_enroll_details[0]->overall_status == 'lrn_tpm_ovr_att')
+								$check_program_register_flag = true;
+						}
+						$header_details->program_register_flag = $check_program_register_flag;
+						if($header_details->master_enrollment_id > 0 && $header_details->master_enrollment_id!=null && $header_details->master_enrollment_id!='' && $check_program_register_flag==true){
+							$header_details->action_variables->htmlout='<div '.$res[0].'</div>';
+							$showContentAttempts = $res[1];
+						}else{
+							$header_details->action_variables->id="registerCls_".$header_details->class_id;
+							$header_details->action_variables->class='action-btn-disable';
+							$header_details->action_variables->action="";
+							$header_details->action_variables->action_label=t($regMsg);
+						}
+					}else{
+						$header_details->action_variables->htmlout='<div '.$res[0].'</div>';
+						$showContentAttempts = $res[1];
+					}
+				}
+				else{
+					$header_details->action_variables->id="registerCls_".$header_details->class_id;
+					$header_details->action_variables->class='action-btn-disable';
+					$header_details->action_variables->action="";
+					$header_details->action_variables->action_label=t($regMsg);
+				}	
+			//}
+		} else if($ifexpired ==1) {
+			$header_details->action_variables->id="registerCls_".$header_details->class_id;
+			$header_details->action_variables->class='action-btn-disable';
+			$header_details->action_variables->action="";
+			$header_details->action_variables->action_label=$msg; //Full
+		}else if((($header_details->delivery_type_code == "lrn_cls_dty_ilt" || $header_details->delivery_type_code == "lrn_cls_dty_vcl") && $header_details->available_seats == 0 && $header_details->waitlist_seats == 0) && ($condCount == 1)){
+			$header_details->action_variables->id="registerCls_".$header_details->class_id;
+			$header_details->action_variables->class='action-btn-disable';
+			$header_details->action_variables->action="";
+			$header_details->action_variables->action_label=t('LBL046'); //Full
+		}else if((($header_details->delivery_type_code == "lrn_cls_dty_ilt" || $header_details->delivery_type_code == "lrn_cls_dty_vcl") && $sessionInProgress) && ($condCount == 1)) {
+			$header_details->action_variables->id="registerCls_".$header_details->class_id;
+			$header_details->action_variables->class='action-btn-disable';
+			$header_details->action_variables->action="";
+			$header_details->action_variables->action_label= t('In progress'); //In progress
+		}else if((($header_details->delivery_type_code == "lrn_cls_dty_ilt" || $header_details->delivery_type_code == "lrn_cls_dty_vcl") && $pastDateCount > 0) && ($condCount == 1)) {
+			$header_details->action_variables->id="registerCls_".$header_details->class_id;
+			$header_details->action_variables->class='action-btn-disable';
+			$header_details->action_variables->action="";
+			$header_details->action_variables->action_label=t('LBL105');//Delivered
+		}	else if(($registerEndDateCheck != 0) && ($condCount == 1)) {
+			$header_details->action_variables->id="registerCls_".$header_details->class_id;
+			$header_details->action_variables->class='action-btn-disable';
+			$header_details->action_variables->action="";
+			$header_details->action_variables->action_label=t('LBL047');//Closed
+		} else if($catalog_reg == 'Course' && $header_details->cls_count == 0 && $header_details->widgetId == 'lnr-catalog-search') {
+			$header_details->action_variables->id="registerCls_".$header_details->class_id;
+			$header_details->action_variables->class='action-btn-disable';
+			$header_details->action_variables->action="";
+			$header_details->action_variables->action_label=t('LBL636');//No Classes
+		} else  {
+			$seatDisplay = true;
+			if(count($preRequisite)>0) {
+				$header_details->action_variables->id="prereqCourse".$header_details->course_id;
+				$header_details->action_variables->class='action-btn';
+				$header_details->action_variables->action_label=t('LBL230');//Prerequisite
+				$header_details->action_variables->action="";
+				if((isset($_SESSION['widget']['pass_url']) &&  ($_SESSION['widget']['pass_url']===TRUE || $_SESSION['widget']['pass_url']==1) && (strpos($referer_url,'page_number') === false && strpos($referer_url,'click_id') === false && strpos($referer_url,'row_number') === false)) && (arg(1) == 'catalog-search' && arg(2) == 'search')){
+					$header_details->action_variables->action="passUrlCommonCall(this.id);";
+				}else{
+					if($userId!="" && $userId>0){
+						$header_details->action_variables->action="$('body').data('prerequisite').getTpPrerequisites(".$header_details->course_id.",'','course','l1');";
+					}else{
+						$header_details->action_variables->action="$('body').data('learningcore').callSigninWidget(this.id);";
+					}
+				}
+				// 41115: When commerce is enabled and price is not set then we should be showing as Register without the 0$ //
+				if(!empty($_SESSION['availableFunctionalities']->exp_sp_commerce) && $header_details->catalog_data_price > 0)  {
+					$header_details->action_variables->entity_color_class=$entityColor;
+					$header_details->action_variables->action_price_label= $header_details->currency_type ." ".$header_details->catalog_data_price;
+					$header_details->action_variables->class='action-btn priced';
+				}
+			} else if($condCount == 1 && !empty($_SESSION['availableFunctionalities']->exp_sp_commerce))  {
+				if($header_details->is_cart_added){
+					$header_details->action_variables->id="addToCartList_".$header_details->class_id;
+					$header_details->action_variables->class='action-btn-disable';
+					$header_details->action_variables->action_label=t('LBL049');//Added to Cart
+					$header_details->action_variables->action="";
+				} else if(($header_details->catalog_data_price != '0.00') || ($header_details->catalog_data_price == '0.00' && $header_details->export_compliance == 'Y')){
+					$header_details->action_variables->id="addToCartList_".$header_details->class_id;
+					$header_details->action_variables->class=($waitlist_register > 0) ? 'action-btn-waitlist' : 'action-btn priced';
+					$header_details->action_variables->action_label=t('LBL049');//Added to Cart
+					$header_details->action_variables->data=$passData;
+					$header_details->action_variables->action="";
+					if((isset($_SESSION['widget']['pass_url']) &&  ($_SESSION['widget']['pass_url']===TRUE || $_SESSION['widget']['pass_url']==1) && (strpos($referer_url,'page_number') === false && strpos($referer_url,'click_id') === false && strpos($referer_url,'row_number') === false)) && (arg(1) == 'catalog-search' && arg(2) == 'search')){
+						$header_details->action_variables->action="passUrlCommonCall(this.id);";
+					}else{
+						if($userId!="" && $userId>0){
+							$header_details->action_variables->action="$('body').data('learningcore').callAddToCart('".$header_details->widgetId."','1','".$classID."','','',".$waitlist.");";
+						}else{
+							$header_details->action_variables->action="$('body').data('learningcore').callSigninWidget(this.id);";
+						}
+					}
+					$header_details->action_variables->action_label=($waitlist_register > 0) ? t("Waitlist") : t('LBL050'); //Add to cart
+					// 41115: When commerce is enabled and price is not set then we should be showing as Register without the 0$ //
+					if(!empty($_SESSION['availableFunctionalities']->exp_sp_commerce)  && $header_details->catalog_data_price > 0){
+						$header_details->action_variables->entity_color_class=$entityColor;
+						$header_details->action_variables->action_price_label= $header_details->currency_type ." ".$header_details->catalog_data_price;
+					}else{
+						$header_details->action_variables->entity_color_class='';
+						$header_details->action_variables->action_price_label= '';
+					}
+				} else if(($header_details->catalog_data_price == '0.00' && $header_details->export_compliance == 'N')  || ($waitlist_register > 0)){
+					$header_details->action_variables->id="registerCls_".$header_details->class_id;
+					$header_details->action_variables->class=($waitlist_register > 0) ? 'action-btn-waitlist' : 'action-btn';
+					$header_details->action_variables->action_label=t('LBL049');//Added to Cart
+					$header_details->action_variables->data=$passData;
+					$header_details->action_variables->action="";
+					if((isset($_SESSION['widget']['pass_url']) &&  ($_SESSION['widget']['pass_url']===TRUE || $_SESSION['widget']['pass_url']==1) && (strpos($referer_url,'page_number') === false && strpos($referer_url,'click_id') === false && strpos($referer_url,'row_number') === false)) && (arg(1) == 'catalog-search' && arg(2) == 'search')){
+						$header_details->action_variables->action="passUrlCommonCall(this.id);";
+					}else{
+						if($userId!="" && $userId>0){
+							$header_details->action_variables->action="$('body').data('learningcore').callEquivalencePopup('".$header_details->widgetId."','".$userId."','".$courseID."','".$classID."','".$waitlist."','".$header_details->enrolled_status."');";
+						}else{
+							$header_details->action_variables->action="$('body').data('learningcore').callSigninWidget(this.id);";
+						}
+					}
+					$header_details->action_variables->action_label=($waitlist_register > 0) ? t("Waitlist") : (($header_details->enrolled_status == 'lrn_crs_reg_cnf' && $header_details->comp_status != 'lrn_crs_cmp_exp') ? t('Register') : t('Register'));
+					$header_details->action_variables->entity_color_class='';
+					$header_details->action_variables->action_price_label= '';
+					// 41115: When commerce is enabled and price is not set then we should be showing as Register without the 0$ //print (!empty($_SESSION['availableFunctionalities']->exp_sp_commerce) && $header_details->enrolled_status != 'lrn_crs_reg_cnf') ? ("<div class='".$entityColor."'>".$header_details->currency_type ." ".$header_details->price."</div>") : '';
+				}
+			}else {
+				if($catalog_reg == 'Course' && $header_details->cls_count > 1 && $header_details->widgetId == 'lnr-catalog-search'){
+					if(!empty($_SESSION['availableFunctionalities']->exp_sp_commerce) && ($header_details->is_cart_added)) {
+						$header_details->action_variables->id="registerCls_".$header_details->class_id;
+						$header_details->action_variables->class='action-btn-disable priced';
+						$header_details->action_variables->action_label=t('LBL049');//Added to Cart
+						$header_details->action_variables->action="";
+					} else if (($header_details->enrolled_id != '' || $header_details->enrolled_id != null || $header_details->enrolled_id != 0) && $header_details->multi_register == 1 )  {
+						$header_details->action_variables->id="addToCartList_".$courseID;
+						$header_details->action_variables->class=($waitlist_register > 0) ? 'action-btn-waitlist' : 'action-btn';;
+						$header_details->action_variables->action_label=($waitlist_register > 0 ) ? t("Waitlist") : (($header_details->enrolled_status == 'lrn_crs_reg_cnf' && $header_details->comp_status != 'lrn_crs_cmp_exp') ? t('Register') : t('Register'));
+						$header_details->action_variables->action="";
+					   if((isset($_SESSION['widget']['pass_url']) &&  ($_SESSION['widget']['pass_url']===TRUE || $_SESSION['widget']['pass_url']==1) && (strpos($referer_url,'page_number') === false && strpos($referer_url,'click_id') === false && strpos($referer_url,'row_number') === false)) && (arg(1) == 'catalog-search' && arg(2) == 'search')){
+					   		$header_details->action_variables->action='passUrlCommonCall(this.id);';
+					   }else{ 
+						    if($userId!="" && $userId>0){
+						    	$header_details->action_variables->action="$('body').data('learningcore').callEquivalencePopup('".$header_details->widgetId."','".$userId."','".$courseID."','".$header_details->registered_class."','".$waitlist."','".$header_details->enrolled_status."','".'fromCourselvl'."');";
+							}else{
+							    $header_details->action_variables->action="$('body').data('learningcore').callSigninWidget(this.id);";
+					        }
+					   }
+			     	}else {
+				      	$header_details->action_variables->id="registerCls_".($catalog_reg == 'Course' && $header_details->widgetId == 'lnr-catalog-search') ? $classID : $courseID;
+				      	$header_details->action_variables->class=($waitlist_register > 0) ? 'action-btn-waitlist' : 'action-btn';
+				      	$header_details->action_variables->action_label=($waitlist_register > 0 ) ? t("Waitlist") : (($header_details->enrolled_status == 'lrn_crs_reg_cnf' && $header_details->comp_status != 'lrn_crs_cmp_exp') ? t('Register') : t('Register'));
+				      	$header_details->action_variables->action="";
+						if((isset($_SESSION['widget']['pass_url']) &&  ($_SESSION['widget']['pass_url']===TRUE || $_SESSION['widget']['pass_url']==1) && (strpos($referer_url,'page_number') === false && strpos($referer_url,'click_id') === false && strpos($referer_url,'row_number') === false)) && (arg(1) == 'catalog-search' && arg(2) == 'search')){
+							$header_details->action_variables->action='passUrlCommonCall(this.id);';
+						}else{
+							if($userId!="" && $userId>0){
+								if(($catalog_reg == 'Course' && $header_details->cls_count <= 1) || $header_details->view_from == 'details' || ($catalog_reg != 'Course' && $getEnrollCnt)){
+									$header_details->action_variables->action="$('body').data('learningcore').callEquivalencePopup('".$header_details->widgetId."','".$userId."','".$courseID."','".$classID."','".$waitlist."','".$header_details->enrolled_status."','".'fromCourselvl'."');";
+						  		}else{
+									$header_details->action_variables->action="$('#lnr-catalog-search').data('lnrcatalogsearch').showSelectClass('".$userId."','".$courseID."');";
+								}
+							}else{
+								$header_details->action_variables->action="$('body').data('learningcore').callSigninWidget(this.id);";
+							}
+						}
+					}
+				}  else {
+					$header_details->action_variables->id="registerCls_".$header_details->class_id;
+					$header_details->action_variables->class=($waitlist_register > 0) ? 'action-btn-waitlist' : (($header_details->multi_register == 0 && $getEnrollCnt == $header_details->cls_count && isset($header_details->cls_count)) ? 'action-btn-disable' : 'action-btn');
+					$header_details->action_variables->data=$passData;
+					$header_details->action_variables->action="";
+					if((isset($_SESSION['widget']['pass_url']) &&  ($_SESSION['widget']['pass_url']===TRUE || $_SESSION['widget']['pass_url']==1) && (strpos($referer_url,'page_number') === false && strpos($referer_url,'click_id') === false && strpos($referer_url,'row_number') === false)) && (arg(1) == 'catalog-search' && arg(2) == 'search')){
+						$header_details->action_variables->action="passUrlCommonCall(this.id);";
+					}else{
+						if($userId!="" && $userId>0){
+							if($getEnrollCnt != $header_details->cls_count || $header_details->view_from == 'details' || $header_details->multi_register == 1) {
+								$header_details->action_variables->action="$('body').data('learningcore').callEquivalencePopup('".$header_details->widgetId."','".$userId."','".$courseID."','".$classID."','".$waitlist."','".$header_details->enrolled_status."');";
+							}
+						}else{
+							$header_details->action_variables->action="$('body').data('learningcore').callSigninWidget(this.id);";
+						}
+					}
+					$header_details->action_variables->action_label=($waitlist_register > 0 ) ? t("Waitlist") : (($header_details->enrolled_status == 'lrn_crs_reg_cnf' && $header_details->comp_status != 'lrn_crs_cmp_exp') ? t('Register') : t('Register'));
+				}
+			}
+		}
+		if($header_details->action_variables->action_price_label!="")
+			$price_label = '<div class="cls-action-button-price-lable">'.$header_details->action_variables->action_price_label.'</div>';
+		else 
+			$price_label = '';
+		if(empty($header_details->action_variables->htmlout)){
+			if($callfrom=='lrnplan_course_class_list'){
+				$action_label = $header_details->action_variables->action_label;
+				if($action_label == t('LBL230') || $action_label ==t('LBL050') || $action_label ==t('LBL049'))
+					$action_label = t('Register');
+				if($header_details->master_enrollment_id > 0 && $header_details->master_enrollment_id!=null && $header_details->master_enrollment_id!=''){
+					$header_details->action_variables->htmlout='<div id="'.$header_details->action_variables->id.'" class="'.$header_details->action_variables->class.'" onclick="'.$header_details->action_variables->action.'" data="'.$header_details->action_variables->data.'" ><div>'.$action_label.'</div></div>';
+				}else{
+					$header_details->action_variables->htmlout='<div id="'.$header_details->action_variables->id.'" class="action-btn-disable" data="'.$header_details->action_variables->data.'" ><div>'.$action_label.'</div></div>';
+				}
+			}else
+				$header_details->action_variables->htmlout='<div id="'.$header_details->action_variables->id.'" class="'.$header_details->action_variables->class.'" onclick="'.$header_details->action_variables->action.'" data="'.$header_details->action_variables->data.'" ><div>'.$header_details->action_variables->action_label.'</div>'.$price_label.'</div>';
+		}
+		$header_details->action_variables->class_id = $header_details->class_id;
+		if(contentPlayerIsActive()){
+			$header_details->launch_variables->isLaunch				= $showContentAttempts;
+			$header_details->launch_variables->class_id 			= $header_details->class_id;
+			$header_details->launch_variables->course_id 			= $header_details->course_id;
+			$header_details->launch_variables->enrolled_id			= $header_details->enrolled_id;
+			$header_details->launch_variables->user_id				= $userId;
+			$header_details->launch_variables->master_enrollment_id = ($header_details->master_enrollment_id!=null && $header_details->master_enrollment_id!='')?$header_details->master_enrollment_id:0;
+		}
+		else
+			$header_details->launch_variables->isLaunch				= false;
+		$header_details->action_variables->showprogress 			= false;
+		$header_details->launch_variables->showmenu 				= false;
+		if($header_details->comp_status == 'lrn_crs_cmp_enr' ||  $header_details->comp_status == 'lrn_crs_cmp_inp' || $header_details->comp_status == 'lrn_crs_cmp_att' || ($header_details->comp_status == 'lrn_crs_cmp_cmp' && $allow_recertify ==0))
+			$header_details->action_variables->showprogress 		= true;
+		if($header_details->delivery_type_code=='lrn_cls_dty_wbt' || $header_details->delivery_type_code=='lrn_cls_dty_vod')
+			$header_details->launch_variables->showmenu 			= true;
+		$header_details->action_variables->enrolled_id				= $header_details->enrolled_id;
+		$header_details->action_variables->progress					= convertProgressValue($header_details->progress);
+		$header_details->action_variables->attempt_left_block 		= false;
+		if($header_details->comp_status =='lrn_crs_cmp_cmp' && $header_details->multi_register == 1 ){
+		$header_details->action_variables->showprogress= false ;
+		}
+		
+		if($showContentAttempts && $header_details->comp_status !='lrn_crs_cmp_cmp' &&  !contentPlayerIsActive()){ // && $header_details->cls_count == 1
+			$header_details->action_variables->attempt_left_block = true;
+			$header_details->action_variables->attempt_left_id = "attempt_left_".$crsClassId;
+			$header_details->action_variables->attempt_left_class = "attempts_left";
+			$header_details->action_variables->attempt_left_content = '';
+			if ($attemptLeft != 'notset' && !empty($attemptLeft)) {  $header_details->action_variables->attempt_left_content =  $attemptLeft . ' ' . t('LBL202'); }
+			$header_details->action_variables->validity_label_id = "content_concat_str_".$crsClassId;
+			$header_details->action_variables->validity_label_class = "content_concat_string";
+			$header_details->action_variables->validity_content_label = t('LBL647');
+			$header_details->action_variables->validity_content = '';
+			$header_details->action_variables->validity_id = "content_validity_".$crsClassId;
+			$header_details->action_variables->validity_class = "content_validity";
+			if ($validDays > 0) { $header_details->action_variables->validity_content = $validDays . ' ' .$validDayString . ' ' .t('LBL604'); }
+			if($header_details->delivery_type_code == 'lrn_cls_dty_vod' && count($header_details->launch_info) == 1) {
+				// expDebug::dPrint('launch info from tpl'.print_r($header_details->launch_info, 1), 5);
+				$progress = '';
+				$progress_percent = 0;
+				foreach($header_details->launch_info as $launch){
+					$suspend_data = isset($launch['SuspendData']) ? json_decode(rawurldecode($launch['SuspendData'])) : null;
+					$progress = 0;
+					// expDebug::dPrint('launch info SuspendData'.print_r($suspend_data, 1), 5);
+					if($suspend_data != null) {
+						$progress = $suspend_data->progress;
+						// expDebug::dPrint('progress of each vod'.print_r($progress, 1), 5);
+					}
+					$progress_percent += floatval($progress);
+				}
+				$progress_percent = $progress_percent / count($header_details->launch_info);
+				$progress_percent_string = round($progress_percent) . '% ' . t('Completed');
+				//to show progress percentage for single content vod classes
+				$header_details->action_variables->video_progress_id = "content_progress_".$crsClassId;
+				$header_details->action_variables->video_progress_class = "content_validity";
+				$header_details->action_variables->video_progress_content = $progress_percent_string;
+				if (($attemptLeft != 'notset' || !empty($validDays)) && count($header_details->launch_info) == 1) {
+					$header_details->action_variables->video_progress_concat_string = t('LBL647');
+				}
+			}
+		}
+		$header_details->action_variables->seat_block = false;
+		if(($condCount == 1) && $seatDisplay == true ) {
+			if($header_details->delivery_type_code == "lrn_cls_dty_ilt" || $header_details->delivery_type_code == "lrn_cls_dty_vcl"){
+				$header_details->action_variables->seat_block = true;
+				$header_details->action_variables->seat_id = "seats_available_".$header_details->class_id;
+				$header_details->action_variables->seat_class = "catlog_seats_available";
+				$header_details->action_variables->seat_content = '';
+				if($waitlisted == 1) {
+					$seatInfo = t('LBL125').' '.getWaitlistPosition($header_details->class_id,$header_details->course_id,$userId);
+				} else if($waitlist_register > 0) {
+					$seatInfo = (($waitlist_register == 1) ? ($waitlist_register." ".t('LBL126')) : //Waitlist Seat left
+							($waitlist_register." ".t('LBL127'))); //Waitlist Seats left
+				} else {
+					$seatInfo = $header_details->available_seats;
+					$seatInfo = (($header_details->available_seats == 1) ? ($header_details->available_seats." ".t('LBL052')) : //Seat left
+							($header_details->available_seats." ".t('LBL053'))); //Seats left
+				}
+				$header_details->action_variables->seat_content = $seatInfo;
+			}
+		}
+		//return $header_details;
+	}catch (Exception $ex) {
+	    watchdog_exception('commonCourseClassAction', $ex);
+	    expertusErrorThrow($ex);
+	}
+}
+function getCourseActionDetails($header_details,$course_id,$course_details){
+	expDebug::dPrint(' Course DETAILS RESULR---->' . print_r($course_details, 1),4);
+	$rec_search_results = new stdClass();
+	$subRst =$header_details['Course_'.$course_id];
+	$rec_search_results->cls_id = $subRst->cls_id;
+	$rec_search_results->crs_id = $subRst->crs_id;
+	$rec_search_results->course_node_id = $subRst->crs_nid;
+	$rec_search_results->object_type = $subRst->ob_type;
+	$rec_search_results->node_id = $subRst->crs_id;
+	$rec_search_results->base_price = $course_details->price;
+	$rec_search_results->base_currency_type = $course_details->currency_type;
+	$rec_search_results->export_compliance = $course_details->export_compliance;
+	
+	$rec_search_results->price = $course_details->price;
+	$rec_search_results->prm_price = $course_details->price;
+	$rec_search_results->base_currency_type = $course_details->currency_type;
+	$rec_search_results->export_compliance = $course_details->export_compliance;
+	
+	$rec_search_results->created_on = $course_details->created_on;	
+	$rec_search_results->published_on = $course_details->published_on;
+	
+	$rec_search_results->mro_id = $course_details->mro_id;	
+	$rec_search_results->start_date = $course_details->start_date;
+	
+	$UserDefaultCurrencyArr = getUserDefaultCurrency();
+	$UserPrefCurrCode = $UserDefaultCurrencyArr['currency_code'];
+	$UserPrefCurrSym = $UserDefaultCurrencyArr['currency_sym'];
+	$rec_search_results->currency_symbol=$UserPrefCurrSym;
+	$rec_search_results->currency_type=$UserPrefCurrSym;
+	if($rec_search_results->base_price == null || $rec_search_results->base_price == '' || $rec_search_results->base_price == 0) {
+		$rec_search_results->base_price = '0.00';
+	}
+	$rec_search_results->course_to_complete = $subRst->crs_count;
+	$rec_search_results->node_id = $subRst->cls_nid;
+	$rec_search_results->course_node_id = $subRst->crs_nid;
+	$rec_search_results->language = $subRst->language;
+	$rec_search_results->language_code = $subRst->language_code;
+	$rec_search_results->location_id = $subRst->location_id;
+	$rec_search_results->crs_id = $subRst->crs_id;
+	$rec_search_results->cls_count = $subRst->cls_count;
+	$rec_search_results->delivery_type_code = $subRst->delivery_type_code;
+	$rec_search_results->delivery_type_name = $subRst->delivery_type_name;
+	
+	
+	$rec_search_results->location = $subRst->location;
+	$rec_search_results->currency_type=$rec_search_results->currency_symbol;
+	if($rec_search_results->export_compliance == null){
+		$rec_search_results->export_compliance = 'N';
+	}
+	$rec_search_results->multi_register = $subRst->is_multi_reg;
+	
+	if($rec_search_results->delivery_type_code == 'lrn_cls_dty_ilt' || $rec_search_results->delivery_type_code == 'lrn_cls_dty_vcl' ){
+		// Seat availability calculation
+		if ($subRst->capacity_max != 0) {
+			$no_of_available_seats = $subRst->capacity_max - $subRst->reg_count;
+		}
+	
+		if ($no_of_available_seats < 0 ) {
+			$no_of_available_seats = 0;
+		}
+		// Watilist calculation
+		if ($subRst->capacity_max != 0) {
+			if($subRst->capacity_max <= ($subRst->reg_count+$subRst->wtl_count)) {
+				$no_of_waitlist_seats = ($subRst->capacity_max + $subRst->waitlist_count) - ($subRst->reg_count+$subRst->wtl_count);
+			} else {
+				$no_of_waitlist_seats = 0;
+			}
+		}
+		if ($no_of_waitlist_seats < 0 ) {
+			$no_of_waitlist_seats = 0;
+		}
+		$rec_search_results->available_seats = $no_of_available_seats;
+		$rec_search_results->waitlist_seats  = $no_of_waitlist_seats;
+		$rec_search_results->session_details = $subRst;
+	}
+	if($userId && $rec_search_results->object_type =='Course'){
+		$rec_search_results->multi_register = !empty($subRst->is_multi_reg)? true : false;
+		$rec_search_results->registered_class = !empty($subRst->is_multi_reg)? explode(',',$subRst->is_multi_reg) : NULL ;
+		$rec_search_results->nodeIdFiveStar = explode(',',$subRst->cls_nid);
+	}
+
+	if($theme_key == "expertusoneV2"){
+		$catalogTrClass = '';
+		if(!empty($rec_search_results->delivery_type_code)){
+			$catalogTrClass = 'catalog-search-'.array_pop(explode('_',$rec_search_results->delivery_type_code));
+		}
+		if(!empty($rec_search_results->object_type) && ($rec_search_results->object_type != 'Class')){
+			$catalogTrClass = 'catalog-search-'.array_pop(explode('_',$rec_search_results->object_type));
+		}
+	}
+	$rec_search_results->widgetId = 'lnr-catalog-search';
+	$rec_search_results->widget = 'catalog-search';
+	expDebug::dPrint(' Course Action variable are before---->' . print_r($rec_search_results, 1),4);
+	$action_variables = get_course_class_action_themed($rec_search_results);
+	expDebug::dPrint(' Course Action variable are---->' . print_r($action_variables, 1),4);
+	return $action_variables;	
+}
+/**
+ * Implementation of hook_theme().
+ */
+function exp_sp_learning_learner_theme() {
+	try{
+		return array(
+				'content_child_list' => array (
+						'variables' => array ('results' => array (), 'context' => array()),
+						'template' => 'content_child_list',
+						'path' => drupal_get_path('module', 'exp_sp_learning_learner') . '/theme',
+				),
+				'content_class_list' => array (
+						'variables' => array ('results' => array (), 'context' => array()),
+						'template' => 'content_class_list',
+						'path' => drupal_get_path('module', 'exp_sp_learning_learner') . '/theme',
+				),
+				'content_course_list' => array (
+						'variables' => array ('results' => array (), 'context' => array()),
+						'template' => 'content_course_list',
+						'path' => drupal_get_path('module', 'exp_sp_learning_learner') . '/theme',
+				),
+				'content_icon' => array(
+						'variables' => array('result' => array(), 'context' => array()),
+						'template' => 'content_icon',
+						'path' => drupal_get_path('module', 'exp_sp_learning_learner') . '/theme',
+				),
+				'content_header' => array(
+						'variables' => array('result' => array(), 'context' => array()),
+						'template' => 'content_header',
+						'path' => drupal_get_path('module', 'exp_sp_learning_learner') . '/theme',
+				),
+				'content_action' => array(
+						'variables' => array('result' => array(), 'context' => array()),
+						'template' => 'content_action',
+						'path' => drupal_get_path('module', 'exp_sp_learning_learner') . '/theme',
+				),
+				'content_misc' => array (
+						'variables' => array('results' => array(), 'context' => array()),
+						'template' => 'content_misc',
+						'path' => drupal_get_path('module', 'exp_sp_learning_learner') . '/theme',
+				),
+				'content_stats' => array (
+						'variables' => array('results' => array(), 'context' => array()),
+						'template' => 'content_stats',
+						'path' => drupal_get_path('module', 'exp_sp_learning_learner') . '/theme',
+				),
+				'content_session_info' => array (
+						'variables' => array('results' => array(), 'context' => array()),
+						'template' => 'content_session_info',
+						'path' => drupal_get_path('module', 'exp_sp_learning_learner') . '/theme',
+				),
+				'content_disc' => array (
+						'variables' => array('results' => array(), 'context' => array()),
+						'template' => 'content_disc',
+						'path' => drupal_get_path('module', 'exp_sp_learning_learner') . '/theme',
+				),
+		);
+	}catch (Exception $ex) {
+		watchdog_exception('exp_sp_learning_learner_theme', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+
+//get survey and assessment count
+function getSurveyAssesmentCount($entity_id = '',$entity_type = '',$type = '', $opearion = '', $moduleId = '') {
+	// Select table
+	$selectStmt = db_select('slt_survey_mapping', 'ssm');
+	$selectStmt->join('slt_survey', 'sur', 'sur.id = ssm.survey_id');
+	// Set conditions
+	$selectStmt->condition('ssm.object_id', $entity_id,'=');
+	$selectStmt->condition('ssm.object_type', $entity_type,'=');
+	$selectStmt->condition('sur.type', $type, '=');
+	
+	if ($entity_type == 'cre_sys_obt_crt') { // only used in certification
+		$selectStmt->condition('ssm.module_id', $moduleId, '=');
+	}
+	
+	// Select fields
+	$selectStmt->distinct();
+	$selectStmt->addField('ssm', 'id', 'id'); // This is course id.
+	// Execute query
+	
+	expDebug::dPrintDBAPI('$select getSurveyAssesmentCount ' , $selectStmt);
+	$result = $selectStmt->execute()->fetchAll();
+	$cnt = (count($result)>0) ? count($result) : 0;
+	return $cnt;
+}
+
+
+function exp_sp_learning_learner_init() {
+	$css_module_optional = array('type' => 'file', 'group' => CSS_DEFAULT, 'weight'=>1301);
+	drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner').'/css/exp_sp_learning_learner.css', $css_module_optional);
+}
+
+function exp_sp_learning_learner_menu(){
+	try{
+		$items = array();
+
+		$items['learning/learning-classes-details-list/%'] = array (
+				'title' => 'Fetch the list of classes for the course with basic details',
+				'page callback' => 'fetchLPClassList',
+				'page arguments' => array(2,'',TRUE),
+				'type' => MENU_CALLBACK,
+				'access arguments' => array('access content'),
+				'file' => 'exp_sp_classdetail.inc',
+				'file path' => drupal_get_path('module', 'exp_sp_classdetail'),
+		);
+		
+		return $items;
+	}catch (Exception $ex) {
+		
+	}
+}
+
+
+function getEntityMiscDetails($entityId,$entityType='Course',$additional=array()){
+	$retObj=new stdClass();
+	if(isset($additional['preRequiste'])){
+		if ($entityType == 'Course') {
+			$retObj->preRequiste = $additional['preRequiste'];
+		} else {
+			$titleAttr 	=  ($entityType == 'trainingplan') ? 'pe_title' : 'crs_title';
+			$codeAttr 	=  ($entityType == 'trainingplan') ? 'pe_code' : 'crs_code';
+			$i=0;
+			foreach ($additional['preRequiste'] as $row){
+				$retObj->preRequiste[$i]=new stdClass();
+				$retObj->preRequiste[$i]->name = $row->$titleAttr;
+				$retObj->preRequiste[$i]->code = $row->$codeAttr;
+				$i++;
+			}
+		}
+		
+		expDebug::dPrint('preRequiste frm class' . print_r($retObj->preRequiste, true) , 4);
+		
+	}
+	$retObj->has_preRequiste=count($retObj->preRequiste)>0?'yes':'no';
+	//$retObj->preRequiste_label = $additional['preRequiste_label'];
+	if(isset($additional['Equivalence'])){
+		if ($entityType == 'Course') { 
+			$retObj->Equivalence = $additional['Equivalence'];
+		} else {	
+			$j=0;
+			foreach ($additional['Equivalence'] as $row){
+				$retObj->Equivalence[$j]=new stdClass();
+				$retObj->Equivalence[$j]->name = $row->crs_title;
+				$retObj->Equivalence[$j]->code = $row->crs_code;
+				$j++;
+			}		
+		}
+		expDebug::dPrint('Equivalence from class' . print_r($retObj->Equivalence, true) , 4);
+	}
+	$retObj->has_Equivalence=count($retObj->Equivalence)>0?'yes':'no';
+		
+	//For getting attachments
+	$retObj->attachments 	= getAttachmentsInfo($entityId,$entityType);
+	$retObj->numAttachments	= count($retObj->attachments);
+
+	$tagEntityType = ($entityType == 'trainingplan') ? $additional['delivery_type'] : $entityType;
+
+	$tags  = getCatalogTags($entityId,$tagEntityType);
+	$tagString  = '';
+	if(!empty($tags)){
+		$tagString  = implode(", ",$tags);
+	}
+	$retObj->tagString=$tagString;
+	$retObj->additional_info=$additional['additional_info'];
+	$retObj->has_instructor = 'no';
+	
+	if($entityType=='Class'){
+		//$entityId=4;
+		$sessDetails = getClassSessionblockDetails($additional['course_id'],$entityId,$additional['delivery_type']);
+		//print_r($additional);
+		if(count($sessDetails->sessionInsArr)>0){
+			$retObj->has_instructor = 'yes';
+			$retObj->instructors = $sessDetails->sessionInsArr;
+		}		
+		$retObj->prereq_id = $additional['course_id'];
+	} else {
+		$retObj->prereq_id = $entityId;
+	}
+
+	//print_r($retObj);
+	//$content = theme('content_misc',array("result"=>$retObj));
+	return $retObj;
+}
+
+function getLanguagesForTraining($id = '', $type = '', $access = FALSE) {
+	$languages = array();
+		$select = db_select('slt_course_class', 'cls');
+		$select->join('slt_profile_list_items', 'pli', 'pli.code = cls.lang_code');
+		$select->addField('pli', 'name', 'lang_code');
+		$select->condition('cls.course_id', $id);
+		$select->condition('cls.status', 'lrn_cls_sts_atv');
+		$select->groupBy('cls.lang_code');
+		if($access == TRUE)
+			filterByUserAccessPrivileges($select, 'cls','','','cre_sys_obt_cls','Class');
+	expDebug::dPrintDBAPI('$select getLanguagesForTraining= ' , $select);
+	$result = $select->execute()->fetchAll();
+	
+	foreach ($result as $lang) {
+		$languages[] = t($lang->lang_code);
+	}
+		
+	return implode(', ', $languages);
+	
+}
+
+function countMandatoryTraining($results = array()) {
+	$mand = 0;
+	if (empty($results)) {
+		return $mand;
+	}
+	foreach ($results as $result ) {
+		if ($result->is_required == 'Y') {
+			$mand++;
+		}
+	}
+	return $mand;
+}
+
+function getDeliveryTypesForTraining($courseId = '',$access=FALSE) {
+	$delTypes = array();
+	
+	$select = db_select('slt_course_class', 'cls');
+	$select->join('slt_profile_list_items', 'pli', 'pli.code = cls.delivery_type');
+	$select->addField('pli', 'name', 'delivery_type');
+	$select->condition('cls.course_id', $courseId);
+	$select->condition('cls.status', 'lrn_cls_sts_atv');
+	$select->where('(cls.dedicated_class_flag = \'N\' or cls.dedicated_class_flag is null)');
+	$select->groupBy('cls.delivery_type');
+	if($access == TRUE)
+		filterByUserAccessPrivileges($select, 'cls','','','cre_sys_obt_cls','Class');
+	expDebug::dPrintDBAPI('$select getDeliveryTypesForTraining= ' , $select);
+	$result = $select->execute()->fetchAll();
+	
+	expDebug::dPrint('del tyeps for the training: ' . print_r($result, 1));
+	foreach ($result as $deltype) {
+		$delTypes[] = t($deltype->delivery_type);
+	}
+
+	return implode(', ', $delTypes);
+}
+
+function getSessionDuration($classId = '') {
+	try {
+		$select = db_select('slt_course_class_session', 'ses');
+		$select->join('slt_course_class', 'cls', 'cls.id = ses.class_id');
+		$select->addExpression('SUM(TIME_TO_SEC(SUBTIME(ses.end_time, ses.start_time)))', 'session_duration');
+		$select->condition('cls.id', $classId);
+		$select->condition('cls.status', 'lrn_cls_sts_atv');
+		$select->condition('cls.delivery_type', array('lrn_cls_dty_ilt', 'lrn_cls_dty_vcl'));
+		expDebug::dPrintDBAPI('$select getSessionDuration= ' , $select);
+		$result = $select->execute()->fetchField();
+		
+		if ($result != null) {
+			return $min_string = ($result/60).' '.t('LBL424');
+		} else {
+			return '';
+		}
+		
+	} catch(Exception $ex) {
+		
+	}
+}
+
+function formatLocationAddress($detail = array()) {
+	$locDetail = '';
+	$locDetail .= $detail['location_name'];
+	if (!empty($detail['location_address1'])) {
+		$locDetail .= ', ' . $detail['location_address1'];
+	}
+	if (!empty($detail['location_address2'])) {
+		$locDetail .= ', ' . $detail['location_address2'];
+	}
+	$locDetail .= ', ' .$detail['location_city'];
+	
+	if (!empty($detail['location_state'])) {
+		$locDetail .= ', ' .$detail['location_state'];
+	}	
+	$locDetail .= ' - ' .$detail['location_zipcode'];
+	$locDetail .= ', ' .$detail['location_country'];
+	return $locDetail;
+	
+}
+
+function getFullCourseDetails($courseDetails = '') {
+	try {
+		expDebug::dPrint('node id rescied' . $courseId);
+		$crsDetail 			= new stdClass();
+		$userId 			= getSltpersonUserId();
+		$timezone_details 	= getPersonDetails($userId);
+		$crsResult			= $courseDetails;
+		expDebug::dPrint('Course Detail information : ' . print_r($crsResult, 1));
+		
+		// basic details 
+		$courseDetails		= $crsResult['catalog'];
+		
+		expDebug::dPrint('Course Detail information 2 : ' . print_r($courseDetails, 1));
+		$childNodeIds = getNodeActivityMapping($courseDetails->id);
+		$crsDetail->node_id						= implode(",",$childNodeIds); 
+		//$crsDetail->node_id						= 9;
+		$crsDetail->course_id 					= $courseDetails->id;
+		$crsDetail->entity_id 					= $courseDetails->id;
+		$crsDetail->delivery_type_code			= 'cre_sys_obt_crs';
+		$crsDetail->is_compliance				= $courseDetails->is_compliance;
+		
+	
+		if ($crsDetail->course_id  != '-') {
+			$crsDetail->preRequiste					= $crsResult['preRequiste'];
+			$crsDetail->Equivalence					= $crsResult['Equivalence'];
+			$crsDetail->entityProfRes				= $crsResult['entityProfRes'];
+			
+			
+			// Header Section
+			$crsDetail->data_icon 					= 'crs-icon';
+			$crsDetail->icon_class					=  getTypeImageClass($crsDetail->delivery_type_code);
+			$crsDetail->icon_title					=  t('Course');
+		$crsDetail->delType						=  $crsDetail->icon_title;
+			$crsDetail->data_title 					= sanitize_data($courseDetails->title);
+			$crsDetail->data_code 					= $courseDetails->code;
+			$crsDetail->cls_class_code 				= 'COURSE-DETAIL-COURSE-CODE';
+			$crsDetail->data_desc					= $courseDetails->description;
+		$crsDetail->data_trunk8 				= 'lmt-crs';
+			
+			$crsDetail->mroImageClass					= '';
+			$mroImageClassArr['cre_sys_inv_com'] =  '<div class="catalog-course-compliance-role-bg"><span class="catalog-course-compliance-bg-left"></span><span class="catalog-course-compliance-bg-middle">'.t('Compliance').'</span><span class="catalog-course-compliance-bg-right"></span></div>';
+			$mroImageClass .= '<div class="clearBoth"></div>';
+			
+			if($crsDetail->is_compliance==1){
+				$mroImageClass = $mroImageClassArr['cre_sys_inv_com'];
+				$crsDetail->mroImageClass		=    $mroImageClass;
+			}
+			
+			$crsDetail->start_rate_setting			= array(
+				'content_type' => 'Class',
+				'content_id' => 	$childNodeIds,
+					'stars' => 5,
+					'autosubmit' => TRUE,
+					'allow_clear' => FALSE,
+					'required' => FALSE,
+					'tag' => 'vote',
+					'style' => 'average',
+					'text' => 'average',
+					'enable_rate' => 'disable',
+				'startype' => 'lrn_cls_dty_ilt',
+				'catalog_crs' => 'Course',
+			);
+		$crsDetail->share_icon 					= false;
+		if(!empty($userId) && (! isset($_SESSION['widgetCallback']) || ($_SESSION['widgetCallback'] != true))){
+			$crsDetail->share_icon					= true;
+			$crsDetail->request_cls_option_class = "request-class-icon vtip";
+			$crsDetail->request_cls_option_title = t('Request Class');
+			$crsDetail->request_cls_option_data = '<a class="request-option vtip" title="'.t('Request Class').'" onclick="$(\'body\').data(\'requestclass\').openRequestClassDialog('.$crsDetail->course_id.', \'lnr-catalog-search\');">'.t('Request Class').'</a>';	//Request Class
+		}
+			$crsDetail->qtipIdInit        			= $crsDetail->course_id.'_'.$crsDetail->delivery_type_code;
+			$crsDetail->qtipOptAccessObj      		= "{'entityId':".$crsDetail->course_id.",
+														'entityType':'cre_sys_obt_crs',
+														'popupDispId':'widget_share_qtip_visible_disp_$crsDetail->qtipIdInit',
+														'wid':440,
+														'heg':'350',
+														'postype':'middle',
+														'linkid':'widget-share-$crsDetail->course_id',
+														'callFrom' : 'detail_page'}";
+			$crsDetail->action_variables			= array();
+			//initializing the course statistics info
+			$statistics = new stdClass();
+		$crsDetail->statistics->class_count			= t('LBL679'); //count($childNodeIds);
+			$crsDetail->statistics->prerequisite		= t('LBL679');
+			$crsDetail->statistics->equivalence  		= t('LBL679');
+			if(count($crsDetail->preRequiste)>0)
+				$crsDetail->statistics->prerequisite 	= t('Yes');
+			if(count($crsDetail->Equivalence)>0)
+				$crsDetail->statistics->equivalence 	= t('Yes');
+			expDebug::dPrint('course id value: ' . $crsDetail->course_id);
+		$dl_type = getDeliveryTypesForTraining($crsDetail->course_id, TRUE);
+		$crsDetail->statistics->delivery_type 		= (!empty($dl_type) ? $dl_type : t('LBL679'));
+		$crsDetail->statistics->language		= getLanguagesForTraining($crsDetail->course_id, 'course', TRUE);
+			$forum_taxonomy_data_id = GetForumTopicListForDetail('catalog',$crsDetail->course_id);
+			$crsDetail->statistics->discussion_topics = getCountTopic($forum_taxonomy_data_id[0]->tid);
+			
+			
+			$hideDesc= 'show';
+			if( !empty($_SESSION['widget']['catalog_display_parameters']) &&  $_SESSION['widget']['catalog_display_parameters']['show_description']== false){
+				$hideDesc = 'hide';
+			}
+			
+			if(isset($_SESSION['widgetCallback']) && $_SESSION['widgetCallback']==TRUE){
+				$showTitle = widgetTitleController($title, 'view_detail_page', $crsDetail->is_compliance);
+			}
+			else{
+				if (empty($crsDetail->mro_id)) {
+					if($crsDetail->is_compliance) {
+						$showTitle = titleController('BLOCK-EXP-SP-COURSEDETAIL-COMPLIANCE-TITLE', $title,100);
+					}
+					else {
+						$showTitle = titleController('BLOCK-EXP-SP-COURSEDETAIL-TITLE', $title,100);
+					}
+				}
+				else {
+					$recomm_course = 0;
+					$mand_course = 0;
+					$mrovalue= explode(',',$crsDetail->mro_id);
+					if (in_array('cre_sys_inv_rec', $mrovalue)){
+						$recomm_course = 1;
+					}
+					if (in_array('cre_sys_inv_man', $mrovalue)){
+						$mand_course = 1;
+					}
+			
+					if($recomm_course == 1) {
+						$showTitle = titleController('BLOCK-EXP-SP-COURSEDETAILS-RECOMMENDED-TITLE', $crsDetail->data_title 	,100);
+					}
+					else if($mand_course == 1) {
+						$showTitle = titleController('BLOCK-EXP-SP-COURSEDETAILS-MANDATORY-TITLE', $crsDetail->data_title 	,100);
+					}
+					else {
+						$showTitle = titleController('BLOCK-EXP-SP-COURSEDETAIL-RECORD-TITLE', $crsDetail->data_title 	,70);
+					}
+				}
+			}
+			expDebug::dPrint('course information in the function: ' . print_r($crsDetail, 1));
+		}	
+		return $crsDetail;
+	} catch(Exception $e) {
+		
+	}
+}
+
+function getFullLearningPlanDetails($programDetails = '') {
+	try {
+		global $user;
+		expDebug::dPrint('program id received' . print_r($programDetails,1),4);
+		$prmDetail 			= new stdClass();
+		$userId 			= getSltpersonUserId();
+		$prgmResult			= $programDetails;
+		expDebug::dPrint('LearningPlan Detail information : ' . print_r($prgmResult, 1));
+		
+		// basic details
+		$programDetails		= $prgmResult['learning']['0'];
+		$results				= fetchLearningActionItem($programDetails->id);
+		
+		expDebug::dPrint('LearningPlan Detail information 2 : ' . print_r($programDetails, 1));
+		
+		$prmDetail->node_id						= $programDetails->node_id;
+		$prmDetail->program_id 					= $programDetails->id;
+		$prmDetail->entity_id					= $programDetails->id;
+		$prmDetail->lang_code					= $programDetails->lang_code;
+		$prmDetail->delivery_type_code			= $programDetails->object_type;
+		$prmDetail->object_type					= $programDetails->object_type;
+		$prmDetail->pro_type					= $programDetails->pro_type;
+		$prmDetail->widgetId					= 'learning-plan-details-data';
+		$prmDetail->end_date					= $programDetails->end_date;
+		$prmDetail->registration_end_on			= $programDetails->end_date;
+		$prmDetail->expires_in_value			= $programDetails->expires_in_value;
+		$prmDetail->expires_in_unit				= $programDetails->expires_in_unit;
+		$prmDetail->mro_id						= $programDetails->mro_id;
+		$prmDetail->prm_price					= $results->prm_price;					
+		$prmDetail->prm_currency_type			= $results->prm_currency_type;
+		
+		
+		$prmDetail->preRequiste					= $programDetails->prerequisites;
+		$prmDetail->additional_info				= $programDetails->additional_info;
+		$prmDetail->courselist					= $programDetails->courselist;
+		//$prmDetail->Equivalence					= $prgmResult['Equivalence'];
+	
+		
+		
+		// Header Section
+		$prmDetail->data_icon 					= 'crs-icon';
+		$prmDetail->icon_class					=  getTypeImageClass($prmDetail->delivery_type_code);
+		$prmDetail->icon_title					=  t($prmDetail->pro_type);
+		$prmDetail->delType						=  $prmDetail->icon_title;
+		$prmDetail->data_title 					= sanitize_data($programDetails->title);
+		$prmDetail->cls_class_code				= 'BLOCK-EXP-SP-COURSEDETAILS-RECOMMENDED-TITLE'; // for title controller
+		$prmDetail->data_code 					= $programDetails->code;
+		$prmDetail->data_desc					= $programDetails->description;
+		$prmDetail->data_trunk8 				= 'lmt-lrp';
+		$prmDetail->data_comp_by				= ($prmDetail->object_type == 'cre_sys_obt_trn') ? date_format(date_create($prmDetail->end_date),'M d, Y') : '';
+		
+		if($prmDetail->object_type == 'cre_sys_obt_crt' && !empty($prmDetail->expires_in_value))
+		$prmDetail->data_expire_on				=  ($prmDetail->object_type == 'cre_sys_obt_crt') ?  prepareCrtExpiresInDisplayString($prmDetail->expires_in_value, $prmDetail->expires_in_unit) . ' ' . t('MSG568') : '';
+		
+		
+		$prmDetail->start_rate_setting			= array(
+													'content_type' => $prmDetail->object_type,
+				'content_id' => 	$prmDetail->node_id,
+				'stars' => 5,
+				'autosubmit' => TRUE,
+				'allow_clear' => FALSE,
+				'required' => FALSE,
+				'tag' => 'vote',
+				'style' => 'average',
+				'text' => 'average',
+				'enable_rate' => 'disable',
+													'startype' => $prmDetail->object_type,
+		);
+		$prmDetail->share_icon 					= false;
+		if(!empty($userId) && (! isset($_SESSION['widgetCallback']) || ($_SESSION['widgetCallback'] != true)))
+		$prmDetail->share_icon					= true;
+		$prmDetail->qtipIdInit        			= $prmDetail->program_id.'_'.$prmDetail->delivery_type_code;
+		$prmDetail->qtipOptAccessObj      		= "{'entityId':".$prmDetail->program_id.",
+													'entityType': '".$prmDetail->delivery_type_code."',
+													'popupDispId':'widget_share_qtip_visible_disp_$prmDetail->qtipIdInit',
+													'wid':440,
+													'heg':'350',
+													'postype':'middle',
+													'linkid':'widget-share-$prmDetail->program_id',
+													'callFrom' : 'detail_page'}";
+		
+		$prmDetail->mroImageClass				= '';
+		$mroImageClassArr['cre_sys_inv_man']   	=  '<div class="catalog-course-role-access-bg"><span class="catalog-course-mandatory-bg-left"></span><span class="catalog-course-mandatory-bg-middle">'.t('Mandatory').'</span><span class="catalog-course-mandatory-bg-right"></span></div>';
+		$mroImageClassArr['cre_sys_inv_opt']	=  ''; //<div class="catalog-course-role-access-bg"><span class="catalog-course-optional-bg-left"></span><span class="catalog-course-optional-bg-middle">'.strtolower(t('Optional')).'</span><span class="catalog-course-optional-bg-right"></span></div>';
+		$mroImageClassArr['cre_sys_inv_rec'] 	=  '<div class="catalog-course-role-access-bg"><span class="catalog-course-recommended-bg-left"></span><span class="catalog-course-recommended-bg-middle">'.t('Recommended').'</span><span class="catalog-course-recommended-bg-right"></span></div>';
+		$mroImageClass 							= empty($prmDetail->mro_id) ? '' : $mroImageClassArr[$prmDetail->mro_id];
+		$mroImageClass 						   .= '<div class="clearBoth"></div>';
+		
+		if(!empty($prmDetail->mro_id))
+			$prmDetail->mroImageClass			=    $mroImageClass;
+		
+		
+		
+		
+		//initializing the course statistics info
+		$statistics = new stdClass();
+		$prmDetail->statistics->prerequisite 	= (count($prmDetail->preRequiste)>0) ? t('Yes') : t('LBL679');
+		//$prmDetail->statistics->equivalence	= (count($prmDetail->equivalence)>0) ? t('Yes') : t('LBL679');
+		$prmDetail->statistics->language		= t(getProfileListItemName($prmDetail->lang_code));
+		$prmDetail->statistics->delivery_type 	= t($prmDetail->pro_type);
+		$forum_taxonomy_data_id 				= GetForumTopicListForDetail('learningplan',$prmDetail->program_id);
+		$prmDetail->statistics->discussion_topics = getCountTopic($forum_taxonomy_data_id[0]->tid);
+		
+		if ($prmDetail->object_type == 'cre_sys_obt_crt' && $user->uid) { // show respective survey and assessment count associated with current enrolled module path
+			$module_seq 							= getModuleId($userId, $prmDetail->program_id);
+			$path									= (count($module_seq) > 0) ? $module_seq[0]->recertify_path : 1 ;
+		} else {
+			$path									= 1;
+		}
+		$module_seq 							= getModuleIdFromObjectId($prmDetail->program_id, $path);
+		
+		$survey_count 							= getSurveyAssesmentCount($prmDetail->program_id, $prmDetail->delivery_type_code,'sry_det_typ_sry', '', $module_seq[0]->module_id);
+		$assessment_count 						= getSurveyAssesmentCount($prmDetail->program_id, $prmDetail->delivery_type_code,'sry_det_typ_ass', '',  $module_seq[0]->module_id);
+		
+		$prmDetail->statistics->survey = ($survey_count > 0) ? $survey_count : t('LBL679');
+		$prmDetail->statistics->assessment = ($assessment_count > 0) ? $assessment_count : t('LBL679');
+		$totalCourses							= count($prmDetail->courselist);
+		$mandatoryCourses						= countMandatoryTraining($prmDetail->courselist);
+		$optionalCourses						= $totalCourses - $mandatoryCourses;
+		$prmDetail->statistics->course_count	= $totalCourses;
+		$prmDetail->statistics->courses->mandatory	= $mandatoryCourses;
+		$prmDetail->statistics->courses->optional	= $optionalCourses;
+		
+		// prepare Tp Action button
+		commonLPRegisterAction($prmDetail, 'TP');
+		
+		$hideDesc= 'show';
+		if( !empty($_SESSION['widget']['catalog_display_parameters']) &&  $_SESSION['widget']['catalog_display_parameters']['show_description']== false){
+			$hideDesc = 'hide';
+		}
+		
+		if(isset($_SESSION['widgetCallback']) && $_SESSION['widgetCallback']==TRUE){
+			$showTitle = widgetTitleController($title, 'view_detail_page', $prmDetail->is_compliance);
+		}
+		else{
+			if (empty($prmDetail->mro_id)) {
+				if($prmDetail->is_compliance) {
+					$showTitle = titleController('BLOCK-EXP-SP-COURSEDETAIL-COMPLIANCE-TITLE', $title,100);
+				}
+				else {
+					$showTitle = titleController('BLOCK-EXP-SP-COURSEDETAIL-TITLE', $title,100);
+				}
+			}
+			else {
+				$recomm_course = 0;
+				$mand_course = 0;
+				$mrovalue= explode(',',$prmDetail->mro_id);
+				if (in_array('cre_sys_inv_rec', $mrovalue)){
+					$recomm_course = 1;
+				}
+				if (in_array('cre_sys_inv_man', $mrovalue)){
+					$mand_course = 1;
+				}
+		
+				if($recomm_course == 1) {
+					$showTitle = titleController('BLOCK-EXP-SP-COURSEDETAILS-RECOMMENDED-TITLE', $prmDetail->data_title,100);
+				}
+				else if($mand_course == 1) {
+					$showTitle = titleController('BLOCK-EXP-SP-COURSEDETAILS-MANDATORY-TITLE', $prmDetail->data_title,100);
+				}
+				else {
+					$showTitle = titleController('BLOCK-EXP-SP-COURSEDETAIL-RECORD-TITLE', $prmDetail->data_title,70);
+				}
+			}
+		}
+		expDebug::dPrint('program information in the function: ' . print_r($prmDetail, 1));
+		return $prmDetail;
+	} catch(Exception $ex) {
+		
+	}
+}
+
+function fetchLPClassList($courseId = '', $callFrom, $isFromTP=FALSE) {
+	try {
+		expDebug::dPrint('courseid received: ' . $courseId);
+		$class_ids = getClassIds($courseId);
+		expDebug::dPrint('courseid received: ' . $class_ids);
+		foreach ($class_ids as $class_id)
+			$course_details->class_details_arr[] = getFullClassDetails($class_id->classid);
+		
+		$output = theme('content_class_list', array(
+			"result" => $course_details,
+			"context" => ['callfrom' => 'learning_plan_details'],	
+		));
+		
+		$drupalSettings         = getDrupalSettings();
+		
+		$classList = array(
+				'drupal_settings'     => $drupalSettings,
+				'render_content_main' => $output,
+		);
+		
+		echo $output;
+		exit;
+		
+	} catch (Exception $ex) {
+		
+	}
+}
+
+function commonLPRegisterAction(&$prmDetail = '', $callFrom = '') {
+	try {
+		global $theme_key;
+		global $catalog_reg;
+		$delivettype 			= getObjectdeliveryType($prmDetail->program_id,$userId);
+		$getcount 				= getCourseClassCountForLP($prmDetail->program_id,$userId);
+		expDebug::dPrint('program details---->' . print_r($prmDetail, 1),4);
+		// Check any delivery type with in ILT or VCL
+		if ((in_array("lrn_cls_dty_ilt", $delivettype)) || (in_array("lrn_cls_dty_vcl", $delivettype))) {	
+			$match = true;
+		} else {	
+			$match = false;
+		}
+		//81675: TP action button shows closed instead of register.
+		if($match == true){
+			$prmDetail->cls_count = $getcount[0]->cnt;
+		}else{
+			$prmDetail->cls_count = 0;
+		}
+		$entityColor = ($theme_key == "expertusoneV2") ? 'learning-type-'.array_pop(explode('_',$prmDetail->object_type)).' currency-override-bold' : '' ;
+		//$prmDetail->cls_count = 0;
+		if($prmDetail->object_type == 'Course' || $prmDetail->object_type == 'Class'){
+			$condCount = (($catalog_reg == 'Course' && $prmDetail->cls_count == 1 && $prmDetail->widgetId == 'lnr-catalog-search') || ($catalog_reg == 'Course' && $prmDetail->widgetId != 'lnr-catalog-search')) ? 1 : 0;
+		}else{
+			$condCount = ((($catalog_reg == 'Course' || $catalog_reg == 'Class') && $prmDetail->cls_count == 1 && $prmDetail->widgetId == 'lnr-catalog-search' || $prmDetail->widgetId =='learning-plan-details-data') || ($catalog_reg == 'Course' && $prmDetail->widgetId != 'lnr-catalog-search')) ? 1 : 0;
+		}
+		$userId = getSltpersonUserId();
+		$module_seq = getModuleId($userId, $prmDetail->program_id);
+		expDebug::dPrint('$module_seq' . print_r($module_seq, 1)); 
+		$preRequisite = checkCatalogPrerequisite($prmDetail->program_id,'cre_sys_obt_trp');
+		if(count($module_seq)>0) {
+			$module_path = $module_seq[0]->recertify_path;
+			$recertifyValue = ($module_path).'-R';
+		} 
+		
+		$resultsMasterEnroll = getObjectRegisteredOrNot($prmDetail->program_id,'',$module_path);
+		$prmDetail->overall_progress = $resultsMasterEnroll->overall_progress;
+		$prmDetail->percentage_complete = $resultsMasterEnroll->percentage_complete;
+		$prmDetail->comp_status = $resultsMasterEnroll->master_enrolled_status;
+		if(contentPlayerIsActive()) {
+			$prmDetail->action_variables->progress	= convertProgressValue($prmDetail->overall_progress);
+		} else {
+			require_once(drupal_get_path('module', 'exp_sp_lnrlearningplan').'/exp_sp_lnrlearningplan.inc');
+			$comp_status = getLPCourses($resultsMasterEnroll->master_enrolled_id,$prmDetail->program_id, $resultsMasterEnroll->recertify_path,'GetCompStaus','',$prmDetail->delivery_type_code);
+			$prmDetail->action_variables->progress = $comp_status['comp_percentage'];
+		}	
+		$prmDetail->action_variables->showprogress 			= false;
+		if($prmDetail->comp_status == 'lrn_tpm_ovr_enr' ||  $prmDetail->comp_status == 'lrn_tpm_ovr_inp' || $prmDetail->comp_status == 'lrn_tpm_ovr_att' || $prmDetail->comp_status == 'lrn_tpm_ovr_cmp' || $prmDetail->comp_status == 'lrn_tpm_ovr_exp')
+			$prmDetail->action_variables->showprogress 		= true;
+		expDebug::dPrint(' PROGRAM DETAILS --------->' . print_r($prmDetail, 1));
+		$prmDetail->action_variables->program_id = $prmDetail->program_id;
+		$prmDetail->master_enrolled_id = $resultsMasterEnroll->master_enrolled_id;
+		$prmDetail->action_variables->master_enrolled_id = $prmDetail->master_enrolled_id;
+		$allow_recertify = 0;
+		
+		if($resultsMasterEnroll->object_type == 'cre_sys_obt_crt' && $resultsMasterEnroll->master_enrolled_status == 'lrn_tpm_ovr_cmp')
+			$allow_recertify = getRecertifyBeforeCertifyExpired($resultsMasterEnroll->comp_date, $resultsMasterEnroll->expires_in_value ,$resultsMasterEnroll->expires_in_unit);
+		
+		$prmDetail->is_cart_added = isCartAdded($prmDetail->node_id);
+		
+		$passData = "data={'NodeId' :'".$prmDetail->node_id."','TpId':'".$prmDetail->program_id."'}";
+		
+		
+		if($match == true){
+			$prmDetail->prm_available_seats = getObjectAvailableSeats($prmDetail->program_id, $userId, $recertifyValue);
+			$prmDetail->waitlist_status=-1;
+			if($prmDetail->prm_available_seats<=0)
+				$prmDetail->waitlist_status = getProgramWaitlistStatus($prmDetail->program_id,$userId);
+		}
+		
+		$hideButton = 'show';
+		
+		if( !empty($_SESSION['widget']['catalog_display_parameters']) &&  $_SESSION['widget']['catalog_display_parameters']['show_button']==false){
+			$hideButton = 'hide';
+		}
+		
+		if($condCount == 1){
+			if(($prmDetail->waitlist_status > 0) && ($resultsMasterEnroll->master_enrolled_id == '' || $resultsMasterEnroll->master_enrolled_id == null || $resultsMasterEnroll->master_enrolled_id == 0)) {
+				$waitlist_register  = $prmDetail->waitlist_status;
+				$waitlist           = 1;
+			} else {
+				$waitlist_register = 0;
+				$waitlist          = 0;
+			}
+		}
+		if($resultsMasterEnroll->master_enrolled_status == 'lrn_tpm_ovr_wtl') {
+			$waitlist_st = 1;
+		} else {
+			$waitlist_st = 0;
+		}
+		//81675: TP action button shows closed instead of register.
+		$startdate = format_date(time(), 'custom', 'Y-m-d');
+		$end_date_arr = explode(' ',$results->registration_end_on);
+		$registarion_end_date = $end_date_arr[0];
+		$registerEndDateCheck =0;
+		//if($condCount == 1){
+			if($prmDetail->registration_end_on !='' || $prmDetail->registration_end_on != null) {
+				if (strtotime($prmDetail->registration_end_on) < strtotime($startdate)) {
+					$registerEndDateCheck = 1;
+				}
+			}
+		//}
+		$referer_url = $_SERVER['HTTP_REFERER'];
+		
+		$NextmoduleAvailable =getCourseMappingCount($prmDetail->program_id,$recertifyValue);
+		if($hideButton != 'hide'){
+			if($resultsMasterEnroll->master_enrolled_id != '' || $resultsMasterEnroll->master_enrolled_id != null || $resultsMasterEnroll->master_enrolled_id != 0) {
+				
+				if($prmDetail->object_type == 'cre_sys_obt_crt' && ($resultsMasterEnroll->master_enrolled_status == 'lrn_tpm_ovr_exp' || $allow_recertify == 1) && $NextmoduleAvailable >0) {
+					expDebug::dPrint('action: recertify block');
+					$prmDetail->action_variables->class			= 'action-btn';
+					$prmDetail->action_variables->id			= "object-registerCls_".$prmDetail->program_id;
+					$prmDetail->action_variables->action		= "$('body').data('learningcore').callPopupOrNot('enroll-lp-result-container','". $prmDetail->program_id. "',null,'N',null,'".$resultsMasterEnroll->recertify_path."-R');";
+					$prmDetail->action_variables->action_label	= t('LBL429'); // Recertify
+					$prmDetail->action_variables->progress = '0.0';
+				} else {
+					expDebug::dPrint('action: Completed | Waitlisted | Registered block');
+					$seatDisplay = true;
+					$tpcompleted  = t('Completed');
+					$tpwaitlist   = t('LBL190');
+					$tpregistered = t('Registered');
+					$regMsg = ($resultsMasterEnroll->master_enrolled_status == 'lrn_tpm_ovr_cmp' || $resultsMasterEnroll->master_enrolled_status == 'lrn_tpm_ovr_exp') ? $tpcompleted : (($waitlist_st > 0) ? $tpwaitlist :$tpregistered); 
+
+					$prmDetail->action_variables->class			= 'action-btn-disable';
+					$prmDetail->action_variables->id			= "object-registerCls_".$prmDetail->program_id;
+					$prmDetail->action_variables->action		= "";
+					$prmDetail->action_variables->action_label	= t($regMsg); // Completed | Waitlisted | Registered
+					$prmDetail->action_variables->seat_block 	= $seatDisplay;
+				}
+				
+		 	} else if(($match == true) && ($prmDetail->prm_available_seats <= 0 && $prmDetail->waitlist_status == 0) && ($condCount == 1)) { // Seats Full
+		 		expDebug::dPrint('action: Full block');
+		 		$prmDetail->action_variables->class			= 'action-btn-disable';
+		 		$prmDetail->action_variables->id			= "object-registerCls_".$prmDetail->program_id;
+		 		$prmDetail->action_variables->action		= "";
+		 		$prmDetail->action_variables->action_label	= t('LBL046'); // Full
+		 	} else {
+		 		expDebug::dPrint('action: other block');
+		 		$seatDisplay = true;
+		 		if((count($preRequisite)>0)) {
+		 			expDebug::dPrint('action: Prerequisite block');
+		 			$prmDetail->action_variables->class			= 'action-btn';
+		 			$prmDetail->action_variables->id			= "prereqCourse".$prmDetail->program_id;
+		 			if((isset($_SESSION['widget']['pass_url']) &&  ($_SESSION['widget']['pass_url']===TRUE || $_SESSION['widget']['pass_url']==1) && (strpos($referer_url,'page_number') === false && strpos($referer_url,'click_id') === false && strpos($referer_url,'row_number') === false))){
+		 				$prmDetail->action_variables->action		= 'passUrlCommonCall(this.id);';
+		 			} else {
+		 				if($userId!="" && $userId>0){
+		 						$prmDetail->action_variables->action		= "$('body').data('prerequisite').getTpPrerequisites(".$prmDetail->program_id.",'" . $prmDetail->widgetId."','initPrereq');";
+		 					} else {
+		 						$prmDetail->action_variables->action		= "$('body').data('learningcore').callSigninWidget(this.id);";
+		 					}
+		 			} 
+		 			$prmDetail->action_variables->action_label	= t('LBL230');  // Prerequisite
+		 			$prmDetail->action_variables->entity_color_class	= $entityColor;
+		 			$prmDetail->action_variables->seat_block 			= $seatDisplay;
+		 			if(!empty($_SESSION['availableFunctionalities']->exp_sp_commerce) && $prmDetail->prm_price > 0)  {
+		 				$prmDetail->action_variables->data			= $passData;
+		 				$prmDetail->action_variables->class			= 'action-btn priced';
+		 				$prmDetail->action_variables->action_price_label	= $prmDetail->prm_currency_type ." ".$prmDetail->prm_price;
+		 			}
+		 		} else if(($registerEndDateCheck == 1)){	
+		 			expDebug::dPrint('action: Closed block');
+		 			$prmDetail->action_variables->class			= 'action-btn-disable';
+		 			$prmDetail->action_variables->id			= "object-registerCls_".$prmDetail->program_id;
+		 			$prmDetail->action_variables->action		= "";
+		 			$prmDetail->action_variables->action_label	= t('LBL047'); //Closed
+		 		} else  if(/*$condCount == 1 &&*/ !empty($_SESSION['availableFunctionalities']->exp_sp_commerce))  {
+		 			expDebug::dPrint('action: commerce block');
+		 			if($prmDetail->is_cart_added){
+		 				expDebug::dPrint('action: Added to cart block');
+		 				$prmDetail->action_variables->class			= 'action-btn-disable';
+		 				$prmDetail->action_variables->id			= "object-addToCartList_".$prmDetail->program_id;
+		 				$prmDetail->action_variables->action		= "";
+		 				$prmDetail->action_variables->action_label	=  t('LBL049'); //Added to cart
+		 			} else if($prmDetail->prm_price != '0.00') {  // Data value need to check
+		 				expDebug::dPrint('action: Add to cart block');
+		 				$prmDetail->action_variables->class			= ($waitlist_register > 0) ? 'action-btn-waitlist' : 'action-btn';
+		 				$prmDetail->action_variables->id			= "object-addToCartList_".$prmDetail->program_id;
+		 				if((isset($_SESSION['widget']['pass_url']) &&  ($_SESSION['widget']['pass_url']===TRUE || $_SESSION['widget']['pass_url']==1) && (strpos($referer_url,'page_number') === false && strpos($referer_url,'click_id') === false && strpos($referer_url,'row_number') === false)) && (arg(1) == 'catalog-search' && arg(2) == 'search')){
+		 					$prmDetail->action_variables->action		= "passUrlCommonCall(this.id);";
+		 				} else {
+		 					if($userId!="" && $userId>0){
+		 						$prmDetail->action_variables->action		= "$('body').data('learningcore').callPopupOrNot('".$prmDetail->widgetId."','". $prmDetail->program_id."','Cart','N','');";
+		 					} else {
+		 						$prmDetail->action_variables->action		= "$('body').data('learningcore').callSigninWidget(this.id);";
+		 					}
+		 				}	
+		 				$prmDetail->action_variables->action_label	=  ($waitlist_register > 0) ? t("Waitlist") : t('LBL050'); ; // Waitlist | Add to cart
+		 				if(!empty($_SESSION['availableFunctionalities']->exp_sp_commerce) && $prmDetail->prm_price > 0)  {
+		 					$prmDetail->action_variables->data			= $passData;
+		 					$prmDetail->action_variables->class			= $prmDetail->action_variables->class			= ($waitlist_register > 0) ? 'action-btn-waitlist priced' : 'action-btn priced';
+		 					$prmDetail->action_variables->action_price_label	= $prmDetail->prm_currency_type ." ".$prmDetail->prm_price;
+		 				}
+		 			} else {
+		 				expDebug::dPrint('action: Normal register block');
+		 				$prmDetail->action_variables->class			= ($waitlist_register > 0) ? 'action-btn-waitlist' : 'action-btn';
+		 				$prmDetail->action_variables->id			= "object-registerCls_".$prmDetail->program_id;
+		 				if((isset($_SESSION['widget']['pass_url']) &&  ($_SESSION['widget']['pass_url']===TRUE || $_SESSION['widget']['pass_url']==1) && (strpos($referer_url,'page_number') === false && strpos($referer_url,'click_id') === false && strpos($referer_url,'row_number') === false)) && (arg(1) == 'catalog-search' && arg(2) == 'search')){
+		 					$prmDetail->action_variables->action		= "passUrlCommonCall(this.id);";
+		 				} else {
+		 					if($userId!="" && $userId>0){
+		 						$prmDetail->action_variables->action		= "$('body').data('learningcore').callPopupOrNot('".$prmDetail->widgetId."','". $prmDetail->program_id."','','N','');";
+		 					} else {
+		 						$prmDetail->action_variables->action		= "$('body').data('learningcore').callSigninWidget(this.id);";
+		 					}
+		 				}
+		 				$prmDetail->action_variables->action_label	=   ($waitlist_register > 0) ? t("Waitlist") : t('Register'); // Waitlist | Register
+		 				if(!empty($_SESSION['availableFunctionalities']->exp_sp_commerce) && $prmDetail->prm_price > 0)  {
+		 					$prmDetail->action_variables->data			= $passData;
+		 					$prmDetail->action_variables->class			= ($waitlist_register > 0) ? 'action-btn-waitlist priced' : 'action-btn priced';
+		 					$prmDetail->action_variables->action_price_label	= $prmDetail->prm_currency_type ." ".$prmDetail->prm_price;
+		 				}
+		 				
+		 			}
+		 			
+		 		} else {
+		 			expDebug::dPrint('action: Normal register 2 block');
+		 			$prmDetail->action_variables->class			= ($waitlist_register > 0) ? 'action-btn-waitlist' : 'action-btn';
+		 			$prmDetail->action_variables->id			= "object-registerCls_".$prmDetail->program_id;
+		 			if((isset($_SESSION['widget']['pass_url']) &&  ($_SESSION['widget']['pass_url']===TRUE || $_SESSION['widget']['pass_url']==1) && (strpos($referer_url,'page_number') === false && strpos($referer_url,'click_id') === false && strpos($referer_url,'row_number') === false)) && (arg(1) == 'catalog-search' && arg(2) == 'search')){
+		 				$prmDetail->action_variables->action		= "passUrlCommonCall(this.id);";
+		 			} else {
+		 				if($userId!="" && $userId>0){
+		 					$prmDetail->action_variables->action		= "$('body').data('learningcore').callPopupOrNot('".$prmDetail->widgetId."','". $prmDetail->program_id."','','N','');";
+		 				} else {
+		 					$prmDetail->action_variables->action		= "$('body').data('learningcore').callSigninWidget(this.id);";
+		 				}
+		 			}
+		 			$prmDetail->action_variables->action_label	=   ($waitlist_register > 0) ? t("Waitlist") : t('Register'); // Waitlist | Register
+		 			
+		 		}
+		 		
+		 	}
+		 	
+		 	if($prmDetail->action_variables->action_price_label!="")
+		 		$price_label = '<div class="cls-action-button-price-lable">'.$prmDetail->action_variables->action_price_label.'</div>';
+		 	else
+		 		$price_label = '';
+		 	if(empty($prmDetail->action_variables->htmlout))
+		 		$prmDetail->action_variables->htmlout='<div id="'.$prmDetail->action_variables->id.'" class="'.$prmDetail->action_variables->class.'" onclick="'.$prmDetail->action_variables->action.'" data="'.$prmDetail->action_variables->data.'" ><div>'.$prmDetail->action_variables->action_label.'</div>'.$price_label.'</div>';
+		 	$prmDetail->action_variables->class_id = $prmDetail->program_id;
+		 	
+		}
+		
+	} catch(Exception $ex) {
+		
+	}
+}
+
+?>

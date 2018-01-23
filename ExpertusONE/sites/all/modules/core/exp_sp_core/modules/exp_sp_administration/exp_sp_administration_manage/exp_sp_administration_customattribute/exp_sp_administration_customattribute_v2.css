@@ -1,0 +1,1259 @@
+/* TextArea*/
+.page-administration .addedit-customattributes-wrapper #bubble-face-table .form-item input.error,
+.page-administration .addedit-customattributes-wrapper #bubble-face-table .form-item textarea.error,
+.page-administration .addedit-customattributes-wrapper #bubble-face-table .form-item select.error{
+    border: 1px solid #fc4646
+}
+#customattribute-basic-addedit-form-disp .custom_attr_textarea .addedit-form-cancel-and-save-actions-row{
+	   margin-top: 4px
+}
+
+/*#customattribute-basic-addedit-form-disp .custom_attr_textarea .addedit-new-field{
+	padding-top: 4px
+}*/
+
+#customattribute-basic-addedit-form-disp .custom_attr_textarea #space_before_textareatext .addedit-new-field-title{
+	 padding-top: 10px
+}
+
+#customattribute-basic-addedit-form-container .greyout_ent_lbl{
+	color:#999
+}
+
+.page-administration-manage-customattribute #show_expertus_message{
+	width: 65%
+}
+ #customattribute-basic-addedit-form-container .form-disabled .addedit-readonly-dropdown{
+ color:#999
+}
+
+#cattr_help_txt_textarea_full_row .admin-desc-character-count{
+	display:none
+}
+/* TextBox */
+/*#customattribute-basic-addedit-form-disp .custom_attr_textbox .addedit-new-field{
+	padding-top: 3px
+} */ 
+#customattribute-basic-addedit-form-disp .custom_attr_textbox .addedit-form-cancel-and-save-actions-row{
+	    /*margin-bottom: 2px;*/
+    	margin-top: 5px
+    
+} 
+#customattribute-basic-addedit-form-disp .custom_attr_textbox #space_before_textareatext .addedit-new-field{
+	padding-top: 3px;
+}
+#customattribute-basic-addedit-form-disp .custom_attr_textbox #space_before_textareatext .addedit-new-field-title{
+	 padding-top: 10px
+}
+
+#customattribute-basic-addedit-form-disp #cust_attr_unique .addedit-twocol-secondcol .addedit-new-field-title{
+  padding-right: 22px;
+}
+
+/* For Checkbox and Radio , Dropdown */
+/*#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-new-field,
+#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-new-field,
+#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-new-field{
+	padding-top: 2px
+}*/ 
+
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-form-cancel-and-save-actions-row,
+#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-form-cancel-and-save-actions-row,
+#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-form-cancel-and-save-actions-row{
+    margin-top: 5px
+} 
+
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox #space_before_textareatext .addedit-new-field-title,
+#customattribute-basic-addedit-form-disp .custom_attr_radio #space_before_textareatext .addedit-new-field-title,
+#customattribute-basic-addedit-form-disp .custom_attr_dropdown #space_before_textareatext .addedit-new-field-title{
+	/* padding-top: 10px*/
+}
+
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-new-field-title,
+#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-new-field-title,
+#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-new-field-title{
+	/*width:113px */
+	width:119px
+}
+#customattribute-basic-addedit-form-disp .addedit-new-field-title{
+	width:82px
+}
+
+#customattribute-basic-addedit-form-container .addedit-new-field-title-choice{
+	/* font-size: 12px*/
+}
+
+/*#customattribute-basic-addedit-form-container #custom_attr_option_block{
+	padding-left: 53px
+}*/
+ 
+/*#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-twocol-firstcol,
+#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-twocol-firstcol,
+#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-twocol-firstcol{
+	/*padding-top: 7px; 
+}
+
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-twocol-secondcol,
+#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-twocol-secondcol,
+#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-twocol-secondcol{
+	/*padding-top: 7px; 
+}*/
+
+
+/*#customattribute-basic-addedit-form-disp .custom_attr_checkbox #answer-choices-block,
+#customattribute-basic-addedit-form-disp .custom_attr_radio #answer-choices-block,
+#customattribute-basic-addedit-form-disp .custom_attr_dropdown #answer-choices-block {
+    margin-top: 32px;
+}*/
+
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-edit-cattr_mandatory,
+#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-edit-cattr_mandatory,
+#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-edit-cattr_mandatory,
+#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-edit-cattr_multiple_opt{ 
+ width: 61px
+}     
+
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-edit-cattr_display_opt,
+#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-edit-cattr_display_opt{ 
+ width: 95px
+}  
+
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-twocol-secondcol .addedit-new-field-title,
+#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-twocol-secondcol .addedit-new-field-title{
+ /* width: 88px */
+	width:90px
+}
+.customattribute-basic-addedit-form-container #course-custom-fields {
+  position:relative
+}
+#customattribute-basic-addedit-form-container .form-item-crs-additional-info .addedit-edit-crs_additional_info{
+  height:40px
+}
+
+#customattribute-basic-addedit-form-container .admin-course-class-long-description {
+  height:210px
+}
+
+#customattribute-basic-addedit-form-container .admin-text-field-column{
+  width:98.7%
+}
+
+.customattribute-basic-addedit-form-container .prereq-grid-wrapper .no-records-msg {
+  margin-top:145px
+}
+
+.page-administration-manage-customattribute #form-attribute .addedit-form-cancel-and-save-actions-row{
+	/*margin-bottom: -4px;*/
+}
+.page-administration-manage-customattribute #form-screen .addedit-form-cancel-and-save-actions-row{
+	/*margin-top: 75px;*/
+	margin-top: 8px
+}
+
+.page-administration-manage-customattribute #page-container #create-dd-list{ 
+ /* margin-left: 4px */
+}
+
+.page-administration-manage-customattribute #narrow-search-results-holder .narrow-search-multi-action-container{
+	 margin-top: 0px
+}
+
+#customattribute-basic-addedit-form-disp .addedit-new-field-value .addedit-form-cancel-container-actions input{
+	margin-top: 1px;
+	margin-left:-2px
+}
+
+.customattribute-basic-addedit-action-disp {
+  /*width:150px;*/
+  width:81px;
+  float:left
+} 
+
+#custom-question-choice-first-delete-button{
+	width:30px
+}
+
+.cus_attr_vtip{
+	float: right;
+    margin: 3px 0 0 3px;
+    position: absolute;
+    cursor:pointer;
+    top: auto
+}
+
+.customattribute-basic-addedit-form-container {
+  border-left:1px solid #CCC;
+  border-right:1px solid #CCC;
+  float:left;
+  min-height:417px;
+  padding:5px 0 5px 42px;
+  width:598px;
+  background:#fff
+}
+
+#catalog-enroll-form-html .customattribute-basic-addedit-form-container {
+	padding-left:5px;
+	width:625px
+}
+
+.customattribute-basic-addedit-action-disp ul {
+  margin:0;
+  padding:0
+}
+.customattribute-basic-addedit-action-disp ul li {
+  list-style-type:none;
+  position:relative;
+  display:block;
+  min-height:35px
+}
+.customattribute-basic-addedit-action-disp ul li input.selected {
+  list-style-type:none;
+  /*width:151px;*/
+   width:81px;
+  height:35px;
+  padding:10px 0 10px 8px;
+  text-align:left;
+  color:#474747;
+  font-size:12px;
+  font-family:ProximaNovaBold, Arial;
+  border-radius: 5px 0 0 5px;
+  border:1px solid #ccc;
+  border-right:0;
+  background-color:#fff
+}
+.customattribute-basic-addedit-action-disp ul li:first-child input.selected{
+  /*width:153px;*/
+   width:81px;
+  border-radius: 5px 0 5px 5px;
+}
+.customattribute-basic-addedit-action-disp ul li input.highlighted {
+  list-style-type:none;
+ /* width:151px; */
+  width:81px;
+  height:35px;
+  border:0;
+  padding:10px 0 10px 8px;
+  text-align:left;
+  color:#474747;
+  border-radius: 5px 0 0 5px;
+  border:1px solid #ccc;
+  border-right:0;
+   background-color:#fff
+}
+.customattribute-basic-addedit-action-disp ul li .form-submit {
+  color:#474747;
+  font-size:12px;
+  background:#fff;
+  border:0;
+  /*width:150px;*/
+  width:81px;
+  padding:9px 0 9px 8px;
+  text-align:left;
+  font-family:ProximaNovaBold, Arial;
+  text-transform:uppercase
+}
+#customattribute-basic-addedit-form .addedit-left-col,
+#program-tp-basic-addedit-form-disp .addedit-left-col {
+  padding:15px 0 15px 15px
+}
+#exp-sp-administration-customattribute-addedit-form .addedit-left-col .addedit-left-col {
+  padding:0
+}
+.customattribute-basic-addedit-action-disp ul li .remove-border {
+  border:0;
+  color:#010101;
+  font-size:13px;
+  background:#fff;
+  /*width:142px;*/
+  width:81px;
+  padding:10px 0 10px 8px;
+  text-align:left;
+  cursor:pointer
+}
+
+#customattribute-basic-addedit-form-container .reading-type-txtBox{
+  width:224px
+}
+
+#customattribute-basic-addedit-form-container .reading-content-txtBox{
+  width:370px
+}
+
+#customattribute-basic-addedit-form-container .admin-datagrid-pagination .admin-datagrid-add-btn-wrapper-container {
+  top:145px
+}
+
+#customattribute-basic-addedit-form-container .custom-details-row .admin-custom-required-col2 .input-attachment-url{
+   width:314px
+}
+
+#customattribute-basic-addedit-form-container .custom-details-row td.addedit-new-field-title-custom{
+  padding-left:2px;
+  width:222px
+}
+
+.edit-customattribute-save-publish {
+  background:#27245e;
+  border:1px solid #27245e;
+  float:left;
+  text-align:center;
+  line-height:16px;
+  color:#fff;
+  font-family:ProximaNovaBold, Arial;
+  text-transform:uppercase;
+  font-size:11px;
+  margin:0;
+  border-radius:6px;
+  padding:3px 6px 2px
+}
+
+#customattribute-basic-addedit-form .form-item-crs-author-vendor .addedit-edit-crs_author_vendor{
+   width:169px
+}
+
+#customattribute-basic-addedit-form-container .add-scroll-button-description {
+  height:auto;
+  overflow:hidden;
+  width:340px
+}
+#customattribute-basic-addedit-form-container .two-column-container-view .second-col-container-view label {
+  padding-right:12px;
+  text-align:right;
+  line-height:18px;
+  width:144px
+}
+
+.customattribute-basic-addedit-action-disp ul li .deactive-links label {
+  font-weight:normal;
+  font-size:12px;
+  border:0;
+  /*width:142px;*/
+  width:81px;
+  padding:9px 0 9px 11px;
+  text-align:left;
+  cursor:auto;
+  font-family:ProximaNovaBold, Arial;
+  text-transform:uppercase;
+  color:#474747
+}
+
+.theme-ctool-popup #customattribute-basic-addedit-form #bubble-face-table .addedit-left-col{
+ padding:7px 0 0 10px;
+ background:none 
+}
+
+#customattribute-basic-addedit-form-disp {
+  margin:9px 0 0 0;
+  float:left
+}
+#customattribute-basic-addedit-form-disp .addedit-new-field-value .addedit-edit-textarea {
+  padding-top:0
+}
+#customattribute-basic-addedit-form-disp #form-attribute .customattribute-basic-addedit-form-container {
+  min-height:117px;
+  padding:0px 0 1px 21px;
+  width:368px
+}
+#customattribute-basic-addedit-form-disp #form-screen .customattribute-basic-addedit-form-container {
+  min-height:150px;
+  padding:0 0 2px 8px;
+  width:381px
+}
+
+#customattribute-basic-addedit-form-disp .addedit-new-field-title{
+	width:82px
+}
+
+/*.page-administration-manage-customattribute .addedit-edit-textarea, 
+.page-administration-manage-customattribute #bubble-face-table .form-item .form-text, 
+.page-administration-manage-customattribute .theme-ctool-popup .form-item .form-text{
+	padding-left: 10px;
+}*/
+
+#customattribute-basic-addedit-form-disp .addedit-edit-cattr_datatype{
+	 width: 86px
+}
+
+.page-administration-manage-customattribute #paint-narrow-search-results #gview_narrow-search-results-holder{
+	min-height: 0 !important;
+}
+
+/*#customattribute-basic-addedit-form-disp .addedit-form-main-container.custom_attr_dropdown .addedit-edit-cattr_mandatory{
+ width: 70px;
+}*/
+/*#customattribute-basic-addedit-form-disp .addedit-form-main-container.custom_attr_dropdown .addedit-edit-cattr_multiple_opt{
+ width: 70px
+}*/
+#customattribute-basic-addedit-form-disp .addedit-edit-cattr_unique{
+	width: 64px
+}
+
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #customattribute-basic-addedit-form-container {
+  padding-left:25px;
+  width:615px
+}
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common .addedit-long-description-container .addedit-new-field-value {
+  width:442px
+}
+
+#customattribute-basic-addedit-form .addedit-twocol-secondcol .addedit-secondcol-field-value{
+	float: right;
+	padding-right:10px
+}
+#customattribute-basic-addedit-form .form-select {
+	padding-left: 3px
+}
+
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-cattr_length,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-author_vendor,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-author_vendor_complete {
+  width:100%
+}
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common .addedit-new-field-two-col .addedit-twocol-firstcol,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common .addedit-new-field-two-col .addedit-twocol-secondcol {
+  width:50%
+}
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #customattribute-basic-addedit-form-disp #two-col-row-author_vendor .addedit-twocol-secondcol {
+  float:right
+}
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-author_vendor_complete .addedit-twocol-secondcol .addedit-new-field-title,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-author_vendor .addedit-twocol-secondcol .addedit-new-field-title,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-cattr_length .addedit-twocol-secondcol .addedit-new-field-title,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-course-price .addedit-twocol-secondcol .addedit-new-field-title {
+  margin-left:10px;
+  padding-right:0;
+  width:125px
+}
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-author_vendor_complete .addedit-twocol-secondcol .addedit-new-field-title {
+	width:60px;
+	text-align: left;
+	margin-left: 7px;
+}
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-author_vendor .addedit-twocol-secondcol .expertus-dropdown-bg,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-author_vendor .addedit-twocol-secondcol .expertus-dropdown-icon,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-cattr_length .addedit-twocol-secondcol .expertus-dropdown-bg,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-cattr_length .addedit-twocol-secondcol .expertus-dropdown-icon,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-course-price .addedit-twocol-secondcol .expertus-dropdown-bg,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-course-price .addedit-twocol-secondcol .expertus-dropdown-icon {
+  width:151px
+}
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-author_vendor .addedit-twocol-secondcol .addedit-secondcol-field-value #course_compliance,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-cattr_length .addedit-twocol-secondcol .addedit-secondcol-field-value #edit-crs-language,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-cattr_length .addedit-twocol-secondcol .addedit-secondcol-field-value .addedit-edit-crs_language,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-course-price .addedit-twocol-secondcol .addedit-secondcol-field-value #course_compliance {
+  width:170px
+}
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-cattr_length .form-item-crs-code .addedit-edit-cattr_datatype,
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #two-col-row-author_vendor .form-item-crs-author-vendor .addedit-edit-crs_author_vendor {
+  width:145px
+}
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common input.addedit-edit-crs_title {
+  width:438px
+}
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #customattribute-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions {
+  margin-right:20px
+}
+#customattribute-basic-addedit-form-container #two-col-row-author_vendor_complete .form-item-completed-date .addedit-edit-completed_date {
+  margin-left: -100px;
+  width: 70px;
+  padding-left: 2px;68
+}
+
+#customattribute-basic-addedit-form-disp .addedit-edit-crs_short_description {
+  height:164px
+}
+
+#customattribute-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions {
+  margin-right:10px
+}
+#form-screen #customattribute-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions {
+  margin-right:-1px
+}
+
+
+#customattribute-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .admin-save-pub-unpub-button-container {
+  padding-left:0
+}
+
+#customattribute-basic-addedit-form .catalog_course_addedit_form_common #customattribute-basic-addedit-form-container .tag-fieldset-wrapper .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions {
+  margin-right:0
+}
+
+#narrow-search-results-holder #bubble-face-table .customattribute-basic-addedit-form-container {
+  border:0
+}
+
+.customattribute-basic-addedit-form-container .addedit-new-field-two-col .form-item-price .addedit-edit-price {
+  margin-right:4px;
+  margin-top:1px;
+  width:90px
+}
+
+
+.theme-ctool-popup .customattribute-basic-addedit-action-disp ul li input.selected {
+  list-style-type:none;
+  width:81px;
+  height:35px;
+  padding:10px 0 10px 8px;
+  text-align:left;
+  color:#474747;
+  font-size:12px;
+  font-weight:normal;
+  font-family:ProximaNovaBold, Arial;
+  border-radius: 5px 0 0 5px;
+  border:1px solid #ccc;
+  border-right:0;
+  background-color:#fff
+}
+.theme-ctool-popup .customattribute-basic-addedit-action-disp ul li:first-child input.selected{
+   width:82px;
+}
+.theme-ctool-popup #customattribute-basic-addedit-form-disp #form-screen .round-corner-left {
+	border-radius: 10px 10px 0 0;
+}
+.theme-ctool-popup #customattribute-basic-addedit-form-disp #form-attribute .round-corner-left {
+    border-radius: 0px 10px 0 0;
+}
+.theme-ctool-popup .customattribute-basic-addedit-action-disp ul li input.highlighted {
+  list-style-type:none;
+  /*width:151px;*/
+  width:82px;
+  height:35px;
+  padding:10px 0 10px 8px;
+  text-align:left;
+  color:#474747;
+  font-size:12px;
+  font-weight:normal;
+  font-family:ProximaNovaBold, Arial;
+  border-radius: 5px 0 0 5px;
+  border:1px solid #ccc;
+  border-right:0;
+  background-color:#fff
+}
+.theme-ctool-popup .customattribute-basic-addedit-action-disp ul li .form-submit {
+  color:#474747;
+  font-size:12px;
+  background:none;
+  border:0;
+  /*width:150px;*/
+  width:81px;
+  text-transform:uppercase;padding-left: 11px;
+  padding:9px 0 9px 8px;
+  text-align:left;
+  font-size:12px;
+  font-weight:normal;
+  font-family:ProximaNovaBold, Arial
+}
+.theme-ctool-popup #customattribute-basic-addedit-form .addedit-left-col{
+  /* padding:15px 0 15px 14px;
+ padding:15px 0 2px 14px;*/
+ padding:2px 0 2px 13px;
+ background:#FFF
+ width: 97%;
+}
+.page-administration-manage-customattribute .addedit-form-main-container{
+	margin-bottom: 0;
+	float:none;
+    width:381px;
+}
+.page-administration-manage-customattribute .theme-ctool-popup .addedit-form-main-container{
+  width:391px;
+  float:left
+}
+.theme-ctool-popup .customattribute-basic-addedit-action-disp ul li .deactive-links label {
+  border:0;
+ /* width:142px;*/
+  width:81px;
+  padding:9px 0 9px 11px;
+  text-align:left;
+  cursor:auto;
+  text-transform:uppercase;
+  color:#474747;
+  font-size:12px;
+  font-weight:normal;
+  font-family:ProximaNovaBold, Arial
+}
+
+.theme-ctool-popup #customattribute-basic-addedit-form-disp .addedit-secondcol-field-value #course_compliance {
+  width:87px
+}
+#customattribute-basic-addedit-form-disp .addedit-secondcol-field-value .form-item-course-compliance {
+	float: right;
+}
+#customattribute-basic-addedit-form-disp #two-col-row-course_price .addedit-twocol-secondcol,
+#customattribute-basic-addedit-form-disp #two-col-row-course_price .two-col-row-author_vendor_complete {
+	width: 37%;
+}
+
+#edit-customattribute-basic-save{
+  border-radius:6px 0 0 6px;
+  margin-left:10px;
+  margin-top:1px;
+  padding:2px 3px 2px 6px
+}
+
+
+#customattribute-basic-addedit-form53px-container .addedit-edit-customattribute-basic-save{
+  border-radius:6px 0 0 6px;
+  margin-left:10px;
+  margin-top:1px;
+  padding:2px 3px 2px 6px
+}
+
+#customattribute-basic-addedit-form-container div.two-column-container-view label {
+  width:156px;
+  float:left;
+  font-size:12px;
+  font-weight:normal;
+  font-family:proximaNovaBold, Arial;
+  color:#474747
+}
+
+#customattribute-basic-addedit-form-container .two-column-container-view .first-col-container-view .first-col-value-view,
+#customattribute-basic-addedit-form-container .two-column-container-view .second-col-container-view .second-col-value-view{
+  font-size:12px;
+  font-weight:normal;
+  float:left;
+  color:#333
+}
+
+#customattribute-basic-addedit-form-container .two-column-container-view .first-col-container-view,
+#customattribute-basic-addedit-form-container .two-column-container-view .second-col-container-view{
+  float:left;
+  margin-bottom:6px;
+  margin-top:6px;
+  width:49%;
+}
+
+#customattribute-basic-addedit-form #two-col-row-author_vendor_complete,
+#customattribute-basic-addedit-form #two-col-row-cattr_length{
+  width:553px
+}
+
+#customattribute-basic-addedit-form #two-col-row-cattr_length .addedit-twocol-secondcol .addedit-new-field-title{
+  margin-left:15px
+}
+
+#customattribute-basic-addedit-form-disp .addedit-twocol-secondcol .addedit-new-field-title{ 
+  padding-right: 20px;
+  text-align: right;
+ /* width: 50px*/
+ width: 81px
+}
+
+#customattribute-basic-addedit-form-disp .form-item-cattr-length{
+ /*padding-right:10px*/
+}
+
+#customattribute-basic-addedit-form .customattribute-basic-addedit-form-container .completed-by-fadeout-container {
+	max-width :150px;
+	display : inline-block;
+	position : relative;
+	vertical-align : middle
+}
+
+#customattribute-basic-addedit-form-disp .addedit-new-field-value .addedit-edit-textarea {
+	  padding-top:2px
+}
+#customattribute-basic-addedit-form-disp #catalog-attachment-disp-container .attach-btn-group-provide-url {
+	  display:table;
+	  margin:12px auto 0
+	}
+#customattribute-basic-addedit-form-container .admin-course-edit-button-container .admin-add-edit-button{
+	 margin: 15px 24px 0 0;
+}
+
+#customattribute-basic-addedit-form-container #multi_ent_setup_div{
+	max-height: 280px; 
+    overflow: hidden;
+}
+#customattribute-basic-addedit-form-container #multi_ent_setup_div .jspContainer {
+    width: 418px;
+    padding-top: 10px; 
+}
+#customattribute-basic-addedit-form-container #screen_tableholder {
+    width: 373px;
+    padding-top: 3px; 
+}
+
+#customattribute-basic-addedit-form-container #multi_ent_setup_div .jspHorizontalBar{
+	display:none
+}
+
+#customattribute-basic-addedit-form-container .screen-table-heading {
+    border-bottom: 1px solid #e5e5e5;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    width:100%
+} 
+ 
+#customattribute-basic-addedit-form-container .heading-background-class-title {
+    background: rgba(0, 0, 0, 0) linear-gradient(#fefefe, #ebebeb) repeat scroll 0 0;
+    border-color: #e5e5e5 #dadada #e5e5e5 #e5e5e5;
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+    height: 25px;
+   line-height: 25px; padding: 0px 10px; font-family: proximanovabold,arial; font-size:12px; font-weight: normal
+}
+
+#customattribute-basic-addedit-form-container .check-attributes {
+    color: #2d2d2d;
+    font-size: 12px;
+    padding-left: 10px
+}
+
+/*#customattribute-basic-addedit-form-container td.edit_option .publish_checkbox,
+#customattribute-basic-addedit-form-container td.view_option .publish_checkbox {
+	margin: 0.3em 0 0 3em;
+}*/
+
+#customattribute-basic-addedit-form-container .odd-list-class{
+	background-color:none
+}
+#customattribute-basic-addedit-form-container .even-list-class{
+	background-color:#f7f7f7
+}
+
+#customattribute-basic-addedit-form-container #admin-save-screen-button{
+	margin-right:9px;
+	margin-left:10px
+}
+#form-screen #customattribute-basic-addedit-form-container .screen-table-heading th{
+	color: #474747;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 5px;
+	text-transform: uppercase
+}
+#customattribute-basic-addedit-form-container #screen_heading_field{
+	width:66%
+}
+#customattribute-basic-addedit-form-container #view_heading_field{
+	width:17%
+}
+#customattribute-basic-addedit-form-container #edit_heading_field{
+	width:17%
+}
+#form-screen #customattribute-basic-addedit-form-container table.screen-table-heading td{
+	color: #474747;53px
+    font-family: openSansRegular,Arial;
+    padding-left: 5px 
+}
+#customattribute-basic-addedit-form-container .admin-customattribute-edit-button-container .admin-add-edit-button{
+	margin: 29px 46px 0 0;
+	position: relative;
+    z-index: 9999
+}
+
+#customattribute-basic-addedit-form-container .admin-customattribute-edit-button-container {
+    float: right;
+    padding-right: 0;
+    position: absolute;
+    right: 0;
+    top: 15px;
+ }   
+    
+.page-administration-manage-customattribute .narrow-search-multi-action-container{
+	  margin-left: -8px
+}
+.page-administration-manage-customattribute #page-container #create-dd-list li {
+    margin: 0;
+}
+
+.page-administration-manage-customattribute #page-container .narrow-search-actionbar-list li, 
+.page-administration-manage-customattribute #page-container .narrow-search-actionbar-list li a{
+	padding-top: 4px
+}
+
+.page-administration-manage-customattribute #page-container .narrow-search-results-item-action{
+	/*padding-right:20px*/
+    padding-right:2px
+}
+
+/*.page-administration-manage-customattribute #customattribute-basic-addedit-form-disp .addedit-new-field-title{
+		padding-top:4px
+	}*/
+	
+	
+.page-administration-manage-customattribute .theme-ctool-popup .custom_attr_checkbox,
+.page-administration-manage-customattribute .theme-ctool-popup .custom_attr_radio,
+.page-administration-manage-customattribute .theme-ctool-popup .custom_attr_dropdown  {
+   width:450px;
+}
+.page-administration-manage-customattribute .theme-ctool-popup .custom_attr_checkbox_screen,
+.page-administration-manage-customattribute .theme-ctool-popup .custom_attr_radio_screen,
+.page-administration-manage-customattribute .theme-ctool-popup .custom_attr_dropdown_screen  {
+   /*width:458px;*/
+  width:449px;
+}
+
+.page-administration-manage-customattribute #customattribute-basic-addedit-form-disp .custom_attr_checkbox #customattribute-basic-addedit-form-container,
+.page-administration-manage-customattribute #customattribute-basic-addedit-form-disp .custom_attr_radio #customattribute-basic-addedit-form-container,
+.page-administration-manage-customattribute #customattribute-basic-addedit-form-disp .custom_attr_dropdown #customattribute-basic-addedit-form-container{
+  width:427px;
+}
+
+
+.page-administration-manage-customattribute #customattribute-basic-addedit-form-disp .custom_attr_checkbox_screen #customattribute-basic-addedit-form-container,
+.page-administration-manage-customattribute #customattribute-basic-addedit-form-disp .custom_attr_radio_screen #customattribute-basic-addedit-form-container,
+.page-administration-manage-customattribute #customattribute-basic-addedit-form-disp .custom_attr_dropdown_screen #customattribute-basic-addedit-form-container{
+  /*width:448px;*/
+ width:439px
+}
+
+.custom_attr_checkbox_screen #customattribute-basic-addedit-form-container #screen_tableholder,
+.custom_attr_radio_screen #customattribute-basic-addedit-form-container #screen_tableholder,
+.custom_attr_dropdown_screen #customattribute-basic-addedit-form-container #screen_tableholder{
+   /*width: 440px;*/
+  width:431px
+}
+ 
+
+#customattribute-basic-addedit-form-disp .custom-answer-choice-customattributetextfield{
+	width: 278px;
+	margin-left: 2px
+}
+
+.custom_attr_checkbox #customattribute-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions,
+.custom_attr_radio #customattribute-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions,
+.custom_attr_dropdown #customattribute-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions{
+    margin-right: 20px;
+}
+	
+/*
+#sf-basic-addedit-form .sf-table-heading .check-attributes > input {
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    font-size: 12px;
+    padding-left: 2px;
+}
+
+#sf-basic-addedit-form .sf-table-heading .check-attributes > input {
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    font-size: 12px;
+    padding-left: 2px;
+}
+
+*/
+#customattribute-basic-addedit-form #form-attribute .addedit-new-field-two-col{
+	width:100%
+}
+#customattribute-basic-addedit-form .custom_attr_checkbox .addedit-new-field-two-col,
+#customattribute-basic-addedit-form .custom_attr_radio .addedit-new-field-two-col,
+#customattribute-basic-addedit-form .custom_attr_dropdown .addedit-new-field-two-col{
+	top: -5px;
+    position: relative
+}
+#customattribute-basic-addedit-form #form-attribute .addedit-new-field-two-col .addedit-twocol-firstcol{
+	width:46%;
+	padding-top:2px
+}
+#customattribute-basic-addedit-form #form-attribute .addedit-new-field-two-col .addedit-twocol-secondcol{
+	width:54%;
+	padding-top:2px
+}
+#customattribute-basic-addedit-form .custom_attr_textbox .addedit-new-field-two-col .addedit-twocol-firstcol .addedit-firstcol-field-value,
+#customattribute-basic-addedit-form .custom_attr_textbox .addedit-new-field .addedit-new-field-value,
+#customattribute-basic-addedit-form .custom_attr_textarea .addedit-new-field-two-col .addedit-twocol-firstcol .addedit-firstcol-field-value,
+#customattribute-basic-addedit-form .custom_attr_textarea .addedit-new-field .addedit-new-field-value{
+	margin-left:8px
+}
+#customattribute-basic-addedit-form-disp #two-col-row-custom-attr-txt-mandatory .addedit-edit-cattr_mandatory,
+#customattribute-basic-addedit-form .custom_attr_textarea #two-col-row-custom-attr-txtarea-length .addedit-edit-cattr_mandatory{
+	width:61px
+}
+#customattribute-basic-addedit-form .custom_attr_textbox #two-col-row-custom-attr-txt-mandatory .addedit-twocol-secondcol .addedit-secondcol-field-value{
+	margin-top:0;
+}
+#customattribute-basic-addedit-form-disp .addedit-edit-cattr_help_txt{
+	max-width:263px;
+    min-width:263px;
+    height:30px
+}
+#customattribute-basic-addedit-form .custom_attr_textbox #two-col-row-custom-attr-txt-length .addedit-twocol-firstcol .addedit-firstcol-field-value{
+	margin-top:0
+}
+#customattribute-basic-addedit-form-disp .addedit-edit-cattr_name{
+	width:258px
+}
+#customattribute-basic-addedit-form-disp .addedit-edit-cattr_unique{
+	width:86px
+}
+#customattribute-basic-addedit-form-disp .addedit-edit-cattr_length{
+ 	width:59px
+}
+#customattribute-basic-addedit-form .custom_attr_textarea .addedit-new-field-two-col .addedit-twocol-secondcol .addedit-new-field-title{
+	width:106px
+}
+#customattribute-basic-addedit-form .custom_attr_textarea .form-item-cattr-help-txt{
+	margin-top:4px
+}
+#customattribute-basic-addedit-form .addedit-form-cancel-and-save-actions-row .addedit-edit-customattribute-basic-save{
+	border-radius:6px 0 0 6px;
+	padding: 2px 0px 2px 6px
+}
+#customattribute-basic-addedit-form-disp .addedit-form-main-container.custom_attr_dropdown .addedit-twocol-secondcol .addedit-new-field-title{
+	width:123px	
+}
+#customattribute-basic-addedit-form .custom_attr_checkbox .addedit-twocol-secondcol .addedit-secondcol-field-value,
+#customattribute-basic-addedit-form .custom_attr_radio .addedit-twocol-secondcol .addedit-secondcol-field-value,
+#customattribute-basic-addedit-form .custom_attr_dropdown .addedit-twocol-secondcol .addedit-secondcol-field-value{
+	padding-right: 21px;
+}
+#customattribute-basic-addedit-form #answer-choices-block #custom_attr_option_block .addedit-new-field{
+	margin-top: 3px;
+}
+#new-customattribute-wrapper #customattribute-basic-addedit-form #answer-choices-block #custom_attr_option_block .addedit-new-field{
+		margin-top: 4px;
+	}
+#customattribute-basic-addedit-form .addedit-custom-field .addedit-form-cancel-container-actions .add-custombtn-symbol{
+	padding: 3px 8px 3px 12px
+}
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-edit-cattr_name,
+#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-edit-cattr_name,
+#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-edit-cattr_name{
+	 width: 278px;
+}
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-edit-cattr_help_txt,
+#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-edit-cattr_help_txt,
+#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-edit-cattr_help_txt{
+    max-width: 283px;
+    min-width: 283px;
+    /*margin-top: 4px*/
+   margin-top: -2px;
+}
+/* IE 11 hack*/
+
+ @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+  /* IE10+ specific styles go here */  
+  .page-administration-manage-customattribute #page-container #create-dd-list{ 
+  		margin-left: 0px
+	}
+	
+  .theme-ctool-popup .customattribute-basic-addedit-action-disp ul li input.highlighted {
+      width:82.5px;
+   }
+   .theme-ctool-popup .customattribute-basic-addedit-action-disp ul li:first-child input.selected{
+     width:82.5px;
+   }
+
+}
+/* Chrome hack Start */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	/*.page-administration-manage-customattribute .addedit-edit-textarea, 
+	.page-administration-manage-customattribute #bubble-face-table .form-item .form-text, 
+	.page-administration-manage-customattribute .theme-ctool-popup .form-item .form-text{
+		padding-left: 8px
+	}*/
+	/*#customattribute-basic-addedit-form-disp .addedit-edit-cattr_name{
+		width: 253px
+	}*/
+	/*#customattribute-basic-addedit-form-disp .addedit-edit-cattr_length{
+ 		width:53px
+	}*/
+	/*#customattribute-basic-addedit-form-disp #form-attribute .customattribute-basic-addedit-form-container {
+    	padding:0px 0 5px 21px;
+	}*/
+	#customattribute-basic-addedit-form .form-select {
+		padding-left: 7px
+	}
+	#customattribute-basic-addedit-form .custom_attr_textarea .form-item-cattr-help-txt{
+		margin-top:3px
+	}
+	#customattribute-basic-addedit-form-disp .custom_attr_textarea .addedit-form-cancel-and-save-actions-row{
+	   margin-top: 5px
+	}
+	#customattribute-basic-addedit-form #answer-choices-block #custom_attr_option_block .addedit-new-field{
+		margin-top: 5px;
+	}
+	#new-customattribute-wrapper #customattribute-basic-addedit-form #answer-choices-block #custom_attr_option_block .addedit-new-field{
+		margin-top: 3px;
+	}
+	#customattribute-basic-addedit-form .custom_attr_checkbox .addedit-twocol-secondcol .addedit-secondcol-field-value,
+	#customattribute-basic-addedit-form .custom_attr_radio .addedit-twocol-secondcol .addedit-secondcol-field-value,
+	#customattribute-basic-addedit-form .custom_attr_dropdown .addedit-twocol-secondcol .addedit-secondcol-field-value{
+		padding-right: 24px;
+	}
+}
+/* Chrome hack End */
+
+/*safari hack Start*/
+
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0), not all and (min-resolution:.001dpcm) { @media { _:-webkit-full-screen,
+    .theme-ctool-popup .customattribute-basic-addedit-action-disp ul li:first-child input.selected{
+      border:1px solid #ccc;
+      border-right:1px solid #fff
+    } 
+}}
+@media screen and (-webkit-min-device-pixel-ratio:0) {  
+  .page-administration-manage-customattribute #page-container #narrow-search-results-holder .crs-unpublish-btn.glossy-btn,
+     .page-administration-manage-customattribute #page-container #narrow-search-results-holder .crs-publish-btn.glossy-btn{
+    	/*background: -webkit-linear-gradient(#ffffff,#f3f3f3);
+  		filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#ffffff', endColorstr='#f3f3f3'); /*For IE7-8-9*/
+  		background:none;
+    	
+    }    
+    .page-administration-manage-customattribute #pub-unpub-action-btn{
+    	/*height:22px*/
+    }
+    .theme-ctool-popup .customattribute-basic-addedit-action-disp ul li:first-child input.selected {
+    	border-right: 0
+    }
+    
+    .page-administration-manage-customattribute #form-screen .checkbox-unselected{
+    	margin: 3px 0 0 2px
+    }
+    #customattribute-basic-addedit-form .customattribute-basic-addedit-action-disp input{
+    	font-size: 11px
+    }
+    #customattribute-basic-addedit-form .addedit-form-cancel-container-actions input{
+    	font-size: 11px
+    }
+    #customattribute-basic-addedit-form .addedit-form-cancel-container-actions .catalog-pub-add-list{
+    	font-size: 11px
+    }
+    #form-screen #customattribute-basic-addedit-form-container table.screen-table-heading th{
+    	font-size: 11px
+    }
+    
+    
+    #customattribute-basic-addedit-form-disp #cust_attr_unique .addedit-twocol-secondcol .addedit-new-field-title{
+    	padding-right:20px
+    }
+	/*#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-edit-cattr_name,
+	#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-edit-cattr_name,
+	#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-edit-cattr_name{
+		 width: 270px;
+	}*/
+	#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-edit-cattr_help_txt,
+	#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-edit-cattr_help_txt,
+	#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-edit-cattr_help_txt{
+	    max-width: 280px;
+	    min-width: 280px;
+	    /*margin-top: 4px*/
+	   margin-top:-2px;
+	}
+	/*#customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-form-cancel-and-save-actions-row,
+	#customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-form-cancel-and-save-actions-row,
+	#customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-form-cancel-and-save-actions-row{
+	    margin-bottom: -2px;
+	}*/
+
+} 
+
+/*safari hack End*/
+.page-administration-manage-customattribute #vtip_custom_attr .info-enr-upload
+{
+    cursor: pointer;
+    float: right;
+    margin: 3px 0 0 3px;
+    position: absolute;
+    top: auto;
+}
+.addedit-customattributes-wrapper #vtip_custom_attr .info-enr-upload
+{
+	cursor: pointer;
+    float: right;
+    margin: 3px 0 0 3px;
+    position: absolute;
+    top: auto;
+}
+.page-administration-manage-customattribute #page-container #narrow-search-results-holder .crs-unpublish-btn.glossy-btn, 
+.page-administration-manage-customattribute #page-container #narrow-search-results-holder .crs-publish-btn.glossy-btn {
+ background: rgba(0, 0, 0, 0) linear-gradient(#ffffff, #f3f3f3) repeat scroll 0 0;
+    border-radius: 12px;
+    color: #474747;
+    font: 12px/15px ProximaNovaBold,Arial;
+    height: auto;
+    padding: 5px 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 70%;
+}
+.page-administration-manage-customattribute .narrow-search-actionbar-list li a span.narrow-search-actionbar-greyout-btnLeft, .narrow-search-actionbar-list li div span.narrow-search-actionbar-greyout-btnLeft,
+.page-administration-manage-customattribute .narrow-search-actionbar-list li a span.narrow-search-actionbar-greyout-btnRight, .narrow-search-actionbar-list li div span.narrow-search-actionbar-greyout-btnRight,
+.page-administration-manage-customattribute .narrow-search-actionbar-list li a span.narrow-search-actionbar-greyout-btnBG, .narrow-search-actionbar-list li div span.narrow-search-actionbar-greyout-btnBG
+        {
+        margin-top: -4px;
+        }
+.page-administration-manage-customattribute #page-container #narrow-search-results-holder .crs-pub-enrolled-btn.plainy-btn
+{
+    border-radius: 12px;
+    color: #474747;
+    font: 12px/15px ProximaNovaBold,Arial;
+    height: auto;
+    padding: 5px 0;
+    text-align: center;
+    text-transform: uppercase;
+    /*width: 100%;*/
+   width: 70%;
+}
+#customattribute-basic-addedit-form-container .addedit-new-field-title-choice {
+    color: #666;
+    font-size: 12px;
+    width: 119px;
+    position: relative;
+    right: 8px;
+    text-align: right;
+}
+.custom-question-choice-delete-button input {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/close.png") no-repeat scroll 8px 0;
+    border: 0 none;
+    cursor: pointer;
+    display: inline;
+    float: none;
+    font-size: 0;
+    height: 9px;
+    /*margin-left: 2px;*/
+    margin: 4px 0 0 -4px;
+    text-align: center;
+    vertical-align: middle;
+    width: 32px;
+}
+.custom-question-choice-text{
+	font-size: 14px;
+	height: 20px;
+}
+.page-administration-manage-customattribute .grp-dropdown .pink-btn-bg-right {
+width: 20px;
+}
+.page-administration-manage-customattribute #page-container .narrow-search-actionbar-list li a span.narrow-search-actionbar-orange-btnBG, 
+.page-administration-manage-customattribute #page-container .narrow-search-actionbar-orange-btnBG {
+padding: 2px 0 2px 6px;
+}
+.page-administration-manage-customattribute #customattribute-basic-addedit-form .addedit-form-cancel-and-save-actions-row.enroll-edit-save-cancel-btn .admin-save-pub-unpub-button-container input.admin-save-button-dropdown-middle-bg-wrapper {
+padding: 2px 0 2px 6px;
+}
+.page-administration-manage-customattribute #page-container .narrow-search-actionbar-list li .dropdown-title {
+   /* line-height:12px;*/
+}
+#custom-question-choice-text-10
+{
+	padding-bottom: 5px;
+}
+/*rendering*/
+#new-customattribute-wrapper .custom-question-choice-delete-button input{
+	margin: 4px 0 0 -4px;
+}
+/*show in screen*/
+#bubble-face-table .customattribute-basic-addedit-action-disp {
+display: none;
+}
+#bubble-face-table #form-screen .round-corner-left,#bubble-face-table #form-screen .round-corner-footer-left {
+    border: 0 none;
+}
+#bubble-face-table #customattribute-basic-addedit-form .addedit-left-col {
+padding:0 0 0 15px;
+}
+.page-administration-manage-customattribute #bubble-face-table .addedit-form-main-container{
+	/*margin: -10px 0 0px -14px;*/
+	margin: -17px 0 -5px -21px;
+	width:246px;
+}
+#bubble-face-table #form-screen #customattribute-basic-addedit-form-container table.screen-table-heading td {
+font-size: 12px;
+height:25px;
+vertical-align:inherit;
+}
+.page-administration-manage-customattribute #bubble-face-table #form-screen #customattribute-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions {
+    /*margin-top: 6px;*/
+}
+/*.page-administration-manage-customattribute #bubble-face-table #message-container .messages
+{
+margin: 0 20px 0 -59px;
+}*/
+
+/*.page-administration-manage-customattribute #bubble-face-table #disable-msg-container #message-container .messages{
+margin: 0 35px 0 -59px;
+}*/
+.page-administration-manage-customattribute #bubble-face-table #customattribute-basic-addedit-form-container #screen_tableholder {
+    /*padding-top: 3px;*/
+    width: 238px;
+}
+.page-administration-manage-customattribute #bubble-face-table #customattribute-basic-addedit-form-disp #form-screen .customattribute-basic-addedit-form-container {
+    width: 246px;
+}
+.page-administration-manage-customattribute #page-container .narrow-search-sortbar-sorttext {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 54px -466px;
+}
+.page-administration-manage-customattribute #bubble-face-table #show_expertus_message
+{
+margin-left:auto;
+}
+#new-customattribute-wrapper #bubble-face-table #show_expertus_message {
+    margin-left:auto;
+}
+.theme-ctool-popup #custom_attr_container .addedit-twocol-firstcol .ui-multiselect, .theme-ctool-popup #location-basic-addedit-form .addedit-twocol-secondcol .ui-multiselect
+{
+border-width: 0 0 1px 1px;
+}
+.custom-question-choice-delete-button .form-button-disabled {
+/*width: 13px;*/
+background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -406px -225px;
+/*height: 15px;*/
+margin: 4px 0 0 -10px;
+}
+
+/*Dynamic translation */
+.narrow-search-actionbar-translations{
+	background: url(/translatetool/translation_icon.png) no-repeat;
+    height: 19px;
+    margin-top: 1px;
+    width: 18px;
+    display: block;
+    float: left;
+    margin-left: 2px;
+}
+
+#customattr-translation-container #dtcontainer .jspHorizontalBar{
+	    visibility: visible;
+	    height:6px;
+} 
+
+#customattr-translation-container #dtcontainer .jspTrack:hover {
+    border:0px
+}
+#customattr-translation-container #dtcontainer .jspDrag:hover {
+   background: #cbcbcb;
+   border:0px
+}
+
+
+#search_txtbox_trans 
+{
+	color:#999;
+	font-family:openSansRegular, Arial;
+	border: 1px solid #E5E5E5;
+	border-radius: 10px;
+	padding-left: 2px;
+	font-size: 12px;
+}
+.page-administration-manage-customattribute div.checkbox-selected-readonly {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/menu_bg1.png") no-repeat scroll 0 -845px;
+    cursor: default;
+    float: left;
+    height: 12px;
+  /*  margin: 6px -6px 0 7px; */
+    padding: 0;
+    width: 15px;
+}
+
+.page-administration-manage-customattribute div.checkbox-selected-readonly input {
+	display:none;
+}
+
+
+.page-administration-manage-customattribute div.checkbox-unselected-readonly {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/menu_bg1.png") no-repeat scroll 0 -438px;
+    cursor: default;
+    float: left;
+    height: 12px; 
+    padding: 0;
+    width: 15px;
+}
+
+.page-administration-manage-customattribute div.checkbox-unselected-readonly input {
+	display:none;
+}

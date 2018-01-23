@@ -1,0 +1,6 @@
+name = E-Signature
+description = Responsible for authenticating users to perform Save/Update
+package = ExpertusONE Core
+dependencies[] = exp_sp_audit_trail
+version = VERSION
+core = 7.x

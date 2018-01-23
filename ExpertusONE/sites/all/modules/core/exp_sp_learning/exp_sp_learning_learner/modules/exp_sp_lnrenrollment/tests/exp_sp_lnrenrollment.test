@@ -1,0 +1,319 @@
+	<?php 
+
+use MyProject\Proxies\__CG__\OtherProject\Proxies\__CG__\stdClass;
+class LearnerMyLearningTestCase extends DrupalSeleniumWebTestCase {
+	
+	private $test_case = array();
+	
+	public static function getInfo() {
+		return array(
+			'name' => 'My Learning - Learner TestSuite',
+			'description' => 'Module: exp_sp_lnrenrollment',
+			'group' => 'Learner - My Learning - Enrollment',
+		);
+	}
+	
+	public function setUp() {
+		parent::setUp();
+		$user = new stdClass();
+		$this->expertusLogin($this->admin);
+		// set refer to prevent access denied error
+		$this->setHttpReferer('learning/my-account');
+	}
+	
+	public function testMyLearningPage() {
+		//$this->getMyLearningPageComponents();
+		//$this->getConfigurationBlockResults();
+		//$this->getMyEnrollmentEnrolledTab();
+		$this->verifyAnnouncementBlock();
+	}
+	
+	private function getMyLearningPageComponents(){
+		$out =  $this->clickLink(t('MY LEARNING'));
+		
+		// Check basic page load with blocks
+		$this->assertRaw('<div id="user-preference-settings">','My learning configuration settings block loaded', 'exp_sp_lnrenrollment');
+		$this->assertRaw("<div id='learner-enrollment-tab-inner'></div>",'My Enrollment Block loaded', 'exp_sp_lnrenrollment');
+		$this->assertRaw("<div id='learningplan-tab-inner'></div>",'My Programs Block loaded', 'exp_sp_lnrenrollment');
+		$this->assertRaw('<div id="announcement_loader" class="my-transcript-content">','Announcements Block loaded', 'exp_sp_lnrenrollment');
+		$this->assertRaw('<div id="block-exp-sp-lnrcalendar-tab-my-calendar" class="block block-exp-sp-lnrcalendar even">','My Calendar Block loaded', 'exp_sp_lnrenrollment');
+		$this->assertRaw("<div id='div_my_transcript' style='width:100%'>",'My Transcript Block loaded', 'exp_sp_lnrenrollment');
+		
+		// General check error message appear on the site.
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_lnrenrollment');
+	}
+	
+	private function getConfigurationBlockResults()  {
+		$path = 'user-preference/list';
+		// Use additional parametets in the URL /?q=user-preference/list&salesforce=0
+		$options = array(
+				 		'query' => array('salesforce' => 0)
+					);
+		$headers = array();
+		$out = $this->drupalGetAJAX($path, $options, $headers);
+		$this->assertRaw('<ul id="manage-dd-list">','My learning configuration content loaded', 'exp_sp_lnrenrollment');
+		$this->assertResponse(200,'Resonpose Code - 200');
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_account');
+	}
+	
+	private function getMyEnrollmentEnrolledTab()  {
+		$path = 'learning/enrollment-search/all/';
+		// Use additional parametets in the URL /?q=user-preference/list&salesforce=0
+		
+		$class_title = db_query("SELECT cls.title AS class_title FROM slt_enrollment enr
+INNER JOIN slt_course_class cls ON cls.id = enr.class_id
+WHERE enr.user_id = 1
+AND comp_status IN ('lrn_crs_cmp_enr','lrn_crs_cmp_inp','lrn_crs_cmp_att')
+ORDER BY reg_date DESC")->fetchField();
+		
+		debug('class_title ' . $class_title);
+		$options = array(
+						'query' => array(
+								'UserID' => 1,
+								'page' => 1,
+								//'regstatuschk' => 'lrn_crs_cmp_enr|lrn_crs_cmp_inp|lrn_crs_cmp_att',
+								),
+				   		);
+		$headers = array();
+		$out = $this->drupalGetAJAX($path, $options, $headers);
+		//$this->assertRaw('<ul id="manage-dd-list">','My learning configuration content loaded', 'exp_sp_lnrenrollment');
+		$this->assertResponse(200,'MyEnrollmentEnrolledTab - Resonpose Code - 200');
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_account');
+	}
+	
+	function verifyAnnouncementBlock() {
+		$current_date = date('Y-m-d');
+		$announcementDesc = db_query("SELECT ann.title            AS title
+				FROM   slt_announcement_master ann
+				LEFT OUTER JOIN slt_group_mapping group_map
+				ON group_map.entity_id = ann.id
+				AND group_map.entity_type = 'cbn_anm_typ_ban'
+				AND group_map.group_type = 0
+				AND 'cre_sec_sts_atv' = (SELECT STATUS
+				FROM   slt_groups
+				WHERE  id = group_map.group_id)
+				LEFT OUTER JOIN slt_groups catacs
+				ON catacs.id = group_map.group_id
+				AND ( catacs.is_admin = 0 )
+				WHERE  ( ann.ann_type = 'cbn_anm_typ_ban' )
+				AND ( ann.status = 'cbn_anm_sts_atv' )
+				AND ( ann.lang_code = 'cre_sys_lng_eng' )
+				AND ( ( ( ann.date_activate IS NULL )
+				AND ( ann.date_deactivate IS NULL ) )
+				OR ( ( ann.date_activate IS NOT NULL )
+				AND ( ann.date_deactivate IS NULL )
+				AND ( ann.date_activate <= ':from_date' ) )
+				OR ( ( ann.date_activate IS NULL )
+				AND ( ann.date_deactivate IS NOT NULL )
+				AND ( ann.date_deactivate >= ':to_date' ) )
+				OR ( ( ann.date_activate IS NOT NULL )
+				AND ( ann.date_deactivate IS NOT NULL )
+				AND ( ann.date_activate <= ':from_date' )
+				AND ( ann.date_deactivate >= ':to_date' ) ) )
+				ORDER  BY ann.banner_seq_num ASC,
+				ann.created_on ASC
+				LIMIT  1 OFFSET 0 ", array(':from_date' => $current_date, ':to_date' => $current_date ))->fetchField();
+		debug('announcement title found: ' . $announcementDesc);
+		$out =  $this->clickLink(t('MY LEARNING'));
+		$this->assertRaw($announcementDesc,'Announcement loaded for today', 'exp_sp_lnrenrollment');
+		
+	}
+	
+	
+	
+}
+class launchWBTClass extends DrupalSeleniumWebTestCase {
+	/** Authenticated but unprivileged user. */
+	protected $customer_user;
+	protected $customer_drupal_user;
+
+	public static function getInfo() {
+		return array(
+				'name' => 'Launch WBT Class',
+				'description' => 'Launch WBT Class',
+				'group' => 'Learner - My Learning - Enrollment',
+		);
+	}
+
+	protected function setUp(){
+		parent::setUp();
+		$this->expertusLogin($this->learner);
+	}
+	
+	protected function getPlayerMenuSummary($subContentMenuClass){
+		$menuClass = explode("cp-list-menu-",$subContentMenuClass);
+		expDebug::dPrint("splitMenu".print_r($menuClass,true),4);
+		$splitMenu = explode("-",$menuClass[1]);
+		$contentType = $splitMenu[0];
+		$contentId = $splitMenu[1];
+		return array($contentType,$contentId); 
+	}
+	
+	protected function  getAssessmentDetails($contentId){
+		$select = db_select('slt_survey_questions', 'q');
+		$select->fields('q','g.sequence');
+		$select->join('slt_survey_groups_questions','g','g.question_id=q.id');
+		$select->condition('g.survey_id', $contentId, '=');
+		$select->orderBy('g.sequence', 'ASC');
+		$assessmentQuestions = $select->execute()->fetchAll();
+		return $assessmentQuestions;
+	}
+	
+	protected function getPlayerMenuDetails($contentType,$contentId){
+		$rightAnswers='';
+		if(strpos($contentType,'Ass')!==FALSE){
+			$rightAnswers = $this->getAssessmentDetails($contentId);
+		}
+		elseif (strpos($contentType,'Content')!==FALSE){
+			//$this->getContentDetails($contentId);
+		}
+		elseif (strpos($contentType,'survey')!==FALSE){
+			$rightAnswers = $this->getAssessmentDetails($contentId);
+		}
+		expDebug::dPrint("RightAnswers:: For content with ID::".$contentId." and Type:: ".$contentType." is ::".print_r($rightAnswers,true),4);
+		return $rightAnswers;
+		
+	}
+	
+	protected function selectAnswer($currentAnswers,$question_count){
+		if($currentAnswers!=''){
+			foreach ($currentAnswers as $answerObject){
+				//$this->driver->
+				expDebug::dPrint("AnswerObject".print_r($answerObject,true),4);
+				$question_type = $answerObject->question_type;
+				if($question_type=='sry_qtn_typ_rtg'){ // Rating
+					$elementName = $question_count."_RatingHorizontal";
+				}
+				if($question_type=='sry_qtn_typ_mch'){  //Multiple Choice
+					$elementName = $question_count."_MultiHorizontal";
+				}
+				if($question_type=='sry_qtn_typ_cmt'){ //Comments
+					$elementName = $question_count."_Text";
+				}
+				if($question_type=='sry_qtn_typ_dpn'){	//Dropdown
+					$elementName = $question_count."_Dropdown";
+				}
+				if($question_type=='sry_qtn_typ_yno'){  // Yes/No
+					$elementName = $question_count."_yesno";
+				}
+				if($question_type=='sry_qtn_typ_trf'){ //True/False
+					$elementName = $question_count."_truefalse";
+				}
+				$question_count++;
+				$elementName = "id=".$elementName;
+				debug($elementName);
+				$checkElement = $this->driver->isElementPresent($elementName);
+				if($checkElement == TRUE){
+					expDebug::dPrint("Element is available".print_r($elementName,true),4);
+					//if($question_type == 'sry_qtn_typ_rtg' || $question_type == 'sry_qtn_typ_mch' || $question_type == 'sry_qtn_typ_yno' )
+					foreach ($this->driver->getAllElements($elementName) as $inputElement){
+						if($inputElement->isVisible() == TRUE){
+							sleep(1);
+							$val = $inputElement->getAttributeValue('value');
+							debug($val);
+							if($val == $answerObject->right_answer){
+								$inputElement->click();
+								debug($val." is selected");
+							}
+						}
+							
+					}
+				}
+				else{
+					expDebug::dPrint("Element Not available".print_r($elementName,true),4);
+				}
+					
+			}
+		}
+	}
+	
+	protected function testlaunchWBT(){
+		$path='learning/enrollment-search';
+		$this->drupalGet($path);
+		$this->verboseScreenshot();
+		$result_div_id='enroll-result-container';
+		$this->assertFieldById($result_div_id,'','My Enrollment Block loaded', 'exp_sp_lnrenrollment');
+		$this->verboseScreenshot();
+sleep(10);
+		$msg_div_id='css=#enroll-noresult-msg';
+		$enrollments_message_div = $this->driver->getElement($msg_div_id)->isVisible();
+		debug($enrollments_message_div);
+		if(!$enrollments_message_div){
+			$this->verboseScreenshot();
+			$enrollment_rows = $this->driver->getAllElements('css=#paintEnrollmentResults tbody tr');
+//			debug(print_r($enrollment_rows,true));
+			$content_ids = array();
+			foreach ($enrollment_rows as $row){
+				if($row->isVisible()){
+					$content_ids[] = $row->getAttributeValue('id');
+				}
+			}
+			foreach ($content_ids as $content_id ){
+				// Check for enrolled class listing
+				$content_launch_div_id='enroll-main-action-'.$content_id;
+				$this->driver->waitForElements($content_launch_div_id);
+				$this->assertFieldById($content_launch_div_id,'','Content Launch block loaded', 'exp_sp_lnrenrollment');
+				//Check whether the launch button is available
+				$launch_button_locator = 'css=#launch'.$content_id;
+				$this->driver->waitForElements($launch_button_locator);
+				//Capture the progress rate before launching the content
+				$progress_bar_locator='css=#progress_'.$content_id.' .progressbar-text';
+				//debug($this->driver->getElement($progress_bar_locator));
+				$progress_rate_before_launch = $this->driver->getElement($progress_bar_locator)->getText();
+				debug($progress_rate_before_launch,'Progress Rate Before Launch');
+				//Launch the content
+				$this->driver->getElement($launch_button_locator)->click();
+				sleep(10);
+				$this->assertTrue($this->driver->getElement('css=#cp-modalcontainer')->isVisible(),'Content Player Launched','exp_sp_lnrenrollment');
+				$this->verboseScreenshot();
+				//TO DO
+				$player_menu_cols = $this->driver->getAllElements('css=.cls-cp-menulist .cp-menulist li');
+				//debug($player_menu_cols);
+				$player_menu_identifier = $locators = array();
+				foreach ($player_menu_cols as $player_menu_item_div){
+					$player_menu_identifier[] = $player_menu_item_div->getAttributeValue('class');
+					$current_menu_array = explode(" ",end($player_menu_identifier));
+					list($subContentType,$subContentId) = $this->getPlayerMenuSummary($current_menu_array[0]);
+					$menuContentTypes[]=$subContentType;
+					$menuContentIds[]=$subContentId;
+					$locators[] = 'css=.'.$current_menu_array[0].' .cp-menuitem .cp-menu-details a.clsMenulistTitle .cp-menu-action';					
+				}
+				for($i=0;$i<count($locators);$i++){
+					$locator = $locators[$i];
+					$this->driver->getElement($locator)->click();
+					sleep(10);
+					$this->assertTrue($this->driver->getElement($locator)->isVisible(),'Player Menu with id: '.array_shift($player_menu_identifier).' Launched','exp_sp_lnrenrollment');
+					$this->driver->waitForElements('css=#cp-contentcontainer');
+					$currentAnswers = $this->getPlayerMenuDetails($menuContentTypes[$i],$menuContentIds[$i]);
+					$question_count = 0;
+					$this->selectAnswer($currentAnswers,$question_count);
+					
+					$this->verboseScreenshot();
+					//break;
+				}				
+				//TO DO ends
+				//Close the content player
+				$this->driver->getElement('css=#cp-tools .cp-modal-close')->click();
+				//Check if the player is still open
+				$modal_div_id='css=#cp-modalcontainer';
+				$modal_container_div = $this->driver->getElement($modal_div_id)->isVisible();
+				if($modal_container_div)
+					debug('Content Player Not Closed');
+				else
+					debug('Content Player is Closed');
+				$this->verboseScreenshot();
+				//Capture the progress rate again.
+				sleep(10);
+				$this->driver->waitForElements($progress_bar_locator);
+				$progress_rate_after_launch = $this->driver->getElement($progress_bar_locator)->getText();
+				debug($progress_rate_after_launch,'Progress Rate After Launch');
+				
+			}
+		}
+			
+	}
+}
+?>

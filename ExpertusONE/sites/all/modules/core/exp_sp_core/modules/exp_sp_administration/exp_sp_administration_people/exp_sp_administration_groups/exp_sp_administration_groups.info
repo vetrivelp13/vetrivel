@@ -1,0 +1,12 @@
+name = Groups Administration
+description = Responsible for Groups
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration_people
+testing_api = 2.x
+files[] = exp_sp_administration_groups.inc
+files[] = tests/exp_sp_administration_groups.test
+files[] = tests/exp_sp_administration_groups_create.test
+files[] = tests/exp_sp_administration_groups_update.test
+files[] = tests/exp_sp_administration_groups_delete.test
+version = VERSION
+core = 7.x

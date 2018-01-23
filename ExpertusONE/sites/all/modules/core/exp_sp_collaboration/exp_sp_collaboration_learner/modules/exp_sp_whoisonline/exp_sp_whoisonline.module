@@ -1,0 +1,162 @@
+<?php
+
+/**
+ * Implements hook_block_info().
+ */
+function exp_sp_whoisonline_block_info() {
+	try{
+  global $user;
+  
+  $blocks['online_users'] = array(
+  	'info'  => t('Expertus who is online'),
+    'cache' => DRUPAL_NO_CACHE,
+  	'visiblity' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/enrollment-search'
+  );
+  $blocks['online_users_mylearning'] = array(
+  		'info'  => t('New theme Expertus who is online'),
+  		'cache' => DRUPAL_NO_CACHE,
+  		'visiblity' => BLOCK_VISIBILITY_LISTED,
+  		'pages' => 'learning/enrollment-search'
+  );
+  return $blocks;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_whoisonline_block_info', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implements hook_block_configure().
+ */
+function exp_sp_whoisonline_block_configure($delta = '') {
+	try{
+  global $user;
+  
+  switch ($delta) {
+    case 'online_users':
+    case 'online_users_mylearning':
+      $period = drupal_map_assoc(array(30, 60, 120, 180, 300, 600, 900, 1800, 2700, 3600, 5400, 7200, 10800, 21600, 43200, 86400), 'format_interval');
+      $form['exp_sp_whoisonline_block_seconds_online'] = array('#type' => 'select', '#title' => t('User activity'), '#default_value' => variable_get('exp_sp_whoisonline_block_seconds_online', 900), '#options' => $period, '#description' => t('A user is considered online for this long after they have last viewed a page.'));
+      $form['exp_sp_whoisonline_block_max_list_count'] = array('#type' => 'select', '#title' => t('User list length'), '#default_value' => variable_get('exp_sp_whoisonline_block_max_list_count', 5), '#options' => drupal_map_assoc(array(3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 40, 50, 75, 100)), '#description' => t('Maximum number of currently online users to display.'));
+      $form['exp_sp_whoisonline_block_refresh_interval'] = array('#type' => 'select', '#title' => t('Refresh interval'), '#default_value' => variable_get('exp_sp_whoisonline_block_refresh_interval', 60), '#options' => $period, '#description' => t('Automatically refresh online users list every this interval.'));
+      return $form;
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_whoisonline_block_configure', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implements hook_block_save().
+ */
+function exp_sp_whoisonline_block_save($delta = '', $edit = array()) {
+	try{
+  global $user;
+
+  switch ($delta) {
+    case 'online_users':
+    case 'online_users_mylearning':
+      variable_set('exp_sp_whoisonline_block_seconds_online', $edit['exp_sp_whoisonline_block_seconds_online']);
+      variable_set('exp_sp_whoisonline_block_max_list_count', $edit['exp_sp_whoisonline_block_max_list_count']);
+      variable_set('exp_sp_whoisonline_block_refresh_interval', $edit['exp_sp_whoisonline_block_refresh_interval']);
+      break;
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_whoisonline_block_save', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function exp_sp_whoisonline_block_view($delta = '') {
+	try{
+  global $user, $user_preference;
+  
+  $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+  $css_module_optional = array('type' => 'file', 'group' => CSS_DEFAULT);
+  global $theme_key;
+  
+  $block = array();
+  switch ($delta) {
+    case 'online_users':
+      drupal_add_js(drupal_get_path('module', 'exp_sp_whoisonline').'/exp_sp_whoisonline.js',$js_module_optional);
+      includeJqGridJsCss();
+      if($theme_key == 'expertusoneV2') {
+      //NEWUI THEME STYLE SHEET
+      drupal_add_css(drupal_get_path('module', 'exp_sp_whoisonline').'/exp_sp_whoisonline_v2.css', $css_module_optional);
+      }else{
+      drupal_add_css(drupal_get_path('module', 'exp_sp_whoisonline').'/exp_sp_whoisonline.css', $css_module_optional);
+      } 
+      $block['subject'] = t('Who\'s online');
+      
+      if ($theme_key == 'expertusoneV2' && !isset($user_preference['mylearning_right']['online_users'])) {
+      	$block['content'] =  "";
+      } else {
+      	$block['content'] = 	'
+      	<input id="exp_sp_whoisonline_block_refresh_interval" type="hidden" value="'.   variable_get('exp_sp_whoisonline_block_refresh_interval', 60). '" />
+				<input id="exp_sp_whoisonline_block_max_list_count" type="hidden" value="'.  variable_get('exp_sp_whoisonline_block_max_list_count', 5) .'" />
+				<div id="expertus-online-users-loader">
+			      <div id="expertus-no-online-users-msg" class="expertus-no-online-users-msg">
+			       	'.  t('MSG253') .'
+			      </div>
+			      <div id="expertus-online-users-list" style="display:none">
+			        <table id ="expertus-online-users-jqgrid"></table> 
+			    	<div id="expertus-online-datatable-pager" class="expertus-online-datatable" style="display:block;"></div> 
+			      </div>
+				</div>';
+      }
+      break;
+      case 'online_users_mylearning':
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/exp_sp_mylearning.js',$js_module_optional);
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_whoisonline').'/exp_sp_whoisonline.js',$js_module_optional);
+      	includeJqGridJsCss();
+      	if($theme_key == 'expertusoneV2') {
+      		//NEWUI THEME STYLE SHEET
+      		drupal_add_css(drupal_get_path('module', 'exp_sp_whoisonline').'/exp_sp_whoisonline_v2.css', $css_module_optional);
+      	}else{
+      		drupal_add_css(drupal_get_path('module', 'exp_sp_whoisonline').'/exp_sp_whoisonline.css', $css_module_optional);
+      	}
+      	$block['subject'] = '';
+      $block['content'] = '<div id="whoisonline-settings">
+		<div class="vtip" title="'.t('LBL197').'"><div class="whoisonlineicon" onclick="showWhoisOnlineSettings()"><span class="my-whoisonline-arrow-new" id="my-whoisonline-arrow-new"></span></div>
+	  </div></div>';
+      break;
+  }
+  expDebug::dPrint(' $block = ' . print_r($block, true),4);
+  
+  return $block;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_whoisonline_block_view', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function exp_sp_whoisonline_menu($delta = '') {
+ try{ 
+  $items = array();
+  
+  $items['learning/fetch-online-users-list'] = array (
+  	'title' => 'Fetch the list of online users',
+	'page callback' => 'fetch_online_users_list',
+	'type' => MENU_CALLBACK,
+	'access arguments' => array('expertus learner'),
+	'file' => 'exp_sp_whoisonline.inc'
+  );
+  
+  expDebug::dPrint(" items = ". print_r($items, true),4);
+	
+  return $items;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_whoisonline_menu', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+?>

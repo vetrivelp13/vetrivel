@@ -1,0 +1,1 @@
+Drupal.behaviors.bbbCheckStatusInit=function(){Drupal.bbbCheckStatus();setInterval("Drupal.bbbCheckStatus();",5000);};Drupal.bbbCheckStatus=function(){var a=bbb_check_status_url;$.getJSON(a,function(b){console.log(b);if(b.is_running==true){location.href=location.href+"/meeting/attend";}});};

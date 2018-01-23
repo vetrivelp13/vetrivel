@@ -1,0 +1,423 @@
+#catalog_roster_container {
+  overflow-x:hidden;
+  padding:1em;
+  font-size:12px
+}
+#roster-result-container {
+  table-layout:fixed;
+  width:763px;
+  overflow-x:hidden
+}
+#catalog_roster_container .ui-jqgrid-bdiv {
+  overflow:hidden;
+  width:763px; 
+  border:1px solid #ccc;
+  border-width:0 1px
+}
+.admin-roster-wrapper .ui-jqgrid-btable {
+  table-layout:none
+}
+#roster-container-div .ui-jqgrid-btable tr.jqgrow td {
+  border:1px solid #ccc;
+  border-width:1px 0;
+  color:#333;
+  padding:8px 0 8px 5px;
+  white-space:normal;
+  font-size:12px
+} 
+#catalog-roster-form-id {
+  border:1px solid #CCC;
+  height:150px;
+  padding:10px;
+  width:742px;
+  padding-top:15px;
+  margin-top:4px
+}
+.admin-roster-wrapper span.admin-roster-col1 {
+  width:380px;
+  float:left;
+  height:30px;
+  margin-left:5px;
+  position:relative
+}
+.admin-roster-wrapper span.admin-roster-col2 {
+  width:300px;
+  float:left;
+  height:30px;
+  margin-left:5px;
+  position:relative
+}
+.admin-roster-wrapper span.admin-roster-col1 .admin-roster-col1-field {
+  width:150px
+}
+.admin-roster-col2 .hasDatepicker,
+.admin-roster-col1 .hasDatepicker {
+  width:150px;
+  height:18px
+}
+#catalog-roster-form label {
+  width :125px;
+  float:left;
+  font-weight:normal
+}
+#catalog-roster-form select {
+  width :155px
+}
+#catalog-roster-form td {
+  height:30px
+}
+#catalog_roster_container .center-align {
+  text-align:center;
+  width:850px;
+  padding:0;
+  margin:0
+}
+.catalog-label-div {
+  font-weight:bold;
+  color:#666;
+  padding:4px 0
+}
+.roster-status {
+  display:none;
+  margin-bottom:15px
+}
+.roster-status table {
+  border-bottom:1px solid #ccc
+}
+.roster-status tr {
+  border:1px solid #ccc;
+  border-bottom:0
+}
+.roster-status td {
+  width:200px;
+  height:30px
+}
+#catalog-roster-form .admin-save-button-container {
+  margin:0 5px 10px 10px
+}
+#catalog-roster-form img {
+  padding-left:3px
+}
+#catalog-roster-form .addedit-form-cancel-container-actions {
+  margin-top:5px
+}
+.roster-status .header td {
+  padding-left:10px;
+  background:#EFEFEF;
+  font-size:13px;
+  color:#666;
+  font-weight:bold
+}
+#catalog_roster_container #roster-noresult-msg {
+  width:400px;
+  padding:5px 10px;
+  text-align:center;
+  display:none;
+  font-size:12px;
+  width: 850px;
+  color:#999
+}
+#gview_roster-result-container thead {
+  background-color:#FFF;
+  height:30px;
+}
+#gview_roster-result-container .ui-state-default {
+  background:#EFEFEF;
+  border:0;
+  padding:5px 0 4px 3px;
+  text-align:left;
+  font-size:13px;
+  color:#666
+}
+#gview_roster-result-container tr.ui-state-hover {
+  border:0;
+  background:#dbeefa
+}
+#gview_roster-result-container .ui-widget-content a {
+  text-decoration:none;
+  display:block
+}
+#gview_roster-result-container .jqgrow a {
+  text-decoration:none
+}
+#gview_roster-result-container .ui-jqgrid-hdiv {
+  border:1px solid #ccc;
+  border-bottom:0
+}
+#gbox_roster-result-container #pager-roster {
+  padding-top:6px;
+  width:765px;
+  border-top:0
+}
+#cb_roster-result-container {
+  display:none
+}
+#pager-roster {
+  background:0;
+  font-size:13px;
+  color:#666;
+  position:relative;
+  font-size:12px;
+  font-family:helvetica neue, arial
+}
+#pager-roster #pager_right {
+  position:absolute;
+  left:20px
+}
+#pager-roster { 
+  position:relative 
+}
+#pager-roster_center {
+	width:100%
+}
+#pager-roster_center .ui-pg-table {
+  float:right;
+  position:static
+}
+#pager-roster_left,
+#pager-roster_right,
+#first_pager-roster,
+#last_pager-roster { 
+  display:none
+}
+#next_pager-roster span,
+#prev_pager-roster span { background:none;}
+#prev_pager-roster {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -91px -302px;
+  width:24px;
+  height:18px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#next_pager-roster {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -126px -302px;
+  width:22px;
+  height:18px;
+  padding-right:8px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#program-tp-basic-addedit-form-container .two-column-container-view,
+#catalog-course-basic-addedit-form-container .two-column-container-view {
+  clear:both
+}
+#program-tp-basic-addedit-form-container .two-column-container-view .first-col-container-view,
+#catalog-course-basic-addedit-form-container .two-column-container-view .first-col-container-view,
+#catalog-survey-assesment-basic-addedit-form .two-column-container-view .first-col-container-view,
+#program-tp-basic-addedit-form-container .two-column-container-view .second-col-container-view,
+#catalog-course-basic-addedit-form-container .two-column-container-view .second-col-container-view,
+#catalog-survey-assesment-basic-addedit-form .two-column-container-view .second-col-container-view {
+  float:left;
+  margin-bottom:6px;
+  margin-top:6px;
+  width:49%
+}
+.first-col-container-view div#edit-crs-language label,
+.second-col-container-view div#edit-crs-status label,
+#program-tp-basic-addedit-form-container div.two-column-container-view label,
+#catalog-course-basic-addedit-form-container div.two-column-container-view label {
+  width:156px;
+  float:left;
+  font-size:13px;
+  font-weight:normal;
+  color:#666
+}
+#catalog-course-basic-addedit-form-container .two-column-container-view .course-view-mode label,
+#program-tp-basic-addedit-form-container .two-column-container-view .tp-view-mode label {
+   width:154px
+}
+#catalog-survey-assesment-basic-addedit-form div.two-column-container-view label {
+  width:200px;
+  float:left;
+  font-size:13px;
+  font-weight:normal;
+  color:#666
+}
+#catalog-course-basic-addedit-form-container .two-column-container-view .first-col-container-view .first-col-value-view,
+#catalog-course-basic-addedit-form-container .two-column-container-view .second-col-container-view .second-col-value-view,
+#program-tp-basic-addedit-form-container .first-col-container-view .first-col-value-view,
+#program-tp-basic-addedit-form-container .second-col-container-view .second-col-value-view,
+#catalog-survey-assesment-basic-addedit-form .two-column-container-view .first-col-container-view .first-col-value-view,
+#catalog-survey-assesment-basic-addedit-form .two-column-container-view .second-col-container-view .second-col-value-view {
+  font-size:13px;
+  font-weight:normal;	
+  float:left;
+  color:#333
+}
+#addedit-twocol-export-compliance #edit-export-compliance {
+  margin-bottom:2px;
+  padding:0;
+  vertical-align:bottom
+}
+div#gview_roster-result-container tr.ui-search-toolbar input {
+  margin:0;
+  border:1px solid #CCC;
+  height:18px
+}
+.admin-roster-wrapper .ui-datepicker-trigger {
+  cursor:pointer;
+  left:256px;
+  position:absolute;
+  top:4px
+}
+.admin-roster-wrapper .count-statistics {
+  padding:5px 0 9px 0
+}
+div#gview_roster-result-container tr.ui-search-toolbar {
+  border:1px solid #EEE
+}
+#gs_Grade, #gs_Score {
+  width:36px
+}
+#roster-result-container .jqgfirstrow {
+  border:0
+}
+/*title restriction style*/
+.page-administration-learning-catalog .fade-out-title-container.admin-narrow-search-code-fadeout-container {
+  max-width: 100px;
+  display: inline-block;
+  margin-bottom: -4px
+}
+.fade-out-title-container.narrow-search-lang-fadeout-container{
+  max-width: 150px;
+  display: inline-block;
+  margin-bottom: -4px
+}
+.fade-out-title-container.narrow-search-results-item-class-title-fadeout-container{
+  max-width:720px
+}
+.fade-out-title-container.narrow-search-results-item-detail-class-code-fadeout-container,
+.fade-out-title-container.narrow-search-results-item-detail-class-language-fadeout-container{
+  max-width: 150px;
+  display: inline-block;
+  margin-bottom: -4px
+}
+.fade-out-title-container.addedit-course-field-code-fadeout-container{
+  max-width: 135px
+}
+.fade-out-title-container.admin-narrow-search-courseview-catalog-title-fadeout-container{
+  max-width: 600px
+}
+.fade-out-title-container.admin-narrow-search-courseview-catalog-code-fadeout-container{
+  max-width:380px
+}
+.fade-out-title-container.admin-narrow-search-courseview-tag-string-fadeout-container,
+.fade-out-title-container.admin-narrow-search-courseview-access-name-fadeout-container,
+.fade-out-title-container.admin-narrow-search-courseview-certificate-name-fadeout-container,
+.fade-out-title-container.narrow-classview-detaildesc-survey-title-fadeout-container {
+  max-width: 590px
+}
+.fade-out-title-container.narrow-classview-detaildesc-survey-title-fadeout-container,
+.fade-out-title-container.narrow-classview-detaildesc-access-fadeout-container {
+  max-width: 559px
+}
+.fade-out-title-container.narrow-classview-detaildesc-tagstring-fadeout-container{
+  max-width: 305px
+}
+.fade-out-title-container.narrow-classview-detaildesc-title-fadeout-container{
+  max-width: 570px
+}
+.fade-out-title-container.narrow-classview-detaildesc-code-fadeout-container{
+  max-width: 305px
+}
+.fade-out-title-container.narrow-classview-detaildesc-continfo-title-fadeout-container{
+  max-width: 460px
+}
+.fade-out-title-container.addedit-cataog-certificate-name-fadeout-container{
+  max-width:300px
+}
+.fade-out-title-container.narrow-classview-detaildesc-auth-vend-fadeout-container,
+.fade-out-title-container.narrow-classview-detaildesc-businessstr-fadeout-container{
+  max-width:125px
+}
+.fade-out-title-container.narrow-classview-detaildesc-assessinfo-title-fadeout-container{
+  max-width:500px
+}
+.fade-out-title-container.admin-narrow-search-courseview-catalog-author-title-fadeout-container{
+  max-width:600px
+}
+#catalog-course-basic-addedit-form-container .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr:nth-child(odd) .fade-out-image,
+.table-detail-tr-odd .class-detail-session-name .fade-out-title-container.narrow-classview-detaildesc-assessinfo-title-fadeout-container .fade-out-image {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/title_gradient.png") no-repeat right -60px;
+}
+.fade-out-title-container.admin-narrow-search-datewithzone-fadeout-container{
+  display: inline-block;
+  margin-bottom: -4px;
+  max-width: 200px;
+}
+.fade-out-title-container.narrow-search-filterset-checkbox-fadeout-container,
+.fade-out-title-container.narrow-search-filterset-radio-label-fadeout-container{
+  max-width:145px
+}
+.fade-out-title-container.addedit-course-field-title-fadeout-container{
+  max-width:320px
+}
+.fade-out-title-container.multi-grid-perrequisite-title-fadeout-container,
+.fade-out-title-container.multi-grid-equivalence-title-fadeout-container{
+  max-width:450px
+}
+.fade-out-title-container.admin-narrow-search-fadeout-container{
+  max-width:500px
+}
+.fade-out-title-container.admin-narrow-search-edit-tooltip-code-fadeout-container{
+  display: inline-block;
+  margin-bottom: -4px;
+  max-width:125px
+}
+.fade-out-title-container.multi-grid-assessment-view-title-fadeout-container{
+  max-width:145px
+}
+.fade-out-title-container.multi-grid-assessment-view-code-fadeout-container{
+  max-width:90px
+}
+.fade-out-title-container.multi-grid-survey-view-title-fadeout-container{
+  max-width:300px
+}
+.fade-out-title-container.multi-grid-survey-view-code-fadeout-container{
+  max-width:100px
+}
+.fade-out-title-container.view-enrolluser-fullname{
+  max-width:100px
+}
+.fade-out-title-container.view-enrolluser-username{
+  max-width:90px
+}
+.fade-out-title-container.multi-grid-content-code-fadeout-container{
+  max-width:150px
+}
+.fade-out-title-container.multi-grid-content-type-fadeout-container{
+  max-width:80px
+}
+.fade-out-title-container.admin-learning-metting-title-fadeout-container{
+  max-width:130px;
+  margin-bottom:-12px
+}
+.fade-out-title-container.admin-learning-metting-title-fadeout-container .fade-out-image{
+  height:23px
+}
+.fade-out-title-container.multi-grid-perrequisite-code-fadeout-container,
+.fade-out-title-container.multi-grid-equivalence-code-fadeout-container{
+  max-width:100px
+}
+.fade-out-title-container.view-name{
+  max-width:135px
+}
+.fade-out-title-container.edit-fullname{
+  max-width:135px
+}
+.fade-out-title-container.edit-username{
+  max-width:123px
+}
+.fade-out-title-container.addedit-course-field-author-vendor-fadeout-container{
+  max-width:140px
+}
+/*! Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	#gbox_roster-result-container #pager-roster {
+	  padding-top:6px;
+	  width:765px;
+	  border-top:1px solid #CCC;
+	}
+}

@@ -1,0 +1,366 @@
+/* Common styles Start */
+/* Common styles End */
+
+
+/* Home Page Widgets Start */
+/* Home Page Widgets End */
+
+
+/* Course/Class/Tp Details Start */
+#class_details_display_area div.clsdet-node form#fivestar-rating-widget .form-item .description,
+#learning-plan-details-data div.prgdet-node form#fivestar-rating-widget .form-item .description {
+	width:119px
+}
+/* Course/Class/Tp Details End */
+
+
+/* Sign In styles Start */
+.my-login-wrapper .my-login-register{
+  width:213px
+}
+/* Sign In styles End */
+
+
+/* Register styles Start */
+/* Register styles End */
+
+
+/* Forget Password styles Start */
+body.page-user-password .my-forgot-pass-frm .form-actions {
+    margin-top: 10px;
+    margin-left: -20px
+}
+/* Forget Password styles End */
+
+
+/* Account styles Start */
+.page-learning-my-account-preference .my-account-box .action-button {
+    margin-right: 25px
+}
+.my-account-wrapper #addedit-account-details-page .form-item-SmsAlertCheck{
+  margin-left:174px
+}
+/* Account styles End */
+
+
+/* Catalog styles Start */
+.content #lnr-catalog-search .srch-filter-heading{
+  font-size:13px
+}
+/* Catalog styles End */
+
+/* Profile styles Start */
+.myskill-table .edit-delete-set div{
+  margin-left:-1px
+}
+#exp-sp-my-skill-set-add-form #myskill-parent .disp-label {
+  width: 152px
+}
+#myskill-parent .learner-save-skill-button .addedit-form-cancel-container-actions {
+  margin-right: 2px
+}
+#my-profile-form-wrapper #myprofile-parent .del-link {
+  margin-left:97px
+}
+#block-exp-sp-user-catalog-online #catalog-users #catalog-user-search-list li.eol-search-input input {
+  width: 142px
+}
+.page-learning-my-profile .dsiplay-other-set {
+  width: 150px;
+}
+#myprofile-skill-details .skillname-set{
+ width :280px;
+}
+/* Profile styles End */
+
+
+/* Discussions styles Start */
+#content #block-exp-sp-forum-detail-forum-topic .admin-forum-topic-detail-action-btn #bubble-face-table  .addedit-form-cancel-container-actions {
+   width:124px
+}
+#admin-forum-add-comment-container .admin-forum-add-comment-list .addedit-form-cancel-container-actions .admin-action-button-middle-bg{
+    margin-right:5px
+}
+/* Discussions styles End */
+
+
+/* Team styles Start */
+#block-exp-sp-myteam-tab-manager-view #lnr-myteam-search .usr-enroll-grid-header-grey-cls{
+  font-size:8px;
+  position:absolute;
+  left:-6px;
+  text-indent:9px
+}
+#lnr-myteam-search #paintContentResults .cus-accord .ui-jqgrid-hbox .ui-th-column{
+  padding-right:2px
+}
+/* Team styles End */
+
+
+/* Shopping Cart styles Start */
+/* Shopping Cart styles End */
+
+
+/* My Learning(My Enrollments) styles Start */
+
+/* My Learning(My Enrollments) styles End */
+
+
+/* My Learning(My Programs) styles Start */
+#learningplan-maincontent .EnrolltabNavigation-LP li {
+  padding: 0 5px 0 4px	
+}
+/* My Learning(My Programs) styles End */
+
+
+/* My Learning(My Classes) styles Start */
+.block-exp-sp-instructor-desk #instructor-result-container #paintInstructorResults td.learners-for-classes{
+  padding-right:1px
+}
+/* My Learning(My Classes) styles End */
+
+
+/* My Learning(My Transcripts) styles Start */
+/* My Learning(My Transcripts) styles End */
+
+
+/* My Learning(My CalEndar) styles Start */
+/* My Learning(My CalEndar) styles End */
+
+
+/* Chat styles Start */
+/* Chat styles End */
+
+
+/* Learning(Course) styles Start */
+.page-administration-learning-catalog #catalog-class-basic-addedit-form-container .admin-datagrid-session-with-addanother.virtualclass-session #more-wrapper-div{
+  right:21px
+}
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .virtualclass-session .session-edit-delete-icons {
+  margin-left: -29px
+}
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .admin-datagrid-pagination .admin-datagrid-session-with-addanother.virtualclass-session .session-added-edit-link-text {
+  margin: 0 33px 0 -22px
+}
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .admin-datagrid-pagination .admin-datagrid-session-with-addanother.virtualclass-session .ui-jqgrid .ui-jqgrid-bdiv .ui-jqgrid-btable tr td .admin-pagination-action-link {
+  margin-left: 3px
+}
+#catalog-attachment-disp-container .attachment-empty-column-height {
+  height: 15px
+}
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .attachment-empty-column-height {
+  height: 15px
+}
+#session_detail_container_sample #add-session-details .admin-addedit-session-details-wrapper #session_presenter_url{
+  margin-left:0
+}
+#catalog-class-basic-addedit-form-container #admin-data-grid .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table{
+  left:156px
+}
+#catalog-class-basic-addedit-form-container #admin-data-grid .enrolluser-class-grid-wrapper .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table{
+  left:-2px
+}
+.narrow-search-results #catalog-class-basic-addedit-form-container  #admin-data-grid .enrolluser-class-grid-wrapper .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table{
+  left:270px
+}
+.virtualclass-session #session_detail_container_sample #add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-time-zone-list label {
+  width: 97px
+}
+.virtualclass-session #session_detail_container_sample  #add-session-details #meeting-type-addwebEx .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown{
+  margin-left: 36px
+}
+#program-tp-basic-addedit-form-disp  #admin-data-grid .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table{
+  left:156px
+}
+#program-tp-basic-addedit-form-disp  #admin-data-grid .enrolltp-grid-wrapper .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table{
+  left:171px
+}
+.narrow-search-results-item-details #admin-data-grid .enrolltp-grid-wrapper .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table{
+  left:237px
+}
+/* Learning(Course) styles End */
+
+/* Learning(Class) styles Start */
+/* Learning(Class) styles End */
+
+
+/* Learning(Training Plan) styles Start */
+.page-administration-learning .clone-class-scroll-list  .clone-label-list{
+  width:86%
+}
+#program-tp-basic-addedit-form-container #catalog-attachment-disp-container .attachment-empty-column-height {
+  height: 14px
+}
+/* Learning(Training Plan) styles End */
+
+
+/* People(User) styles Start */
+.page-administration-people-user #admin-data-grid .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table{
+  right:194px
+}
+.page-administration-people .admin-save-pub-unpub-button-container {
+  padding-left:6px
+}
+.page-administration-people .edit-catalog-course-save-publish{
+  padding-left:5px
+}
+/* People(User) styles End */
+
+
+/* People(Organization) styles Start */
+.narrow-search-results-item-details #admin-data-grid .ui-jqgrid-toppager .ui-pg-table {
+  right: 60px		
+}
+.page-administration-people-organization .narrowfilter-loader-hidder{
+  right:31px
+}
+/* People(Organization) styles End */
+
+/* People(Groups) styles Start */
+#add-user-role-page #add-class-list-wrapper #search-list-class-title-keyword ul{
+  margin-left:0
+}
+.page-administration-people-group .ui-multiselect-con-class{
+  min-width:257px;
+  max-width:257px
+}
+.page-administration-people-group .attr-pane #autocomplete input#multiautocomplete{
+  min-width:230px;
+  max-width:230px
+}
+.page-administration-people-group .exportcontainer-page{
+  right:173px
+}
+.page-administration-people-group #add-user-role-page #add-class-list-wrapper .admin-class-auto-search-container .crecls-loader-hidder{
+ top:1px;
+ right:209px
+}
+/* People(Groups) styles End */
+
+/* People(settings) styles Start */
+.add-user-delete,
+#list-values-detail-wrapper .add-user-delete-disable{
+  background-position:5px 4px
+}
+#list-values-addedit-form-details .add-custombtn-symbol{
+  background-position:-169px -684px
+}
+#list-values-detail-wrapper .add-user-delete-disable,
+#list-values-detail-wrapper .add-user-delete{
+  margin-top:2px
+}
+/* People(settings) styles End */
+
+
+/* Survey/Assessment styles Start */
+.page-administration-survey-surveydetails #survey_attach_questions_dt .tot-txt-cls,
+.page-administration-assessment #survey_attach_questions_dt .tot-txt-cls {
+ width: 55px		
+}
+.page-administration-survey ul.catalog-pub-add-list {
+  width:124px
+}
+.page-administration-assessment-assessmentdetails ul.catalog-pub-add-list {
+  width:122px
+}
+.page-administration-assessment-assessmentquestions #survey-question-basic-addedit-form .assessment-answer-choice-textarea {
+  max-width:275px;
+  min-width:275px
+}
+.page-administration-assessment-assessmentquestions #survey-question-basic-addedit-form .mch-correct-answer-checkbox {
+  width:85px
+}
+/* Survey/Assessment styles End */
+
+
+/* Manage(Content) styles Start */
+.page-administration-manage-content #admin-move-users-content .ui-jqgrid-toppager .ui-pg-table{
+  right:-57px;
+  width:197px
+}
+/* Manage(Content) styles End */
+
+
+/* Manage(Location) styles Start */
+/* Manage(Location) styles End */
+
+
+/* Manage(Banner) styles Start */
+/* Manage(Banner) styles End */
+
+
+/* Manage(Notification/Certificate) styles Start */
+/* Manage(Notification/Certificate) styles End */
+
+/* Commerce(Order) styles Start */
+.page-administration-commerce-order #narrow-search-results-holder .catalog-pub-add-list,
+.page-administration-commerce-order #narrow-search-results-holder .narrowsearch-pub-add-list{
+  right:0
+}
+.page-administration-order .admin_add_multi_search_container{
+  width:62%
+}
+.user-information-container-form label{
+  width:140px
+}
+#admin_order #productorg-pane .user-information-container-form input{
+  margin-top:5px
+}
+/* Commerce(Order) styles End */
+
+/* Commerce(Discount) styles Start */
+.page-administration-commerce-discounts #discount-basic-addedit-form-container .admin-discounts-trainings-wrapper .admin_add_multi_search_container {
+  width: 69%;
+}
+#admin-data-grid .discount-grid-wrapper .ui-jqgrid-hbox input.multiselect-selectall{
+  margin-left:-4px
+}
+#admin-data-grid .discount-grid-wrapper .ui-jqgrid .ui-jqgrid-toppager .ui-pg-table {
+  min-width: 170px;
+  max-width: 170px;
+  right:-156px		
+}
+#discount-basic-addedit-form-container .admin-save-pub-unpub-button-container .admin-save-button-middle-bg{
+  padding-right:5px
+}
+/* Commerce(Discount) styles End */
+
+/* Commerce(Tax) styles Start */
+.page-administration-commerce-tax #catalog-question-basic-addedit-form .admin-save-pub-unpub-button-container .edit-catalog-course-save-publish,
+.page-administration-commerce-tax .pub-unpub-only-save-btn{
+  float:none
+}
+/* Commerce(Tax) styles End */
+
+/* Commerce(Settings) styles Start */
+#payment-check-details .form-item label{
+  width:113px
+}
+#payment-check-details .postal-code-col .form-item label {
+  width:108px
+}
+#payment-check-details .uc-check-mailing-city,
+#payment-check-details .uc-check-mailing-postal-code{
+  width:120px
+}
+/* Commerce(Settings) styles End */
+
+/* Reports styles Start */
+#report-data-source #cart_items #tbl_container .table-content-container .table-accordion-content {
+  width:160px
+}
+.section-reports #report-add-wizard #report-query-details #set_report_type {
+  width: 200px
+}
+.section-reports #report-query-details button.ui-multiselect {
+  width: 200px
+}
+/* Reports styles End */
+
+
+/* Reserved Block CSS Start - Here we can create a new block CSS styles*/
+/* Reserved Block CSS End */
+
+#esign-wizard-dialog .ui-dialog div.ui-dialog-buttonset {
+  min-width:134px
+}

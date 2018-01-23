@@ -1,0 +1,135 @@
+<?php 
+
+class AdministrationTaxUpdateBase extends AdministrationTaxTestHelper
+{
+	public function updateTaxTestCase($scope = 'all') {
+		$ctoolModel = array(
+				'modelWidth' => 890,
+				'modelClass' => 'ctools-modal-ctools-admin-resource-addedit-style',
+				'modelTitle' => t('Setup Tax'),
+				'contentWidth' => 535,		// from #modal-content
+				'contentMhight' => 390,		// from #modal-content
+				'outerHeight' => 378,
+				'outerWidth' => 593,
+				'blockHeight' => 1232,		// Document Height
+				'blockWidth' => 1343,		// Document Height
+				'modelTop' => 72,			// from #modalContent
+				'modelLeft' => 630,			// from #modalContent
+				'docHeight' => 1232,		// Document Height
+				'docWidth' => 1343			// Document Width
+		);
+		$this->addCtoolModelContent($ctoolModel);
+
+		$modelContent = $this->content;
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['taxUpdate'];
+		} else {
+			$testCases = array($this->testcases['taxUpdate'][$scope]);
+		}
+
+		foreach($testCases as $test){
+			//Reset content with the ctool model
+			$this->content = $modelContent;
+
+			//Get empty form
+			$post_field = array('wrapper'=>'paint-narrow-search-results');
+			$update_id = $test['id'];
+			unset($test['id']);
+			$out = $this->drupalPostAJAX(null, $edit,'Save','?q=administration/commerce/tax/ajax/addedit/' . $update_id, array(), array(), '', $post_field);
+
+			$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+
+			// Do General validations
+			$this->assertResponse(200,'Form Rended successfully');
+			$webError = "Website encountered an unexpected error";
+			$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+
+			// Save form
+			$param = array(
+					"form_id"=>"exp_sp_administration_tax_addedit_form",
+					"_triggering_element_name" 	=>"saveandpublish",
+					"_triggering_element_value"	=>"Save",
+			);
+
+			$post_field = array('submit'=>$param,'wrapper'=>'tax-basic-addedit-form');
+
+			$out = $this->drupalPostAJAX(null, $test,'Save','?q=system/ajax',array(),array(),'',$post_field);
+
+
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+
+
+			//Check if any error thrown
+			$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+			$error = '';
+			debug("ERROR STRINGS ");
+
+			if(sizeOf($isError) > 0){
+				$error = (string) $isError[0];
+			}
+			$this->assertResponse(200,'Form Repainted successfully');
+			$txt = 'updated successfully';
+			$this->assertText(t($txt),'Updated changes successfully','catalog_admin');
+			$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+			$webError = "Website encountered an unexpected error";
+			$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+		}
+	}
+}
+
+
+class AdministrationTaxUpdateAll extends AdministrationTaxUpdateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Tax - Update - All Tests',
+				'description' => 'Module : exp_sp_administration_commerce_tax',
+				'group' => '1703 - Administration - Manage - Tax - Update',
+		);
+	}
+
+	public function testTaxUpdateAll() {
+		$this->manageAdminTax();
+		debug('testTaxUpdateAll called');
+		$this->updateTaxTestCase('all');
+	}
+}
+
+class AdministrationTaxUpdateCase1 extends AdministrationTaxUpdateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Tax - Update - US',
+				'description' => 'Module : exp_sp_administration_commerce_tax',
+				'group' => '1703 - Administration - Manage - Tax - Update',
+		);
+	}
+
+	public function testTaxUpdateCase1() {
+		$this->manageAdminTax();
+		debug('testTaxUpdateCase1 called');
+		$this->updateTaxTestCase('us');
+	}
+}
+
+class AdministrationTaxUpdateCase2 extends AdministrationTaxUpdateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Tax - Update - India',
+				'description' => 'Module : exp_sp_administration_commerce_tax',
+				'group' => '1703 - Administration - Manage - Tax - Update',
+		);
+	}
+
+	public function testTaxUpdateCase2() {
+		$this->manageAdminTax();
+		debug('testTaxUpdateCase2 called');
+		$this->updateTaxTestCase('in');
+	}
+}
+
+
+?>

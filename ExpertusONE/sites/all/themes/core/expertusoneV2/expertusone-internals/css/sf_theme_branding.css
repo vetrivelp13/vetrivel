@@ -1,0 +1,847 @@
+.noSidebarCell, .sidebarCell .fixed{
+  padding:0px !important;
+}
+ 
+#widget{
+	float:left !important;
+	padding-left:4px;
+}
+
+#innerWidgetTagEnroll{
+   /*padding-top: 7px !important;*/
+   padding-top: 0px !important;
+}
+
+#page-container .block-title-right, .expertusV2PopupContainer .block-title-right{
+  /* padding-right:8px !important; */
+   border-top-right-radius: 8px;
+   background: #F2F2F3 none repeat scroll 0 0 !important;
+   border-right: 1px solid #e6e6e6;
+  /* padding-right: 7px !important;*/
+}
+
+#block-exp-sp-lnrenrollment-tab-my-enrollment .block-title-right{
+  /*padding-right: 7px !important;*/
+  padding-right: 7px !important;
+   height: 40px !important;
+}
+
+#block-exp-sp-lnrlearningplan-tab-my-learningplan .block-title-right{
+  /*padding-right: 8px !important;*/
+  padding-right: 8px !important;
+  height: 40px !important;
+}
+#block-exp-sp-lnrenrollment-tab-my-enrollment .block-title-middle{
+  margin-top: -1px !important;
+  border-top:1px solid #e6e6e6;
+}
+#block-exp-sp-lnrlearningplan-tab-my-learningplan .block-title-middle{
+   margin-top: -1px !important;
+    border-top:1px solid #e6e6e6;
+}
+ 
+
+#page-container .block-title-left, .expertusV2PopupContainer .block-title-left {
+    background: #F2F2F3 none repeat scroll 0 0 !important;
+    border-top-left-radius: 8px; 
+    border-top-right-radius: 8px; 
+	border-left: 1px solid #e6e6e6;
+    border-top: 1px solid #e6e6e6;
+}
+ 
+
+#block-exp-sp-mytranscript-mytranscript .block-title-left{
+  border-bottom: 1px solid #e6e6e6 !important;
+}
+
+.block-title-middle {
+    background: #F2F2F3 none repeat scroll 0 0 !important; 
+}  
+
+.block .block-title-middle h2.block-title{
+  color: #474747 !important;
+}
+
+#page-container .sort-by-text, #page-container #lnr-catalog-search .find-trng-sort-text {
+  color: #474747 !important;
+}
+
+#page-container .sort-by-text{
+  background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 52px -2815px !important;
+  height: 25px !important;
+}
+
+#block-exp-sp-lnrsearch-tab-find-training #lnr-catalog-search .find-trng-sort-text {
+  background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 49px -2815px !important;
+  height: 25px !important;
+}
+
+.cls-show{
+  background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll -1px -2827px !important;
+}
+
+.cls-hide {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 3px -1319px !important;
+}
+
+#page-container .learning-course-container .title_open {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll right -2827px !important;
+	margin-top: 0px !important;
+}
+	
+#page-container .learning-course-container .title_close {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll right -2709px !important;
+}
+
+.class-detail-back-button{
+  color:#474747 !important;
+}
+
+#page-container #content .block-exp-sp-lnrenrollment #learner-maincontent_tab3, #page-container #content #enroll-lp-result-container #learningplan-maincontent, #page-container #content #instructor-result-container #instructor-maincontent_tab{
+   background: #F2F2F3 none repeat scroll 0 0 !important;
+} 
+
+#page-container #multishareoption a.multishare-link{
+  color: #474747;
+}
+
+.page-learning #page-container .admin-save-button-left-bg, .admin-save-button-left-bg{
+    background: #f2f2f2 none repeat scroll -5px -1113px !important;
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
+    border-bottom: 1px solid #B5B5B5;
+    border-top: 1px solid #B5B5B5;
+    border-left: 1px solid #B5B5B5; 
+}
+.page-learning #page-container .admin-save-button-middle-bg, .admin-save-button-middle-bg {
+   background: #f2f2f2 none repeat-x scroll 0 -1142px !important;
+   color: #037fcc !important;
+   border-bottom: 1px solid #B5B5B5 !important;;
+   border-top: 1px solid #B5B5B5 !important;
+   height:25px;
+}  
+ 
+
+.page-learning #page-container .admin-save-button-right-bg, .admin-save-button-right-bg {
+    background: #f2f2f2 none repeat scroll 0 -1171px !important;;
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid #B5B5B5;
+    border-top: 1px solid #B5B5B5;
+    border-right: 1px solid #B5B5B5;
+}
+
+
+.expertusV2PopupContainer .admin-save-button-left-bg, .admin-save-button-left-bg, #page-container .admin-edit-button-left-bg, #page-container .admin-save-button-left-bg{
+   height: 23px !important; 
+}
+
+.expertusV2PopupContainer .admin-save-button-right-bg, .admin-save-button-right-bg, #page-container .admin-save-button-right-bg, #page-container .admin-edit-button-right-bg{
+       height: 23px !important;	   
+}
+
+.myteam-cat-delivery-type{
+   color: #474747 !important;
+}
+
+#myteam-find-trng-sort-display .find-trng-sort-text{
+  color: #474747 !important;
+}
+ 
+.myteam-cat-delivery-type-link {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 3px -2825px !important;
+    /*height: 25px !important;*/
+}
+
+#myteam-find-trng-sort-display .find-trng-sort-text {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 50px -2814px !important;
+    height: 25px !important;
+}
+
+.catkeyword-search {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -486px -22px !important;
+}
+
+#page-container #pager, #page-container #pager-lp, #page-container #pager-ins, #page-container #activity-pager, #userdetailsactivity-pager, #report_result_pager {
+    background: #f2f2f2 none repeat scroll 0 0 !important;
+    border-radius: 0 0 10px 10px !important;
+	border-bottom: 1px solid #e6e6e6 !important;
+    border-left: 1px solid #e6e6e6 !important;
+	border-right: 1px solid #e6e6e6 !important;
+}
+
+
+#page-container #pg_pager, #pg_narrow-search-results-pager, #page-container #pg_pager-lp, #page-container #pg_pager-ins, #page-container #pg_activity-pager, #pg_userdetailsactivity-pager, #pg_report_result_pager{
+ background: none !important;
+}
+
+#page-container #pg_pager, #pg_narrow-search-results-pager #pager_center, #narrow-search-results-pager_center .ui-pg-table, #page-container #pg_pager, #pg_narrow-search-results-pager #pager_center, #narrow-search-results-pager_center .ui-pg-table span, #page-container #data-table-page-view span, #page-container #pg_pager-lp, #page-container #pager-ins_center, #page-container #activity-pager_center, #page-container #pg_activity-pager, #pg_userdetailsactivity-pager_center, #userdetailsactivity-pager, .expertusV2PopupContainer #data-table-page-view span, #pg_pager1, #report_result_pager .ui-pg-table, #report_result_pager .ui-pg-table span{
+  color: #474747 !important;
+}
+
+
+#pager_center .search-pagination-right, #pager-lp_center .search-pagination-right, #pager-ins_center .search-pagination-right, #activity-pager .search-pagination-right, #userdetailsactivity-pager .search-pagination-right, #pager1_center .search-pagination-right, #report_result_pager_center .search-pagination-right{
+    color: #474747 !important;
+}
+
+#first_pager .ui-icon-seek-pgstart, #first_narrow-search-results-pager .ui-icon-seek-pgstart, #first_report_result_pager .ui-icon-seek-pgstart {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -307px -58px !important;
+   height:11px !important;
+}
+	
+#prev_pager .ui-icon-seek-prev, #prev_report_result_pager .ui-icon-seek-prev {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -323px -58px !important;
+	height:11px !important;
+} 
+
+#lnr-catalog-search #next_pager .ui-icon-seek-next, #enroll-result-container #next_pager .ui-icon-seek-next  {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -336px -58px !important;
+	width: 12px !important;
+	height:11px !important;
+} 
+ 
+#lnr-catalog-search #last_pager .ui-icon-seek-pgend, #enroll-result-container #last_pager .ui-icon-seek-pgend {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -353px -58px !important;
+	height:11px !important;
+}
+
+.share-tab-icon-white{
+  background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll -162px -749px !important;
+}
+
+#page-container #data-table-page-view .page_next_prev-container .page-show-next, .expertusV2PopupContainer #data-table-page-view .page_next_prev-container .page-show-next {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -262px -390px !important;
+	width: 12px !important;
+}
+
+#page-container #data-table-page-view .page_next_prev-container .page-show-prev, .expertusV2PopupContainer #data-table-page-view .page_next_prev-container .page-show-prev {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -217px -391px  !important;;
+	width: 12px !important;
+}
+
+#pager_center .search-pagination-right, #pager-lp_center .search-pagination-right, #pager-ins_center .search-pagination-right, #activity-pager .search-pagination-right, #userdetailsactivity-pager .search-pagination-right, #pager1_center .search-pagination-right, #report_result_pager_center .search-pagination-right{
+  padding-top: 0px !important;
+}
+
+#sf_exp_work_area{
+	float:left;
+	height:100%;}
+
+#widget_cat_menu_old1{
+  float:left;
+  /*width:220px;*/
+  width:178px;
+  background-color:#F2F2F3;
+  background:#F2F2F3 url('/sites/all/themes/core/expertusoneV2/expertusone-internals/images/sf_cat_menu_sidebar_shadow.png') repeat-y scroll right top;
+  margin-right:16px;
+  height: 100%; 
+}
+
+.page-learning-enrollment-search .print_certificate_holder .expertusV2PopupContainer .ui-widget-header a{
+    color: #474747 !important;
+}
+  
+.page-learning #print_certificate_holder #page-container .printcert-btn{
+  height: 25px !important;
+}
+
+.curved-blue-button-left {
+    background: #F2F2F3 none repeat scroll 0 0 !important; 
+    border-bottom-right-radius: 8px !important;  
+    border-top-right-radius: 8px !important;
+	height: 19px !important;
+	border-bottom: 1px solid #B5B5B5 !important;
+    border-top: 1px solid #B5B5B5 !important;  
+	border-right: 1px solid #B5B5B5 !important; 
+}
+
+.curved-blue-button-right{
+    background: #F2F2F3 none repeat scroll 0 0 !important; 
+    border-bottom-left-radius: 8px !important;  
+    border-top-left-radius: 8px !important;
+	height: 19px !important;
+	border-bottom: 1px solid #B5B5B5 !important; 
+    border-top: 1px solid #B5B5B5 !important; 
+	border-left: 1px solid #b5b5b5 !important;
+}
+
+.date-refersh-img{
+  background: #F2F2F3 none repeat scroll 0 0 !important;
+  margin-top: 0px !important;
+   border-bottom: 1px solid #B5B5B5;
+  border-top: 1px solid #B5B5B5; 
+  color:#037fcc !important;    
+}
+
+
+ #widget_cat_menu_old1 #catalog_menu_id_first{
+   font-size:14px; text-align: left; 
+}
+ 
+#widget_cat_menu_old1 #catalog_menu_id_first_inner{
+   padding-bottom:14px; 
+   padding-left:10px;
+   padding-top: 13px;
+}
+
+#widget_cat_menu_old1 #catalog_menu_id_next{
+   font-size:14px; text-align: left; 
+   border-top: 0px solid #d9d9d9;
+}
+ 
+#widget_cat_menu_old1 #catalog_menu_id_next_inner{
+   padding-bottom:17px; 
+   padding-left:10px;
+   padding-top: 0px; 
+   border-top: 0px solid #FFFFFF;
+}
+a.cat_menu_link {
+    color: #333435;
+	text-decoration:none;
+	font-family: Arial,Helvetica,sans-serif;
+	font-weight: bold;
+	
+} 
+
+ a.cat_menu_link:hover {
+    color: #015BA7;
+	text-decoration:underline;
+	font-family: Arial,Helvetica,sans-serif;
+	font-weight: bold;
+} 
+
+.cat_menu_link_clicked{
+	color: #015BA7;
+	text-decoration:none;
+	font-family: Arial,Helvetica,sans-serif;
+	font-weight: bold;
+	text-decoration:none;
+	background: #fff url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/sf_cat_menu_bottom_shadow.png") repeat-x scroll left bottom;
+    border-color: #e8e8e9;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+    line-height: 20px;
+    padding-bottom: 2px;
+    padding-left:4px;
+    padding-top: 2px;
+    margin-left: -4px;
+    
+} 
+ 
+.cat_menu_link_clicked a{
+	color: #1797c0;
+	text-decoration:none;
+}
+
+.cat_menu_link_clicked a:hover{
+	color: #1797c0;
+	text-decoration:underline;
+}
+
+
+
+.expertusV2PopupContainer .ui-widget-header {
+    background: #F2F2F3 none repeat scroll 0 0 !important;
+}
+
+.expertusV2PopupContainer .popupLeftCorner{
+    background: #F2F2F3 none repeat scroll 0 0 !important;
+    border-top-left-radius: 8px !important;
+	border-top-right-radius: 8px !important;
+	border-bottom: 1px solid #e6e6e6 !important;
+	height:41px !important;
+}
+
+.expertusV2PopupContainer .popupRightCorner {
+    background: #F2F2F3 none repeat scroll 0 0 !important; 
+	border-top-right-radius: 8px !important;
+} 
+ 
+span.more-text a.show-short-text {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 0 -2831px !important;
+}
+
+span.more-text a.show-full-text {
+     background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -260px -390px !important; 
+	 width: 15px !important;
+	 display: inline-block !important;
+	 height: 5px !important;
+	 line-height: 5px !important;
+}
+
+span.more-text a.show-full-text.more-icon-wbt{
+ /* background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -260px -390px; */
+}
+
+
+.expertusV2PopupContainer .ui-widget-header .ui-icon {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -426px -243px !important;
+}
+
+
+.ui-dialog .ui-dialog-titlebar-close, .ui-dialog-titlebar-close:hover
+.expertusV2PopupContainer .ui-dialog-title, .refer-course-holder .expertusV2PopupContainer .ui-dialog-titlebar-close {
+    color: #474747 !important;
+}  
+
+.page-learning #innerWidgetTagEnroll #page-container .ui-datepicker-header a:hover {
+	top:21px !important;
+}
+
+#refer_course_holder .ui-dialog .ui-dialog-titlebar-close {
+   padding-top: 0px !important;
+   top: 46% !important;
+}
+
+.expertusV2PopupContainer .ui-dialog-title, .refer-course-holder .expertusV2PopupContainer .ui-dialog-titlebar-close{
+	 color: #474747 !important;
+}
+
+.ui-dialog .ui-dialog-titlebar-close, .ui-dialog-titlebar-close:hover {  
+   right: -3px !important;
+}
+
+.expertusV2PopupContainer .ui-widget-header .ui-icon{
+	 width:19px !important;
+}
+#take_survey_main{
+   height: auto !important;
+}
+
+.theme-ctool-popup .block-title-left {
+   background: none #F2F2F3 !important;
+   border-top-left-radius: 8px !important;
+   border-top-right-radius: 8px !important;
+}
+.theme-ctool-popup .block-title-right{
+   background: none #F2F2F3 !important;  
+   border-top-right-radius: 8px !important;
+}
+
+div.ctools-sample-modal-content .popups-title a.close{
+	color: #474747 !important;
+}
+
+div.ctools-modal-content .theme-ctool-popup .modal-title{
+	 color: #474747 !important;
+}
+
+.page-learning-enrollment-search .print_certificate_holder .expertusV2PopupContainer .ui-widget-header a,.page-learning-enrollment-search .print_certificate_holder .expertusV2PopupContainer .ui-widget-header a:hover{
+	 top: 50% !important;
+}
+
+
+ui-datepicker-prev:hover{
+  margin-top:-7px!important;
+}
+
+#page-container #course-details-data .ui-jqgrid .ui-icon-asc {
+   background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll right -2824px !important;
+} 
+
+
+#page-container #paint-classes-list .title_open {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll right -1388px !important;
+}
+
+#page-container #course-details-data .ui-jqgrid .ui-icon-desc {
+  background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -257px -387px !important;
+  height: 9px !important;
+  width: 15px !important; 
+}   
+ 
+#page-container .course-details-backbutton {
+	color: #474747 !important;
+}
+#page-container #paint-classes-list .title_close{
+   background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll right -1322px !important;
+}
+
+.widget-delete-button{
+	color: #474747 !important;
+}
+
+html.js{
+  height:100% !important; 
+}
+body.salesforce-widget {
+  height:100% !important; 
+}
+
+#user-preference-settings .my-account-arrow-new {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") repeat scroll 50px -2828px rgba(0, 0, 0, 0) !important; 
+}
+
+#ui-datepicker-div .ui-datepicker-prev-hover{ 
+    margin-left: 24px !important; 
+	top: 5px !important; 
+}  
+
+#ui-datepicker-div .ui-datepicker-next {
+    margin-left: 10px !important;
+    top:5px !important;
+}
+
+.expertusV2PopupContainer #enroll-result-container #paintEnrollmentResults .enroll-launch-full .enroll-launch, .expertusV2PopupContainer #launch-wizard .enroll-launch-full .enroll-launch{
+	 background: none repeat scroll 0 0 #f2f2f3 !important;
+	 border: 1px solid #B5B5B5 !important;
+	 border-radius: 8px !important;
+	 color: #474747 !important;
+}
+
+.hide_cat_menu{
+	display:none !important;
+}
+
+#page-container #content .section #enroll-result-container, #page-container #content .section #instructor-result-container{
+    border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;  
+}
+
+#tab_my_enrollment .enroll-bottom-curve{
+	    margin-top: -7px !important; 	 
+}
+
+#page-container #content .section #enroll-lp-result-container{
+       border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;  
+}
+	
+#tab_my_learningplan .enroll-bottom-curve{
+	    margin-top: -7px !important; 	 
+}
+
+#tab_my_enrollment  #block-exp-sp-lnrenrollment-tab-my-enrollment{
+	 margin-bottom: 20px !important;
+}
+
+.salesforce-widget #block-system-main-menu{
+	 height: 21px !important;
+}
+
+#block-exp-sp-learning-tab-user-customization{
+	margin-top: 1px !important;
+}
+
+#widget_cat_menu{
+   /* width:209px; */
+    width:162px;
+    float:left;
+	 background-color:#F2F2F3;
+    background:#F2F2F3 url('/sites/all/themes/core/expertusoneV2/expertusone-internals/images/sf_cat_menu_sidebar_shadow.png') repeat-y scroll right top;
+    margin-right:16px; 
+    height: 100%;  
+    padding-left: 10px; 
+    font-family: Arial,Helvetica,sans-serif;
+  }
+#widget_cat_menu .parent_menu_item{
+    font-weight: bold;
+    line-height: 15px;
+    margin-top: 5px;
+    padding: 0;
+    vertical-align: middle;
+  }  
+  
+#parent_menu_img_anc{
+    text-decoration:none;
+}
+#widget_cat_menu .parent_menu_item .menu_arrow_close_img{
+   padding: 0px;
+   cursor: pointer;
+   border:0px;
+   background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/sf_menu_arrow_close.gif") no-repeat scroll 0 0;
+}
+  
+#widget_cat_menu .parent_menu_item a.parent_menu_text_link{
+    background-color: transparent;
+    margin-left: 2px; 
+    top: -1px;
+    text-decoration:none;
+    font-size: 12px;  
+   color: #333435; 
+} 
+  
+#widget_cat_menu .parent_menu_item a.parent_menu_text_link:hover{
+    text-decoration:underline;
+    color: #015ba7; 
+} 
+  
+#widget_cat_menu  a.parent_menu_text_link_selected{
+   background-color: transparent;
+    margin-left: 2px; 
+    top: -1px;
+    text-decoration:none;
+   font-size: 12px;   
+   color:#1797c0;
+}
+  
+ #widget_cat_menu .child_menu_item{ 
+    padding-bottom: 10px;
+    display:block;
+ }
+ 
+#widget_cat_menu .child_menu_div{
+   font-weight: normal;
+   line-height: 15px;
+   margin: 5px 0 0;
+   padding: 0 15px 0 17px;
+   white-space: nowrap;
+ }
+ 
+ #widget_cat_menu .child_menu_div_highlighted{
+   background: #fff url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/sf_cat_menu_bottom_line.png") repeat-x scroll left bottom;
+   border-color: #e8e8e9;
+   border-image: none;
+   border-style: solid;
+   border-width: 1px 0 0 1px;
+   color: #1797c0; 
+   line-height: 20px;
+   margin-left: 15px;
+   padding-bottom: 4px;
+   padding-top: 1px;
+   white-space: nowrap;
+   margin-left: 17px;
+   margin-top:4px;
+   margin-bottom:4px;
+ } 
+ #widget_cat_menu .child_menu_div_highlighted a{
+   color:#1797c0 !important;
+ }  
+ 
+#widget_cat_menu .child_menu_item a.child_menu_text_link{ 
+    font-weight: normal;
+    line-height: 15px;
+    margin: 5px 0 0;
+    padding: 0 15px 0 17px;
+    white-space: nowrap;
+    font-size: 12px;  
+   color: #333435; 
+   text-decoration:none;
+ } 
+  
+#widget_cat_menu .child_menu_item a.child_menu_text_link:hover{
+    text-decoration:underline;
+    color: #015ba7; 
+  }   
+  
+.menu_arrow_close_img{
+   padding: 0px;
+   cursor: pointer;
+   border:0px;
+   width:11px;
+   height:11px; 
+   background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/sf_menu_arrow_close.gif") no-repeat;
+  }
+.menu_arrow_open_img{ 
+   padding: 0px;
+   cursor: pointer;
+   border:0px;
+   width:11px;
+   height:11px; 
+   background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/sf_menu_arrow_open.gif") no-repeat; 
+}
+  
+#Learn{
+  padding-top:12px !important;
+}
+
+.page-learning-enrollment-search #page-container #pager{
+   margin: 0 0 0 -1px !important;
+   min-width: 663px !important;;
+}
+
+.page-learning-enrollment-search #page-container #pager-lp{
+   margin: 0 0 0 -1px !important;
+   min-width: 663px !important;
+}
+
+#div_my_transcript .region-sidebar-widget-bg, .block-content-main{
+  border-left:0px !important;
+  border-right:0px !important;
+}
+
+#block-exp-sp-lnrsearch-tab-find-training #paintContent #pager{
+  min-width: 763px !important;
+}
+
+#lnr-catalog-search  #paintContent  .block-title-left{
+  border-bottom: 1px solid #e6e6e6 !important;
+}
+
+#enroll-noresult-msg, #enroll-lp-noresult-msg{
+	 padding-bottom: 10px !important;
+}
+
+.survey-main-holder #take_survey_main{
+  min-height: 111px !important;
+}
+
+.expertusV2PopupContainer #lnr-tainingplan-register .title_open{
+	  background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll right -1385px !important;
+	  width: 10px !important;
+}
+
+.expertusV2PopupContainer #lnr-tainingplan-register .title_close{
+	background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll right -1319px !important;
+	width: 10px !important;
+}
+
+.expertusV2PopupContainer #enroll-lp-result-container #paintEnrollmentLPResults .enroll-launch-full, .expertusV2PopupContainer #launch-lp-wizard .enroll-launch-full{
+    background: #f2f2f3 none repeat scroll 0 0 !important;
+    border: 1px solid #b5b5b5 !important;
+    border-radius: 8px !important;
+    color: #474747 !important;
+    height: 32px !important;
+}
+
+
+.expertusV2PopupContainer #lplaunch-content-container #paintEnrollmentLPResults .enroll-launch-full .enroll-launch{
+  color: #037fcc !important;
+}
+
+#lnr-prerequisite .prereq-action-container .admin-save-button-left-bg{
+  height: 24px !important;
+}
+#lnr-prerequisite .prereq-action-container .admin-save-button-right-bg{
+   height: 24px !important;
+}
+
+#sf_exp_work_area #page-container #paintContentResults .search-register-btn tr td.action-btn-disable{
+  color: #939598 !important;
+}
+
+#sf_exp_work_area #page-container #paintContentResults .search-register-btn tr td.action-btn-waitlist, #page-container #paintContentResults .search-register-btn tr td.action-btn{
+  color: #037fcc !important;
+}
+
+#sf_exp_work_area #page-container .block-exp-sp-classdetail .search-register-btn tr td.action-btn-disable{
+  color: #939598 !important;
+}
+#sf_exp_work_area #page-container .block-exp-sp-classdetail .search-register-btn tr td.action-btn{
+ color: #037fcc !important;	
+} 
+
+#sf_exp_work_area #page-container #learning-plan-action .search-register-btn tr td.action-btn-disable{
+  color: #939598 !important;
+} 
+
+#sf_exp_work_area #page-container #learning-plan-action .search-register-btn tr td.action-btn{
+ color: #037fcc !important; 
+}
+
+#sf_exp_work_area #page-container #gview_paint-classes-list .search-register-btn tr td.action-btn-disable{
+  color: #939598 !important;
+}
+
+#sf_exp_work_area #page-container #gview_paint-classes-list .search-register-btn tr td.action-btn, #gview_paint-classes-list .search-register-btn tr td.action-btn-waitlist{
+  color: #037fcc !important; 
+}
+
+#sf_exp_work_area #page-container #paintEnrollmentResults .enroll-launch, #page-container #paintEnrollmentResults .enroll-launch-gray, #page-container #paintEnrollmentLPResults .enroll-launch, #page-container #paintEnrollmentLPResults .enroll-launch-gray, #page-container #paintInstructorResults .enroll-launch, #page-container #launch-wizard .enroll-launch{
+  color: #037fcc !important;
+}
+
+#sf_exp_work_area #page-container #paintEnrollmentResults .enroll-action .enroll-drop-down-list li a, #page-container #paintEnrollmentLPResults .enroll-action .enroll-drop-down-list li a, #page-container #paintInstructorResults .enroll-action .enroll-drop-down-list li a {
+ color: #037fcc !important;
+}
+
+#sf_exp_work_area  #page-container .white-btn-bg-middle, .white-btn-bg-middle, .expertusV2PopupContainer .ui-dialog-buttonset .white-btn-bg-middle, .expertusV2PopupContainer .ui-dialog-buttonset-post-assessment .white-btn-bg-middle{ 
+ color: #037fcc !important;	
+}
+
+#sf_exp_work_area .post-assessment-container, .pre-assessment-container{
+  color: #037fcc !important;
+}
+ 
+.page-learning-enrollment-search #tbl-paintCatalogContentResults .search-register-btn tr td.action-course-btn, .page-learning-enrollment-search #tbl-paintCatalogContentResults .search-register-btn tr td.action-btn, .page-learning-enrollment-search #tbl-paintCatalogContentResults .search-register-btn tr td.action-course-btn-waitlist{
+  color: #037fcc !important;
+} 
+
+#my-team-dialog #first_pager1 span, #select-class-dialog #first_pager1 span,#enroll-lp-result-container #first_pager-lp span{	
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -307px -58px !important;    
+    height: 11px !important;
+}
+
+#my-team-dialog #prev_pager1 span, #select-class-dialog #prev_pager1 span,#enroll-lp-result-container #prev_pager-lp span{
+   background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -323px -58px !important;
+    height: 11px !important;
+}
+
+#my-team-dialog #next_pager1 span, #select-class-dialog #next_pager1 span,#enroll-lp-result-container #next_pager-lp span{
+
+   background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -336px -58px !important;
+    height: 11px !important;
+    width: 12px !important;
+}
+
+#my-team-dialog #last_pager1 span, #select-class-dialog #last_pager1 span,#enroll-lp-result-container #last_pager-lp span{
+ background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -353px -58px !important;
+    height: 11px !important;
+}
+
+#my-team-dialog #data-table-page-view, #select-class-dialog  #data-table-page-view{
+	 top: 0 px !important;
+}
+
+#my-team-dialog .ui-dialog-content.ui-widget-content.assign-learning-team{
+  /*  border-radius: 0 0 10px 10px !important; */
+}
+
+#my-team-dialog #gbox_tbl-paintCatalogContentResults{
+  /* border-radius: 0 10px !important; */
+}
+
+#my-team-dialog #pager1,  #select-class-dialog #pager1{  
+ /*background: #f2f2f3 none repeat scroll 0 0 !important;*/ 
+ background: #f2f2f3 none repeat scroll 0 0 !important;
+ border-radius: 0 0 9px 9px !important; 
+ border-top: 1px solid #e6e6e6 !important;
+}
+
+#my-team-dialog #pg_pager1,#select-class-dialog #pg_pager1{
+ background: none !important;
+}
+
+#select-class-dialog #tbl-paintCatalogContentResults .search-register-btn tr td.action-btn, #select-class-dialog #tbl-paintCatalogContentResults .search-register-btn tr td.action-btn-waitlist{
+ color: #037fcc !important;	
+}
+
+#select-class-dialog #tbl-paintCatalogContentResults .search-register-btn tr td.action-btn-disable{
+ color: #939598 !important;
+} 
+
+#select-class-dialog #pg_pager1, #select-class-dialog #data-table-page-view span, #select-class-dialog #pager1_center .ui-pg-table, #select-class-dialog #pager1_center .ui-pg-table span{
+	 color: #474747 !important;
+}
+
+.expertusV2PopupContainer #enroll-result-container #paintEnrollmentResults .enroll-launch-full .enroll-launch, .expertusV2PopupContainer #launch-wizard .enroll-launch-full .enroll-launch{
+	color: #037fcc !important;	
+} 
+ 
+
+.expertusV2PopupContainer .popupBotLeftCorner {
+	display: block !important;
+}
+
+#select-class-dialog #pager1{
+	height: 28px !important;
+}
+
+.page-learning-myteam-search .expertusV2PopupContainer #pager1, .page-learning-enrollment-search .expertusV2PopupContainer #pager1{
+	height: 28px !important;
+}
+
+.page-learning-enrollment-search #page-container .my-transcript-content{
+	border-left: 1px solid #e7e7e7 !important;
+    border-right: 1px solid #e7e7e7 !important;
+}
+
+#page-container .search-opt-box{
+	width: 91.5% !important;
+}
+
+
+#div_my_transcript .fade-out-image{
+	background:none !important;
+}

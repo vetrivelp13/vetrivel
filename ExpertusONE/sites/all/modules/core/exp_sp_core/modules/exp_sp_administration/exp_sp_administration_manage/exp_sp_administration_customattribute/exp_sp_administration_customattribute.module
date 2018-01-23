@@ -1,0 +1,963 @@
+<?php
+/* Implementation of hook_init().
+ */
+function exp_sp_administration_customattribute_init() {
+	try{
+			
+		include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_form.inc');
+        include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_screen.inc');
+		include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderoptions.inc');
+         
+        $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+        drupal_add_js(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute.js', $js_module_optional);
+   
+		if(arg(0) == 'administration' && arg(1) == 'manage' && arg(2) == 'customattribute'){
+		    global $theme_key;
+		    $css_theme_optional   = array('type' => 'file', 'group' => CSS_THEME);
+		   	if($theme_key == 'expertusoneV2') {
+		   	   drupal_add_css(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_v2.css', $css_theme_optional);
+		  	}
+		  }
+		
+	} catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_customattribute_init', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+/**
+ * Implementation of hook_menu().
+ */
+function exp_sp_administration_customattribute_menu() {
+try {
+	$items = array(); 
+  
+    $items['administration/manage/customattribute'] = array(
+    'title' => t('LBL2015'),
+    'page callback' => 'empty_value',
+    'access callback' => 'user_access',
+    'type' => MENU_CALLBACK,
+    'weight' => 7,
+    'access arguments' => array('Custom Attribute Admin Perm'),
+    );
+	
+	$items['administration/manage/customattribute/search/all'] = array(
+    'title' => 'Fetch custom attribute to display in JQGrid',
+    'page callback' => 'sendCustomListToJqGrid',
+    'access callback' => 'user_access',
+    'access arguments' => array('Custom Attribute Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_customattribute.inc'
+    );
+	/*$items['administration/search-filter/%'] = array(
+    'title' => t('Search Filter Content'),
+    'page callback' => 'getAllSearchFilterContent',
+    'access callback' => 'user_access',
+  	'page arguments' => array(2),
+    'access arguments' => array('Administration Perm'),
+    'type' => MENU_CALLBACK,
+    );*/
+        expDebug::dPrint(' $items1 = ' . print_r($items, true) , 4);
+    
+	$items['administration/manage/customattribute/export'] = array(
+    'title' => 'Custom Attribute Search Results CSV Export',
+    'page callback' => 'fetchCustomAttributeAll',
+    'page arguments' => array('CSV'),
+    'access callback' => 'user_access',
+    'access arguments' => array('Custom Attribute Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_customattribute.inc',
+    );
+
+    $items['administration/manage/customattribute/print'] = array(
+     'title' => 'Custom Attribute Search Results Print to PDF',
+     'page callback' => 'fetchCustomAttributeAll',
+     'page arguments' => array('PDF'),
+     'access callback' => 'user_access',
+     'access arguments' => array('Custom Attribute Admin Perm'),
+     'type' => MENU_CALLBACK,
+     'file' => 'exp_sp_administration_customattribute.inc',
+    );
+	
+	$items['administration/manage/customattribute/%ctools_js/addedit/%'] = array(
+    'title' => 'Add Custom Attribute',
+    'page callback' => 'exp_sp_administration_customattribute_display_addedit_form_add',
+    'page arguments' => array(3,5),
+    //'page arguments' => array(3,5),
+    'access callback' => 'user_access',
+    'access arguments' => array('Custom Attribute Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_customattribute.inc'
+    );
+	
+  
+	$items['administration/manage/customattribute/%ctools_js/addedit/%/%'] = array(
+    'title' => 'Edit Custom Attribute',
+    'page callback' => 'exp_sp_administration_customattribute_display_addedit_form',
+    //'page arguments' => array(3),
+    'page arguments' => array(3,5,6),
+    'access callback' => 'user_access',
+    'access arguments' => array('Custom Attribute Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_customattribute.inc'
+    );
+
+  /* $items['administration/manage/customattribute/addedit'] = array(
+    'title' => 'Add / Edit Custom Attribute',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('exp_sp_administration_customattribute_addedit_form'),
+    'access callback' => 'user_access',
+    'access arguments' => array('Custom Attribute Admin Perm'),
+    'type' => MENU_CALLBACK
+    );*/
+	
+	/* Menu Item - ganesh */ 
+	/*$items['administration/learning/customattribute/%ctools_js/addedit'] = array(
+	    'title' => 'Course',
+	    'page callback' => 'exp_sp_administration_customattribute_addedit_form',
+	    'page arguments' => array(3,5,6,7),
+	    'access callback' => 'user_access',
+	    'access arguments' => array('Banner Admin Perm'),
+	    'type' => MENU_CALLBACK,
+	    'file' => 'exp_sp_administration_customattribute.inc'
+    );      
+	/*
+	//Ganesh
+   $items['administration/manage/customattribute/addedit'] = array(
+    'title' => 'Add / Edit Banner',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('exp_sp_administration_customattribute_addedit_form'),
+    'access callback' => 'user_access',
+    'access arguments' => array('Banner Admin Perm'),
+    'type' => MENU_CALLBACK
+    );
+	
+	*/
+	
+    $items['ajax/administration/manage/customattribute/publish-and-unpublish/%'] = array (
+    'title' => 'Publish Or Unpublish Custom',
+    'page callback' => 'publishOrUnpublishCustom',
+    'page arguments' => array(5,6),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'user_access',
+    'access arguments' => array('Custom Attribute Admin Perm'),
+    'file' => 'exp_sp_administration_customattribute.inc'
+	);
+    $items['administration/view-customattribute/%ctools_js/addedit/%'] = array(
+  		'title' => 'View Banner',
+  		'page callback' => 'exp_sp_administration_viewcustom_addedit_form',
+  		'page arguments' => array(3,4),
+  		'access callback' => 'user_access',
+  		'access arguments' => array('Custom Attribute Admin Perm'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_administration_customattribute.inc'
+  );
+    $items['administration/manage/customattribute/textfilter-autocomplete'] = array(
+    'title' => 'Search By Text Filter Autocomplete',
+    'page callback' => 'getCustomTextFilterAutoComplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('Custom Attribute Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_customattribute.inc',
+    ); 
+ 	$items['administration/manage/customattribute/shortcut/showinscreen/%/%'] = array(
+    'title' => 'Shortcut to Show in Entity',
+    'page callback' => 'customattribute_shortcut_addedit_form',
+    'page arguments' => array(4,5,6),
+    'access callback' => 'user_access',
+    'access arguments' => array('Custom Attribute Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_customattribute.inc',
+  ); 
+   
+  $items['administration/manage/customattribute/shortcut/createnew/%/%'] = array(
+    'title' => 'Shortcut to Create New Custom Attribte',
+    'page callback' => 'customattribute_shortcut_addedit_form',
+    'page arguments' => array(4,5,6),
+    'access callback' => 'user_access',
+    'access arguments' => array('Custom Attribute Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_customattribute.inc',
+  );   
+  
+  $items['administration/manage/customattribute/migration-process'] = array(
+        'title' => 'Migrating Custom Fields to Custom Attribute Structure',
+        'page callback' => 'migrateCustomAttributeFromCustomFields', 
+        'access callback' => 'user_access',
+        'access arguments' => array('Custom Attribute Admin Perm'), 
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_administration_customattribute_migration.inc',
+  );
+  
+  $items['ajax/administration/manage/customattribute/updateLabels'] = array(
+  	'title' => 'Update Labels', 
+  	'page callback' => 'dynamic_translation_update_labels',  
+  	'type' => MENU_CALLBACK,    
+  	'access arguments' => array('Custom Attribute Admin Perm'),);
+
+	$items['ajax/administration/manage/customattribute/listLabels'] = array(
+	'title' => 'List labels', 
+	'page callback' => 'dynamic_translation_list_labels',  
+	'type' => MENU_CALLBACK,    
+    'file' => 'exp_sp_administration_customattribute.inc',
+	'access arguments' => array('Custom Attribute Admin Perm'),);
+
+  
+    
+  /*   
+  $items['ajax/administration/customattribute/shortcut/refresh-entity/%/%'] = array (
+    'title' => 'Refresh custom attribute in Entity Page according to entity type',
+    'page callback' => 'refreshCustomAttributeInEntityPage',
+    'page arguments' => array(5),
+    'access callback' => 'user_access',
+    'access arguments' => array('Custom Attribute Admin Perm'), 
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_customattribute.inc'
+   );
+    */ 
+  
+    expDebug::dPrint(' $items = ' . print_r($items, true) , 4);
+	return $items;
+} catch (Exception $ex) {
+		watchdog_exception('exp_sp_administration_customattribute_menu', $ex);
+		expertusErrorThrow($ex);
+	}
+} 
+/*
+function refreshCustomAttributeInEntityPage($entity_id='5',$entity_type='cre_usr'){
+     try { 
+           //To render the custom attributes for related user entity in User Screen 
+          include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderinforms.inc');                 
+          //renderCustomAttributesInAddEditForm($form, $form_state,'cre_usr',$userDetails['id']);
+         // echo renderCustomAttributesInAddEditForm($form, $form_state,$entity_type,$entity_id);
+         //print 'hi';    
+          $form_state['rebuild'] = TRUE;
+        
+          
+      
+     }catch (Exception $ex) {
+        watchdog_exception('refreshCustomAttributeInEntityPage', $ex);
+        expertusErrorThrow($ex);
+    }     
+} */
+
+
+
+/*$cus_attr_id - Might be id of attribute for showinentity and Entity name for Shortcut custom attribute creation like user,course.*/
+
+function customattribute_shortcut_addedit_form($action,$from_page='',$cus_attr_id='') {
+    try { 
+        expDebug::dPrint(' $action >> ' . print_r($action, true) , 4);
+        expDebug::dPrint(' $from_page >> ' . print_r($from_page, true) , 4);
+        expDebug::dPrint(' $cus_attr_id >> ' . print_r($cus_attr_id, true) , 4);
+                
+        		
+          $min_form_state       = array(
+            'ajax'         => TRUE, // As I have merged code from ctools_modal_form_render() in this function, this may no longer be needed. Retaining as in ctools_modal_form_wrapper(), and because form_state is passed around by reference.
+            're_render'    => TRUE, // Doesn't seem of being used by ctools or drupal forms API. Retaining as in ctools_modal_form_wrapper()
+            'no_redirect'  => TRUE, // Prevent any redirection, required forms are built in ajax callback
+            'build_info'   => array('args' => array('ajax')) // The the form builder function expects the first argument to be ajax or nojs.
+          );
+          $form_state                                = $min_form_state;
+         
+         //$cus_attr_type='textbox';
+         
+        // $from_page='textbox';
+         
+         if(!empty($from_page)){ 
+               $form_state['build_info']['args']['from_page'] = $from_page; 
+         } 
+         
+         if($action=='showinscreen'){
+             $from_show_in_screen='from_show_in_screen'; 
+            
+            if (!empty($cus_attr_id)) {
+               $form_state['build_info']['args'][] = $cus_attr_id;
+            }
+                
+            if(!empty($from_show_in_screen)){
+                  $form_state['storage']['form_info_list'][0]['from_showinscreen']=$from_show_in_screen; 
+            }
+                 
+            expDebug::dPrint(' form state= ' . print_r($form_state, true) , 4);
+            expDebug::dPrint(' form state >>= ' . print_r($form_state['build_info']['args']['from_showinscreen'], true) , 4);
+            expDebug::dPrint(' form state 1>>= ' . print_r($form_state['storage']['form_info_list'][0]['from_showinscreen'], true) , 4);     
+             
+         }else if($action=='createnew'){
+             
+               $entity_arr['user']='cre_usr';
+               $entity_arr['course']='cre_sys_obt_crs';
+               $entity_arr['location']='cre_sys_obt_loc';
+               $entity_arr['content']='cre_sys_obt_cnt';
+               $entity_arr['order']='cre_sys_obt_ord';
+			   $entity_arr['tp']='cre_sys_obt_trp';
+			   $entity_arr['class']='cre_sys_obt_cls';
+			   $entity_arr['organization']='cre_org';
+               
+               
+               $entity_type=$cus_attr_id;
+               
+               $entity_code=$entity_arr[$entity_type]; 
+               
+                $form_state['storage']['from_shortcut'] = '1'; 
+                $form_state['storage']['shortcut_entity_code']=$entity_code; //tmp
+                $form_state['storage']['shortcut_attr_form_saved']='';
+         }    
+        		 
+          /*$form_state['build_info']['args'][] = $entityId;
+          $form_state['build_info']['args'][] = $entityType;
+          $form_state['build_info']['args'][] = $emptyId;*/
+        
+          $formId = 'exp_sp_administration_customattribute_addedit_form';
+          $builtForm = drupal_build_form($formId, $form_state);
+          $renderedForm = drupal_render($builtForm);
+        
+          $drupalSettings = getDrupalSettings();
+          $response = array(
+            'drupal_settings' => $drupalSettings,
+            'render_content_main' => $renderedForm,
+        
+          );
+          echo drupal_json_output($response);
+          exit;
+  } catch (Exception $ex) {
+        watchdog_exception('customattribute_shortcut_addedit_form', $ex);
+        expertusErrorThrow($ex);
+  }
+}
+/**
+ * Implements hook_theme.
+ */
+function exp_sp_administration_customattribute_theme() {
+  $themes = array(); 
+ 
+  $themes['customattribute_options'] = array (
+    'render element' => 'element'
+  );  
+  
+   $themes['exp_sp_administration_customattribute_form_element'] = array (
+    'render element' => 'element'
+  );  
+  
+  return $themes;
+}
+
+
+/**
+ * Implements hook_element_info.
+ */
+function exp_sp_administration_customattribute_element_info() {
+	
+	  $types = array();
+	
+	  $types['customattribute_options'] = array(
+	    '#input' => TRUE,
+	    '#process' => array('process_customattribute_options'),
+	    '#theme' => array('customattribute_options'),
+	    '#theme_wrappers' => array('form_element'),
+	    '#value_callback' => 'customattribute_options_value_callback',
+	    '#element_validate' => array('customattribute_options_element_validate'),
+	  );
+	 // expDebug::dPrint('$types = ' . print_r($types, true), 5); 
+ 	  return $types;
+}
+
+
+function theme_exp_sp_administration_customattribute_form_element($variables) { 
+    
+     $element = $variables['element'];  
+     
+     $opt_count=count($element['#options']); 
+     
+     if($opt_count>0){
+          $tmp_tot_child_elem='';
+          foreach($element['#options'] as $opt_key => $opt_val){
+               $tmp_opt_element=$element[$opt_key]['#children']; 
+              
+              $style='checkbox-unselected';
+              if(in_array($opt_key,$element['#value'])){
+                  $style='checkbox-selected';
+              }
+              
+              
+               $tmp_opt_element=str_replace('<input','<span class="'.$style.'"><input',$tmp_opt_element);
+               $tmp_opt_element=str_replace('<label','</span><label',$tmp_opt_element); 
+               
+               $element[$opt_key]['#children']=$tmp_opt_element; 
+               $tmp_tot_child_elem.=$tmp_opt_element;
+          }
+          
+          $element['#children']=$tmp_tot_child_elem;
+         
+     } 
+      $output = $element['#children'] . "\n";  
+    
+     expDebug::dPrint('$output ='.print_r($output,true),5);
+     return $output;
+}
+  
+
+/*
+ * exp_sp_administration_customattribute_display_addedit_form_add() - Multi-Form implementation for course / class
+ */
+function exp_sp_administration_customattribute_display_addedit_form_add($js = NULL, $cus_attr_type){ 
+  try {	
+            global $user;
+            expDebug::dPrint(' $js = ' . print_r($js, true) , 4);
+            expDebug::dPrint(' $cus_attr_type = ' . print_r($cus_attr_type, true) , 4);  
+                
+            //0033772: Code Re-Factoring - Home page - Remove unwanted JavaScript
+            includeFiles(); 
+            
+            
+             $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+            drupal_add_js(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute.js', $js_module_optional);
+            
+            
+            $popupWidth = 522;
+            
+            //For Checkbox, Radio and DropDown
+            if($cus_attr_type=='radio' || $cus_attr_type=='checkbox' || $cus_attr_type=='dropdown'){ 
+        	    $popupWidth = 581; 	 
+            }
+            
+            $custom_attribute_style = array(
+                'ctools-admin-customattribute-addedit-scroll-wrapper' => array(
+                'modalSize' => array(
+                'width' => $popupWidth,
+                'minHeight' =>150,
+               ), 
+            )
+          );
+               // expDebug::dPrint(' $items1csdxc = ' . print_r($items, true) , 4);
+        
+          drupal_add_js($custom_attribute_style, 'setting');
+          
+          if ($js) {   
+                // Prepare the arguments list to be passed to $formState['build_info']['args'] of each form
+                 $argsList = array();
+                 
+                 if(!empty($cus_attr_type)){
+                          $argsList['from_page'] = $cus_attr_type; 
+                 } 
+                 
+                 $formIdList = array(
+                                array('id' => 'exp_sp_administration_customattribute_addedit_form', 'title' => (t('LBL2015')))
+                                //array('id' => 'exp_sp_administration_catalog_class_title_form', 'title' => t('LBL353'))
+                                ); 
+                                    
+                //exp_ctools_modal_multi_ajaxonly_forms_display($formIdList, $argsList);
+                exp_ctools_modal_multi_ajaxonly_forms_display_narrow_refresh_onclose($formIdList, $argsList);
+          }
+          else {
+                throw new Exception('exp_sp_administration_customattribute.module: exp_sp_administration_customattribute_display_addedit_form_add() : nojs');
+          }
+  }catch (Exception $ex) {
+        watchdog_exception('exp_sp_administration_customattribute_display_addedit_form_add', $ex);
+        expertusErrorThrow($ex);
+  }
+} 
+ 
+/*
+ * exp_sp_administration_courseclass_addedit_form() - Multi-Form implementation for course / class
+ */
+function exp_sp_administration_customattribute_display_addedit_form($js = NULL, $from_page,$cus_attr_id,$from_showinscreen){
+  try {
+  	
+          	global $user;
+            expDebug::dPrint(' $js = ' . print_r($js, true) , 4);
+            expDebug::dPrint(' $cus_attr_id = ' . print_r($cus_attr_id, true) , 4); 
+            expDebug::dPrint(' $from_page = ' . print_r($from_page, true) , 4);
+            expDebug::dPrint(' $from_showinscreen = ' . print_r($from_showinscreen, true) , 4);
+        	   
+        	    
+          	//0033772: Code Re-Factoring - Home page - Remove unwanted JavaScript
+          	includeFiles();
+          	 
+            $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+            drupal_add_js(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute.js', $js_module_optional);
+             
+            
+             $popupWidth = 522;
+            
+            
+             //For Checkbox, Radio and DropDown
+            if($from_page=='checkbox' || $from_page=='radio' || $from_page=='dropdown'){ 
+        	    $popupWidth = 581; 		  
+            }
+          	
+          	$custom_attribute_style = array(
+            	'ctools-admin-customattribute-addedit-scroll-wrapper' => array(
+              	'modalSize' => array(
+                'width' => $popupWidth,
+                'minHeight' =>150,
+               ), 
+            )
+          ); 
+        
+          drupal_add_js($custom_attribute_style, 'setting');
+          
+          if ($js) {   
+        	    // Prepare the arguments list to be passed to $formState['build_info']['args'] of each form
+        	    $argsList = array(); 
+                
+        		if(!empty($from_page)){
+                  $argsList['from_page'] = $from_page; 
+                }
+        
+                if (!empty($cus_attr_id)) {
+                  $argsList[] = $cus_attr_id; 
+                }
+                
+        	 
+                $tmp_form_arr['id']='exp_sp_administration_customattribute_addedit_form';
+                $tmp_form_arr['title']=t('LBL2015');
+                
+                if(!empty($from_page)){  
+                      $tmp_form_arr['from_page']=$from_page;
+                }
+                if(!empty($from_showinscreen)){  
+                      $tmp_form_arr['from_showinscreen']=$from_showinscreen;
+                } 
+             
+                $formIdList = array ($tmp_form_arr);  
+        	   // exp_ctools_modal_multi_ajaxonly_forms_display($formIdList, $argsList);
+        	    exp_ctools_modal_multi_ajaxonly_forms_display_narrow_refresh_onclose($formIdList, $argsList);
+          }
+          else {
+          	throw new Exception('exp_sp_administration_customattribute.module: exp_sp_administration_customattribute_display_addedit_form() : nojs');
+          }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_customattribute_display_addedit_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+} 
+
+function exp_sp_administration_customattribute_permission() {
+	try{
+    return array(    
+    'Custom Attribute Admin Perm' => array(
+      'title' => t('Custom Attribute Admin Perm')
+    )
+  );
+    }catch (Exception $ex) {
+    	watchdog_exception('exp_sp_administration_announcement_permission', $ex);
+    	expertusErrorThrow($ex);
+    }
+} 
+
+function dynamic_translation_update_labels(){
+try{
+   include_once($_SERVER["DOCUMENT_ROOT"]. '/translatetool/ExpertusONETranslation.inc');
+
+	$loggedInUserId = getIdOfLoggedInUser();
+	$arr = json_decode($_POST["data"]);
+	$errormsg ="";
+	for($i =0; $i < count($arr); $i++)
+	{
+		$row = $arr[$i];
+		
+		$cleanedDataObj = expertus_xss_validate_translation("label",$row->newdata);
+		if($cleanedDataObj->iserror == false)
+		{
+			$cleanedData = $cleanedDataObj->data;
+		db_update('slt_labels_store') -> fields(array($row->lang."_label" => $cleanedData,'updated_on' => now(), 'updated_by' => $loggedInUserId,)) 
+				 -> condition("id", core_decrypt($row->id)) -> execute(); 
+		
+		/*db_update('slt_labels_store') -> fields(array($row->lang."_label" => $cleanedData,'updated_on' => now(), 'updated_by' => $loggedInUserId,)) 
+				 -> condition($row->lang."_label", $row->olddata) -> execute(); */ 
+
+
+		}
+		else
+		{ 
+		  $errormsg  = $row->newdata." ".t("ERR057");
+		}
+	}
+	 if($errormsg != "")
+	   echo $errormsg;
+	 else
+	   echo "success";
+	   
+	
+	/*$oldData = $_POST["olddata"];
+	$newData = $_POST["newdata"];
+	$lang = $_POST["lang"]."_label";
+	db_update('slt_labels_store') -> fields(array($lang => $newData,'updated_on' => now(), 'updated_by' => $loggedInUserId,)) 
+				 -> condition($lang, $oldData) -> execute();*/
+	}catch (Exception $ex) {
+    	watchdog_exception('dynamic_translation_update_labels', $ex);
+    	expertusErrorThrow($ex);
+    }
+}
+
+function dynamic_translation_list_labels()
+{
+
+    try {
+        
+        $langCode = "";
+        $langSelectFields = array();
+        $whereCond = array();
+        $displayCol = "";
+    
+        
+        
+        $languageList = locale_language_list('native');
+        foreach ($languageList as $key => $value) {
+            if ($key == "en")
+                continue;
+            if ($key == "en-us") {
+                $langCode = "en";
+                $displayCol = "english";
+                $whereCond[] = " en_label is not null ";
+            } else if ($key == "zh-hans") {
+                $langCode = "zh";
+                $displayCol = "chinese";
+                $whereCond[] = "  zh_label is not null ";
+            } else if ($key == "pt-pt" || $key == "pt-br") {
+                
+                $langCode = "pt";
+                $displayCol = "portuguese";
+                $whereCond[] = "  pt_label is not null ";
+            } else {
+                if ($key == "ko")
+                    $displayCol = "Korean";
+                else if ($key == "es")
+                    $displayCol = "Spanish";
+                else if ($key == "ru")
+                    $displayCol = "Russian";
+                else if ($key == "fr")
+                    $displayCol = "French";
+                else if ($key == "de")
+                    $displayCol = "German";
+                else if ($key == "ja")
+                    $displayCol = "Japanese";
+                else if ($key == "it")
+                    $displayCol = "Italiano";
+                
+                $langCode = $key;
+                
+                $whereCond[] = " " . $key . "_label is not null ";
+            }
+            
+            $langSelectFields[] = $langCode . "_label " . $displayCol;
+        }
+        
+        $fieldsStr = implode(",", $langSelectFields);
+        $whereStr = implode(" or ", $whereCond);
+        expDebug::dPrint("lang::" . implode(",", $langSelectFields), 5);
+        
+        // $selQry = "select id,src_lang,src_label, ".$fieldsStr." from slt_labels_store where ".$whereStr;
+        $selQry = "select id,src_lang,src_label,  " . $fieldsStr . " from slt_labels_store ";
+        
+        $status = "cre_cattr_sts_atv,cre_cattr_sts_itv";
+        $loggedInUserId = getIdOfLoggedInUser();
+        $res = listCustomAttributeAPIForTranslation(0, 200, 200, '', '', '', $status, $loggedInUserId);
+        expDebug::dPrint("filtered rec::" . print_r($res, true), 5);
+        
+        $masterLabels = array();
+        $masterIds = array();
+        for ($i = 0; $i < count($res); $i ++) {
+            $masterLabels[] = $res[$i]->name;
+            $masterLabels[] = $res[$i]->help_txt;
+            $masterIds[] =$res[$i]->id;
+            
+            $optname = $res[$i]->opt_name;
+            if ($optname != "") {
+                $optarr = explode(",", $optname);
+                expDebug::dPrint("optarr:".print_r($optarr,true),5);
+                for ($j = 0; $j < count($optarr); $j++) {
+                		if(trim($optarr[$j]) != "")
+                    	  $masterLabels[] = $optarr[$j];
+                }
+            }
+            
+            $optids = $res[$i]->opt_ids;
+            if ($optids != "") {
+                $optarr1 = explode(",", $optids);
+                for ($j = 0; $j < count($optarr1); $j++) {
+                    if(trim($optarr[$j]) !="")
+						$masterIds[] =$optarr1[$j];
+                    
+                }
+            }
+            
+            
+            
+        }
+        
+        expDebug::dPrint("masterlabel::" . print_r($masterLabels, true), 5);
+        expDebug::dPrint("masterIds::" . print_r($masterIds, true), 5);
+        
+        $result = db_query($selQry)->fetchAll();
+        
+        $transHash = array();
+        
+        $transRequired = false;
+        
+        for ($i = 0; $i < count($result); $i++) {
+            // if($result[$i]->src_lang == "en")
+            {
+                
+                $langCode = "";
+                foreach ($languageList as $key => $value) {
+                    if ($key == "en")
+                        continue;
+                    if ($key == "en-us") {
+                        $langCode = "en";
+                    } else if ($key == "zh-hans") {
+                        $langCode = "zh";
+                    } else if ($key == "pt-pt" || $key == "pt-br") {
+                        $langCode = "pt";
+                    } else
+                        $langCode = $key;
+                    
+                    if ($langCode == "en") {
+                        if ($result[$i]->english == "" || $result[$i]->english == null) {
+                            $transHash[$langCode][$result[$i]->src_label] = $result[$i]->src_label;
+                            $transRequired = true;
+                        }
+                    } else if ($langCode == "zh") {
+                        if ($result[$i]->chinese == "" || $result[$i]->chinese == null) {
+                            $transHash[$langCode][$result[$i]->src_label] = $result[$i]->src_label;
+                            $transRequired = true;
+                        }
+                    } else if ($langCode == "ru") {
+                        if ($result[$i]->russian == "" || $result[$i]->russian == null) {
+                            $transRequired = true;
+                            $transHash[$langCode][$result[$i]->src_label] = $result[$i]->src_label;
+                        }
+                    } else if ($langCode == "pt") {
+                        if ($result[$i]->portuguese == "" || $result[$i]->portuguese == null) {
+                            $transHash[$langCode][$result[$i]->src_label] = $result[$i]->src_label;
+                            $transRequired = true;
+                        }
+                    } 
+                    else if ($langCode == "ko") {
+                        if ($result[$i]->korean == "" || $result[$i]->korean == null) {
+                            $transHash[$langCode][$result[$i]->src_label] = $result[$i]->src_label;
+                            $transRequired = true;
+                        }
+                    } else if ($langCode == "fr") {
+                        if ($result[$i]->french == "" || $result[$i]->french == null) {
+                            $transHash[$langCode][$result[$i]->src_label] = $result[$i]->src_label;
+                            $transRequired = true;
+                        }
+                    } else if ($langCode == "ja") {
+                        if ($result[$i]->japanese == "" || $result[$i]->japanese == null) {
+                            $transHash[$langCode][$result[$i]->src_label] = $result[$i]->src_label;
+                            $transRequired = true;
+                        }
+                    } 
+                    else if ($langCode == "de") {
+                        if ($result[$i]->german == "" || $result[$i]->german == null) {
+                            $transHash[$langCode][$result[$i]->src_label] = $result[$i]->src_label;
+                            $transRequired = true;
+                        }
+                    } 
+                    else if ($langCode == "es") {
+                        if ($result[$i]->spanish == "" || $result[$i]->spanish == null) {
+                            $transHash[$langCode][$result[$i]->src_label] = $result[$i]->src_label;
+                            $transRequired = true;
+                        }
+                    } else if ($langCode == "it") {
+                        if ($result[$i]->italiano == "" || $result[$i]->italiano == null) {
+                            $transHash[$langCode][$result[$i]->src_label] = $result[$i]->src_label;
+                            $transRequired = true;
+                        }
+                    }
+                }
+            }
+        }
+        expDebug::dPrint("transHash..." . print_r($transHash, true), 5);
+        
+        if ($transRequired) {
+            include_once ($_SERVER["DOCUMENT_ROOT"] . '/translatetool/ExpertusONETranslation.inc');
+            $translatedArr = array();
+            foreach ($transHash as $key => $value) {
+                $new_array_string = array_values($value);
+                $convertedStrArr = invokeTranslation($new_array_string, $key);
+                $newarr = array();
+                for ($k = 0; $k < count($value); $k ++)
+                    $newarr[$new_array_string[$k]] = $convertedStrArr[$k];
+                $translatedArr[$key] = $newarr;
+            }
+            
+            expDebug::dPrint("translatedArr..." . print_r($translatedArr, true), 5);
+            
+            for ($i = 0; $i < count($result); $i ++) {
+            //    $result[$i]->id = core_encrypt($result[$i]->id);
+                $updateFields = array();
+                
+                foreach ($transHash as $key => $value) {
+                    if (isset($translatedArr[$key][$result[$i]->src_label]) && $translatedArr[$key][$result[$i]->src_label] != "")
+                        $updateFields[$key . "_label"] = $translatedArr[$key][$result[$i]->src_label];
+                }
+                
+                if (count($updateFields) > 0)
+                    db_update('slt_labels_store')->fields($updateFields)
+                        ->condition('src_label', $result[$i]->src_label)
+                        ->execute();
+            }
+            
+            /*
+             * foreach ($transHash as $key => $value){
+             *
+             * $updateFields = array();
+             * for($k = 0; $k < count($value); $k++)
+             * {
+             * foreach ($translatedArr as $key1 => $value1){
+             *
+             * $updateFields[$key1."_label"]=strval($translatedArr[$key1][$k]);
+             * }
+             * expDebug::dPrint("updateFields...".print_r($updateFields,true),5);
+             *
+             * db_update('slt_labels_store')->fields($updateFields)
+             * ->condition('src_label', $transHash[$key][$k])
+             * ->execute();
+             * }
+             *
+             * }
+             */
+        }
+        
+        expDebug::dPrint("converted..." . print_r($translatedArr, true), 5);
+        
+        $completeFields = "id id,src_lang src_lang,src_label src_label," . $fieldsStr;
+        $fieldArr = explode(",", $completeFields);
+        expDebug::dPrint("fieldsarr..." . print_r($fieldArr, true), 5);
+        
+        $sel = db_select("slt_labels_store", "lbl");
+        
+        for ($k = 0; $k < count($fieldArr); $k ++) {
+            $col = $fieldArr[$k];
+            $colnameAlias = explode(" ", $col);
+            $sel->addField("lbl", $colnameAlias[0], $colnameAlias[1]);
+        }
+        // if(count($masterLabels)>0)
+        // 	$sel->condition("lbl.src_label", $masterLabels, "in");
+        if(count($masterIds)>0){
+        		$sel->condition("lbl.entity_id", $masterIds, "in");
+        		$resultFinal = $sel->execute()->fetchAll();
+        		}
+        	else{
+        	 	$resultFinal = array();
+        	}
+        expDebug::dPrintDBAPI('Select entity_type query -->', $sel);
+        
+        
+        
+        /*$duplicateLangCheck = "";
+        $duplicateLangLabelCheck = "";
+        $hashedKey = array();
+        $j = 0;
+        $k = 0;
+        $resultFinalDupliateRemoved = array(); */
+		$config=getConfig('exp_sp');
+    
+        for ($i = 0; $i < count($resultFinal); $i++) {
+        
+            $resultFinal[$i]->id = core_encrypt($resultFinal[$i]->id);
+     		if(isset($config["microsoft_api_key"]) && trim($config["microsoft_api_key"]) =="")
+ 	   		{
+ 	   			if($resultFinal[$i]->src_lang == "en"){
+    					if($resultFinal[$i]->english == null || $resultFinal[$i]->english == "" )
+    						$resultFinal[$i]->english = $resultFinal[$i]->src_label;
+    				}
+    				
+				if($resultFinal[$i]->src_lang == "zh"){
+    					if($resultFinal[$i]->chinese == null || $resultFinal[$i]->chinese == "" )
+    						$resultFinal[$i]->chinese = $resultFinal[$i]->src_label;
+    				}
+ 	   			if($resultFinal[$i]->src_lang == "fr"){
+    					if($resultFinal[$i]->french == null || $resultFinal[$i]->french == "" )
+    						$resultFinal[$i]->french = $resultFinal[$i]->src_label;
+    				}
+ 	   			if($resultFinal[$i]->src_lang == "de"){
+    					if($resultFinal[$i]->german == null || $resultFinal[$i]->german == "" )
+    						$resultFinal[$i]->german = $resultFinal[$i]->src_label;
+    				}
+ 	   			if($resultFinal[$i]->src_lang == "it"){
+    					if($resultFinal[$i]->italiano == null || $resultFinal[$i]->italiano == "" )
+    						$resultFinal[$i]->italiano = $resultFinal[$i]->src_label;
+    				}
+ 	   			if($resultFinal[$i]->src_lang == "ja"){
+    					if($resultFinal[$i]->japanese == null || $resultFinal[$i]->japanese == "" )
+    						$resultFinal[$i]->japanese = $resultFinal[$i]->src_label;
+    				}
+ 	   			if($resultFinal[$i]->src_lang == "ko"){
+    					if($resultFinal[$i]->korean == null || $resultFinal[$i]->korean == "" )
+    						$resultFinal[$i]->korean = $resultFinal[$i]->src_label;
+    				}
+ 	   			if($resultFinal[$i]->src_lang == "es"){
+    					if($resultFinal[$i]->spanish == null || $resultFinal[$i]->spanish == "" )
+    						$resultFinal[$i]->spanish = $resultFinal[$i]->src_label;
+    				}
+ 	   			if($resultFinal[$i]->src_lang == "pt"){
+    					if($resultFinal[$i]->portuguese == null || $resultFinal[$i]->portuguese == "" )
+    						$resultFinal[$i]->portuguese = $resultFinal[$i]->src_label;
+    				}
+ 	   			if($resultFinal[$i]->src_lang == "ru"){
+    					if($resultFinal[$i]->russian == null || $resultFinal[$i]->russian == "" )
+    						$resultFinal[$i]->russian = $resultFinal[$i]->src_label;
+    				}
+    				
+    				
+    				
+    			}
+    			
+    
+			/*expDebug::dPrint(array_search($resultFinal[$i]->src_lang.$resultFinal[$i]->src_label,$hashedKey));
+            
+            if(count($hashedKey) == 0)
+            {
+            		$hashedKey[$j++]=$resultFinal[$i]->src_lang.$resultFinal[$i]->src_label;
+            		$resultFinalDupliateRemoved[$k++] = $resultFinal[$i];
+            }
+            else if(array_search($resultFinal[$i]->src_lang.$resultFinal[$i]->src_label,$hashedKey) > 0){
+				$resultFinal[$i] =	"";
+            }
+            else{
+            		$hashedKey[$j++] = $resultFinal[$i]->src_lang.$resultFinal[$i]->src_label;
+            		$resultFinalDupliateRemoved[$k++] = $resultFinal[$i];
+            		}
+            		*/
+            	
+            
+            
+        }
+		//expDebug::dPrint("resultFinalDupliateRemoved.2.." . print_r($resultFinalDupliateRemoved, true), 5);
+        
+        $r = json_encode($resultFinal);
+        
+        //$r = json_encode($resultFinalDupliateRemoved);
+        /*
+         * $selQry = "select id,src_lang,src_label, en_label English, ".$fieldsStr." from slt_labels_store ";// where ".$whereStr;
+         * expDebug::dPrint("selQry::".$selQry,5);
+         *
+         * $result = db_query($selQry)->fetchAll();
+         *
+         * for($i = 0; $i < count($result); $i++){
+         * $result[$i]->id = core_encrypt($result[$i]->id);
+         * }
+         *
+         *
+         *
+         * $r = json_encode($result);
+         */
+        
+        $results = [
+            "sEcho" => 1,
+            "iTotalRecords" => count($r),
+            "iTotalDisplayRecords" => count($r),
+            "aaData" => json_decode($r, true)
+        ];
+        echo json_encode($results);
+    } catch (Exception $ex) {
+        watchdog_exception('dynamic_translation_list_labels', $ex);
+        expertusErrorThrow($ex);
+    }
+
+}
+ 
+?>

@@ -1,0 +1,37 @@
+name        = expertusone
+description = expertusone sub-themes are the ultimate starting themes for Drupal 7. Read the <a href="http://drupal.org/node/873778">online docs</a> or the included README-FIRST.txt on how to create a theme with expertusone.
+screenshot  = expertusone-internals/screenshot.png
+
+core        = 7.x
+engine      = phptemplate
+
+regions[content] = Content
+regions[multi_language] = Multi language
+regions[top_links]   	= Top links
+regions[shopping_cart]  = Shopping Cart
+regions[sidebar_first]  = First sidebar
+regions[sidebar_second] = Second sidebar
+regions[navigation]     = Navigation bar
+regions[highlight]      = Highlighted content
+regions[content_top]    = Content top
+regions[content_bottom] = Content bottom
+regions[header]         = Header
+regions[footer]         = Footer
+regions[page_closure]   = Page closure
+
+settings[expertusone_breadcrumb]           = yes
+settings[expertusone_breadcrumb_separator] = ' › '
+settings[expertusone_breadcrumb_home]      = 1
+settings[expertusone_breadcrumb_trailing]  = 1
+settings[expertusone_breadcrumb_title]     = 0
+settings[expertusone_layout]               = expertusone-columns-fixed
+settings[expertusone_jump_link_target]     = main-menu
+settings[expertusone_rebuild_registry]     = 0
+settings[expertusone_wireframes]           = 0
+
+; Information added by drupal.org packaging script on 2011-04-25
+version = "7.x-3.1"
+core = "7.x"
+project = "expertusone"
+datestamp = "1303759317"
+

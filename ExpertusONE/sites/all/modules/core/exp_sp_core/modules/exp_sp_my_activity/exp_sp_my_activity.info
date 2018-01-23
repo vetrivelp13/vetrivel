@@ -1,0 +1,6 @@
+name = My Activity
+description = Responsible for Profile Activity.
+package = ExpertusONE Core
+dependencies[] = exp_sp_audit_trail
+version = VERSION
+core = 7.x

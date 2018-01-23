@@ -1,0 +1,35 @@
+<?php 
+
+class LoginTest extends DrupalWebTestCase {
+	
+	private $test_case = array();
+
+	public static function getInfo() {
+		return array(
+			'name' => 'Login',
+			'description' => 'Login',
+			'group' => 'exp_sp_login',
+		);
+	}
+	
+	public function setUp() {
+		parent::setUp();
+		$user = new stdClass();
+		$user->name = 'admin';
+		$user->pass_raw = 'welcome';
+		$this->drupalLogin($user);
+		$this->setHttpReferer('learning/catalog-search');
+	$this->drupalGet('');
+		$name = '';
+		$result = user_validate_name($name);
+        $this->assertNotNull($result, 'Excessively short username');
+		
+    $this->clickLink(t('Sign In'));
+    $this->assertRaw('<div id="my-login-container" class="my-login-frm">','login form loaded', 'exp_sp_login');
+	}
+	
+	
+	
+}
+
+?>

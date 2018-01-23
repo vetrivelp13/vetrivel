@@ -1,0 +1,1 @@
+(function(a){Drupal.ajax.prototype.commands.fivestarUpdate=function(d,c,b){c.selector=a(".fivestar-form-item",d.element.form);d.commands.insert(d,c,b);};})(jQuery);

@@ -1,0 +1,321 @@
+.my-login-frm {
+  font-size:13px
+}
+.my-login-frm a {
+  text-decoration:none;
+  color:#417CAB;
+  height:18px
+}
+.my-login-frm .form-item {
+  width:100%;
+  clear:both
+}
+.my-login-frm .form-item,.form-actions {
+  margin:0
+}
+.my-login-frm .row-holder {
+  width:100%;
+  height:22px;
+  padding-bottom:5px;
+  clear:both
+}
+.my-login-frm .row-holder .form-item {
+  width:95%;
+  clear:both
+}
+.my-login-frm .row-holder span.required-item {
+  width:4%;
+  height:10px;
+  margin-top:6px;
+  float:right;
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/arrowRedLeft.gif") no-repeat 0 0
+}
+div.popups-title {
+  padding:0px;
+  line-height:31px;
+  background-color:none
+}
+.my-login-container {
+  color:#666;
+}
+#my-login-container .my-login-wrapper .form-item label {
+  width:73px;
+  font-weight:normal;
+  display:block;
+  color:#666;
+  padding-right:15px;
+  text-align:right;
+  float:left
+}
+#my-login-container .form-item label {
+  width:86px;
+  font-weight:normal;
+  float:left;
+  display:block;
+  color:#666;
+  padding-right:15px;
+  text-align:right;
+  line-height:20px
+}
+.my-login-frm .row-holder .form-item input {
+  float:left;
+  width:181px;
+  display:block
+}
+.my-login-frm .ctool-control-div {
+  display:block;
+  padding:0 10px;
+  text-align:right;
+  float:right
+}
+.my-login-frm .control-div {
+  clear:both;
+  margin-top:10px;
+  padding-top:10px;
+  padding-left:240px
+}
+.my-login-frm .form-actions {
+  padding-top:16px
+}
+.my-login-frm .form-actions input {
+  margin:0;
+  padding:0;
+  float:right;
+  font-size:12px;
+  text-align:center;
+  line-height:16px;
+  width:52px
+}
+.my-login-frm .req-pwd-form-wrapper {
+  font-size:11px;
+  padding-left:1px;
+  padding-top:10px
+}
+.my-login-frm, .req-usr-form-wrapper {
+  width:93%;
+  clear:both;
+  color:#666
+}
+.my-login-links-actions {
+  clear:both;
+  width:68%;
+}
+.req-pwd-form-wrapper {
+  width:100px
+}
+.my-login-frm #edit-actions,
+.my-login-links-actions .form-actions{
+  padding-top:5px;
+  text-align:right;
+  width:100%
+}
+.req-usr-form-wrapper {
+  width:63px
+}
+.ctool-login-modal .ctools-modal-content {
+  height:auto;
+  overflow:visible
+}
+.my-login-register {
+  padding:10px 0 17px 0px;
+  clear:both;
+  text-align:center;
+  width:187px
+}
+.my-login-register .login-note {
+  font-size:11px
+}
+#my-login-container {
+  padding:9px 11px 15px 15px
+}
+#modalContent.ctool-login-modal .popups-body div.messages {
+  padding:auto;
+  margin-bottom:7px
+}
+#modalContent.ctool-video-modal div.ctools-sample-modal-content .popups-body {
+  padding:0
+}
+.secondary-menu-overlay {
+  position:absolute;
+  background:#fff;
+  filter:Alpha(Opacity=10);
+  opacity:.1;
+  display:block;
+  height:17px;
+  right:0;
+  top:4px;
+  width:94px
+}
+.corporate-image{
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -124px -1708px;
+  height:42px;
+  left:224px;
+  position:absolute;
+  top:60px;
+  width:42px
+}
+.corporate-links{
+  border-left:1px dotted #CCC;
+  height:163px;
+  position:absolute;
+  right:220px;
+  top:8px
+}
+.login-admin-save-button-container{
+  width:auto;
+  float:right
+}
+.login-admin-save-button-container .saml-signin {
+  display:inline;
+  text-align:center;
+  padding:15px 15px 0 15px
+}
+.login-admin-save-button-container .item-list {
+  display:inline-block
+}
+.login-admin-save-button-container .item-list ul {
+  padding:10px 0;
+  margin:0
+}
+.login-admin-save-button-container .item-list ul li {
+  line-height:18px
+}
+.login-admin-save-button-container .item-list ul a {
+  height:18px
+}
+.login-white-btn-bg-left{
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") repeat-x -163px -2270px;
+  height:38px;
+  width:15px;
+  display:inline-block;
+  position:absolute;
+  left:0;
+  float:right
+}
+.login-white-btn-bg-right{
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -169px -2312px;
+  height:38px;
+  width:15px;
+  display:inline-block;
+  position:absolute;
+  right:0;
+  float:right
+}
+.login-white-btn-bg-middle{
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat 0 -2405px;
+  border:0;
+  border-radius:0;
+  color:#FFF;
+  font-size:11px;
+  height:22px;
+  line-height:18px;
+  margin:0;
+  padding:0;
+  text-align:center;
+  float:right;
+  width:auto
+}
+.my-login-wrapper{
+  float:left
+}
+.saml-helptext {
+  float:right;
+  position:relative;
+  right:63px;
+  top:29px
+}
+#my-login-container .form-item-pass label{
+  padding-top:3px
+}
+.saml-signin{
+  float:right;
+  position:absolute;
+  right:49px;
+  top:49px
+}
+.my-login-frm .single-req-pwd-form-wrapper {
+  font-size:11px;
+  padding-left:102px
+}
+.single-req-pwd-form-wrapper {
+  width:170px
+}
+.my-login-frm .signin-holder .form-item input {
+  float:left;
+  width:219px;
+  display:block
+}
+.not-logged-in #modalContent div.ctools-sample-modal-content .popups-body {
+  padding:0
+}
+#my-login-container .admin-save-button-middle-bg {
+  float:left;
+  width:auto
+}
+.not-logged-in .admin-save-button-left-bg {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -107px -747px;
+  float:left;
+  height:22px;
+  width:7px
+}
+.not-logged-in .admin-save-button-middle-bg {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -3px -1022px;
+  border:0;
+  color:#FFF;
+  cursor:pointer;
+  font-weight:normal;
+  height:22px
+}
+.not-logged-in .admin-save-button-right-bg {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -121px -747px;
+  float:left;
+  height:22px;
+  width:7px
+}
+#my-login-container .single-admin-save-button-container {
+  float:right;
+  margin:1px 23px 0 0
+}
+#my-login-container .learner-sign-close-link {
+  background:none;
+  color:#4686DD;
+  float:left;
+  margin:4px 0 0;
+  padding:0 10px 0 0
+}
+.single-my-login-register {
+  clear:both;
+  padding:0 10px 10px;
+  text-align:cente;
+}
+.single-my-login-register .login-note {
+  font-size:11px
+}
+.my-login-frm .signin-holder .form-required {
+  display:none
+}
+#my-login-container .admin-save-button-container {
+  float:right;
+  margin:-21px 0 0
+}
+.my-login-links-actions-single {
+  clear:both;
+  width:100%
+}
+.my-login-frm .signin-holder {
+  clear:both;
+  height:22px;
+  padding-bottom:5px
+}
+/*! Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	#my-login-container .single-admin-save-button-container {
+		left:153px
+	}
+	.my-login-register{
+		padding-top:10px
+	}
+	.my-login-links-actions{
+		padding-top:3px
+	}
+}

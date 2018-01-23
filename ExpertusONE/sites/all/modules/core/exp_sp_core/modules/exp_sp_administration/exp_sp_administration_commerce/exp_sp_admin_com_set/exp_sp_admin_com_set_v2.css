@@ -1,0 +1,907 @@
+#commerce-cancellation-policy-screen-wrapper {
+  background-color:#FFF;
+  float:left;
+  width:100%
+}
+#cancellation-policy-admin-form fieldset {
+  color:#4686DD;
+  font-size:14px;
+  text-decoration:none
+}
+#cancellation-policy-admin-form .dptxtfield {
+  color:#474747;
+  font-size:14px;
+  line-height:30px
+}
+#cancellation-policy-admin-form .dptxtfield  td {
+  color:#777;
+  font-size:13px
+}
+#cancellation-policy-admin-form .addedit-form-cancel-and-save-actions-row {
+  margin-top:5px
+}
+#cancellation-policy-admin-form .admin-save-button-container {
+  margin:1px 0 0 11px
+}
+#cancellation-policy-admin-form .addedit-form-cancel-container-actions {
+  margin-right:26px
+}
+#admin-commerce-country-setting-plan .admin-datagrid-save-cancel-button-align-bottom {
+  clear:both;
+  margin:0 13px -9px 0
+}
+#admin-commerce-country-setting-plan  .datagrid-country-setting-commerce {
+  padding-bottom:37px;
+  margin:1px 0 0 4px
+}
+.datagrid-country-setting-commerce .norecords-msg-edit-page {
+  padding-top:20px;
+  border:0
+}
+.datagrid-country-setting-commerce .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-htable th div {
+  padding-left:0
+}
+.payment-tab-seperator {
+  color:#999;
+  padding-left:3px;
+  padding-right:2px
+}
+#admin-commerce-payment-method-plan .crs-publish-btn {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat 0 -99px;
+  border:0;
+  color:#474747;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:normal;
+  display:table-cell;
+  height:48px;
+  vertical-align:middle;
+  text-align:center;
+  width:111px;
+  text-transform:uppercase;
+  padding:0;
+  word-wrap:break-word;
+  font-family:ProximaNovaBold, Arial
+}
+#admin-commerce-payment-method-plan .crs-unpublish-btn {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat 0 -99px;
+  border:0;
+  color:#474747;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:normal;
+  display:table-cell;
+  height:48px;
+  vertical-align:middle;
+  text-align:center;
+  width:111px;
+  text-transform:uppercase;
+  padding:0;
+  word-wrap:break-word;
+  font-family:ProximaNovaBold, Arial
+}
+#admin-commerce-payment-method-plan .narrow-search-results-item-action-list-btn {
+  text-align:center;
+  font-weight:normal;
+  cursor:pointer;
+  color:#FF7924;
+  text-decoration:none;
+  font-weight:normal;
+  float:left;
+  font-size:12px;
+  padding-left:1px;
+  padding-top:1px;
+  padding-right:1px;
+  padding-bottom:.2px
+}
+#admin-commerce-payment-method-plan .crs-unpublish-btn.glossy-btn,
+#admin-commerce-payment-method-plan .crs-publish-btn.glossy-btn {
+  width:108px; 
+  height:48px; 
+  display:table-cell;  
+  margin-top:0;
+  padding:0;  
+  float:left;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  font-weight:normal;  
+  color:#474747;  
+  text-align:center;  
+  vertical-align:middle; 
+  text-transform:uppercase;  
+  word-wrap:break-word;   
+  line-height:48px;  
+  background: -ms-linear-gradient(#ffffff,#f3f3f3);/*For IE10*/
+  background: linear-gradient(#ffffff,#f3f3f3);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#ffffff', endColorstr='#f3f3f3'); /*For IE7-8-9*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#f3f3f3)"; 
+  border-radius:10px;
+  border:1px solid #e5e5e5 
+}
+#admin-commerce-payment-method-plan .ui-widget-content td {
+  border-bottom:0px dotted #CCC
+}
+.admin-check-details-wrapper {
+  margin-left:4px;
+  padding:10px 0;
+  width:100%
+}
+#admin-commerce-payment-method-plan .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  padding-left:0;
+  line-height:normal
+}
+.admin-check-details-wrapper label {
+  font-weight:normal;
+  margin-bottom:5px;
+  padding-bottom:5px;
+  padding-left:1px;
+  text-align:left;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  color:#474747
+}
+#payment-check-details .field-prefix {
+  display:block;
+  width:122px;
+  padding:0
+}
+#payment-check-details .form-item label {
+  width:112px
+}
+#payment-check-details .postal-code-col .form-item label {
+  padding-right:5px;
+  text-align:right;
+  width:106px
+}
+#payment-check-details #adddedit-state-wrapper .addedit-new-field-title {
+  padding-right:6px;
+  text-align:right;
+  width:108px
+}
+#payment-check-details .admin-check-details-wrapper .form-type-textfield input {
+  height:18px
+}
+#payment-check-details .uc-check-mailing-name,
+#payment-check-details .uc-check-mailing-street1,
+#payment-check-details .uc-check-mailing-street2 {
+  width:368px
+}
+#payment-check-details .addedit-new-field-title {
+  width:109px;
+  color:#474747;
+  padding-top:5px
+}
+#payment-check-details .form-item, #payment-check-details .form-actions {
+  margin-bottom:0;
+  margin-top:0
+}
+#payment-check-details .greyouttext {
+  color:#777;
+  display:inline-block;
+  float:left;
+  font-size:9px;
+  line-height:2px;
+  padding:1px 0 0;
+  font-family:openSansRegular, Arial
+}
+#payment-check-details .admin-save-button-container {
+  margin:2px 1px 0 10px
+}
+#payment-check-details .uc-check-mailing-city,
+#payment-check-details .uc-check-mailing-postal-code {
+  width:122px
+}
+#payment-check-details img {
+  display:none
+}
+#payment-check-details .addedit-edit-dropdown {
+  width:164px;
+/*   height:17px */
+}
+.add_session_popup .qtip-close-button {
+  top:10px
+}
+#payment-check-details .admin-check-details-wrapper tr.ui-widget-content > td > div.narrow-search-results-item-details > div:first-child span span {
+  padding:1px 0 0
+}
+#paintContentqtip_visible_disp_addpayment_check_payment #show_expertus_message span {
+  color:#222;
+  padding:0
+}
+#popup_container_qtip_visible_disp_addpayment_check_payment #bubble-face-table #show_expertus_message {
+  top:27px;
+  margin-left:12px
+}
+#payment-check-details span.addedit-mandatory {
+  color:#E30F7A;
+  font-weight:bold;
+  float:none;
+  padding:0
+}
+#admin-commerce-payment-method-plan .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  padding-left:0;
+}
+#payment-check-details .cancel-align-bottom {
+  margin:2px;
+  float:left
+}		
+/*!Credit card settings */
+#commerce-cc-settings-tabs li span {
+  height:35px;
+  display:block;
+  padding:0
+}
+#commerce-cc-settings-tabs li .commerce-cc-settings-other-wrapper input.form-submit {
+  padding:2px 0 0 8px
+}
+#commerce-cc-settings-tabs li .commerce-cc-settings-other-wrapper .commerce-cc-settings-other-hint {
+  color:#777;
+  font-size:11px;
+  padding:0 0 5px 10px;
+  line-height:12px
+}
+#commerce-cc-settings-tabs li .commerce-cc-settings-other-button {
+  line-height:0
+}
+#commerce-cc-settings-tabs li span.selected {
+  width:101px;
+  position:relative;
+  z-index:1;
+  padding-top:0;
+  border-radius: 5px 0 0 5px;
+  border:1px solid #ccc;
+  border-right:0;
+  background-color:#fff
+}
+#commerce-cc-settings-tabs li span.selected.notfirst {
+  width:101px
+}
+#commerce-cc-settings-tabs li span.selected input.form-submit {
+  color:#474747;
+  margin:2px 0 2px 2px;
+  padding:7px 0 7px 6px
+}
+#commerce-cc-settings-tabs li span.commerce-cc-settings-other-wrapper.selected input.form-submit {
+  margin:2px 0 0 2px;
+  padding:0 0 0 6px
+}
+#commerce-cc-settings-tabs li span.commerce-cc-settings-other-wrapper.selected .commerce-cc-settings-other-hint {
+  color:#777;
+  font-size:11px;
+  padding-bottom:3px;
+  margin-bottom:2px
+}
+#commerce-cc-settings-screen-wrapper .commerce-cc-settings-form-wrapper {
+  width:auto;
+  margin-bottom:0;
+  float:left
+}
+#commerce-cc-settings-screen-wrapper .commerce-cc-settings-form {
+  clear:none;
+  width:545px;
+  border-left:1px solid #CCC;
+  border-right:1px solid #CCC;
+  float:left;
+  padding:0 2px 1px 9px
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-new-field-title {
+  width:118px
+}
+#commerce-cc-settings-form-wrapper .cancel-align-bottom {
+  margin:1px 10px 0 0;
+  float:left
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-twocol-secondcol {
+  float:left
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-twocol-secondcol .addedit-new-field-title {
+  width:100px
+}
+#commerce-cc-settings-paymetric-form .addedit-twocol-secondcol .addedit-new-field-title {
+  width:116px
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-new-field-two-col {
+  width:540px;
+  padding-bottom:3px
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-edit-dropdown {
+  width:160px;
+/*   height:17px;
+  margin-top:-1px */
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-new-field-two-col  .expertus-dropdown-bg,
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-new-field-two-col .expertus-dropdown-icon {
+  width:143px
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-new-field-two-col  .expertus-dropdown-bg {
+  margin-top:1px
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-edit-textfield {
+  width:137px;
+  border:1px solid #E5E5E5;
+  height:18px;
+  padding-left:4px;
+  padding-top:2px
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-form-cancel-container-actions {
+  margin-right:14px
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .input-field-grey {
+  font-size:11px
+}
+#bubble-face-table #paintContentqtip_visible_disp_addpayment_credit_payment #show_expertus_message {
+  margin-left:0;
+  top:23px
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .form-type-checkbox {
+  width:145px;
+  margin-top:3px
+}
+#commerce-cc-settings-basic-form .addedit-new-field-title-wrapper {
+  float:left
+}
+#commerce-cc-settings-basic-form .addedit-new-field-title-wrapper .addedit-new-field-title {
+  display:block;
+  float:none;
+  padding-bottom:0
+}
+#commerce-cc-settings-basic-form .addedit-new-field-title-wrapper .addedit-new-field-title-hint {
+  font-size:9px;
+  line-height:6px;
+  margin-top:2px;
+  text-align:left;
+  color:#777
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-edit-exp-card-types {
+  width:135px
+}
+ #commerce-cc-settings-form-wrapper .commerce-cc-settings-form .ui-icon {
+    background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/select_icon.png") no-repeat;
+    height:19px;
+    margin:-1px -3px 0 0;
+    width:22px;
+    float:right;
+    padding:4px 0 0 0
+  }
+.ui-multiselect-menu .ui-multiselect-checkboxes {
+	border:1px solid #e5e5e5;
+	margin-top:-5px
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .ui-multiselect {
+  background: -ms-linear-gradient(#fafafa,#e9e9e9);/*For IE10*/
+  background: linear-gradient(#fafafa,#e9e9e9);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#fafafa', endColorstr='#e9e9e9'); /*For IE7-8-9*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fafafa, endColorstr=#e9e9e9)";
+  color:#474747;
+  font-family:openSansRegular, Arial;
+  font-size:12px;
+  font-weight:normal;
+  padding-left:2px;
+  line-height:13px;
+  padding-top:0;
+  border-radius: 10px 4px 4px 10px;
+  border:1px solid #e5e5e5;
+  border-right:0;
+  height:20px
+}
+#qtipEditPaymentIdqtip_visible_disp_credit_payment_disp span span {
+  float:none
+}
+#commerce-cc-settings-basic-form .exp-card-types-error .ui-multiselect {
+  border:1px solid #fc4646;
+  height:20px
+}
+#commerce-cc-settings-form-wrapper .addedit-mandatory {
+  color:#474747
+}
+#commerce-cc-settings-form-wrapper .addedit-mandatory {
+  color:#E30F7A;
+  float:none;
+  padding:0
+}
+#qtipEditPaymentIdqtip_visible_disp_credit_payment_disp span .ui-multiselect .ui-icon {
+  float:right;
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/select_icon.png") no-repeat right 0;
+  height:19px;
+  margin:-2px 1px 0 0;
+  width:22px
+}
+#qtipEditPaymentIdqtip_visible_disp_credit_payment_disp span .ui-multiselect span {
+  padding:0;
+  color:#474747
+}
+#qtipEditPaymentIdqtip_visible_disp_credit_payment_disp #show_expertus_message span {
+  color:#222;
+  padding:0
+}
+#commerce-cc-settings-screen-wrapper .catalog-course-basic-addedit-action-disp {
+  width:101px;
+  padding-top:6px
+}
+#commerce-cc-settings-screen-wrapper .catalog-course-basic-addedit-action-disp ul li .form-submit {
+  width:101px
+}
+#popup_container_qtip_visible_disp_addpayment_credit_payment #bubble-face-table .addedit-left-col {
+  padding:0
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-form-cancel-and-save-actions-row {
+  margin-top:10px
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .admin-save-button-container {
+  margin:1px 0 0
+}
+#commerce-cancellation-policy-screen-wrapper.no-cancel-policy {
+  min-height:265px
+}
+#commerce-cancellation-policy-screen-wrapper .no-cancel-policy-add-button-div {
+  top:105px;
+  width:215px;
+  height:auto;
+  margin:0 auto;
+  position:relative;
+  right:6px;
+  text-align:center
+}
+#no-cancel-policies-msg
+{
+	top:105px;
+  position:relative
+}
+#commerce-cancellation-policy-screen-wrapper .no-cancel-policy-add-button-div .add-cancel-policy-button-wrapper {
+  height:22px
+}
+#commerce-cancellation-policy-screen-wrapper .add-cancel-policy-button-wrapper .add-cancel-policy-type-list-item {
+  border-radius:6px 0 0 6px;
+  margin-top:1px;
+  padding-bottom:1px;
+  padding-right:4px
+}
+#commerce-cancellation-policy-screen-wrapper .admin-empty-text-msg {
+  padding-top:5px
+}
+#commerce-cancellation-policy-screen-wrapper .no-cancel-policy-add-button-div .add-cancel-policy-more-list {
+  width:104px;
+  left:55px;
+  top:0
+}
+#commerce-cancellation-policy-screen-wrapper .no-cancel-policy-add-button-div .add-cancel-policy-popup {
+  position:relative;
+  left:100px;
+  top:20px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-actions-wrapper {
+  position:relative;
+  float:right
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-edit-wrapper,
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-delete-wrapper {
+  float:left;
+  position:relative
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .edit-cancel-policy-popup {
+  display:inline;
+  float:left;
+  width:1px;
+  height:9px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .tab-seperator {
+  border-left:1px solid #CCC;
+  height:13px;
+  margin:2px 9px 0 8px;
+  float:left;
+  position:relative
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-delete-action {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/close.png") no-repeat 0 5px;
+  display:block;
+  text-decoration:none;
+  width:9px;
+  margin-right:5px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-edit-action {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -339px -185px;
+  color:transparent;
+  cursor:pointer;
+  display:block;
+  height:20px;
+  margin-left:3px;
+  width:20px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div {
+  border:1px solid #CCC;
+  margin:14px;
+  min-height:100px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-display-table {
+  width:595px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-display-table thead th {
+  background: -ms-linear-gradient(#fefefe,#ebebeb);/*For IE10*/
+  background: linear-gradient(#fefefe,#ebebeb);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#fefefe', endColorstr='#ebebeb'); /*For IE7-8-9*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fefefe, endColorstr=#ebebeb)";
+  border-right:1px solid #E5E5E5;
+  padding:0 0 0 4px;
+  text-align:left;
+  color:#474747;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  font-weight:normal;
+  height:24px;
+  margin-top:0;
+  line-height:27px;
+  text-transform:uppercase
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-display-table tbody tr.cancel-policy-display-table-row>td {
+  padding:9px 5px 4px 4px;
+  color:#2D2D2D;
+  font-size:12px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-display-table tbody tr.odd {
+  background-color:#FFF
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-display-table tbody tr.even {
+  background-color:#F7F7F7
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-display-table tbody tr {
+  vertical-align:top;
+  border-bottom:none
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-display-table-row .training-type {
+  width:32%;
+  color:#474747
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-display-table-row .deduct-percent {
+  width:40%
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-display-table-row .deduct-days {
+  width:14%
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-display-table-row .deduct-days-plus-actions {
+  border-right:none
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-display-table-row .actions {
+  width:14%;
+  padding:8px 0 8px 5px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .add-another-cancel-policy-label {
+  cursor:pointer;
+  color:#474747;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  line-height:25px;
+  text-transform:uppercase
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .add-session-popup-list {
+  position:relative
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-add-another-button-div {
+  margin:14px 0 14px 4px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .add-another-cancel-policy-arrow {
+  color:#4686DD;
+  cursor:pointer;
+  font-size:11px;
+  display:inline-block;
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat right -1482px;
+  width:12px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .add-another-cancel-policy-type-list-ul {
+  margin-top:0;
+  margin-left:82px;
+  bottom:-15px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .add-another-cancel-policy-type-list {
+  position:relative
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .add-another-cancel-policy-openup-arrow {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -151px -1896px;
+  height: 11px;
+  left:128px;
+  position:absolute;
+  top:14px;
+  width:24px;
+  display:none;
+  z-index:100
+}
+.add-cancel-policy-more-list.dropdownadd-dd-list .dropdownadd-dd-list-arrow {
+  top:-9px
+}
+#commerce-cancellation-policy-screen-wrapper #cancel-policy-addedit-form .addedit-edit-textfield {
+  width:57px
+}
+#commerce-cancellation-policy-screen-wrapper #add-another-cancel-policy-qtip_disp {
+  bottom:53px;
+  left:4.5px
+}
+#commerce-cancellation-policy-screen-wrapper #add-another-cancel-policy .bottom-qtip-tip {
+  bottom:13px;
+  left:64px
+}
+#commerce-cancellation-policy-screen-wrapper #cancel-policy-addedit-form .addedit-form-cancel-container-actions {
+  margin-right:1px
+}
+#commerce-cancellation-policy-screen-wrapper #cancel-policy-addedit-form .cancel-policy-addedit-form-table {
+  color:#777;
+  font-size:12px
+}
+#commerce-cancellation-policy-screen-wrapper #cancel-policy-addedit-form .form-type-textfield {
+  display:inline
+}
+#commerce-cancellation-policy-screen-wrapper #cancel-policy-addedit-form .form-type-textfield input {
+  border:1px solid #E5E5E5;
+  height:18px;
+  width:44px;
+  margin-right:4px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-addedit-form-wrapper {
+  margin:5px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-addedit-form-table td.narrow {
+  width:65px;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  color:#474747
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-addedit-form-table td.wide {
+  width:160px
+}
+#commerce-cancellation-policy-screen-wrapper #cancel-policy-addedit-form .admin-save-button-container {
+  margin:1px 0 0 10px
+}
+#commerce-cancellation-policy-screen-wrapper .cancel-policy-display-div .cancel-policy-popup-wrapper #bubble-face-table #show_expertus_message {
+  margin-left:0
+}
+#commerce-cancellation-policy-screen-wrapper.has-cancel-policies > #show_expertus_message {
+  margin-top:-14px
+}
+#admin-commerce-payment-method-plan .enable-edit-icon {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -339px -186px;
+  height:18px;
+  width:20px
+}
+.cancel-policy-add-another-button-div .add-custombtn-symbol {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -493px -233px;
+  font-size:12px;
+  height:20px;
+  line-height:22px;
+  padding-left:8px;
+  padding-top:0
+}
+#admin-commerce-payment-method-plan .ui-state-hover {
+  border:0;
+  background:#FAFAFA
+}
+#admin-commerce-payment-method-plan .narrow-search-results-item-action {
+  padding:0 0 0 30px
+}
+.commerce-cc-settings-form .addedit-edit-uc_cybersource_soap_merchant_id {
+  width:153px
+}
+#admin-commerce-payment-method-plan .narrow-search-results-additional-title-info {
+  color:#474747;
+  font-family:ProximaNovaBold, Arial;
+  font-size:13px;
+  font-weight:normal;
+  text-transform:uppercase
+}
+.admin-check-details-wrapper .dropdown-width {
+  width:124px
+}
+#admin-commerce-payment-method-plan .ui-jqgrid-hdiv {
+  display:none
+}
+#admin-commerce-country-setting-plan .admin-datagrid-pagination .ui-jqgrid .ui-jqgrid-bdiv .ui-state-hover {
+  background:none;
+  border:0
+}
+.add-another-cancel-policy-popup {
+  position:relative;
+  top:40px
+}
+#commerce-cancellation-policy-screen-wrapper .no-cancel-policy-add-button-div .add-another-cancel-policy-popup {
+  left:40px
+}
+.page-administration-commerce-setting .narrow-search-results-item-description span.more-text a.show-short-text {
+  background-position:0 -1495px
+}
+.page-administration-commerce-setting .narrow-search-results-item-description span.more-text a.show-full-text {
+  background-position:0 -1481px
+}
+#add-cancel-policy-qtip #bubble-face-table #show_expertus_message {margin-left:0}
+.visible-ctools-commerece-popup {
+  position:relative;
+  float:left
+}
+.datagrid-payment-method-commerce .ui-jqgrid tr.jqgrow td {
+  height:0px
+}
+div.ctools-modal-content #commerce-cc-settings-basic-form .form-item label{
+  width:101px
+}
+div.ctools-modal-content #commerce-cc-settings-cybersource-form .form-item label {
+  width:101px
+}
+.page-administration-commerce-setting #page-container .narrow-search-results-item-details {
+  margin-top:-4px
+}
+.fade-out-title-container.admin-narrow-search-fadeout-container{
+  max-width:580px
+}
+.fade-out-title-container.multi-grid-countrysetting-title-fadeout-container{
+  max-width:200px
+}
+#admin-commerce-payment-method-plan .fade-out-title-container.admin-narrow-search-fadeout-container{
+  max-width:428px
+}
+.fade-out-title-container.admin-narrow-search-edit-tooltip-code-fadeout-container{
+  max-width:180px
+}
+#admin-commerce-country-setting-plan .ui-jqgrid-toppager {
+  background:#fff;
+  visibility:hidden;
+  border:0
+}
+#admin-commerce-country-setting-plan .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table {
+  display:block
+}
+#admin-commerce-country-setting-plan .pager-datagrid-common,
+#admin-commerce-country-setting-plan .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table  #data-table-page-view {
+  display:none
+}
+#admin-commerce-country-setting-plan .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-pgstart {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -144px -416px;
+  width:14px;
+  height:23px;
+  margin:0;
+  border:none;
+  padding:0px;
+  display:block;
+  float:left;
+  opacity:1;
+  filter:Alpha(Opacity=100)
+}
+#admin-commerce-country-setting-plan .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-prev {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -161px -416px;
+  width:14px;
+  height:23px;
+  margin:0;
+  border:0;
+  padding:0px;
+  display:block;
+  float:left;
+  opacity:1;
+  filter:Alpha(Opacity=100)
+}
+#admin-commerce-country-setting-plan .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button {
+  opacity:8;
+  background:none;
+  border:0;
+  filter:Alpha(Opacity=100)
+}
+#admin-commerce-country-setting-plan .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-next {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -177px -416px;
+  width:14px;
+  height:23px;
+  margin:0;
+  border:0;
+  padding:0;
+  display:block;
+  float:left;
+  opacity:1;
+  filter:Alpha(Opacity=100)
+}
+#admin-commerce-country-setting-plan .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-pgend {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -194px -416px;
+  width:24px;
+  height:23px;
+  margin:0;
+  border:0;
+  padding:0;
+  display:block;
+  float:left;
+  opacity:1;
+  filter:Alpha(Opacity=100)
+}
+#admin-commerce-country-setting-plan .admin-save-button-container {
+  margin-bottom:10px;
+  margin-right:0
+}
+#admin-commerce-country-setting-plan .admin_add_multi_search_container {
+  position:absolute;
+  top:0;
+  width:330px;
+  left:4px
+}
+#admin-commerce-country-setting-plan .admin_add_multi_search_container .admin_add_multi_auto_search {
+  width:142px
+}
+#admin-commerce-country-setting-plan .admin_add_multi_search_container .admin_add_multi_auto_search .addedit-edit-commerce-countrylist-autocomplete {
+  width:280px;
+  padding-right:20px
+}
+#admin-commerce-country-setting-plan .ui-jqgrid-hbox input.multiselect-selectall {
+  margin-left:0
+}
+#admin-commerce-country-setting-plan .ui-widget-content span.countryaction a,
+#admin-commerce-country-setting-plan .ui-widget-content span.countryaction a:hover{
+  text-decoration:none;
+  color:#FF7924;
+  font-family:ProximaNovaBold, Arial;
+  text-transform:uppercase;
+  color:#474747
+}
+#admin-commerce-country-setting-plan .select-list-dropdown {
+  height:24px;
+  width:93px;
+  background:none;
+  border:0;
+  color:#474747;
+  float:left;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  line-height:23px;
+  padding:0;
+  text-align:left;
+  text-transform:uppercase
+}
+#admin-commerce-country-setting-plan .select-list-dropdown-link {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat 0 -253px;
+  cursor:pointer;
+  float:left;
+  height:24px;
+  text-decoration:none;
+   width:20px
+}
+#admin-commerce-country-setting-plan #search-dropdwn-list {
+   display:block;
+   float:left;
+   height:24px;
+   width:113px
+}
+#admin-commerce-country-setting-plan #select-list-dropdown-list {
+  left:-2px;
+  position:absolute;
+  top:23px;
+  z-index:100
+}
+#admin-commerce-country-setting-plan #select-list-dropdown-list li {
+  border-top:0;
+  border-bottom:1px solid #EBEBEB;
+  cursor:pointer;
+  display:inline-block;
+  text-align:center;
+  width:100%;
+  color:#474747;
+  padding:7px 0;
+  font-family:ProximaNovaBold, Arial;
+  text-transform:uppercase
+}
+/*safari hack Start*/
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0), not all and (min-resolution:.001dpcm) { @media { _:-webkit-full-screen,
+       #admin-commerce-payment-method-plan #bubble-face-table .bubble-cl,
+       #admin-commerce-payment-method-plan #bubble-face-table .bubble-c,
+       #admin-commerce-payment-method-plan #bubble-face-table .bubble-cr {
+       min-height:100px;
+       line-height:0;
+       padding:0
+       }
+       #admin-commerce-payment-method-plan .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td #visible-popup-credit table,
+       table {
+       border-collapse: separate
+       }
+       #commerce-cc-settings-basic-form .addedit-new-field-title-wrapper .addedit-new-field-title-hint{
+       line-height:15px
+       }
+       #commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-new-field-title {
+       line-height:18px;
+       padding-top:4px
+       }
+       #commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-twocol-secondcol .addedit-secondcol-field-value .addedit-edit-uc_credit_cvv_enabled{
+       margin-top:2px
+       }
+       #commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-twocol-secondcol .addedit-secondcol-field-value .addedit-edit-exp_cybersource_soap_tax_calculate{
+       margin-top:3px
+       }
+}}
+/*safari hack End*/

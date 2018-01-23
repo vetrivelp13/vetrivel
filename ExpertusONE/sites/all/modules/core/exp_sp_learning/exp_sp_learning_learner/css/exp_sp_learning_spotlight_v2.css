@@ -1,0 +1,343 @@
+#page-container div.spotlight-block {
+	display:block;
+  padding:19px 0 19px 0;
+  margin:0 18px;
+  border-bottom:0;
+  text-align:justify
+}
+#page-container .block .list-spotlight {
+  border-bottom:1px solid #e7e7e7
+}
+.block .list-spotlight {
+  min-height:95px
+}
+.spotlight-block-para {
+  display:block;
+  width:100%;
+  word-wrap:break-word;
+}
+.spotlight-block .spotlight-block-para .spotlight-item-title:hover {
+   text-decoration:none;
+}
+#page-container #block-exp-sp-learning-spotlight-most-viewed,
+#page-container #block-exp-sp-learning-spotlight-highly-rated,
+#page-container #block-exp-sp-learning-spotlight-most-popular,
+#page-container #block-exp-sp-learning-spotlight-featured-training {
+  float:left;
+  width:301px;
+  margin-right:18px;
+  /*margin-top:18px*/
+}
+#page-container #block-exp-sp-learning-spotlight-highly-rated,
+#page-container #block-exp-sp-learning-spotlight-most-popular {
+  margin-right:0
+}
+#page-container .spotlight-item-image-crs-large {
+  height:53px;
+  width:53px;
+  background:url('/sites/default/files/images/Course.png') no-repeat;
+  float:left;
+  margin:0 15px 5px 0;
+      background-size : contain;
+}
+#page-container #block-exp-sp-learning-spotlight-new-courses .spotlight-item-image-crs {
+  height:53px;
+  width:53px;
+  background:url('/sites/default/files/images/Course.png') no-repeat;
+  float:left;
+  margin:0 15px 5px 0;
+  background-size : contain;
+  display:block
+}
+#page-container #block-exp-sp-learning-spotlight-most-active-users .most-active-user .profile-item {
+  border-bottom:0;
+  height:50px;
+  font-size:14px;
+  padding:13px 0 13px 0;
+  margin:0 16px
+}
+#page-container #block-exp-sp-learning-spotlight-most-active-users .most-active-user .profile-item .profile-image img {
+  cursor:auto;
+  height:36px;
+  margin:7px;
+  width:36px
+}
+#page-container #block-exp-sp-learning-spotlight-most-active-users .most-active-user .profile-item .profile-image {
+  cursor:default;
+  display:block;
+  float:left;
+  height:50px;
+  padding-right:15px;
+  width:43px
+}
+#page-container #block-exp-sp-learning-spotlight-most-active-users .most-active-user .profile-item .user-name {
+  color:#333;
+  display:block;
+  clear:both;
+  margin-top:0;
+  line-height:1em;
+  font-size:12px;
+  text-transform:uppercase;
+  margin-top:8px;
+  font-family:ProximaNovaBold, Arial
+}
+#page-container #block-exp-sp-learning-spotlight-most-active-users .most-active-user .profile-item .job-title {
+  color:#2d2d2d;
+  display:block;
+  padding-top:4px;
+  font-size:12px;
+  font-family:openSansRegular, Arial
+}
+/*! Course large Size Icons only for  New Training */
+#page-container #block-exp-sp-learning-spotlight-new-courses .spotlight-item-image-trn {
+  background:url("/sites/default/files/images/Learning-plan.png") no-repeat;
+  margin:3px 15px 0 0;
+  width:53px;
+  height:53px;
+  float:left;
+  background-size : contain;
+}
+#page-container #block-exp-sp-learning-spotlight-new-courses .spotlight-item-image-cur {
+  background:url("/sites/default/files/images/Curriculam.png") no-repeat;
+  margin:3px 15px 0 0;
+  width:53px;
+  height:53px;
+  float:left;
+  background-size : contain;
+}
+#page-container #block-exp-sp-learning-spotlight-new-courses .spotlight-item-image-crt {
+  background:url("/sites/default/files/images/Certification.png") no-repeat;
+  margin:3px 15px 0 0;
+  width:53px;
+  height:53px;
+  float:left;
+  background-size : contain;
+}
+#page-container #block-exp-sp-learning-spotlight-new-courses .spotlight-item-title,
+#page-container #block-exp-sp-learning-spotlight-most-popular .spotlight-item-title,
+#page-container #block-exp-sp-learning-spotlight-highly-rated .spotlight-item-title {
+  font-size:13px;
+  word-wrap: break-word;
+  display:block;
+}
+#page-container .spotlight-item-image-trn-large {
+  background:url("/sites/default/files/images/Learning-plan.png") no-repeat;
+  margin:-4px 15px 0 0;
+  float:left;
+  width:53px;
+  height:53px;
+  background-size : contain;
+}
+#page-container .spotlight-item-image-cur-large {
+  background:url("/sites/default/files/images/Curriculam.png") no-repeat;
+  margin:-4px 15px 0 0;
+  float:left;
+  width:53px;
+  height:53px;
+  background-size : contain;
+}
+#page-container .spotlight-item-image-crt-large {
+  background:url("/sites/default/files/images/Certification.png") no-repeat;
+  margin:-4px 15px 0 0;
+  float:left;
+  width:53px;
+  height:53px;
+  background-size : contain;
+}
+#page-container #block-exp-sp-learning-spotlight-new-courses .spotlight-title-breaker,
+#page-container #block-exp-sp-learning-spotlight-most-popular .spotlight-title-breaker,
+#page-container #block-exp-sp-learning-spotlight-highly-rated .spotlight-title-breaker {
+  margin-top:5px;
+  height:0
+}
+.spotlight-block-para  a.spotlight-item-title {
+  color:#4687DD;
+  margin:0;
+  font-weight:normal;
+  text-decoration:none
+}
+.spotlight-title-breaker {
+  display:block;
+  margin-top:5px;
+  height:0
+}
+.spotlight-block .block-sp-learning-spotlight-title-fadeout-container {
+  max-width:180px
+}
+
+/* Styles for misalignment of text rows in Narrow Search Page starts here */
+/* Viswanathan commented for #75628 */
+.front .spotlight-block .limit-title-row {
+  /*display:inline;*/
+  max-width:100%;
+  display: block;
+  float: none;
+}
+.front .spotlight-block .limit-desc-row {
+  display:inline-block;
+  max-width:100%;
+  float:none
+}
+.front .spotlight-block .limit-title,
+.front .spotlight-block .limit-desc {
+  line-height:16px
+}
+#page-container .spotlight-item-image-crs-large,
+#page-container .spotlight-item-image-cur-large {
+  margin-top:4px
+}
+#page-container #block-exp-sp-learning-spotlight-new-courses .spotlight-item-image-crs,
+#page-container #block-exp-sp-learning-spotlight-new-courses .spotlight-item-image-crt,
+#page-container #block-exp-sp-learning-spotlight-new-courses .spotlight-item-image-cur {
+  margin-top:3px
+}
+#page-container #block-exp-sp-learning-spotlight-new-courses .spotlight-title-breaker, 
+#page-container #block-exp-sp-learning-spotlight-most-popular .spotlight-title-breaker, 
+#page-container #block-exp-sp-learning-spotlight-highly-rated .spotlight-title-breaker {
+  margin-top:3px
+}
+/*-- Home page customization --*/
+#page-container #block-exp-sp-learning-spotlight-new-courses,
+#page-container #block-exp-sp-learning-spotlight-leaderboard {
+  float:left;
+  width:301px;
+}
+.front .block .list-spotlight {
+  min-height:auto
+}
+/* Styles for misalignment of text rows in Narrow Search Page ends here */
+
+/*-- Case: With Sidebar, Slideshow and One Panel ---*/
+.front.sidebar-second.highlight-2 #page-container #block-exp-sp-announcement-learner-announcement1,
+.front.sidebar-second.highlight-2 #page-container #block-exp-sp-learning-spotlight-highly-rated,
+.front.sidebar-second.highlight-2 #page-container #block-exp-sp-learning-spotlight-most-popular,
+.front.sidebar-second.highlight-2 #page-container #block-exp-sp-learning-spotlight-new-courses,
+.front.sidebar-second.highlight-2 #page-container #block-exp-sp-learning-spotlight-leaderboard {
+    width: 100%
+}
+/*-- Case: When No Sidebar, Slideshow and One Panel ---*/
+.front.no-sidebars.highlight-2 #page-container #block-exp-sp-learning-spotlight-highly-rated,
+.front.no-sidebars.highlight-2 #page-container #block-exp-sp-learning-spotlight-most-popular,
+.front.no-sidebars.highlight-2 #page-container #block-exp-sp-learning-spotlight-new-courses,
+.front.no-sidebars.highlight-2 #page-container #block-exp-sp-learning-spotlight-leaderboard,
+.front.no-sidebars.highlight-2 #page-container #block-exp-sp-announcement-learner-announcement1,
+.front.no-sidebars.highlight-3 #page-container #block-exp-sp-announcement-learner-announcement1 {
+    width: 100%;
+}
+/*-- Case: When No Sidebar, Slideshow and Two Panel ---*/
+.front.no-sidebars.highlight-3 #page-container #block-exp-sp-learning-spotlight-highly-rated,
+.front.no-sidebars.highlight-3 #page-container #block-exp-sp-learning-spotlight-most-popular,
+.front.no-sidebars.highlight-3 #page-container #block-exp-sp-learning-spotlight-new-courses,
+.front.no-sidebars.highlight-3 #page-container #block-exp-sp-learning-spotlight-leaderboard {
+    width: 49%;
+    float: left;
+}
+/*-- Case: When No Sidebar, Slideshow and Three Panel ---*/
+.front.no-sidebars.highlight-4 #page-container #block-exp-sp-learning-spotlight-highly-rated,
+.front.no-sidebars.highlight-4 #page-container #block-exp-sp-learning-spotlight-most-popular,
+.front.no-sidebars.highlight-4 #page-container #block-exp-sp-learning-spotlight-new-courses,
+.front.no-sidebars.highlight-4 #page-container #block-exp-sp-learning-spotlight-leaderboard {
+    width: 301px;
+    float: left;
+}
+.front.no-sidebars #block-exp-sp-announcement-learner-announcement1 #announcement_details .announcement-learner-title-fadeout-container { max-width: 900px; width: 900px }
+.front.sidebar-second.highlight-2 #block-exp-sp-learning-spotlight-most-popular .spotlight-block .block-sp-learning-spotlight-title-fadeout-container,
+.front.sidebar-second.highlight-2 #block-exp-sp-learning-spotlight-highly-rated .spotlight-block .block-sp-learning-spotlight-title-fadeout-container,
+.front.sidebar-second.highlight-2 #block-exp-sp-learning-spotlight-new-courses .spotlight-block .block-sp-learning-spotlight-title-fadeout-container,
+.front.sidebar-second.highlight-2 #block-exp-sp-learning-spotlight-leaderboard .spotlight-block .block-sp-learning-spotlight-title-fadeout-container {
+	max-width: 480px
+}
+.front.no-sidebars.highlight-2 #block-exp-sp-learning-spotlight-most-popular .spotlight-block .block-sp-learning-spotlight-title-fadeout-container,
+.front.no-sidebars.highlight-2 #block-exp-sp-learning-spotlight-highly-rated .spotlight-block .block-sp-learning-spotlight-title-fadeout-container,
+.front.no-sidebars.highlight-2 #block-exp-sp-learning-spotlight-new-courses .spotlight-block .block-sp-learning-spotlight-title-fadeout-container,
+.front.no-sidebars.highlight-2 #block-exp-sp-learning-spotlight-leaderboard .spotlight-block .block-sp-learning-spotlight-title-fadeout-container {
+	max-width: 780px
+}
+.front.no-sidebars.highlight-3 #block-exp-sp-learning-spotlight-most-popular .spotlight-block .block-sp-learning-spotlight-title-fadeout-container,
+.front.no-sidebars.highlight-3 #block-exp-sp-learning-spotlight-highly-rated .spotlight-block .block-sp-learning-spotlight-title-fadeout-container,
+.front.no-sidebars.highlight-3 #block-exp-sp-learning-spotlight-new-courses .spotlight-block .block-sp-learning-spotlight-title-fadeout-container,
+.front.no-sidebars.highlight-3 #block-exp-sp-learning-spotlight-leaderboard .spotlight-block .block-sp-learning-spotlight-title-fadeout-container  {
+	max-width: 330px
+}
+.front .region-sidebar-second .block.first {
+	margin-top: 0
+}
+.front #page-container div.spotlight-block {  padding: 11px 0 }
+.front .block .list-spotlight { min-height: 96px }
+.block .list-spotlight-last { min-height: 84px }
+/*-- Home page customization --*/
+.fade-out-title-container{
+  overflow: hidden;
+  position: relative;
+  max-width: 415px
+}
+.title-lengthy-text{
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.fade-out-image{
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/title_gradient.png") no-repeat right 0;
+  top: 0;
+  float: right;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  width: 30px;
+  height:20px
+}
+.ui-state-hover .fade-out-image {
+ background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/title_gradient.png") no-repeat right -30px;
+}
+.ui-state-highlight.ui-state-hover .fade-out-image {
+ background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/title_gradient.png") no-repeat right 0;
+}
+.fade-out-title-container.admin-multiselect-dropdown {
+  max-width:140px;
+}
+/* Trunk8 Fadeout for Title and Description texts start here */
+/*-- Case: When Sidebar, Slideshow and One Panel ---*/
+.front.one-sidebar.sidebar-second.highlight-2 .region-highlight .spotlight-block .limit-title-row ,
+.front.one-sidebar.sidebar-second.highlight-2 .region-highlight .spotlight-block .limit-desc-row {
+  max-width:88%;
+}
+.front.sidebar-second.highlight-2 .region-highlight #userpoints-leaderboard .user-desc{
+  width:88%	
+}
+.front.sidebar-second.highlight-2 .region-highlight #userpoints-leaderboard .user-profile-link .limit-title-row .limit-title,
+.front.sidebar-second.highlight-2 .region-highlight #userpoints-leaderboard .user-profile-link .limit-title-row{
+  width:100%;
+  max-width:100%
+}
+/*-- Case: When No Sidebar, Slideshow and One Panel ---*/
+.front.no-sidebars.highlight-2 .spotlight-block .limit-title-row,
+.front.no-sidebars.highlight-2 .spotlight-block .limit-desc-row{
+  max-width:92%
+}
+.front.no-sidebars.highlight-2 #userpoints-leaderboard .user-desc{
+  width:92%	
+}
+.front.no-sidebars.highlight-2 #userpoints-leaderboard .user-profile-link .limit-title-row .limit-title,
+.front.no-sidebars.highlight-2 #userpoints-leaderboard .user-profile-link .limit-title-row{
+  width:100%;
+  max-width:100%
+}
+/*-- Case: When No Sidebar, Slideshow and Two Panel ---*/
+.front.no-sidebars.highlight-3 .spotlight-block .limit-title-row,
+.front.no-sidebars.highlight-3 .spotlight-block .limit-desc-row{
+  max-width:83%
+}
+.front.no-sidebars.highlight-3 #userpoints-leaderboard .user-profile-link .limit-title-row .limit-title,
+.front.no-sidebars.highlight-3 #userpoints-leaderboard .user-profile-link .limit-title-row{
+  width:100%;
+  max-width:100%
+}
+.front.no-sidebars.highlight-3 #userpoints-leaderboard .user-desc{
+  width:83%	
+}
+/* Trunk8 Fadeout for Title and Description texts ends here */
+
+.front .spotlight-block .spotlight-desc-container{
+  float:left;
+  width:73%
+}

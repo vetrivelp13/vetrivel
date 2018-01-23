@@ -1,0 +1,1247 @@
+#catalog-course-basic-addedit-form-container .view-mode-field-value-txt {
+  color:#333
+}
+.addedit-new-field .addedit-edit-reg_end_date,
+.addedit-new-field .addedit-edit-cancel_deadline_date {
+  width:160px
+}
+#catalog-class-basic-addedit-form-container .session-details-row #admin-addedit-session-details-wrapper .admin-session-col2-container label {
+  width:68px
+}
+#catalog-class-basic-addedit-form-container #admin-addedit-session-details-wrapper .admin-session-start-date .admin-seession-form-month {
+  width:122px
+}
+#catalog-class-basic-addedit-form-container #admin-addedit-session-details-wrapper .admin-session-date-start-end select,
+#catalog-class-basic-addedit-form-container #admin-addedit-session-details-wrapper .admin-session-start-date .admin-seession-from-year {
+  width:44px
+}
+#catalog-class-basic-addedit-form-container #two-col-row-delivery_type_location .addedit-twocol-firstcol .addedit-firstcol-field-value select {
+  width:166px
+}		
+#catalog-class-basic-addedit-form-container .admin-session-date-start-end .admin-session-end-date .admin-session-date-start-end-to {
+  width:90px
+}
+#catalog-class-basic-addedit-form-container #admin-addedit-session-details-wrapper .admin-session-date-start-end .admin-session-end-date .admin-session-date-start-end-to .form-item label {
+  padding-top:5px;
+  width:44px
+}
+#catalog-class-basic-addedit-form-container #admin-addedit-session-details-wrapper .admin-delete-img{
+  margin-right:-5px;
+  float:right
+}
+#catalog-course-basic-addedit-form-disp .admin-course-edit-button-container .admin-add-edit-button{
+  margin:34px 70px 0 0
+}
+#catalog-course-basic-addedit-form-container .genere-title {
+  width:62%
+}
+#two-col-row-waitlist_count_currency_type .addedit-twocol-firstcol .addedit-firstcol-field-value .addedit-new-datefield-value input.addedit-edit-datefield + img {
+  cursor:pointer;
+  left:145px;
+  position:absolute;
+  top:3px
+}
+.location-list-title {
+  color:#666;
+  float:left;
+  font-size:13px;
+  font-weight:normal;
+  margin-left:34px;
+  margin-top:5px;
+  text-align:right
+}
+#select-location-list {
+  background:#FFF;
+  right:51px;
+  position:absolute;
+  width:118px;
+  margin-top:3px;
+  height:18px
+}
+#location-list ul { 
+  padding:0; 
+  background:#FFF;
+  margin-right:0;	
+  height:20px
+}
+#location-list li {
+  list-style-type:none;
+  padding:1px 3px;			
+  cursor:default
+}
+#location-list .top-select {
+  width:112px;
+  height:18px
+}
+.location-selected-list { 
+  background-color:#ccc
+}
+#location-list .loc-disp ul { 
+  height:95px;
+  list-style-type:none;
+  overflow-y:scroll;
+  max-width:155px;
+  min-width:113px
+}
+#location-list .loc-disp li { 
+  position:relative; 
+  text-align:left
+}
+#location-list .loc-disp-selection {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -120px 2px;
+  float:right;
+  height:18px;
+  text-decoration:none;
+  width:7px;
+  margin-right:6px
+}
+#location-list input {
+  float:left;
+  height:16px;
+  padding-left:2px;
+  width:87px
+}
+.top-select{
+  border:1px solid #ccc;
+  cursor:pointer
+}
+.top-select-nonclick{
+  border:1px solid #ccc;
+  background:#F4F4F4;
+  cursor:default;
+  height:18px
+}
+.middle-select{
+  border:1px solid #ccc;
+  padding-right:2px;
+  width:99%
+}
+.add-location-cls {
+  font-size:12px;
+  cursor:pointer;
+  border-left:0;
+  border-right:0;
+  border-bottom:0;
+  border-top:1px dotted #ccc;
+  height:24px;
+  padding:5px 0 2px 10px;
+  text-align:center;
+  background:#FFF;
+  display:block;
+  width:93%;
+  color:#4686DD;
+  line-height:22px;
+  background:#FFF url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -162px -679px
+}
+.input-selected-loc-disp-nonclick{
+  border:0;
+  background:#F4F4F4
+}
+.input-selected-loc-disp{
+  border:0;
+  background:#FFF;
+  cursor:pointer
+}
+#admin-class-location-container .addedit-edit-new_location{
+  width:163px;
+  background-position:100% 5px
+}
+#catalog-class-basic-addedit-form-container  .addedit-edit-ac-textfield {
+  height:20px;
+  margin-bottom:3px
+}
+.admin-addedit-class-instructor-name .addedit-edit-ac-textfield {
+  width:47%
+}
+#add-session-details #meeting-type-editclassroom .admin-addedit-class-instructor-name .addedit-edit-ac-textfield,
+#add-session-details #meeting-type-addclassroom .admin-addedit-class-instructor-name .addedit-edit-ac-textfield,
+#add-session-details #meeting-type-classroom  .admin-addedit-class-instructor-name .addedit-edit-ac-textfield {
+  width:45%
+}
+#admin_list_values_container .catalog-pub-add-list {
+  right:15px;
+  top:36px
+}
+#catalog-class-basic-addedit-form-container .enroll-date-input-txtBox {
+  margin-top:3px;
+  width:81px
+}
+#catalog-class-basic-addedit-form-container .enroll-date-input-txtBox + img {
+  position:absolute;
+  right:89px;
+  margin-top:3px
+}
+#tab-content-main #catalog-class-basic-addedit-form-container .enroll-date-input-txtBox + img {
+  right:91px;
+  margin-top:8px
+}		
+.admin-addedit-session-details-wrapper {
+  padding:10px 0;
+  width:99.3%
+}
+#admin-addedit-session-vc-details-wrapper input.ac_loading,  
+#admin-addedit-session-ilt-details-wrapper input.ac_loading {
+  background-position:100% -15px
+}
+#admin-addedit-session-vc-details-wrapper .admin-datagrid-pagination .ac_input,
+.session-details-fieldset-wrapper .admin-add-more-field-column {
+  padding-top:0
+}
+.admin-addedit-session-details-wrapper th {
+  font-size:12px;
+  color:#666;
+  font-weight:bold;
+  text-transform:capitalize;
+  padding:0 0 0 5px
+}
+.admin-addedit-session-details-wrapper tr td {
+  font-size:13px;
+  color:#666
+}
+.admin-addedit-session-details-wrapper label {
+  text-align:left;
+  font-weight:normal;
+  padding-left:1px;
+  padding-bottom:5px;
+  margin-bottom:5px
+}
+.session-details-fieldset-wrapper .admin-save-button-container {
+  margin-right:2px;
+  margin-bottom:0
+}
+.admin-addedit-session-details-wrapper .admin-session-label-delete div.form-item + div.form-item label,
+.admin-addedit-session-details-wrapper .admin-addedit-class-start-time div.form-item + div.form-item label,
+.admin-addedit-session-details-wrapper .admin-addedit-class-start-time div.form-item + div.form-item label {
+  padding-left:9px
+}
+.admin-addedit-session-details-wrapper .admin-session-first-row input.addedit-edit-datefield + img {
+  top:31px;
+  left:74px;
+  cursor:pointer;
+  position:absolute
+}
+.admin-addedit-session-details-wrapper input.addedit-edit-datefield + img {
+  top:54px;
+  left:242px;
+  cursor:pointer;
+  position:absolute
+}
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper input.addedit-edit-datefield + img,
+#add-session-details #meeting-type-editexp .admin-addedit-session-details-wrapper input.addedit-edit-datefield + img,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper input.addedit-edit-datefield + img {
+	top:57px
+}
+.admin-addedit-session-details-wrapper .admin-addedit-class-start-time {
+  width:39%
+}
+#admin-addedit-session-ilt-details-wrapper .admin-addedit-class-session-name {
+  width:230px
+}
+#admin-addedit-session-ilt-details-wrapper .admin-addedit-class-session-name input {
+  width:215px
+}
+#admin-addedit-session-ilt-details-wrapper .admin-session-date-container {
+  width:100px
+}
+#admin-addedit-session-ilt-details-wrapper .admin-session-date-container input {
+  width:91px
+}
+#admin-addedit-session-ilt-details-wrapper .admin-addedit-class-start-time .form-item,
+#admin-addedit-session-ilt-details-wrapper .admin-session-date-container .form-item {
+  position:relative
+}
+#admin-addedit-session-ilt-details-wrapper .admin-addedit-class-start-time {
+  width:50px
+}
+#admin-addedit-session-ilt-details-wrapper .admin-addedit-class-start-time input {
+  width:42px
+}
+#admin-addedit-session-ilt-details-wrapper .admin-addedit-class-instructor-name{
+  width:160px
+}
+#admin-addedit-session-ilt-details-wrapper .admin-addedit-class-instructor-name input {
+  width:152px
+}
+#admin-addedit-session-ilt-details-wrapper tr td.admin-session-label-delete {
+  vertical-align:top
+}
+#admin-addedit-session-ilt-details-wrapper tr.admin-session-first-row td.admin-session-label-delete .admin-delete-img {
+  background:none;
+  border:0;
+  cursor:pointer;
+  height:10px;
+  padding-top:36px;
+  padding-left:6px;
+  width:9px
+}
+#admin-addedit-session-ilt-details-wrapper tr td.admin-session-label-delete .admin-delete-img {
+  background:none;
+  border:0;
+  cursor:pointer;
+  height:10px;
+  padding-top:10px;
+  padding-left:6px;
+  width:9px
+}
+.admin-addedit-session-details-wrapper .session-meeting-details {
+  color:#4686DD;
+  font-size:11px;
+  cursor:pointer;
+  text-decoration:none;
+  text-align:left;
+  width:100%;
+  display:inline-block;
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif") no-repeat right -1494px
+}
+.admin-datagrid-session-with-addanother .admin-course-class-session-details-container {
+  min-height:388px;
+  position:relative
+}
+#admin-addedit-session-vc-details-wrapper .meeting-session-container .form-item label {
+  width:135px;
+  display:inline-block;
+  padding-bottom:0
+}
+#admin-addedit-session-vc-details-wrapper .meeting-session-container .session-meeting-vc-class-others .form-item label {
+   width:100px
+}
+#admin-addedit-session-vc-details-wrapper .meeting-session-container .session-meeting-vc-class .form-item label {
+  width:80px
+}
+#admin-addedit-session-vc-details-wrapper .meeting-session-container .addedit-edit-select {
+  width:145px;
+  display:inline-block
+}
+#admin-addedit-session-vc-details-wrapper .meeting-session-container .session-meeting-vc-class-others .addedit-edit-select {
+  width:179px
+}
+#admin-addedit-session-vc-details-wrapper .meeting-session-container .session-meeting-vc-class .addedit-edit-select {
+  width:201px
+}
+#admin-addedit-session-vc-details-wrapper .meeting-session-container .ctrDropDownClick {
+  width:143px;
+  display:inline-block
+}
+#admin-addedit-session-vc-details-wrapper .meeting-session-container .form-item input {
+  width:143px;
+  border:1px solid #7F9DB9;
+  display:inline-block
+}
+#admin-addedit-session-vc-details-wrapper .meeting-session-container .session-meeting-vc-class-others .form-item input {
+  width:177px
+}
+#admin-addedit-session-vc-details-wrapper .meeting-session-container .session-meeting-vc-class  .form-item input {
+  width:198px;
+  border:1px solid #7F9DB9;
+  display:inline-block
+}
+#admin-addedit-session-vc-details-wrapper .meeting-session-container .admin-save-button-container {
+  margin-right:5px;
+  margin-bottom:0
+}
+.admin-addedit-session-details-wrapper .exp-timepicker-selection {
+  top:23px;
+  left:59px;
+  width:106px
+}
+.admin-addedit-session-details-wrapper .admin-session-first-row .exp-timepicker-selection {
+  top:50px;
+  width:54px
+}
+#add-more-session .addedit-form-cancel-container-actions .add-custombtn-symbol {
+  background-position:-169px -680px
+}
+#admin-addedit-session-vc-details-wrapper {
+  width:100%
+}
+#admin-addedit-session-vc-details-wrapper .admin-session-label-delete-empty {
+  width:30px
+}
+#admin-addedit-session-vc-details-wrapper .admin-addedit-class-meeting-type {
+  width:140px
+}
+#admin-addedit-session-vc-details-wrapper .admin-addedit-class-meeting-type .crt-paint-meeting-type select {
+  width:132px;
+  height:24px
+}
+#admin-addedit-session-vc-details-wrapper .admin-addedit-class-session-name {
+  width:210px
+}
+#admin-addedit-session-vc-details-wrapper .admin-addedit-class-session-name input {
+  width:202px
+}
+#admin-addedit-session-vc-details-wrapper .admin-addedit-class-start-on {
+  width:100px
+}
+#admin-addedit-session-vc-details-wrapper .admin-addedit-class-start-on input {
+  width:92px
+}
+#admin-addedit-session-vc-details-wrapper .admin-addedit-class-start-on .form-item {
+  position:relative
+}
+#admin-addedit-session-vc-details-wrapper .admin-addedit-class-start-time {
+  width:50px
+}
+#admin-addedit-session-vc-details-wrapper td.admin-addedit-class-start-time input{
+  width:42px
+}
+#admin-addedit-session-vc-details-wrapper .admin-addedit-class-start-time input.exp-timepicker {
+  width:42px
+}
+#admin-addedit-session-vc-details-wrapper .admin-session-meeting-details-container {
+  width:36px
+}
+#admin-addedit-session-vc-details-wrapper .admin-session-meeting-details-container .admin-session-meeting-vc-class-container {
+  position:relative;
+  top:11px
+}
+#admin-addedit-session-vc-details-wrapper .exp-timepicker-selection {
+  top:23px
+}
+#admin-addedit-session-vc-details-wrapper .admin-session-first-row .exp-timepicker-selection {
+  top:50px;
+  width:54px
+}
+#admin-addedit-session-vc-details-wrapper .admin-session-first-row input.addedit-edit-datefield + img {
+  top:31px;
+  left:74px;
+  cursor:pointer;
+  position:absolute
+}
+#admin-addedit-session-vc-details-wrapper input.addedit-edit-datefield + img {
+  top:3px;
+  left:75px;
+  cursor:pointer;
+  position:absolute
+}
+#admin-addedit-session-vc-details-wrapper .admin-addedit-class-attendee-url .admin-delete-img {
+  background:none;
+  border:0;
+  cursor:pointer;
+  height:10px;
+  padding-top:21px;
+  padding-left:0;
+  margin-left:10px;
+  width:9px
+}
+#catalog-class-basic-addedit-form-container .ac_input {
+  background-position:100% 5px
+}
+#catalog-course-basic-addedit-form input.addedit-edit-crs_title,
+.addedit-form-wrapper .catalog-class-basic-addedit-form-disp input#edit-title {
+  width:389px
+}
+.addedit-form-wrapper .catalog-class-basic-addedit-form-disp input#edit-code{
+  width:160px
+}
+#catalog-class-addedit-form-details .ac_input {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% 3px #FFF 
+}
+#catalog-class-basic-addedit-form-container input.ac_loading{
+ background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% -15px #FFF
+}
+#catalog-class-addedit-form-details input.ac_loading {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% -17px #FFF
+}
+#catalog-course-basic-addedit-form .addedit-twocol-secondcol .addedit-new-field-title{
+  padding-right:23px;
+  text-align:center
+}
+#catalog-course-basic-addedit-form-disp .addedit-secondcol-field-value .form-item-validity-days input {
+  width:94px
+}
+#catalog-course-basic-addedit-form-disp #two-col-row-author_vendor_complete .addedit-twocol-secondcol .addedit-new-field-title {
+  margin-left:2px;
+  padding-right:6px
+}
+#catalog-course-basic-addedit-form-disp .addedit-secondcol-field-value #course_compliance {
+  width:112px
+}
+#catalog-course-basic-addedit-form-disp #two-col-row-author_vendor .addedit-twocol-secondcol{
+  float:left
+}
+#two-col-row-lang_status .form-item-crs-code .addedit-edit-crs_code,
+#catalog-course-basic-addedit-form .form-item-crs-author-vendor .addedit-edit-crs_author_vendor,
+#two-col-row-classcode_langcode .addedit-twocol-firstcol .addedit-edit-code,
+#two-col-row-regdate_deadlinedate .addedit-edit-reg_end_date,
+#two-col-row-waitlist_count_currency_type .addedit-edit-author_vendor {
+  width:168px
+}
+#catalog-attachment-disp-container .attachment-detail-list {
+  padding-top:7px;	
+}
+#catalog-attachment-disp-container #attachment-del-btn .attach-delete-btn {
+  padding:6px 3px 1px 13px
+}
+.brl-column-left{
+  color:#666;
+  font-size:12px;
+  text-align:left;
+  font-weight:normal
+}
+.brl-column-right{
+  color:#666;
+  font-size:12px;
+  text-align:right
+}
+.brl-checkbox-input{
+	margin-right:0
+}
+#exp-sp-administration-class-bussiness-rule-form-html .certificate-btn-container .addedit-form-cancel-container-actions {
+  margin-right:1px
+}
+#catalog-class-basic-addedit-form-container
+.addedit-readonly-textfield,
+.addedit-readonly-password-field {
+  height:18px
+}
+#catalog-class-basic-addedit-form-container .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  line-height:20px;
+  vertical-align:top
+}
+.catalog-class-session-basic-addedit-form-container .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td { padding-left:0}
+#catalog-enroll-form-html #catalog-class-basic-addedit-form-container .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  padding-left:2px
+}
+.catalog-class-session-basic-addedit-form-container .admin-datagrid-add-btn-wrapper-container span.narrow-search-actionbar-orange-btnLeft {
+  float:left;
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -107px -747px;
+  width:7px;
+  height:22px
+}
+.catalog-class-session-basic-addedit-form-container .admin-datagrid-add-btn-wrapper-container span.narrow-search-actionbar-orange-btnBG {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -3px -945px;
+  color:#FFF;
+  float:left;
+  font-size:12px;
+  font-weight:bold;
+  height:20px;
+  padding:3px 3px 0 12px
+}
+.catalog-class-session-basic-addedit-form-container .admin-datagrid-add-btn-wrapper-container .session-list {
+  background:#FFF; 
+  position:absolute;
+  top:21px;
+  padding:0;
+  right:0;
+  list-style-type:none;
+  border:1px solid #ccc;
+  z-index:100;
+  left: 192px;
+}
+.catalog-class-session-basic-addedit-form-container .admin-datagrid-add-btn-wrapper-container .session-add-list{
+  background:#FFF;
+  position:absolute;
+  top:21px;
+  padding:0;
+  right:0;
+  list-style-type:none;
+  border:1px solid #ccc;
+  z-index:100;
+  text-align:left;
+	}
+.catalog-class-session-basic-addedit-form-container .admin-datagrid-add-btn-wrapper-container .save-pub-unpub-sub-menu {
+  display:block;
+  text-align:right
+}
+.catalog-class-session-basic-addedit-form-container .admin-datagrid-add-btn-wrapper-container {
+  height:auto;
+  margin:0 auto;
+  position:relative;
+  text-align:center;
+  width:350px;
+  top:177px
+}
+#add-session-details .admin-addedit-session-details-wrapper label,
+#add-session-details .admin-addedit-session-details-wrapper #edit-session-name,
+#add-session-details .admin-addedit-session-details-wrapper #start_date, 
+#catalog-class-basic-addedit-form-container .ac_input {
+  float:left
+}
+#add-session-details .admin-addedit-session-details-wrapper #start_hours,#add-session-details .admin-addedit-session-details-wrapper #end_hours {
+  float:right
+}
+#add-session-details .admin-addedit-session-details-wrapper label {
+  width:130px
+}
+#add-session-details .admin-addedit-session-details-wrapper #edit-session-name {
+  width:301px;
+  font-size:13px
+}
+ #add-session-details .form-item-start-hours label, #add-session-details .form-item-end-hours label {
+  width:48px
+}
+#add-session-details .admin-addedit-session-details-wrapper #start_date,
+#add-session-details .admin-addedit-session-details-wrapper #start_hours,
+#add-session-details .admin-addedit-session-details-wrapper #end_hours {
+  width:107px;
+  float: left;
+}
+#add-session-details #meeting-type-addclassroom .admin-addedit-session-details-wrapper #start_date,
+#add-session-details #meeting-type-editclassroom .admin-addedit-session-details-wrapper #start_date {
+  width:113px
+}
+#meeting-type-addclassroom .admin-addedit-session-details-wrapper input.addedit-edit-datefield + img,
+#meeting-type-editclassroom .admin-addedit-session-details-wrapper input.addedit-edit-datefield + img {
+  left:245px
+}
+/*#add-session-details .addedit-edit-instructor_{
+  margin-right:-2px
+}*/
+#add-session-details #meeting-type-addothers .addedit-edit-instructor_, 
+#add-session-details #meeting-type-others .addedit-edit-instructor_,
+#add-session-details #meeting-type-editothers .addedit-edit-instructor_,
+#add-session-details #meeting-type-expmeeting .addedit-edit-instructor_,
+#add-session-details #meeting-type-addexpmeeting .addedit-edit-instructor_, 
+#add-session-details #meeting-type-editexp .addedit-edit-instructor_ {
+  width:283px
+}
+#catalog-class-basic-addedit-form-container .admin-datagrid-add-btn-wrapper-container a {
+  display:block;
+  margin-left:-8px
+}
+#catalog-class-basic-addedit-form-container .admin-datagrid-add-btn-wrapper-container a .admin-save-button-left-bg,
+#catalog-class-basic-addedit-form-container .admin-datagrid-add-btn-wrapper-container a .admin-save-button-middle-bg,
+#catalog-class-basic-addedit-form-container .admin-datagrid-add-btn-wrapper-container a .admin-save-button-right-bg {
+  margin-top:5px
+}
+#catalog-class-basic-addedit-form-container .admin-empty-text-msg {
+  padding-top:5px
+}
+#catalog-class-basic-addedit-form-container .admin-datagrid-session-with-addanother {
+  min-height:0
+}
+#catalog-class-basic-addedit-form-container .admin-datagrid-session-with-addanother .add_session_popup .add-session-popup-box {
+  position:relative;
+  width:90px;
+  margin:0 auto
+}
+#catalog-class-basic-addedit-form-container #admin-data-grid .session-details-fieldset-wrapper .addedit-form-cancel-container-actions,
+#catalog-class-basic-addedit-form-container #admin-data-grid .session-details-fieldset-wrapper .addedit-form-cancel-container-actions .admin-save-button-container {
+  margin-right:2px
+}
+#catalog-class-basic-addedit-form-container #admin-data-grid .session-details-fieldset-wrapper .session-add-another-popup-container {
+  float:left;
+  padding-top:10px
+}
+#catalog-class-basic-addedit-form-container .add_session_popup .admin-addedit-class-start-time .form-item {
+  position:relative
+}
+.catalog-class-session-basic-addedit-form-container .session-details-fieldset-wrapper .addedit-form-cancel-container-actions .add-custombtn-symbol {
+  color:#4686dd;
+  font-size:13px;
+  cursor:pointer;
+  float:left
+}
+#catalog-class-basic-addedit-form-container .admin-datagrid-pagination .admin-datagrid-session-with-addanother .ui-jqgrid .ui-jqgrid-bdiv {
+  margin-bottom:0
+}
+#catalog-class-basic-addedit-form-container .admin-datagrid-pagination .admin-datagrid-session-with-addanother .session-added-edit-link-text {
+  font-size:11px;
+  color:#FF7924;
+  cursor:pointer;
+  margin:0 3px;
+  float:left
+}
+#catalog-class-basic-addedit-form-container .session-edit-delete-icons {
+  padding:0;
+  float:left;	
+  width:2px;
+  margin-top:-2px
+}
+#catalog-class-basic-addedit-form-container .admin-datagrid-pagination .admin-datagrid-session-with-addanother .ui-jqgrid .ui-jqgrid-bdiv .ui-jqgrid-btable tr td .admin-pagination-action-link {
+  margin-left:0
+} 
+#add-session-details .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown {
+  /*margin-right:26px;*/
+  width:108px
+}
+#add-session-details .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDownClick {
+ width:110px
+}
+#add-session-details .admin-addedit-session-details-wrapper .form-item-session-attendee-url label {
+  width:90px
+}
+#add-session-details .admin-addedit-session-details-wrapper .form-item-session-presenter-url label {
+  width:94px
+}
+#add-session-details .admin-addedit-session-details-wrapper #session_presenter_url {
+  width:283px;
+  float: left;
+  /*margin-left:21px*/
+}	
+#add-session-details .admin-addedit-session-details-wrapper #session_attendee_url {
+  width:283px;
+  float: left;
+  /*margin-left:24px*/
+}	
+.admin-addedit-session-details-wrapper tr td .admin-session-from-container{
+  width:100px
+}
+#add-session-details .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown {
+  width:109px;
+  /*margin-right:12px*/
+  float: left;
+}
+#add-session-details #meeting-type-expmeeting .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDownClick {
+  width:109px;
+  /*margin-right:25px*/
+  float:left;
+}
+#add-session-details .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDownClick {
+  width:109px;
+  /*margin-right:13px*/
+  float:left;
+}
+#add-session-details #meeting-type-others .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDownClick {
+  width:109px;
+  /*margin-right:12px*/
+  float:left;
+}
+#add-session-details .admin-addedit-session-details-wrapper .form-item-session-attendee-url label {
+  width:91px
+}
+#add-session-details .admin-addedit-session-details-wrapper .form-item-session-presenter-url label {
+  width:94px
+}
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper #session_presenter_url {
+  width:283px;
+  /*margin-left:21px*/
+}	
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper #session_attendee_url {
+  width:283px;
+  /*margin-left:24px*/
+}	
+.admin-addedit-session-details-wrapper tr td .admin-session-from-container{
+  width:100px
+}
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-time-zone-list label {
+  width:83px
+}
+#add-session-details #meeting-type-webEx  .admin-addedit-session-details-wrapper .form-item-session-attende-password label {
+  width:134px
+}
+#add-session-details #meeting-type-webEx  .admin-addedit-session-details-wrapper #session_attende_password {
+	border:1px solid #7F9DB9;
+  width:107px;
+  /*margin-right:51px;*/
+  height:20px;
+  margin-bottom:2px; 
+  float: left;
+}
+#add-session-details #meeting-type-webEx  .admin-addedit-session-details-wrapper .form-item-session-presenter-password label {
+  width:134px
+}
+#add-session-details #meeting-type-webEx  .admin-addedit-session-details-wrapper #session_presenter_password{
+  width:107px;
+  /*margin-right:51px;*/ 
+  height:20px;
+  float: left;
+}
+#add-session-details #meeting-type-webEx .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown {
+  width:110px;
+  /*margin-left:13px;*/
+  height:23px;
+  float: left
+}
+#add-session-details #meeting-type-webEx  .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDownClick {
+  width:110px;
+  float: left;
+  /*margin-left:14px*/
+}
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-start-date label {
+  width:135px
+}
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-session-name label {
+  width:133px
+}
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .admin-addedit-class-instructor-name label {
+  width:80px
+}
+#add-session-details #meeting-type-webEx .admin-addedit-class-instructor-name .addedit-edit-ac-textfield {
+  width:47%
+}
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-session-meeting-id label {
+  width:77px
+}
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper #edit-session-name {
+  width:349px
+}
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper #session_meeting_id {
+	border:1px solid #7F9DB9;
+	width:107px;	
+	/*margin-right:-4px;*/
+	height:20px;
+	float: left
+}
+#add-session-details #meeting-type-webEx input.addedit-edit-datefield + img {
+  left:303x
+} 
+#catalog-class-basic-addedit-form-container .admin-datagrid-pagination .admin-datagrid-session-with-addanother .session-meeting-details {
+  font-size:11px;
+  color:#4686DD;
+  cursor:pointer
+}
+.add-another-arrow-link {
+  text-decoration:none;
+  width:12px;
+  height:16px;
+  float:right;
+  cursor:pointer;
+  margin:4px 20px 0 0;
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif") no-repeat right -1493px
+}
+.catalog-class-session-basic-addedit-form-container .session-details-fieldset-wrapper .addedit-form-cancel-container-actions .add-another-arrow-link {
+  color: #4686DD;
+  cursor:pointer;
+  float:right;
+  font-size:11px
+}
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-time-zone-list label {
+  width:115px
+}
+#add-session-details #meeting-type-others   .crt-paint-timezone .ctrDropDown {
+	/*margin-right:23px*/
+}
+#add-session-details #meeting-type-others  .crt-paint-timezone .ctrDropDownClick {
+	/*margin-right:23px*/
+}
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-time-zone-list label {
+  width:115px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-session-attende-password label {
+  width:136px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-session-presenter-password label {
+  width:136px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-session-name label {
+  width:134px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-start-date label {
+  width:136px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-time-zone-list label {
+  width:136px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-session-meeting-id label {
+  width:77px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .admin-addedit-class-instructor-name label {
+  width:78px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #edit-session-name {
+  width:348px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_meeting_id {
+  margin-right:-4px;
+  width:106px
+}
+#add-session-details #meeting-type-editwebex input.addedit-edit-datefield + img {
+  left:244px;
+  top:56px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_attende_password {
+  /*margin-right:30px;*/
+  width:106px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_presenter_password {
+  /*margin-right:30px;*/
+  width:106px
+}
+#meeting-type-expmeeting .admin-addedit-session-details-wrapper .exp-timepicker-selection {
+  left:70px
+}
+#meeting-type-webEx .admin-addedit-session-details-wrapper .exp-timepicker-selection {
+  left:116px
+}
+#meeting-type-others .admin-addedit-session-details-wrapper .exp-timepicker-selection {
+  left:70px
+}
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label {
+  width:115px
+}
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label {
+  width:113px
+}
+
+/*#add-session-details  #meeting-type-editexp  .admin-addedit-session-details-wrapper .form-item-time-zone-list label {
+  width:115px
+}*/
+#add-session-details #meeting-type-editclassroom .admin-addedit-session-details-wrapper label {
+  line-height:11px
+}
+.session-details-fieldset-wrapper .ui-jqgrid tr.jqgrow td {
+  overflow:visible
+}
+#meeting-type-editwebex .admin-addedit-session-details-wrapper .exp-timepicker-selection {
+  left:116px
+}
+#meeting-type-editexp .admin-addedit-session-details-wrapper .exp-timepicker-selection ,
+#meeting-type-editothers .admin-addedit-session-details-wrapper .exp-timepicker-selection{
+  left:70px
+}
+#catalog-class-basic-addedit-form-container .session-list-ul .add-more-session-list{
+  width:150px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper #edit-session-name {
+  width:350px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-session-attende-password label {
+  width:134px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-session-presenter-password label {
+  width:134px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-time-zone-list label {
+  width:87px
+}
+#add-session-details #meeting-type-addwebEx  .admin-addedit-session-details-wrapper #session_attende_password {
+  width:106px;
+  /*margin-right:27px*/
+}
+#add-session-details #meeting-type-addwebEx  .admin-addedit-session-details-wrapper #session_presenter_password{
+  width:106px;
+  /*margin-right:27px*/
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown {
+  width:109px;
+  /*margin-left:47px*/
+}
+#add-session-details #meeting-type-addwebEx  .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDownClick {
+  width:109px;
+  /*margin-left:0px*/
+  float: left;
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-start-date label {
+  width:134px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-session-name label {
+  width:132px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .admin-addedit-class-instructor-name label {
+  width:73px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-session-meeting-id label {
+  width:70px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-class-instructor-name .addedit-edit-ac-textfield {
+  width:107px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper #session_meeting_id {
+  width:107px;	
+  /*margin-left:4px*/
+  float: left
+}
+#add-session-details #meeting-type-addwebEx input.addedit-edit-datefield + img {
+  left:302px
+}
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label {
+  width:115px
+}
+#catalog-class-basic-addedit-form-container .session-list-ul .admin-save-button-middle-bg {
+  padding-right:4px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .exp-timepicker-selection {
+  left:116px
+}
+#add-session-details #meeting-type-addexpmeeting .admin-addedit-session-details-wrapper .exp-timepicker-selection ,
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .exp-timepicker-selection{
+  left:70px
+}
+#add-session-details .exp-timepicker-selection li{
+  width:88px
+}
+.add_session_button_div{
+  height:22px;    
+  padding-left:75px;    
+  width:247px;
+  margin: 0 auto;
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .admin-addedit-class-instructor-name .ac_input {
+  /*margin-left:7px*/
+}
+/*#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_meeting_id {
+  margin-left:3px
+}*/
+#catalog-course-basic-addedit-form-container #admin-data-grid .ui-jqgrid .ui-icon-asc{
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -117px -14px
+}
+#catalog-course-basic-addedit-form-container #admin-data-grid .ui-jqgrid .ui-icon-desc{
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -117px -30px
+}
+#catalog-class-addedit-form-details .admin-pagination-search-go{
+  float:left
+}
+.catalog-class-basic-addedit-form-disp .dropdownadd-dd-list-arrow{
+  top:-9px
+}
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container #admin-data-grid .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr .admin-addedit-session-details-wrapper td{
+  line-height:21px;
+}
+#add-session-details #meeting-type-addexpmeeting .admin-addedit-class-time-zone .ctrDropDown,
+#add-session-details #meeting-type-addwebEx .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper #session_attende_password,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper #session_meeting_id, 
+#add-session-details #meeting-type-webEx  .admin-addedit-session-details-wrapper #session_presenter_password,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper #session_meeting_id,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper #session_presenter_password,
+#add-session-details .admin-addedit-session-details-wrapper #session_attendee_url,
+#add-session-details .admin-addedit-session-details-wrapper #session_presenter_url,
+#add-session-details .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_attende_password,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_presenter_password,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_meeting_id {
+  border:1px solid #7F9DB9
+}
+#add-session-details #meeting-type-addexpmeeting .admin-addedit-class-time-zone .ctrDropDownClick,
+#add-session-details #meeting-type-addwebEx .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDownClick,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper #session_attende_password,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper #session_meeting_id, 
+#add-session-details #meeting-type-webEx  .admin-addedit-session-details-wrapper #session_presenter_password,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper #session_meeting_id,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper #session_presenter_password,
+#add-session-details .admin-addedit-session-details-wrapper #session_attendee_url,
+#add-session-details .admin-addedit-session-details-wrapper #session_presenter_url,
+#add-session-details .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDownClick,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_attende_password,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_presenter_password,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_meeting_id {
+  border:1px solid #7F9DB9
+}
+#add-session-details #meeting-type-others .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDownClick {
+  /*margin-right:25px*/
+}
+#add-session-details #meeting-type-others  .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown {
+  /*margin-right:25px*/
+}
+#add-session-details #meeting-type-expmeeting .admin-addedit-class-time-zone .ctrDropDown {
+  /*margin-right:25px*/
+}
+
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .admin-addedit-class-instructor-name .ac_input,
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .admin-addedit-class-time-zone .ctrDropDown,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .admin-addedit-class-time-zone .ctrDropDown,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_attende_password,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_presenter_password,
+#add-session-details #meeting-type-editexp .admin-addedit-session-details-wrapper .ctrDropDown {
+  margin-left:0
+}
+/*#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .admin-addedit-class-instructor-name .ac_input,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .admin-addedit-class-instructor-name .ac_input {
+  margin-left:2px
+}*/
+#enroll-user-completion-date-popup,
+#enroll-user-registration-date-popup {
+  margin-right:19px;
+  margin-top:10px
+}
+.session-add-another-popup-container .bottom-qtip-tip-up {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -10px -1413px;
+  height:41px;
+  width:64px;
+  z-index:100
+}
+.chosen-meeting-type{
+  color:#4686DD;
+  line-height: 23px;
+  font-size:12px
+}
+#more-wrapper-div{
+  position:relative;
+  right:-4px
+}
+.enrolluser-class-grid-wrapper .addedit-form-cancel-and-save-actions-row .enrolluser-save-cancel-btn-container{
+  margin-right:18px;
+  width:115px
+}
+.enrolluser-class-grid-wrapper .enroll-edit-save-cancel-btn{
+  width:100%
+}
+#admin_list_values_container .enrolluser-class-grid-wrapper .enroll-edit-save-cancel-btn .catalog-pub-add-list{
+  right:17px
+} 
+#catalog-class-basic-addedit-form-container #admin-data-grid .admin-datagrid-session-with-addanother .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-next{
+  margin-right:-6px
+}	
+.session-add-another-popup-container #bubble-face-table #show_expertus_message{
+  min-height:7px
+}
+#tag_hideshow .ac_input,
+#location_hideshow .ac_input {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% 3px
+}
+#tag_hideshow input.ac_loading,
+#location_hideshow input.ac_loading {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% -17px
+} 
+body.page-administration-learning-catalog .qtip {
+  margin-left:14px
+}
+#catalog-class-basic-addedit-form-container .assess-attach-grid-wrapper .enrolled-status ul.sub-menu li,
+#catalog-class-basic-addedit-form-container .survey-attach-grid-wrapper .enrolled-status ul.sub-menu li {
+  text-align:center
+}
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .admin-addedit-class-start-time,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .admin-addedit-class-start-time,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .admin-addedit-class-start-time {
+	width: 42%;
+}
+
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-session-name label, 
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-start-date label,
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-time-zone-list label,
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-session-attende-password label,
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-session-presenter-password label,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-session-name label, 
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-start-date label,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-time-zone-list label,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-session-attende-password label,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-session-presenter-password label,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-session-name label, 
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-start-date label,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-time-zone-list label,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-session-attende-password label,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-session-presenter-password label    {
+	width: 190px;
+}
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-start-hours label,
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-end-hours label,
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-session-meeting-id label,
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-start-hours label,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-end-hours label,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-session-meeting-id label,
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-start-hours label,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-end-hours label,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-session-meeting-id label,
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label {
+	width: 115px;
+}
+
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-session-name label, 
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-start-date label,
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-time-zone-list label,
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-session-attendee-url label,
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-session-presenter-url label,
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label,
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-session-name label, 
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-start-date label,
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-time-zone-list label,
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-session-attendee-url label,
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-session-presenter-url label,
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label,
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-session-name label, 
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-start-date label,
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-time-zone-list label,
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-session-attendee-url label,
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-session-presenter-url label,
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label {
+	width: 140px;
+}
+#add-session-details .form-item-start-hours label, 
+#add-session-details .form-item-end-hours label {
+	width: 69px;
+}
+#add-session-details #meeting-type-classroom .form-item-start-hours label, 
+#add-session-details #meeting-type-classroom .form-item-end-hours label,
+#add-session-details #meeting-type-addclassroom .form-item-start-hours label, 
+#add-session-details #meeting-type-addclassroom .form-item-end-hours label,
+#add-session-details #meeting-type-editclassroom .form-item-start-hours label, 
+#add-session-details #meeting-type-editclassroom .form-item-end-hours label{
+    width: 58px;
+}
+#add-session-details #meeting-type-webEx  .admin-addedit-session-details-wrapper input.addedit-edit-datefield + img,
+#add-session-details #meeting-type-editwebex  .admin-addedit-session-details-wrapper input.addedit-edit-datefield + img { 
+	left: 302px 
+}
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper input.addedit-edit-datefield + img,
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper input.addedit-edit-datefield + img {
+	left: 247px 
+}
+#meeting-type-expmeeting .admin-addedit-session-details-wrapper .admin-addedit-class-start-time,
+#meeting-type-addexpmeeting .admin-addedit-session-details-wrapper .admin-addedit-class-start-time,
+#meeting-type-editexp .admin-addedit-session-details-wrapper .admin-addedit-class-start-time {
+    width: 39%;
+}
+#meeting-type-expmeeting .admin-addedit-session-details-wrapper .admin-session-date-container,
+#meeting-type-addexpmeeting .admin-addedit-session-details-wrapper .admin-session-date-container,
+#meeting-type-editexp .admin-addedit-session-details-wrapper .admin-session-date-container {
+	width: 54%;
+}
+#add-session-details #meeting-type-expmeeting .admin-addedit-session-details-wrapper #edit-session-name, 
+#add-session-details #meeting-type-expmeeting .admin-addedit-session-details-wrapper #edit-session-details-name-instructor-,
+#add-session-details #meeting-type-addexpmeeting .admin-addedit-session-details-wrapper #edit-session-name, 
+#add-session-details #meeting-type-addexpmeeting .admin-addedit-session-details-wrapper #edit-session-details-name-instructor-,
+#add-session-details #meeting-type-editexp .admin-addedit-session-details-wrapper #edit-session-name, 
+#add-session-details #meeting-type-editexp .admin-addedit-session-details-wrapper #edit-session-details-name-instructor- {
+	width: 301px;
+}
+#meeting-type-others .admin-addedit-session-details-wrapper .admin-addedit-class-start-time,
+#meeting-type-addothers .admin-addedit-session-details-wrapper .admin-addedit-class-start-time,
+#meeting-type-editothers .admin-addedit-session-details-wrapper .admin-addedit-class-start-time {
+    width: 39%;
+}
+#meeting-type-others .admin-addedit-session-details-wrapper .admin-session-date-container,
+#meeting-type-addothers .admin-addedit-session-details-wrapper .admin-session-date-container,
+#meeting-type-editothers .admin-addedit-session-details-wrapper .admin-session-date-container {
+    width: 54%;
+}
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper #edit-session-name, 
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper #edit-session-details-name-instructor-,
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper #session_attendee_url,
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper #session_presenter_url,
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper #edit-session-name, 
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper #edit-session-details-name-instructor-,
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper #session_attendee_url,
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper #session_presenter_url,
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper #edit-session-name, 
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper #edit-session-details-name-instructor-,
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper #session_attendee_url,
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper #session_presenter_url  {
+	width: 291px;
+}
+
+
+
+/*! Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	#catalog-class-basic-addedit-form-container .enroll-date-input-txtBox + img {
+	  right:95px;
+	  margin-top:3px
+	}
+	#catalog-class-basic-addedit-form-container .enroll-date-input-txtBox {
+	  margin-top:3px;
+	  width:83px
+	}
+  #tab-content-main #catalog-class-basic-addedit-form-container .enroll-date-input-txtBox + img {
+	  right:95px;
+	  margin-top:8px
+	}
+	.catalog-class-session-basic-addedit-form-container .session-details-fieldset-wrapper .addedit-form-cancel-container-actions .add-custombtn-symbol {
+	  float:none  
+	}
+	.catalog-class-session-basic-addedit-form-container .session-details-fieldset-wrapper .addedit-form-cancel-container-actions .add-custombtn-symbol {
+	  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -169px -686px
+	}
+	.session-add-another-popup-container #bubble-face-table #show_expertus_message{
+	  min-height:0
+	}
+	.admin-addedit-class-instructor-name .addedit-edit-ac-textfield {
+	  width:43%
+	}
+	.admin-addedit-session-details-wrapper .admin-addedit-class-start-time {
+	  width:39%
+	}
+	#add-session-details #meeting-type-webEx .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown {
+	  height:23px	
+	}
+	#more-wrapper-div {
+	  right:-3px;
+	  top:-1px
+	}
+	#catalog-class-basic-addedit-form-container .session-edit-delete-icons {
+	  margin-top:-1px
+	}
+}

@@ -1,0 +1,605 @@
+.multi-class-container-cls{
+  width:700px;
+  background:#FFFFFF;
+  height: 290px;
+  overflow:hidden
+}
+#multi-class-container .title_close {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat right -1421px;
+  height: 14px;
+  margin:0 2px 0 1px;
+  float:left;
+  width:12px;
+  text-decoration:none
+}
+#multi-class-container .title_open {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat right -1494px;
+  height: 14px;
+  margin-left:1px;
+  margin: 0 5px 0 1px;
+  float:left;
+  width:9px;
+  text-decoration:none
+}
+#multi-select-class-wrapper #multi-container-pop-up .jspContainer .jspPane{
+	left: 0px;
+}
+.page-administration-learning-program #multi-class-container .lp-reg-class-title-iltvc {
+  max-width:290px;
+}
+.page-administration-learning-program #multi-class-container .iltvc-select-class .limit-title {
+    color: #333333;
+    font-family: proximanovabold;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: left;
+    text-transform: uppercase;
+}
+.page-administration-learning-program #multi-class-container .lp-reg-class-title {
+	max-width:600px;
+}
+#multi-class-container .lp-reg-class-title {
+  color: #333333;
+  font-family: proximanovabold;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: left;
+  text-transform: uppercase
+}
+.page-administration-learning-program #multi-class-container .iltvc-select-class limit-title{
+	max-width:290px;
+}
+.page-administration-learning-program  #multi-class-container .course-info {
+	float:left;
+	width:100%
+}
+/*.page-administration-learning-program #multi-class-container .sub-course-class{
+	margin-left:15px
+}*/
+#multi-class-container .course-info {
+  width:580px;
+  text-align:left;
+  color:#333333
+}
+#multi-class-container .course-level,
+#multi-class-container .class-level{
+  padding-left:15px;
+  padding-bottom: 5px;
+}
+.enroll-show-morecourse .class-details-info .sub-course-class .cls-description{
+ border-bottom: 0;
+}
+#multi-class-container .class-details-info {
+  width:100%
+}
+#multi-class-container .enroll-show-morecourse {
+  margin-left:1px
+}
+#multi-class-container .enroll-show-morecourse tr td div.set-height-column-right{
+  padding-bottom:6px
+}
+#bubble-face-table .multi-class-container-cls tr td {
+  height:auto
+} 
+#multi-class-container .enroll-show-morecourse tr td {
+  padding:0;
+  color:#666666;
+  height:auto;
+  vertical-align:middle
+}
+#multi-class-container .enroll-show-morecourse tr td.course-sub-class-detail {
+  padding-top:0;
+  padding-bottom: 3px
+}
+#multi-class-container .pipeline {
+  color: #999999;
+  margin: 0 2px
+}
+#multi-class-container .item-title-code {
+  padding-top:4px;
+  font-size:13px;
+  color:#999999
+}
+#multi-class-container .course-desc-info {
+  color:#666666;
+  padding:6px 0 9px 0;
+  font-size:13px
+}
+/*! Sub level Style*/
+#multi-class-container .class-level .class-details-info {
+  font-size:13px;
+  border-bottom:1px solid #EDEDED
+}
+#multi-class-container .class-level .course-delivery-info {
+  clear: both;
+  margin-left: 16px;
+  padding-bottom: 5px;
+  width:100%
+}
+#multi-class-container .class-level .course-detail-col1,
+#multi-class-container .class-level .course-detail-col2 {
+  width:45%;
+ /* padding-top:5px*/
+}
+#multi-class-container .class-level .course-detail-col2{
+  padding-top:0	
+}
+#multi-class-container .class-level .course-detail-col3 {
+  width:5%;
+  padding-top:5px  
+}
+#multi-class-container .class-level .course-detail-col3 input[type="radio"]{
+ vertical-align:top	
+}
+#multi-class-container .lp-course-class-list-accord {
+  width:100%;
+  height:120px
+}
+#multi-class-container .set-height-column-left {
+  float:left;
+  display:block
+}
+#multi-class-container .set-height-column-right {
+  border-bottom:0;
+  width:97%;
+  float:left
+}
+#multi-class-container .class-details-info .cls-description {
+ /* border-bottom:1px solid #cccccc;*/
+  color:#666666;
+  font-size:13px
+}
+/*! Class Session Detail style VJ*/
+#multi-class-container .cls-description .sessionDet {
+  width:100%;
+  clear: both;
+  padding-bottom: 2px;
+  padding-top: 7px;
+  float:left
+}
+#multi-class-container .cls-description .sessName {
+  float:left;
+  width:40%
+}
+#multi-class-container .cls-description .sessDay {
+  float:left;
+  width:5%
+}
+#multi-class-container .cls-description .sessDate {
+  float:left;
+  width:55%
+}
+#multi-class-container .cls-description .cls-lang {
+  padding-top:8px;
+  clear:both
+}
+#multi-class-container .cls-description .enroll-loc-details {
+  /*margin-top:5px*/
+  width: 100%;
+}
+#multi-class-container .enroll-loc-details .enroll-location-text {
+  padding-bottom:5px
+}
+#multi-class-container .cls-description .time-zone-text,
+#multi-class-container .time-zone-text {
+  font-size:10px
+}
+#multi-class-container .no-item-found {
+  color:#999999;
+  font-size:12px;
+  text-align:center;
+  padding-bottom:5px
+}
+#multi-class-container .class-level .sub-course-class .cls-description {
+  padding-bottom:8px;
+  display:block
+}
+/* MULTI COURSE REGISTER IN ENROLLMENT TAB WRITTEN BY VIJAY */
+#multi-class-container {
+  left: -598px;
+  position: absolute;
+  top: -397px;
+  z-index: 1000
+}
+#multi-class-container .tp-bubble-popup-multi-register {
+  position:relative;
+  height:350px
+}
+.bubble-qtip-button-close {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/bubble_close.png") no-repeat 0 21px;
+  height: 40px;
+  position: absolute;
+  right: -5px;
+  top: -16px;
+  width: 20px;
+  cursor:pointer
+}
+#multi-class-container .qtip-tip {
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  margin: 0 auto;
+  line-height: 0.1px;
+  font-size: 1px;
+  bottom: -29px;
+  right: 20px;
+  visibility: visible
+}
+#multi-class-container .multi-select-class-wrapper {
+  font-size:13px;
+  color:#333333;
+  height:310px
+}
+#multi-class-container .bubble-c .addedit-form-cancel-container-actions {
+  margin-right:0;
+  font-size:13px
+}
+#multi-class-container .addedit-form-cancel-container-actions .white-btn-bg-right{
+  padding-left:10px
+}	
+#multi-class-container .bubble-c .addedit-form-cancel-container-actions .admin-action-button-middle-bg {
+  padding-right:10px
+}
+.scroll-pane {
+  width: 100%;
+  height: 290px;
+  overflow: hidden
+}
+.horizontal-only {
+  height: auto;
+  max-height: 200px
+}
+.jspContainer {
+  overflow: hidden;
+  position: relative
+}
+.jspPane {
+  position: absolute
+}
+.jspVerticalBar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 9px;
+  height: 100%;
+  background: #ffffff
+}
+.jspHorizontalBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: #ffffff;
+  visibility:hidden
+}
+.jspVerticalBar *,
+.jspHorizontalBar * {
+  margin: 0;
+  padding: 0
+}
+.jspCap {
+  display: none
+}
+.jspHorizontalBar .jspCap {
+  float: left
+}
+.page-administration-learning-program #multi-class-container .assn-lrn-left-sec,
+.page-administration-learning-program #multi-class-container .assn-lrn-right-sec {
+	float: left;
+    display: block;
+    font-family: openSansRegular, Arial; 
+    font-size: 12px; 
+}
+.page-administration-learning-program #multi-class-container .assn-lrn-left-sec-ses{
+	width:100%;
+	float: left;
+    display: block;
+    font-family: openSansRegular, Arial; 
+    font-size: 12px;
+    font-weight: bold;
+}
+.page-administration-learning-program #multi-class-container .assn-lrn-left-sec { width: 20%; font-weight: bold; }
+.page-administration-learning-program #multi-class-container .assn-lrn-right-sec { width: 80%; }
+#multi-class-container .jspTrack {
+  height:288px
+} 
+.jspTrack {
+  position: relative
+}
+.jspTrack:hover {
+  background: #f6f6f6;
+  border:1px solid #d4d4d4;
+  position: relative
+}
+.jspDrag {
+  background: #cbcbcb;
+  border-left:1px solid #b7b7b7;
+  border-right:1px solid #cbcbcb;
+  border-top:1px solid #cbcbcb;
+  border-bottom:1px solid #cbcbcb;
+  position: relative;
+  top: 0;
+  left: 0;
+  cursor: pointer
+}
+.jspDrag:hover {
+  background: #939393;
+  border:1px solid #646464;
+  position: relative;
+  top: 0;
+  left: 0;
+  cursor: pointer
+}
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag {
+  float: left;
+  height: 100%
+}
+.jspArrow {
+  background: #50506d;
+  text-indent: -20000px;
+  display: block;
+  cursor: pointer
+}
+.jspArrow.jspDisabled {
+  cursor: default;
+  background: #80808d
+}
+.jspVerticalBar .jspArrow {
+  height: 10px
+}
+.jspHorizontalBar .jspArrow {
+  width: 16px;
+  float: left;
+  height: 100%
+}
+.jspVerticalBar .jspArrow:focus {
+ outline: none
+}
+.jspCorner {
+  background: #eeeef4;
+  float: left;
+  height: 100%
+}
+.enroll-show-morecourse,
+.lnr-tainingplan-register,
+.lp-course-class-list-accord {
+  width:99%;
+  height:auto
+}
+.set-height-column-right {
+  border-bottom: 0
+} 
+/*! fix for ticket 0024169 */
+.section-administration .catalog-course-basic-addedit-form-container .exportcontainer-page-pipe-delimter {
+  border-left: 0	
+}
+#page-container #program-tp-basic-addedit-form-container .exportcontainer-page .page-pipeline {
+  top: 3px;	
+  right: -4px
+}
+#program-tp-basic-addedit-form-container .exportcontainer-page .page-pipeline {
+  top: 0;	
+  right: -6px
+}
+#multi-select-class-wrapper .enroll-show-morecourse .fade-out-title-container.tp-view-module-title {
+  max-width:640px;
+  display:inline-block;
+  margin-bottom:-8px 
+}
+.page-administration-learning-program #multi-select-class-wrapper .enroll-show-morecourse .fade-out-title-container.tp-view-class-sessiondate {
+	max-width:300px;
+}
+.page-administration-learning-program #multi-select-class-wrapper .limit-title-row {
+    max-width: 100%;
+    text-align: justify;
+    float:none
+}
+#multi-select-class-wrapper .enroll-show-morecourse .fade-out-title-container.tp-view-course-title {
+  max-width:640px;
+  display:list-item;
+  margin-bottom:-8px
+}
+#multi-select-class-wrapper .enroll-show-morecourse .item-title-code .fade-out-title-container.tp-view-course-code {
+  max-width:240px;
+  display:inline-block;
+  margin-bottom:-8px;
+  line-height:18px 
+}
+#multi-select-class-wrapper .enroll-show-morecourse .fade-out-title-container.tp-view-class-code {
+  max-width:240px;
+  display:inline-block;
+  margin-bottom:-8px;
+  line-height:18px    
+}
+#multi-select-class-wrapper .enroll-show-morecourse .course-sub-class-detail .fade-out-title-container.tp-view-class-title {
+  max-width:350px;
+  display:inline-block;
+  margin-bottom:-8px 
+}
+#multi-class-container #multi-select-class-wrapper .admin-tp-cls-session-title{
+	max-width: 250px;
+}
+#multi-class-container #multi-select-class-wrapper .enroll-show-morecourse .class-level .course-sub-class-detail .course-detail-col1 {
+  width:50%
+}
+#multi-class-container #multi-select-class-wrapper .enroll-show-morecourse .class-level .course-sub-class-detail .course-detail-col2 {
+  width:45%
+}
+#multi-select-class-wrapper .enroll-show-morecourse .course-sub-class-detail .fade-out-title-container.tp-view-class-title-new{
+	max-width:290px
+}
+.page-administration-learning-program #multi-select-class-wrapper .tp-view-course-access,
+.page-administration-learning-program #multi-select-class-wrapper .tp-view-course-reg{
+  display:inline-block;
+}
+.tp-register-select-class-crs-title {
+	width:89%;
+}
+#page-container #narrow-search-results-holder #multi-select-class-wrapper .assignlearn-tp-cls-session-title{
+	max-width:250px
+}
+#page-container #narrow-search-results-holder #multi-select-class-wrapper .ui-widget-content > td{
+     padding:12px 0 11px 0px
+}
+
+
+
+
+
+
+
+#multi-container-pop-up .jspTrack{
+  max-height:88px;
+}
+#multi-container-pop-up .scroll-pane {
+  width:100%;
+  height:450px;
+  overflow:hidden
+}
+#multi-container-pop-up .horizontal-only {
+  height:auto;
+  max-height:200px
+}
+#multi-container-pop-up .jspContainer {
+  overflow:hidden;
+  position:relative
+}
+#multi-container-pop-up .jspPane {
+  position:absolute
+}
+#multi-container-pop-up .jspVerticalBar, .jspVerticalBar {
+  position:absolute;
+  top:0;
+  right:0;
+  width:6px;
+  height:100%;
+  background:#fff
+}
+#multi-container-pop-up .jspHorizontalBar {
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:8px;
+  background:#fff;
+  visibility:hidden
+}
+#multi-container-pop-up .jspVerticalBar *, #multi-container-pop-up .jspHorizontalBar * {
+  margin:0;
+  padding:0
+}
+#multi-container-pop-up .jspCap {
+  display:none
+}
+.jspHorizontalBar .jspCap {
+  float:left
+}
+#multi-container-pop-up .jspTrack {
+  height:288px
+}
+.jspTrack {
+  position:relative
+}
+#lnr-tainingplan-register .jspHorizontalBar {
+  display:none
+} 
+#multi-container-pop-up .jspTrack:hover {
+  background:#f6f6f6;
+  border:1px solid #d4d4d4;
+  position:relative
+}
+#multi-container-pop-up .jspDrag {
+  background:#cbcbcb;
+  border:1px solid #cbcbcb;
+  border-left:1px solid #b7b7b7;
+  position:relative;
+  top:0;
+  left:0;
+  cursor:pointer
+}
+#multi-container-pop-up .jspDrag:hover {
+  background:#939393;
+  border:1px solid #646464;
+  position:relative;
+  top:0;
+  left:0;
+  cursor:pointer
+}
+#multi-container-pop-up .jspHorizontalBar .jspTrack, #multi-container-pop-up .jspHorizontalBar .jspDrag {
+  float:left;
+  height:100%
+}
+#multi-container-pop-up .jspArrow {
+  background:#50506d;
+  text-indent:-20000px;
+  display:block;
+  cursor:pointer
+}
+#multi-container-pop-up .jspArrow.jspDisabled {
+  cursor:default;
+  background:#80808d
+}
+#multi-container-pop-up .jspVerticalBar .jspArrow {
+  height:10px
+}
+#multi-container-pop-up .jspHorizontalBar .jspArrow {
+  width:16px;
+  float:left;
+  height:100%
+}
+#multi-container-pop-up .jspVerticalBar .jspArrow:focus {
+  outline:none
+}
+#multi-container-pop-up .jspCorner {
+  background:#eeeef4;
+  float:left;
+  height:100%
+}
+
+
+
+
+
+/*! Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.section-administration .catalog-course-basic-addedit-form-container .exportcontainer-page {
+  margin-top: -22px;
+  right: 57px
+}
+.section-administration .addedit-left-col #program-tp-basic-addedit-form-disp .exportcontainer-page {
+  margin-top: -33px
+}
+.section-administration .addedit-left-col #program-tp-basic-addedit-form-disp .exportcontainer-page .page-pipeline {
+  top: 1px;	
+  right: -6px	
+}
+#multi-select-class-wrapper .enroll-show-morecourse .fade-out-title-container.tp-view-course-title {
+  display : inline-block;
+}
+#page-container #narrow-search-results-holder #multi-select-class-wrapper .ui-widget-content > td{
+     padding:12px 0 11px 0px
+}
+}
+/*safari hack Start*/
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0), not all and (min-resolution:.001dpcm) { @media { _:-webkit-full-screen,
+	#multi-select-class-wrapper .enroll-show-morecourse .item-title-code .fade-out-title-container.tp-view-course-code,
+	#multi-select-class-wrapper .enroll-show-morecourse .fade-out-title-container.tp-view-class-code {
+	  margin-bottom:0 
+	}
+	#multi-class-container .class-level .course-detail-col3 input[type="radio"]{
+      margin:4px 0 0 5px	
+    }
+    #multi-select-class-wrapper .enroll-show-morecourse .course-sub-class-detail .fade-out-title-container.tp-view-class-title{
+      margin-bottom:0 
+    }
+    #multi-class-container .class-level .course-detail-col1{
+      padding-top:0
+    }
+}}
+/*safari hack End*/
+/*Viswanathan added for #70429*/
+.page-administration-learning .multiple-certificate-display #certificate-display-table{
+	max-height:300px;
+}

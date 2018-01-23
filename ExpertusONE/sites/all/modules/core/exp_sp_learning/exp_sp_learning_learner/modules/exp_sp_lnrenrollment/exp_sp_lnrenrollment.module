@@ -1,0 +1,1492 @@
+<?php
+/**
+ * Implementation of hook_init().
+ */
+function exp_sp_lnrenrollment_init() {
+	try{
+  global $user;
+  // add session variable to javascript
+  drupal_add_js(array('exp_sp_lnrenrollment' => array('ecommerce_enabled' => $_SESSION['availableFunctionalities']->exp_sp_commerce)), 'setting');
+  if((arg(1) == 'enrollment-search') && ($user->uid==0)) {
+    $query = array('destination' => "learning/enrollment-search");
+    drupal_goto('/', array('query' => $query));
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_lnrenrollment_init', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+/**
+ * Implementation of hook_block_info().
+ */
+function exp_sp_lnrenrollment_block_info() {
+	try{
+  $blocks = array();
+ // if(mylearningpageCustomization()){
+  	 $blocks['tab_my_enrollment_customized'] = array(
+  			'info' => t('My Enrollments Customized'),
+  			'cache' => DRUPAL_CACHE_PER_ROLE,
+  			'visibility' => BLOCK_VISIBILITY_LISTED,
+  			'pages' => 'learning/enrollment-search
+    								widget/enrollment-search'
+  	); 
+ // }else{
+  	$blocks['tab_my_enrollment'] = array(
+  			'info' => t('My Enrollments'),
+  			'cache' => DRUPAL_CACHE_PER_ROLE,
+  			'visibility' => BLOCK_VISIBILITY_LISTED,
+  			'pages' => 'learning/enrollment-search
+    								widget/enrollment-search'
+  	);
+ // }
+  
+  /*
+   * @TODO : below logic can be used for certification display.
+   */
+  return $blocks;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_lnrenrollment_block_info', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_lnrenrollment_menu() {
+	try{
+  $items = array();
+  
+   $items['learning/enrollment-search/all'] = array(
+    'title' => 'Search Catalog',
+    'page callback' => 'getEnrollSearchResults',
+    'access arguments' => array('expertus learner'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  $items['learning/enrollment-launch-details/%/%/%'] = array(
+   		'title' => 'Launch Details',
+   		'page callback' => 'getAllLaunchContentDetails',
+   		'page arguments' => array(2,3,4),
+   		'access arguments' => array('expertus learner'),
+   		'type' => MENU_CALLBACK,
+   		'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  $items['ajax/enroll-status/%'] = array (
+    'title' => 'Get enroll status for registered user',
+    'page callback' => 'getEnrollStatus',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  $items['ajax/drop-enroll/%/%/%/%/%/%/%'] = array (
+    'title' => 'Drop enrollment',
+    'page callback' => 'getDropEnrollment',
+    'page arguments' => array(2,3,4,5,6,7,8),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_lnrenrollment.inc'
+  );
+   $items['ajax/get-droppolicy/%/%/%/%/%/%/%'] = array (
+    'title' => 'Get Drop policy',
+    'page callback' => 'getDropPolicy',
+    'page arguments' => array(2,3,4,5,6,7,8),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  $items['learning/enrollment-search'] = array(
+    'title' => 'Search enrollment',
+    'page callback' => 'empty_value',
+    'access arguments' => array('expertus learner'),
+    'type' => MENU_CALLBACK
+  );
+  $items['ajax/update-launch/%'] = array (
+    'title' => 'Update Launch',
+    'page callback' => 'updateLaunch',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_launch.inc'
+  );
+  $items['ajax/class-option/%'] = array (
+    'title' => 'Class option',
+    'page callback' => 'getClassOption',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  $items['ajax/switch-enroll/%/%'] = array (
+    'title' => 'Switch enrollment',
+    'page callback' => 'getSwitchEnrollment',
+    'page arguments' => array(2,3),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+    'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  $items['ajax/compliance-class-cnt/%/%/%/%'] = array (
+ 		'title' => 'compliance class count',
+ 		'page callback' => 'single_or_multipleclass',
+ 		'page arguments' => array(2,3,4,5),
+ 		'type' => MENU_CALLBACK,
+ 		'access arguments' => array('expertus learner'),
+ 		'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  $items['content-player/test'] = array(
+  		'title' => 'sample page',
+  		'page callback' => 'content_player_callback',
+  		'access arguments' => array('expertus learner'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  
+  $items['ajax/content-player/playlist/%'] = array(
+  		'page callback' => 'content_playlist_callback',
+  		'page arguments' => array(3),
+  		'access arguments' => array('expertus learner'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  $items['ajax/content-player/survey_list/%/%/%'] = array(
+  		'page callback' => 'content_survey_list',
+  		'page arguments' => array(3,4,5),
+  		'access arguments' => array('expertus learner'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  $items['ajax/content-player/program_survey_list/%/%/%'] = array(
+  		'page callback' => 'program_content_survey_list',
+  		'page arguments' => array(3,4,5),
+  		'access arguments' => array('expertus learner'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  $items['ajax/content-player/playcontent'] = array(
+  		'page callback' => 'content_playcontent_callback',
+  		//'page arguments' => array(3, 4),
+  		'access arguments' => array('expertus learner'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  
+  $items['ajax/content-player/play-subcontent'] = array(
+  		'page callback' => 'content_player_subcontent_callback',
+  		//'page arguments' => array(3, 4, 5),
+  		'access arguments' => array('expertus learner'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  
+  $items['ajax/content-player/program-playlist/%'] = array(
+  		'page callback' => 'content_player_program_callback',
+  		'page arguments' => array(3),
+  		'access arguments' => array('expertus learner'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_lnrenrollment.inc'
+  );
+  return $items;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_lnrenrollment_menu', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implements hook_block_configure().
+ */
+function exp_sp_lnrenrollment_block_configure($delta = '') {
+	try{
+  $form = array();  
+  if ($delta == 'tab_my_enrollment' || $delta == 'tab_my_enrollment_customized') {
+    $form['exp_sp_mandatory_auto_registration_allowed'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Allow auto register for Mandatory training and class'),
+      '#default_value' => variable_get('exp_sp_mandatory_auto_registration_allowed', FALSE),
+     );
+  }
+  return $form;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_lnrenrollment_block_configure', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implements hook_block_save().
+ */
+function exp_sp_lnrenrollment_block_save($delta = '', $edit = array()) {
+	try{
+  switch ($delta) {
+    case 'tab_my_enrollment':
+    case 'tab_my_enrollment_customized':
+	  variable_set('exp_sp_mandatory_auto_registration_allowed', $edit['exp_sp_mandatory_auto_registration_allowed']);
+    break;
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_lnrenrollment_block_save', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function exp_sp_lnrenrollment_block_view($delta = ''){
+	try{
+  require_once('exp_sp_lnrenrollment.inc');
+  $header_optional = array('type' => 'file', 'scope' => 'header', 'group' => JS_LIBRARY);
+  $css_module_optional = array('type' => 'file', 'group' => CSS_DEFAULT);
+  $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+  $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+  global $theme_key, $user_preference;
+  
+  $block = array();
+  switch ($delta) {
+   case 'tab_my_enrollment':
+   case 'tab_my_enrollment_customized':
+   	expDebug::dPrint("With in the tab enrolment customized");
+      includeJqGridJsCss();
+      
+      expDebug::dPrint('drupal_get_path() returned ' . drupal_get_path('module', 'exp_sp_learning_learner') , 4);
+      drupal_add_js(drupal_get_path('module', 'fivestar').'/js/fivestar.js', $js_module_optional);
+      drupal_add_js(drupal_get_path('module', 'fivestar').'/js/fivestar.ajax.js', $js_module_optional);
+      drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/intro.js',$js_module_optional);
+      drupal_add_css(drupal_get_path('module', 'exp_sp_core').'/css/introjs.css',$css_module_optional);
+      if (contentPlayerIsActive()) { // Based on a content player activation load the needed files.
+      	includeContentPlayerJsCss();
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_lnrsearch') .'/jquery.cookie.js', $js_module_optional);
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_lnrenrollment/exp_sp_lnrenrollment_cp.js', $js_module_optional);
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/js/exp_sp_surveylearner/exp_sp_surveylearner_cp.js',$js_module_optional);
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/exp_sp_launch_cp.js', $js_module_optional);
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM-API-WRAPPER_cp.js', $js_module_optional);
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM12-LMS-API_cp.js', $js_module_optional);
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM2004-LMS-API_cp.js', $js_module_optional);
+      } else {
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_lnrenrollment/exp_sp_lnrenrollment.js', $js_module_optional);
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/js/exp_sp_surveylearner/exp_sp_surveylearner.js',$js_module_optional);
+      drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/exp_sp_launch.js', $js_module_optional);
+  	  if(getConfigValue('wbt_content_launch_style') == 1) {
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM-API-WRAPPER-MODAL.js', $js_module_optional);
+	  } else {
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM-API-WRAPPER.js', $js_module_optional);
+	  }
+      drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM12-LMS-API.js', $js_module_optional);
+      drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM2004-LMS-API.js', $js_module_optional);
+      }
+      drupal_add_js(drupal_get_path('module', 'exp_sp_administration_learning') . '/jquery.jscrollpane.js', $js_module_optional);
+      drupal_add_js(drupal_get_path('module', 'drupalchat') . '/js/jquery.mousewheel.js');
+      if($theme_key == 'expertusoneV2') {
+      //NEWUI THEME STYLE SHEET	
+      drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner') .'/css/exp_sp_lnrsearch_v2.css', $css_theme_optional);
+      drupal_add_css(drupal_get_path('module', 'fivestar').'/css/fivestar_v2.css',$css_theme_optional);
+	      if (contentPlayerIsActive()) { // Based on a content player activation load the needed files.
+	      	drupal_add_css(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/css/Survey_formatter_cp.css',$css_theme_optional);
+	      	drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner') .'/css/exp_sp_lnrenrollment_v2.css', array('type' => 'file', 'group' => CSS_THEME, 'weight'=>1300));
+	      	drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner') .'/css/exp_sp_lnrenrollment_cp.css',$css_theme_optional);
+	      	
+      }else{
+	      	drupal_add_css(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/css/Survey_formatter_v2.css',$css_theme_optional);
+	      	drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner') .'/css/exp_sp_lnrenrollment_v2.css', array('type' => 'file', 'group' => CSS_THEME, 'weight'=>1300));
+	      }	
+      }else{
+      drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner') .'/css/exp_sp_lnrsearch.css', $css_theme_optional);
+      drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner') .'/css/exp_sp_lnrenrollment.css', $css_module_optional);
+      
+      drupal_add_css(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/css/Survey_formatter.css',$js_module_optional);
+      drupal_add_css(drupal_get_path('module', 'fivestar').'/css/fivestar.css',$css_theme_optional);
+      drupal_add_css(drupal_get_path('module', 'fivestar').'/css/fivestar-admin.css',$css_theme_optional);
+      drupal_add_css(drupal_get_path('module', 'fivestar').'/css/fivestar-admin-rtl.css',$css_theme_optional);    
+      drupal_add_css(drupal_get_path('module', 'fivestar').'/css/fivestar-rtl.css',$css_theme_optional);    
+      drupal_add_css(drupal_get_path('module', 'exp_sp_fivestar').'/exp_sp_fivestar.css',$css_theme_optional);	
+      }    
+      
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_lnrsearch') .'/jquery.cookie.js', $js_module_optional);
+      	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/exp_sp_mylearning.js',$js_module_optional);      
+      $outhtml = ($theme_key == 'expertusoneV2' && !isset($user_preference['mylearning_left']['tab_my_enrollment_customized'])) ? "" : "<div id='learner-enrollment-tab-inner'></div>";
+      $block['content'] = $outhtml;
+      break;
+      /*
+       * @TODO : below logic can be used for certification display.
+       */
+  }
+  return $block;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_lnrenrollment_block_view', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function includeContentPlayerJsCss() {
+	$js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+	$css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+	drupal_add_library('system', 'ui.accordion');
+	drupal_add_library('system', 'ui.dialog');
+	drupal_add_library('system', 'ui.resizable');
+	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/exp_sp_contentplayer.js', $js_module_optional);
+	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/exp_sp_progressbar.js', $js_module_optional);
+	drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner').'/css/exp_sp_contentplayer.css', $css_theme_optional);
+	// carousel effect on player menu
+	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/jquery.carousel_cp.js', $js_module_optional);
+	drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner').'/css/jquery.carousel.css', $css_theme_optional);
+	
+	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/jquery.fullscreen.js', $js_module_optional);
+}
+
+function content_player_callback() {
+	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/exp_sp_contentplayer.js');
+	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/exp_sp_progressbar.js');
+	drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner').'/css/exp_sp_contentplayer.css');
+	// carousel effect on player menu
+	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/jquery.carousel.js');
+	drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner').'/css/jquery.carousel.css');
+
+	//drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/jquery.fullscreen.js');
+	drupal_add_js(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/js/exp_sp_surveylearner/exp_sp_surveylearner.js',$js_module_optional);
+	$str = <<<TAM
+	<div id='learner-enrollment-tab-inner'></div>
+	<div class="test">
+		Content Sample1 Content Sample1 Content Sample1
+	</div>
+
+	<div class="buttons">
+		<span class="show">Show	</span> | <span class="hide">Hide</span>
+	</div>
+TAM;
+	return $str;
+}
+
+function content_player_program_callback($masterEnrollId = '', $master_enroll_call = 0,$forPendingSurvey = '') {
+	try {
+		include_once($_SERVER["DOCUMENT_ROOT"]. '/sites/all/modules/core/exp_sp_survey/exp_sp_survey_learner/exp_sp_surveylearner.inc');
+		include_once($_SERVER["DOCUMENT_ROOT"]. '/sites/all/modules/core/exp_sp_learning/exp_sp_learning_learner/modules/exp_sp_lnrlearningplan/exp_sp_lnrlearningplan.inc');
+
+		// collect program details
+		$selectTp = db_select('slt_master_enrollment', 'menr'); 
+		$selectTp->innerJoin('slt_program','prg','prg.id=menr.program_id');
+		$selectTp->addField('menr', 'user_id', 'user_id');
+		$selectTp->addField('menr', 'program_id', 'program_id');
+		$selectTp->addField('menr', 'overall_status', 'overall_status');
+		$selectTp->addField('prg', 'object_type', 'object_type');
+		$selectTp->addField('prg', 'title', 'class_title');
+		$selectTp->condition('menr.id', $masterEnrollId);
+		$result = $selectTp->execute()->fetchObject();
+		
+		$enrCntDetail = array();
+		$enrCntDetail['pre_ass_detail'] 	= getAssignedSurveys($result->user_id, $result->program_id, $result->object_type, 'assessment','1',$masterEnrollId,'yes');
+		$enrCntDetail['post_ass_detail'] 	= getAssignedSurveys($result->user_id, $result->program_id, $result->object_type, 'assessment','0',$masterEnrollId,'yes');
+		$enrCntDetail['survey_detail']		= getAssignedSurveys($result->user_id, $result->program_id, $result->object_type, 'survey', '0', $masterEnrollId, 'yes');
+		$programDetails 					= getProgramDetails($masterEnrollId);
+
+		//expDebug::dPrint("Master Enrollment details ---->".print_r($result,1),4);
+		expDebug::dPrint("post assessment details  ---->".print_r($enrCntDetail['post_ass_detail'],1),4);
+		expDebug::dPrint("Pre assessment details  ---->".print_r($enrCntDetail['pre_ass_detail'],1),4);
+		expDebug::dPrint("survey details  ---->".print_r($enrCntDetail['survey_detail'] ,1),4);
+		//expDebug::dPrint("program details  ---->".print_r($programDetails ,1),4);
+		
+		$list = array();
+		$i=0;
+		$j=0;
+		$defaultContent = 'notset';
+		$complete_defaultContent = 0;
+		$completed_content_count = 0;
+		$defaultContent_flag = false;
+		$complete_defaultContent_flag = false;
+		$content_pending_flag = false;
+		/**
+		 *  Pre-Asssessment attached to the training
+		 */
+		
+		if(!empty($enrCntDetail['pre_ass_detail'][0]->surveyid)){
+			//pre and post assessment summary details
+			$progress = getSummaryDetails($result->user_id, $programDetails[0]->class_id, $enrCntDetail['pre_ass_detail'][0]->surveyid, $programDetails[0]->id,'sry_det_typ_ass');
+			expDebug::dPrint("pre assessment progress ---->".$progress,4);
+			$attemptLeft ='';
+			if($enrCntDetail['pre_ass_detail'][0]->no_of_attempts>0)
+				$attemptLeft = $enrCntDetail['pre_ass_detail'][0]->no_of_attempts - $enrCntDetail['pre_ass_detail'][0]->attempts;
+			$list[$i] = array('listId' => $i+1,
+					'contentTitle'			=> $enrCntDetail['pre_ass_detail'][0]->surveytitle,
+					'contentType' 			=> $enrCntDetail['pre_ass_detail'][0]->asschk,
+					'cType' 				=> 'preAss',
+					'show_survey' 			=> $enrCntDetail['pre_ass_detail'][0]->show_survey,
+					'contentId'    			=> $enrCntDetail['pre_ass_detail'][0]->surveyid,
+					'surveytitle' 			=> $enrCntDetail['pre_ass_detail'][0]->surveytitle,
+					'suveycode'    			=> $enrCntDetail['pre_ass_detail'][0]->suveycode,
+					'surtype' 				=> $enrCntDetail['pre_ass_detail'][0]->surtype,
+					'no_of_attempts'   		=> $enrCntDetail['pre_ass_detail'][0]->no_of_attempts,
+					'viewoption'    		=> $enrCntDetail['pre_ass_detail'][0]->viewoption,
+					'prestatus' 			=> $enrCntDetail['pre_ass_detail'][0]->previewoption,
+					'previewoption'    		=> $enrCntDetail['pre_ass_detail'][0]->surveyid,
+					'aftercompletion' 		=> $enrCntDetail['pre_ass_detail'][0]->aftercompletion,
+					'objecttype'   			=> $enrCntDetail['pre_ass_detail'][0]->objecttype,
+					'objectid' 				=> $enrCntDetail['pre_ass_detail'][0]->objectid,
+					'surveycount'    		=> $enrCntDetail['pre_ass_detail'][0]->surveycount,
+					'compstatus'    		=> $enrCntDetail['pre_ass_detail'][0]->compstatus,
+					'attempts' 				=> $enrCntDetail['pre_ass_detail'][0]->attempts,
+					'AttemptLeft' 			=> $attemptLeft,
+					'asschk'    			=> $enrCntDetail['pre_ass_detail'][0]->asschk,
+					'presurveycount' 		=> $enrCntDetail['pre_ass_detail'][0]->presurveycount,
+					'preassCount'    		=> $enrCntDetail['pre_ass_detail'][0]->preassCount,
+					'statusCount'    		=> $enrCntDetail['pre_ass_detail'][0]->statusCount,
+					//	'enr_id' 				=> $enr_id,
+					'content_completion' 	=> convertProgressValue($progress),
+					'play_status' 			=> true
+			);
+			$validation = contentStatusValidation($list[$i]);
+			$list[$i]['play_status'] = $validation;
+			if($progress>=100 && $enrCntDetail['pre_ass_detail'][0]->surveycount>=1)
+				$completed_content_count = $completed_content_count+1;
+			if($progress<100)
+				$content_pending_flag = true;
+			if($enrCntDetail['pre_ass_detail'][0]->attempts<$enrCntDetail['pre_ass_detail'][0]->no_of_attempts  && $enrCntDetail['pre_ass_detail'][0]->pstatus != 'lrn_tpm_ovr_cmp'){
+				$defaultContent = $j;
+				$defaultContent_flag = true;
+			}
+			if($enrCntDetail['pre_ass_detail'][0]->attempts<$enrCntDetail['pre_ass_detail'][0]->no_of_attempts){
+				$complete_defaultContent = $j;
+				$complete_defaultContent_flag = true;
+			}
+			$j++;
+			$i++;
+		}
+		
+		/**
+		 *  Post-Asssessment attached to the training
+		 */
+		if(!empty($enrCntDetail['post_ass_detail'][0]->surveyid)){
+			$is_post_ass_launch = 0;
+			$inp_class_count = getCourseCompletionStatus($masterEnrollId);
+			if($inp_class_count<=0)
+				$is_post_ass_launch = 1;
+			// $userid, $objectid, $surveyid, $enr_id, $content_type
+			$summ_det = getSummaryDetails($result->user_id, $programDetails[0]->class_id, $enrCntDetail['post_ass_detail'][0]->surveyid, $programDetails[0]->id, 'sry_det_typ_ass','post-assessment');
+			$progress_post = $summ_det[0]->progress;
+			$post_status = $summ_det[0]->status;
+			expDebug::dPrint("post assessment progress ---->".$progress_post . "status -->> ".$post_status,4);
+			$list[$i] = array(
+					'listId' => $i+1,
+					'contentTitle' => $enrCntDetail['post_ass_detail'][0]->surveytitle,
+					'contentType' => $enrCntDetail['post_ass_detail'][0]->asschk,
+					'cType' => 'posAss',
+					'show_survey' => $enrCntDetail['post_ass_detail'][0]->show_survey,
+					'contentId'    => $enrCntDetail['post_ass_detail'][0]->surveyid,
+					'surveytitle' => $enrCntDetail['post_ass_detail'][0]->surveytitle,
+					'suveycode'    => $enrCntDetail['post_ass_detail'][0]->suveycode,
+					'surtype' => $enrCntDetail['post_ass_detail'][0]->surtype,
+					'no_of_attempts'    => $enrCntDetail['post_ass_detail'][0]->no_of_attempts,
+					'viewoption'    => $enrCntDetail['post_ass_detail'][0]->viewoption,
+					'prestatus' => $enrCntDetail['post_ass_detail'][0]->previewoption,
+					'previewoption'    => $enrCntDetail['post_ass_detail'][0]->surveyid,
+					'aftercompletion' => $enrCntDetail['post_ass_detail'][0]->aftercompletion,
+					'objecttype'    => $enrCntDetail['post_ass_detail'][0]->objecttype,
+					'objectid' => $enrCntDetail['post_ass_detail'][0]->objectid,
+					'surveycount'    => $enrCntDetail['post_ass_detail'][0]->surveycount,
+					'compstatus'    => $enrCntDetail['post_ass_detail'][0]->compstatus,
+					'attempts' => $enrCntDetail['post_ass_detail'][0]->attempts,
+					'AttemptLeft' => ($enrCntDetail['post_ass_detail'][0]->no_of_attempts - $enrCntDetail['post_ass_detail'][0]->attempts),
+					'asschk'    => $enrCntDetail['post_ass_detail'][0]->asschk,
+					'presurveycount' => $enrCntDetail['post_ass_detail'][0]->presurveycount,
+					'preassCount'    => $enrCntDetail['post_ass_detail'][0]->preassCount,
+					'statusCount'    => $enrCntDetail['post_ass_detail'][0]->statusCount,
+					'content_completion' => convertProgressValue($progress_post),
+					'is_post_ass_launch' => $is_post_ass_launch,
+					//'enr_id' => $enr_id,
+					'play_status' 			=> true
+			);
+			$validation = contentStatusValidation($list[$i]);
+			$list[$i]['play_status'] = $validation;
+			if($progress_post>=100 && $enrCntDetail['post_ass_detail'][0]->surveycount>=1)
+				$completed_content_count = $completed_content_count+1;
+			if($progress_post<100)
+				$content_pending_flag = true;
+			if($enrCntDetail['post_ass_detail'][0]->attempts<$enrCntDetail['post_ass_detail'][0]->no_of_attempts
+					&& $defaultContent_flag==false && $is_post_ass_launch==1 && $post_status != 'lrn_crs_cmp_cmp'){
+				$defaultContent = $j;
+				$defaultContent_flag = true;
+			}
+			if($complete_defaultContent_flag==false && $enrCntDetail['post_ass_detail'][0]->attempts<$enrCntDetail['post_ass_detail'][0]->no_of_attempts && $is_post_ass_launch==1){
+				$complete_defaultContent = $j;
+				$complete_defaultContent_flag = true;
+			}
+			$j++;
+			$i++;
+		}
+		
+		/**
+		 *  Survey attached to the training
+		 */
+		$forsurvey = '';
+		$survey_pending_flag = false;
+		if(!empty($enrCntDetail['survey_detail'])){
+			foreach ($enrCntDetail['survey_detail'] as $key =>$survey_details){
+				$progress_survey = getSummaryDetails($result->user_id, $programDetails[0]->class_id, $survey_details->surveyid, $programDetails[0]->id, 'sry_det_typ_sry');
+					
+				$list[$i] = array(
+						'listId' => $i+1,
+						'contentTitle' => $survey_details->surveytitle,
+						'contentType' => 'survey',
+						'cType' => 'survey',
+						'show_survey' => $survey_details->show_survey,
+						'contentId'    => $survey_details->surveyid,
+						'surveytitle' => $survey_details->surveytitle,
+						'suveycode'    => $survey_details->suveycode,
+						'surtype' => $survey_details->surtype,
+						'no_of_attempts'    => $survey_details->no_of_attempts,
+						'viewoption'    => $survey_details->viewoption,
+						'prestatus' => $survey_details->previewoption,
+						'previewoption'    => $survey_details->surveyid,
+						'aftercompletion' => $survey_details->aftercompletion,
+						'objecttype'    => $survey_details->objecttype,
+						'objectid' => $survey_details->objectid,
+						'surveycount'    => $survey_details->surveycount,
+						'compstatus'    => $survey_details->compstatus,
+						'attempts' => $survey_details->attempts,
+						'asschk'    => $survey_details->asschk,
+						'presurveycount' => $survey_details->presurveycount,
+						'preassCount'    => $survey_details->preassCount,
+						'statusCount'    => $survey_details->statusCount,
+						'content_completion' => convertProgressValue($progress_survey),
+						'enr_id' => $enr_id,
+						'play_status' 			=> true
+				);
+				if( !empty($forPendingSurvey) && $survey_details->surveyid == $forPendingSurvey){
+					$forsurvey = $j;
+				}
+				$validation = contentStatusValidation($list[$i]);
+				$list[$i]['play_status'] = $validation;
+				if($survey_details->surveycount<=0 && $survey_pending_flag==false)
+					$survey_pending_flag = true;
+				if($progress_survey>=100 && $survey_details->surveycount>=1)
+					$completed_content_count = $completed_content_count+1;
+				if(($survey_details->surveycount<=0)
+						//($enrCntDetail['post_ass_detail'][0]->compstatus =='lrn_crs_cmp_enr' || $enrCntDetail['post_ass_detail'][0]->compstatus =='lrn_crs_cmp_inp')
+						&& $defaultContent_flag==false){
+					$defaultContent = $j;
+					$defaultContent_flag = true;
+				}
+				if($complete_defaultContent_flag==false && $survey_details->surveycount<0){
+					$complete_defaultContent = $j;
+					$complete_defaultContent_flag = true;
+				}
+				$j++;
+				$i++;
+			}
+		}
+		
+		expDebug::dPrint("Final list called  ---->".print_r($list ,1),4);
+		
+		if($defaultContent === 'notset')
+			$defaultContent = $complete_defaultContent;
+		$result = array(
+				'classDetails' => array(
+										'classTitle' => $result->class_title, 
+										'cls_comp_status'=>$result->overall_status, 
+										'survey_pending_flag'=>$survey_pending_flag, 
+										'baseType' => $result->object_type, 
+										'defaultLaunchContent'=> $defaultContent,
+										'total_content_count'=> count($list), 
+										'completed_content_count'=>$completed_content_count,
+										'content_pending_flag'=>$content_pending_flag,
+								  ),
+				'menuList'	   => $list
+		);
+		if($defaultContent=== 'notset' && count($list) ==1 && $list[0]['is_post_ass_launch']==0){
+			$result['classDetails']['lp_have_only_post_ass_cont'] = true;
+		}
+		expDebug::dPrint('PROGRAM CONTENT DETAILES------------>'.print_r($result,1),4);
+		if(!empty($forPendingSurvey)){
+			return $forsurvey;
+		}
+		if($master_enroll_call == 1){
+			return $result;
+		}else{
+			return drupal_json_output($result);
+		}	
+		exit();
+	} catch(Exception $ex) {
+		watchdog_exception('exp_sp_lnrenrollment_block_view', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+
+function content_playlist_callback($enr_id = '', $enroll_call = 0,$defaultsurvey_id = '',$seqstatus) {
+	
+	// Collect enrollment basic details 
+	$selectStmt = db_select('slt_enrollment', 'enr');
+	$selectStmt->leftJoin('slt_course_class','scc','enr.class_id=scc.id');
+	$selectStmt->leftJoin('slt_profile_list_items','spli','scc.delivery_type=spli.code');
+	/* $selectStmt->innerJoin('slt_master_enrollment','menr','enr.master_enrollment_id=menr.id');
+	$selectStmt->innerJoin('slt_program','prg','prg.id=menr.program_id'); */
+	
+	$selectStmt->leftJoin('slt_master_enrollment','menr','enr.master_enrollment_id=menr.id');
+	$selectStmt->leftJoin('slt_program','prg','prg.id=menr.program_id'); 
+	
+	$selectStmt->condition('enr.id', $enr_id);
+	$selectStmt->addField('enr', 'master_enrollment_id', 'master_enrollment_id');
+	$selectStmt->addField('spli', 'attr1', 'basetype');
+	$selectStmt->addField('enr', 'user_id', 'user_id');
+	$selectStmt->addField('enr', 'course_id', 'course_id');
+	$selectStmt->addField('enr', 'class_id', 'class_id');
+	$selectStmt->addField('scc', 'title', 'class_title');
+	$selectStmt->addField('enr', 'reg_date', 'reg_date');
+	$selectStmt->addField('enr', 'comp_status', 'comp_status');
+	$selectStmt->addField('prg', 'id', 'program_id');
+	$selectStmt->addField('scc', 'title', 'cls_title');
+	$selectStmt->addField('enr', 'recertify_path', 'recertify_path');
+	$result =$selectStmt->execute()->fetchObject();
+	expDebug::dPrint("Enrollment details ---->".print_r($result,1),4);
+	
+	$enrCntDetail = array();
+	$classBaseType 		= $result->basetype;
+	$classID 			= $result->class_id;
+	$courseID			= $result->course_id;
+	$userID 			= $result->user_id;
+	$regDate            = $result->reg_date;
+	$cls_comp_status    = $result->comp_status;
+	$prgmap_cond 		= $result->program_id;
+	$master_enrollment_id = $result->master_enrollment_id;
+	$recertifyPath = $result->recertify_path;
+	
+	//$seqstatus is the value being added to check specific to class level seemore.
+	if(!empty($master_enrollment_id) && $seqstatus != 1) {
+		
+		$enforceSequence = getEnforceSequenceStatus($prgmap_cond);
+		
+		if($enforceSequence == 'Y') {
+			// get next launchable sequence
+			$nextlaunch = get_course_sequence($master_enrollment_id,$recertifyPath);
+			expDebug::dPrint("nextlaunch ---->" . print_r($nextlaunch, 1), 4);
+			
+			// get current launched sequence
+			$currentlaunch = get_course_sequence($master_enrollment_id,$recertifyPath,$enr_id);
+			expDebug::dPrint("currentlaunch ---->" . print_r($currentlaunch, 1), 4);
+						
+			$prevCompStatus =(($currentlaunch->sequence <= $nextlaunch->sequence) ? '' : 'notallow');
+			
+			if((empty($nextlaunch) && $currentlaunch->is_required == 'N') || ($currentlaunch->comp_status == 'lrn_crs_cmp_cmp'))
+			    $prevCompStatus = '';
+			$prevClassTitle = $nextlaunch->cls_title;
+			$prevClassStatus = $nextlaunch->comp_status;
+		}
+	}
+	// Collect launch information based on the object type
+	if ($result->basetype=='WBT' || $result->basetype=='VC' || $result->basetype=='VOD'){
+		$sid = $result->user_id."-".$result->course_id."-".$result->class_id;
+		$content_details = getLaunchDetail($enr_id, '', $sid);
+	} else {
+		$content_details = getLaunchDetail($enr_id);
+	}
+	$content_details = array_map("unserialize", array_unique(array_map("serialize", $content_details)));
+	expDebug::dPrint("Multiple Enrollment details ---->".print_r($content_details,1),4);
+	
+	$enrCntDetail['content_details'] = $content_details;
+	$objectType = 'cre_sys_obt_cls';
+	include_once($_SERVER["DOCUMENT_ROOT"]. '/sites/all/modules/core/exp_sp_survey/exp_sp_survey_learner/exp_sp_surveylearner.inc');
+	
+	//pre assesment
+	$pre_ass_detail =  getAssignedSurveys($result->user_id, $result->class_id, $objectType, 'assessment','1',$enr_id,'yes','content_player_call');
+	
+	$enrCntDetail['pre_ass_detail'] = $pre_ass_detail;
+	expDebug::dPrint("pre assesment details ---->".print_r($pre_ass_detail,1),4);
+	//post assesment
+	$post_ass_detail =  getAssignedSurveys($result->user_id,$result->class_id,$objectType,'assessment','0',$enr_id,'yes','content_player_call');
+	$enrCntDetail['post_ass_detail'] = $post_ass_detail;
+	$survey_detail =  getAssignedSurveys($result->user_id,$result->class_id,$objectType,'survey','0',$enr_id,'yes');
+	expDebug::dPrint("Survey Details details only survey---->".print_r($survey_detail,1),4);
+	$enrCntDetail['survey_detail'] = $survey_detail;
+	expDebug::dPrint("post assessment details ---->".print_r($post_ass_detail,1),4);
+	expDebug::dPrint("Launch details ---->".print_r($enrCntDetail,1),4);
+	// based on the enroll id retrive original list
+	$list = array();
+	$content = array();
+	$defaultContent = 'notset';
+	$complete_defaultContent = 0;
+	$i=0;
+	$j=0;
+	$completed_content_count =0;
+	$defaultContent_flag = false;
+	$complete_defaultContent_flag = false;
+	$content_pending_flag = false;
+	$mulLessondefaultContentFlag = false;
+	$config = getConfig("exp_sp");
+	// vod_progress_update_frequency is set to 1 min (60 seconds) by default if exp_sp.ini varaible is not set
+	$vod_progress_update_frequency = isset($config['vod_progress_update_frequency']) ? $config['vod_progress_update_frequency'] : 10;
+	
+	$enc1 = new Encrypt();
+	/**
+	 *  Pre-Assessment attached to the training
+	 */
+	if(!empty($enrCntDetail['pre_ass_detail'][0]->surveyid)){
+	//pre and post assessment summary details	
+		$progress = getSummaryDetails($result->user_id,$enrCntDetail['pre_ass_detail'][0]->objectid,$enrCntDetail['pre_ass_detail'][0]->surveyid,$enr_id,'sry_det_typ_ass');
+		expDebug::dPrint("pre assessment progress ---->".$progress,4);
+		$attemptLeft ='';
+		if($enrCntDetail['pre_ass_detail'][0]->no_of_attempts>0)
+			$attemptLeft = $enrCntDetail['pre_ass_detail'][0]->no_of_attempts - $enrCntDetail['pre_ass_detail'][0]->attempts;
+		$list[$i] = array('listId' => $i+1,
+							'contentTitle'			=> $enrCntDetail['pre_ass_detail'][0]->surveytitle,
+							'contentType' 			=> $enrCntDetail['pre_ass_detail'][0]->asschk,
+							'cType' 				=> 'preAss',
+							'show_survey' 			=> $enrCntDetail['pre_ass_detail'][0]->show_survey,
+							'contentId'    			=> $enrCntDetail['pre_ass_detail'][0]->surveyid,
+							'surveytitle' 			=> $enrCntDetail['pre_ass_detail'][0]->surveytitle,
+							'suveycode'    			=> $enrCntDetail['pre_ass_detail'][0]->suveycode,
+							'surtype' 				=> $enrCntDetail['pre_ass_detail'][0]->surtype,
+							'no_of_attempts'   		=> $enrCntDetail['pre_ass_detail'][0]->no_of_attempts,
+							'viewoption'    		=> $enrCntDetail['pre_ass_detail'][0]->viewoption,
+							'prestatus' 			=> $enrCntDetail['pre_ass_detail'][0]->previewoption,
+							'previewoption'    		=> $enrCntDetail['pre_ass_detail'][0]->surveyid,
+							'aftercompletion' 		=> $enrCntDetail['pre_ass_detail'][0]->aftercompletion,
+							'objecttype'   			=> $enrCntDetail['pre_ass_detail'][0]->objecttype,
+							'objectid' 				=> $enrCntDetail['pre_ass_detail'][0]->objectid,
+							'surveycount'    		=> $enrCntDetail['pre_ass_detail'][0]->surveycount,
+							'compstatus'    		=> $enrCntDetail['pre_ass_detail'][0]->compstatus,
+							'attempts' 				=> $enrCntDetail['pre_ass_detail'][0]->attempts,
+							'AttemptLeft' 			=> $attemptLeft,
+							'asschk'    			=> $enrCntDetail['pre_ass_detail'][0]->asschk,
+							'presurveycount' 		=> $enrCntDetail['pre_ass_detail'][0]->presurveycount,
+							'preassCount'    		=> $enrCntDetail['pre_ass_detail'][0]->preassCount,
+							'statusCount'    		=> $enrCntDetail['pre_ass_detail'][0]->statusCount,
+						//	'enr_id' 				=> $enr_id,
+							'content_completion' 	=> convertProgressValue($progress),
+							'prev_comp_status'		=> $prevCompStatus,
+							'prev_class_status'		=> $prevClassStatus,
+							'cls_title'             => addslashes(($result->cls_title)),
+							'prev_class_title'		=> addslashes($prevClassTitle),
+							'play_status' 			=> true
+						);
+		$validation = contentStatusValidation($list[$i]);
+		$list[$i]['play_status'] = $validation;
+		if($progress>=100 && $enrCntDetail['pre_ass_detail'][0]->surveyattemptcount>=1)
+			$completed_content_count = $completed_content_count+1;
+		if($progress<100)
+				$content_pending_flag = true;
+		if($enrCntDetail['pre_ass_detail'][0]->attempts<$enrCntDetail['pre_ass_detail'][0]->no_of_attempts && $enrCntDetail['pre_ass_detail'][0]->pstatus != 'lrn_crs_cmp_cmp'){
+			$defaultContent = $j;
+			$defaultContent_flag = true;
+		}
+		if($enrCntDetail['pre_ass_detail'][0]->attempts<$enrCntDetail['pre_ass_detail'][0]->no_of_attempts){
+			$complete_defaultContent = $j;
+			$complete_defaultContent_flag = true;
+		}
+		$j++;
+		$i++;
+	}
+	/**
+	 *  Contents attached to the training
+	 */
+	if(!empty($enrCntDetail['content_details'])){
+		$k=0;
+		$usertimezone = getUserPHPTimezoneName();
+		$usertimezone = $usertimezone[0]->zone_name;
+		$timeZone = date_default_timezone(false);
+		$defaultTimezone = ($timeZone == 'Asia/Kolkata') ? 'Asia/Calcutta' : $timeZone;
+		$usertimezone = empty($usertimezone)? $defaultTimezone : $usertimezone;
+		$convertTimezoneuser = timeZoneConvert(now() , $defaultTimezone,  $usertimezone);
+		$convertTimezone = timeZoneConvert($regDate , $defaultTimezone,  $usertimezone);
+		expDebug::dPrint("content_completion reg date convert---->".print_r($convertTimezoneuser,1),4);
+		expDebug::dPrint("content_completion cur date convert---->".print_r($convertTimezone,1),4);
+		expDebug::dPrint("content_completion yogaraja reg---->".$regDate,4);
+		if($regDate != ''){
+			$remDays = abs((strtotime($convertTimezoneuser->date) -strtotime($convertTimezone->date)) / (60 * 60 * 24));
+		}
+		expDebug::dPrint("content_completion yogaraja rem---->".$remDays,4);
+		$content_id_arr = array();
+		foreach ($enrCntDetail['content_details'] as $key =>$content_details){
+			if(!in_array($content_details['ID'], $content_id_arr)){
+				$content_id_arr[] =$content_details['ID'];
+				if($content_details['LaunchType']!='VC'){
+					if ($content_details['Lessoncnt'] > 1) {
+						$totallesson = $content_details['Lessoncnt'];
+						$isMultiLesson = 1;
+					} else {
+						$isMultiLesson = 0;
+						$k=0;
+					}
+					$suspendData =  $content_details['SuspendData'];
+					if($content_details['ContentType'] == 'Video on Demand'){				
+						$suspend_data = json_decode(rawurldecode($suspendData));				
+						//$content_completion = round($suspend_data->progress);
+						$content_completion = round($content_details['progress']);
+						if($content_completion>=100)
+							$completed_content_count = $completed_content_count+1;
+						if($content_completion<100)
+							$content_pending_flag = true;
+						$progress = $content_completion;
+						/*if($progress == 100 || $progress == 0.100){
+							$progress = "1.0";
+						}else if($progress == '0.0'){
+							$progress = $progress;
+						}else{
+							$progress = $progress;
+						}*/
+					}
+					if($content_details['ContentType'] == 'Knowledge Content' || $content_details['ContentType'] == 'SCORM 1.2' || $content_details['ContentType'] == 'SCORM 2004' || $content_details['ContentType'] == 'AICC' || $content_details['ContentType'] == 'Tin Can'){
+						$progress =  $content_details['progress'];
+						if($progress>=100 && $isMultiLesson == 0)
+							$completed_content_count = $completed_content_count+1;
+						if($progress<100)
+							$content_pending_flag = true;
+						
+						/*if($progress == 100 || $progress == 0.100){
+							$progress = "1.0";
+						}else if($progress == '0.0'){
+							$progress = $progress;
+						}else if ($progress <= 9){
+							$progress = "0.0".$progress;
+						}else{
+							$progress = "0.".$progress;
+						}*/
+						$launchURL = $content_details['LearnerLaunchURL'];
+						$urlinfo = pathinfo($launchURL);
+						$filename = $urlinfo['basename'];
+						$extension = _mime_content_type($urlinfo['basename']);
+						if($extension == "application/pdf"){
+							$suspend_data = json_decode(unserialize(rawurldecode($content_details['SuspendData'])));
+							expDebug::dPrint("suspend_datasuspend_datasuspend_datasuspend_data asd asd".print_r($suspend_data,true),5);
+							}
+					}
+					$daysleft            = $content_details['ValidityDays'] - round($remDays);
+					$content_details['remDays'] = $daysleft;
+					$launchURL =$content_details [ 'LearnerLaunchURL'];
+					$error=false;
+					//	$urlhere='https://www.lynda.com/Office-tutorials/Word-2013-Essential-Training/115862-2.html';
+
+					if($content_details['ContentType'] == "Knowledge Content" && filter_var($content_details['LearnerLaunchURL'], FILTER_VALIDATE_URL)){
+					
+						
+					
+					$iframedet = IframeDeniedCheck($launchURL);
+					
+					$headers = $iframedet['headers'];
+					//$executiontime = $iframedet['exec_time'];
+					//expDebug::dPrint("Multiplecameeeesaaa cheeee".print_r($iframedet['exec_time'],1),4);
+					//expDebug::dPrint("Multiplecameeeesaaa cheeee".print_r($iframedet['headers'],1),4);
+					
+					}
+						
+					//Subtract the two times to get seconds
+						
+					$denied_flag = '';
+					if(strpos($headers, 'X-Frame-Options: DENY')>-1 || strpos($headers, 'X-Frame-Options: deny')>-1 || strpos($headers, 'X-Frame-Options: SAMEORIGIN')>-1 || strpos($headers, 'X-Frame-Options: sameorigin')>-1  || strpos($headers, 'x-frame-options: DENY')>-1 || strpos($headers, 'x-frame-options: deny')>-1 || strpos($headers, 'x-frame-options: SAMEORIGIN')>-1 || strpos($headers, 'x-frame-options: sameorigin')>-1) {
+						$error=true;
+					}
+					if(($content_details['ContentType'] == "Knowledge Content" ) && $error ==1){
+						$denied_flag = 1;
+					}
+					
+					$access_denied_flag = '';
+					
+					if (preg_match("/^(http|ftp):/", $content_details['LearnerLaunchURL']) && isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS'])) {
+						$access_denied_flag=1;
+					}else{
+						$access_denied_flag        = $denied_flag;
+					}
+					expDebug::dPrint("Multiple Enrollment detailsaabbbbbba ---->".print_r($access_denied_flag,1),5);
+					
+					
+					$content = array('listId' =>  $i+1,
+									 'LessonId' => $content_details['ID'],
+									'contentId' => $content_details['ContentId'],
+									'VersionId' => $content_details['VersionId'],
+									'ValidTo' => $content_details['ValidTo'],
+									'Code' => $content_details['Code'],
+									'contentTitle' => ($isMultiLesson) ? $content_details['Title'] :  $content_details['Code'],
+									'server_date_time' => $content_details['server_date_time'],
+									'Status' => $content_details['Status'],
+									'Lessoncnt' => $content_details['Lessoncnt'],
+									'LesScore' => $content_details['LesScore'],
+									'ClsScore' => $content_details['ClsScore'],
+									'ContScore' => $content_details['ContScore'],
+									'ValidityDays' => $content_details['ValidityDays'],
+									'contentQuizStatus' => $content_details['contentQuizStatus'],
+									'ContentCompletionStatus' => $content_details['ContentCompletionStatus'],
+									'remDays' => $daysleft,
+									'LaunchType' => $content_details['LaunchType'],
+									'contentType' => $content_details['ContentType'],
+									'cType' => 'lContent',
+									'ContentSubTypeCode' => $content_details['ContentSubTypeCode'],
+									'LearnerLaunchURL' => $content_details['LearnerLaunchURL'],
+									'PresenterLaunchURL' => $content_details['PresenterLaunchURL'],
+									'MaxAttempt' => $content_details['MaxAttempt'],
+									'AttemptLeft' => $content_details['AttemptLeft'],
+									'VersionNum' => $content_details['VersionNum'],
+									'contValidateMsg' => $content_details['contValidateMsg'],
+									'daysLeft' => $content_details['daysLeft'],
+									'IsLaunchable' => $content_details['IsLaunchable'],
+									'Handler' => $content_details['Handler'],
+									'LessonLocation' => $content_details['LessonLocation'],
+									'LaunchData' => $content_details['LaunchData'],
+									'SuspendData' => $content_details['SuspendData'],
+									'CmiExit' => $content_details['CmiExit'],
+									'ContentStatus' => $content_details['ContentStatus'],
+									'masteryscore' => $content_details['masteryscore'],
+									'StatusCode' => $content_details['StatusCode'],
+									'AICC_SID' => $content_details['AICC_SID'],
+									'content_completion' => convertProgressValue($progress),
+									'isMultiLesson' => $isMultiLesson,					
+									'play_status' => true,
+									'suspend_data'=>$suspend_data,
+									'user_id' => $result->user_id,
+							        'access_denied_flag' => $access_denied_flag,
+									'subtype' => $content_details['subtype'], //h5pcustomization
+									'prev_comp_status' => $prevCompStatus,
+									'prev_class_status'		=> $prevClassStatus,
+									'cls_title' => addslashes(($result->cls_title)),
+									'prev_class_title' => addslashes($prevClassTitle),
+								);
+					$validation = contentStatusValidation($content);
+					$content['play_status'] = $validation;
+					if($isMultiLesson) {
+						$mulLessondefaultContent = $i . '-0';
+						if ($contentId != $content_details['ContentId']){
+							$percentage = 0;
+							$k = 0;
+						}
+						$percentage			+= $progress;
+						$overllpercentage 	= round($percentage/$totallesson);
+						
+						if($overllpercentage>=100){
+							expDebug::dPrint("Over all percentage  ---->".print_r($overllpercentage,1),4);
+							$completed_content_count = $completed_content_count+1;
+						}
+						/*if($overllpercentage == 100){
+							$progress_all = "1.0";
+						}else if ($overllpercentage <= 9 && $overllpercentage != "0.0"){
+							$progress_all = "0.0".$overllpercentage;
+						}else{
+							$progress_all = "0.".$overllpercentage;
+						}*/
+						$list[$i][$k] = $content;
+						$list[$i]['contentTitle']  	=  $content_details['Code'];
+						$list[$i]['contentId']  	=  $content_details['ContentId'];
+						$list[$i]['contentType']  	=  $content_details['ContentType'];
+						$list[$i]['cType']  		=  'lContent';
+						$list[$i]['isMultiLesson'] 	=  $isMultiLesson;
+						$list[$i]['ValidityDays'] 	=  $content_details['ValidityDays'];
+						$list[$i]['remDays'] 	    =  $content_details['remDays'];
+						$list[$i]['MaxAttempt'] 	=  $content_details['MaxAttempt'];
+						$list[$i]['AttemptLeft'] 	=  $content_details['AttemptLeft'];
+						$list[$i]['VersionNum'] 	=  $content_details['VersionNum'];
+						$list[$i]['play_status']    = $validation;
+						$list[$i]['content_completion'] = convertProgressValue($overllpercentage);
+						if($mulLessondefaultContentFlag == false)
+							$list[$i]['defaultContent'] = $mulLessondefaultContent;
+						if($progress<100 && $defaultContent_flag == false
+								&& (($content_details['ValidityDays']>0 && $content_details['remDays']>0) || ($content_details['ValidityDays']==null  || $content_details['ValidityDays']=='')) 
+									&& ($content_details['AttemptLeft']>0 ||$content_details['MaxAttempt']==null || $content_details['MaxAttempt']=='')){
+							$defaultContent = $i.'-'.$k;
+							$defaultContent_flag = true;
+						}
+						if($complete_defaultContent_flag == false  
+								&& (($content_details['ValidityDays']>0 && $content_details['remDays']>0) || ($content_details['ValidityDays']==null  || $content_details['ValidityDays']=='')) 
+									&& ($content_details['AttemptLeft']>0 || $content_details['MaxAttempt']==null || $content_details['MaxAttempt']=='')){
+							$complete_defaultContent = $i.'-'.$k;
+							$complete_defaultContent_flag = true;
+						}
+						
+						if($progress<100 && $mulLessondefaultContentFlag == false
+								&& (($content_details['ValidityDays']>0 && $content_details['remDays']>0) || ($content_details['ValidityDays']==null  || $content_details['ValidityDays']==''))
+								&& ($content_details['AttemptLeft']>0 ||$content_details['MaxAttempt']==null || $content_details['MaxAttempt']=='')){
+							$mulLessondefaultContent = $i.'-'.$k;
+							$list[$i]['defaultContent'] = $mulLessondefaultContent;
+							$mulLessondefaultContentFlag = true;
+						} 
+						if($k>=$totallesson)
+							$k=0;
+						else
+							$k++;
+						if($k == $totallesson){
+							$i++;
+							$j++;
+							$mulLessondefaultContentFlag = false;
+						}
+						$contentId = $content_details['ContentId'];
+					} else {
+						$list[$i] = $content;
+						if($progress<100 && $defaultContent_flag == false 
+								&& (($content_details['ValidityDays']>0 && $content_details['remDays']>0) || ($content_details['ValidityDays']==null  || $content_details['ValidityDays']=='')) 
+										&& ($content_details['AttemptLeft']>0 ||$content_details['MaxAttempt']==null || $content_details['MaxAttempt']=='')){
+							$defaultContent = $j;
+							$defaultContent_flag = true;
+						}
+						if($complete_defaultContent_flag == false 
+								&& (($content_details['ValidityDays']>0 && $content_details['remDays']>0) || ($content_details['ValidityDays']==null  || $content_details['ValidityDays']==''))  
+										&& ($content_details['AttemptLeft']>0 ||$content_details['MaxAttempt']==null || $content_details['MaxAttempt']=='')){
+							$complete_defaultContent = $j;
+							$complete_defaultContent_flag = true;
+						}
+						$i++;
+						$j++;
+					}
+				}
+			}
+		}
+		
+	}
+
+	
+	/**
+	 *  Post-Asssessment attached to the training
+	 */
+	if(!empty($enrCntDetail['post_ass_detail'][0]->surveyid)){
+		$is_post_ass_launch = 0;
+		if($classBaseType == 'VC' || $classBaseType == 'ILT'){
+			if($classBaseType == 'VC')
+				$vcSession_details = getSessionDetails($courseID,$classID,'lrn_cls_dty_vcl','enroll',$userID);
+			else
+				$vcSession_details = getSessionDetails($courseID,$classID,'lrn_cls_dty_ilt','enroll',$userID);
+			$cnt = count($vcSession_details) -1;
+			$enDateFull = $vcSession_details[$cnt]['ilt_session_end_time_full'];
+			expDebug::dPrint("Virtual Class session details ---->".print_r($vcSession_details,1),4);
+			expDebug::dPrint("LAst session details ---->".print_r($enDateFull,1),4);
+			$sessionendtime = new DateTime($enDateFull);
+			$currenttime = new DateTime($vcSession_details[0]['server_date_time']);
+			if($currenttime > $sessionendtime)
+				$is_post_ass_launch = 1;
+		}
+		if($classBaseType == 'WBT' || $classBaseType == 'VOD')
+			$is_post_ass_launch = 1;
+		$summ_det = getSummaryDetails($result->user_id,$enrCntDetail['post_ass_detail'][0]->objectid,$enrCntDetail['post_ass_detail'][0]->surveyid,$enr_id,'sry_det_typ_ass','post-assessment');
+		$progress_post = $summ_det[0]->progress;
+		$post_status = $summ_det[0]->status;
+		expDebug::dPrint("post assessment progress ---->".$progress_post . "status -->> ".$post_status);
+		$list[$i] = array(
+						'listId' => $i+1,
+						'contentTitle' => $enrCntDetail['post_ass_detail'][0]->surveytitle,
+						'contentType' => $enrCntDetail['post_ass_detail'][0]->asschk,
+						'cType' => 'posAss',
+						'show_survey' => $enrCntDetail['post_ass_detail'][0]->show_survey,
+						'contentId'    => $enrCntDetail['post_ass_detail'][0]->surveyid,
+						'surveytitle' => $enrCntDetail['post_ass_detail'][0]->surveytitle,
+						'suveycode'    => $enrCntDetail['post_ass_detail'][0]->suveycode,
+						'surtype' => $enrCntDetail['post_ass_detail'][0]->surtype,
+						'no_of_attempts'    => $enrCntDetail['post_ass_detail'][0]->no_of_attempts,
+						'viewoption'    => $enrCntDetail['post_ass_detail'][0]->viewoption,
+						'prestatus' => $enrCntDetail['post_ass_detail'][0]->previewoption,
+						'previewoption'    => $enrCntDetail['post_ass_detail'][0]->surveyid,
+						'aftercompletion' => $enrCntDetail['post_ass_detail'][0]->aftercompletion,
+						'objecttype'    => $enrCntDetail['post_ass_detail'][0]->objecttype,
+						'objectid' => $enrCntDetail['post_ass_detail'][0]->objectid,
+						'surveycount'    => $enrCntDetail['post_ass_detail'][0]->surveycount,
+						'compstatus'    => $enrCntDetail['post_ass_detail'][0]->compstatus,
+						'attempts' => $enrCntDetail['post_ass_detail'][0]->attempts,
+						'AttemptLeft' => ($enrCntDetail['post_ass_detail'][0]->no_of_attempts - $enrCntDetail['post_ass_detail'][0]->attempts),
+						'asschk'    => $enrCntDetail['post_ass_detail'][0]->asschk,
+						'presurveycount' => $enrCntDetail['post_ass_detail'][0]->presurveycount,
+						'preassCount'    => $enrCntDetail['post_ass_detail'][0]->preassCount,
+						'statusCount'    => $enrCntDetail['post_ass_detail'][0]->statusCount,
+						'content_completion' => convertProgressValue($progress_post),
+						'is_post_ass_launch' => $is_post_ass_launch,
+						//'enr_id' => $enr_id,
+						'prev_comp_status' => $prevCompStatus,
+						'prev_class_status'		=> $prevClassStatus,
+						'cls_title'  => addslashes(($result->cls_title)),
+						'prev_class_title' => addslashes($prevClassTitle),
+						'play_status' => true
+					);
+		$validation = contentStatusValidation($list[$i]);
+		$list[$i]['play_status'] = $validation;
+		if($progress_post>=100 && $enrCntDetail['post_ass_detail'][0]->surveyattemptcount>=1)
+			$completed_content_count = $completed_content_count+1;
+		if($progress_post<100)
+			$content_pending_flag = true;
+		if($enrCntDetail['post_ass_detail'][0]->attempts<$enrCntDetail['post_ass_detail'][0]->no_of_attempts
+				&& $defaultContent_flag==false && $is_post_ass_launch==1 && $post_status != 'lrn_crs_cmp_cmp'){
+			$defaultContent = $j;
+			$defaultContent_flag = true;
+		}
+		
+		if($complete_defaultContent_flag==false && $enrCntDetail['post_ass_detail'][0]->attempts<$enrCntDetail['post_ass_detail'][0]->no_of_attempts && $is_post_ass_launch==1){
+			$complete_defaultContent = $j;
+			$complete_defaultContent_flag = true;
+		}
+		$j++;
+		$i++;
+	}
+	
+	/**
+	 *  Survey attached to the training
+	 */
+	$survey_pending_flag = false;
+	$forsurvey = '';
+	if(!empty($enrCntDetail['survey_detail'])){
+		foreach ($enrCntDetail['survey_detail'] as $key =>$survey_details){
+			$progress_survey = getSummaryDetails($result->user_id,$survey_details->objectid,$survey_details->surveyid,$enr_id,'sry_det_typ_sry');		
+			
+			$list[$i] = array(
+							'listId' => $i+1,
+							'contentTitle' => $survey_details->surveytitle,
+							'contentType' => 'survey',
+							'cType' => 'survey',
+							'show_survey' => $survey_details->show_survey,
+							'contentId'    => $survey_details->surveyid,
+							'surveytitle' => $survey_details->surveytitle,
+							'suveycode'    => $survey_details->suveycode,
+							'surtype' => $survey_details->surtype,
+							'no_of_attempts'    => $survey_details->no_of_attempts,
+							'viewoption'    => $survey_details->viewoption,
+							'prestatus' => $survey_details->previewoption,
+							'previewoption'    => $survey_details->surveyid,
+							'aftercompletion' => $survey_details->aftercompletion,
+							'objecttype'    => $survey_details->objecttype,
+							'objectid' => $survey_details->objectid,
+							'surveycount'    => $survey_details->surveycount,
+							'compstatus'    => $survey_details->compstatus,
+							'attempts' => $survey_details->attempts,
+							'asschk'    => $survey_details->asschk,
+							'presurveycount' => $survey_details->presurveycount,
+							'preassCount'    => $survey_details->preassCount,
+							'statusCount'    => $survey_details->statusCount,
+							'content_completion' => convertProgressValue($progress_survey),
+							'enr_id' => $enr_id,
+							'prev_comp_status'		   => $prevCompStatus,
+							'prev_class_status'		=> $prevClassStatus,
+							'cls_title'             => addslashes(($result->cls_title)),
+							'prev_class_title'		   => addslashes($prevClassTitle),
+							'play_status' 			=> true
+						);
+			if( $survey_details->surveyid == $defaultsurvey_id){
+				$forsurvey = $j;
+			}
+			$validation = contentStatusValidation($list[$i]);
+			$list[$i]['play_status'] = $validation;
+			if($survey_details->surveycount<=0 && $survey_pending_flag==false)
+				$survey_pending_flag = true;
+			if($progress_survey>=100 && $survey_details->surveycount>=1)
+				$completed_content_count = $completed_content_count+1;
+			if(($survey_details->surveycount<=0)
+					//($enrCntDetail['post_ass_detail'][0]->compstatus =='lrn_crs_cmp_enr' || $enrCntDetail['post_ass_detail'][0]->compstatus =='lrn_crs_cmp_inp')
+					&& $defaultContent_flag==false){
+				$defaultContent = $j;
+				$defaultContent_flag = true;
+			}
+			if($complete_defaultContent_flag==false && $survey_details->surveycount<0){
+				$complete_defaultContent = $j;
+				$complete_defaultContent_flag = true;
+			}
+			$j++;
+			$i++;
+		}
+	}
+	if($defaultContent === 'notset')
+		$defaultContent = $complete_defaultContent;
+	expDebug::dPrint('PLAYER LIST------------------>'.print_r($list,1),4);
+	$result = array(
+				'classDetails' => array(
+						'classTitle' => $result->class_title,
+						'cls_comp_status'=>$cls_comp_status,
+						'survey_pending_flag'=>$survey_pending_flag,
+						'content_pending_flag'=>$content_pending_flag,
+						'baseType' => $result->basetype,
+						'defaultLaunchContent'=>$defaultContent,
+						'total_content_count'=>count($list),
+						'prev_comp_status'=> $prevCompStatus,
+						'cls_title'    => addslashes(($result->cls_title)),
+						'prev_class_title' => addslashes($prevClassTitle),
+						'prev_class_status'		=> $prevClassStatus,
+						'completed_content_count'=>$completed_content_count),
+						
+				'menuList'	   => $list		
+			);
+	if($defaultContent=== 'notset' && count($list) ==1 && $list[0]['is_post_ass_launch']==0 && !empty($enrCntDetail['post_ass_detail'][0]->surveyid)){
+		$result['classDetails']['cl_ilt_have_only_post_ass_cont'] = true;
+	}
+	expDebug::dPrint('PLAYER LIST------------------>'.print_r($result,1),4);
+	if(!empty($defaultsurvey_id)){
+		return $forsurvey;
+	}
+	if($enroll_call==1){
+		return $result;
+	}else{
+	return drupal_json_output($result);
+	exit();
+}
+}
+
+function content_playcontent_callback() {
+	global $user;
+	$contentDetailCheck = true;
+	$iFrameContent 		= false;
+	$contentType 		= strtolower($_POST['contentType']);
+	$contentTitle		= $_POST['contentTitle'];
+	$addionalParams		= array();
+	$validation = contentStatusValidation($_POST);
+	if ($user->uid == 0) { // Block anonymous users
+		$content = '<div class="message"> '.t('MSG027').' </div>';
+		$contentDetailCheck = false;
+	}
+	if($_POST['access_denied_flag'] ==1 ){
+		$contentDetailCheck = false;
+	}
+// 	else if($contentType== 'post-assessment' && isset($_POST['masterEnrollId']) && (isset($_POST['pagefrom']) && ($_POST['pagefrom'] == 'lp_launch' || $_POST['pagefrom'] == 'lp_seemore'))){
+// 		include_once($_SERVER["DOCUMENT_ROOT"]. '/sites/all/modules/core/exp_sp_learning/exp_sp_learning_learner/modules/exp_sp_lnrlearningplan/exp_sp_lnrlearningplan.inc');
+// 		$inp_class_count = getCourseCompletionStatus($masterEnrollId);
+// 		if($inp_class_count>0){
+// 			$content = '<div id="cp-contentcontainer" class="cp-contentcontainer cp-full-player" style="height: auto; width: 99%;"><div id="cp-content-main"><span class="msg-content">'.t('MSG688').'</span></div></div>';
+// 			$contentDetailCheck = false;
+// 		}
+// 	}
+	else if($validation==false){
+		if($contentType== 'post-assessment' && $_POST['is_post_ass_launch']!=1 && $_POST['objecttype']!='cre_sys_obt_cls')
+			$content = '<div><span class="msg-content">'.t('MSG688').'</span></div>'; // "All mandatory classes should be completed before you can take your assessment."
+		else if($contentType== 'post-assessment' && $_POST['is_post_ass_launch']!=1 && $_POST['objecttype']=='cre_sys_obt_cls')
+			$content = '<div><span class="msg-content">'.t('MSG384').'</span></div>'; // "You can take the assessment only after completing the program."
+		else if($contentType=='survey' && $_POST['surveycount']>0)
+			$content = '<div><span class="msg-content">'.t('MSG394').'</span></div>'; // "You have already completed the survey."
+		else
+			$content = '<div><span class="msg-content">'. $contentTitle . '&nbsp;' .'<b>'.t('MSG796').'</b></span></div>'; // can no longer be launched as the validity has expired or there are no attempts left."/*Viswanathan added >b> tag for #0078402*/
+		$contentDetailCheck = false;
+	}
+	if ($contentDetailCheck == true) {
+		//$objectHtml	= '<object data="" width="100%" height="100%" id="cp-frame-container" type="text/html"></object>';
+		$objectHtml	= '<div class="iframe-overlay"></div><iframe src="" width="100%" height="100%" id="cp-frame-container" ></iframe>';
+		switch ($contentType) {
+			case "video on demand":
+				include_once(drupal_get_path('module', 'exp_sp_learning') .'/exp_sp_learning.inc');
+				$title 				= $_POST['Code'];
+				$contentSubTypeCode = $_POST['ContentSubTypeCode'];
+				$path 				= $_POST['LearnerLaunchURL'];
+				$launchedFrom 		= $_POST['LaunchFrom'];
+				$courseId 			= $_POST['courseId'];
+				$classId 			= $_POST['classId'];
+				$lessonId 			= $_POST['LessonId'];
+				$versionId 			= $_POST['VersionId'];
+				$enrollId 			= $_POST['enrollId'];
+				$previousStatus 	= $_POST['LaunchData'];
+				$suspendData 		= $_POST['SuspendData'];
+				$result 			= exp_ctools_modal_display_video($title, $contentSubTypeCode, $path, $launchedFrom, $courseId, $classId, $lessonId, $versionId, $enrollId, $previousStatus, $suspendData);
+				$content 			= $result['output'];
+				$addionalParams		= $result['params'];
+			break;
+		
+			case "scorm 1.2":
+				$iFrameContent = true;
+				$content = $objectHtml;
+			break;
+					
+			case "scorm 2004":
+				$iFrameContent = true;
+				$content = $objectHtml;
+			break;
+		
+			case "knowledge content":
+				$iFrameContent = true;
+				$content = $objectHtml;
+			break;
+		
+			case "tin can":
+				$iFrameContent = true;
+				$content = $objectHtml;
+				break;
+		
+			case "aicc":
+			case "aicc course structure":
+				$iFrameContent = true;
+				$content = $objectHtml;
+				break;
+		
+			case "pre-assessment":
+			case "post-assessment":
+				$content = generateAssessmentSurveyContainer();
+				break;
+		
+			case "survey":
+				$content = generateAssessmentSurveyContainer();
+				break;
+					
+		default:
+			$content = '<div class="message">'.t('MSG344').'</div>';
+			break;
+				
+	}
+	}
+
+	$result = array(
+		'isIframeContent' => $iFrameContent,
+		'content' => $content,
+		'params' => $addionalParams	
+	);
+	return drupal_json_output($result);
+	exit();
+}
+function contentStatusValidation($content = '') {
+	
+	expDebug::dPrint('contentStatusValidation' . print_r($content, 1));
+	if (is_object($content)) {
+		$content = (array) $content;
+	}
+	expDebug::dPrint('contentStatusValidation' . print_r($content, 1));
+	$contentType 		= strtolower($content['contentType']);
+	$play_status = false;
+	switch ($contentType) {
+			case 'video on demand':
+			case 'knowledge content':
+			case 'scorm 1.2':
+			case 'scorm 2004':
+			case 'tin can':
+			case 'aicc':
+			case 'aicc course structure':
+				if((($content['ValidityDays']>0 && $content['remDays']>0) || ($content['ValidityDays']==null || $content['ValidityDays']=='null' || $content['ValidityDays']=='')) &&	
+					($content['AttemptLeft']>0 || $content['MaxAttempt']==null || $content['MaxAttempt']=='null' || $content['MaxAttempt']==''))
+						$play_status = true;
+			break;
+			case 'pre-assessment':
+				if(($content['attempts']<$content['no_of_attempts']) || $content['attempts']==null || $content['attempts']=='null')
+					$play_status = true;
+			case 'post-assessment':
+				if($content['is_post_ass_launch']==1 && (($content['attempts']<$content['no_of_attempts']) || $content['attempts']==null || $content['attempts']=='null'))
+					$play_status = true;
+				break;
+			case "survey":
+				if($content['surveycount']<=0)
+					$play_status = true;
+				break;					
+		default:
+			//$content = '<div class="message">'.t('MSG796').'</div>';
+			$play_status = false;
+			break;
+	}
+	return $play_status;
+}
+function content_player_subcontent_callback() {
+	global $user;
+	$contentDetailCheck = true;
+	$iFrameContent 		= false;
+	$contentType 		= strtolower($_POST['contentType']);
+	$contentTitle		= $_POST['contentTitle'];
+	$validation = contentStatusValidation($_POST);
+			if ($user->uid == 0) { // Block anonymous users
+				$content = '<div class="message"> '.t('MSG027').' </div>';
+				$contentDetailCheck = false;
+			}else if($validation==false){
+					$content = '<div><span class="msg-content">'. $contentTitle . '&nbsp;' .'<b>'.t('MSG796').'</b></span></div>';/*Viswanathan added >b> tag for #0078402*/
+				$contentDetailCheck = false;
+			}
+		
+	if ($contentDetailCheck == true) {
+		//$objectHtml	= '<object data="" width="100%" height="100%" id="cp-frame-container" type="text/html"></object>';
+		$objectHtml	= '<div id="iframe-overlay" class="iframe-overlay"></div><iframe src="" width="100%" height="100%" id="cp-frame-container" ></iframe>';
+		switch ($contentType) {
+			case "video on demand":
+				break;
+	
+			case "scorm 1.2":
+				$iFrameContent = true;
+				$content = $objectHtml;
+				break;
+					
+			case "scorm 2004":
+				$iFrameContent = true;
+				$content = $objectHtml;
+				break;
+	
+			case "knowledge content":
+				$iFrameContent = true;
+				$content = $objectHtml;
+				break;
+	
+			case "tin can":
+				$iFrameContent = true;
+				$content = $objectHtml;
+				break;
+	
+			case "aicc":
+			case "aicc course structure":
+				$iFrameContent = true;
+				$content = $objectHtml;
+				break;
+			
+			default:
+				$content = '<div class="message"> No Cotent Found !</div>';
+				break;
+	
+		}
+	}	
+	$result = array(
+			'isIframeContent' => $iFrameContent,
+			'content' => $content
+	);
+	return drupal_json_output($result);
+	exit();
+}
+
+
+function generateAssessmentSurveyContainer() {
+	try{
+		//73059: Content completion % is not getting updated unless we close the window and reopen it or move to the next content
+		$buttonHtml  = '';
+		$contentHtml = '';
+		$buttonHtml .= '<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">';
+		$buttonHtml .= '	<div class="ui-dialog-buttonset">';
+		$buttonHtml .= '		<button type="button" class="removebutton white-btn-bg-middle" style="display: none;">'.t('LBL123').' </button>';
+		$buttonHtml .= '		<button type="button" class="removebutton white-btn-bg-middle" style="display: none;">'.t('LBL123').'</button>';
+		$buttonHtml .= '		<button type="button" style="display: none;">'.t('No').'</button>';
+		$buttonHtml .= '		<button type="button" style="display: none;" id="selSurAssPrevButton" onclick="$(\'#block-take-survey\').data(\'surveylearner\').movePrev();">&lt;&lt;' .t('LBL692'). '</button>';
+		$buttonHtml .= '		<button type="button" style="display: none;">'.t('Yes').'</button>';
+		$buttonHtml .= '		<button type="button" style="display: none;" onclick="$(\'#block-take-survey\').data(\'surveylearner\').surveyCommit();">'.t('LBL124').'</button>';
+		$buttonHtml .= '		<button type="button" style="display: none;" id="selSurAssNextButton" onclick="$(\'#block-take-survey\').data(\'surveylearner\').moveNext(\'\');">'.t('LBL693'). '&gt;&gt;</button>';
+		$buttonHtml .= '		<button type="button" style="display: none;" onclick="$(\'#block-take-survey\').data(\'surveylearner\').loadPreview();">'.t('LBL694').'</button>';
+		$buttomHtml .= '	</div>';
+		$buttonHtml .= '</div>';
+		
+		$contentHtml .= '<div id="cp-contentcontainer" class="cp-contentcontainer cp-full-player">';
+		$contentHtml .= '	<div id="cp-content-main"><div id="selSurveyContainer">';
+		$contentHtml .= '		<div class="survey-main-holder popupLeftCorner popupRightCorner">';
+		$contentHtml .= 			'<div  class="SurveyContainer ui-dialog-content ui-widget-content" id="take_survey_main" style="display:block;"></div>';
+		$contentHtml .= 				'<div id="surveyButtonHolder">'. $buttonHtml .'</div>';
+		$contentHtml .= 			'</div></div>';
+		$contentHtml .= 		'</div>';
+		$contentHtml .= '</div>';
+		
+		return $contentHtml;
+		
+	} catch (Exception $ex) {
+		watchdog_exception('generateAssessmentSurveyContainer', $ex);
+		expertusErrorThrow($ex);
+	}		
+}
+
+
+function getSummaryDetails($userid,$objectid,$surveyid,$enr_id,$content_type,$from = ''){
+try{
+		$select = db_select('slt_attendance_summary', 'summ');		
+		if(!empty($from)){
+			$select->addField('summ','status','status');
+			$select->addField('summ','progress','progress');
+		}else {
+			$select->addField('summ','progress','progress');
+		}
+		$select->condition('summ.user_id',$userid);
+		$select->condition('summ.class_id',$objectid);
+		$select->condition('summ.assessment_id',$surveyid);
+		$select->condition('summ.enrollment_id',$enr_id);
+		$select->condition('summ.content_type',$content_type);
+		expDebug::dPrintDBAPI('getSummaryDetails-->', $select);
+		if(!empty($from)){
+			$result = $select->execute()->fetchAll();
+		}else {
+			$result = $select->execute()->fetchField();
+		}
+		
+		expDebug::dPrint('result value' . print_r($result,1));
+		return $result;
+}catch (Exception $ex) {
+  	watchdog_exception('getSummaryDetails', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+	
+function convertProgressValue($value = '') {
+	expDebug::dPrint('value received: ' . var_export($value, 1));
+	if ($value == '0') {
+		expDebug::dPrint('0 case:');
+		return '0.0';
+	}
+	if ($value == '100') {
+		expDebug::dPrint('100 case:');
+		return '1.0';
+	} 
+	$progress = floatval($value/100);
+	return $progress;
+}
+?>

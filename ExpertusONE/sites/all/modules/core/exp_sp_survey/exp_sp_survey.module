@@ -1,0 +1,71 @@
+<?php
+
+function exp_sp_survey_menu() {
+  try{
+  $items['portalpages/sp_administrator/survey-admin'] = array(
+    'title' => 'Survey/Assessment Administration',
+    'description' => 'Survey or Assessment Administration',
+    'page callback' => 'exp_sp_surveyadmin_surveyadmin',
+    'access callback' => 'user_access',
+    'access arguments' => array('Survey Admin Perm'),
+    'type' => 6,
+    'weight' => 1,
+  );
+  
+  $items['portalpages/sp_administrator/survey-admin/survey'] = array(
+    'title' => 'Details',
+    'description' => 'Create/Edit Survey/Assessment Forms and Groups.',
+    'page callback' => 'exp_sp_surveyadmin_survey',
+    'access callback' => 'user_access',
+    'access arguments' => array('Survey Details Admin Perm'),
+    'type' => 6,
+    'weight' => 2,
+  );
+  
+  $items['portalpages/sp_administrator/survey-admin/surveyquestions'] = array(
+    'title' => 'Questions',
+    'description' => 'Create/Edit Survey/Assessment Questions.',
+    'page callback' => 'exp_sp_surveyadmin_surveyquestions',
+    'access callback' => 'user_access',
+    'access arguments' => array('Survey Questions Admin Perm'),
+    'type' => 6,
+    'weight' => 3,
+  ); 
+	
+  return $items;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_survey_menu', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+function exp_sp_surveyadmin_surveyadmin() {
+  try{
+	/*drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/exp_sp_welcomemenu/exp_sp_welcomemenu.js');
+	$out="<div class='rightBoxleftcorner'><div class='rightBoxrightcorner'><h2 id='WelcomeMenuService'  class='welcomeadmin' data=''></h2></div></div>";
+	$out.="<input type='hidden' id='welcomeTitle' value='".t("Survey Admin")."'>"; 
+	return $out;*/
+    drupal_goto('portalpages/sp_administrator/survey-admin/survey');
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_surveyadmin_surveyadmin', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+/**
+ * Implementation of hook_perm().
+ */
+function exp_sp_surveyadmin_permission() {
+  try{
+  return array(    
+    'Survey Details Admin Perm' => array(
+      'title' => t('Survey Details Admin Perm')
+    ),
+  );
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_surveyadmin_permission', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+?>

@@ -1,0 +1,50 @@
+/* Admin Calendar Styles starts here */
+#admincalendarsettingdiv {
+  width:290px;
+  right:-120px;
+}
+#admincalendarsettingdiv div.links {
+  width:220px;  
+}
+#admincalendarsettingdiv .dropdownadd-dd-list-arrow {
+  right:130px;
+}
+.viewreportorderpopupdiv div.links {
+  width:250px;
+}
+.viewreportorderpopupdiv .dropdownadd-dd-list-arrow {
+  left:108px;
+}
+.viewreportorderpopupdiv div.links .list {
+  width:230px;
+}
+.viewreportorderpopupdiv div.links .loca-list {
+  width:140px;
+}
+.viewreportorderpopupdiv .orders div.links .list-item {
+  width: 160px;
+}
+.createnewpopupdiv #admincalendarcreatenewobjectdiv {
+  width:280px;
+}
+.createnewpopupdiv #admincalendarcreatenewobjectdiv .dropdownadd-dd-list-arrow {
+  left:36px;
+}
+.createnewpopupdiv #admincalendarcreatenewobjectdiv .qtip-close-button {
+  left:65%;
+}
+.page-admincalendar #block-system-main-menu {
+  width: 71.5%;
+}
+#calendarprimaryview .fc-agendaDay-view .fc-head div.fc-widget-header th.fc-axis{
+  min-width:63px
+}
+#select-list-calendar-dropdown-list{
+	/*left:-95px*/
+	left:-24px; /* Added/Changed by ganesh on May 10th 2017 for #73716 */
+}
+#select-list-calendar-dropdown-list li {
+  /* width:140px*/
+   width:102px; /* Added/Changed by ganesh on May 10th 2017 for #73716 */
+}
+/* Admin Calendar Styles ends here */

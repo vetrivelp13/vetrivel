@@ -1,0 +1,242 @@
+<?php
+/**
+ * Implementation of hook_block_info().
+ */
+function exp_sp_classdetail_block_info() {
+  try{
+  $blocks = array();
+ 
+  $blocks['class_details'] = array(
+    'info' => t('Class/Delivery Type Details - Class'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/class-details/*'
+  );
+  $blocks['class_forums'] = array(
+    'info' => t('Discussion Forum - Class'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/class-details/*'
+  );
+  $blocks['class_blogs'] = array(
+    'info' => t('Blogs - Class'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/class-details/*'
+  );
+  $blocks['class_related'] = array(
+    'info' => t('Related Class'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/class-details/*'
+  );
+  $blocks['class_rating'] = array(
+    'info' => t('Rating/Review - Class'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/class-details/*'
+  );
+  $blocks['class_categories'] = array(
+    'info' => t('Categories Related - Class'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/class-details/*'
+  );
+  return $blocks;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_classdetail_block_info', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function exp_sp_classdetail_block_view($delta = ''){
+  try{
+   
+  global $theme_key, $user;
+  $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+  $css_module_optional = array('type' => 'file', 'group' => CSS_DEFAULT);
+  $header_optional = array('type' => 'file', 'scope' => 'header', 'group' => JS_LIBRARY);
+  $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+  drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/qtippopup.js',$js_module_optional);
+  require_once('exp_sp_classdetail.inc');
+  $block = array();
+  $block['results'] = array();
+  switch ($delta) {
+    case 'class_details':
+      // included forum js
+    	drupal_add_js(drupal_get_path('module', 'exp_sp_lnrsearch') .'/jquery.cookie.js', $js_module_optional);
+      drupal_add_js(drupal_get_path('module', 'exp_sp_forum').'/exp_sp_forum.js',$js_module_optional);
+      drupal_add_js(drupal_get_path('module', 'exp_sp_classdetail').'/exp_sp_classdetail.js',$js_module_optional);
+      //Add onclick register
+      drupal_add_js(drupal_get_path('module', 'exp_sp_lnrsearch') .'/exp_sp_lnrsearch.js', $js_module_optional);
+	  if (contentPlayerIsActive()) {
+	  	includeContentPlayerJsCss();
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_lnrenrollment/exp_sp_lnrenrollment_cp.js', $js_module_optional);
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/js/exp_sp_surveylearner/exp_sp_surveylearner_cp.js',$js_module_optional);
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/exp_sp_launch_cp.js', $js_module_optional);
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM-API-WRAPPER_cp.js', $js_module_optional);
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM12-LMS-API_cp.js', $js_module_optional);
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM2004-LMS-API_cp.js', $js_module_optional);
+	  }	else {
+      drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_lnrenrollment/exp_sp_lnrenrollment.js', $js_module_optional);
+      drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/exp_sp_launch.js', $js_module_optional);
+  	  if(getConfigValue('wbt_content_launch_style') == 1) {
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM-API-WRAPPER-MODAL.js', $js_module_optional);
+	  } else {
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM-API-WRAPPER.js', $js_module_optional);
+	  }
+      drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM12-LMS-API.js', $js_module_optional);
+      drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM2004-LMS-API.js', $js_module_optional);
+	  }
+      //drupal_add_js(drupal_get_path('module', 'exp_sp_my_profile') .'/exp_sp_my_profile.js',$js_module_optional);
+      //drupal_add_js(drupal_get_path('module', 'exp_sp_my_skill') .'/exp_sp_my_skill.js',$js_module_optional);
+      //drupal_add_js(drupal_get_path('module', 'exp_sp_my_activity') .'/exp_sp_my_activity.js',$js_module_optional);
+      includeJqGridJsCss();
+      if($theme_key == 'expertusoneV2') {
+         drupal_add_css(drupal_get_path('module', 'exp_sp_classdetail').'/exp_sp_classdetail_v2.css', $css_module_optional);
+         drupal_add_css(drupal_get_path('module', 'exp_sp_forum') .'/exp_sp_forum_v2.css', array('type' => 'file', 'group' => CSS_THEME, 'weight'=>1300));
+         drupal_add_css(drupal_get_path('module', 'exp_sp_prerequisite') .'/exp_sp_prerequisite_v2.css', $css_theme_optional);
+         drupal_add_css(drupal_get_path('module', 'exp_sp_learning_plan_detail').'/exp_sp_learning_plan_detail_v2.css', $css_module_optional);
+         //Add onclick register
+         if (contentPlayerIsActive()) { // Based on a content player activation load the needed files.
+         	drupal_add_css(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/css/Survey_formatter_cp.css',$css_theme_optional);
+         	drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner') .'/css/exp_sp_lnrenrollment_cp.css', $css_module_optional);
+         } else {
+         drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner') .'/css/exp_sp_lnrenrollment_v2.css', $css_module_optional);
+         }	
+         
+         //drupal_add_css(drupal_get_path('module', 'exp_sp_fivestar').'/exp_sp_fivestar_v2.css', $css_theme_optional);
+         //drupal_add_css(drupal_get_path('module', 'exp_sp_my_profile') .'/exp_sp_my_profile_v2.css', $css_theme_optional);
+         //drupal_add_css(drupal_get_path('module', 'exp_sp_my_activity') .'/exp_sp_my_activity_v2.css', array('type' => 'file', 'group' => CSS_DEFAULT));
+        // drupal_add_css(drupal_get_path('module','exp_sp_my_skill') .'/exp_sp_my_skill_v2.css', array('type' => 'file', 'group' => CSS_DEFAULT));
+      }else{
+         drupal_add_css(drupal_get_path('module', 'exp_sp_classdetail').'/exp_sp_classdetail.css', $css_module_optional);
+         drupal_add_css(drupal_get_path('module', 'exp_sp_forum') .'/exp_sp_forum.css', $css_theme_optional);
+         //drupal_add_css(drupal_get_path('module', 'exp_sp_fivestar').'/exp_sp_fivestar.css', $css_theme_optional);
+         //drupal_add_css(drupal_get_path('module', 'exp_sp_my_profile') .'/exp_sp_my_profile.css', $css_theme_optional);
+        // drupal_add_css(drupal_get_path('module', 'exp_sp_my_activity') .'/exp_sp_my_activity.css', array('type' => 'file', 'group' => CSS_DEFAULT));
+         //drupal_add_css(drupal_get_path('module','exp_sp_my_skill') .'/exp_sp_my_skill.css', array('type' => 'file', 'group' => CSS_DEFAULT));
+      }
+      enableCtool();
+      if(arg(0) == 'share')
+      	$courseID = getCourseIdFromClassId(arg(3)); 
+      else
+      	$courseID = getCourseIdFromClassId(arg(2)); 
+      expDebug::dPrint( 'COURSER ID FROM CLASS : ' . print_r($courseID,1),4);
+      	
+      /*-- Check the access enabled and view the page --*/
+      
+      // Added by ganeshbabuv on May 3rd 2016 5 PM to avoid to getting PHP fatal error when view the class details
+      include_once(drupal_get_path('module', 'exp_sp_administration_catalog_access') .'/exp_sp_administration_catalog_access.inc');
+      if(arg(0) == 'share') // 0085715
+      	$isAccessEnabled = getEntityAccess(arg(3), 'cre_sys_obt_cls',$courseID);
+      else
+      	$isAccessEnabled = getEntityAccess(arg(2), 'cre_sys_obt_cls',$courseID); // 0085715
+      if ($user->uid == 0 && $isAccessEnabled) {
+       $viewDetailPage = false;
+      } else {
+       $viewDetailPage = true;
+       if($isAccessEnabled) {
+        $userId = getSltpersonUserId();
+        if(arg(0) == 'share')
+        	$isGroupMember = checkUserEntityAccess(arg(3), 'cre_sys_obt_cls', $userId,$courseID);
+        else 
+        	$isGroupMember = checkUserEntityAccess(arg(2), 'cre_sys_obt_cls', $userId,$courseID);
+       } else {
+        $isGroupMember = true;
+       }
+      }
+     // expDebug::dPrint( 'tp opbject type : ' . print_r($class_details,1),4);
+      //$block['subject'] = sanitize_data($class_details->title);
+      $block['content'] =  " ";
+      if($viewDetailPage && $isGroupMember) {
+      	$userId = getSltpersonUserId();
+      	if(arg(0) == 'share')
+      		$header_details = getFullClassDetails(arg(3));
+      	else
+      		$header_details = getFullClassDetails(arg(2));
+      	expDebug::dPrint('getClassDetailsInfo Whole: = ' . print_r($header_details, true) , 4);
+      	$block['results']['details'] = $header_details;
+      	if(arg(0) == 'share')
+      		$block['results']['attachments'] = getAttachmentsInfo(arg(3));
+      	else
+      		$block['results']['attachments'] = getAttachmentsInfo(arg(2));
+      	$additional = array (
+							"course_id" 	=> $block['results']['details']->course_id,
+							"delivery_type" => $block['results']['details']->delivery_type_code,
+      						"preRequiste"	=>	$header_details->preRequiste,
+      						//'preRequiste_label' => $header_details->preRequiste_label,
+      						"Equivalence"	=>	$header_details->Equivalence,
+      						'additional_info'=> $header_details->additional_info,
+					);
+      	$block['results']['miscContent'] = getEntityMiscDetails($block['results']['details']->class_id,'Class',$additional);
+      	// retrieving taxonomy term data id
+      	$block['results']['discussions']  = GetForumTopicListForDetail('catalog',$courseID);//Added for displaying discussions under class (discussions under parent)
+      	
+      }
+      break;
+    case 'class_forums':
+      $block['subject'] = t('Discussion Forum');
+      $block['content'] =  " ";
+      $block['results'] = getClassDiscussionForum();
+      break;
+    case 'class_blogs':
+      $block['subject'] = t('Blogs');
+      $block['content'] =  " ";
+      $block['results'] = getClassBlogsDetail();
+      break;
+    case 'class_related':
+      $block['subject'] = t('Related Class');
+      $block['content'] =  " ";
+      $block['results'] = getRelatedClass();
+      break;
+    case 'class_rating':
+      $block['subject'] = t('Rating/Review');
+      $block['content'] =  " ";
+      $block['results'] = getClassRatingReview();
+      break;
+    case 'class_categories':
+      $block['subject'] = t('Categories Related');
+      $block['content'] =  " ";
+      $block['results'] = getClassCategoryRelated();
+      break;
+  }
+  return $block;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_classdetail_block_view', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function exp_sp_classdetail_menu($delta = ''){
+  try{
+    $items = array();
+    
+	$items['learning/class-details'] = array(
+      'title' => 'CLASS DETAILS',
+      'page callback' => 'empty_value',
+      'access arguments' => array('catalog learner'),
+      'type' => MENU_CALLBACK,
+    );
+    
+  $items['share/learning/class-details'] = array(
+      'title' => 'CLASS DETAILS',
+      'page callback' => 'empty_value',
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK,
+    );
+
+	expDebug::dPrint(" items = ". print_r($items, true) , 4);
+	
+	return $items;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_classdetail_menu', $ex);
+    expertusErrorThrow($ex);
+  } 	
+}

@@ -1,0 +1,341 @@
+<?php
+
+class MyProfileNameTestCase extends DrupalUnitTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'My Profile Unit Tests for Validating Company Name',
+      'description' => 'Unit test all class details helper functions',
+      'group' => 'exp_sp_my_profile',
+    );
+  }  
+	
+  public function testValidate_Name() {
+	    module_load_include('inc', 'exp_sp_my_profile', 'exp_sp_my_profile');
+      
+      // The various test scenarios 
+      $test_cases = array(
+        array('ABC Co',		true,		'Test validate_name() - true because it is having only alphabets'),
+        array('db88 Inc',	true,		'Test validate_name() - true because it is having only alphabets and numbers'),
+        //array('1234',		false,		'Test validate_name() - false because it is a numbers'),
+        //array('as123',		false,		'Test validate_name() - true because it is a decimal number'),
+        array('Abi & Abi',	true,		'Test validate_name() - true because it is a string with symbol'),
+      );
+
+        // Test the scenarios
+      foreach ($test_cases as $name => $test_case) {
+          list($companyName, $expectedFormattedDuration, $description) = $test_case;
+        
+          $actualFormattedDuration = validateName($companyName);
+          $this->assertIdentical($actualFormattedDuration,
+                               $expectedFormattedDuration,
+                               $message = $description . '. Expected: "' . $expectedFormattedDuration . '", Actual: "' . $actualFormattedDuration . '"',
+                               $group = 'exp_sp_my_profile');
+      }
+  }
+}
+class MyProfileAdd1TestCase extends DrupalUnitTestCase {
+	
+  public static function getInfo() {
+    return array(
+      'name' => 'My Profile Unit Tests of Validating Address1',
+      'description' => 'Unit test all class details helper functions',
+      'group' => 'exp_sp_my_profile',
+    );
+  }  
+
+  public function testValidate_Add1() {
+	    module_load_include('inc', 'exp_sp_my_profile', 'exp_sp_my_profile');
+    
+    // The various test scenarios 
+    $test_cases = array(
+      //array('Exner Rd',		  true,	  'Test validate_add1() - true because it is having only alphabets'),
+      //array('28, Exner Rd',	  true,	  'Test validate_add1() - true because it is having only alphabets and numbers'),
+      //array('28',		      false,  'Test validate_add1() - false because it is a numbers'),
+      //array('28/30',		  true,	  'Test validate_add1() - false because it is a decimal number'),
+      //array('#28, Exner Rd',  true,	  'Test validate_add1() - true because it is a string with symbol'),
+    );
+
+      // Test the scenarios
+    foreach ($test_cases as $name => $test_case) {
+        list($companyAdd1, $expectedFormattedDuration, $description) = $test_case;
+      
+        $actualFormattedDuration = validateAdd1($companyAdd1);
+        $this->assertIdentical($actualFormattedDuration,
+                             $expectedFormattedDuration,
+                             $message = $description . '. Expected: "' . $expectedFormattedDuration . '", Actual: "' . $actualFormattedDuration . '"',
+                             $group = 'exp_sp_my_profile');
+    }
+  }
+}
+class MyProfileAdd2TestCase extends DrupalUnitTestCase {
+	
+  public static function getInfo() {
+    return array(
+      'name' => 'My Profile Unit Tests for Validating Address2',
+      'description' => 'Unit test all class details helper functions',
+      'group' => 'exp_sp_my_profile',
+    );
+  } 
+	  
+  public function testValidate_Add2() {
+	   module_load_include('inc', 'exp_sp_my_profile', 'exp_sp_my_profile');
+    // The various test scenarios 
+	  $test_cases = array(
+	    array('Darien',		        true,	 'Test validate_add2() - true because it is having only alphabets'),
+	    //array('Darien, IL-63584',	true,	 'Test validate_add2() - true because it is having only alphabets and numbers'),
+	    //array('63584',		        false,   'Test validate_add2() - false because it is a numbers'),
+	    //array('Darien, IL',         true,	 'Test validate_add2() - true because it is a string with symbol'),
+	  );
+	
+	    // Test the scenarios
+	  foreach ($test_cases as $name => $test_case) {
+	      list($companyAdd2, $expectedFormattedDuration, $description) = $test_case;
+	    
+	      $actualFormattedDuration = validateAdd2($companyAdd2);
+	      $this->assertIdentical($actualFormattedDuration,
+	                           $expectedFormattedDuration,
+	                           $message = $description . '. Expected: "' . $expectedFormattedDuration . '", Actual: "' . $actualFormattedDuration . '"',
+	                           $group = 'exp_sp_my_profile');
+	  }
+  }
+  
+}
+class profileDetails extends ExpertusWebTestCase {
+	private $test_case = array();
+
+	public static function getInfo() {
+		return array(
+				'name' => 'profile Details',
+				'description' => 'My profile detail page testing',
+				'group' => 'exp_sp_my_profile',
+		);
+	}
+	public function setUp(){
+		parent::setUp();
+		$user = new stdClass();
+		$user->name =  'sandhya';
+		$user->pass_raw = 'welcome';
+		$this->drupalLogin($user);
+	}
+	public function testMyProfileDetails(){
+		$user_id = db_query("select id from slt_person where user_name = 'sandhya'")->fetchField();
+		$this->getProfileDetails();
+		$this->editprofile();
+		$this->saveprofile();
+		$this->deleteActivity();
+		$this->deleteskill();
+		$this->Addskill();
+		$this->UserPointsDisplay($user_id);
+		$this->getuserbadges($user_id);
+		
+	}
+	private function getProfileDetails(){
+		$this->setHttpReferer('learning/my-profile');
+		$out = $this->drupalGet('learning/my-profile');
+		$this->assertRaw('<div id="block-exp-sp-my-profile-my-details" class="block block-exp-sp-my-profile first odd','details block loaded', 'exp_sp_my_profile');
+		$this->assertRaw('<div id="block-exp-sp-my-skill-my-skill" class="block block-exp-sp-my-skill even">','skill block loaded', 'exp_sp_my_profile');
+		$this->assertRaw('<div id="block-exp-sp-my-activity-my-activity" class="block block-exp-sp-my-activity last odd">','my activity block loaded', 'exp_sp_my_profile');
+		$this->assertRaw('<div id="block-exp-sp-user-catalog-online" class="block block-exp-sp-user-catalog first odd">','users block loaded', 'exp_sp_my_profile');
+		$this->assertRaw('<div id="block-exp-sp-mytranscript-mytranscript" class="block block-exp-sp-mytranscript even">','certificates block loaded', 'exp_sp_my_profile');
+		$this->assertRaw('<div id="block-exp-sp-admin-userpoints-userpoints" class="block block-exp-sp-admin-userpoints last odd">','points block loaded', 'exp_sp_my_profile');
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_profile');
+	}
+
+	private function  editprofile(){
+		$edit=  array();
+
+		$post_field = array('submit'=>array(
+				"form_id"=>"exp_sp_my_profile_form",
+				"_triggering_element_name"=>"profile-edit",
+				"storage[step]" => 2
+
+		),
+			//	'storage' => Array("step" => 2),
+				'wrapper'=>'my-profile-form-wrapper');
+		$this->setHttpReferer('learning/my-profile');
+		$out = $this->drupalPostAJAX(null,null,$edit,'?q=system/ajax',array(),array(),'exp_sp_my_profile',$post_field);
+		$this->assertResponse(200,'Form Repainted successfully');
+		$this->assertRaw('<div class="form-textarea-wrapper"', 'found it!!', 'exp_sp_my_profile');
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_profile');
+		$this->verbose('Render grid: ' . $this->getUrl() .
+				'<hr />' . $this->content);
+	}
+	private function  saveprofile(){
+		$edit = array('about_me'=> 'noooo');
+
+		$post_field = array('submit'=>array(
+				"form_id"=>"exp_sp_my_profile_form",
+				"_triggering_element_name"=>"save",
+				"_triggering_element_value"=>"Save",
+		),
+				'wrapper'=>'my-profile-form-wrapper');
+		$this->setHttpReferer('learning/my-profile');
+		$out = $this->drupalPostAJAX(null,$edit,'Save','?q=system/ajax',array(),array(),'exp_sp_my_profile',$post_field);
+		$this->verbose('Render grid: ' . $this->getUrl() .
+				'<hr />' . $this->content);
+	}
+	private function getMyProfileActivityDetails(){
+	$user_id = db_query("select id from slt_person where user_name = 'sandhya'")->fetchField();
+	$select = db_select('slt_audit_trail', 'activity');
+	$select->addField('activity','entity_id','entity_id');
+	$select->addField('activity','functionality_name','functionality_name');
+	$select->addField('activity','entity_type','entity_type');
+	$select->addField('activity','id','activityid');
+	$weekAgo= date("Y-m-d",strtotime("-1 week"));
+	$select->condition('activity.logged_user_id',$user_id);
+	$select->condition('activity.mod_user_id',$user_id);
+	$select->condition('activity.custom0', '', 'IS NULL');
+	$select->condition('activity.custom4','','IS NULL');
+	$select->orderBy('activity.id', 'DESC');
+	$select->condition('activity.entity_type', array('cre_sys_obt_cur','cre_sys_obt_trn','cre_sys_obt_crt','cre_sys_obt_cls','cre_sys_obt_usr','cre_sys_obt_not','Class','Curricula','Certification','Notice','Learning Plan','User'),'IN');
+			
+	$select->condition('activity.functionality_name', array('enrollUserToClass','classcancelled','classcompleted','tpregistered','tpcancelled','myaccount','myprofilepersonal','tpcompleted','myprofile','updateskilldetails','addnewskilldetails','deleteskilldetails','passwordupdated','classincomplete','tpincomplete','classswitch','tprecertify','dismissannouncement','addnewCertificatedetails'),'IN');
+	$select->range(0, 1);
+	$list= $select->execute()->fetchAll();
+	return $list;
+
+	}
+	 private function deleteActivity(){
+		$result = $this->getMyProfileActivityDetails();
+		debug($result);
+		$out = $this->drupalGet("learning/my-profile/activity/remove/".$result[0]->entity_id."/".$result[0]->entity_type."/".$result[0]->functionality_name."/".$result[0]->activityid."");
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_profile');
+	} 
+	private function getmyskills(){
+		$user_id = db_query("select id from slt_person where user_name = 'sandhya'")->fetchField();
+		//debug($user_id);
+		$select = db_select("slt_skill_set","skill");
+		//$select->leftjoin('slt_program','prog','skill.program_id = prog.id'); // For getting updated TP title. ticket: 0023049 //
+		$select->addField('skill','id','skill_id');
+		$select->condition('skill.user_id',$user_id,'=');
+		$select->condition('skill.is_deleted', '', 'IS NULL');
+		$list= $select->execute()->fetchAll();
+		//debug($list);
+		return $list;
+	}
+	private function deleteskill(){
+	$skill = $this->getmyskills();
+	debug($skill);
+	if($skill){
+		debug($skill);
+		$out = $this->drupalGet("learning/myprofile/skills/remove/".$skill[0]->skill_id."");
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_profile');
+	}
+	}
+ private function getUserPoints($userId) {
+		
+  $selectStmt = db_select('slt_user_points','points');
+  $selectStmt->addExpression('SUM(points.total_points)','actionpoints');
+  $selectStmt->condition('points.user_id',$userId,'=');
+  $selectStmt->condition('points.operation_flag','insert','=');
+  $result = $selectStmt->execute()->fetchField();
+  $result = ($result)? $result : 0;
+  expDebug::dPrintDBAPI('getTotalUserpOINTS',$selectStmt);
+  return $result;
+	}
+	private function UserPointsDisplay($userId){
+		$this->setHttpReferer('learning/my-profile');
+		$out = $this->drupalGet('learning/my-profile');
+		$points = $this->getUserPoints($userId);
+		$dd = '<div class="total-points">'.$points.'</div>';
+		expDebug::dPrint(' $items =lala ' . print_r($dd, true),3);
+		$this->assertRaw('<div class="total-user-points"><div class="total-points">'.$points.'</div>', 'Points updated', 'exp_sp_my_profile');
+	}
+ private function getActionPointsForUser($userId) {
+			$selectStmt = db_select('slt_user_points','points');
+			$selectStmt->addField('points','action_code');
+			$selectStmt->addExpression('SUM(points.total_points)','actionpoints');
+			$selectStmt->condition('points.user_id',$userId,'=');
+			$selectStmt->condition('points.operation_flag','insert','=');
+			$selectStmt->groupBy('points.action_code');
+			expDebug::dPrintDBAPI('getSeperatePointsForAction', $selectStmt);
+			$result = $selectStmt->execute()->fetchAllKeyed();
+			return $result;
+		}
+private	function getTotalUserBadges() {
+				$selectStmt = db_select('slt_badge_points','bdgpnt');
+				$selectStmt->addField('bdgpnt','badge_code');
+				$selectStmt->addField('bdgpnt','badge_points');
+				//$selectStmt->condition('bdgpnt.badge_points',$totalPoints,'<=');
+				$result = $selectStmt->execute()->fetchAllKeyed();
+				expDebug::dPrintDBAPI('getTotalUserBadge',$selectStmt);
+				return $result;
+			}
+	private	function BadgesCount($resultTotal) {
+			$regPoints = ($resultTotal['register_class']) ? $resultTotal['register_class'] : 0;
+			$compPoints = ($resultTotal['complete_class_training']) ? $resultTotal['complete_class_training'] : 0;
+			$topicCommentPoints = ($resultTotal['add_topic_comment_reply']) ? $resultTotal['add_topic_comment_reply'] : 0;
+			$ratePoints = ($resultTotal['rating_class']) ? $resultTotal['rating_class'] : 0;
+			$sharePoints = ($resultTotal['sharing_class']) ? $resultTotal['sharing_class'] : 0;
+		
+				$keyedValues = $this->getTotalUserBadges();
+				$totalCnt = 0;
+				$totalCnt = ($keyedValues['cre_sys_upt_bg1'] <= $regPoints) ? ($totalCnt+1) : $totalCnt;
+				$totalCnt = ($keyedValues['cre_sys_upt_bg2'] <= $sharePoints) ? ($totalCnt+1) : $totalCnt;
+				$totalCnt = ($keyedValues['cre_sys_upt_bg3'] <= $topicCommentPoints) ? ($totalCnt+1) : $totalCnt;
+				$totalCnt = ($keyedValues['cre_sys_upt_bg4'] <= $compPoints) ? ($totalCnt+1) : $totalCnt;
+				$totalCnt = ($keyedValues['cre_sys_upt_bg5'] <= $ratePoints) ? ($totalCnt+1) : $totalCnt;
+				return $totalCnt;
+			}
+ private function getuserbadges($userId){
+ 	$this->setHttpReferer('learning/my-profile');
+ 	$out = $this->drupalGet('learning/my-profile');
+ 	$totalPoints = $this->getActionPointsForUser($userId);
+ 	$badges = $this->BadgesCount($totalPoints);
+ 	expDebug::dPrint(' $items badges ' . print_r($badges, true),3);
+ 	$this->assertRaw('<div class="total-badge-points"><div class="total-points">'.$badges.'</div>', 'badges updated', 'exp_sp_my_profile');
+ }
+ protected function Addskill(){
+ 	$this->setHttpReferer('learning/my-profile');
+ 	$out = $this->drupalGet('learning/my-profile');
+ 	$path = '//*[@id="skill-set-title"]//a';
+ 	$tipAtr = $this->getQtipAttributes($path,'onclick');
+  	//expDebug::dPrint("ATTRS -- ".print_r($tipAtr,1),1);
+ 	debug($tipAtr);
+ 	//$this->addQtipModel2($qtipDef,$path);
+ 	$qtipDef = array(
+ 			'tipWidth'=>$tipAtr['wBubble'],
+ 			'tipTop'=>0,
+ 			'tipLeft'=>-208,
+ 			'tipId'=>$tipAtr['catalogVisibleId'],
+ 			'tipObjectId'=>$tipAtr['entityId'],
+ 			'tipTableWidht'=>480,
+ 			'tipContentId'=>$tipAtr['popupDispId'],
+ 			'tipEntityType'=>$tipAtr['entityType'],
+ 			'tipClass'=>'display-message-positioning',
+ 			'tipPos'=>'tipfaceTopMiddle'
+ 	
+ 	);
+ 	$this->addQtipModel2($qtipDef,$path);
+ 	$this->verbose('Render grid: ' . $this->getUrl() .
+ 		'<hr />' . $this->content);
+ 	
+ 	$post_field = array('wrapper'=>'popup_container_'.$qtipDef['tipContentId']);
+ 	$out = $this->drupalPostAJAX(null,$edit,'Add Skill','?q='.$tipAtr['url'],array(),array(),'',$post_field);
+ 	$this->verbose('Session Empty Form: ' . $this->getUrl() .
+ 			'<hr />' . $this->content);
+ 	
+ 	
+ 	
+ 	$param = array(
+ 			"form_id"=>"exp_sp_my_skill_set_add_form",
+ 			"_triggering_element_name"=>"Add-skill-details",
+ 			"_triggering_element_value"=>"Done",
+ 	);
+ 	$post_field = array('submit'=>$param,	'wrapper'=>'my-skill-wrapper');
+ 	$input = array("skill_name" => "msoffice",
+ 			 "proficiency"  => 1,
+ 			"display_to_others" =>"Yes"
+ 	);
+ 	$out = $this->drupalPostAJAX(null,$input,'Done','?q=system/ajax',array(),array(),'',$post_field);
+ 	$this->verbose('Skill Save: ' . $this->getUrl() .
+ 			'<hr />' . $this->content);
+ 
+ }
+	
+}
+?>

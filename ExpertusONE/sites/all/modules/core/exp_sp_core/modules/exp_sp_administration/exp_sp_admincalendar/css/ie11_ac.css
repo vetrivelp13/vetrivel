@@ -1,0 +1,24 @@
+/* Admin Calendar Styles starts here */
+#admincalendarsettingdiv #bubble-face-table .single-admin-save-button-container #edit-submit.admin-save-button-middle-bg {
+  margin-left:0
+}
+#calendarprimaryview .fc-toolbar .fc-right a .cal-setting-img {
+  margin-right:10px
+}
+#calendarprimaryview .fc-agendaDay-view {
+  margin-left:1px
+}
+#calendarprimaryview .fc-agendaDay-view .fc-head div.fc-widget-header th.fc-axis{
+  min-width:51px
+}
+.page-administration .enrolluser-class-grid-wrapper .ui-jqgrid-hbox .checkbox-selected,
+.page-administration .enrolluser-class-grid-wrapper .ui-jqgrid-hbox .checkbox-unselected{
+  width:10px
+}
+.page-admincalendar #create-schedule-addedit-form .exp-timepicker-selection{
+  top:175px
+}
+.page-admincalendar #create-schedule-addedit-form .time-picker-image .exp-timepicker-for-addedit-form {
+    background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/time-picker-icon.png") no-repeat scroll right -5px;
+}
+/* Admin Calendar Styles ends here */

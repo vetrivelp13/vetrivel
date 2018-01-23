@@ -1,0 +1,446 @@
+.block-exp-sp-classdetail h2.class-delivery-title {
+  color:#333;
+  font-weight:bold;
+  text-transform:uppercase;
+  text-index:5px
+}
+.class-detail-display-area {
+  font-size:14px;
+  color:#333
+}
+.block-exp-sp-classdetail .class-delivery-back-btn {
+  text-align:center;
+  padding-top:10px;
+  margin-left:0;
+  float:right
+}
+.block-exp-sp-classdetail .top-record-div {
+  padding-top:20px
+}
+.block-exp-sp-classdetail .top-record-div table {
+  width:101px;
+  margin:0 auto
+}
+.class-delivery-back-btn .class-detail-back-button {
+  text-decoration:none;
+  display:inline-block;
+  text-align:center;
+  padding:1px 7px 0 7px;
+  font-size:12px;
+  background:none;
+  border:0;
+  color:#4686DD;
+  cursor:pointer;
+  height:24px
+}
+.detail-item-row {
+  clear:both;
+  font-size:14px;
+  line-height:1.3em;
+  padding:0 16px 5px
+}
+.detail-item-row {
+  clear:both;
+  font-size:13px;
+  line-height:1.3em;
+  padding:0 16px 10px
+}
+.detail-item-row .para {
+  clear:both;
+  padding:15px 0 0 0
+}
+#page-container .detail-code {
+  font-family:ProximaNovaBold, Arial;
+  font-size:13px;
+  text-transform:uppercase;
+  font-weight:normal;
+  color:#474747;
+  float:left;
+  padding:0 10px 0 0;
+  line-height:20px
+}
+#page-container .detail-desc {
+  font-family:openSansRegular, Arial;
+  font-size:13px;
+  line-height:1.5em;
+  color:#474747;
+  float:left
+}
+.detail-item-row .para .prereq .head,
+.detail-item-row .para .equiv .head {
+  float:left;
+  padding-right:10px
+}
+.detail-item-row .para .prereq .desc,
+.detail-item-row .para .equiv .desc {
+  float:left
+}
+.detail-item-row .para .prereq .detail-desc ul li,
+.detail-item-row .para .equiv .detail-desc ul li {
+  clear:both;
+  padding:0 0 5px;
+  overflow:hidden
+}
+.detail-item-row .para .attachments .detail-desc li {
+  float:left
+}
+.detail-item-row .para .attachments .lpn-head {
+  float:left
+}
+.detail-item-row .para .attachments .lpn-click-info {
+  clear:both;
+  float:left;
+  font-size:12px;
+  color:#777;
+  font-weight:normal;
+  font-family:openSansRegular, Arial;
+  text-transform:none
+}
+.detail-item-row .para .attachments .attachment-link a.attach {
+  color:#2D2D2D;
+  cursor:pointer;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px
+}
+.detail-item-row .para .info .detail-desc {
+  width:84%;
+  text-align:justify
+}
+.detail-item-row .para .cdescription .detail-desc {
+  width:87%;
+  text-align:justify
+}
+.detail-item-row .para .tags .detail-desc {
+  width:93%
+}
+.detail-item-row .para .session {
+  padding:0
+}
+.detail-item-row .para .rating,
+.detail-item-row .para .rating-block {
+  float:left
+}
+.detail-item-row .para .prereq .detail-desc {
+  width:85%
+}
+.detail-item-row .para .equiv .detail-desc,
+.detail-item-row .para .attachments .detail-desc  {
+  width:81%
+}
+.detail-item-row .para .cdesc .detail-desc {
+  width:88%
+}
+.detail-item-row .para .discussions {
+  padding:0;
+  border-top:1px solid #ededed;
+  padding:10px 0
+}
+#no-records {
+  clear:both
+}
+.para1 {
+  padding:0 16px 0 16px
+}
+.detail-item-row .para-last {
+  padding:0
+}
+.detail-item-row span.more-text a.show-full-text {
+  background-position:0 -1484px
+}
+.detail-item-row span.more-text a.show-short-text {
+  background-position:0 -1497px
+}
+.code-container span.class-attachment {
+  color:#999
+}
+.class-session-details {
+  margin-top:10px;
+  padding-bottom:5px;
+  margin-bottom:5px;
+  border-bottom:1px solid #ededed;
+  margin-left:10px;
+  width:780px;
+  border:1px solid #efefef
+}
+.code-container table tr td {
+  padding-top:5px;
+  color:#2d2d2d;
+  padding-bottom:5px
+}
+.code-container .admin-forum-action-link-container table#bubble-face-table tr td {
+  padding-top:0;
+  padding-bottom:0
+}
+#class-details-data #forum-topic-list-display #pager #pager_center .search-pagination-right {
+  color: #fff
+}
+.code-container table.class-session-details tr td {
+  padding:3px 10px;
+  border-top:1px solid #fff
+}
+#class_details_display_area .column-title {
+  padding:0 0 10px
+}
+.class-details-noattachmentmsg {
+  color:#666;
+  font-size:13px;
+  padding:5px 0 0 0
+}
+.detail-item-row-left {
+  width:790px;
+  float:left
+}
+.detail-item-row-right {
+  width:112px;
+  float:right;
+  text-align:center
+}
+.block-exp-sp-classdetail .class-available-seats {
+  color:#999;
+  text-align:center;
+  line-height:15px
+}
+.block-exp-sp-classdetail .class-available-seats .title-clr {
+  color:#999;
+  font-size:12px;
+  line-height:15px
+}
+.block-exp-sp-classdetail tr td.action-btn-waitlist {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat 0 -99px;
+  border:0;
+  color:#474747;
+  cursor:pointer;
+  font-family:ProximaNovaBold, Arial;
+  font-size:11px;
+  font-weight:normal;
+  height:48px;
+  padding:0;
+  text-align:center;
+  text-transform:uppercase;
+  vertical-align:middle;
+  width:108px
+}
+.block-exp-sp-classdetail .class-details-attachments {
+  padding:5px 0
+}
+.block-exp-sp-classdetail .class-details-attachments .attachment-link {
+  color:#285EA6;
+  cursor:pointer
+}
+.block-exp-sp-classdetail .disp-msg {
+  color:#E6932D;
+  font-size:12px;
+  margin-top:4px;
+  text-align:center;
+  white-space:normal;
+  width:100%
+}
+.block-exp-sp-classdetail .search-register-btn .disp-msg-red {
+  font-size:12px;
+  line-height:1em;
+  text-align:center
+}
+.block-exp-sp-classdetail .search-register-btn .disp-msg-add-cart {
+  font-size:13px;
+  font-weight:bold;
+  line-height:1em
+}
+.block-exp-sp-classdetail .class-details-attachment-more .class-details-attachment-list {
+  padding:5px 0 0 0
+}
+.block-exp-sp-classdetail .class-details-attachment-more .class-details-attachment-list li.attachment-link {
+  cursor:pointer;
+  color:#52ACF7;
+  display:inline;
+  padding:0;
+  font-size:13px
+}
+.class-session-details tr td.class-detail-session-name {
+  word-wrap:break-word;
+  padding-right:10px;
+  color:#2d2d2d
+}
+.time-zone-format {
+  font-size:10px;
+  padding-left:3px
+}
+.detail-item-row-right .course-available-seats,
+.detail-item-row-right .course-attempt-left,
+.detail-item-row-right .course-content-validity {
+  color:#666;
+  font-size:11px;
+  padding-bottom:10px;
+  text-align:center;
+  font-weight:normal;
+  font-family:ProximaNovaBold, Arial
+}
+div.detail-item-row-left form#fivestar-rating-widget .fivestar-widget {
+  float:left;
+  padding:0 5px 0 0
+}
+span.total-votes {
+  margin:0;
+  display:block
+}
+#page-container .block-exp-sp-classdetail .search-register-btn tr td.action-btn-disable {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -128px -99px;
+  border:0;
+  color:#474747;
+  font-size:12px;
+  font-weight:lighter;
+  height:48px;
+  text-align:center;
+  text-transform:uppercase;
+  vertical-align:middle;
+  font-family:ProximaNovaBold, Arial
+}
+#page-container  .block-exp-sp-classdetail .top-record-div table {
+  width:115px;
+  margin-right:8px
+}
+#page-container .class-delivery-back-btn .class-detail-back-button {
+  text-decoration:none;
+  font-size:12px;
+  background:none;
+  border:0;
+  color:#fff;
+  cursor:pointer;
+  height:24px;
+  font-family:ProximaNovaBold, Arial;
+  text-transform:uppercase
+}
+#page-container .block-exp-sp-classdetail .search-register-btn tr td.action-btn {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat 0 -99px;
+  border:0;
+  color:#474747;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:lighter;
+  font-family:ProximaNovaBold, Arial;
+  height:47px;
+  text-align:center;
+  text-transform:uppercase;
+  vertical-align:middle
+}
+#page-container .block-exp-sp-classdetail .top-record-div {
+  padding-top:20px
+}
+#page-container  #class-details-data .forum-list-theme {
+  border-bottom:1px solid #E5E5E5;
+  padding-bottom:10px
+}
+#page-container #class-details-data #forum-topic-list-display .discuss-image-container {
+  margin-left:6px;
+  width:133px;
+  margin-top:16px
+}
+#page-container #class-details-data #forum-topic-list-display .learner-forum-topic-content {
+  width:94%;
+  padding-top:3px;
+  padding-bottom:10px;
+  font-size:12px
+}
+#page-container #class-details-data #forumTopicListContentResults .learner-forum-desc-container .learner-forum-title {
+  color:#474747;
+  float:left;
+  font-family:ProximaNovaBold, Arial;
+  font-size:12px;
+  text-transform:uppercase
+}
+#page-container #class-details-data #forum-topic-list-display .user-list-border-img {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -298px -276px;
+  height:52px;
+  margin-top:12px;
+  overflow:hidden;
+  width:52px
+}
+#page-container #class-details-data #forum-topic-list-display .learner-forum-desc-container .admin-forum-action-link-container {
+  line-height:1.286em;
+  padding-left:12px;
+  padding-top:11px
+}
+#page-container #class-details-data #forumTopicListContentResults .title_open {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat right -1495px;
+  display:block;
+  float:left;
+  height:10px;
+  margin:9px 4px 0 1px;
+  text-decoration:none;
+  width:10px
+}
+#page-container #class-details-data  #forumTopicListContentResults .title_close {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat right -1420px;
+  margin:4px 2px 0 1px;
+  display:block;
+  height:16px;
+  width:12px;
+  float:left;
+  text-decoration:none
+}
+#page-container .code-container .class-session-details th {
+  font-family:ProximaNovaBold, Arial;
+  font-size:13px;
+  font-weight:lighter;
+  text-transform:uppercase;
+  color:#474747;
+  background:#f7f7f7;
+  padding:3px 10px
+}
+.page-learning-class-details #page-container span.item-short-desc,
+.page-learning-class-details #page-container span.item-long-desc {
+  color:#2D2D2D
+}
+#class_details_display_area .class-session-detail-odd{
+  background:#fafafa
+}
+#class-details-data .attachments .detail-desc ul.class-details-attachment-list li.attachment-link {
+  margin-left:0;
+  margin-right:5px
+}
+#class-details-data .attachments .detail-desc ul.class-details-attachment-list li.attachment-link a {
+  color:#474747
+}
+.detail-item-row span.more-text a.show-short-text,
+.detail-item-row span.more-text a.show-full-text{
+  text-decoration: none
+}
+/*title restriction style*/
+.fade-out-title-container.forum-title{
+  max-width:745px
+}
+.fade-out-title-container.block-exp-sp-classdetails-title-fadeout-container{
+  max-width:830px;
+  float:left;
+}
+.fade-out-title-container.class-detail-class-code-fadeout-container{
+  max-width:730px
+}
+.fade-out-title-container.block-exp-sp-classdetails-compliance-title-fadeout-container,
+.fade-out-title-container.block-exp-sp-classdetails-mandatory-title-fadeout-container,
+.fade-out-title-container.block-exp-sp-classdetails-recommended-title-fadeout-container{
+  max-width:745px;
+  height:40px;
+  float:left
+}
+.page-learning-class-details .fade-out-title-container.class-detail-prerequisities-title-fadeout-container,
+.page-learning-class-details .fade-out-title-container.class-detail-equivalences-title-fadeout-container{
+  max-width: 400px;
+  display: inline-block;
+  margin-bottom:-8px
+}
+.page-learning-class-details .fade-out-title-container.class-detail-prerequisities-code-fadeout-container,
+.page-learning-class-details .fade-out-title-container.class-detail-equivalences-code-fadeout-container{
+  max-width: 200px;
+  display: inline-block;
+  margin-bottom:-8px
+}
+/*-- One click launch --*/
+.course-content-validity .content_concat_string { display: block; text-transform: lowercase; font-family: ProximaNova,Arial; }
+.detail-item-row-right .course-attempt-left, .detail-item-row-right .course-content-validity { padding: 0; }
+/*-- One click launch --*/
+/*! Hack for Google chrome browser */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #page-container #class-details-data div#class_details_display_area div.fivestar-widget {
+    margin:4px 0 0
+  }
+}

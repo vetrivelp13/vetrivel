@@ -1,0 +1,81 @@
+<?php 
+
+class AdministrationSurveyQuestionDeleteBase extends AdministrationSurveyQuestionTestHelper
+{
+	public function deleteSurveyQuestionTestCase($scope = 'all'){
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['surveyQuestionDelete'];
+		} else {
+			$testCases = array($this->testcases['surveyQuestionDelete'][$scope]);
+		}
+		
+		foreach($testCases as $test){
+			$surveyTitle = $this->getSurveyQuestionTitle($test['id']);
+			debug("SurveyQuestions name to delete: " . $surveyTitle);
+	
+			//drupalPost($path, $edit, $submit, $options, $headers, $form_html_id);
+			$surveyId = $test['id'];
+			$deletePath = 'ajax/admincore/deleteprocessobject/' . $surveyId . '/SurAssQues';
+			$out = $this->drupalPost($deletePath, array(), t('Delete'));
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+	
+			$surveyStatus = $this->getSurveyQuestionStatus($test['id']);
+			debug("SurveyQuestions status : " . $surveyStatus);
+		}
+	
+	}
+}
+
+class AdministrationSurveyQuestionDeleteAll extends AdministrationSurveyQuestionDeleteBase
+{
+public static function getInfo() {
+		return array(
+				'name' => 'Administration - SurveyQuestions - Delete - AllTest',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1302 - Administration - Survey - SurveyQuestions - Delete',
+		);
+	}
+
+	public function testSurveyQuestionsDeleteAll() {
+		$this->deleteSurveyQuestionTestCase('all');
+		$this->manageAdminSurveyQuestions();
+	}
+}
+
+class AdministrationSurveyQuestionDeleteCase1 extends AdministrationSurveyQuestionDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - SurveyQuestions - Delete - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1302 - Administration - Survey - SurveyQuestions - Delete',
+		);
+	}
+
+	public function testSurveyQuestionsDeleteCase1() {
+		debug('testAdminSurveyQuestionsListCase1 called');
+		$this->deleteSurveyQuestionTestCase('st_case1');
+		$this->manageAdminSurveyQuestions();
+	}
+}
+
+class AdministrationSurveyQuestionDeleteCase2 extends AdministrationSurveyQuestionDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - SurveyQuestions - Delete - Case 2',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1302 - Administration - Survey - SurveyQuestions - Delete',
+		);
+	}
+
+	public function testSurveyQuestionsDeleteCase2() {
+		debug('testAdminSurveyQuestionsListCase1 called');
+		$this->deleteSurveyQuestionsTestCase('st_case2');
+		$this->manageAdminSurveyQuestions();
+	}
+}
+
+?>

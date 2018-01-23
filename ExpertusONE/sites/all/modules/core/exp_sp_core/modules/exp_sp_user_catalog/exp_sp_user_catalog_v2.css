@@ -1,0 +1,381 @@
+/* #catalog-users .block-title {
+  text-indent: 10px
+} */
+#catalog-users #catalog-users-list {
+  padding: 6px 10px 0 10px;
+  background: #fff;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc
+}
+#catalog-users #expertus-online-datatable-pager {
+  position: relative
+}	
+#catalog-users #expertus-online-datatable-pager_center {
+  width: 100%;
+  float: right
+}
+#catalog-users #expertus-online-datatable-pager_center .ui-pg-table {
+  float: right
+}
+#catalog-users .ui-jqgrid .ui-pg-table {
+  position: static
+}
+#catalog-users #expertus-online-datatable-pager_left,
+#catalog-users #expertus-online-datatable-pager_right,
+#catalog-users #catalog-users-jqgrid_id { 
+  display: none
+}
+#catalog-users .ui-jqgrid .ui-separator,
+#catalog-users #expertus-online-datatable-pager,
+#catalog-users #gview_catalog-users-jqgrid .ui-state-default,
+#catalog-users #catalog-users-jqgrid .ui-state-hover {
+  border:0
+}
+#catalog-users #next_expertus-online-datatable-pager span,
+#catalog-users #prev_expertus-online-datatable-pager span,
+#catalog-users #expertus-online-datatable-pager,
+#catalog-users #catalog-users-jqgrid .ui-state-hover {
+  background: none
+}
+#page-container #catalog-users .ui-jqgrid .ui-pg-table td.ui-pg-button {
+  background:none
+}
+#catalog-users #first_expertus-online-datatable-pager .ui-icon-seek-pgstart {
+  background: #fff url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -304px -53px;
+  width: 12px;
+  height: 22px;
+  margin-left:0;  
+  border:0;  
+  padding:0;
+  float:left;
+  opacity: 1;
+  filter: Alpha(Opacity=100)  
+}
+#catalog-users #prev_expertus-online-datatable-pager .ui-icon-seek-prev {
+  background: #fff url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -320px -53px;
+  width: 14px;
+  height: 22px;
+  margin-left:0;  
+  border:0;  
+  padding:0;
+  float:left;
+  opacity: 1;
+  filter: Alpha(Opacity=100)
+}
+#catalog-users #next_expertus-online-datatable-pager .ui-icon-seek-next {
+  background: #fff url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -334px -53px;
+  width: 12px;
+  height: 22px;
+  margin-left:0;  
+  border:0;  
+  padding:0;
+  float:left;
+  opacity: 1;
+  filter: Alpha(Opacity=100)
+}
+#catalog-users #last_expertus-online-datatable-pager .ui-icon-seek-pgend {
+  background: #fff url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png) no-repeat -350px -53px;
+  width: 14px;
+  height: 22px;
+  margin-left:0;  
+  border:0;  
+  padding:0;
+  float:left;
+  opacity: 1;
+  filter: Alpha(Opacity=100)
+}
+#catalog-users .exp-catalogusers-first-rec {
+  padding-top: 0
+}
+#catalog-users .exp-catalogusers-last-rec {
+  padding-bottom: 0;
+  border-bottom: 0
+}
+#catalog-users .expertus-no-online-users-msg {
+  background: #ffffff;
+  border-left: 1px solid #E5E5E5;
+  border-right: 1px solid #E5E5E5;
+  width: 99.4%;
+  padding:12px 0 5px;
+  color: #999;
+  text-align: center
+}
+#block-exp-sp-usercatalog-online h2.block-title {
+  text-transform: capitalize
+}
+#catalog-users-list .profile-item .user-name {
+  font-size:15px;
+  padding-bottom:0
+}
+#catalog-users-list .profile-item .job-title {
+  font-size: 11px;
+  line-height: 17px;
+}
+.profile-online-picture {
+  float:left;
+  width:15%;
+  padding-right:10px
+}
+.profile-catalog-user-info {
+  float:left;
+  width:81%
+}
+.UserProfile_box {
+  background:#fff
+}
+.usercatalog-holder .block-title {
+  float: left
+} 
+.UserCatalogInfo .profile-catalog-user-session {
+  width: 350px;
+  display:block;
+  font-size:13px;
+  color:#333
+}
+.UserCatalogInfo .user-profile-text {
+  padding-bottom:6px  
+}
+.UserCatalogInfo .profile-catalog-list-items {
+  width: 300px;
+  padding-bottom:5px
+} 
+.UserCatalogInfo .profile-catalog-list-items .user-description {
+  float: left;
+  width: 25%;
+  color:#666
+}
+.UserCatalogInfo .profile-catalog-list-items .user-details {
+  float: left;
+  width: 75%;
+  word-wrap: break-word
+}
+#usercatalog-online-loader {
+  min-height:100px
+}
+.usercatalog-holder .qtip-content {
+  width: -moz-available
+}
+#my-login-container .admin-save-button-container {
+  margin: 1px 27px 0 0
+}
+#my-login-container .admin-save-button-middle-bg {
+  float:left;
+  width:auto
+}
+#my-login-container .learner-sign-close-link {
+  background: none;
+  color: #4686DD;
+  float: left;
+  margin: 4px 0 0;
+  padding: 0 10px 0 0
+}
+#catalog-users h2.block-title {
+ text-transform: uppercase		
+}
+.overallusersearchlist {
+  margin: -31px 2px 0 59px;
+ float: right		
+}
+.usersearchoptdiv {
+  padding: 0 10px 0 0		
+}
+#catalog-user-search-list li.eol-search-input input{
+  width:187px
+}
+#catalog-user-search-list li.eol-search-input {
+  width:187px		
+}		 
+#catalog-users .block ul {
+  margin:0		
+}
+#catalog-users-list .expertus-online-datatable .ui-pg-table .ui-pg-table {
+  margin-top: 4px
+}
+#catalog-user-search-list .ac_input {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% 4px;
+  padding-top: 1px
+}
+#catalog-user-search-list input.ac_loading {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% -16px;
+  padding-top: 1px;
+  line-height: 21px;
+  margin-left: 6px;
+  height: 20px;
+  position: relative;
+  z-index: 2000
+}
+#catalog-user-search-list .block-title {
+  line-height: 33px;
+}
+#page-container #catalog-users #catalog-users-list {
+  background: #FFF;
+  border-left: 1px solid #E5E5E5;
+  border-right: 1px solid #E5E5E5;
+  padding: 0
+}
+#catalog-users .exp-usercatalog-user-rec {
+  border-bottom: 1px solid #ededed;
+  padding: 10px 13px 10px;
+  margin-right: 0
+}
+#page-container #catalog-users .exp-catalogusers-last-rec {
+  border-bottom: 0	
+}
+#page-container .most-active-user .profile-item .profile-desc {
+  float: left;
+  padding:0;
+  text-align: left;
+  width: auto;
+  min-height:50px
+}
+#page-container .most-active-user .profile-item .user-name {
+  clear: both;
+  color: #4687DD;
+  display: inline-block;
+  line-height: 1.2em;
+  padding: 0;
+  text-decoration: none
+}
+#page-container #catalog-users .ui-jqgrid .ui-pg-table {
+  margin-right: 5px;
+  position: static
+ }
+#page-container #catalog-users .ui-jqgrid .ui-pg-table td,
+#expertus-online-datatable-pager .search-pagination-right .ui-pg-input {
+  color: #474747;
+  font-family: ProximaNovaBold;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: uppercase
+}
+#expertus-online-datatable-pager .search-pagination-right #sp_1_expertus-online-datatable-pager {
+  margin: 0 2px
+}
+#expertus-online-datatable-pager .search-pagination-right .ui-pg-input,
+#expertus-online-datatable-pager .search-pagination-right span {
+  margin: -3px 3px 0 0	
+}
+#expertus-online-datatable-pager .search-pagination-right .ui-pg-input {
+  border: #2B225A solid 1px	
+}
+#page-container #catalog-user-search-list li.eol-search-input {
+  width: 136px	
+}
+#page-container .region-sidebar-second {
+  margin-left: 683px;
+  width: 260px	
+}
+#page-container #catalog-user-search-list .block-title {
+  line-height: 38px;
+  text-indent: 2px
+}
+#catalog-user-search-list .overallusersearchlist ul.eol-search-profiles li.eol-search-input input {
+  background: #FFF;
+  font-family: openSansRegular, Arial;
+  font-size: 12px;
+  padding-left: 0px;
+  padding-right: 15px;
+  margin: 1px 0 0 0;
+  width: 116px;
+  color: #999;
+  font-style: normal
+}
+#catalog-user-search-list .overallusersearchlist ul.eol-search-profiles li.eol-search-input .ac_loading{
+ background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% -15px #FFF;
+ z-index:1005
+}
+#catalog-user-search-list .overallusersearchlist ul.eol-search-profiles li.eol-search-input {
+  background: none;	
+  border: 0;
+  float: left;
+  font-size: 11px;
+  height: 24px;
+  line-height: 28px;
+  outline: none;
+  padding-left: 0;
+  width: 136px
+}
+#catalog-user-search-list .overallusersearchlist ul.eol-search-profiles li.user-search-rightcorner {
+  background-color:#fff;
+  display: block;
+  height: 24px;
+  outline: none;
+  text-decoration: none;
+  width: auto; 
+  position: relative;	
+  z-index: 1000;
+  border-radius:0 15px 15px 0;
+  border:1px solid #e5e5e5;
+  border-left:0
+}
+#catalog-user-search-list .overallusersearchlist ul.eol-search-profiles li.user-search-rightcorner a {
+  margin: 0	
+}
+#catalog-user-search-list .overallusersearchlist ul.eol-search-profiles li.eol-search-input span {
+  background-color:#fff;
+  float: left;
+  font-size: 11px;
+  height: 24px;
+  line-height: 28px;
+  width: 123px;
+  padding-left: 15px;
+  border-radius:15px 0 0 15px;
+  border:1px solid #e5e5e5;
+  border-right:0
+  }
+#page-container .overallusersearchlist .eol-search-profiles li.eol-search-go a {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -394px -218px;
+  display: block;
+  width: 20px 		
+}
+#page-container .overallusersearchlist .eol-search-profiles li.eol-search-go.user-search-rightcorner a {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -487px -18px;
+  display: block;
+  width: 23px; 		
+}
+.fade-out-title-container.user-job-title{
+ display: inline-block;
+ float: left;
+ max-width: 140px
+}
+#page-container #catalog-user-search-list .block-title-right{
+  padding-right:7px
+}
+/* Styles for misalignment of text rows in Narrow Search Page starts here */
+#page-container .most-active-user .profile-item .job-title {
+  margin-top:-4px
+}
+#page-container .most-active-user #catalog-users-list .profile-item .profile-image {
+  margin-top:2px
+}
+#page-container #catalog-users .exp-usercatalog-user-rec {
+  padding-bottom:15px
+}
+/* Styles for misalignment of text rows in Narrow Search Page ends here */
+/* Trunk8 Fadeout for Title and Description texts starts here */
+#page-container .most-active-user #catalog-users-list .profile-item .limit-title-row.user-name {
+  max-width:154px;
+  min-width:154px
+}
+#page-container .most-active-user #catalog-users-list .profile-item .limit-title-row.user-name .limit-title{
+  word-wrap:break-word;
+  display:block	
+}
+#page-container .most-active-user #catalog-users-list .profile-item .profile-desc { 
+  float:left;
+  padding-top:0
+}
+#page-container .most-active-user #catalog-users-list .profile-item .limit-title-row.job-title {
+  max-width:154px;
+  min-width:154px;
+  float: left;
+  padding-top: 5px;
+}
+/* Trunk8 Fadeout for Title and Description texts end here */
+/*!Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+ #catalog-users-list .ui-jqgrid .ui-jqgrid-pager .ui-pg-table{
+   max-width:198px;
+   white-space:nowrap
+ }
+}	

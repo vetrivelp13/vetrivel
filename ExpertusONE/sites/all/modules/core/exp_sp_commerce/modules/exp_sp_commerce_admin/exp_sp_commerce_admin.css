@@ -1,0 +1,121 @@
+
+/*For Reports Tables by Balaji*/
+.uc-admin-store .sticky-table{
+	border: 1px solid #DDDDDD;
+	margin-top: 12px;
+    width: 100%;
+}
+
+.uc-admin-store .sticky-table .tableHeader-processed{
+	background-color:#DDDDDD;
+}
+/*
+.uc-admin-store .sticky-table tr.odd{
+	background:transparent;
+}
+*/
+
+.uc-admin-store .sticky-table td.active{
+	background-color: transparent;
+}
+	
+.uc-admin-store .sticky-table .form-text {
+	margin-top:4px;
+}
+
+.uc-admin-store .uc-admin-store-region{
+	border:1px solid #ddd;
+	padding:5px;
+	overflow:hidden;
+	background-color:#FFFFFF;
+}
+.uc-admin-store .uc-store-add-button{
+	text-align:right;
+	float:right;
+	/*padding:5px;*/
+}
+
+.uc-admin-store fieldset {
+  width:98%;
+}
+.uc-admin-store .form-checkbox{
+  float:left;
+}
+.uc-admin-store .form-type-checkbox{
+  float:left;
+  width:100%;
+}
+.uc-admin-store tr.draggable .form-type-checkbox{
+  width:auto;
+}
+.uc-admin-store .multiselect_labels {
+  padding-top:15px;
+  padding-left:80px;  
+} 
+/*To hide primary tabs of admin store in drupal.*/
+
+.uc-admin-store-region div.messages {
+	margin-top :0;
+}
+.uc-admin-store-region .tabs{
+  margin:0;
+  background-color:transparent;
+}
+.uc-admin-store .sp_content_header h2 {
+  width:100%;
+}
+/*
+.uc-admin-store .uc-store-backlinks-div{
+	float: right;
+    margin-left:5px;
+    position: relative;
+    text-align: center;
+    width: 140px;
+}*/
+.uc-admin-store .uc-store-backlinks-innerdiv{
+    font-size: 11px;
+    line-height: 1.8em;
+    padding-left: 3px;
+    text-align: left;
+}
+.uc-admin-store .uc-store-backlinks-innerdiv a:hover{
+	text-decoration:underline;
+}
+.uc-admin-store fieldset {
+    margin: 0.5em 0;
+    padding: 0.5em;
+}
+.uc-admin-store .content-wid-resize {
+    width:80%;
+}
+.uc-admin-store select {
+    width:auto;
+}
+
+/*For Commerce Roster Tables by Balaji*/
+.view-orders-commerce-roster .sticky-table{
+	border: 1px solid #DDDDDD;
+	margin-top: 12px;
+    width: 100%;
+}
+.view-orders-commerce-roster .sticky-table .tableHeader-processed{
+	background-color:#DDDDDD;
+}
+.view-orders-commerce-roster .sticky-table td.active{
+	background-color: transparent;
+}
+.view-orders-commerce-roster .sticky-table .form-text {
+	margin-top:4px;
+}
+/*cancelation policy save fixes*/
+.addedit-form-wrapper .addedit-left-col-dropPolicy legend {
+  color: #4686DD;
+}
+.addedit-form-wrapper .addedit-left-col-dropPolicy .dptxtfield {
+  color: #333333;
+  line-height: 30px;
+}
+.addedit-form-wrapper .addedit-left-col-dropPolicy,
+.addedit-form-wrapper .addedit-left-col-dropPolicy .dptxtfield {
+  font-size: 14px;
+}

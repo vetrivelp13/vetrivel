@@ -1,0 +1,102 @@
+#banner-basic-addedit-form .delete-picture-chkbox {
+  margin-left:155px
+}
+#banner-basic-addedit-form .addedit-edit-datefield {
+  height:16px;
+  width:109px
+}
+#banner-basic-addedit-form #two-col-row-banner_from_date_banner_until_date .addedit-secondcol-field-value  input.addedit-edit-datefield + img {
+  left:92px;
+  top:3px
+}		
+#banner-basic-addedit-form .addedit-twocol-secondcol .addedit-secondcol-field-value input.addedit-edit-datefield + img {
+  left:92px;
+  top:3px
+}
+#banner-basic-addedit-form .addedit-twocol-secondcol .addedit-secondcol-field-value{
+  margin-right:3px
+}
+#banner-basic-addedit-form #two-col-row-banner_twocol_row1 .addedit-twocol-secondcol .addedit-new-field-title {
+  width:116px
+}
+#banner-basic-addedit-form #two-col-row-banner_twocol_row2 .addedit-twocol-secondcol .addedit-new-field-title{
+  width:97px
+}
+#banner-basic-addedit-form .addedit-new-field-value .addedit-edit-banner_seq_num {
+  width:115px
+}
+#banner-basic-addedit-form type-file input.addedit-edit-file-upload {
+  width:0
+}		
+#banner-basic-addedit-form .text-format-wrapper #switch_edit-bannerdescription-value{
+  display:none
+}
+#banner-basic-addedit-form #two-col-row-banner_twocol_row3 {
+  margin-top:-2px
+}		
+#banner-basic-addedit-form .addedit-new-field-two-col {
+  width:550px
+}
+#banner-basic-addedit-form .addedit-form-cancel-and-save-actions-row {
+  padding-top:10px;
+  width:96%;	
+  margin:0;
+  clear:both
+}
+#banner-basic-addedit-form .admin-delete-img {
+  background:none;
+  border:0;
+  cursor:pointer;
+  height:10px;
+  padding-left:8px;
+  padding-top:1px;
+  width:9px
+}
+#banner-basic-addedit-form .admin-save-pub-unpub-button-container{
+  padding-left:8px
+}
+#banner-basic-addedit-form .addedit-left-col {
+  padding:9px 0 15px 16px
+}
+#banner-basic-addedit-form .addedit-new-field-two-col .banner-change-image-link {
+  color:#4686DD;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:normal;
+  text-align:center;
+  text-decoration:none
+}
+#banner-basic-addedit-form .crs-tab-titles-container {
+  margin-top:-20px
+}
+.page-administration-manage-banner .addedit-new-field .form-type-file input.addedit-edit-file-upload {
+  font-size:12px;
+  width:165px
+}
+.crs-tab-titles-container .access-mro-visibility .addedit-form-cancel-and-save-actions-row .resize-save_btn {margin-right:0}
+.admin-narrow-search-user {
+  margin-top: 14px;
+}
+#banner-basic-addedit-form .addedit-new-field .addedit-twocol-secondcol .addedit-new-field-title{
+  width:110px
+}
+#banner-basic-addedit-form .addedit-firstcol-field-value{
+  width:113px
+}
+.page-administration-manage-banner .narrow-search-results-item-details .fade-out-title-container.admin-narrow-search-fadeout-container {
+  max-width:500px
+}
+.page-administration-manage-banner #viewbanner-detail-wrapper .admin-narrow-banner-view-title-fadeout-container,
+.page-administration-manage-banner #viewbanner-detail-wrapper .admin-narrow-banner-view-accessname-fadeout-container {
+  max-width:430px
+}
+.page-administration-manage-banner #viewbanner-detail-wrapper #view-scroll-wrapper span.vtip  {
+  float:left
+}
+/*! Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	#banner-basic-addedit-form .admin-save-pub-unpub-button-container{
+	  padding-left:7px
+	}
+}
+	 

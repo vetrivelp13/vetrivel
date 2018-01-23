@@ -1,0 +1,328 @@
+#add-list-values-wrapper .addlist-table-heading {
+  width: 100%;
+  border-left: 1px solid #E5E5E5;
+  border-right: 1px solid #E5E5E5;
+  border-bottom: 1px solid #E5E5E5
+}
+#add-list-values-wrapper .list-header {
+  border-right: 1px solid #DADADA
+}
+#add-list-values-wrapper .adduser-title-heading {
+  color: #666;
+  font-family: proximanovabold;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: uppercase
+}
+#add-list-values-wrapper .even-list-class {
+  background: #F5F5F5
+}
+#list-values-addedit-form-details .enable-edit-icon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -339px -185px;
+  height: 20px;
+  width: 20px
+}
+#list-values-addedit-form-details .enable-delete-icon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -362px -184px;
+  height: 20px;
+  width: 20px
+}
+#list-values-addedit-form-details .edit-button-list-values .disable-edit-icon {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -423px -255px;
+  height:20px;
+  width:20px;
+  cursor :default;
+  float: left;
+  margin-top: 3px;  
+}
+#list-values-addedit-form-details .disable-delete-icon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -415px -219px;
+  height: 20px;
+  cursor: default;
+  float: left;
+  margin-top: 5px;
+  width: 20px
+}
+#list-values-addedit-form-details .attached-list-container {
+  width: 60px;
+  float: right;
+  margin-right: 8px
+}
+#addedit-listvalues-detail-wrapper .addedit-new-field-title {
+  width: 48px
+}
+#addedit-listvalues-detail-wrapper .addedit-new-field-value input.addedit-edit-textfield {
+  width: 200px
+}
+#addedit-listvalues-detail-wrapper .white-btn-bg-container {
+  float: left;
+  margin-right:10px
+}
+#addedit-listvalues-detail-wrapper .addedit-form-cancel-and-save-actions-row {
+ height: 21px
+}
+#addedit-listvalues-detail-wrapper .addedit-form-cancel-container-actions {
+  margin-right: 8px
+}
+#list-values-addedit-form-details .add-another-button {
+  cursor: pointer;
+  float: left;
+  font-family: proximanovabold;
+  font-size: 12px;
+  font-style: normal;
+  padding-left: 15px;
+  font-weight: normal;
+  color: #666;
+  text-transform: uppercase;
+  padding-top: 3px
+}
+#list-values-addedit-form-details .delete-class-button {
+  cursor: pointer;
+  float: left;
+  margin-top: 5px
+}
+#list-values-addedit-form-details .add-list-pagination-container {
+  float: right;
+  margin-right: -8px;
+  margin-top: 18px;
+  width: auto
+}
+#list-values-addedit-form-details .add-list-first-btn {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -304px -55px;
+  border: 0;
+  height: 17px;
+  opacity: 8;
+  width: 13px;
+  display: inline-block;
+  float: left;
+  margin-top: 3px;
+  vertical-align: top
+}
+#list-values-addedit-form-details .add-list-previous-btn {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -320px -55px;
+  border: 0;
+  height: 17px;
+  opacity: 8;
+  width: 16px;
+  display: inline-block;
+  float: left;
+  margin-top: 3px;
+  vertical-align: top
+}
+#list-values-addedit-form-details .add-list-next-btn {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -332px -55px;
+  border: 0;
+  height: 17px;
+  opacity: 8;
+  width: 16px;
+  display: inline-block;
+  float: left;
+  padding: 0;
+  margin-top: 3px
+}
+#list-values-addedit-form-details .add-list-last-btn {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -350px -55px;
+  border: 0;
+  height: 17px;
+  opacity: 8;
+  width: 18px;
+  display: inline-block;
+  float: left;
+  padding: 0;
+  margin-top: 3px
+}
+#list-values-addedit-form-details .tot-txt-cls {
+  font-size : 12px;
+  font-familY: proximanovabold;
+  color: #333;
+  display: inline-block;
+  height: 21px;
+  width: auto;  
+  margin-right: 0;
+  padding-top:3px;
+  float: left;
+  text-transform: uppercase
+}
+#list-values-addedit-form-details .form-item {
+  display: inline;
+  padding-right: 5px
+}
+#list-values-detail-wrapper #list-values-addedit-form-details .tot-txt-cls .form-item input{
+	float:none;
+}
+#list-values-detail-wrapper .list-form-class {
+  background: none #FFF;
+  padding: 10px 10px 22px 5px
+}
+#list-values-detail-wrapper .edit-adduser-list {
+  padding-bottom: 20px;
+  width: 94.7%
+}
+#list-values-detail-wrapper .heading-background-class {
+  background: -ms-linear-gradient(#fefefe,#ebebeb);/*For IE10*/
+  background: linear-gradient(#fefefe,#ebebeb);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#fefefe', endColorstr='#ebebeb'); /*For IE7-8-9*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fefefe, endColorstr=#ebebeb)"; 
+  border:1px solid #e5e5e5;
+  border-width: 1px 1px 0;
+  height: 25px
+}
+#addedit-listvalues-detail-wrapper .addedit-left-col {
+  padding: 15px 0 15px 5px
+}
+#list-values-detail-wrapper .pagination-total-pages {
+  float: right;
+  padding-right: 1px;
+  margin-top: 1px
+}
+.theme-ctool-popup #list-values-detail-wrapper #add_lst_pg_txtfld{
+  border: 1px solid #2B225A;
+  border-radius: 0;
+  font-family: proximanovabold;
+  font-size: 12px;
+  height: 13px;
+  padding-left: 0;
+  text-align: center;
+}
+#list-values-addedit-form-details .seperator-edit-delete {
+  color: #CCC;
+  float: left;
+}
+#add-list-values-wrapper .add-custombtn-symbol {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -493px -231px;
+  font-size: 12px;
+  line-height: 13px;
+  padding-left: 10px;
+  margin-top: 5px
+}
+#add-list-values-wrapper .add-custombtn-symbol-greyout {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -493px -231px;
+  font-size: 12px;
+  line-height: 13px;
+  padding-left: 10px;
+  margin-top: 5px;
+  opacity:0.5;
+  cursor:default
+}
+#list-values-addedit-form-details .edit-button-list-values {
+  float: left
+}
+#addedit-listvalues-detail-wrapper .addedit-form-cancel-container-actions .admin-action-button-middle-bg {
+  padding: 0;
+  background: none;
+  border:none
+}
+.page-administration-people-setup div.popups-title .popups-close {
+  margin-right: 5px
+}
+.page-administration-people-setup .modal-title {
+  margin-left: 2px
+}
+/* Search CSS Styles Start */
+
+#add-list-values-wrapper .admin_add_multi_search_container{
+	top: 0px;
+	width: 100%
+}
+#add-list-values-wrapper .admin_add_multi_auto_search{
+	background : none;
+	border: 0 none;
+	width: 180px
+}
+#add-list-values-wrapper .form-item-listvalues-autocomplete{
+	position: absolute;
+	width: 167px;
+	height: 23px;
+	line-height: 23px;
+	border:1px solid #e5e5e5;
+	border-width:1px 0
+}
+#add-list-values-wrapper .admin_ac_input_mainform{
+	position: absolute;
+	width: 168px;
+	height: 21px;
+	line-height: 23px;
+	/*border:1px solid #e5e5e5;
+	border-width:1px 0*/
+}
+#listvalues-autocomplete{
+	/*border:1px solid #e5e5e5;
+	border-radius: 0px;
+	border-width:1px 0*/
+	border: none;
+}
+#add-list-values-wrapper .admin-pagination-search-go{
+	float: right;
+	height: 20px;
+	margin: 2px 0
+}
+#add-list-values-wrapper #search-dropdwn-list{
+	width: 50px
+}
+#add-list-values-wrapper #select-list-dropdown{
+	font-family: ProximaNovaBold,Arial;
+	padding: 4px 2px 5px 15px;
+	text-transform: uppercase;
+	width: 60px
+}
+.theme-ctool-popup #add-list-values-wrapper #listvalues-autocomplete.ac_loading{
+	background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% -15px #FFF;
+	height:21px;
+	line-height:23px;
+	z-index: 10
+}
+
+.admin_add_multi_auto_search .input-field-grey {
+    font-size: 11px;
+}
+#no-list-values-setup {
+	padding-top: 20px;
+}
+.page-administration-people-setup .admin-save-button-container.add-class-button{
+   margin: 0 auto;
+   position: relative;
+   top:10px;
+   right:118px
+}
+.fade-out-title-container.admin-setup-name-fadeout-container{
+   max-width:230px
+}
+#add-list-values-wrapper .even-list-class .fade-out-title-container.admin-setup-name-fadeout-container .fade-out-image{
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/title_gradient.png") no-repeat right -60px
+}
+#addedit-listvalues-detail-wrapper .addedit-edit-listvalues-save-button.admin-save-button-middle-bg{
+  margin:0
+}
+/*!Chrome Hack*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #list-values-detail-wrapper .edit-adduser-list {
+    padding-bottom: 4px
+  }
+  #list-values-addedit-form-details .add-list-pagination-container {
+    width: auto;
+    margin-right: 0
+  }
+  #list-values-addedit-form-details .tot-txt-cls {
+    padding-top: 2px;
+    line-height: 19px
+  }
+   #list-values-addedit-form-details .tot-txt-cls .form-item-add-lst-pg-txtfld {
+     margin-top: -2px
+   }
+  #list-values-addedit-form-details .add-list-previous-btn,
+  #list-values-addedit-form-details .add-list-next-btn {
+    width:15px
+  }
+  #list-values-detail-wrapper .pagination-total-pages {
+    float: none
+  }
+  #list-values-addedit-form-details .add-list-last-btn {
+    width: 13px
+  }
+  #list-values-detail-wrapper .list-form-class {
+    padding: 10px 10px 39px 5px
+  }
+  #add-list-values-wrapper .add-custombtn-symbol {
+    background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -493px -231px
+  }
+}

@@ -1,0 +1,12 @@
+name = Banner Administration
+description = Responsible for Banner administration
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration_manage
+testing_api = 2.x
+files[] = exp_sp_administration_banner.inc
+files[] = tests/exp_sp_administration_banner.test
+files[] = tests/exp_sp_administration_banner_create.test
+files[] = tests/exp_sp_administration_banner_update.test
+files[] = tests/exp_sp_administration_banner_delete.test
+version = VERSION
+core = 7.x

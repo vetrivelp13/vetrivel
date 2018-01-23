@@ -1,0 +1,81 @@
+<?php 
+
+class AdministrationBannerDeleteBase extends AdministrationBannerTestHelper
+{
+	public function deleteBannerTestCase($scope = 'all'){
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['bannerDelete'];
+		} else {
+			$testCases = array($this->testcases['bannerDelete'][$scope]);
+		}
+		
+		foreach($testCases as $test){
+			$bannerTitle = $this->getBannerTitle($test['id']);
+			debug("Banner name to delete: " . $bannerTitle);
+	
+			//drupalPost($path, $edit, $submit, $options, $headers, $form_html_id);
+			$bannerId = $test['id'];
+			$deletePath = 'ajax/admincore/deleteprocessobject/' . $bannerId . '/banner';
+			$out = $this->drupalPost($deletePath, array(), t('Delete'));
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+	
+			$bannerStatus = $this->getBannerStatus($test['id']);
+			debug("Banner status : " . $bannerStatus);
+		}
+	
+	}
+}
+
+class AdministrationBannerDeleteAll extends AdministrationBannerDeleteBase
+{
+public static function getInfo() {
+		return array(
+				'name' => 'Administration - Banner - Delete - AllTest',
+				'description' => 'Module : exp_sp_administration_banner',
+				'group' => '1503 - Administration - Manage - Banner - Delete',
+		);
+	}
+
+	public function testBannerDeleteAll() {
+		$this->deleteBannerTestCase('all');
+		$this->manageAdminBanner();
+	}
+}
+
+class AdministrationBannerDeleteCase1 extends AdministrationBannerDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Banner - Delete - Case 1',
+				'description' => 'Module : exp_sp_administration_banner',
+				'group' => '1503 - Administration - Manage - Banner - Delete',
+		);
+	}
+
+	public function testBannerDeleteCase1() {
+		debug('testBannerDeleteCase1 called');
+		$this->deleteBannerTestCase('st_case1');
+		$this->manageAdminBanner();
+	}
+}
+
+class AdministrationBannerDeleteCase2 extends AdministrationBannerDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Banner - Delete - Case 1',
+				'description' => 'Module : exp_sp_administration_banner',
+				'group' => '1503 - Administration - Manage - Banner - Delete',
+		);
+	}
+
+	public function testBannerDeleteCase2() {
+		debug('testBannerDeleteCase2 called');
+		$this->deleteBannerTestCase('st_case2');
+		$this->manageAdminBanner();
+	}
+}
+
+?>

@@ -1,0 +1,4 @@
+﻿#partial po file 
+
+msgid "Translations"
+msgstr "Translations"

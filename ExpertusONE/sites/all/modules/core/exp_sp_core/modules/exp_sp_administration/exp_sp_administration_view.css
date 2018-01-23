@@ -1,0 +1,908 @@
+.top-record-div-left {
+  padding-bottom:10px;
+  display:block
+}
+.detail-code {
+  color:#666;
+  float:left;
+  font-size:13px;
+  font-weight:bold;
+  line-height:21px;
+  padding:3px 10px 0 2px
+}
+.detail-code.attachments {
+  padding:0 0 10px 10px
+}
+.detail-desc {
+  color:#666;
+  float:left;
+  font-size:13px;
+  line-height:21px;
+  padding:3px 0
+}
+#detail-desc-view {
+  display:block;
+  width:618px;
+  vertical-align:top;
+  text-align:justify
+}
+#viewcourse-detail-wrapper #detail-desc-view {
+  width:595px
+}
+#viewclass-detail-wrapper #detail-desc-view {
+  text-align:justify;
+  width:570px
+}
+.detail-desc.attachments {
+  padding-top:0
+}
+.para {
+  clear:both
+}
+.para ul.class-details-attachment-list {
+  padding-left:5px
+}
+#view-scroll-wrapper {
+  height:625px
+}
+#view-scroll-wrapper .jspTrack {
+  height:621px
+}
+#view-scroll-wrapper .jspVerticalBar {
+  right:18px
+}
+.class-session-details {
+  margin-top:10px;
+  padding-bottom:5px;
+  margin-bottom:5px;
+  margin-left:4px;
+  width:695px;
+  border:1px solid #CCC;
+  border-top:0
+}
+.code-container table.class-session-details tr td {
+  padding:5px 10px;
+  border-top:1px solid #fff
+}
+.class-session-details tr td.class-detail-session-name {
+  word-wrap:break-word;
+  padding-right:10px;
+  color:#2d2d2d
+}
+.code-container .class-session-details th {
+  font-size:13px;
+  font-weight:bold;
+  color:#666;
+  padding:5px 10px;
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png") repeat-x right -38px #000;
+  border:1px solid #CCC;
+  border-width:0 1px 1px 
+}
+#paint-classes-list .title_open {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -119px -14px;
+  display:block;
+  float:left;
+  height:12px;
+  margin:0 4px 0 1px;
+  text-decoration:none;
+  width:10px
+}
+#paint-classes-list .title_close {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -129px -15px;
+  display:block;
+  float:left;
+  height:14px;
+  margin:0 2px 0 1px;
+  text-decoration:none;
+  width:12px
+}
+#paint-classes-list tr.jqgrow td {
+  padding:5px 5px 5px 2px;
+  vertical-align:top
+}
+#paint-classes-list tr td {
+  border:0;
+  color:#333333;
+  font-size:13px;
+  height:auto
+}
+#course-details-data {
+  margin-left:0
+}
+#course-details-display-content  #gview_paint-classes-list .ui-jqgrid-hdiv .ui-jqgrid-hbox .ui-jqgrid-htable .ui-jqgrid-labels th.ui-state-hover {
+  background:none;
+  border:0
+}
+#course-details-display-content #gview_paint-classes-list .ui-jqgrid-bdiv #paint-classes-list tr.ui-state-hover {
+  background:#DBEEFA;
+  border:none
+}
+#course-details-display-content .ui-jqgrid .ui-jqgrid-sortable {
+  color:#666;
+  cursor:default;
+  font-size:13px;
+  font-weight:bold;
+  height:auto;
+  margin-left:0;
+  text-align:left
+}
+#course-details-data .ui-jqgrid .ui-icon.ui-icon-asc {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -117px -13px;
+  height:16px;
+  margin-top:2px;
+  width:12px
+}
+#course-details-data .ui-jqgrid .ui-icon.ui-icon-desc {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -117px -26px;
+  height:16px;
+  margin-top:4px;
+  width:12px
+}
+#view-detail-wrapper #course-details-display-content #gview_paint-classes-list .ui-state-default {
+  border:0
+}
+#admin-data-grid .user-enrollment-div-cls #bubble-face-table {
+  position:relative
+}
+#admin-data-grid .user-enrollment-div-cls .bottom-qtip-tip {
+  position:absolute;
+  right:120px;
+  top:-35px
+}
+#viewcourse-detail-wrapper #course-details-data .ui-jqgrid .ui-state-disabled {
+  opacity:0
+}
+#viewclass-detail-wrapper .ui-jqgrid .ui-state-disabled ,
+#viewprogram-detail-wrapper .ui-jqgrid .ui-state-disabled {
+  opacity:1
+}
+.sub-detail-code {
+  color:#666;
+  float:left;
+  font-size:13px;
+  font-weight:bold;
+  line-height:20px;
+  padding:3px 10px;
+  text-indent:10px
+}
+.sub-detail-desc {
+  color:#666;
+  float:left;
+  font-size:13px;
+  line-height:1.5em;
+  padding-top:1px
+}
+.version-detail-desc {
+  color:#666;
+  float:left;
+  font-size:13px;
+  line-height:1.5em;
+  padding-top:1px;
+  width:50%
+}
+#viewcontent-detail-wrapper .code-container #detail-desc-view {
+  width:508px;
+  text-align:justify
+}
+#access-detail-desc {
+  display:block;
+  width:640px;
+  vertical-align:top
+}
+#viewcourse-detail-wrapper #access-detail-desc {
+  width:615px
+}
+#viewquestion-detail-wrapper .detail-desc {
+  display:block;
+  vertical-align:top;
+  width:440px
+}
+#viewquestion-detail-wrapper .detail-code {
+  width:92px
+}
+.question-opt-container .opt-detail-code {
+  color:#666;
+  float:left;
+  font-size:13px;
+  font-weight:normal;
+  line-height:20px;
+  padding:3px 0;
+  text-indent:0;
+  clear:both;
+  width:70px
+}
+.question-opt-container {
+  float: left;
+  width: 440px
+}
+.opt-detail-desc {
+  color:#666;
+  float:left;
+  font-size:13px;
+  line-height:21px;
+  padding-top:3px;
+  width:300px;
+  display:block;
+  vertical-align:top;
+  text-align:justify
+}
+.sur-opt-detail-desc {
+  color:#666;
+  float:left;
+  font-size:13px;
+  line-height:21px;
+  padding-top:3px;
+  width:340px;
+  display:block;
+  vertical-align:top;
+  text-align:justify;
+  padding-left:10px
+}
+.question-opt-container input#option-list {
+  float:left;
+  margin-left:12px;
+  margin-top:5px
+}
+.option-text {
+  font-size:10px
+}
+.question-opt-container  .sub-opt-detail-code {
+  color:#666;
+  float:left;
+  font-size:13px;
+  font-weight:normal;
+  line-height:20px;
+  padding:3px 0;
+  text-indent:0;
+  clear:both;
+  width:80px
+}
+#viewsurass-detail-wrapper  .assess-question-detais {
+  border:1px solid #CCC;
+  border-top:0;
+  margin-bottom:5px;
+  margin-left:3px;
+  margin-top:10px;
+  padding-bottom:5px;
+  width:595px
+}
+.assess-question-detais th {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png") repeat-x right -38px #000;
+  border:1px solid #CCC;
+  border-top:0;
+  font-size:12px;
+  font-weight:bold
+}
+.assess-question-detais th,
+.assess-question-detais td {
+  padding:5px
+}
+#viewsurass-detail-wrapper #survey-detail-desc {
+  width:475px;
+  display:block;
+  vertical-align:top;
+  text-align:justify
+}
+.learning-course-title .mnd-txt {
+  float:left;
+  padding:3px 0 0
+}
+.learning-course-title .catalog-course-mandatory-bg-left {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat 0 -1927px;
+  display:block;
+  float:left;
+  height:17px;
+  vertical-align:middle;
+  width:10px
+}
+.learning-course-title .catalog-course-mandatory-bg-middle {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -11px -1927px;
+  color:#FFF;
+  display:block;
+  float:left;
+  font-size:10px;
+  font-weight:bold;
+  height:17px;
+  line-height:10px;
+  padding:0 3px;
+  vertical-align:middle
+}
+.learning-course-title .catalog-course-mandatory-bg-right {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -119px -1927px;
+  display:block;
+  float:left;
+  height:17px;
+  width:10px
+}
+.left-side-container {
+  float:left;
+  width:48%;
+  clear:both
+}
+.right-side-container {
+  float:right;
+  width:48%
+}
+.view-enrollment-popup {
+  float:left;
+  position:relative;
+}
+.view-enrollment-popup .tab-title {
+  height:29px;
+  line-height:29px;
+  cursor:pointer
+}
+#vieworganization-detail-wrapper #org-desc-view {
+  display:block;
+  vertical-align:top;
+  width:435px;
+  text-align:justify
+}
+.user-section-separator {
+  border-bottom:1px solid #e5e5e5;
+  width:600px
+}
+#viewsurass-detail-wrapper #view-scroll-wrapper {
+  height:500px
+}
+#viewsurass-detail-wrapper #view-scroll-wrapper .jspTrack {
+  height:498px
+}
+#viewquestion-detail-wrapper  #view-scroll-wrapper {
+  height:280px
+}
+#viewquestion-detail-wrapper #view-scroll-wrapper .jspTrack {
+  height:278px
+}
+#viewcontent-detail-wrapper #view-scroll-wrapper {
+  height:400px
+}
+#viewcontent-detail-wrapper #view-scroll-wrapper .jspTrack {
+  height:398px
+}
+#view-scroll-wrapper  .jspDrag,
+#view-scroll-wrapper .jspVerticalBar,
+#view-scroll-wrapper .jspTrack {
+  border:0;
+  border-radius:10px
+}
+.table-detail-tr-odd {
+  background:#F7F7F7
+}
+.course-details {
+  font-size:13px;
+  padding:10px 10px 0;
+  text-transform:uppercase
+}
+.detail-title {
+  color:#666;
+  font-size:13px;
+  font-weight:bold;
+  line-height:20px;
+  padding:3px 10px 0 2px
+}
+#viewbanner-detail-wrapper #view-scroll-wrapper {
+  height:320px
+}
+#viewbanner-detail-wrapper #view-scroll-wrapper .jspTrack {
+  height:318px
+}
+#viewbanner-detail-wrapper #banner-detail-desc {
+  text-align:justify;
+  width:430px;
+  display:block;
+  vertical-align:top
+}
+#viewannounce-detail-wrapper #announce-detail-desc {
+  text-align:justify;
+  width:430px;
+  display:block;
+  vertical-align:top;
+  padding-bottom:10px
+}
+#viewannounce-detail-wrapper  #view-scroll-wrapper {
+  height:265px
+}
+.announce-code {
+  color:#666;
+  float:left;
+  font-size:12px;
+  font-weight:bold;
+  line-height:20px;
+  padding:3px 10px 0 0;
+  text-align:left;
+  width:91px
+}
+.time-detail-desc {
+  color:#666;
+  float:left;
+  font-size:12px;
+  font-weight:normal;
+  line-height:25px;
+  padding:0 10px
+}
+#notify-detail-desc {
+  text-align:justify;
+  width:550px;
+  display:block;
+  vertical-align:top
+}
+#viewnotification-detail-wrapper #view-scroll-wrapper {
+  height:400px
+}
+#viewnotification-detail-wrapper #view-scroll-wrapper .jspTrack {
+  height:398px
+}
+.template-separation {
+  border-bottom:1px solid #CCC
+}
+#viewnotification-detail-wrapper .class-session-details {
+  margin-right:34px;
+  width:640px
+}
+.edit-class-list-left {
+  color:#777;
+  font-size:12px;
+  margin:4px 0 0
+}
+.template-names {
+  color:#2d2d2d
+}
+#viewcourse-detail-wrapper .detail-code {
+  width:107px
+}
+#viewclass-detail-wrapper .detail-code {
+  width:122px
+}
+#viewcourse-detail-wrapper #course-detail-desc-view {
+  text-align:justify;
+  width:610px
+}
+#enrollment-class-list-view .ui-jqgrid .ui-jqgrid-htable th div {
+  color:#666;
+  font-size:13px;
+  font-weight:bold;
+  padding-left:10px
+}
+#viewclass-detail-wrapper #enrollment-class-list-view .ui-jqgrid .ui-jqgrid-htable th div,
+#viewprogram-detail-wrapper #enrollment-class-list-view .ui-jqgrid .ui-jqgrid-htable th div {
+  text-align:left
+}
+.view-enrollment-popup #bubble-face-table .ui-jqgrid  .ui-jqgrid-view  .ui-state-default {
+  background:none;
+  border:0
+}
+.view-enrollment-popup #bubble-face-table .ui-jqgrid .ui-jqgrid-view .ui-state-default.ui-jqgrid-hdiv {
+  border-bottom:1px solid #ddd
+}
+#enrollment-class-list-view  .view-enrollment-popup .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  color:#666;
+  font-size:12px;
+  line-height:21px
+}
+#viewclass-detail-wrapper #enrollment-class-list-view  .view-enrollment-popup .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  padding:5px 5px 5px 2px;
+  cursor:pointer
+}
+#enrollment-class-list-view  .view-enrollment-popup .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-state-hover {
+  border:none;
+  background:#F7F7F7
+}
+.view-enrollment-popup .ui-jqgrid .ui-jqgrid-hbox .ui-icon-asc {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -117px -11px;
+  height:16px;
+  margin-top:0;
+  width:12px
+}
+.view-enrollment-popup .ui-jqgrid .ui-jqgrid-hdiv .ui-icon-desc {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -117px -26px;
+  height:16px;
+  margin-top:4px;
+  width:12px
+}
+#viewclass-detail-wrapper .view-enrollment-popup .ui-jqgrid .ui-jqgrid-hdiv .s-ico .ui-state-disabled ,
+#viewprogram-detail-wrapper .view-enrollment-popup .ui-jqgrid .ui-jqgrid-hdiv .s-ico .ui-state-disabled {
+  opacity:0
+}
+#viewprogram-detail-wrapper #enrollment-class-list-view .view-enrollment-popup .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  padding:5px 5px 5px 2px
+}
+.view-enrollment-popup  .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-pgstart {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -158px -253px;
+  border:0;
+  display:block;
+  float:left;
+  height:23px;
+  margin:0 0 0 5px;
+  opacity:8;
+  width:23px
+}
+
+.view-enrollment-popup   .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-prev {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -92px -302px;
+  border:0;
+  display:block;
+  float:left;
+  height:23px;
+  margin:0 2px 0 5px;
+  opacity:8;
+  width:23px
+}
+.view-enrollment-popup   .search-pagination-right .ui-pg-input {
+  height:13px;
+  margin-right:3px;
+  margin-top:-2px;
+  padding-top:0
+}
+.view-enrollment-popup  .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-next {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -126px -302px;
+  border:0;
+  display:block;
+  float:left;
+  height:23px;
+  margin:0 0 0 3px;
+  opacity:8;
+  padding:0;
+  width:23px
+}
+.view-enrollment-popup   .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-pgend {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -158px -302px;
+  border:0;
+  display:block;
+  float:left;
+  height:23px;
+  margin:0 0 0 5px;
+  opacity:8;
+  padding:0;
+  width:23px
+}
+.view-enrollment-popup  #data-table-page-view {
+  display:none
+}
+.user-enrollment-bottom-row-cls #user-enrollment-container {
+  float:right
+}
+#user-enrollment-container .user-enroll-close-link {
+  color:#4686DD;
+  cursor:pointer;
+  font-weight:normal;
+  margin-right:18px
+}
+.view-enrollment-popup .ui-jqgrid-view .ui-pager-control .ui-pg-table {
+  position:absolute;
+  right:0;
+  top:0
+}
+.view-enrollment-popup .norecords-msg-edit-page {
+  position:relative;
+  top:88px;
+  font-weight:normal
+}
+.user-separator {
+  border-bottom:1px solid #e5e5e5;
+  width:700px
+}
+#viewuser-detail-wrapper .userview-label {
+  color:#666;
+  float:left;
+  font-size:13px;
+  font-weight:normal;
+  line-height:20px;
+  padding:3px 10px;
+  width:142px
+}
+#viewuser-detail-wrapper .job-role .user-desc{
+  width:175px
+}
+#viewuser-detail-wrapper .user-container {
+  padding-bottom:5px
+}
+#viewuser-detail-wrapper .user-desc {
+  color:#666;
+  float:left;
+  font-size:13px;
+  line-height:20px;
+  text-align:left;
+  padding:3px 0
+}
+#viewuser-detail-wrapper .user-container .user-desc span.vtip {
+  width:165px;
+  float:left
+}
+#vieworganization-detail-wrapper .detail-code {
+  width:129px
+}
+#vieworganization-detail-wrapper #org-right-detail-code {
+  min-width:80px
+}
+.code-container {
+  padding-bottom:5px
+}
+#vieworganization-detail-wrapper #access-detail-desc,
+#vieworganization-detail-wrapper #custom-detail-desc {
+  width:470px
+}
+.correct-detail-desc {
+  color:#666;
+  float:left;
+  font-size:12px;
+  line-height:20px;
+  padding-top:3px
+}
+#viewsurass-detail-wrapper .detail-code {
+  width:107px
+}
+#viewsurass-detail-wrapper .right-side-container .detail-code {
+  width:127px
+}
+#viewsurass-detail-wrapper .right-side-container {
+  width:31%
+}
+#viewsurass-detail-wrapper .left-side-container {
+  width:63%
+}
+#viewcontent-detail-wrapper .detail-code {
+  width:84px
+}
+#viewcontent-detail-wrapper .class-session-details {
+  width:595px
+}
+#viewcontent-detail-wrapper .right-side-container {
+  width:35%
+}
+#viewbanner-detail-wrapper .detail-code {
+  width:122px
+}
+#viewbanner-detail-wrapper .right-side-container {
+  width:40%
+}
+#viewnotification-detail-wrapper .detail-code {
+  width:80px
+}
+#viewsurass-detail-wrapper  .detail-code-container {
+  font-size:13px;
+  margin-left:3px;
+  padding:5px 0;
+  width:573px;
+  font-weight:bold;
+  color:#666
+}
+#viewsurass-detail-wrapper .code-container .class-session-details th {
+  background:#FAFAFA
+}
+#viewprogram-detail-wrapper .detail-code {
+  width:129px
+}
+#viewsurass-detail-wrapper #access-detail-desc {
+  width:480px
+}
+#viewannounce-detail-wrapper #access-detail-desc {
+  width:430px
+}
+#viewcourse-detail-wrapper #course-details-display-content  #gview_paint-classes-list  .view-enrollment-popup #bubble-face-table .ui-jqgrid .ui-jqgrid-view  .ui-jqgrid-hdiv th.ui-state-hover {
+  background:none;
+  border-top:0
+}
+#course-details-display-content #gview_paint-classes-list #enrollment-class-list-view  .ui-jqgrid-hdiv .ui-jqgrid-hbox .ui-jqgrid-htable .ui-jqgrid-labels th {
+  border-top:0
+}
+#viewcourse-detail-wrapper #course-details-data #enrollment-class-list-view  .ui-jqgrid .s-ico .ui-state-disabled {
+  opacity:0
+}
+#viewcourse-detail-wrapper #course-details-data #enrollment-class-list-view  .ui-jqgrid .ui-state-disabled {
+  opacity:1
+}
+#viewcourse-detail-wrapper .right-side-container{
+	 width:29%
+}
+#viewprogram-detail-wrapper .right-side-container {
+  width:32%
+}
+#viewcourse-detail-wrapper .left-side-container{
+	width:68%
+}
+#viewprogram-detail-wrapper .left-side-container {
+  width:64%
+}
+#viewcourse-detail-wrapper #paint-classes-list .right-side-container,
+#viewclass-detail-wrapper .right-side-container {
+  width:35%
+}
+#viewcourse-detail-wrapper #paint-classes-list .left-side-container,
+#viewclass-detail-wrapper .left-side-container {
+  width:62%
+}
+#viewprogram-detail-wrapper .no-course-items {
+  color:#777;
+  display:block;
+  font-size:12px;
+  text-align:right
+}
+#viewprogram-detail-wrapper #tp-desc-view {
+  width:570px;
+  display:block;
+  vertical-align:top
+}
+#vieworganization-detail-wrapper #view-scroll-wrapper {
+  height:375px
+}
+#vieworganization-detail-wrapper #view-scroll-wrapper .jspTrack {
+  height:372px
+}
+#vieworganization-detail-wrapper .para {
+  margin-left:-6px
+}
+#viewannounce-detail-wrapper .right-side-container {
+  width:42%
+}
+#viewprogram-detail-wrapper #tp-right-view {
+  width:104px
+}
+.enroll-course-title {
+  color:#666;
+  font-size:13px
+}
+#viewgroup-detail-wrapper #view-scroll-wrapper {
+  height:450px
+}
+#viewgroup-detail-wrapper #attr-separator {
+  float:left;
+  border:0
+}
+#viewgroup-detail-wrapper .attr-selected-pane {
+  float:left;
+  width:590px
+}
+#viewgroup-detail-wrapper .attr-selected-pane .list-group {
+  color:#2D2D2D;
+  float:left;
+  font-size:12px;
+  font-weight:normal;
+  line-height:21px;
+  padding:3px 10px 0 3px;
+  text-align:left;
+  width:129px
+}
+#viewgroup-detail-wrapper .viewright-groupdetails {
+  color:#2D2D2D;
+  float:left;
+  font-size:12px;
+  line-height:1.5em;
+  padding:3px 0;
+  width:430px
+}
+#viewgroup-detail-wrapper .attr-pane {
+  padding:0
+}
+#viewgroup-detail-wrapper .attr-selected-pane .and-class {
+  float:none;
+  left:139px;
+  position:relative
+}
+#viewgroup-detail-wrapper #attr-separator {
+  padding:0;
+  margin:0
+}
+#viewgroup-detail-wrapper #view-scroll-wrapper #admin-add-permissions .jspVerticalBar {
+  right:0
+}
+#viewgroup-detail-wrapper #permissions_disp_div {
+  margin:-31px 0 0
+}
+#viewgroup-detail-wrapper #add-user-role-page #add-class-list-wrapper .admin-class-auto-search-container {
+  margin:20px 0 0 105px
+}
+#viewgroup-detail-wrapper .admin-datagrid-pagination .ui-pg-button {
+  float:none
+}
+#viewgroup-detail-wrapper #add-user-role-page #admin-add-course-training-plan .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-pgstart {
+  height:25px
+}
+#viewgroup-detail-wrapper .tab-seperator {
+  border-left:1px solid #CCC;
+  height:13px;
+  margin:7px 9px;
+  float:left
+}
+#wrap-perm-user-list > div {
+  float:left;
+  position:relative
+}
+#wrap-perm-user-list .tab-title {
+  color:#4686DD;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:bold;
+  line-height:26px;
+  text-decoration:none
+}
+#wrap-perm-user-container {
+  margin-top:10px
+}
+#viewclass-detail-wrapper #access-detail-desc {
+  width:590px
+}
+#viewclass-detail-wrapper .right-side-container .detail-code {
+  width:103px
+}
+#view-scroll-wrapper .enrollment-tab-icon {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -152px -723px;
+  height:20px;
+  width:20px;
+  float:left;
+  margin-top:4px;
+  cursor:pointer
+}
+#viewcourse-detail-wrapper #paint-classes-list .detail-code {
+  width:116px
+}
+#viewcourse-detail-wrapper #paint-classes-list #detail-desc-view {
+  width:560px
+}
+#viewcourse-detail-wrapper #paint-classes-list .right-side-container .detail-code {
+  width:106px
+}
+#viewcourse-detail-wrapper  #paint-classes-list {
+  overflow:hidden
+}
+#viewsurass-detail-wrapper #access-detail-desc {
+  width:475px
+}
+#viewbanner-detail-wrapper #access-detail-desc{
+	width:450px
+} 
+#viewquestion-detail-wrapper #access-deatil-desc {
+  width:458px
+}
+#vieworganization-detail-wrapper .detail-code {
+  padding:3px 10px 0 6px
+}
+#enrollment-class-list-view .ui-pg-table td.ui-state-hover {
+  background:none;
+  border:0
+}
+#enrollment-class-list-view  .ui-jqgrid .ui-pg-table td.ui-state-disablked:hover {
+  padding:0
+}
+#viewcourse-detail-wrapper #paint-classes-list #access-detail-desc {
+  width:565px
+}
+#viewgroup-detail-wrapper .adduser-title-heading{
+  border-left:0
+}
+#viewgroup-detail-wrapper .resize-save_btn2 {
+  width:60px
+}
+#viewuser-detail-wrapper #user-addr-desc{
+  width:548px
+}
+.ui-widget-content a {
+  color:#666
+}
+.ui-widget-content tr.ui-widget-content.ui-state-highlight {
+  background:none;
+  border:0
+}
+#exp-sp-administration-view-tpdetails-addedit-form .view-enrollment-popup #bubble-face-table .ui-jqgrid .ui-jqgrid-view .ui-state-default {
+  max-width:430px
+}
+#viewprogram-detail-wrapper .para .detail-desc ul {
+  margin-left:0
+}
+#view-scroll-wrapper #permission-td-table tr td.user-list-detail {
+  width: 120px
+}
+/*! Chrome fix */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #viewcourse-detail-wrapper #gview_paint-classes-list .ui-jqgrid-bdiv{
+    overflow:hidden;
+  }
+  .view-enrollment-popup .tab-title {
+  height:24px;
+  line-height:24px
+  }
+  #view-scroll-wrapper .enrollment-tab-icon {margin-top:1px}
+}
+#viewuser-detail-wrapper .user-container #user-access-desc span.vtip, #viewuser-detail-wrapper .user-container #user-group-desc span.vtip {
+	width: 540px;
+}

@@ -1,0 +1,9 @@
+name = Learner My Enrollment
+description = Responsible for learner side my enrollment.
+package = ExpertusONE Learning
+dependencies[] = exp_sp_learning
+testing_api = 2.x
+files[] = exp_sp_lnrenrollment.inc
+files[] = tests/exp_sp_lnrenrollment.test
+version = VERSION
+core = 7.x

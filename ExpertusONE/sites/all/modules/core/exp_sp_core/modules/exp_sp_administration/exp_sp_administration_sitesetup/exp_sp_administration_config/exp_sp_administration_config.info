@@ -1,0 +1,6 @@
+name = Configuration Details
+description = Responsible for data visibility configuration details
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration_sitesetup
+version = VERSION
+core = 7.x

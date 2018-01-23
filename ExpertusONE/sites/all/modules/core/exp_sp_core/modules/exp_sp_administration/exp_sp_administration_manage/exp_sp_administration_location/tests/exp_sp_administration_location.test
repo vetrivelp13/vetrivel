@@ -1,0 +1,339 @@
+<?php 
+
+class AdministrationLocationTestHelper extends ExpertusWebTestCase {
+	private $searchResultContent=null;
+	
+	protected $testcases = array();
+	public $listContent = '';
+	
+	private $srcParam = array(
+			'title'=>'',		// Title base search
+			'announcementdaterange'=>'',		// date range on announcement
+			'announcementlang'=>'cre_sys_lng_eng', 	// Selected languages pipe separated
+			'sortby'=> 'desc',		//	Sort by option
+			'announcemanage' => 'cre_sys_fop_me'
+	);
+
+	public function setUp() {
+		parent::setUp();
+		$this->drupalLogin($this->admin); // login as admin
+		$this->getLocationTestCases();
+		// set refer to prevent access denied error
+		$this->setHttpReferer('learning/enrollment-search');
+	}
+	
+	public function manageAdminLocation($scope = 'basic') {
+	
+		// Get Main HTML content
+		$this->drupalPost('administration/manage/location');
+		$content = $this->content;
+	
+		// Get Filters
+		$this->drupalGetAJAX('administration/search-filter/location');
+		$this->content = drupal_json_decode($this->content);
+			
+		//Update filters with existing response
+		$replArray = array(
+				'rendered_narrow_search_filters' => 'narrow-search',
+				'rendered_main_div' => 'root-admin-results',
+				'rendered_tab_content_main' => 'tab-content-main',
+				'rendered_narrow_search_sortbar' => 'admin-maincontent_tab',
+				'rendered_narrow_search_actionbar' => 'sort-bar-V2'
+		);
+			
+		$this->updateSearchFilters($content, $replArray, 'div', 'tag', 'div' );
+	
+		$this->displayTagsById('narrow-search');
+		$this->displayTagsById('root-admin-results');
+	
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['locationList'];
+		} else {
+			$testCases = array($this->testcases['locationList'][$scope]);
+		}
+		
+		//Get search results
+		foreach($testCases as $test){
+			$this->getAdministrationLocationList($test);
+		}
+	}
+	
+	public function getAdministrationLocationList($opt = array()){
+		$opt = array_merge($this->basicParam, $opt);
+		$this->listContent = $this->content;
+		$srcRc = $this->drupalGetAJAX('administration/manage/location/search/all/',array('query'=>$opt));
+		$this->updateSearchResults($this->listContent,$srcRc,'narrow-search-results-holder');
+	}
+
+	protected function getLocationTestCases(){
+		$rand = $this->randomName();
+		$this->testcases = array(
+				'locationList' => array(
+						'basic' => array(),
+						'case1' => array(),
+				),		
+				'locationCreate' => array(
+		  				'st_case1' => array(
+		  						"name"					=> 'st_case1 Location Test '.$rand,
+								"city" 					=> 'Chennai',
+								"country"				=> 'IN', // India
+								"state" 				=>  25, // Tamilnadu
+								"zipcode"				=> '600001',
+								"timezone"				=> 'cre_sys_tmz_059',
+								"capacity"				=> 100 
+		  				 ),
+						'st_case2' => array(
+		  						"name"					=> 'st_case2 Location Test '.$rand,
+								"city" 					=> 'Chennai',
+								"country"				=> 'IN', // India
+								"state" 				=>  25, // Tamilnadu
+								"zipcode"				=> '600001',
+								"timezone"				=> 'cre_sys_tmz_059',
+								"capacity"				=> 100 
+						),
+				),
+				'locationUpdate' => array(
+						'st_case1' 	=> array(
+							"name"						=> 'st_case1 Location changed- '.$rand,
+							"id"						=> $this->getLocationId('st_case1'),	
+						 ),
+						'st_case2' => array(
+							"name"						=> 'st_case2 Location changed- '.$rand,
+							"id"						=> $this->getLocationId('st_case2'),
+						),
+				),
+				'locationDelete' => array(
+						'st_case1' 	=> array( 'id'	 	=> $this->getLocationId('st_case1') ),
+						'st_case2' 	=> array( 'id' 		=> $this->getLocationId('st_case2') ),
+				),
+				'locationView' => array(
+						'st_case1' 	=> array( 'id'	 	=> $this->getLocationId('st_case1') ),
+						
+				),
+				'locationStatus' => array(
+						'st_case1' 	=> array( 'id'	 	=> $this->getLocationId('st_case1') ),
+						'st_case2' 	=> array( 'id' 		=> $this->getLocationId('st_case2') ),
+				),
+		);
+	}
+	
+	public function getLocationTitle($locationId = '') {
+		$locationTitle = db_query("SELECT name FROM slt_location WHERE id = :location_id", array(':location_id' => $locationId ))->fetchField();
+		return $locationTitle;
+	}
+	
+	public function getLocationStatus($locationId = '') {
+		$locationStatus = db_query("SELECT status FROM slt_location WHERE id = :location_id", array(':location_id' => $locationId ))->fetchField();
+		return $locationStatus;
+	}
+	
+	public function getLocationId($search_str = '') {
+		$select = db_select('slt_location', 'loc');
+		$select->addField('loc', 'id', 'id');
+		$select->condition('loc.status','lrn_res_loc_del','!=' );
+		$select->condition('loc.name', '%' . db_like($search_str) . '%', 'LIKE');
+		$select->orderBy('loc.id', 'DESC');
+		$select->range(0,1);
+		$locationId = $select->execute()->fetchField();
+		return $locationId;
+	}
+}
+
+
+class AdministrationLocationListBase extends AdministrationLocationTestHelper
+{
+	
+}
+
+class AdministrationLocationListAll extends AdministrationLocationListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Location - List - All Tests',
+				'description' => 'Module : exp_sp_administration_location',
+				'group' => '1502 - Administration - Manage - Location - List',
+		);
+	}
+	
+	public function testLocationListAll() {
+		debug('testAdminLocationListAll called');
+		$this->manageAdminLocation('all');
+	}
+}
+
+class AdministrationLocationListCase1 extends AdministrationLocationListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Location - List - Case 1',
+				'description' => 'Module : exp_sp_administration_location',
+				'group' => '1502 - Administration - Manage - Location - List',
+		);
+	}
+
+	public function testLocationListCase1() {
+		debug('testAdminLocationListCase1 called');
+		$this->manageAdminLocation('case1');
+	}
+}
+
+/**
+ *  Location view test cases
+ *  Created By :Maheswari.M
+ *  Created Date:21.12.2016
+ */
+
+// class AdministrationLocationViewBase extends AdministrationLocationTestHelper
+// {
+// 	public function viewLocationTestCase($scope) {
+// 		$ctoolModel = array(
+// 				'modelWidth' => 890,
+// 				'modelClass' => 'ctools-modal-ctools-viewscreen-wrapper',
+// 				'modelTitle' => t('View'),
+// 				'contentWidth' => 680,
+// 				'contentMhight' => 335,
+// 				'outerHeight' => 620,
+// 				'outerWidth' => 336,
+// 				'blockHeight' => 1232,
+// 				'blockWidth' => 1343,
+// 				'modelTop' => 150,
+// 				'modelLeft' => 226.5,
+// 				'docHeight' => 1232,
+// 				'docWidth' => 1343
+// 		);
+// 		$this->addCtoolModelContent($ctoolModel);
+
+// 		$modelContent = $this->content;
+		
+// 		$testCases =$this->testcases['locationView'][$scope];		
+		
+// 		if($testCases['id']=='null'||$testCases['id']==''){		
+// 			debug('there is no location exists');
+// 		}
+// 		else{
+
+// 			//Reset content with the ctool model
+// 			$this->content = $modelContent;
+
+// 			//Get empty form
+// 			$post_field = array('wrapper'=>'paint-narrow-search-results');
+// 			$groupId = $testCases['id'];
+
+
+
+// 			$out = $this->drupalPostAJAX(null, $edit,'Save','?q=administration/manage/view-content/ajax/addedit/' . $groupId,array(),array(),'',$post_field);
+// 			$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+// 			// Do General validations
+// 			$this->assertResponse(200,'Form Rended successfully');
+// 			$webError = "Website encountered an unexpected error";
+// 			$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+
+// 		}
+// 	}
+// }
+
+// class AdministrationLocationViewCase1 extends AdministrationLocationViewBase
+// {
+// 	public static function getInfo() {
+// 		return array(
+// 			'name' => 'Administration - Location - View - Case 1',
+// 				'description' => 'Module : exp_sp_administration_location',
+// 				'group' => '1502 - Administration - Manage - Location - View',
+// 		);
+// 	}
+
+// 	public function testLocationViewCase1() {
+// 		debug('testLocationViewCase1 called');
+// 		$this->manageAdminLocation('case1');
+// 		$this->viewLocationTestCase('st_case1');
+// 	}
+// }
+
+/**
+ *  Location change status test cases
+ *  Created By :Maheswari.M
+ *  Created Date:30.12.2016
+ *  To check the functionality for the location activate/unpublish .
+ */
+
+class AdministrationLocationStatusBase extends AdministrationLocationTestHelper
+{
+	public function statusGroupTestCase($scope = 'all') {
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['locationStatus'];
+		} else {
+			$testCases = array($this->testcases['locationStatus'][$scope]);
+		}
+
+		foreach($testCases as $test){
+			$locationId = $test['id'];
+			if ($locationId != '') {
+			//fetching the location status
+			$status=$this->getLocationStatus($locationId);
+			$this->changeStatus($locationId,$status);
+			$status=$this->getLocationStatus($locationId);
+			$this->changeStatus($locationId,$status);
+			$this->content = $this->listContent;
+			$this->getAdministrationLocationList();
+		}else
+				debug ( 'The location id not found' );
+		}
+	}
+
+	public function changeStatus($locationId,$status) {
+		if($status=='lrn_res_loc_atv'){
+			//location is activated status.
+			$this->changeLocationStatus($locationId);
+			$this->assertResponse(200,'Location status suspended successfully');
+		}else{
+			//location is suspended status.
+			$this->changeLocationStatus($locationId);
+			$this->assertResponse(200,'Location status activated successfully');
+		}
+	}
+
+	public function changeLocationStatus($locationId) {
+		$this->drupalPostAJAX(null, $edit,'Save','?q=ajax/administration/manage/location/publish-and-unpublish/' . $locationId,array(),array(),'',$post_field);
+		$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+	}
+
+}
+
+class AdministrationLocationStatusCase1 extends AdministrationLocationStatusBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Location - Status - Case1',
+				'description' => 'Module : exp_sp_administration_location',
+				'group' => '1502 - Administration - Manage - Location - Status',
+		);
+	}
+
+	public function testLocationPublishCase1() {
+		debug('testLocationPublishCase1 called');
+		$this->manageAdminLocation('case1');
+		$this->statusGroupTestCase('st_case1');
+	}
+}
+
+class AdministrationLocationStatusCase2 extends AdministrationLocationStatusBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Location - Status - Case2',
+				'description' => 'Module : exp_sp_administration_location',
+				'group' => '1502 - Administration - Manage - Location - Status',
+		);
+	}
+
+	public function testLocationPublishCase2() {
+		debug('testLocationPublishCase1 called');
+		$this->manageAdminLocation('case1');
+		$this->statusGroupTestCase('st_case2');
+	}
+}
+
+
+?>

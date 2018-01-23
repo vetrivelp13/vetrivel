@@ -1,0 +1,147 @@
+<?php 
+
+class AdministrationBannerUpdateBase extends AdministrationBannerTestHelper
+{
+	public function updateBannerTestCase($scope = 'all') {
+		$ctoolModel = array(
+				'modelWidth' => 890,
+				'modelClass' => 'ctools-modal-ctools-admin-announcement-addedit-style',
+				'modelTitle' => t('Banner'),
+				'contentWidth' => 548,		// from #modal-content
+				'contentMhight' => 235,		// from #modal-content
+				'outerHeight' => 378,
+				'outerWidth' => 593,
+				'blockHeight' => 1232,		// Document Height
+				'blockWidth' => 1343,		// Document Height
+				'modelTop' => 72,			// from #modalContent
+				'modelLeft' => 630,			// from #modalContent
+				'docHeight' => 1232,		// Document Height
+				'docWidth' => 1343			// Document Width
+		);
+		$this->addCtoolModelContent($ctoolModel);
+
+		$modelContent = $this->content;
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['bannerUpdate'];
+		} else {
+			$testCases = array($this->testcases['bannerUpdate'][$scope]);
+		}
+
+		foreach($testCases as $test){
+			//Reset content with the ctool model
+			$this->content = $modelContent;
+
+			//Get empty form
+			$post_field = array('wrapper'=>'paint-narrow-search-results');
+			$update_id = $test['id'];
+			unset($test['id']);
+			$out = $this->drupalPostAJAX(null, $edit,'Save','?q=/administration/manage/banner/ajax/addedit/' . $update_id, array(), array(), '', $post_field);
+
+			$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+
+			// Do General validations
+			$this->assertResponse(200,'Form Rended successfully');
+			$webError = "Website encountered an unexpected error";
+			$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+			
+			// delete current image to upload a new image
+			$tmp_large = isset($test['files[announcement_banner_large]']) ? $test['files[announcement_banner_large]'] : '';
+			$tmp_small = isset($test['files[announcement_banner]']) ? $test['files[announcement_banner]'] : '';
+			unset($test['files[announcement_banner_large]']);
+			unset($test['files[announcement_banner]']);
+			$this->drupalPostAJAX(null, $test, 'Delete Large banner');
+			$this->drupalPostAJAX(null, $test, 'Delete banner');
+			debug('Remove large Banner Image');
+			$test['files[announcement_banner_large]'] = $tmp_large;
+			debug('Remove small Banner Image');
+			$test['files[announcement_banner]'] = $tmp_small;
+
+			// Save form
+			$param = array(
+					"form_id"=>"exp_sp_administration_banner_addedit_form",
+					"_triggering_element_name" 	=>"save",
+					"_triggering_element_value"	=>"Save",
+			);
+
+			$post_field = array('submit'=>$param,'wrapper'=>'banner-basic-addedit-form');
+
+			$out = $this->drupalPostAJAX(null, $test,'Save','?q=system/ajax',array(),array(),'',$post_field);
+
+
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+
+
+			//Check if any error thrown
+			$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+			$error = '';
+			debug("ERROR STRINGS ");
+
+			if(sizeOf($isError) > 0){
+				$error = (string) $isError[0];
+			}
+			$this->assertResponse(200,'Form Repainted successfully');
+			$txt = 'Details updated successfully';
+			$this->assertText(t($txt),'Details updated successfully','catalog_admin');
+			$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+			$webError = "Website encountered an unexpected error";
+			$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+		}
+	}
+}
+
+
+class AdministrationBannerUpdateAll extends AdministrationBannerUpdateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Banner - Update - All Tests',
+				'description' => 'Module : exp_sp_administration_banner',
+				'group' => '1503 - Administration - Manage - Banner - Update',
+		);
+	}
+
+	public function testBannerUpdateAll() {
+		$this->manageAdminBanner();
+		debug('testBannerUpdateAll called');
+		$this->updateBannerTestCase('all');
+	}
+}
+
+class AdministrationBannerUpdateCase1 extends AdministrationBannerUpdateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Banner - Update - Case 1',
+				'description' => 'Module : exp_sp_administration_banner',
+				'group' => '1503 - Administration - Manage - Banner - Update',
+		);
+	}
+
+	public function testBannerUpdateCase1() {
+		$this->manageAdminBanner();
+		debug('testBannerUpdateCase1 called');
+		$this->updateBannerTestCase('st_case1');
+	}
+}
+
+class AdministrationBannerUpdateCase2 extends AdministrationBannerUpdateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Banner - Update - Case 2',
+				'description' => 'Module : exp_sp_administration_banner',
+				'group' => '1503 - Administration - Manage - Banner - Update',
+		);
+	}
+
+	public function testBannerUpdateCase2() {
+		$this->manageAdminBanner();
+		debug('testBannerUpdateCase2 called');
+		$this->updateBannerTestCase('st_case2');
+	}
+}
+
+
+?>

@@ -1,0 +1,233 @@
+body {
+  height: 100%;
+  overflow-x: hidden;
+  position: absolute;
+  width: 100%
+}
+#page-wrapper {
+  width: 100%;
+  margin: 0
+}
+#pager #last_pager{
+  padding-right:15px
+}
+#no-records{
+  width:100%
+}
+#lnr-catalog-search .top-record-div{
+  padding:0
+}
+#block-exp-sp-coursedetail-course-details{
+  padding:2px
+}
+#block-exp-sp-coursedetail-course-details .detail-desc,.detail-item-row .para .cdesc .detail-desc {
+  width:80%;
+  line-height: 15px;
+}
+.block{
+  margin:2px
+}
+.detail-item-row .para .cdescription .detail-desc {
+  width: 75%
+}
+.detail-item-row .para .info .detail-desc {
+  width: 70%
+}
+.detail-item-row .para .code .detail-desc {
+  width: 80%
+}
+#learning-plan-details-display-content .detail-item-row .para .code .detail-desc,
+#learning-plan-details-display-content .code-container .detail-desc{
+  width: 77%
+}
+.search-record-paint{
+  padding:0
+}
+#paintContentResults .ui-widget-content td {
+  padding: 5px 10px 0 5px
+}
+#paintContentResults { max-width:100% }
+.top-record-div-left{
+  padding-left:5px
+}
+.search-register-btn{
+  margin:0 auto
+}
+#pager #data-table-page-view{left:4px}
+#pager_center .ui-pg-table{margin-right:5px}
+#select-class-dialog .top-record-div-left{
+  width:auto
+}
+#select-class-dialog .ui-dialog .assign-learning-team{
+  padding:0
+}
+#select-class-dialog .ui-jqgrid-view {
+  width:100%
+}
+#select-class-dialog .ui-jqgrid tr.jqgrow td.assign-learn-first-row{
+  width:10%
+}
+#select-class-dialog .ui-jqgrid tr.jqgrow td.assign-learn-second-row{
+  width:73%
+}
+#select-class-dialog .ui-jqgrid tr.jqgrow td.assign-learn-last-row{
+  width:15%;
+  padding-left:10px
+}
+#select-class-dialog #catkeyword_hideshow .searchcatkeyword{
+  height:20px;
+  height:17px\0/;
+  padding-top:0\0/;
+}
+#select-class-dialog #tbl-paintCatalogContentResults,
+#lnr-catalog-search .ui-jqgrid .ui-jqgrid-btable{
+  table-layout: auto
+}
+#select-class-dialog #paintCatalogHeader .search-cat-keyword{width: 50%}
+#select-class-equalence-dialog .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    min-width: 89px;
+}
+#lnr-catalog-search #searchRecordsPaint #pager td.search-pagination-right{
+  padding-top:1px
+}
+#lnr-catalog-search #searchRecordsPaint #pager td.search-pagination-right .ui-pg-input{
+  height:17px
+}
+#lnr-tainingplan-register .course-level, #lnr-tainingplan-register .class-level {
+    padding-left: 0px;
+}
+#ajax-userregister .create-lnr-container .user-profile-box {
+  margin: 0 0 0 5px;
+  width: 100%
+}
+#reg-new-div .password-note-cls{
+  padding: 2px 0 0;
+}
+#reg-new-div .password-note-cls li{
+  display:table-cell;
+  padding-right: 40px 
+}
+#select-class-dialog .ui-dialog {right:5px}
+/*--- Course - Class - TP detail pages ---*/
+#class-details-displayarea{margin-left:0}
+#class_detail_content .detail-item-row .para .session .detail-desc {
+    width: 100%;
+}
+#class_detail_content .code-container table.class-session-details tr td {padding:5px;}
+.detail-item-row .para .session{display:table}
+.detail-item-row .learning-module-course-level {
+    padding-left: 10px;
+}
+.detail-item-row .learning-module-course-level .learning-classes-details-wrapper{margin-left:10px}
+.detail-back-button{
+    color: #4686dd;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    height: 24px;
+    padding: 1px 7px 0;
+    position: absolute;
+    right: 17px;
+    text-align: center;
+    text-decoration: none;
+    top: 9px;
+}
+#course-details-data #no-records, #learning-plan-details-data #no-records, #class-details-data #no-records { width: auto }
+.code-container table.class-session-details tr td{padding-left:5px}
+#block-exp-sp-coursedetail-course-details h2.block-title,
+#block-exp-sp-classdetail-class-details h2.block-title,
+#block-exp-sp-learning-plan-detail-learning-details h2.block-title {
+	letter-spacing: 0;
+}
+.course-details-content, .class-details-content, .lnp-details-content  {
+	overflow: hidden;
+	padding-bottom: 20px
+}
+#block-exp-sp-coursedetail-course-details .ui-jqgrid .ui-jqgrid-btable {
+  table-layout: auto;
+}
+#learning-class-details-displayarea .course-session-timing{
+  width:auto
+}
+.course-mandatory-bg,.course-optional-bg{position: absolute;}
+#course-details-data .ui-jqgrid tr.jqgrow td,
+#learning-plan-details-data .ui-jqgrid tr.jqgrow td, #class-details-data .ui-jqgrid tr.jqgrow td{ 
+  overflow:visible
+}
+.detail-item-row .para .session .detail-desc .class-session-details{width:98%}
+#course-details-display-content #gbox_paint-classes-list{
+  max-width:99%
+}
+.widget_info_msg {
+  margin: 0 auto;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%
+}
+#gbox_forumTopicListContentResults{
+  max-width:100%
+}
+#paintContentResults div.fivestar-widget{
+  margin-top:1px
+}
+#lnr-catalog-search .catlog_seats_available{
+  width:97%;
+  text-align:center
+}
+/*----Regeiser page----------*/
+#reg-new-div .password-note-cls ul li{float:left;width:85%}
+#reg-new-div .form-text{width:275px}
+#reg-new-div .form-select{width:275px}
+#reg-new-div .reg-link-back{padding-left:75px}
+div #message-container{
+  width:98%
+}
+#select-class-dialog div.fivestar-widget{
+  float:left
+}
+#select-class-dialog form.fivestar-widget div.description{
+  margin-bottom:2px
+}
+#paintContentResults .search-register-btn tr td.action-btn,
+#paintContentResults .search-register-btn tr td.action-btn-disable{
+  padding:0
+}
+#paintContentResults .total-votes,
+.find-training-txt span.total-votes{
+  font-size:10px
+}
+#select-class-dialog #myteam-cat-delivery-type-list li{
+  width:102px
+}
+/*--------IE8 Specification css ---------*/
+@media \0screen {
+  #select-class-dialog .ui-dialog {
+   right:0;
+   margin-left:2px
+  }
+}
+/*--------IE10 Specification css ---------*/
+@media screen and (-ms-high-contrast:active),(-ms-high-contrast:none){
+  #learning-plan-details-display-content .detail-item-row .para .code .detail-desc,
+  #learning-plan-details-display-content .code-container .detail-desc{
+    width: 76%
+  }
+  #course-details-display-content #gbox_paint-classes-list{
+    max-width:99%
+  }
+  #select-class-dialog #catkeyword_hideshow .searchcatkeyword{
+    height:20px
+  }
+}
+/*!Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #paintContentResults div.fivestar-widget{
+    margin-top:-1px
+  }
+  .search-register-btn{
+    margin-left:3px
+  }
+  #lnr-catalog-search .catlog_seats_available{
+    width:70%
+  }
+}

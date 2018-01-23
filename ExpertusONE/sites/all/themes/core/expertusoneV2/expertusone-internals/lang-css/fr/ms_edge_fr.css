@@ -1,0 +1,11 @@
+.page-learning-enrollment-search #page-container #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .filter_labelclass{
+	width:104px;
+}
+.page-learning-enrollment-search #page-container #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .mylearning-filter-by .reg.dropdown-set-wrapper, 
+.page-learning-enrollment-search #page-container #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .mylearning-filter-by .textfilter-set-wrapper,
+.page-learning-enrollment-search #page-container #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .mylearning-filter-by .assignedby.dropdown-set-wrapper{
+	width:250px;
+}
+.page-administration-manage-customattribute .bottom-qtip-tip-visible{
+	margin-top: -3px;
+}

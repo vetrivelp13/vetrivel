@@ -1,0 +1,11 @@
+/* Auto Logout */
+#exp_sp_session_timeout-confirm.ui-widget-header, .ui-widget-content, .ui-dialog .ui-dialog-content, .ui-dialog .ui-dialog-buttonpane {
+    background: #fff none repeat scroll 0 0;
+    border: 0 none;
+}
+
+.ui-dialog ui-widget ui-widget-content ui-corner-all exp_sp_session_timeout-dialog, .ui-corner-all {
+    background: #27245e none repeat scroll 0 0;
+    border-radius: 10px 10px 0 0;
+    color: #fff;
+}

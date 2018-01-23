@@ -1,0 +1,1 @@
+(function(a){try{a.fn.cancelPopUp=function(c,d){try{a("#qtipAttachIdqtip_listvalues_visible_disp_"+c+"_"+d).closest(".qtip-active").remove();}catch(f){}};}catch(b){}})(jQuery);function closeListValuesQtipPopUp(){try{$(".qtip").find(".qtip-button > div").each(function(){try{var b=$(this).attr("id");$(this).closest(".qtip").remove();}catch(c){}});}catch(a){}}

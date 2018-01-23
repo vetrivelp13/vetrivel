@@ -1,0 +1,12 @@
+name = Bank Transfer
+description = Provides the Bank Transfer payment method.
+dependencies[] = uc_cart
+dependencies[] = uc_payment
+package = ExpertusONE Commerce
+core = 7.x
+
+; Information added by drupal.org packaging script on 2011-03-14
+version = "7.x-1.0-alpha3"
+core = "7.x"
+datestamp = "1300096269"
+

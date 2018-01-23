@@ -1,0 +1,156 @@
+#organization-addedit-form .addedit-new-field-value .form-item .addedit-edit-status {
+  width:390px
+}
+#organization-addedit-form .addedit-form-cancel-and-save-actions-row {
+  margin-top:0;
+  width:100%;
+  clear:both
+}
+#organization-addedit-form .addedit-left-col {
+  padding:13px 0 13px 17px
+}
+#organization-addedit-form .admin-custom-required-col2-dropdown .addedit-edit-ac-textfield,
+#organization-addedit-form .admin-custom-required-col1-dropdown .addedit-edit-ac-textfield {
+  width:166px
+}
+#organization-addedit-form .admin-delete-img {
+  padding-bottom:4px;
+  padding-left:6px
+}
+#organization-addedit-form .addedit-new-field-title-custom {
+  width:220px
+}
+#organization-addedit-form .addedit-new-field-two-col {
+  width:528px
+}
+#organization-addedit-form .addedit-edit-ac-textfield {
+  width:150px;
+  height:19px;
+  padding-right:20px
+}
+#organization-addedit-form .addedit-new-field-two-col .addedit-edit-dropdown {
+  width:150px;
+  height:23px
+}
+#organization-addedit-form .addedit-twocol-secondcol .addedit-new-field-title {
+  padding-right:0;
+  text-align:left;
+  width:78px
+}
+#organization-addedit-form .addedit-twocol-secondcol{
+  margin-right:-1px
+}  
+#organization-addedit-form #adddedit-state-wrapper.addedit-twocol-secondcol {
+  position:relative
+}
+#organization-addedit-form .addedit-custom-field .addedit-new-field-value .addedit-edit-textarea {
+  height:25px;
+  padding-top:2px
+}
+#organization-addedit-form .addedit-form-cancel-container-actions {
+  margin-right:41px
+}
+div.ctools-modal-content #organization-addedit-form .resizable-textarea {
+  margin-right:0
+}
+#organization-addedit-form .addedit-customfields-wrapper td.delbtn-wrapper {
+  padding-left:0
+}
+#organization-addedit-form .save-pub-unpub-sub-menu input {
+  text-align:right;
+  width:100%
+}
+#organization-addedit-form .pub-unpub-only-save-btn {
+  margin:1px 0 0;
+  padding:0 5px 0 11px
+}
+#organization-addedit-form .addedit-new-field-title {
+  width:129px
+}
+#organization-addedit-form .addedit-edit-custom-label-field {
+  width:117px
+}
+#organization-addedit-form #org-custom-fields .admin-save-button-container {
+  margin:0
+}
+#organization-addedit-form .addedit-new-field-value .addedit-form-cancel-container-actions input:first-letter {
+  font-size:20px
+}
+#organization-addedit-form .addedit-new-field-value .addedit-edit-contact {
+  height:20px
+}
+#organization-addedit-form .admin-save-button-container {
+  margin-bottom:0
+}
+#organization-addedit-form #adddedit-state-wrapper .loaderimg {
+  width:555px
+}
+#organization-addedit-form .admin-save-button-container {
+  padding-left:8px;
+  margin-left:0
+}
+#organization-addedit-form .addedit-left-col * {
+  font-size:13px
+}
+#admin-data-grid .user-enrollment-div-cls .ac_input {
+  background-position:100% 3px;
+  width:79%
+}
+#admin-data-grid .user-enrollment-div-cls input.ac_loading {
+  background-position:100% -17px
+}
+#admin-data-grid .user-enrollment-div-cls.orgusers .ui-jqgrid .ui-icon-asc {
+  background-position:-117px -14px
+}
+#admin-data-grid .user-enrollment-div-cls.orgusers .ui-jqgrid .ui-icon-desc {
+  background-position:-117px -29px
+}
+.narrow-search-results .narrow-search-multi-action-container .tab-title.disable-suspend {
+  color:#ccc;
+  cursor:default
+}
+.narrow-search-results .narrow-search-multi-action-container .tab-title.disable-suspend:hover {
+  color:#ccc
+}
+.orgusers .exportcontainer{
+  z-index:200;
+  width:26px
+}
+/*title restriction style*/
+.fade-out-title-container.admin-narrow-search-fadeout-container{
+  max-width:691px
+}
+.fade-out-title-container.admin-narrow-orgview-name-fadeout-container,
+.fade-out-title-container.admin-narrow-orgview-accessname-fadeout-container,
+.fade-out-title-container.admin-narrow-orgview-custominfo-value-fadeout-container,
+.fade-out-title-container.admin-narrow-orgview-type-fadeout-container{
+  max-width:450px
+}
+.fade-out-title-container.admin-narrow-orgview-label-fadeout-container,
+.fade-out-title-container.admin-add-custom-field-label-fadeout-container{
+  max-width:100px;
+  float:left
+}
+.fade-out-title-container.admin-narrow-orgview-parent-fadeout-container{
+  max-width:150px
+}
+.fade-out-title-container.admin-narrow-orgview-contact-fadeout-container,
+.fade-out-title-container.admin-narrow-orgview-costcenter-fadeout-container{
+  max-width:135px
+}
+.fade-out-title-container.admin-narrow-search-code-fadeout-container{
+  max-width: 100px;
+  display:inline-block;
+  margin-bottom:-4px
+}
+.fade-out-title-container.narrow-search-organization-type-fadeout-container{
+  max-width: 250px;
+  display:inline-block;
+  margin-bottom:-4px
+}
+/*! Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .page-administration-people-organization #admin-data-grid .orgusers .user-enroll-grid-div .ui-jqgrid-toppager .ui-pager-control .ui-pg-table {
+    top:4px
+  }	
+}

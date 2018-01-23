@@ -1,0 +1,45 @@
+<style>
+
+	.divLocationLeftTdPosition{
+		width:20%;
+	}
+	.divResourceLeftTdPosition{
+		width:20%;
+	}
+	
+	.divResourcenLeftTd{
+		padding-left:2px;
+		padding-top:3px;
+		text-align:left;
+		width:25%;  
+	}
+	
+	.divResourcenMapLeftTd{
+		padding-left:2px;
+		padding-top:3px;
+		text-align:left;
+		width:120px; 
+	} 
+	
+	.divResourcenMiddleTd{
+		text-align:left;
+		width:25%;
+	}
+	
+	.divResourcenRightTd{
+		text-align:left;
+	}
+	
+
+	td
+	{
+	  font-family:Arial,Helvetica,"Bitstream Vera Sans",sans-serif;
+	  font-size:12px;
+	}
+
+	.txt_non_edit {
+	background:transparent none repeat scroll 0 0;
+	border:0 none;
+	}
+
+	</style>

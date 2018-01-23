@@ -1,0 +1,153 @@
+.vat-separator{
+  font-size: 9px
+}
+#tax-basic-addedit-form {
+  float:none		
+}		
+#tax-basic-addedit-form-container .addedit-twocol-firstcol .addedit-new-field-title {
+  padding: 6px 5px 4px 0
+}
+#tax-basic-addedit-form-container .addedit-new-field {
+  clear: none;
+  float: left;
+  margin-top: 2px
+}
+#exp-sp-administration-tax-addedit-form input,textarea,
+#tax-basic-addedit-form-container .addedit-new-field-value .form-type-select .ui-multiselect {
+  font-size: 12px;
+  font-weight: normal;
+}
+#exp-sp-administration-tax-addedit-form .addedit-left-col,
+#tax-basic-addedit-form .addedit-left-col {
+  padding: 13px 0 6px 16px;
+  width: 96.5%;
+}
+#tax-basic-addedit-form-container .addedit-new-field .addedit-new-field-title,
+#tax-basic-addedit-form-container .addedit-twocol-firstcol .addedit-new-field-title {
+  width: 190px
+}
+#tax-basic-addedit-form-container .addedit-new-field .addedit-edit-textfield {
+  width: 255px;
+  border: 1px solid #E5E5E5;
+  height: 18px;
+  padding-left: 4px;
+  padding-top: 2px
+}
+#tax-basic-addedit-form-container .addedit-new-field .addedit-new-field-value .resizable-textarea textarea {
+  min-width: 261px;
+  max-width: 261px;
+  height: 70px;
+  border: 1px solid #E5E5E5;
+  border-radius: 10px;
+  padding-left: 4px;
+  padding-top: 2px
+}
+#tax-basic-addedit-form-container .addedit-firstcol-field-value .addedit-edit-dropdown {
+  width: 278px;
+/*   height: 17px;
+  margin-top:-1px */
+}
+#tax-basic-addedit-form-container .addedit-new-field-value .form-type-select .addedit-edit-dropdown {
+  width: 260px
+}
+#tax-basic-addedit-form-container .expertus-dropdown-bg,
+#tax-basic-addedit-form-container .expertus-dropdown-icon {
+  width:261px		
+}		
+#tax-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row {
+  float: left;
+  margin-top: 6px
+}
+#tax-basic-addedit-form-container .addedit-form-cancel-container-actions {
+  margin-right:14px
+}
+#tax-basic-addedit-form-container .addedit-new-field-value .form-type-select .ui-multiselect {
+  background:none;
+  border: 1px solid #E5E5E5;
+  color: #333333;
+  height: 20px;
+  line-height: 20px;
+  padding: 2px 0 2px 4px
+}
+#tax-basic-addedit-form-container .addedit-new-field-value .ui-multiselect .ui-icon {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/select_icon.png") no-repeat right 0;
+  height: 19px;
+  margin: -3px -3px 0 0;
+  width: 22px
+}
+#gview_narrow-search-results-holder .narrow-search-results-item-details {
+  padding-bottom: 0;
+  padding-top: 6px
+}
+#tax-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions .admin-action-button-middle-bg {
+  padding: 0
+}
+#tax-basic-addedit-form-container .addedit-firstcol-field-value .addedit-edit-dropdown option {
+  width: 240px
+}
+#tax-basic-addedit-form-container .catalog-pub-add-list, .catalog-pub-add-list-move { 
+  width:auto		
+}
+#tax-basic-addedit-form-container .catalog-pub-add-list li, .catalog-pub-add-list-move li {
+  border-bottom: 0		
+}		
+.page-administration-commerce-tax div.ctools-sample-modal-content .theme-ctool-popup div.popups-title {
+  padding: 0 0 0 6px
+}
+#tax-basic-addedit-form-container .dropdown-width {
+  width: 261px
+}
+.page-administration-commerce-tax .theme-ctool-popup #tax-basic-addedit-form .ui-multiselect {
+  background: -ms-linear-gradient(#fafafa,#e9e9e9);/*For IE10*/
+  background: linear-gradient(#fafafa,#e9e9e9);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#fafafa', endColorstr='#e9e9e9'); /*For IE7-8-9*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fafafa, endColorstr=#e9e9e9)"; 
+  height: 20px;
+  line-height: 16px;
+  border-radius: 10px 4px 4px 10px;
+  border:1px solid #e5e5e5;
+  border-right:0
+}
+.page-administration-commerce-tax .popups-title .popups-close {
+  margin-right: 7px
+}
+#tax-basic-addedit-form-container .addedit-new-field-value button {
+  width: 260px
+}
+.fade-out-title-container.admin-narrow-search-fadeout-container{
+  max-width: 520px
+}
+.fade-out-title-container.admin-narrow-search-edit-tooltip-code-fadeout-container{
+  max-width: 250px
+}
+.fade-out-title-container.admin-commerce-tax-statename-fadeout-container,
+.fade-out-title-container.admin-commerce-vat-numbers-fadeout-container {
+  display: inline-block;
+  margin-bottom: -8px;
+  max-width: 460px
+}
+/* Hack for Google chrome browser by shobana */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #tax-basic-addedit-form-container .addedit-new-field-value .form-type-select .ui-multiselect .ui-icon {
+    margin: -2px 0px 0 0
+  }
+  .page-administration-commerce-tax .theme-ctool-popup #tax-basic-addedit-form .ui-multiselect {
+    width: 261px
+  }
+  .page-administration-commerce-tax #page-container #narrow-search-results-holder .narrow-search-results-item-details{
+/*     padding-top:3px */
+  }
+  .page-administration-commerce-tax #page-container .narrow-search-results-item-action{
+/*     margin-top:5px */
+  }
+}
+
+
+/* Safari hack Start */
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0), not all and (min-resolution:.001dpcm) { @media { _:-webkit-full-screen,
+ .fade-out-title-container.admin-commerce-tax-statename-fadeout-container,
+ .fade-out-title-container.admin-commerce-vat-numbers-fadeout-container {
+  margin-bottom:0
+ }
+}}
+/* Safari hack End */

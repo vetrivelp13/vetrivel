@@ -1,0 +1,327 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name='notification' targetNamespace="https://v7299.exphosted.com/sites/all/modules/core/exp_sp_core/wsdl/wsdlschema.xsd" 
+	xmlns:expertus='https://v7299.exphosted.com/sites/all/modules/core/exp_sp_core/wsdl/wsdlschema.xsd'
+	xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/'
+	xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns='http://schemas.xmlsoap.org/wsdl/'>
+
+	<wsdl:types>
+	  <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="https://v7299.exphosted.com/sites/all/modules/core/exp_sp_core/wsdl/wsdlschema.xsd">
+	 	 <xsd:include schemaLocation="wsdlschema.xsd"/>	 	 
+	 	 <xsd:complexType name="getNotificationsRequest"> 
+		    <xsd:sequence>
+				<xsd:element name='sendFlag' type='xsd:string' />
+			</xsd:sequence>          
+		</xsd:complexType>
+		<xsd:complexType name="getCommerceNotificationsRequest"> 
+        <xsd:sequence>
+        <xsd:element name='sendFlag' type='xsd:string' />
+        <xsd:element name='messageId' type='xsd:string' />
+        <xsd:element name='sendToId' type='xsd:string' />
+      </xsd:sequence>          
+    </xsd:complexType>
+		<xsd:complexType name="updateNotificationRequest"> 
+		    <xsd:sequence>
+		    	<xsd:element name='notificationId' type='xsd:string' />
+				<xsd:element name='sendFlag' type='xsd:string' />
+				<xsd:element name='remarks' type='xsd:string' />
+			</xsd:sequence>          
+		</xsd:complexType>
+		
+		<xsd:complexType name="InsertNotificationRequest"> 
+   			<xsd:sequence>
+		    	<xsd:element name='notification_id' type='xsd:string' />
+		    	<xsd:element name='notification_code' type='xsd:string' />
+				<xsd:element name='notification_language' type='xsd:string' />
+				<xsd:element name='notification_local' type='xsd:string' />
+				<xsd:element name='notification_entity_type' type='xsd:string' />
+				<xsd:element name='notification_sendto' type='xsd:string' />
+				<xsd:element name='notification_email_cc' type='xsd:string' />
+				<xsd:element name='notification_admin_email' type='xsd:string' />
+				<xsd:element name='notification_title' type='xsd:string' />
+				<xsd:element name='notification_desc' type='xsd:string' />				
+				<xsd:element name='notification_type' type='xsd:string' />
+				<xsd:element name='notification_procedure' type='xsd:string' />				
+				<xsd:element name='frequency_data_type' type='xsd:string' />				
+				<xsd:element name='frequency_data_value' type='xsd:string' />
+				<xsd:element name='notification_status' type='xsd:string' />
+			</xsd:sequence>            
+		</xsd:complexType>
+		
+		<xsd:complexType name="GetMasterNotification"> 
+	    	<xsd:sequence> 
+	    		<xsd:element name='id' type='xsd:string' />
+	 		</xsd:sequence>     
+		</xsd:complexType>	
+		
+		<xsd:complexType name="InsertNotificatonFrameReq"> 
+	    	<xsd:sequence> 
+	    		<xsd:element name='id' type='xsd:string' />
+	    		<xsd:element name='notification_master_id' type='xsd:string' />
+	    		<xsd:element name='send_option' type='xsd:string' />
+				<xsd:element name='notification_subject' type='xsd:string' />			    								
+				<xsd:element name='notification_template' type='xsd:string' />
+				<xsd:element name='notification_header' type='xsd:string' />
+				<xsd:element name='notification_footer' type='xsd:string' />
+	 		</xsd:sequence>     
+		</xsd:complexType>	
+		
+		<xsd:complexType name="GetNotificationFrameReq"> 
+	    	<xsd:sequence> 
+	    		<xsd:element name='notification_master_id' type='xsd:string' />
+	    		<xsd:element name='send_option' type='xsd:string' />
+	 		</xsd:sequence>     
+		</xsd:complexType>	
+			
+	</xsd:schema>
+	</wsdl:types>	 
+
+	<wsdl:message name='getNotificationsRequest'>
+		<wsdl:part name="getNotificationsRequest" type="expertus:getNotificationsRequest"/>
+	</wsdl:message> 
+	<wsdl:message name='getNotificationsResponse'>
+		<wsdl:part name='Notifications' type='xsd:string' />
+	</wsdl:message>	
+	
+	<wsdl:message name='getCommerceNotificationsRequest'>
+    <wsdl:part name="getCommerceNotificationsRequest" type="expertus:getCommerceNotificationsRequest"/>
+  </wsdl:message> 
+  <wsdl:message name='getCommerceNotificationsResponse'>
+    <wsdl:part name='Notifications' type='xsd:string' />
+  </wsdl:message> 
+	
+	<wsdl:message name='updateNotificationRequest'>
+		<wsdl:part name="updateNotificationRequest" type="expertus:updateNotificationRequest"/>
+	</wsdl:message> 
+	<wsdl:message name='updateNotificationResponse'>
+		<wsdl:part name='Notifications' type='xsd:string' />
+	</wsdl:message>	
+	
+	
+	<wsdl:message name='InsertNotificationRequest'>
+		<wsdl:part name="InsertNotificationRequest" type="expertus:InsertNotificationRequest"/>
+	</wsdl:message> 
+	<wsdl:message name='InsertNotificationResponse'>
+		<wsdl:part name='NotificationsResponse' type='xsd:string' />
+	</wsdl:message>	
+	
+	<wsdl:message name='SearchNotificationRequest'>
+		<wsdl:part name="SearchRequest" type="expertus:SearchRequest"/>
+	</wsdl:message> 
+	<wsdl:message name='SearchNotificationResponse'>
+		<wsdl:part name='SearchNotificationResponse' element='xsd:string' />
+	</wsdl:message>
+	
+	<wsdl:message name='GetMasterNotificationRequest'>
+		<wsdl:part name="GetMasterNotification" type="expertus:GetMasterNotification"/>
+	</wsdl:message> 
+	<wsdl:message name='GetMasterNotificationResponse'>
+		<wsdl:part name='GetMasterNotificationResponse' element='xsd:string' />
+	</wsdl:message>
+	
+	<wsdl:message name='InsertNotificatonFrameReq'>
+		<wsdl:part name="InsertNotificatonFrameReq" type="expertus:InsertNotificatonFrameReq"/>
+	</wsdl:message> 
+	<wsdl:message name='InsertNotificatonFrameRes'>
+		<wsdl:part name='NotificationsFrameResponse' type='xsd:string' />
+	</wsdl:message>	
+	
+	<wsdl:message name='GetNotificationFrameReq'>
+		<wsdl:part name="GetNotificationFrameReq" type="expertus:GetNotificationFrameReq"/>
+	</wsdl:message> 
+	<wsdl:message name='GetNotificationFrameRes'>
+		<wsdl:part name='GetNotificationFrameResp' element='xsd:string' />
+	</wsdl:message>
+		
+	<wsdl:portType name='getNotificationsPortType'>
+		<wsdl:operation name='getNotifications'>
+			<wsdl:input name="getNotificationsReq" message='expertus:getNotificationsRequest' />
+			<wsdl:output name="getNotificationsRes" message='expertus:getNotificationsResponse' />
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:portType name='getCommerceNotificationsPortType'>
+    <wsdl:operation name='getCommerceNotifications'>
+      <wsdl:input name="getCommerceNotificationsReq" message='expertus:getCommerceNotificationsRequest' />
+      <wsdl:output name="getCommerceNotificationsRes" message='expertus:getCommerceNotificationsResponse' />
+    </wsdl:operation>
+  </wsdl:portType>
+	
+	<wsdl:portType name='updateNotificationPortType'>
+		<wsdl:operation name='updateNotification'>
+			<wsdl:input name="updateNotificationReq" message='expertus:updateNotificationRequest' />
+			<wsdl:output name="updateNotificationRes" message='expertus:updateNotificationResponse' />
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	
+	<wsdl:portType name='InsertNotificationPortType'>
+		<wsdl:operation name='insertMasterNotification'>
+			<wsdl:input name="InsertNotificationReq" message='expertus:InsertNotificationRequest' />
+			<wsdl:output name="InsertNotificationRes" message='expertus:InsertNotificationResponse' />
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:portType name="SearchNotificationPortType">
+		<wsdl:operation name="searchNotification">
+			<wsdl:input name="SearchNotificationReq" message="expertus:SearchNotificationRequest" />
+			<wsdl:output name="SearchNotificationRes" message="expertus:SearchNotificationResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:portType name="GetMasterNotificationPortType">
+		<wsdl:operation name="getMasterNotification">
+			<wsdl:input name="GetMasterNotificationReq" message="expertus:GetMasterNotificationRequest" />
+			<wsdl:output name="GetMasterNotificationRes" message="expertus:GetMasterNotificationRequest" />
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:portType name='InsertNotificationFramePortType'>
+		<wsdl:operation name='insertFrameNotification'>
+			<wsdl:input name="InsertNotiFrameReq" message='expertus:InsertNotificatonFrameReq' />
+			<wsdl:output name="InsertNotiFrameRes" message='expertus:InsertNotificatonFrameRes' />
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:portType name="GetNotiFramePortType">
+		<wsdl:operation name="getNotificationFrame">
+			<wsdl:input name="GetNotificationFrameRequest" message="expertus:GetNotificationFrameReq" />
+			<wsdl:output name="GetNotificationFrameResponse" message="expertus:GetNotificationFrameReq" />
+		</wsdl:operation>
+	</wsdl:portType>
+	
+
+		
+	<wsdl:binding name='getNotificationsBinding' type='expertus:getNotificationsPortType'>
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name='getNotifications'>
+			<soap:operation soapAction=" " style="document" />
+			<wsdl:input>
+				<soap:body use='literal'  />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use='literal'  />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:binding name='getCommerceNotificationsBinding' type='expertus:getCommerceNotificationsPortType'>
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name='getCommerceNotifications'>
+      <soap:operation soapAction=" " style="document" />
+      <wsdl:input>
+        <soap:body use='literal'  />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use='literal'  />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+	
+	<wsdl:binding name='updateNotificationBinding' type='expertus:updateNotificationPortType'>
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name='updateNotification'>
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input>
+				<soap:body use='literal'  />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use='literal'  />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	
+	<wsdl:binding name='InsertNotificationBinding' type='expertus:InsertNotificationPortType'>
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name='insertMasterNotification'>
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input>
+				<soap:body use='literal'  />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use='literal'  />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:binding name="SearchNotificationBinding" type="expertus:SearchNotificationPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="searchNotification">
+		<soap:operation soapAction="" style="document"/>
+		<wsdl:input>
+			<soap:body use='literal'  />
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use='literal'  />
+		</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:binding name="GetMasterNotificationBinding" type="expertus:GetMasterNotificationPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="getMasterNotification">
+		<soap:operation soapAction="" style="document"/>
+		<wsdl:input>
+			<soap:body use='literal'  />
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use='literal'  />
+		</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:binding name='InsertNotiFrameBinding' type='expertus:InsertNotificationFramePortType'>
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name='insertFrameNotification'>
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input>
+				<soap:body use='literal'  />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use='literal'  />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:binding name="GetNotiFrameBinding" type="expertus:GetNotiFramePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="getNotificationFrame">
+		<soap:operation soapAction="" style="document"/>
+		<wsdl:input>
+			<soap:body use='literal'  />
+		</wsdl:input>
+		<wsdl:output>
+			<soap:body use='literal'  />
+		</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name='NotificationService'>
+		<wsdl:port name='getNotificationsSrv' binding='expertus:getNotificationsBinding'>
+			<soap:address location='https://v7299.exphosted.com/sites/all/services/Service.php' />
+		</wsdl:port>
+		<wsdl:port name='getCommerceNotificationsSrv' binding='expertus:getCommerceNotificationsBinding'>
+      		<soap:address location='https://v7299.exphosted.com/sites/all/services/Service.php' />
+    	</wsdl:port>
+		<wsdl:port name='updateNotificationsSrv' binding='expertus:updateNotificationBinding'>
+			<soap:address location='https://v7299.exphosted.com/sites/all/services/Service.php' />
+		</wsdl:port>
+		
+		<wsdl:port name='InsertNotificationSrv' binding='expertus:InsertNotificationBinding'>
+			<soap:address location='https://v7299.exphosted.com/sites/all/services/Service.php' />
+		</wsdl:port>	
+		<wsdl:port name='SearchNotificationSrv' binding='expertus:SearchNotificationBinding'>
+			<soap:address location='https://v7299.exphosted.com/sites/all/services/Service.php' />
+		</wsdl:port>	
+		<wsdl:port name='GetMasterNotificationSrv' binding='expertus:GetMasterNotificationBinding'>
+			<soap:address location='https://v7299.exphosted.com/sites/all/services/Service.php' />
+		</wsdl:port>
+		<wsdl:port name='InsertNotiFrameSrv' binding='expertus:InsertNotiFrameBinding'>
+			<soap:address location='https://v7299.exphosted.com/sites/all/services/Service.php' />
+		</wsdl:port>	
+		<wsdl:port name='GetNotiFrameSrv' binding='expertus:GetNotiFrameBinding'>
+			<soap:address location='https://v7299.exphosted.com/sites/all/services/Service.php' />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

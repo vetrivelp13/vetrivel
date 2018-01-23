@@ -1,0 +1,7 @@
+name = Custom Attributes Administration
+description = Responsible for Custom Attributes administration
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration_manage
+testing_api = 2.x
+version = VERSION
+core = 7.x

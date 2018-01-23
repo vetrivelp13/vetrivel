@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * Implementation of hook_menu().
+ */
+function exp_sp_administration_survey_menu() {
+ try{
+  $items = array();
+
+    $items['administration/survey'] = array(
+    'title' => t('Survey'),
+    'page callback' => 'empty_value',
+    'access callback' => 'user_access',
+    'access arguments' => array('Survey Admin Perm'),
+    'type' => MENU_CALLBACK
+    );
+   
+    $items['administration/assessment'] = array(
+    'title' => t('Assessment'),
+    'page callback' => 'empty_value',
+    'access callback' => 'user_access',
+    'access arguments' => array('Assessment Admin Perm'),
+    'type' => MENU_CALLBACK
+    );
+ 
+	return $items;
+	} catch (Exception $ex) {
+		watchdog_exception('exp_sp_administration_survey_menu', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function exp_sp_administration_survey_permission() {
+	try{
+    return array(    
+    'Survey Admin Perm' => array(
+      'title' => t('Survey Admin Perm')
+    ),
+    'Assessment Admin Perm' => array(
+      'title' => t('Assessment Admin Perm')
+    )
+  );
+    } catch (Exception $ex) {
+    	watchdog_exception('exp_sp_administration_survey_permission', $ex);
+    	expertusErrorThrow($ex);
+    }
+} 
+?>

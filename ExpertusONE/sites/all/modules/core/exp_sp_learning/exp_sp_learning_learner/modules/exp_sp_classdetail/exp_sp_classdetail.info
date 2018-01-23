@@ -1,0 +1,9 @@
+name = Class Details 
+description = Responsible for rendering class details.
+package = ExpertusONE Learning
+dependencies[] = exp_sp_core
+testing_api = 2.x
+files[] = exp_sp_classdetail.inc
+files[] = tests/exp_sp_classdetail.test
+version = VERSION
+core = 7.x

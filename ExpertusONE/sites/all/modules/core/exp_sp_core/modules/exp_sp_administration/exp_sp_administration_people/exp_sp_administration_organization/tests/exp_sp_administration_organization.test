@@ -1,0 +1,302 @@
+<?php 
+
+class AdministrationOrganizationTestHelper extends ExpertusWebTestCase {
+	private $searchResultContent=null;
+	
+	protected $testcases = array();
+
+	
+	private $srcParam = array(
+			'title'=>'',		// Title base search
+			'announcementdaterange'=>'',		// date range on announcement
+			'announcementlang'=>'cre_sys_lng_eng', 	// Selected languages pipe separated
+			'sortby'=> 'desc',		//	Sort by option
+			'announcemanage' => 'cre_sys_fop_me'
+	);
+
+	public function setUp() {
+		parent::setUp();
+		$this->drupalLogin($this->admin); // login as admin
+		$this->getOrganizationTestCases();
+		// set refer to prevent access denied error
+		$this->setHttpReferer('learning/enrollment-search');
+	}
+	
+	public function manageAdminOrganization($scope = 'basic') {
+	
+		// Get Main HTML content
+		$this->drupalPost('administration/people/organization');
+		$content = $this->content;
+	
+		// Get Filters
+		$this->drupalGetAJAX('administration/search-filter/organization');
+		$this->content = drupal_json_decode($this->content);
+			
+		//Update filters with existing response
+		$replArray = array(
+				'rendered_narrow_search_filters' => 'narrow-search',
+				'rendered_main_div' => 'root-admin-results',
+				'rendered_tab_content_main' => 'tab-content-main',
+				'rendered_narrow_search_sortbar' => 'admin-maincontent_tab',
+				'rendered_narrow_search_actionbar' => 'sort-bar-V2'
+		);
+			
+		$this->updateSearchFilters($content, $replArray, 'div', 'tag', 'div' );
+	
+		$this->displayTagsById('narrow-search');
+		$this->displayTagsById('root-admin-results');
+	
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['organizationList'];
+		} else {
+			$testCases = array($this->testcases['organizationList'][$scope]);
+		}
+		
+		//Get search results
+		foreach($testCases as $test){
+			$this->getAdministrationOrganizationList($test);
+		}
+	}
+	
+	public function getAdministrationOrganizationList($opt = array()){
+		$opt = array_merge($this->basicParam, $opt);
+		$content = $this->content;
+		$srcRc = $this->drupalGetAJAX('administration/people/organization/search/all/',array('query'=>$opt));
+		$this->updateSearchResults($content,$srcRc,'narrow-search-results-holder');
+	}
+
+	protected function getOrganizationTestCases(){
+		$rand = $this->randomName();
+		$this->testcases = array(
+				'organizationList' => array(
+						'basic' => array(),
+						'case1' => array(),
+				),		
+				'organizationCreate' => array(
+		  				'st_case1' => array(
+		  						"name"							=> 'st_case1 organization - '.$rand, 
+		  						"type" 							=> 'cre_org_typ_ext',
+		  						"cost_center"					=> '01',
+		  						"description[value]"		=> 'st_case1 description - '.$rand,
+		  						"entity_value"					=> 'cre_org'
+		  				 ),
+						'st_case2' => array(
+		  						"name"							=> 'st_case2 organization - '.$rand, 
+		  						"type" 							=> 'cre_org_typ_ext',
+		  						"cost_center"					=> '01',
+		  						"description[value]"		=> 'st_case2 description - '.$rand,
+		  						"entity_value"					=> 'cre_org'
+						),
+				),
+				'organizationUpdate' => array(
+						'st_case1' 	=> array(
+							"name"							=> 'st_case1 organization changed- '.$rand,
+							"id"					=> $this->getOrganizationId('st_case1'),	
+						 ),
+						'st_case2' => array(
+							"name"							=> 'st_case2 organization changed- '.$rand,
+							"id"					=> $this->getOrganizationId('st_case2'),
+						),
+				),
+				'organizationDelete' => array(
+						'st_case1' 	=> array( 'id' => $this->getOrganizationId('st_case1') ),
+						'st_case2' 	=> array( 'id' => $this->getOrganizationId('st_case2') ),
+				),
+				'organizationView' => array(
+						'st_case1' 	=> array( 'id' => $this->getOrganizationId('st_case1') ),
+				),
+		);
+	}
+	
+	public function getOrganizationTitle($organizationId = '') {
+		$organizationTitle = db_query("SELECT name FROM slt_organization WHERE id = :organization_id", array(':organization_id' => $organizationId ))->fetchField();
+		return $organizationTitle;
+	}
+	
+	public function getOrganizationStatus($organizationId = '') {
+		$organizationStatus = db_query("SELECT status FROM slt_organization WHERE id = :organization_id", array(':organization_id' => $organizationId ))->fetchField();
+		return $organizationStatus;
+	}
+	
+	public function getOrganizationId($search_str = '') {
+		$select = db_select('slt_organization', 'org');
+		$select->addField('org', 'id', 'id');
+		$select->condition('org.name', '%' . db_like($search_str) . '%', 'LIKE');
+		$select->orderBy('org.id', 'DESC');
+		$select->range(0,1);
+		$organizationId = $select->execute()->fetchField();
+		return $organizationId;
+	}
+	
+	/**
+	 *  Export functionality test case
+	 *  Created By :Maheswari.M
+	 *  Created Date:02.01.2017
+	 */
+	
+	
+	public function exportOrganizations($opt='csv'){
+		debug('Organization Id -->'.print_r($this->id,1),4);
+		$selOrganizationQry = db_select('slt_organization', 'per');
+		$selOrganizationQry->addField('per', 'name', 'name');
+		$selOrganizationQry->condition('per.id', $this->id, 'IN');
+		$selOrganizationRes = $selOrganizationQry->execute()->fetchAll();
+		debug('Organization Name List-->'.print_r($selOrganizationRes,1),4);
+		if($opt=='csv'){
+			//customized the drupalGet() using options parameter
+			$this->drupalGet('administration/people/organization/export',array('filewrite'=>1,'testCase'=>'csv'));
+			if ($this->assertResponse(200) == 'pass') {
+				foreach ($selOrganizationRes as $organizationName){
+					$this->assertRaw($organizationName->name, 'Contents of the exported file has '.$organizationName->name.' and it is correct.');
+				}
+					
+			}
+		}
+		elseif($opt=='pdf'){
+			$this->drupalGet('administration/people/organization/print',array('filewrite'=>1,'testCase'=>'pdf'));
+			if ($this->assertResponse(200) == 'pass') {
+				debug($this->content);
+				foreach ($selOrganizationRes as $organizationName){
+					$this->assertText($organizationName->name, 'Contents of the exported file has '.$organizationName->name.' and it is correct.');
+				}
+					
+			}
+		}
+	
+	}
+}
+
+
+class AdministrationOrganizationListBase extends AdministrationOrganizationTestHelper
+{
+	
+}
+
+class AdministrationOrganizationListAll extends AdministrationOrganizationListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Organization - List - All Tests',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1202 - Administration - People - Organization - List',
+		);
+	}
+	
+	public function testOrganizationListAll() {
+		debug('testAdminOrganizationListAll called');
+		$this->manageAdminOrganization('all');
+	}
+}
+
+class AdministrationOrganizationListCase1 extends AdministrationOrganizationListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Organization - List - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1202 - Administration - People - Organization - List',
+		);
+	}
+
+	public function testOrganizationListCase1() {
+		debug('testAdminOrganizationListCase1 called');
+		$this->manageAdminOrganization('case1');
+	}
+}
+
+
+/**
+ *  Organization view test cases
+ */
+
+class AdministrationOrganizationViewBase extends AdministrationOrganizationTestHelper
+{
+	public function viewOrganizationTestCase($scope) {
+		$ctoolModel = array(
+				'modelWidth' => 890,
+				'modelClass' => 'ctools-modal-ctools-viewscreen-wrapper',
+				'modelTitle' => t('View'),
+				'contentWidth' => 680,
+				'contentMhight' => 335,
+				'outerHeight' => 620,
+				'outerWidth' => 336,
+				'blockHeight' => 1232,
+				'blockWidth' => 1343,
+				'modelTop' => 150,
+				'modelLeft' => 226.5,
+				'docHeight' => 1232,
+				'docWidth' => 1343
+		);
+		$this->addCtoolModelContent($ctoolModel);
+	
+		$modelContent = $this->content;
+	
+		
+		$testCases =$this->testcases['organizationView'][$scope];
+		
+		if($testCases['id']=='null'||$testCases['id']==''){
+			debug('there is no group exists');
+		}
+		else{
+			//Reset content with the ctool model
+			$this->content = $modelContent;			
+			//Get empty form
+			$post_field = array('wrapper'=>'paint-narrow-search-results');
+			$viewId = $testCases['id'];			
+			$out = $this->drupalPostAJAX(null, $edit,'Save','?q=administration/view-org/ajax/addedit/' . $viewId,array(),array(),'',$post_field);
+			$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);				
+			// Do General validations
+			$this->assertResponse(200,'Form Rended successfully');
+			$webError = "Website encountered an unexpected error";
+			$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+		}
+	}
+}
+
+class AdministrationOrganizationViewCase1 extends AdministrationOrganizationViewBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Organization - View - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1202 - Administration - People - Organization - View',
+		);
+	}
+
+	public function testOrganizationViewCase1() {
+		debug('testOrganizationViewCase1 called');
+		$this->manageAdminOrganization('case1');
+		$this->viewOrganizationTestCase('st_case1');
+	}
+}
+
+
+
+/**
+ *  Export functionality test case
+ *  Created By :Maheswari.M
+ *  Created Date:02.01.2017
+ */
+
+
+class AdministrationOrganizationExport extends AdministrationOrganizationListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Organization - Export - All',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1202 - Administration - People - Organization - Export',
+		);
+	}
+
+	public function testOrganizationExportAll() {
+		debug('testAdminOrganizationExportAll called');
+		$this->manageAdminOrganization('basic');
+		$this->exportOrganizations('csv');
+		$this->exportOrganizations('pdf');
+	}
+}
+
+
+?>

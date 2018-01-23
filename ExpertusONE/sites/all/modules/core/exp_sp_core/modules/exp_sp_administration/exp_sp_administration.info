@@ -1,0 +1,6 @@
+name = Administration Core
+description = Responsible for the all common code/functionality among all ExpertusONE administration modules
+package = ExpertusONE Administration
+dependencies[] = exp_sp_core
+version = VERSION
+core = 7.x

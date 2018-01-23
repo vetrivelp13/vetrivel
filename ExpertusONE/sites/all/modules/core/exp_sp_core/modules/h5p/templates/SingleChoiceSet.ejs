@@ -1,0 +1,62 @@
+<%
+	if(GLOBALPARAMS_H5P.action.params.contenttype == "presentation")
+	{
+ %>
+	<a id="control-close" class="qtip-close-button" onclick="closeH5PIcon(this)"></a>
+    <div class="e1_h5p_error" style="height:auto;margin-top: -17px;"></div>
+ <%
+    }
+ %>
+<%
+	var html = "";
+	if(GLOBALPARAMS_H5P.action.params.choices != null )
+	{
+		for( var i = 0 ; i < GLOBALPARAMS_H5P.action.params.choices.length;i++)
+		{
+			html += displayQuestionSet(GLOBALPARAMS_H5P.action.params.choices[i],i+1);
+		}
+	}
+	else
+	{
+			html += displayQuestionSet();
+	}
+%>
+
+<div class='questionandanswers'>
+<%= html %> 
+</div>
+
+
+<div class="field text h5peditor-interaction-label OptionalLabel form-item-label-row"   >
+   <label class="h5peditor-label"><%=window.parent.Drupal.t('LBL3034')%>:</label>
+   <div class="ckeditor striptags" tabindex="0" id="singlechoicesetlabel" contenteditable="true" onkeypress="return (this.innerText.length <=99)"><%= GLOBALPARAMS_H5P.label %></div>
+   <div class="h5p-errors"></div>
+   <div class="h5peditor-field-description"></div>
+</div>
+
+<script>
+if(GLOBALPARAMS_H5P.displayType == "poster")
+  		{
+  			ns.$("#singlechoicesetlabel").parent().hide();
+  		}
+  	
+	   
+	   
+	   $('.single-choice-set-container').bind('click', function(event) {
+        if(event.target.id != 'pub-unpub-action-btn'){
+           ns.$(".btn-question").hide();
+           ns.$(".btn-question").css("display","none");
+            }
+        });
+	   
+	   $('.SingleChoiceSet-CourPres').bind('click', function(event) {
+	   if(event.target.id != 'pub-unpub-action-btn'){
+           ns.$(".btn-question").hide();
+           ns.$(".btn-question").css("display","none");
+            }
+        });
+	   
+	   
+	  
+		vtip();
+</script>

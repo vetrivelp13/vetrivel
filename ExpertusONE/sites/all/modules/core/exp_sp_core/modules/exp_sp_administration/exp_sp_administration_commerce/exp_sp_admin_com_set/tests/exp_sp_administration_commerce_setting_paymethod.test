@@ -1,0 +1,182 @@
+<?php 
+class AdministrationCommercePayMethodUpdateBase extends AdministrationCommerceSettingTestHelper
+{
+	public function updateCommercePayMethodTestCase($scope = 'all') {
+		$this->openCommerceSettingModal('paymentmethod');
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['setPayMethod'];
+		} else {
+			$testCases = array($this->testcases['setPayMethod'][$scope]);
+		}
+		
+		foreach($testCases as $test){
+			$this->openCommerceSettingQTip();
+			$this->populatePayMethodResults();
+			$this->enableDisablePayMethod($test);
+		}
+	}
+	
+	
+	public function populatePayMethodResults($term = '') {
+		$prev = $this->content;
+			
+		$opt = array(
+				'_search' => false,
+				'page' => 1,
+				'rows' => 15,
+				'sidx' => '',
+				'sord' => 'desc',
+				'searhType' => 'countryname'
+		);
+		$searchTerm = $term;
+		$ajaxUrl = 'administration/multiselect-grid/edit/PayMethodSetting/'.$searchTerm.'/1/commerce/0';
+			
+		$srcRc = $this->drupalGetAJAX($ajaxUrl,array('query'=>$opt));
+		$dom = new DOMDocument();
+		$dom->loadHTML($prev);
+		$xpath = new DOMXPath($dom);
+			
+		// Prepare Search Result data
+		$src = '';
+		$this->cId = null;
+		$i=0;
+		
+		// append a head row
+		if (count($srcRc['rows']) > 1) {
+			$src = '<tr><th>'.t('Name').'</th><th>'.t('Code').'</th><th> </th></tr>';
+			if(!empty($src)){
+				$idPath = 'datagrid-container-PayMethodSetting-1-commerce';
+				$Node = $xpath->query('//*[@id="'.$idPath.'"]')->item(0);
+				$Node->setAttribute('clear','both');
+				$newDom = new DOMDocument();
+				$newDom->loadHTML($src);
+				$newNode = $dom->importNode($newDom->getElementsByTagName('tr')->item(0), TRUE);
+				$Node->appendChild($newNode);
+				$this->content = $dom->saveHTML();
+			}
+		}
+		
+		foreach($srcRc['rows'] as $row){
+			$this->cId[$i]['id']=$row['id'];
+			//$this->cId[$i]['id']=$row['id'];
+			$src = '<tr><td>'.$row['cell']['name'].'</td><td>'.$row['cell']['code'].'</td><td>'.$row['cell']['ActionList'].'</td></tr>';
+			$i++;
+		
+			
+			// Appending Search Details
+			if(!empty($src)){
+				$idPath = 'datagrid-container-PayMethodSetting-1-commerce';
+				$Node = $xpath->query('//*[@id="'.$idPath.'"]')->item(0);
+				$Node->setAttribute('style','width:460px');
+				$newDom = new DOMDocument();
+				$newDom->loadHTML($src);
+				$newNode = $dom->importNode($newDom->getElementsByTagName('tr')->item(0), TRUE);
+				$Node->appendChild($newNode);
+				$this->content = $dom->saveHTML();
+			}
+		}
+			
+		$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+	}
+	
+	public function enableDisablePayMethod($country = array()) {
+		
+		// Publish section
+		$publishUrl = '?q=administration/commerce/setting/country/action/'.$country['code'] .'/' . $country['id'];
+		$this->drupalPostAJAX(null, $edit,'Save',$publishUrl, array(),array(),'',$post_field);
+		$this->assertResponse(200,'Disable/Enable action completed');
+		// Ubpublish section
+		$this->drupalPostAJAX(null, $edit,'Save',$publishUrl, array(),array(),'',$post_field);
+		$this->assertResponse(200,'Disable/Enable action completed');
+		
+	}
+
+}
+
+class AdministrationCommercePayMethodUpdateAll extends AdministrationCommercePayMethodUpdateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - CommerceSetting - PayMethod - All Tests',
+				'description' => 'Module : exp_sp_administration_commerce_setting',
+				'group' => '1704 - Administration - Manage - CommerceSetting - PayMethod',
+		);
+	}
+	
+	public function testCommercePayMethodUpdateAll() {
+		$this->manageAdminCommerceSetting();
+		debug('testCommercePayMethodUpdateAll called');
+		$this->updateCommercePayMethodTestCase('all');
+	}
+}
+
+class AdministrationCommercePayMethodUpdateCase1 extends AdministrationCommercePayMethodUpdateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - CommerceSetting - PayMethod - CyberSource',
+				'description' => 'Module : exp_sp_administration_commerce_setting',
+				'group' => '1704 - Administration - Manage - CommerceSetting - PayMethod',
+		);
+	}
+
+	public function testCommercePayMethodUpdateCase1() {
+		$this->manageAdminCommerceSetting();
+		debug('testCommercePayMethodUpdateCase1 called');
+		$this->updateCommercePayMethodTestCase('cybersource');
+	}
+}
+
+class AdministrationCommercePayMethodUpdateCase2 extends AdministrationCommercePayMethodUpdateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - CommerceSetting - PayMethod - PayMetric',
+				'description' => 'Module : exp_sp_administration_commerce_setting',
+				'group' => '1704 - Administration - Manage - CommerceSetting - PayMethod',
+		);
+	}
+
+	public function testCommercePayMethodUpdateCase2() {
+		$this->manageAdminCommerceSetting();
+		debug('testCommercePayMethodUpdateCase2 called');
+		$this->updateCommercePayMethodTestCase('paymetric');
+	}
+}
+
+
+class AdministrationCommercePayMethodUpdateCase3 extends AdministrationCommercePayMethodUpdateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - CommerceSetting - PayMethod - Paypal',
+				'description' => 'Module : exp_sp_administration_commerce_setting',
+				'group' => '1704 - Administration - Manage - CommerceSetting - PayMethod',
+		);
+	}
+
+	public function testCommercePayMethodUpdateCase3() {
+		$this->manageAdminCommerceSetting();
+		debug('testCommercePayMethodUpdateCase3 called');
+		$this->updateCommercePayMethodTestCase('paypal');
+	}
+}
+
+class AdministrationCommercePayMethodUpdateCase4 extends AdministrationCommercePayMethodUpdateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - CommerceSetting - PayMethod - Check',
+				'description' => 'Module : exp_sp_administration_commerce_setting',
+				'group' => '1704 - Administration - Manage - CommerceSetting - PayMethod',
+		);
+	}
+
+	public function testCommercePayMethodUpdateCase4() {
+		$this->manageAdminCommerceSetting();
+		debug('testCommercePayMethodUpdateCase4 called');
+		$this->updateCommercePayMethodTestCase('check');
+	}
+}
+?>

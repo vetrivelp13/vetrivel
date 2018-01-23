@@ -1,0 +1,207 @@
+<?php 
+
+class accountDetails extends DrupalWebTestCase {
+	private $test_case = array();
+	
+	public static function getInfo() {
+    return array(
+      'name' => 'Account Details',
+      'description' => 'My account detail page testing',
+      'group' => 'exp_sp_my_account',
+    );
+  }
+  
+  public function setUp(){
+  	parent::setUp();
+  	$user = new stdClass();
+  	$user->name =  'admin';
+  	$user->pass_raw = 'welcome';
+  	$this->drupalLogin($user);
+  }
+  
+  public function testMyAccountDetails(){
+  	
+  	// Retrive My Account Detail's page content
+  	$this->getAccountDetails();
+		
+		// On Edit Click - To rebuld the form for edit.
+		$this->editAccountDetails();
+  	
+  	// Update my account details  	
+  	$this->saveAccountDetails();
+  	$this->getAccountPreferenceDetails();
+  	$this->editpreference();
+  	$this->saveAccountDetailspreference();
+  	$this->getorders();
+  }
+  
+  private function getAccountDetails(){
+  	$this->setHttpReferer('learning/my-account');
+		$out = $this->drupalGet('learning/my-account');
+		$this->assertRaw('<table cellspacing="2"  cellpadding="2" class="my-account-box myAccount">','Form Rendered Successfully', 'exp_sp_my_account');
+		$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_account');
+  }
+  
+  private function editAccountDetails(){
+  	$edit= array();
+		$post_field = array('submit'=>array(
+													"form_id"=>"exp_sp_my_account_form",
+													"_triggering_element_name"=>"op",
+													"_triggering_element_value"=>"Edit",
+										),
+										'wrapper'=>'wizard-form-wrapper');
+		$this->setHttpReferer('learning/my-account');
+  	$out = $this->drupalPostAJAX(null,$edit,t('Edit'),'?q=system/ajax',array(),array(),'exp-sp-my-account-form',$post_field);
+  	$this->assertResponse(200,'Form Repainted successfully');
+  	$this->assertRaw('edit-next-save-esignoff', 'found it!!', 'exp_sp_my_account');
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_account');
+  }
+  
+  private function saveAccountDetails(){
+  	$input = array();
+  	$formIds = $this->xpath('//form[@action="/?q=learning/my-account"]');
+  	//$this->verbose('sdasd');
+  	expDebug::dPrint(' $result = ' . print_r($formIds, true),3);
+  	//debug($formIds);
+  	$formId = (string) $formIds[1]['id'];
+  	
+  	/*foreach ($fields as $element) {
+  		$tName='';
+  		$tId='';
+  		foreach($element->attributes() as $ele=>$val){
+  			if($ele == 'name')
+  				$tName = (string) $val;
+  			if($ele == 'id')
+  				$tId = (string) $val;
+  		}
+  		if(!empty($tName) && !empty($tId)){
+  			$input[$tName] = $tId;
+  		} 
+  	}*/
+  	
+  	// Replace value and submit
+  	$edit['LastName'] = 'SimpleTest Change';
+  	$edit['Email'] = 'vincents2@expertus.com';
+  	
+  	$post_field = array('submit'=>array(
+													"form_id"=>"exp_sp_my_account_form",
+													"_triggering_element_name"=>"hidden-save",
+													"_triggering_element_value"=>"hidden-save",
+										),
+										'wrapper'=>'wizard-form-wrapper');
+		$this->setHttpReferer('learning/my-account');
+  	$out = $this->drupalPostAJAX(null,$edit,'Save','?q=system/ajax',array(),array(),$formId,$post_field);
+  	
+  	//Check if any error thrown 
+  	$isError = $this->xpath('//div[@class="messages error"]/ul/li/span');
+  	$error = '';
+  	if(sizeOf($isError) > 0){
+  		$error = (string) $isError[0];
+  	}
+  	$this->assertResponse(200,'Form Repainted successfully');
+  	$txt = 'Your account details have been updated';
+  	$this->assertText(t($txt),'Updated changes successfully','exp_sp_my_account');
+  	$this->assertNoText(t($error),'Error - '.$error,'exp_sp_my_account');
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_account');
+  }
+  private function getAccountPreferenceDetails(){
+  	$this->setHttpReferer('learning/my-account/preference');
+  	$out = $this->drupalGet('learning/my-account/preference');
+  	$this->assertRaw('exp-sp-my-account-preference-form','Form Rendered dis Successfully', 'exp_sp_my_account');
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_account');
+  }
+  private function editpreference(){
+  	$edit= array();
+  	$formIds = $this->xpath('//form[@action="/?q=learning/my-account/preference"]');
+  	//debug($formIds);
+  	$post_field = array('submit'=>array(
+  			"form_id"=>"exp_sp_my_account_preference_form",
+  			"op"=>"Edit",
+  		//	"_triggering_element_value"=>"Edit",
+  	),
+  			'wrapper'=>'wizard-form-wrapper');
+  	$this->setHttpReferer('learning/my-account/preference');
+  	$this->drupalGet('learning/my-account/preference');
+  	$out = $this->drupalPostAJAX(null,$edit,t('Edit'),'?q=system/ajax',array(),array(),'',$post_field);
+  	$this->assertResponse(200,'Form Repainted successfully');
+  	//$this->assertRaw('edit-preflanguage', 'found ', 'exp_sp_my_account');
+  	$this->assertText('edit-preflanguage', t('The field appears on user registration form'));
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_account');
+  }
+  private function saveAccountDetailspreference(){
+  	$input = array();
+  	$formIds = $this->xpath('//form[@action="/?q=learning/my-account/preference"]');
+  	//$this->verbose('sdasd');
+  	expDebug::dPrint(' $result = ' . print_r($formIds, true),3);
+  	//debug($formIds);
+  	$formId = (string) $formIds[1]['id'];
+  	$edit['timezone'] = 'cre_sys_tmz_059';
+  	 
+  	$post_field = array('submit'=>array(
+  			"form_id"=>"exp_sp_my_account_preference_form",
+  			"_triggering_element_name"=>"hidden-save",
+  			"_triggering_element_value"=>"hidden-save",
+  	),
+  			'wrapper'=>'wizard-form-wrapper');
+  	$this->setHttpReferer('learning/my-account');
+  	$this->drupalGet('learning/my-account/preference');
+  	$out = $this->drupalPostAJAX(null,$edit,'Save','?q=system/ajax',array(),array(),$formId,$post_field);
+  	$this->drupalPost(NULL, $edit, 'Save');
+  	$isError = $this->xpath('//div[@class="messages error"]/ul/li/span');
+  	$error = '';
+  	if(sizeOf($isError) > 0){
+  		$error = (string) $isError[0];
+  	}
+  	$this->assertResponse(200,'Form Repainted successfully');
+  	$txt = 'Your account details have been updated';
+  	$this->assertText(t($txt),'Updated changes successfully','exp_sp_my_account');
+  	$this->assertNoText(t($error),'Error - '.$error,'exp_sp_my_account');
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_account');
+  }
+   private function getorders(){
+   	$this->setHttpReferer('learning/my-account/shopping-cart');
+   	$out = $this->drupalGet('learning/my-account/shopping-cart');
+   	$this->assertRaw('<div id="gbox_myaccount-orders-details" class="ui-jqgrid ui-widget ui-widget-content ui-corner-all" dir="ltr" style="width: 902px;">','Form Rendered Successfully', 'exp_sp_my_account');
+   $user_id = db_query("SELECT id from slt_person where user_name='$user->name'");
+   $orderid = $this->getMyAccountOrdersDetails($user_id);
+   //	debug($user_id);
+  // $out = $this->drupalGet("user/'.$user_id.'/orders/'.$orderid.'/print");
+   $out = $this->drupalGet("user/1/orders/64/print");
+   	$webError = "Website encountered an unexpected error";
+   	$this->assertNoText(t($webError),'Web errors not found','exp_sp_my_account');
+   }
+  private function getMyAccountOrdersDetails($usid){
+  	$select = db_select('slt_order', 'orders');
+  	$select->LeftJoin('slt_profile_list_items', 'spli', 'spli.attr1=orders.currency_type AND spli.code like \'cre_sys_crn_%\'');
+  	$select->LeftJoin('slt_order_items', 'orditem', 'orditem.order_id=orders.id');
+  	$select->LeftJoin('slt_enrollment', 'enrollment', 'enrollment.course_id=orditem.course_id and enrollment.class_id=orditem.class_id and enrollment.user_id=orditem.user_id and enrollment.order_id=orditem.order_id');
+  	$select->LeftJoin('uc_orders', 'ucorder', 'ucorder.order_id =orders.uc_order_id and ucorder.order_status in (\'completed\',\'payment_received\',\'pending\',\'canceled\') ');
+  	$select->leftJoin('uc_order_line_items', 'ordersitemtax', 'ordersitemtax.order_id =ucorder.order_id  and ordersitemtax.type = \'cybersource_tax\'');
+  	$select->addField('orders','id','order_id');
+  	$select->addField('orders','uc_order_id','uc_order_id');
+  	$select->addField('ucorder','order_status','order_status');
+  	$select->addField('ucorder','order_total','order_total');
+  	$select->addField('ucorder','product_count','product_count');
+  	$select->addField('orders','created_on','purchase_date');
+  	$select->addField('ordersitemtax','amount','tax_amount');
+  	$select->addField('spli','attr2','attr2');
+  	$select->addField('orders','currency_type','currency_type');
+  	$select->addExpression('(select sum(ordersitemdis.amount) from uc_order_line_items ordersitemdis where ordersitemdis.order_id= ucorder.order_id and ordersitemdis.type = \'uc_discounts\')','discount_amount');
+  	$select->addExpression('(select sum(ucordprod.price) from uc_order_products ucordprod where ucordprod.order_id= ucorder.order_id)','total_amount');
+  	$select->condition('enrollment.reg_status', array('lrn_crs_reg_rsv','lrn_crs_reg_rsc'),'NOT IN');
+  	$select->condition('orders.user_id',$usid);
+  	$select->GroupBy('orders.id');
+  	
+  		$ordersDetails = $select->execute()->fetchAll();
+ 
+  	return $ordersDetails;
+  }
+}
+
+?>

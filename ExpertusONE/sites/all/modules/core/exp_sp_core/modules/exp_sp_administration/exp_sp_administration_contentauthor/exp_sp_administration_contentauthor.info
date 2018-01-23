@@ -1,0 +1,12 @@
+name = Content Author Administration
+description = Responsible for content author administration
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration
+testing_api = 2.x
+files[] = exp_sp_administration_contentauthor.inc
+files[] = tests/exp_sp_administration_contentauthor.test
+files[] = tests/exp_sp_administration_contentauthor_create.test
+files[] = tests/exp_sp_administration_contentauthor_delete.test
+files[] = tests/exp_sp_administration_contentauthor_update.test
+version = VERSION
+core = 7.x

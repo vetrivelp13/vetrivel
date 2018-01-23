@@ -1,0 +1,253 @@
+<?php
+
+class CoreTestCase extends DrupalUnitTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Core Unit Tests',
+      'description' => 'Unit test functions in exp_sp_core.inc',
+      'group' => 'exp_sp_core',
+    );
+  }
+
+  /*
+   * Tests function formatDuration() defined in exp_sp_core.inc
+   */  
+  public function testFormatDuration() {
+      // The various test scenarios 
+      $test_cases = array(
+        array(null,		'-',						'Test formatDuration() - null duration converts to a dash'),
+        array('',		'-',						'Test formatDuration() - null string duration converts to a dash'),
+        array(-1,		'-',						'Test formatDuration() - negative duration converts to a dash'),
+        array(0,		'-',						'Test formatDuration() - 0 duration converts to a dash'),
+        array(1,		'1 minute',					'Test formatDuration() - format of 1 minute'),
+        array(59,		'59 minutes',				'Test formatDuration() - format of 59 minutes'),
+        array(60,		'1 hour',					'Test formatDuration() - format of 60 minutes'),
+        array(61,		'1 hour 1 minute',			'Test formatDuration() - format of 61 minutes'),
+        array(119,		'1 hour 59 minutes',		'Test formatDuration() - format of 62 minutes'),
+        array(120,		'2 hours',					'Test formatDuration() - format of 120 minutes'),
+        array(121,		'2 hours 1 minute',			'Test formatDuration() - format of 121 minutes'),
+        array(122,      '2 hours 2 minutes',		'Test formatDuration() - format of 122 minutes'), 
+        
+        array('-1',		'-',						'Test formatDuration() - negative duration as string convert to a dash'),
+        array('0',		'-',						'Test formatDuration() - 0 duration as string converts to a dash'),
+        array('1',		'1 minute',					'Test formatDuration() - format of 1 minute (as string)'),
+        array('59',		'59 minutes',				'Test formatDuration() - format of 59 minutes (as string)'),
+        array('60',		'1 hour',					'Test formatDuration() - format of 60 minutes (as string)'),
+        array('61',		'1 hour 1 minute',			'Test formatDuration() - format of 61 minutes (as string)'),
+        array('119',	'1 hour 59 minutes',		'Test formatDuration() - format of 62 minutes (as string)'),
+        array('120',	'2 hours',					'Test formatDuration() - format of 120 minutes (as string)'),
+        array('121',	'2 hours 1 minute',			'Test formatDuration() - format of 121 minutes (as string)'),
+        array('122',    '2 hours 2 minutes',		'Test formatDuration() - format of 122 minutes (as string)'), 
+        );
+
+        // Test the scenarios
+        foreach ($test_cases as $name => $test_case) {
+          list($durationInMin, $expectedFormattedDuration, $description) = $test_case;
+        
+          $actualFormattedDuration = formatDuration($durationInMin);
+          $this->assertIdentical($actualFormattedDuration,
+                               $expectedFormattedDuration,
+                               $message = $description . '. Expected: "' . $expectedFormattedDuration . '", Actual: "' . $actualFormattedDuration . '"',
+                               'exp_sp_core');
+      }
+  }
+
+  /*
+   * Tests function subStringBtwTwoStrings() defined in exp_sp_core.inc
+   */
+  public function testSubStringBtwTwoStrings() {
+      // The various test scenarios 
+      $test_cases = array(
+        array(null, 'ab', 'fgh', false, 'Test subStringBtwTwoStrings() - Returns false when there is no $string to search from'),
+        array('abcdefgh', null, null, 'abcdefgh', 'Test subStringBtwTwoStrings() - Returns $string when both $precedeString and $succeedString are null'),
+        array('abcdefgh', 'ab', null, 'cdefgh', 'Test subStringBtwTwoStrings() - Returns from after $precedeString until end of string when $succeedString is null'),
+        array('abcdefgh', null, 'fgh', 'abcde', 'Test subStringBtwTwoStrings() - Returns from start of string till before $succeedString when $precedeString is null'),
+        array('abcdefgh', '', '', 'abcdefgh', 'Test subStringBtwTwoStrings() - Returns $string when both $precedeString and $succeedString are null strings'),
+        array('abcdefgh', 'ab', '', 'cdefgh', 'Test subStringBtwTwoStrings() - Returns from after $precedeString until end of string when $succeedString is null string'),
+        array('abcdefgh', '', 'fgh', 'abcde', 'Test subStringBtwTwoStrings() - Returns from start of string till before $succeedString when $precedeString is null string'),
+        array('abcdefgh', 'ab', 'fgh', 'cde', 'Test subStringBtwTwoStrings() - Returns from subString between $precedeString and $succeedString'),
+        array('abcdefgh', 'ij', 'fgh', false, 'Test subStringBtwTwoStrings() - Returns false when $precedeString is not present in string'),
+        array('abcdefgh', 'ab', 'ab', false, 'Test subStringBtwTwoStrings() - Returns false when $succeedString is not present in string'),
+        );
+
+        // Test the scenarios
+        foreach ($test_cases as $name => $test_case) {
+          list($string, $precedeString, $succeedString, $expectedSubString, $description) = $test_case;
+        
+          $actualSubString = subStringBtwTwoStrings($string, $precedeString, $succeedString);
+          $this->assertIdentical($actualSubString,
+                               $expectedSubString,
+                               $message = $description . '. Expected: "' . $expectedSubString . '", Actual: "' . $actualSubString . '"',
+                               'exp_sp_core');
+      }
+  }
+  
+  /*
+   * Tests function getPaymentMethodName() defined in exp_sp_core.inc
+   */
+  public function testGetPaymentMethodNameNonDBPart() {
+      // The various test scenarios 
+      $test_cases = array(
+        array('check', 'code', 'cme_pmt_typ_chk', 'Test getPaymentMethodName() - Get code for lnr payment method check'),
+        array('po', 'code', 'cme_pmt_typ_por', 'Test getPaymentMethodName() - Get code for lnr payment method po'),
+        array('credit', 'code', 'cme_pmt_typ_crd', 'Test getPaymentMethodName() - Get code for lnr payment method credit'),
+        array('bank_transfer', 'code', 'cme_pmt_typ_bnt', 'Test getPaymentMethodName() - Get code for lnr payment method bank_transfer'),
+        array('other', 'code', 'cme_pmt_typ_acn', 'Test getPaymentMethodName() - Get code for lnr payment method other'),
+        array('unknown', 'code', 'unknown', 'Test getPaymentMethodName() - Get code for unknown lnr payment method'),
+        array('Zero Cost', 'code', 'Zero Cost', 'Test getPaymentMethodName() - Get code for lnr payment method Zero Cost'),
+        array('Zero Cost', 'name', 'Zero Cost', 'Test getPaymentMethodName() - Get name for lnr payment method Zero Cost. Not a DB operation'),
+        );
+
+        // Test the scenarios
+        foreach ($test_cases as $name => $test_case) {
+          list($lnrOrderType, $returnType, $expectedResultString, $description) = $test_case;
+        
+          $actualResultString = getPaymentMethodName($lnrOrderType, $returnType);
+          $this->assertIdentical($actualResultString,
+                               $expectedResultString,
+                               $message = $description . '. Expected: "' . $expectedResultString . '", Actual: "' . $actualResultString . '"',
+                               'exp_sp_core');
+      }
+  }
+
+  /*
+   * Tests function getPaymentStatusName() defined in exp_sp_core.inc
+   */
+  public function testGetPaymentStatusNameNonDBPart() {
+      // The various test scenarios 
+      $test_cases = array(
+        array('completed', 'code', 'cme_pmt_sts_cnm', 'Test getPaymentStatusName() - Get code for payment status completed'),
+        array('pending', 'code', 'cme_pmt_sts_pnd', 'Test getPaymentStatusName() - Get code for payment status pending'),
+        array('payment_received', 'code', 'cme_pmt_sts_cnm', 'Test getPaymentStatusName() - Get code for payment status payment_received'),
+        array('canceled', 'code', 'cme_pmt_sts_rjt', 'Test getPaymentStatusName() - Get code for payment status canceled'),
+        array('unknown', 'code', 'unknown', 'Test getPaymentStatusName() - Get code for unknown payment status'),
+        );
+
+        // Test the scenarios
+        foreach ($test_cases as $name => $test_case) {
+          list($paymentStatus, $returnType, $expectedResultString, $description) = $test_case;
+        
+          $actualResultString = getPaymentStatusName($paymentStatus, $returnType);
+          $this->assertIdentical($actualResultString,
+                               $expectedResultString,
+                               $message = $description . '. Expected: "' . $expectedResultString . '", Actual: "' . $actualResultString . '"',
+                               'exp_sp_core');
+      }
+  }
+
+  /*
+   * Tests function dateTimeStrToUSShort() defined in exp_sp_core.inc
+   */
+  public function testDateTimeStrToUSShort() {
+      // The various test scenarios 
+      $test_cases = array(
+      //array('2011-09-19 13:30:00',  $year4,  $showTime,  $time24,  $showSeconds, 'expected', ''),
+        array('2011-09-19 13:30:00',  true,    true,       true,     true,         '09/19/2011 13:30:00', ''),
+        array('2011-09-19 13:30:00',  true,    true,       true,     false,        '09/19/2011 13:30', ''),
+        array('2011-09-19 13:30:00',  true,    true,       false,    true,         '09/19/2011 01:30:00 pm', ''),
+        array('2011-09-19 13:30:00',  true,    true,       false,    false,        '09/19/2011 01:30 pm', ''),
+        array('2011-09-19 13:30:00',  true,    false,      true,     true,         '09/19/2011', ''),
+        array('2011-09-19 13:30:00',  true,    false,      true,     false,        '09/19/2011', ''),
+        array('2011-09-19 13:30:00',  true,    false,      false,    true,         '09/19/2011', ''),
+        array('2011-09-19 13:30:00',  true,    false,      false,    false,        '09/19/2011', ''),
+        array('2011-09-19 13:30:00',  false,   true,       true,     true,         '09/19/11 13:30:00', ''),
+        array('2011-09-19 13:30:00',  false,   true,       true,     false,        '09/19/11 13:30', ''),
+        array('2011-09-19 13:30:00',  false,   true,       false,    true,         '09/19/11 01:30:00 pm', ''),
+        array('2011-09-19 13:30:00',  false,   true,       false,    false,        '09/19/11 01:30 pm', ''),
+        array('2011-09-19 13:30:00',  false,   false,      true,     true,         '09/19/11', ''),
+        array('2011-09-19 13:30:00',  false,   false,      true,     false,        '09/19/11', ''),
+        array('2011-09-19 13:30:00',  false,   false,      false,    true,         '09/19/11', ''),
+        array('2011-09-19 13:30:00',  false,   false,      false,    false,        '09/19/11', ''),
+        array('',                     false,   false,      false,    false,        '', ''),
+        array(null,                   false,   false,      false,    false,        '', ''),
+        array('@1309943773',          true,    false,      true,     false,        '07/06/2011', ''), // Unix timestamp also accepted     
+        );
+
+        // Test the scenarios
+        foreach ($test_cases as $name => $test_case) {
+          list($dateTimeString, $year4, $showTime, $time24, $showSeconds, $expectedResultString, $description) = $test_case;
+        
+          $actualResultString = dateTimeStrToUSShort($dateTimeString, $year4, $showTime, $time24, $showSeconds);
+          $this->assertIdentical($actualResultString,
+                               $expectedResultString,
+                               $message = 'Expected date format: "' . $expectedResultString . '", Actual date format: "' . $actualResultString . '"',
+                               'exp_sp_core');
+      }
+  }
+  
+/*
+   * Tests function dateTimeStrToUnivShort() defined in exp_sp_core.inc
+   */
+  public function testDateTimeStrToUnivShort() {
+      // The various test scenarios 
+      $test_cases = array(
+      //array('2011-09-19 13:30:00',  $year4,  $showTime,  $time24,  $showSeconds, 'expected', ''),
+        array('2011-09-19 13:30:00',  true,    true,       true,     true,         'Sep 19, 2011 13:30:00', ''),
+        array('2011-09-19 13:30:00',  true,    true,       true,     false,        'Sep 19, 2011 13:30', ''),
+        array('2011-09-19 13:30:00',  true,    true,       false,    true,         'Sep 19, 2011 01:30:00 PM', ''),
+        array('2011-09-19 13:30:00',  true,    true,       false,    false,        'Sep 19, 2011 01:30 PM', ''),
+        array('2011-09-19 13:30:00',  true,    false,      true,     true,         'Sep 19, 2011', ''),
+        array('2011-09-19 13:30:00',  true,    false,      true,     false,        'Sep 19, 2011', ''),
+        array('2011-09-19 13:30:00',  true,    false,      false,    true,         'Sep 19, 2011', ''),
+        array('2011-09-19 13:30:00',  true,    false,      false,    false,        'Sep 19, 2011', ''),
+        array('2011-09-19 13:30:00',  false,   true,       true,     true,         'Sep 19, 11 13:30:00', ''),
+        array('2011-09-19 13:30:00',  false,   true,       true,     false,        'Sep 19, 11 13:30', ''),
+        array('2011-09-19 13:30:00',  false,   true,       false,    true,         'Sep 19, 11 01:30:00 PM', ''),
+        array('2011-09-19 13:30:00',  false,   true,       false,    false,        'Sep 19, 11 01:30 PM', ''),
+        array('2011-09-19 13:30:00',  false,   false,      true,     true,         'Sep 19, 11', ''),
+        array('2011-09-19 13:30:00',  false,   false,      true,     false,        'Sep 19, 11', ''),
+        array('2011-09-19 13:30:00',  false,   false,      false,    true,         'Sep 19, 11', ''),
+        array('2011-09-19 13:30:00',  false,   false,      false,    false,        'Sep 19, 11', ''),
+        array('',                     false,   false,      false,    false,        '', ''),
+        array(null,                   false,   false,      false,    false,        '', ''),
+        array('@1309943773',          true,    false,      true,     false,        'Jul 06, 2011', ''), // Unix timestamp also accepted     
+        );
+
+        // Test the scenarios
+        foreach ($test_cases as $name => $test_case) {
+          list($dateTimeString, $year4, $showTime, $time24, $showSeconds, $expectedResultString, $description) = $test_case;
+        
+          $actualResultString = dateTimeStrToUnivShort($dateTimeString, $year4, $showTime, $time24, $showSeconds);
+          $this->assertIdentical($actualResultString,
+                               $expectedResultString,
+                               $message = 'Expected date format: "' . $expectedResultString . '", Actual date format: "' . $actualResultString . '"',
+                               'exp_sp_core');
+      }
+  }
+}
+
+class CoreTestDBCase extends DrupalWebTestCase { 
+	public static function getInfo() {
+    return array(
+      'name' => 'Database Test',
+      'description' => 'Unit test functions in exp_sp_core.inc for database',
+      'group' => 'exp_sp_core',
+    );
+  }
+  
+  function setUp(){
+  	parent::setUp();
+  }
+  
+	public function testGetEntityIdFromNodeId(){
+		$test_case = array(
+			array('30','157'),
+			array('31',''),
+			array('35','158')
+		);
+		foreach($test_case as $test){
+			list($in, $out) = $test;
+			$rst = getEntityIdFromNodeId($in);
+			$this->assertEqual(
+				$rst,
+				$out, 
+				" Given Node Id: " . $in . " Expected: " . $out. " Actual: ".$rst,
+				'exp_sp_core');
+		}
+		
+	}
+}
+
+
+?>

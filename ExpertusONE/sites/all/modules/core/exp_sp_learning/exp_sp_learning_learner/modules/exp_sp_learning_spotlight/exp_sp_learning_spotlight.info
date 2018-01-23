@@ -1,0 +1,10 @@
+name = Learning Spotlight for Highly Rated,Most Viewed,New Releases 
+description = Responsible for learner side Learnin Spotlight-Highly Rated,Most Viewed,New Releases.
+package = ExpertusONE Learning
+dependencies[] = exp_sp_admin_userpoints
+testing_api = 2.x
+files[] = exp_sp_learning_spotlight.inc
+files[] = exp_sp_administration/exp_sp_administration_sitesetup/exp_sp_administration_module_info/exp_sp_admin_userpoints/exp_sp_admin_userpoints.inc
+files[] = tests/exp_sp_learning_spotlight.test
+version = VERSION
+core = 7.x

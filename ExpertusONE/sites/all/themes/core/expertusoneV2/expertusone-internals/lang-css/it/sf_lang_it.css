@@ -1,0 +1,79 @@
+/* Catalog */
+#page-container #lnr-catalog-search .find-trng-sort-text {
+/*     background-position: 72px -2815px !important; */
+} 
+ 
+ /* My Learning */
+ 
+.page-learning-enrollment-search #page-container .sort-by-text, .page-learning-enrollment-search #widget .sort-by-text{
+	/* min-width: 74px !important; */
+}
+
+.page-learning-enrollment-search #page-container .sort-by-text{
+	/* background-position: 78px -2814px !important;*/
+}
+
+.salesforce-widget #myteam-find-trng-sort-display .find-trng-sort-text{
+ 	background-position: 72px -2815px
+}
+.salesforce-widget #catalog-admin-cal-legend .first-row-cell .cal-legent-td-upcg{
+  width:auto;
+  padding-right:5px
+}
+#user-preference-settings #manage-dd-list li .dropdown-msg{
+  line-height:15px !important;
+}
+
+#embed_widget_container .widget-class-table td.dispayparam-checkbox {
+width: 48% !important;
+}
+
+#page-container .enroll-sort-bylist {
+	/*right: 25px !important;*/
+}
+
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -96px !important;
+}
+
+/* For IE 9 */
+
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -122px\9 !important;
+}
+/* Salesforce Styles for IFrame */
+.iframe-mylearning #page-container .enroll-sort-bylist{
+	right:0\9 !important;
+}
+
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -122px\9 !important;
+}
+
+
+
+/* Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -52px !important;
+	 width: 146px !important;
+}
+}
+
+/* IE 10 Hack */
+
+/* IE 10 & Above*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+.iframe-mylearning #page-container .enroll-sort-bylist{
+	right:25px !important;	
+}
+
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -97px !important;
+}
+
+}
+
+ 
+
+

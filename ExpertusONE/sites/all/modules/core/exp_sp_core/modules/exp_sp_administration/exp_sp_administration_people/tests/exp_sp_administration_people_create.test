@@ -1,0 +1,175 @@
+<?php 
+class AdministrationUserCreateBase extends AdministrationUserTestHelper
+{
+	public function createUserTestCase($scope = 'all') {
+		$ctoolModel = array(
+				'modelWidth' => 890,
+				'modelClass' => 'ctools-modal-ctools-admin-user-addedit-style',
+				'modelTitle' => t('User'),
+				'contentWidth' => 570,
+				'contentMhight' => 335,
+				'outerHeight' => 620,
+				'outerWidth' => 336,
+				'blockHeight' => 1232,
+				'blockWidth' => 1343,
+				'modelTop' => 150,
+				'modelLeft' => 226.5,
+				'docHeight' => 1232,
+				'docWidth' => 1343
+		);
+		$this->addCtoolModelContent($ctoolModel);
+
+		$modelContent = $this->content;
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['userCreate'];
+		} else {
+			$testCases = array($this->testcases['userCreate'][$scope]);
+		}
+		expDebug::dPrint("create test case  ".print_r($testCases,true),1);
+		foreach($testCases as $test){
+			
+			debug('test data to proceed' . print_r($test,1 ));
+
+			//Reset content with the ctool model
+			$this->content = $modelContent;
+				
+			//Get empty form
+			$post_field = array('wrapper'=>'paint-narrow-search-results');
+
+			$out = $this->drupalPostAJAX(null, $edit,'Save','?q=/administration/people/user/ajax/addedit',array(),array(),'',$post_field);
+
+			$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+
+			// Do General validations
+			$this->assertResponse(200,'Form Rended successfully');
+			$webError = "Website encountered an unexpected error";
+			$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+
+			// Save form
+			$param = array(
+					"form_id"=>"exp_sp_administration_user_basic_addedit_form",
+					"_triggering_element_name" 	=>"hidden-save",
+					"_triggering_element_value"	=>"hidden-save",
+			);
+				
+			$post_field = array('submit'=>$param,	'wrapper'=>'user-basic-addedit-form');
+
+			$out = $this->drupalPostAJAX(null, $test,'Save','?q=system/ajax',array(),array(),'',$post_field);
+				
+				
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+
+
+			//Check if any error thrown
+			$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+			$error = '';
+			debug("ERROR STRINGS ");
+
+			if(sizeOf($isError) > 0){
+				$error = (string) $isError[0];
+			}
+			$this->assertResponse(200,'Form Repainted successfully');
+			$txt = 'Details saved successfully.';
+			$this->assertText(t($txt),'Details saved successfully.','catalog_admin');
+			$this->assertNoText(t($error),'Error - '.$error,'catalog_admin');
+			$webError = "Website encountered an unexpected error";
+			$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+		}
+	}
+
+}
+
+class AdministrationUserCreateAll extends AdministrationUserCreateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - User - Create - All Tests',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1201 - Administration - People - User - Create',
+		);
+	}
+	
+	public function testUserCreateAll() {
+		$this->manageAdminUser();
+		debug('testAdminUserCreateAll called');
+		$this->createUserTestCase('all');
+	}
+}
+
+class AdministrationUserCreateLearner extends AdministrationUserCreateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - User - Create - Learner',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1201 - Administration - People - User - Create',
+		);
+	}
+
+	public function testUserCreateLearner() {
+		$this->manageAdminUser();
+		debug('testAdminUserCreateLearner called');
+		$this->createUserTestCase('st_learner');
+	}
+}	
+
+class AdministrationUserCreateInstructor extends AdministrationUserCreateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - User - Create - Instructor',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1201 - Administration - People - User - Create',
+		);
+	}
+
+	public function testUserCreateInstructor() {
+		$this->manageAdminUser();
+		debug('testAdminUserCreateInstructor called');
+		$this->createUserTestCase('st_instructor');
+	}
+}
+
+class AdministrationUserCreateManager extends AdministrationUserCreateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - User - Create - Manager',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1201 - Administration - People - User - Create',
+		);
+	}
+
+	public function testUserCreateManager() {
+		$this->manageAdminUser();
+		debug('testAdminUserCreateManager called');
+		$this->createUserTestCase('st_manager');
+	}
+}
+//
+class AdministrationUserCreateEmployees extends AdministrationUserCreateBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - User - Create - Employees',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1201 - Administration - People - User - Create',
+		);
+	}
+
+	public function testUserCreateEmployees() {
+		$this->manageAdminUser();
+		debug('testAdminUserCreateEmployees called');
+		$this->createUserTestCase('st_employee_Human_resources');
+	}
+	
+	public function testUserCreateJobRole() {
+		$this->manageAdminUser();
+		debug('testAdminUserCreateJobRole called');
+		$this->createUserTestCase('st_job_role_1');
+	}
+} 
+
+?>

@@ -1,0 +1,148 @@
+.logo_img1 {
+	background-image: url(images/expertuslogo.jpg);
+}
+
+.PopupHeader {
+	background-image: url(../images/bg11.jpg);
+}
+
+/* For Menu Style 
+
+body {margin:25px; font:11px Verdana,Arial; background:#eee}*/
+ul.menu {list-style:none; margin:0; padding:0}
+ul.menu * {margin:0; padding:0}
+ul.menu a {display:block; color:#fff; text-decoration:none}
+ul.menu li {position:relative; float:left; margin-right:2px}
+ul.menu ul {position:absolute; top:26px; left:0; background:#d1d1d1; display:none; opacity:0; list-style:none}
+ul.menu ul li {position:relative; border:1px solid #aaa; border-top:none; width:148px; margin:0}
+ul.menu ul li a {display:block; padding:3px 7px 5px; background-color:#d1d1d1}
+ul.menu ul li a:hover {background-color:#c5c5c5}
+ul.menu ul ul {left:148px; top:-1px}
+ul.menu .menulink {border:1px solid #aaa; padding:5px 5px 5px; font:11px Verdana,Arial;font-weight:bold; background-color:#878585;width:134px;}
+ul.menu .menulink:hover, ul.menu .menuhover { background-color:#D70B0B;}
+ul.menu .sub {background:#d1d1d1 url(images/arrow.gif) 136px 8px no-repeat}
+ul.menu .topline {border-top:1px solid #aaa}
+
+
+.ssmenu {
+	color: #FFFFFF;
+}
+
+.forSidemenu {
+	background-color:#FFFFFF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000000;
+	text-decoration: none;
+}
+
+.formain_menu {
+	background-color: #c9282d;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.forsub_main_menu {
+	background-color: #ebcdcd;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000000;
+	text-decoration: none;
+}
+
+.tablebg {
+          background-color: #eeeded;
+          border: 2px solid #CCCCCC; 
+
+}
+.tableContentborder {
+
+          border: 2px solid #bcb7b7; 
+ }
+
+.tableContentbgcolor {
+          background-color: #f5e8e8;
+		  font-family: Arial, Helvetica, sans-serif;
+		  font-size: 13px;
+		  color: #000000;
+		  background-color: #e9b8b8;
+}
+
+.table{
+font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000000;
+	
+	
+}
+.table_header{
+background-color: #ebcdcd;
+}
+
+.box {
+background-color: #f0dada;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000000;
+	text-decoration: none;
+	border: 2px solid  #bcb7b7;
+}
+
+.note {
+background-color: #e9b8b8;
+ border: 2px solid #bcb7b7; 
+}
+.titles {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: normal;
+	color: #000000;
+	text-decoration: underline;
+	font-weight: bold;
+}
+.subtitles {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000000;
+	font-weight: bold;
+	text-transform: uppercase;
+
+}
+
+.notestable {
+	background-color:#FF9900;
+	border-color:#CCCCCC;
+	border: 2px solid #CCCCCC;
+	font-family:Arial;
+	font-size:12px; 	
+}
+.pagebg {
+	background-attachment: fixed;
+	background-image: url(images/bg1.png);
+	background-repeat: repeat-x;
+	background-position: left top;
+}
+.opacity25 { /* 25% opaque */
+    opacity:0.25;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=25)";
+    filter:alpha(opacity=25);
+    zoom:1	
+}
+
+.mainBG{
+background-color: #f9f0f0;
+}
+
+.testbg{
+background-color: #f0dada;
+border: 2px solid  #bcb7b7;
+}
+.testbgnote{
+background-color: #e9b8b8;
+border: 2px solid  #bcb7b7;
+}
+
+
+

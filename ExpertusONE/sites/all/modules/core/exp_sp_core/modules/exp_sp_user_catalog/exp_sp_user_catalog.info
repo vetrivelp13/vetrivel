@@ -1,0 +1,5 @@
+name = User Catalog
+description = Responsible for learner side List out online users.
+package = ExpertusONE Core
+version = VERSION
+core = 7.x

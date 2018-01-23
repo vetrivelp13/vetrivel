@@ -1,0 +1,9 @@
+name = Learning Plan Learner Details 
+description = Responsible for rendering learning plan details.
+package = ExpertusONE Learning
+dependencies[] = exp_sp_core
+testing_api = 2.x
+files[] = exp_sp_learning_plan_detail.inc
+files[] = tests/exp_sp_learning_plan_detail.test
+version = VERSION
+core = 7.x

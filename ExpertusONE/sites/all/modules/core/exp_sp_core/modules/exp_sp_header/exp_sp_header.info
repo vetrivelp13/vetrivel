@@ -1,0 +1,6 @@
+name = Header Block
+description = Responsible for generating top links.
+package = ExpertusONE Core
+version = VERSION
+core = 7.x
+dependencies[] = exp_sp_core

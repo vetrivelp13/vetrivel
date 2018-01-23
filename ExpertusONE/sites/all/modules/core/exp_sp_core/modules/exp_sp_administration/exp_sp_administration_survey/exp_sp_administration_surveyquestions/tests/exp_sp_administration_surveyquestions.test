@@ -1,0 +1,388 @@
+<?php
+class AdministrationSurveyQuestionTestHelper extends ExpertusWebTestCase {
+	private $searchResultContent = null;
+	protected $testcases = array ();
+	public $listContent = '';
+	private $srcParam = array (
+			'title' => '', // Title base search
+			'announcementdaterange' => '', // date range on announcement
+			'announcementlang' => 'cre_sys_lng_eng', // Selected languages pipe separated
+			'sortby' => 'desc', // Sort by option
+			'announcemanage' => 'cre_sys_fop_me' 
+	);
+	public function setUp() {
+		parent::setUp ();
+		$this->drupalLogin ( $this->admin ); // login as admin
+		$this->getSurveyQuestionsTestCases ();
+		// set refer to prevent access denied error
+		$this->setHttpReferer ( 'learning/enrollment-search' );
+	}
+	public function manageAdminSurveyQuestions($scope = 'basic') {
+		
+		// Get Main HTML content
+		$this->drupalPost ( 'administration/survey/surveyquestions' );
+		$content = $this->content;
+		
+		// Get Filters
+		$this->drupalGetAJAX ( 'administration/search-filter/surveyquestions' );
+		$this->content = drupal_json_decode ( $this->content );
+		
+		// Update filters with existing response
+		$replArray = array (
+				'rendered_narrow_search_filters' => 'narrow-search',
+				'rendered_main_div' => 'root-admin-results',
+				'rendered_tab_content_main' => 'tab-content-main',
+				'rendered_narrow_search_sortbar' => 'admin-maincontent_tab',
+				'rendered_narrow_search_actionbar' => 'sort-bar-V2' 
+		);
+		
+		$this->updateSearchFilters ( $content, $replArray, 'div', 'tag', 'div' );
+		
+		$this->displayTagsById ( 'narrow-search' );
+		$this->displayTagsById ( 'root-admin-results' );
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases ['surveyQuestionList'];
+		} else {
+			$testCases = array (
+					$this->testcases ['surveyQuestionList'] [$scope] 
+			);
+		}
+		
+		// Get search results
+		foreach ( $testCases as $test ) {
+			$this->getAdministrationSurveyQuestionsList ( $test );
+		}
+	}
+	public function getAdministrationSurveyQuestionsList($opt = array()) {
+		$opt = array_merge ( $this->basicParam, $opt );
+		$this->listContent = $this->content;
+		$srcRc = $this->drupalGetAJAX ( 'administration/survey/surveyquestions/search/all/', array (
+				'query' => $opt 
+		) );
+		$this->updateSearchResults ( $this->listContent, $srcRc, 'narrow-search-results-holder' );
+	}
+	protected function getSurveyQuestionsTestCases() {
+		$rand = $this->randomName ( 10 );
+		$this->testcases = array (
+				'surveyQuestionList' => array (
+						'basic' => array (),
+						'case1' => array () 
+				),
+				'surveyQuestionCreate' => array (
+						'st_case1' => array (
+								"question_txt" => 'st_case1 question text - ' . $rand,
+								"question_type" => 'sry_qtn_typ_yno',
+								"lang_code" => 'cre_sys_lng_eng',
+								"entity_value" => 'sry_det_typ_sry_qus' 
+						),
+						'st_case2' => array (
+								"question_txt" => 'st_case2 question text - ' . $rand,
+								"question_type" => 'sry_qtn_typ_yno',
+								"lang_code" => 'cre_sys_lng_eng',
+								"entity_value" => 'sry_det_typ_sry_qus' 
+						) 
+				),
+				'surveyQuestionUpdate' => array (
+						'st_case1' => array (
+								"question_txt" => 'st_case1 question changed ' . $rand,
+								"question_type" => 'sry_qtn_typ_yno',
+								"id" => $this->getSurveyQuestionId ( 'st_case1' ) 
+						),
+						'st_case2' => array (
+								"question_txt" => 'st_case2 question changed ' . $rand,
+								"question_type" => 'sry_qtn_typ_yno',
+								"id" => $this->getSurveyQuestionId ( 'st_case2' ) 
+						) 
+				),
+				'surveyQuestionDelete' => array (
+						'st_case1' => array (
+								'id' => $this->getSurveyQuestionId ( 'st_case1' ) 
+						),
+						'st_case2' => array (
+								'id' => $this->getSurveyQuestionId ( 'st_case2' ) 
+						) 
+				),
+				'surveyQuestionView' => array (
+						'st_case1' => array (
+								'id' => $this->getSurveyQuestionId ( 'st_case1' ) 
+						) 
+				),
+				'surveyQuestionStatus' => array (
+						'st_case1' => array (
+								'id' => $this->getSurveyQuestionId ( 'st_case1' ) 
+						),
+						'st_case2' => array (
+								'id' => $this->getSurveyQuestionId ( 'st_case2' ) 
+						) 
+				) 
+		);
+	}
+	public function getSurveyQuestionTitle($surveyQuesId = '') {
+		$surveyTitle = db_query ( "SELECT question_txt FROM slt_survey_questions WHERE survey_type = :type AND id = :survey_ques_id", array (
+				':type' => 'sry_det_typ_sry',
+				':survey_ques_id' => $surveyQuesId 
+		) )->fetchField ();
+		return $surveyTitle;
+	}
+	public function getSurveyQuestionStatus($surveyQuesId = '') {
+		$surveyStatus = db_query ( "SELECT status FROM slt_survey_questions WHERE survey_type = :type AND id = :survey_ques_id", array (
+				':type' => 'sry_det_typ_sry',
+				':survey_ques_id' => $surveyQuesId 
+		) )->fetchField ();
+		return $surveyStatus;
+	}
+	// To check how many survey having this question
+	public function getSurveyQuestionCount($surveyQuesId = '') {
+		$surveyCount = db_query ( "SELECT count(question_id) FROM slt_survey_groups_questions WHERE question_id = :surveyQuesId", array (
+				':surveyQuesId' => $surveyQuesId 
+		) )->fetchField ();
+		return $surveyCount;
+	}
+	public function getSurveyQuestionId($search_str = '') {
+		$select = db_select ( 'slt_survey_questions', 'survey_ques' );
+		$select->addField ( 'survey_ques', 'id', 'id' );
+		$select->condition ( 'survey_ques.status', 'sry_qtn_sts_del', '!=' );
+		$select->condition ( 'survey_ques.survey_type', 'sry_det_typ_sry' );
+		$select->condition ( 'survey_ques.question_txt', '%' . db_like ( $search_str ) . '%', 'LIKE' );
+		$select->orderBy ( 'survey_ques.id', 'DESC' );
+		$select->range ( 0, 1 );
+		$surveyQuestionId = $select->execute ()->fetchField ();
+		return $surveyQuestionId;
+	}
+	
+	/**
+	 * Export functionality test case
+	 * Created By :Maheswari.M
+	 * Created Date:02.01.2017
+	 */
+	public function exportSurveyQuestions($opt = 'csv') {
+		debug ( 'SurveyQuestion Id -->' . print_r ( $this->id, 1 ), 4 );
+		$selSurveyQuestionQry = db_select ( 'slt_survey_questions', 'per' );
+		$selSurveyQuestionQry->addField ( 'per', 'name', 'name' );
+		$selSurveyQuestionQry->condition ( 'per.id', $this->id, 'IN' );
+		$selSurveyQuestionRes = $selSurveyQuestionQry->execute ()->fetchAll ();
+		debug ( 'SurveyQuestion Name List-->' . print_r ( $selSurveyQuestionRes, 1 ), 4 );
+		if ($opt == 'csv') {
+			// customized the drupalGet() using options parameter
+			$this->drupalGet ( 'administration/survey/surveyquestions/export', array (
+					'filewrite' => 1,
+					'testCase' => 'csv' 
+			) );
+			if ($this->assertResponse ( 200 ) == 'pass') {
+				foreach ( $selSurveyQuestionRes as $groupName ) {
+					$this->assertRaw ( $groupName->name, 'Contents of the exported file has ' . $groupName->name . ' and it is correct.' );
+				}
+			}
+		} elseif ($opt == 'pdf') {
+			$this->drupalGet ( 'administration/survey/surveyquestions/print', array (
+					'filewrite' => 1,
+					'testCase' => 'pdf' 
+			) );
+			if ($this->assertResponse ( 200 ) == 'pass') {
+				debug ( $this->content );
+				foreach ( $selSurveyQuestionRes as $groupName ) {
+					$this->assertText ( $groupName->name, 'Contents of the exported file has ' . $groupName->name . ' and it is correct.' );
+				}
+			}
+		}
+	}
+}
+class AdministrationSurveyQuestionListBase extends AdministrationSurveyQuestionTestHelper {
+}
+class AdministrationSurveyQuestionListAll extends AdministrationSurveyQuestionListBase {
+	public static function getInfo() {
+		return array (
+				'name' => 'Administration - SurveyQuestions - List - All Tests',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1302 - Administration - Survey - SurveyQuestions - List' 
+		);
+	}
+	public function testSurveyQuestionsListAll() {
+		debug ( 'testAdminSurveyQuestionsListAll called' );
+		$this->manageAdminSurveyQuestions ( 'all' );
+	}
+}
+class AdministrationSurveyQuestionListCase1 extends AdministrationSurveyQuestionListBase {
+	public static function getInfo() {
+		return array (
+				'name' => 'Administration - SurveyQuestions - List - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1302 - Administration - Survey - SurveyQuestions - List' 
+		);
+	}
+	public function testSurveyQuestionsListCase1() {
+		debug ( 'testAdminSurveyQuestionsListCase1 called' );
+		$this->manageAdminSurveyQuestions ( 'case1' );
+	}
+}
+
+/**
+ * Survey question view test cases
+ * Created By :Maheswari.M
+ * Created Date:21.12.2016
+ */
+class AdministrationSurveyQuestionViewBase extends AdministrationSurveyQuestionTestHelper {
+	public function viewSurveyQuestionTestCase($scope) {
+		$ctoolModel = array (
+				'modelWidth' => 890,
+				'modelClass' => 'ctools-modal-ctools-viewscreen-wrapper',
+				'modelTitle' => t ( 'View' ),
+				'contentWidth' => 680,
+				'contentMhight' => 335,
+				'outerHeight' => 620,
+				'outerWidth' => 336,
+				'blockHeight' => 1232,
+				'blockWidth' => 1343,
+				'modelTop' => 150,
+				'modelLeft' => 226.5,
+				'docHeight' => 1232,
+				'docWidth' => 1343 
+		);
+		$this->addCtoolModelContent ( $ctoolModel );
+		
+		$modelContent = $this->content;
+		
+		$testCases = $this->testcases ['surveyQuestionView'] [$scope];
+		
+		if ($testCases ['id'] == 'null' || $testCases ['id'] == '') {
+			debug ( 'there is no survey question exists' );
+		} else {
+			// Reset content with the ctool model
+			$this->content = $modelContent;
+			
+			// Get empty form
+			$post_field = array (
+					'wrNULLapper' => 'paint-narrow-search-results' 
+			);
+			$viewId = $testCases ['id'];
+			
+			$out = $this->drupalPostAJAX ( null, $edit, 'Save', '?q=administration/survey/surveyquestions/view-question/ajax/addedit/' . $viewId . '/sry_det_typ_sry/sry_det_typ_sry_qus', array (), array (), '', $post_field );
+			$this->verbose ( 'Request to: ' . $this->getUrl () . '<hr />' . $this->content );
+			// Do General validations
+			$this->assertResponse ( 200, 'Form Rended successfully' );
+			$webError = "Website encountered an unexpected error";
+			$this->assertNoText ( t ( $webError ), 'Web errors not found', 'catalog_admin' );
+		}
+	}
+}
+class AdministrationSurveyQuestionViewCase1 extends AdministrationSurveyQuestionViewBase {
+	public static function getInfo() {
+		return array (
+				'name' => 'Administration - SurveyQuestions - View - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1302 - Administration - Survey - SurveyQuestions - View' 
+		);
+	}
+	public function testSurveyQuestionsViewCase1() {
+		debug ( 'testSurveyQuestionsViewCase1 called' );
+		$this->manageAdminSurveyQuestions ( 'case1' );
+		$this->viewSurveyQuestionTestCase ( 'st_case1' );
+	}
+}
+
+/**
+ * SurveyQuestion change status test cases
+ * Created By :Maheswari.M
+ * Created Date:29.12.2016
+ * To check the functionality for the SurveyQuestion question publish/unpublish .
+ */
+class AdministrationSurveyQuestionStatusBase extends AdministrationSurveyQuestionTestHelper {
+	public function statusSurveyQuestionTestCase($scope = 'all') {
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases ['surveyQuestionStatus'];
+		} else {
+			$testCases = array (
+					$this->testcases ['surveyQuestionStatus'] [$scope] 
+			);
+		}
+		
+		foreach ( $testCases as $test ) {
+			$surveyId = $test ['id'];			
+			if ($surveyId != '') {
+				// checking the status if the question attached any survey
+				$num_question = $this->getSurveyQuestionCount ( $surveyId );
+				if ($num_question == 0) {
+					// if question not attach,we can publish/unpublish the question
+					$status = $this->getSurveyQuestionStatus ( $surveyId );
+					$this->changeStatus ( $surveyId, $status );
+					$status = $this->getSurveyQuestionStatus ( $surveyId );
+					$this->changeStatus ( $surveyId, $status );
+					$this->content = $this->listContent;
+					$this->getAdministrationSurveyQuestionsList ();
+				} else
+					// if question is attach,we can't publish/unpublish
+					debug ( 'Survey Question not able to publish/unpublish,because it attached to survey' );
+			} else
+				debug ( 'The survey question id not found' );
+		}
+	}
+	// change the survey question status
+	public function changeStatus($surveyId, $status) {
+		if ($status == 'sry_qtn_sts_atv') {
+			// question is alreay published ,need to unpublish
+			$this->changeSurveyQuestionStatus ( $surveyId );
+			$this->assertResponse ( 200, 'SurveyQuestion status unpublished successfully' );
+		} else {
+			// question is unpublish
+			$this->changeSurveyQuestionStatus ( $surveyId );
+			$this->assertResponse ( 200, 'SurveyQuestion status published successfully' );
+		}
+	}
+	public function changeSurveyQuestionStatus($surveyId) {
+		$this->drupalPostAJAX ( null, $edit, 'Save', '?q=ajax/administration/survey/survey-assessment-questions/publish-and-unpublish/' . $surveyId, array (), array (), '', $post_field );
+	}
+}
+class AdministrationSurveyQuestionStatusCase1 extends AdministrationSurveyQuestionStatusBase {
+	public static function getInfo() {
+		return array (
+				'name' => 'Administration - SurveyQuestions - Status - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1302 - Administration - Survey - SurveyQuestions - Status' 
+		);
+	}
+	public function testSurveyQuestionPublishCase1() {
+		debug ( 'testSurveyQuestionPublishCase1 called' );
+		$this->manageAdminSurveyQuestions ( 'case1' );
+		$this->statusSurveyQuestionTestCase ( 'st_case1' );
+	}
+}
+class AdministrationSurveyQuestionStatusCase2 extends AdministrationSurveyQuestionStatusBase {
+	public static function getInfo() {
+		return array (
+				'name' => 'Administration - SurveyQuestions - Status - Case 2',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1302 - Administration - Survey - SurveyQuestions - Status' 
+		);
+	}
+	public function testSurveyQuestionPublishCase2() {
+		debug ( 'testSurveyQuestionPublishCase1 called' );
+		$this->manageAdminSurveyQuestions ( 'case1' );
+		$this->statusSurveyQuestionTestCase ( 'st_case2' );
+	}
+}
+
+/**
+ * Export functionality test case
+ * Created By :Maheswari.M
+ * Created Date:02.01.2017
+ */
+class AdministrationSurveyQuestionExport extends AdministrationSurveyQuestionListBase {
+	public static function getInfo() {
+		return array (
+				'name' => 'Administration - SurveyQuestion - Export - All',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1302 - Administration - People - SurveyQuestion - Export' 
+		);
+	}
+	public function testSurveyQuestionExportAll() {
+		debug ( 'testAdminSurveyQuestionExportAll called' );
+		$this->manageAdminSurveyQuestions ( 'basic' );
+		$this->exportSurveyQuestions ( 'csv' );
+		$this->exportSurveyQuestions ( 'pdf' );
+	}
+}
+
+?>

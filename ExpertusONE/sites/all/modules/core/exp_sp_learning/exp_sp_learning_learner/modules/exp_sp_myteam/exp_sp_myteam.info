@@ -1,0 +1,9 @@
+name = My Team Manager Dashboard 
+description = Responsible for Managing Learner Side My Team
+package = ExpertusONE Learning
+version = VERSION
+core = 7.x
+testing_api = 2.x
+files[] = exp_sp_myteam.module
+files[] = tests/exp_sp_myteam.test
+dependencies[] = exp_sp_learning

@@ -1,0 +1,26 @@
+#user-login-form ul { 
+  margin-top: 0;
+}
+#user-login ul {
+  margin: 0 0 5px;
+}
+#user-login ul li {
+  margin: 0;
+}
+#user-login-form .saml-links {
+  padding-bottom: 0;
+}
+#user-login-form .saml-links li,
+#user-login .saml-links li {
+  display: none;
+  list-style: none;
+}
+html.js #user-login-form li.saml-link,
+html.js #user-login li.saml-link {
+  display: block;
+  margin-left: 0; /* LTR */
+}
+#user-login-form li.saml-link a,
+#user-login li.saml-link a {
+  padding: 0 0 0 0; /* LTR */
+}

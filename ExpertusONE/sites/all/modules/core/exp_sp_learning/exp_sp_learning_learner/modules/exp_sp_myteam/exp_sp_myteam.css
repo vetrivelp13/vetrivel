@@ -1,0 +1,1850 @@
+.search-list {
+  margin-left:0;
+  padding:0 5px 0 4px
+}
+.searchcriteria-div {
+  float:left;
+  width:18.5%
+}
+.search-opt-box {
+  border-bottom:1px dotted #CCC;
+  float:left;
+  height:auto;
+  margin:4px 0 5px;
+  padding-bottom:12px;
+  padding-left:9px;
+  width:95%
+}
+#lnr-myteam-search {
+  min-height:200px
+}
+#lnr-myteam-search .srch-filter-heading {
+  border-bottom:1px dotted #CCC;
+  color:#333;
+  cursor:pointer;
+  float:left;
+  font-size:14px;
+  font-weight:bold;
+  margin:0 0 3px;
+  padding:7px 6px 7px 8px;
+  text-transform:uppercase;
+  width:92.5%
+}
+#searchopts-content .search-opt-box-lastitem {
+  border:0;
+  margin-bottom:0;
+  padding-bottom:3px
+}
+.search-opts {
+  height:auto;
+  margin-top:1px
+}
+.search-heading {
+  float:left;
+  font-size:13px;
+  margin-bottom:5px;
+  padding:0 0 0 5px;
+  text-decoration:none;
+  text-transform:uppercase
+}
+.searchoptsTitle {
+  background:url("images/search-icon-orange.gif") no-repeat 0 0;
+  margin-bottom:5px;
+  margin-left:5px;
+  padding-left:18px;
+  font-weight:bold;
+  text-decoration:none;
+  cursor:pointer;
+  color:#0066CC
+}
+table.scroll tr.over td,table.scroll tr.over td a {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif") repeat-x 0 -2px
+}
+.srch-checkbox-container-cls {
+  clear:both;
+  position:relative;
+  padding:6px 0 0 0
+}
+.srch-checkbox-cls {
+  float:left;
+  margin:0
+}
+.srch-label-cls {
+  color:#333;
+  cursor:pointer;
+  float:left;
+  font-size:13px;
+  position:relative;
+  font-weight:normal;
+  margin-left:5px
+}
+.itemCode, .itemBody, .itemLastEdit {
+  padding-top:5px
+}
+table.tblClassSearch {
+  border-collapse:seperate;
+  border:solid 1px #ccc;
+  width:827px
+}
+table.tblClassSearch th {
+  background-color:#ccc;
+  border-right:solid 1px #fff;
+  height:30px;
+  text-align:center
+}
+table.tblClassSearch td {
+  padding:7px;
+  border-bottom:solid 1px #E0E0E0;
+  height:25px
+}
+table.tblClassSearch td.action,table.tblClassSearch th.action {
+  border-bottom:solid 1px #f3f3f3;
+  width:100px
+}
+.cartSuccessInfo {
+  padding-top:20px;
+  padding-bottom:20px;
+  color:#37c400
+}
+.tree .ltr li {
+  display:block
+}
+#myteamSearchMain {
+  float:left;
+  margin-top:5px;
+  width:100%
+}
+table#learner-results-formal-contentTbl tr.jqgrow td {
+  padding:5px 0;
+  text-align:left;
+  vertical-align:top
+}
+.search-record-paint {
+  padding:0 20px
+}
+#LnrSearchService_results {
+  width:80.7%;
+  float:left
+}
+.SearchResultHeader {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif") repeat-x 0 -649px;
+  height:38px
+}
+.FindTraingCol_1, .FindTraingCol_2, .FindTraingCol_3, .FindTraingCol_4, .FindTraingCol_5, .FindTraingCol_6, .FindTraingCol_7 {
+  text-align:center
+}
+.datatable-top-actions #showLastPage {
+  display:none
+}
+.PageTxt {
+  color:#000;
+  float:left;
+  padding-right:3px
+}
+.PaginationText {
+  display:block;
+  float:left;
+  text-align:right;
+  width:150px
+}
+#showPreviousPage {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -127px -80px;
+  width:17px;
+  height:15px;
+  display:block;
+  float:right;
+  margin-right:4px
+}
+#showNextPage {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -144px -80px;
+  width:17px;
+  height:15px;
+  display:block;
+  float:right
+}
+.FndTrgReg, .FndTrgRef {
+  color:#FF7900;
+  font-weight:bold;
+  padding:2px 0;
+  display:block;
+  font-family:Helvetica, Neue
+}
+.record-div .fivestar-widget-static {
+  display:block;
+  margin-left:9px
+}
+.DeliveryTypes {
+  padding:0 0 0 6px
+}
+.DeliveryType_1, .DeliveryType_2, .DeliveryType_3, .DeliveryType_4 {
+  width:21px;
+  height:22px;
+  display:block;
+  float:left;
+  padding:0 1px 0 0
+}
+.DeliveryType_1 {
+  background:url("images/DeliveryType1.gif") no-repeat left top
+}
+.DeliveryType_2 {
+  background:url("images/DeliveryType2.gif") no-repeat left top
+}
+.DeliveryType_3 {
+  background:url("images/DeliveryType3.gif") no-repeat left top
+}
+.DeliveryType_4 {
+  background:url("images/DeliveryType4.gif") no-repeat left top
+}
+.CourseDetailTableLeft,.ClassDetailTableLeft {
+  clear:both
+}
+.para {
+  padding:4px 0
+}
+.top-record-div-left .spotlight-item-title {
+  font-size:14px;
+  padding:6px 0 0;
+  text-decoration:none;
+  background:none;
+  display:inline-block;
+  float:left
+}
+.top-record-div-left .myteam-user-title {
+  color:#4686DD;
+  font-size:16px;
+  text-decoration:none;
+  background:none;
+  cursor:pointer
+}
+.myteam-title-Div {
+  padding:13px 0 0
+}
+.top-record-div-left .FindTrngCourseType,.FindTrngCourseTitle {
+  font-weight:bold;
+  color:#E6932D
+}
+.title-clr {
+  color:#999;
+  font-size:12px
+}
+.find-training-txt,.find-training-list {
+  margin:7px 0 0 0
+}
+.find-training-list-course {
+  font-size:13px;
+  color:#999;
+  margin:7px 0 8px 1px;
+  clear:both
+}
+.find-training-list {
+  font-size:13px;
+  color:#333
+}
+.removeBrd {
+  border:0
+}
+.find-trng-sort {
+  border-bottom:1px solid #CCC;
+  clear:both;
+  margin-left:20px;
+  padding:4px 0 7px;
+  text-align:left;
+  width:764px
+}
+.find-trng-sortby {
+  padding-top:7px;
+  right:3px;
+  width:100%
+}
+#lnr-myteam-search .find-trng-sort-text {
+  color:#666;
+  font-size:13px;
+  float:left;
+  margin-right:8px;
+  max-width:70px
+}
+.find-trng-sort-dropdown {
+  float:left;
+  width:50%
+}
+.find-trng-sort-dropdown select {
+  font-size:11px;
+  color:#333
+}
+#search_rating div.fivestar-widget-static {
+  padding-top:5px
+}
+.disp-msg {
+  color:#E6932D;
+  font-size:12px;
+  margin-top:4px;
+  text-align:center;
+  white-space:normal;
+  width:135px;
+  clear:both;
+  display:none
+}
+.disp-msg-red {
+  font-size:12px;
+  line-height:1em;
+  text-align:center
+}
+.disp-msg-add-cart {
+  font-size:13px;
+  font-weight:bold;
+  line-height:1em
+}
+.disp-msg-blk {
+  color:#000;
+  font-size:12px;
+  font-weight:bold;
+  text-align:center
+}
+.top-record-div-left {
+  padding-bottom:10px
+}
+#paintContentResults tr.over td .top-record-div-left a,
+#paintContentResults tr.over td .top-record-div-left a:hover {
+  background:none
+}
+span.more-text {
+  line-height:1em
+}
+span.more-text a.show-full-text {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif) no-repeat 0 -1480px;
+  margin-left:3px
+}
+.searchlocation {
+  font-size:11px;
+  padding-left:5px;
+  height:17px;
+  float:left;
+  color:#999;
+  border:0;
+  font-style:italic;
+  width:124px
+}
+.search-register-btn {
+  margin:0 auto;
+  width:101px
+}
+.pipe-line {
+  color:#999;
+  padding:0 4px
+}
+.course-delivery-title {
+  width:83%;
+  float:left
+}
+.course-delivery-back-btn {
+  float:right;
+  padding:8px 0 0;
+  text-align:right;
+  width:9%
+}
+#paintContentResults {
+  font-size:12px
+}
+#paintContentResults .ui-jqgrid tr.ui-row-ltr td {
+  padding-top:10px
+}
+#paintContentResults tr .ui-jqgrid tr.ui-row-ltr td {
+  border:0;
+  line-height:30px;
+  padding-top:0;
+  text-indent:9px
+}
+#paintContentResults .ui-widget-content,.ui-widget-content {
+  border:0;
+  overflow:visible
+}
+.ui-jqgrid tr.ui-row-ltr td {
+  border:0;
+  padding:0;
+  vertical-align:top;
+  white-space:normal
+}
+#paintContentResults tr.ui-state-hover {
+  border-left:0;
+  border-right:0;
+  border-top:0;
+  background:#dbeefa
+}
+.find-training-txt span {
+  white-space:normal;
+  color:#333;
+  font-size:14px
+}
+#my-team-dialog table {
+  border-collapse:separate
+}
+.top-record-div {
+  padding:19px 0 0
+}
+#paintContentResults .ui-widget-content td {
+  border-bottom:1px dotted #ccc
+}
+#paintContentResults .jqgfirstrow td {
+  border-bottom:0
+}
+.locationsearch {
+  background-color:#FFF
+}
+.location-search {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -19px -302px;
+  cursor:pointer;
+  height:19px;
+  outline:none;
+  padding:0;
+  display:inline-block;
+  width:15px;
+  border-left:1px solid #ccc
+}
+#location_hideshow {
+  border:1px solid #ccc;
+  padding:0;
+  float:left;
+  margin:5px 0 0;
+  width:93%
+}
+#paintContent {
+  position:relative
+}
+#paintContent .ui-state-highlight {
+  background:none;
+  border:0
+}
+#paintContent .ui-state-highlight a {
+  color:#4789DD
+}
+#paintContent .ui-jqgrid .ui-jqgrid-toppager {
+  background:none;
+  border:1px solid #ccc;
+  padding:4px 0;
+  -moz-border-radius:5px
+}
+#paintContent #pager {
+  position:relative
+}
+#paintContentResults_toppager {
+  display:none
+}
+#paintContent .ui-jqgrid .ui-jqgrid-pager {
+  background:none;
+  border:0;
+  padding:5px 0 0 0
+}
+#paintContent #pager_left {
+  position:absolute;
+  right:20px;
+  top:0;
+  width:75%
+}
+#refresh_paintContentResults {
+  background:none;
+  border:0;
+  display:none
+}
+.red-txt {
+  color:#999;
+  font-size:12px
+}
+.myteam-start-date {
+  clear:both;
+  padding:2px 0;
+  margin:0 0 4px 0;
+  border:1px solid #ccc;
+  float:left;
+  width:93%
+}
+.myteam-start-date img {
+  margin:1px 0 0 0;
+  float:left;
+  cursor:pointer
+}
+#showDateRange {
+  float:left;
+  font-size:12px;
+  margin:4px 0 0;
+  width:100%
+}
+.myteam-start-date span {
+  padding:1px 0 0;
+  width:32px;
+  float:left
+}
+.myteam-start-date-field {
+  margin:0 2px;
+  width:83%;
+  float:left;
+  color:#999;
+  font-size:11px;
+  border:0;
+  font-style:italic
+}
+.myteam-date-format {
+  font-size:11px;
+  clear:both;
+  width:94%;
+  margin:0 9px 0 0
+}
+.myteam-date-refersh {
+  text-align:center;
+  font-size:11px;
+  clear:both;
+  padding:3px 0
+}
+.display-more,
+.display-short {
+  color:#4686DD;
+  cursor:pointer;
+  float:left;
+  height:14px;
+  clear:both
+}
+.display-more {
+  margin:3px 0 0 0;
+  padding:2px 0 0 18px
+}
+.display-short {
+  margin:0;
+  padding:4px 0 0 20px
+}
+#no-records {
+  width:100%;
+  padding:10px;
+  text-align:center;
+  color:#999
+}
+.checkbox {
+  height:14px;
+  width:13px;
+  clear:left;
+  float:left;
+  margin:3px 5px 3px 4px;
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat right 0px;
+  cursor:default;
+  text-align:left
+}
+.checkbox input {
+  opacity:0;
+  filter:Alpha(Opacity=0)
+}
+.checkbox input.show,.radio input.show {
+  display:inline
+}
+#paintContentResults_Action {
+  vertical-align:middle
+}
+.refer-course-link {
+  height:auto;
+  text-decoration:none
+}
+.refer-course-link a {
+  color:#4686DD;
+  text-decoration:none;
+  font-size:12px;
+  display:block;
+  padding:0
+}
+#sortByOption {
+  border:1px solid #999
+}
+.course-available-seats {
+  color:#999;
+  padding-bottom:10px;
+  text-align:center;
+  width:100%;
+  padding-left:27px
+}
+#paintPrice {
+  padding:10px 0 0;
+  float:left
+}
+#paintPrice .ui-widget-header {
+  background:#4686dd
+}
+#paintPrice .ui-slider-horizontal {
+  height:5px
+}
+#paintPrice .ui-slider-handle {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif") no-repeat 0 -1379px;
+  border:0;
+  top:-9px;
+  height:22px
+}
+#paintPrice .ui-slider {
+  background:#ccc
+}
+#price-slide-left,
+#price-slide-right {
+  padding-top:10px;
+  font-size:12px;
+  border:0;
+  height:20px;
+  float:left;
+  color:#333;
+  display:block;
+  width:75px
+}
+#price-slide-right {
+  text-align:right
+}
+#search-filter-content {
+  background-color:#FFF
+}
+#gview_paintContentResults .ui-jqgrid-hdiv {
+  display:none
+}
+.checkbox-selected,
+.checkbox-unselected {
+  width:13px;
+  height:13px;
+  float:left;
+  margin:1px 0 0 0;
+  padding:0;
+  cursor:pointer
+}
+.checkbox-selected {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -147px 0
+}
+.checkbox-unselected {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -147px -15px
+}
+.checkbox-selected input,
+.checkbox-unselected input {
+  opacity:0;
+  filter:Alpha(Opacity=0);
+  width:13px;
+  height:13px;
+  cursor:pointer;
+  outline:none
+}
+.find-training-txt {
+  padding-top:0
+}
+.highlight-light-blue {
+  color:#4686DD
+}
+.highlight-light-gray {
+  color:#333
+}
+.identify-time-zone {
+  font-size:10px;
+  margin:0 0 0 2px
+}
+#lnr-myteam-search .clr-txt {
+  color:#4686DD;
+  cursor:pointer;
+  float:right;
+  font-size:11px;
+  padding-right:11px;
+  text-decoration:underline
+}
+#lnr-myteam-search .pipe-line-sortby {
+  padding:5px;
+  color:#999
+}
+#paintContent .sort-by-links {
+  list-style-type:none;
+  float:left;
+  width:75%;
+  line-height:1.1em
+}
+#paintContent .sort-by-links li {
+  display:inline;
+  cursor:pointer
+}
+#paintContent .sort-by-links li a,
+#paintContent .sort-by-links li a:hover {
+  color:#4686DD;
+  text-decoration:none;
+  float:left;
+  padding:2px 0 0 0;
+  font-size:13px
+}
+#paintContent .sort-by-links li a.sortype-high-lighter {
+  font-weight:bold
+}
+.manager-view-learning-btn {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -2px -328px;
+  width:53px;
+  color:#fff;
+  font-weight:normal;
+  padding:1px 0 3px 0;
+  border:0;
+  margin:0 0 0 2px;
+  text-align:center;
+  font-size:12px;
+  cursor:pointer;
+  height:20px
+}
+.myteam-learning-btn {
+  height:23px;
+  margin-top:13px;
+  float:right;
+  min-width:250px;
+  width:250px
+}
+.fade-out-title-container.team-assign-learning-fadeout-container {
+  max-width:94px;
+ }
+.myteam-learning-btn .view-btn-mid {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif") repeat-x 0 -1758px;
+  border:0;
+  color:#FFF;
+  cursor:pointer;
+  float:left;
+  font-size:12px;
+  height:23px;
+  line-height:22px;
+  margin-right:2px;
+  padding:0 6px 0 0;
+  text-align:center;
+  width:82px
+}
+.myteam-learning-arrow {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -45px -301px;
+  border:0;
+  cursor:pointer;
+  float:left;
+  height:23px;
+  overflow:hidden;
+  width:17px
+}
+.myteam-class-loaderimg {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/loader.gif");
+  height:45px;
+  width:45px;
+  z-index:99;
+  position:relative;
+  margin:0 auto
+}
+.profile-loader {
+  top:15px;
+  margin-left:300px;
+  position:absolute
+}
+.searchusername {
+  font-size:11px;
+  padding-left:5px;
+  height:17px;
+  float:left;
+  color:#999;
+  border:0;
+  font-style:italic;
+  width:126px
+}
+.usernamesearch {
+  background-color:#FFF
+}
+.username-search {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -19px -302px;
+  cursor:pointer;
+  height:19px;
+  outline:none;
+  padding:0;
+  display:inline-block;
+  width:15px;
+  border-left:1px solid #ccc
+}
+#username_hideshow {
+  border:1px solid #ccc;
+  padding:0;
+  float:left;
+  margin:5px 0 0;
+  width:93%
+}
+.myteam-more-action {
+  display:none;
+  z-index:100;
+  width:70px
+}
+.myteam-more-action .myteam-more-drop-down-list {
+  margin:-1px 0 0 -1px;
+  padding:0;
+  list-style-type:none;
+  border:1px solid #ccc;
+  background:#fff
+}
+.myteam-more-drop-down-list li {
+  display:block;
+  padding:3px 1px;
+  text-align:left
+}
+.myteam-more-action .myteam-more-drop-down-list li a {
+  padding:0 1px 0 8px;
+  display:block;
+  color:#4686DD;
+  text-decoration:none;
+  margin-bottom:1px;
+  text-align:left;
+  font-size:12px;
+  width:90px;
+  float:none;
+  line-height:1.286em
+}
+.myteam-more-drop-down-list li.action-disable {
+  display:block;
+  padding:3px 1px;
+  background:#dbeefa;
+  text-align:left
+}
+.myteam-more-drop-down-list li:hover {
+  display:block;
+  padding:3px 1px;
+  background:#dbeefa;
+  text-align:left
+}
+.myteam-more-drop-down-list li a:hover {
+  padding:0 1px 0 8px;
+  color:#4686DD;
+  text-decoration:none;
+  margin-bottom:1px;
+  text-align:left;
+  font-size:12px;
+  display:block
+}
+#paintCatalogHeader .sort-by-links {
+  list-style-type:none;
+  width:75%;
+  line-height:1.1em
+}
+#paintCatalogHeader .sort-by-links li {
+  display:inline;
+  cursor:pointer
+}
+#paintCatalogHeader .sort-by-links li.first a {
+  color:#4686DD;
+  border-left:none;
+  text-decoration:none;
+  float:left;
+  padding:0 10px 0 0;
+  margin-top:2px
+}
+#paintCatalogHeader .sort-by-links li a {
+  color:#4686DD;
+  border-left:1px solid #999;
+  text-decoration:none;
+  float:left;
+  padding:0 10px;
+  font-size:13px;
+  margin-top:2px
+}
+#paintCatalogHeader .sort-by-links li.first a:hover {
+  color:#4686DD;
+  border-left:1px solid #999;
+  text-decoration:none;
+  padding:0 10px 0 0;
+  margin-top:2px
+}
+#paintCatalogHeader .sort-by-links li a:hover {
+  color:#4686DD;
+  border-left:1px solid #999;
+  text-decoration:none;
+  padding:0 10px;
+  font-size:13px;
+  margin-top:2px
+}
+#paintCatalogHeader .sort-by-links li.first a:hover {
+  border-left:none;
+  margin-top:2px
+}
+#paintCatalogHeader .sort-by-links li a.sortype-high-lighter {
+  font-weight:bold;
+  margin-top:2px
+}
+#paintCatalogHeader .ui-state-highlight {
+  background:none
+}
+#paintCatalogHeader .ui-state-highlight a {
+  color:#4789DD
+}
+#paintCatalogHeader .ui-jqgrid .ui-jqgrid-toppager {
+  background:none;
+  border:1px solid #ccc;
+  padding:4px 0;
+  -moz-border-radius:5px
+}
+#paintCatalogFooter #pager1 {
+  position:relative
+}
+#tbl-paintCatalogContentResults_toppager {
+  display:none
+}
+#paintCatalogHeader .ui-jqgrid .ui-jqgrid-pager {
+  background:none;
+  border:0;
+  padding:10px 0 0 0
+}
+#paintCatalogHeader #pager_left {
+  position:absolute;
+  right:20px;
+  top:0;
+  width:75%
+}
+#gview_tbl-paintCatalogContentResults .ui-jqgrid-hdiv {
+  display:none
+}
+#gview_tbl-paintCatalogContentResults .ui-jqgrid-bdiv > div {
+  position:static
+}
+#myteam-find-trng-sort-display .find-trng-sortby {
+  color:#666;
+  font-size:13px;
+  width:100%;
+  right:3px
+}
+#myteam-find-trng-sort-display .find-trng-sort-text {
+  color:#666;
+  font-size:13px;
+  margin-right:8px;
+  max-width:90px;
+  width:90px;
+  float:left;
+  padding-right:5px
+}
+#paintCatalogHeader .myteam-catalog-find-trng-sort {
+  border-bottom:1px solid #CCC;
+  clear:both;
+  padding:4px 0 7px;
+  text-align:left
+}
+#refresh_tbl-paintCatalogContentResults {
+  background:none;
+  border:0;
+  display:none
+}
+#tbl-paintCatalogContentResults .search-register-btn tr td.action-btn,
+#tbl-paintCatalogContentResults .search-register-btn tr td.action-btn-disable,
+#tbl-paintCatalogContentResults .search-register-btn tr td.action-btn-waitlist {
+  border:0;
+  color:#FFF;
+  font-size:13px;
+  font-weight:bold;
+  height:40px;
+  vertical-align:middle;
+  text-align:center;
+  width:99px
+}
+#tbl-paintCatalogContentResults .search-register-btn tr td.action-btn {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/action.png") no-repeat;
+  cursor:pointer
+}
+#tbl-paintCatalogContentResults .search-register-btn tr td.action-btn-disable {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/action_disable.png") no-repeat
+}
+#tbl-paintCatalogContentResults .search-register-btn tr td.action-btn-waitlist {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/action_waitlist.png") no-repeat;
+  cursor:pointer
+}
+#tbl-paintCatalogContentResults .ui-state-highlight {
+  background:none
+}
+#tbl-paintCatalogContentResults .ui-state-highlight a {
+  color:#4789DD
+}
+#catkeyword_hideshow {
+  padding:0;
+  float:left;
+  height:20px;
+  background:#fff
+}
+#catkeyword_hideshow .searchcatkeyword {
+  font-size:11px;
+  padding-left:5px;
+  height:16px;
+  float:left;
+  color:#999;
+  border:0;
+  padding-top:1px;
+  font-style:italic;
+  width:133px;
+  padding-right:17px;
+  border:1px solid #ccc;
+  background-position:100% 3px
+}
+#catkeyword_hideshow input.ac_loading.searchcatkeyword  {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/throbber.gif") no-repeat 100% -17px;
+}
+.catkeyword-search {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -128px -328px;
+  cursor:pointer;
+  height:20px;
+  outline:none;
+  padding:0;
+  display:inline-block;
+  width:20px
+}
+#paintCatalogHeader .clr-txt {
+  color:#4686DD;
+  cursor:pointer;
+  float:right;
+  font-size:11px;
+  padding-right:11px;
+  text-decoration:underline
+}
+#search-cat-title-keyword ul {
+  list-style-type:none;
+  padding:0;
+  border:1px solid #ccc;
+  background:#fff
+}
+#search_delivery_type {
+  width:110px;
+  display:block;
+  float:left
+}
+#catalog-no-records {
+  padding:17px 0 0;
+  text-align:center;
+  color:#999
+}
+.cat-title-clr {
+  color:#999;
+  font-size:12px
+}
+#myteam-keyword-search {
+  height:20px;
+  display:block;
+  float:left
+}
+#myteam-keyword-search  #paintCatKeyword {
+  float:left;
+  height:20px
+}
+#myteam-keyword-search .find-list-items {
+  display:block;
+  float:right;
+  height:21px;
+  line-height:21px;
+  width:40px
+}
+.cat-deltype-clr {
+  color:#999;
+  font-size:12px
+}
+.myteam-cancel-learning {
+  text-decoration:none
+}
+.myclass-no-records-cls {
+  width:760px;
+  color:#999;
+  display:block;
+  line-height:25px;
+  text-align:center;
+  background-color:#fff
+}
+.myteam-learning-btn .view-btn-left {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat 12px -327px;
+  display:block;
+  float:left;
+  height:23px;
+  width:23px;
+  margin-right:-2px
+}
+#paintContentResults .cus-accord div.ui-jqgrid {
+  padding-bottom:10px;
+  border-bottom:1px dotted #ccc
+}
+#paintContentResults .cus-accord .ui-jqgrid .ui-jqgrid-hdiv {
+  border-left:1px solid #ccc;
+  border-right:1px solid #ccc;
+  border-top:1px solid #ccc;
+  border-bottom:0
+}
+#paintContentResults .cus-accord .ui-jqgrid-hbox .ui-th-column {
+  text-align:left;
+  text-indent:8px;
+  padding:5px 4px 0 0
+}
+#paintContentResults .cus-accord .ui-jqgrid-htable {
+  background:#fff;
+  text-align:left;
+  display:inline-block
+}
+.cus-accord .ui-jqgrid-htable tr th {
+  background:none
+}
+.cus-accord .ui-jqgrid-btable {
+  text-align:left;
+  display:inline-block
+}
+.cus-accord .ui-jqgrid-htable th {
+  border:0
+}
+.cus-accord  .ui-jqgrid-btable  .ui-widget-content a {
+  color:#4789DD
+}
+#my-team-dialog tr.jqgrow td {
+  border-bottom:dotted 1px #ccc
+}
+#my-team-dialog #pager1 {
+  position:relative;
+  padding-top:5px
+}
+#my-team-dialog #pager1_center {
+  width:100%
+}
+#my-team-dialog #pager1_center .ui-pg-table {
+  float:right;
+  position:static;
+  margin-top:1px
+}
+#my-team-dialog #pager1_left, #my-team-dialog #pager1_right {
+  display:none
+}
+#my-team-dialog .ui-jqgrid .ui-separator {
+  border:0
+}
+#my-team-dialog #last_pager1 span, #my-team-dialog #first_pager1 span
+#my-team-dialog #next_pager1 span, #my-team-dialog #prev_pager1 span {
+  background:none
+}
+#my-team-dialog #first_pager1, #my-team-dialog #prev_pager1 {
+  width:26px;
+  height:18px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#my-team-dialog #first_pager1 {
+  background:url('/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png') no-repeat -158px -253px
+}
+#my-team-dialog #prev_pager1 {
+  background:url('/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png') no-repeat -91px -302px
+}
+#my-team-dialog #next_pager1, #my-team-dialog #last_pager1 {
+  width:28px;
+  height:18px;
+  padding-right:0;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#my-team-dialog #next_pager1 {
+  background:url('/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png') no-repeat -126px -302px
+}
+#my-team-dialog #last_pager1 {
+  background:url('/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png') no-repeat -158px -302px
+}
+#my-team-dialog .ui-pg-button span.ui-icon-seek-pgstart {
+  background:none;
+}
+#my-team-dialog .ui-pg-button span.ui-icon-seek-next {
+  background:none;
+}
+#my-team-dialog .search-pagination-right {
+  margin:0 4px 0 2px;
+  float:left
+}
+#my-team-dialog .ui-jqgrid .ui-pg-table {
+  position:normal
+}
+#my-team-dialog .ui-jqgrid .ui-pg-table td {
+  padding:0
+}
+#my-team-dialog .ui-jqgrid .ui-pg-input {
+  border:1px solid #CCC;
+  color:#666;
+  font-size:12px;
+  height:13px;
+  margin:-2px 0 0;
+  padding-top:2px;
+  text-align:center;
+  width:20px
+}
+#my-team-dialog #data-table-page-view {
+  position:absolute;
+  left:0;
+  top:2px
+}
+#my-team-dialog #data-table-page-view span {
+  padding:3px 0 0 0
+}
+#my-team-dialog #data-table-page-view select {
+  display:inline;
+  margin:0 7px;
+  font-size:12px;
+  color:#666
+}
+#my-team-dialog .ui-jqgrid tr.jqgrow td {
+  white-space:normal
+}
+#my-team-dialog .ui-jqgrid .ui-icon-asc {
+  background:url('/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png') no-repeat -117px -11px;
+  height:16px;
+  width:12px
+}
+#my-team-dialog .ui-jqgrid .ui-icon-desc {
+  background:url('/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png') no-repeat -117px -26px;
+  height:16px;
+  width:12px
+}
+#my-team-dialog .ui-jqgrid .ui-jqgrid-bdiv {
+  overflow:hidden;
+  position:static
+}
+#my-team-dialog .ui-jqgrid .ui-state-disabled {
+  opacity:0;
+  filter:Alpha(Opacity=0)
+}
+#my-team-dialog .ui-state-hover {
+  border:0;
+  padding:1px;
+  margin:-10px 0 0;
+  background:#dbeefa
+}
+#my-team-dialog .ui-dialog-titlebar-close {
+  width:20px
+}
+#my-team-dialog a.ui-dialog-titlebar-close:hover {
+  background:none
+}
+#my-team-dialog .ui-dialog-titlebar-close span {
+  display:block;
+  margin:1px
+}
+#my-team-dialog .ui-widget-content .ui-state-highlight, 
+#my-team-dialog .ui-state-highlight {
+  background:none
+}
+#my-team-dialog .ui-state-default, 
+#my-team-dialog .ui-widget-content .ui-state-default,
+#my-team-dialog .ui-widget-header .ui-state-default {
+  background:Transparent url('')
+}
+#my-team-dialog .myteam-header-text {
+  display:block;
+  height:15px;
+  overflow:hidden
+}
+#my-team-dialog .ui-dialog .ui-dialog-content {
+  min-height:180px
+}
+#paintCatalogHeader .search-cat-keyword {
+  margin-right:25px;
+  position:absolute;
+  right:7px;
+  top:15px;
+  width:41%
+}
+#my-team-dialog .course-container-list {
+  height: auto;
+  overflow: hidden;
+}
+#my-team-dialog .ui-dialog .ui-dialog-content {
+  position:static;
+  overflow: hidden;
+}
+.myteam-user-profile-cls {
+  display:none;
+  padding:10px
+}
+#myteam-show-user-result .my-profile-box .field-title {
+  width:30%
+}
+#myteam-show-user-result .my-profile-box .field-value {
+  width:65%
+}
+#myteam-show-user-result .region-sidebar-widget-bg {
+  border-left:0;
+  border-right:0
+}
+.ui-corner-all .pager-last, .ui-jqgrid .pager-last,
+.ui-widget .pager-last, .ui-widget-content .pager-last {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -158px -303px;
+  height:20px;
+  opacity:8;
+  width:22px;
+  border:0;
+  padding-right:0;
+  text-decoration:none
+}
+.ui-corner-all .pager-next, .ui-jqgrid .pager-next,
+.ui-widget .pager-next, .ui-widget-content .pager-next {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -126px -303px;
+  height:20px;
+  opacity:8;
+  width:28px;
+  border:0;
+  padding-right:8px;
+  text-decoration:none
+}
+.ui-corner-all .pager-next span, .ui-jqgrid .pager-next span,
+.ui-widget .pager-next span, .ui-widget-content .pager-next span {
+  background-color:transparent
+}
+.ui-widget .pager-next span.ui-icon-seek-next {
+  background:none
+}
+.ui-corner-all .pager-prev,
+.ui-jqgrid .pager-prev,
+.ui-widget .pager-prev,
+.ui-widget-content .pager-prev {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -93px -303px;
+  border:0;
+  height:20px;
+  opacity:8;
+  padding-right:8px;
+  width:28px;
+  text-decoration:none
+}
+.ui-corner-all .pager-prev span, .ui-jqgrid .pager-prev span,
+.ui-widget .pager-prev span, .ui-widget-content .pager-prev span {
+  background-image:url('')
+}
+.ui-corner-all .pager-first,
+.ui-jqgrid .pager-first,
+.ui-widget .pager-first,
+.ui-widget-content .pager-first {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -158px -253px;
+  border:0;
+  height:20px;
+  opacity:8;
+  padding-right:8px;
+  width:28px;
+  text-decoration:none
+}
+.ui-corner-all .pager-first span, .ui-jqgrid .pager-first span,.ui-corner-all .pager-last span, .ui-jqgrid .pager-last span,
+.ui-widget .pager-first span, .ui-widget-content .pager-first span,.ui-widget .pager-last span, .ui-widget-content .pager-last span {
+  background-image:url('')
+}
+.myteam-profile-image img {
+  margin-top:13px
+}
+#search_delivery_type {
+  width:112px;
+  height:20px;
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll -4px -1527px
+}
+.myteam-cat-delivery-type {
+  height:10px;
+  width:82px;
+  font-size:12px;
+  color:#666;
+  border:0;
+  float:left;
+  background:none;
+  padding:2px 2px 5px 8px;
+  font-size:12px
+}
+.myteam-cat-delivery-type-link {
+  text-decoration:none;
+  width:20px;
+  height:20px;
+  float:left;
+  cursor:pointer;
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat 1px -255px
+}
+#myteam-cat-delivery-type-list {
+  display:none;
+  position:absolute;
+  top:20px;
+  left:2px;
+  z-index:100
+}
+#myteam-cat-delivery-type-list li {
+  width:99px;
+  display;block;
+  border-bottom:1px solid #ccc;
+  cursor:pointer;
+  font-size:12px;
+  color:#4686DD;
+  padding:2px 5px 5px
+}
+#paintContentResults .cus-accord .ui-pg-table,
+#searchRecordsPaint #pager_center .ui-pg-table  {
+  padding-right:0
+}
+#searchRecordsPaint #pager_center #data-table-page-view {
+  padding-left:9px
+}
+#paintContentResults .cus-accord .jqgrow-even {
+  background:#EFEFEF
+}
+#paintContentResults .cus-accord .ui-jqgrid-htable tr.ui-jqgrid-labels th.ui-state-hover {
+  background:none
+}
+.searchcriteria-div .block-footer-left {
+  padding-left:9px
+}
+.searchcriteria-div .block-footer-right {
+  padding-right:9px
+}
+.border-style-none {
+  border-bottom:0
+}
+#tbl-paintCatalogContentResults .search-register-mandatory-list {
+  text-align:center;
+  border-bottom:none
+}
+#tbl-paintCatalogContentResults .search-register-btn {
+  width:195px
+}
+.title-mandatory-clr {
+  color:#999;
+  font-size:12px;
+  padding:1px 0 0 0
+}
+#tbl-paintCatalogContentResults .disp-msg {
+  float:right
+}
+.myteam-learning-course-btn {
+  margin-top:3px
+}
+.myteam-learning-course-btn .view-btn-left {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat 0 -327px;
+  display:block;
+  float:left;
+  height:23px;
+  width:9px
+}
+.myteam-learning-course-btn .view-btn-mid {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif") repeat-x 0 -1758px;
+  border:0;
+  color:#FFF;
+  cursor:pointer;
+  float:left;
+  font-size:12px;
+  height:23px;
+  line-height:22px;
+  margin-right:2px;
+  padding:0 6px 0 0;
+  text-align:center;
+  text-indent:none
+}
+.myteam-learning-course-btn .view-btn-middle{
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif") repeat-x 0 -1758px;
+  border:0;
+  color:#FFF;
+  cursor:pointer;
+  float:left;
+  font-size:11px;
+  height:23px;
+  line-height:22px;
+  text-align:center;
+  text-indent:none;
+  width:77px;
+}
+.myteam-learning-course-btn .view-btn-right{
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll -121px -747px;
+  display:block;
+  float:left;
+  height:23px;
+  width:9px
+}
+#paintContentResults tr .ui-jqgrid tr.ui-row-ltr td.course-status-action {
+  text-indent:0
+}
+#ui-datepicker-div {
+  width:225px;
+}
+#ui-datepicker-div .ui-datepicker-header {
+  height:20px;
+  font-weight:bold;
+  font-size:12px;
+}
+#ui-datepicker-div .ui-datepicker-calendar .ui-state-default {
+  line-height:1.2em;	
+}
+#mark-complete-wizard .ui-datepicker-trigger {
+  padding-left:5px;
+  vertical-align:middle;
+  cursor:pointer;
+  position:relative;
+  right:25px
+}
+#mark-complete-wizard table {
+  padding:0 11px
+}
+#mark-complete-wizard span.require-text {
+  color:#FF0000;
+  font-weight:bold
+}
+.lp-course-class-list-accord {
+  border-bottom:1px dotted #ccc;
+  padding-left:43px
+}
+.lp-course-class-list-accord .enroll-show-morecourse {
+  margin-left:1px
+}
+.lp-course-class-list-accord .enroll-show-morecourse tr td {
+  padding-top:5px;
+  padding-left:0;
+  color:#666;
+  vertical-align:top
+}
+.lp-course-class-list-accord .enroll-show-morecourse tr td.course-sub-class-detail {
+  padding-top:0
+}
+.lp-course-class-list-accord .pipeline {
+  color:#999;
+  margin:0 7px
+}
+.lp-course-class-list-accord .item-title-code {
+  padding-top:4px;
+  font-size:13px;
+  color:#999
+}
+.lp-course-class-list-accord .course-desc-info {
+  color:#666;
+  padding:6px 0 9px 0;
+  font-size:13px
+}
+.lp-course-class-list-accord .class-level .class-details-info {
+  font-size:13px;
+  border-bottom:1px solid #ccc
+}
+.lp-course-class-list-accord .class-level .course-delivery-info {
+  clear:both;
+  margin-left:16px;
+  padding-bottom:5px
+}
+.lp-course-class-list-accord .class-level .course-detail-col1 {
+  width:45%;
+  padding-top:5px
+}
+.lp-course-class-list-accord .class-level .course-detail-col2 {
+  width:45%;
+  padding-top:5px
+}
+.lp-course-class-list-accord .class-level .course-detail-col3 {
+  width:5%;
+  padding-top:5px
+}
+.lp-course-class-list-accord .cls-description .sessionDet {
+  width:100%;
+  clear:both;
+  padding-bottom:2px;
+  padding-top:7px;
+  float:left
+}
+.lp-course-class-list-accord .cls-description .sessName {
+  float:left;
+  width:40%
+}
+.lp-course-class-list-accord .cls-description .sessDay {
+  float:left;
+  width:5%
+}
+.lp-course-class-list-accord .cls-description .sessDate {
+  float:left;
+  width:55%
+}
+.lp-course-class-list-accord .enroll-loc-details .enroll-location-text {
+  padding-bottom:5px
+}
+.lp-course-class-list-accord .cls-description .time-zone-text {
+  font-size:10px
+}
+.lp-course-class-list-accord .no-item-found {
+  color:#999;
+  font-size:12px;
+  text-align:center;
+  padding-bottom:5px
+}
+.lp-course-class-list-accord .class-details-info {
+  width:100%
+}
+.lp-course-class-list-accord .title_close {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -129px -16px;
+  height:14px;
+  margin:2px 2px 0 1px;
+  float:left;
+  width:12px;
+  text-decoration:none
+}
+.lp-course-class-list-accord .title_open {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -120px -14px;
+  height:14px;
+  margin-left:1px;
+  margin:2px 5px 0 1px;
+  float:left;
+  width:9px;
+  text-decoration:none
+}
+.lp-course-class-list-accord .lp-reg-class-title {
+  line-height:20px;
+  font-size:14px;
+  color:#333;
+  text-align:left
+}
+.lp-course-class-list-accord .course-info {
+  width:580px;
+  text-align:left;
+  color:#333
+}
+.lp-course-class-list-accord .class-level {
+  padding-left:15px
+}
+.paint-class-content-loader {
+  height:100px;
+  position:absolute;
+  width:100px;
+  left:330px;
+  z-index:2000
+}
+body.page-learning-myteam-search table.ui-pg-table td.ui-state-disabled span.ui-icon-seek-prev,
+body.page-learning-myteam-search table.ui-pg-table td.ui-state-disabled {
+  opacity:100;
+  filter:Alpha(Opacity=100)
+}
+body.page-learning-myteam-search .ui-jqgrid .ui-jqgrid-bdiv {
+  position:inherit
+}
+#searchRecordsPaint .ui-jqgrid .ui-jqgrid-bdiv {
+  overflow:hidden
+}
+body.page-learning-myteam-search table#paintContentResults .top-record-div-left {
+  position:relative
+}
+.page-learning-myteam-search button.ui-button {
+  margin:0
+}
+.page-learning-myteam-search .instructor-cancel-confirm-popup {
+  margin:0;
+  float:right
+}
+.page-learning-myteam-search .myteam-esign-fieldset {
+  position:absolute;
+  z-index:2000;
+  right:17px;
+  margin-top:-10px
+}
+.page-learning-myteam-search .myteam-esign-fieldset-last {
+  position:absolute;
+  z-index:2000;
+  right:17px;
+  margin-top:-142px
+}
+td.tdButtonHolder .esign-close {
+  margin-right:5px
+}
+.view_btn_full {
+  width:68px;
+  height:20px;
+  display:inline-block;
+  color:#fff;
+  font-weight:normal;
+  padding:1px 0 3px 0;
+  border:0;
+  text-align:center;
+  font-size:12px;
+  cursor:pointer;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -2px -412px;
+  line-height:18px;
+  vertical-align:top
+}
+.mro-myteam-class {
+  margin-top:7px;
+  line-height:15px;
+  text-align:center;
+  text-indent:0
+}
+#paintContentResults tr .ui-jqgrid tr.ui-row-ltr td .mro-myteam-class {
+  text-indent:0
+}
+#paintContentResults tr.cus-accord.noborder div.ui-jqgrid {
+  border-bottom:0;
+  padding-bottom:0
+}
+.full-button-without-action {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -2px -412px;
+  cursor:pointer;
+  height:21px;
+  width:68px;
+  display:block;
+  color:#fff;
+  font-weight:normal;
+  font-size:12px;
+  text-align:center;
+  line-height:21px
+}
+#my-team-dialog .ui-jqgrid-view {
+  height:573px
+}
+#lnr-myteam-search #searchRecordsPaint .cus-accord .ui-jqgrid .ui-jqgrid-htable th div.enroll-date-sortalign .s-ico {
+  left:30px;
+  top:0;
+  position:absolute
+}
+#lnr-myteam-search #searchRecordsPaint .cus-accord .ui-jqgrid .ui-jqgrid-htable th div .ui-icon-asc {
+  margin-top:-3px
+}
+#lnr-myteam-search #searchRecordsPaint .cus-accord .ui-jqgrid .ui-jqgrid-htable th div .ui-icon-desc {
+  margin-top:3px
+}
+#lnr-myteam-search #pager .search-pagination-right {
+  font-size:12px;
+  padding:0 8px 0 1px
+}
+#searchRecordsPaint #paintContentResults .cus-accord .ui-pager-control .search-pagination-right {
+  margin-right:6px;
+  float:left
+}
+#tbl-paintCatalogContentResults .change-class-btn {
+  width:101px
+}
+#tbl-paintCatalogContentResults .changecls-available-seats {
+  padding-left:0
+}
+#lnr-myteam-search .usr-enroll-grid-header-grey-cls {
+  color:#ccc;
+  font-size:9px;
+  position:relative
+}
+#lnr-myteam-search #searchRecordsPaint .ui-jqgrid .ui-pg-table td {
+  line-height:23px
+}
+#lnr-myteam-search #paintContentResults .ui-jqgrid .ui-jqgrid-htable th div {
+  height:28px
+}
+.page-learning-myteam-search #ui-datepicker-div .ui-datepicker-next:hover {
+  margin-left:21px;
+  top:9px
+}
+.page-learning-myteam-search #ui-datepicker-div .ui-datepicker-prev:hover {
+  top:9px
+}
+.page-learning-myteam-search #ui-datepicker-div .ui-datepicker-prev-hover .ui-icon-circle-triangle-w {
+  margin-left:-7px
+}
+#data-table-page-view select.ui-pg-selbox {
+  height:22px
+}
+.ui-state-default .ui-pg-table .ui-icon {
+  width:24px;
+  height:20px
+}
+.ui-jqgrid .ui-pg-table td.ui-state-disabled:hover {
+  padding:0
+}
+#exp-sp-my-activity-form .ui-widget-content .ui-state-highlight {
+  background:none
+}
+#my-team-dialog #tbl-paintCatalogContentResults {
+  table-layout:auto;
+  max-width:675px
+}
+.page-learning-myteam-search .myteam-title-Div .exp-sp-myteam-view-name-fadeout-container {
+  max-width:580px;
+  line-height:19px
+}
+.page-learning-myteam-search .find-training-list-course .exp-sp-myteam-view-location-fadeout-container,
+.page-learning-myteam-search .find-training-list-course .exp-sp-myteam-view-jobtitle-fadeout-container {
+  max-width:100px;
+  display:inline-block;
+  margin-bottom:-5px
+}
+#lnr-myteam-search .exp-sp-myteam-myclass-view-classtitle-fadeout-container {
+  max-width:165px
+}
+#paintContentResults .cus-accord .ui-row-ltr.jqgrow-even .fade-out-image,
+#paintContentResults .cus-accord .ui-row-ltr.jqgrow-even.ui-state-hover .fade-out-image {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/title_gradient.png") no-repeat right -60px; 
+}
+#paintContentResults .cus-accord .ui-row-ltr.ui-state-hover .fade-out-image {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/title_gradient.png") no-repeat right -90px; 
+}
+#my-team-dialog .course-container-list .exp-sp-myteam-catalog-search-class-title-fadeout-container {
+  max-width:400px
+}
+#my-team-dialog .course-container-list tr.ui-state-highlight .fade-out-image,
+#my-team-dialog .course-container-list tr.ui-state-hover.ui-state-highlight .fade-out-image {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/title_gradient.png") no-repeat right 0; 
+}
+#my-team-dialog .course-container-list .exp-sp-myteam-catalog-search-class-title-fadeout-container {
+  max-width:320px    /* less width given in order to accomodate the compliance - recommended -mandatory tags in the title row*/
+}
+.page-learning-myteam-search #search-filter-content #paintCountry .team-country-name-fadeout-container {
+  max-width:130px
+}
+.page-learning-myteam-search #tbl-paintCatalogContentResults .find-training-list-course .exp-sp-myteam-catalog-search-class-code-fadeout-container {
+  max-width:100px;
+  display:inline-block;
+  margin-bottom:-4px
+}
+/*!Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .myteam-learning-btn {
+    height:23px;
+    margin-top:13px;
+    float:left
+  }
+  .myteam-learning-btn .view-btn-left {
+    background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat 4px -327px;
+    display:block;
+    float:left;
+    height:23px;
+    width:14px
+  }
+  #tbl-paintCatalogContentResults .search-register-btn tr td.action-btn,
+  #tbl-paintCatalogContentResults .search-register-btn tr td.action-btn-disable,
+  #tbl-paintCatalogContentResults .search-register-btn tr td.action-btn-waitlist {
+   width:102px
+ }
+ #data-table-page-view select.ui-pg-selbox {
+  height:auto
+ }
+}
+#tbl-paintCatalogContentResults .search-register-btn tr td .admin-save-button-middle-bg.prereq-action {
+    width: 74px;
+}
+.prereq-course-class-list-accord {
+	height: 80px;
+	table-layout: fixed;
+}
+.prereq-course-class-list-accord a.title_close, .prereq-course-class-list-accord a.title_open {
+	background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll -129px -16px rgba(0, 0, 0, 0);
+    float: left;
+    height: 14px;
+    margin: 2px 2px 0 1px;
+    text-decoration: none;
+    width: 12px;
+}
+.prereq-course-class-list-accord a.title_open {
+	background-position: -117px -14px;
+}
+.prereq-course-class-list-accord .ui-widget-contents {
+    font-size: 12px;
+}
+.prereq-course-class-list-accord .item-title-code, .prereq-course-class-list-accord .course-desc-info, .prereq-course-class-list-accord .class-lang {
+	margin-left: 15px;	
+}
+.prereq-course-class-list-accord .course-desc-info {
+	display: block;
+	width: auto;
+}
+.prereq-register .admin-save-button-container {
+	margin: 10px 30px 0 0;
+}
+.prereq-course-class-list-accord td {
+	padding: 5px 0;
+}
+.prereq-course-class-list-accord-location, .prereq-course-class-list-accord-session {
+	margin-left: 15px;
+}
+.prereq-course-class-list-accord-location td, .prereq-course-class-list-accord-session td {
+    padding: 0;
+}
+.prereq-course-class-list-accord a.cls-title-open {
+    background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll -117px -14px rgba(0, 0, 0, 0);
+    cursor: none;
+    float: left;
+    font-size: 14px;
+    height: 14px;
+    margin: 0 4px 0 0;
+    text-decoration: none;
+    width: 12px;
+}
+.prereq-course-class-list-accord span.class-title, .prereq-course-class-list-accord span.course-title  {
+	font-family: ProximaNovaBold, Arial;
+	text-transform: uppercase;
+}
+#tbl-paintCatalogContentResults .search-register-btn.prereq-register {
+	width: 100px;
+}
+#tbl-paintCatalogContentResults .search-register-btn.prereq-register .prereq-action-container {
+	width: 99px;
+}

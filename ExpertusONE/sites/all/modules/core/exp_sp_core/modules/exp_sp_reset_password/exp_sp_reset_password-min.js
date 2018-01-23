@@ -1,0 +1,1 @@
+$(document).ready(function(){try{$("#resetPwdLink").click();}catch(a){}});

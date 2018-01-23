@@ -1,0 +1,9 @@
+.alert-block ul li{ background: url('images/bltArrow_Red.gif') no-repeat left center; padding-left: 10px }
+.alert-block h4{font-size: 12px; padding: 10px 4px 4px 2px; color: #f00}
+.alert-item-title{ display: block; color: #0066cc; width: 100%; font-weight: bold; margin: 0px; text-align: left; padding: 3px 0px 1px 2px; border-bottom: dotted 1px #ccc }
+.alert-item-close{ cursor: pointer; width: 16px; height: 16px; float: right; margin-left: 10px; text-align: center }
+.alert-block-more{ display: block; width: 100%}
+.alert-block-more a{ margin-right: 5px; background: url('images/bltArrow_Red.gif') no-repeat left top; padding-left: 10px; font-size: 12px; margin-top: 3px}
+ul.alert-control-strip{ display: block; width: 100%; margin: 0px; padding-left: 2px; list-style-type: circle }
+ul.alert-control-strip li{ display: inline-block; padding-right: 15px; width: auto; float: left}
+ul.alert-control-strip li a{color: #0066cc }

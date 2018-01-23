@@ -1,0 +1,1069 @@
+#learner-enrollment {
+  width:100%;
+  height:31px
+}
+#enroll-result-container {
+  min-height:75px;
+  border-left:1px solid #ccc;
+  border-right:1px solid #ccc;
+  background:#fff;
+  width:99.8%
+}
+#learner-maincontent {
+  clear:both
+}
+#learner-enrollment .block-title {
+  width:25%;
+  float:left;
+  color:#333;
+  font-weight:bold;
+  text-align:left;
+  padding:0;
+  text-indent:11px;
+  text-transform:uppercase
+}
+#learner-enrollment .block-title-left {
+  width:98.3%;
+  float:left
+}
+#learner-enrollment .block-title-right {
+  width:100%;
+  padding-right:0.9%
+}
+#learner-enrollment .block-title-middle {
+  width:100%
+}
+#learner-enrollment #learner-maincontent_tab3 {
+  float:right;
+  margin-left:11px;
+  padding-top:4px;
+  width:73%
+}
+.EnrolltabNavigation {
+  margin:0;
+  padding:0;
+  list-style-type:none
+}
+.EnrolltabNavigation li {
+  display:block;
+  margin-right:0;
+  float:left;
+  height:25px;
+  padding:0 8px
+}
+.EnrolltabNavigation li a {
+  text-decoration:none;
+  color:#666;
+  height:29px;
+  font-size:13px;
+  float:left
+}
+.EnrolltabNavigation li a span {
+  float:left;
+  height:19px;
+  padding:0 0 5px 0;
+  text-decoration:none
+}
+.EnrolltabNavigation li a span span {
+  float:left;
+  height:19px;
+  padding:4px 10px 3px 0;
+  text-decoration:none
+}
+.EnrolltabNavigation li a:hover {
+  text-decoration:none;
+  color:#666;
+  height:29px;
+  font-size:13px;
+  float:left
+}
+.EnrolltabNavigation li a:hover span {
+  float:left;
+  height:19px;
+  padding:0 0 5px 0;
+  text-decoration:none
+}
+.EnrolltabNavigation li a:hover span span {
+  float:left;
+  height:19px;
+  padding:4px 10px 5px 0;
+  text-decoration:none
+}
+.EnrolltabNavigation li.selected {
+  display:inline;
+  float:left;
+  height:30px;
+  padding:0 8px
+}
+.EnrolltabNavigation li.selected a {
+  text-decoration:none;
+  color:#333;
+  font-size:13px;
+  height:27px;
+  padding:0 0 0 10px;
+  float:left;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png) no-repeat left -114px
+}
+.EnrolltabNavigation li.selected a span {
+  float:left;
+  height:27px;
+  padding:0 10px 0 0;
+  text-decoration:none;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png) no-repeat right -174px
+}
+.EnrolltabNavigation li.selected a span span {
+  float:left;
+  height:20px;
+  padding:5px 0 2px 0;
+  text-decoration:none;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png) repeat-x left -144px
+}
+.ui-corner-all {
+  -moz-border-radius:0
+}
+#paintEnrollmentResults {
+  font-size:12px;
+  max-width:100%
+}
+#paintEnrollmentResults tr .ui-jqgrid tr.ui-row-ltr td {
+  border:0
+}
+#paintEnrollmentResults tr.ui-widget-content td {
+  border:1px solid #ccc;
+  border-width:0 0 1px
+}
+#paintEnrollmentResults .ui-widget-content,.ui-widget-content {
+  border:0;
+  font-size:12px;
+  color:#666
+}
+.ui-jqgrid tr.ui-row-ltr td {
+  border:0;
+  vertical-align:top
+}
+#paintEnrollmentResults .ui-widget-content td {
+  border:0;
+  border-bottom:1px solid #ccc
+}
+#ClassDetailsMainDiv {
+  color:#666;
+  border-bottom:1px solid #ccc;
+  float:left
+}
+#ClassDetailsMainDiv .FindTrngTxt {
+  padding:0
+}
+#gbox_paintEnrollmentResults .ui-state-default {
+  background:none;
+  border:0;
+  padding:5px 0 4px 0;
+  text-align:left;
+  font-size:13px;
+  color:#666
+}
+#gbox_paintEnrollmentResults #paintEnrollmentResults_toppager {
+  display:none
+}
+#paintEnrollmentResults .ui-state-hover {
+  border:0;
+  background:#dbeefa
+}
+#paintEnrollmentResults  .ui-state-highlight {
+  border:0;
+  background:none
+}
+#paintEnrollmentResults tr.jqgrow td {
+  padding:8px 0 8px;
+  white-space:normal;
+  font-size:14px
+}
+#paintEnrollmentResults .ui-widget-content a,
+#paintEnrollmentResults .jqgrow a,
+#paintEnrollmentResults .dt-acc-row a {
+  text-decoration:none
+}
+#enroll-result-container .enroll-course-title .item-title {
+  float:left;
+  display:block;
+  /*width:41%*/
+}
+#enroll-result-container .enroll-course-title .item-title-wbt {
+  float:left;
+  display:block
+}
+#enroll-result-container .item-title-code {
+  width:100%;
+  float:left;
+  padding-top:4px;
+  padding-bottom:10px;
+  font-size:13px;
+  color:#999;
+  marign-left:-1px
+}
+#enroll-result-container .enroll-class-title-info {
+  width:auto;
+  clear: both;
+  text-align:left;
+  margin-left:16px;
+  color:#333;
+  float:left;
+  margin-right:5px
+}
+#paintEnrollmentResults .title_close {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -129px -16px;
+  height:14px;
+  margin:1px 0 0 4px;
+  float:left;
+  width:12px;
+  text-decoration:none
+}
+#paintEnrollmentResults .title_open {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -117px -14px;
+  height:14px;
+  margin-left:1px;
+  margin:1px 4px 0 0;
+  float:left;
+  width:12px;
+  text-decoration:none
+}
+.enroll-bottom-curve {
+  width:100%
+}
+.enroll-bottom-curve .block-footer-left {
+  width:99.2%
+}
+.loaderimg {
+  margin:0 auto
+}
+.enroll-action {
+  display:none;
+  z-index:100
+}
+#enroll-result-container .myenrollment-table {
+  padding:5px 0 0 16px;
+  background:#fff
+}
+.enrollment-class-table {
+  border:1px solid #dddfe2
+}
+.enrollment-class-table th {
+  background:#efefef;
+  padding:4px 6px 4px 8px;
+  font-weight:normal
+}
+.enrollment-class-table tr {
+  border-bottom:1px solid #dddfe2
+}
+.enrollment-class-table tr td {
+  padding:5px 6px 5px 8px
+}
+.enroll-course-title-lesson {
+  line-height:20px;
+  font-size:13px;
+  float:left
+}
+.enroll-class-title {
+  line-height:20px;
+  font-size:14px;
+  float:left
+}
+.enroll-main-list {
+  float:right;
+  text-align:right
+}
+#enroll-result-container .enroll-launch,
+#enroll-result-container .enroll-launch-more,
+#enroll-result-container .enroll-launch-gray,
+#enroll-result-container .enroll-launch-more-gray,
+#launch-wizard .enroll-launch {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -87px -1599px;
+  width:93px;
+  color:#fff;
+  font-weight:normal;
+  border:0;
+  line-height:20px;
+  margin:0 0 0 2px;
+  text-align:center;
+  font-size:12px;
+  cursor:pointer;
+  height:20px;
+  padding:0
+}
+.enroll-course-title {
+  text-align:left;
+  color:#333
+}
+#paintEnrollmentResults .enroll-launch-more {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -45px -302px;
+  width:16px;
+  height:20px;
+  float:left
+}
+#paintEnrollmentResults .enroll-launch-more-gray {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -70px -302px;
+  width:16px;
+  float:right
+}
+#paintEnrollmentResults .enroll-launch-gray {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -66px -328px;
+  width:53px;
+  float:left
+}
+#enroll-result-container .enroll-launch {
+  float:left;
+  padding:0
+}
+#enroll-result-container #paintEnrollmentResults .enroll-launch-full,
+#launch-wizard .enroll-launch-full {
+  width:68px;
+  height:20px;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -2px -412px;
+  margin-left:4px
+}
+#enroll-result-container #paintEnrollmentResults .enroll-launch-empty {
+  width:68px;
+  height:20px;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -80px -412px
+}
+#enroll-result-container #paintEnrollmentResults .enroll-launch-empty,
+#launch-wizard .enroll-launch-empty {
+  width:68px;
+  height:20px;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -80px -412px;
+  margin-left:4px
+}
+#launch-content-container #paintEnrollmentResults .enroll-launch-empty .enroll-launch {
+  width:66px;
+  background-image:url('');
+  cursor:none
+}
+#enroll-result-container #paintEnrollmentResults .enroll-launch-full .enroll-launch, 
+#launch-wizard .enroll-launch-full .enroll-launch {
+  width:66px;
+  background-image:url('');
+  cursor:pointer
+}
+#enroll-result-container #paintEnrollmentResults .enroll-launch-empty .enroll-launch-gray {
+  width:66px;
+  background-image:url('');
+  cursor:none
+}
+#paintEnrollmentResults tr.jqgfirstrow td {
+  border:0;
+}
+.enroll-attach {
+  clear:both;
+  font-size:13px;
+  padding:11px 0 6px 0
+}
+.enroll-attach-listitems {
+  margin:0;
+  padding:0;
+  list-style-type:none;
+  width:100%;
+  float:left
+}
+.enroll-attach-listitems li {
+  display:block;
+  float:left
+}
+.enroll-attach-listitems li a {
+  padding:0;
+  color:#4686DD;
+  text-decoration:none
+}
+.enroll-attach-listitems li a:hover {
+  padding:0;
+  color:#4686DD;
+  text-decoration:none
+}
+#gbox_paintEnrollmentResults #refresh_paintEnrollmentResults {
+  display:none
+}
+#gbox_paintEnrollmentResults #pager {
+  position:relative;
+  font-size:12px;
+  font-family:helvetica neue, arial
+}
+#gbox_paintEnrollmentResults #pager #pager_right {
+  position:absolute;
+  left:20px
+}
+.enroll-show-moreevent tr.odd {
+  background:#fff
+}
+.enroll-show-moreevent tr.even {
+  background:#f8f8f8
+}
+.enroll-show-select a,.enrollment-class-table a.show-alternative-txt {
+  color:#4686DD;
+  text-decoration:none
+}
+#ClassDetailsMainDiv td.enroll-classes-list {
+  padding:5px 6px
+}
+.enroll-action .enroll-drop-down-list {
+  margin:-1px 0 0 -17px;
+  padding:0;
+  list-style-type:none;
+  border:1px solid #ccc;
+  background:#fff;
+  min-width: 109px
+}
+.enroll-drop-down-list li {
+  display:block;
+  padding:3px 1px;
+  text-align:right
+}
+.enroll-action .enroll-drop-down-list li a {
+  padding:0 1px 0 6px;
+  display:block;
+  color:#4686DD;
+  text-decoration:none;
+  margin-bottom:1px;
+  text-align:right;
+  font-size:12px;
+  min-width:60px;
+  float:none
+}
+.enroll-drop-down-list li.action-disable {
+  display:block;
+  padding:3px 1px;
+  background:#dbeefa;
+  text-align:left
+}
+.enroll-drop-down-list li:hover {
+  display:block;
+  padding:3px 1px;
+  background:#dbeefa;
+  text-align:left
+}
+.enroll-drop-down-list li a:hover {
+  padding:0 1px 0 6px;
+  color:#4686DD;
+  text-decoration:none;
+  margin-bottom:1px;
+  text-align:right;
+  font-size:12px;
+  display:block
+}
+#gview_paintEnrollmentResults #paintEnrollmentResults_Name {
+  padding:6px 0 4px 0
+}
+#gview_paintEnrollmentResults #paintEnrollmentResults_Date,
+#gview_paintEnrollmentResults #paintEnrollmentResults_Start,
+#gview_paintEnrollmentResults #paintEnrollmentResults_End,
+#gview_paintEnrollmentResults #paintEnrollmentResults_Type {
+  text-align:left;
+  cursor:default;
+  padding:0
+}
+#gview_paintEnrollmentResults #paintEnrollmentResults_Date .ui-jqgrid-sortable {
+  padding:0 0 0 2px;
+  cursor:default
+}
+#paintEnrollmentResults_Name {
+  width:219px
+}
+#ClassDetailsMainDiv a.ShowShortText,
+#ClassDetailsMainDiv a.ShowFullText {
+  width:10px;
+  color:#ff7924;
+  padding-left:6px;
+  text-decoration:none
+}
+#ClassDetailsMainDiv a.ShowShortText {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif) no-repeat 0 -1479px
+}
+#ClassDetailsMainDiv a.ShowFullText {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif) no-repeat -1px -1491px
+}
+.ui-jqgrid .ui-jqgrid-bdiv {
+  overflow:hidden;
+  position:static
+}
+.show-alternative-txt {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif) no-repeat 0 -1350px;
+  padding:0 0 0 14px;
+  font-size:11px
+}
+.ui-widget-content a.hide-alternative-txt {
+  display:none;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif) no-repeat 0 -1338px;
+  padding:0 0 0 14px;
+  font-size:11px;
+  text-decoration:none;
+  color:#4686DD
+}
+.enrollment-class-name {
+  width:235px
+}
+.enrollment-class-day {
+  width:40px
+}
+.enrollment-class-date,
+.enrollment-class-start {
+  width:80px
+}
+.enroll-attach-download {
+  color:#999
+}
+#launch-wizard .enroll-accordian-div {
+  padding:0 0 5px 15px;
+  font-size:13px;
+  width:95%
+}
+.enroll-accordian-div {
+  padding:0 0 15px 16px;
+  font-size:13px;
+  width:97%
+}
+#ClassDetailsMainDiv.noborder {
+  border:0;
+  padding:0 0 0 16px
+}
+#gview_paintEnrollmentResults {
+  padding-bottom:12px
+}
+.enroll-course-code {
+  padding:0 0 4px 0
+}
+.recordDiv {
+  padding:0
+}
+.enroll-events {
+  padding:3px 0 15px 0
+}
+.enroll-pipeline {
+  color:#999;
+  margin:0 7px;
+  font-weight:normal
+}
+.compTabDetails,
+.compLpDetails {
+  padding-top:5px
+}
+.launch-content-status {
+  color:#999;
+  font-size:10px;
+  font-weight:normal;
+  padding-top:1px;
+  clear:both;
+  display:block;
+  width:80px;
+  float:right;
+  text-align:center
+}
+#launch-wizard .launch-content-status {
+  color:#999;
+  font-size:9px;
+  font-weight:normal;
+  padding-top:1px;
+  clear:both;
+  display:block;
+  width:80px;
+  float:left;
+  text-align:center
+}
+#enroll-noresult-msg {
+  display:none;
+  color:#999;
+  padding:10px;
+  text-align:center
+}
+.time-zone-text {
+  font-size:10px
+}
+.enroll-course-code a {
+  color:#666;
+  text-decoration:underline;
+  cursor:pointer
+}
+.enroll-course-code a:hover {
+  color:#666;
+  text-decoration:none;
+  cursor:pointer
+}
+#jqgh_paintEnrollmentResults_Date {
+  padding-left:25px
+}
+#jqgh_paintEnrollmentResults_Start {
+  padding-left:19px
+}
+#jqgh_paintEnrollmentResults_End {
+  padding-left:11px
+}
+.enroll-session-time {
+  font-size:12px;
+  color:#666;
+  display:block;
+  padding-left:9px;
+  line-height:1.3em;
+  width:90%
+}
+#enroll-result-container .sessionDet {
+  padding-top:7px;
+  clear:both
+}
+#enroll-result-container .sessName {
+  /*width:225px;*/
+  float:left;
+  margin-right:20px
+}
+#enroll-result-container .sessDay {
+  width:40px;
+  float:left
+}
+#enroll-result-container .sessDate {
+  float:left;
+  margin-right:15px
+}
+#enroll-result-container .sessAddress {
+  float:left
+}
+#enroll-result-container .sessAddDet {
+  float:left;
+  width:230px;
+  clear:both;
+  padding:5px 0
+}
+#gview_paintEnrollmentResults .ui-jqgrid-hbox {
+  display:none
+}
+#gbox_paintEnrollmentResults {
+  clear:both
+}
+.tooltiptop {
+  width:241px;
+  height:35px;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/tool-tip-top.png) no-repeat 0 -4px
+}
+.tooltipmid {
+  width:230px;
+  height:auto;
+  padding:8px 0 0 17px;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/tool-tip-middle.png) repeat-y
+}
+.tooltipbottom {
+  width:241px;
+  height:27px;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/tool-tip-bottom.png) no-repeat
+}
+.enroll-sort-by-container {
+  width:100%;
+  clear:both;
+  padding-top:13px
+}
+#enroll-result-container .sort-by-text {
+  color:#666;
+  font-size:13px;
+  float:left;
+  max-width:70px;
+  margin-right:8px;
+  padding-left:16px;
+  height:18px
+}
+#enroll-result-container .sort-by-links {
+  list-style-type:none;
+  float:left;
+  width:75%;
+  line-height:1.2em;
+  margin-top:-2px
+}
+#enroll-result-container .sort-by-links li {
+  display:inline
+}
+#enroll-result-container .sort-by-links li a {
+  color:#4686DD;
+  text-decoration:none;
+  float:left;
+  padding:2px 0 0 0;
+  font-size:13px
+}
+#enroll-result-container .sort-by-links li a:hover {
+  color:#4686DD;
+  text-decoration:none;
+  padding:2px 0 0 0;
+  font-size:13px
+}
+.qtip-wrapper .qtip-content {
+  padding-top:0
+}
+#enroll-result-container .session-time-zone {
+  padding:2px 0 0 0;
+  color:#333;
+  cursor:pointer;
+  font-size:13px
+}
+#enroll-result-container .enroll-loc-head {
+  padding:5px 0;
+  font-size:13px
+}
+#enroll-result-container .enroll-loc-details {
+  width:100%;
+  font-size:13px;
+  margin:8px 0 0 0
+}
+#enroll-result-container .enroll-location-text {
+  color:#666;
+  font-size:13px;
+  line-height:1.3em;
+  padding:1px 0;
+  width:400px
+}
+#enroll-result-container .enroll-location-head {
+  width:105px
+}
+#paintEnrollmentResults .enroll-session-details {
+  padding:10px 0 0 0
+}
+#paintEnrollmentResults #pager_center {
+  position:relative
+}
+.enroll-datatable-column1 {
+  width:80%
+}
+.enroll-datatable-column2 {
+  width:20%
+}
+#block-exp-sp-lnrenrollment-tab-my-enrollment .enroll-box-container,
+#content .enroll-disable-right-region {
+  margin-top:10px
+}
+#enroll-result-container .sort-by-links li a.sortype-high-lighter {
+  font-weight:bold
+}
+#content .enroll-enable-right-region {
+  margin-top:0
+}
+#enroll-result-container .days-remain {
+  padding:8px 0
+}
+.enroll-session-timefrom {
+  font-size:10px
+}
+.page-learning-enrollment-search .splitter {
+  height:1px
+}
+.page-learning-enrollment-compliance {
+  clear:both;
+  padding-top:9px
+}
+.page-learning-enrollment-compliance .comp-label {
+  float:left;
+  width:98px;
+  font-weight:bold
+}
+#launch-wizard {
+  min-height:75px;
+  border-left:1px solid #ccc;
+  border-right:1px solid #ccc;
+  background:#fff;
+  width:99.8%
+}
+#launch-wizard .launch-wizard-content {
+  overflow:hidden
+}
+#launch-wizard .enroll-course-title .item-title {
+  float:left;
+  display:block
+}
+#launch-wizard .enroll-class-title-info {
+  width:100%;
+  text-align:left;
+  color:#333
+}
+#launch-wizard .item-title-code-lesson,
+#launch-wizard .item-title-code {
+  width:100%;
+  float:left;
+  padding-top:4px;
+  font-size:13px;
+  color:#999;
+  marign-left:-1px
+}
+#launch-wizard #launch-content-container .enroll-launch-column1 .enroll-class-title .item-title-code span {
+  float: left;
+}
+#launch-wizard .enroll-launch-column1 {
+  width:85%
+}
+#launch-wizard .enroll-launch-column2 {
+  width:15%
+}
+#launch-wizard .enroll-main-list {
+  float:right;
+  width:73px;
+  text-align:right
+}
+#launch-wizard #launch-content-container {
+  margin:6.5px 17px 0 13px
+}
+#launch-wizard .enrollment-launch-table tr {
+  border-bottom:1px solid #dddfe2;
+  display:table;
+  width:100%
+}
+#launch-wizard .enrollment-launch-table tr td {
+  padding:5px 6px 5px 0
+}
+#launch-wizard .enrollment-launch-table .launch-lesson-view tr.enroll-lesson-section {
+  border-bottom:1px solid #dddfe2
+}
+#launch-wizard .enrollment-launch-table .launch-lesson-view {
+  margin:0 20px 0 18px
+}
+#page-container .enroll-datatable-column-img {
+  width:10%
+}
+#page-container #ClassDetailsMainDiv {
+  border-bottom:0;
+  padding-left:16px;
+  width:100%
+}
+#page-container #content .section #enroll-result-container,
+#page-container #content .section #enroll-lp-result-container,
+#page-container #content .section #instructor-result-container {
+  width:100.8%
+}
+#page-container #content .enroll-bottom-curve .block-footer-left {
+  width:99.6%
+}
+#page-container #learner-learningplan .block-title-middle {
+  margin:0
+}
+#page-container #learner-learningplan {
+  width:98.3%
+}
+#page-container #content .block-exp-sp-lnrenrollment #learner-maincontent_tab3,
+#page-container #content #enroll-lp-result-container #learningplan-maincontent,
+#page-container #content #instructor-result-container #instructor-maincontent_tab {
+  float:left;
+  margin-left:1px;
+  padding-top:0;
+  width:99.8%;
+  height:44px;
+  background:#f5f5f5;
+  border-bottom:1px solid #e8e8e8
+}
+#page-container #content #enroll-lp-result-container .enroll-lp-sort-by-container {
+  padding-top:0
+}
+#page-container #content .block-exp-sp-lnrlearningplan #enroll-lp-result-container #learningplan-maincontent .EnrolltabNavigation-LP li a span span {
+  width:84px
+}
+#page-container #content .block-exp-sp-lnrlearningplan #enroll-lp-result-container #learningplan-maincontent .EnrolltabNavigation-LP,
+#page-container #content .block-exp-sp-lnrenrollment #enroll-result-container .EnrolltabNavigation,
+#page-container .EnrolltabNavigation-Ins {
+  margin:9px 0 0 0
+}
+#page-container #content .block-exp-sp-lnrenrollment #enroll-result-container .EnrolltabNavigation li,
+#page-container .EnrolltabNavigation-Ins li {
+  padding:0 0 0 11px
+}
+#page-container #content .section #enroll-result-container,
+#page-container #content .section #instructor-result-container {
+  border-left:1px solid #E6E6E6;
+  border-right:1px solid #e7e7e7
+}
+#page-container #content .section #enroll-lp-result-container {
+  border:1px solid #E6E6E6
+}
+#page-container .region-sidebar-widget-bg {
+  border:1px solid #E5E5E5
+}
+#page-container #expertus-online-users .expertus-no-online-users-msg {
+  border-left:1px solid #E7E7E7;
+  border-right:1px solid #E5E5E5;
+  color:#2d2d2d
+}
+#page-container #learner-enrollment .block-title,
+#page-container #learner-learningplan .block-title,
+#page-container #learner-instructor .block-title {
+  width:100%
+}
+#page-container .enroll-sort-by-container,
+#page-container .instructor-sort-by-container {
+  border-bottom:0;
+  margin-left:20px;
+  padding:0;
+  text-align:left;
+  width:82px;
+  float:right;
+  height:39px;
+  line-height:39px
+}
+#page-container #enroll-result-container .session-time-zone {
+  float:none
+}
+#page-container .enroll-main-list .enroll-action {
+  position:inherit
+}
+#page-container #enroll-result-container #paintEnrollmentResults .enroll-launch-full .enroll-launch,
+#page-container #launch-wizard .enroll-launch-full .enroll-launch {
+  text-align:center;
+  width:79px
+}
+#page-container .noborder td,
+#page-container .course-level .enroll-show-moreclass tr.ui-widget-content td {
+  border:0
+}
+.expertusV2PopupContainer #enroll-result-container #paintEnrollmentResults .enroll-launch-full .enroll-launch,
+.expertusV2PopupContainer #launch-wizard .enroll-launch-full .enroll-launch {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -317px -74px;
+  border:0;
+  color:#FFF;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:normal;
+  font-family:openSansRegular, Arial;
+  height:32px;
+  padding:0;
+  text-transform:uppercase;
+  width:111px
+}
+.expertusV2PopupContainer #enroll-result-container #paintEnrollmentResults .enroll-launch-full,
+.expertusV2PopupContainer #launch-wizard .enroll-launch-full {
+  background:none
+}
+.expertusV2PopupContainer #launch-wizard .enroll-main-list {
+  width:111px;
+  float:right;
+  text-align:center
+}
+.expertusV2PopupContainer .enroll-class-title {
+  float:left;
+  font-size:12px;
+  line-height:20px
+}
+#page-container span.item-short-desc, span.item-long-desc,
+#page-container #enroll-result-container .item-title-code {
+  clear:both;
+  float:none
+}
+.page-learning-enrollment-search #page-container #pager {
+  width:664px;
+  margin:20px 0 0 0;
+}
+#page-container #enroll-noresult-msg,
+#page-container #enroll-lp-result-container #enroll-lp-noresult-msg,
+#page-container #ClassDetailsMainDiv {
+  color:#2d2d2d;
+  font-size:12px
+}
+.expertusV2PopupContainer #launch-wizard .item-title-code {
+  color:#2d2d2d;
+  float:left;
+  font-size:12px;
+  padding-top:4px;
+  font-family:openSansRegular, Arial;
+  width:100%
+}
+#enroll-result-container .course-row, 
+#enroll-result-container .status-row, 
+#enroll-result-container .attach-row, 
+#enroll-result-container .session-row, 
+#enroll-result-container .location-row {
+  clear:both;
+  width:550px;
+  padding:10px 0 10px 0
+}
+#enroll-result-container .session-row {
+  padding:0 0 5px 0
+}
+#enroll-result-container .course-row {
+  padding-top:6px
+}
+#enroll-result-container .status-row .status-label.markcompletestatus {
+  min-width: 137px;
+  margin-right:5px
+}
+#enroll-result-container .course-row .course-label,
+#enroll-result-container .status-row .status-label,
+#enroll-result-container .attach-row .attach-label {
+  min-width:98px;
+  float:left;
+  font-weight:bold
+}
+#enroll-result-container .attach-row .attach-label {
+  width:125px;
+}
+#enroll-result-container .status-row .status-label {
+  margin-right:5px
+}
+#enroll-result-container .location-row .location-label {
+  width:68px;
+  float:left;
+  font-weight:bold
+}
+#enroll-result-container .course-row .course-desc,
+#enroll-result-container .status-row .status-desc,
+#enroll-result-container .attach-row .attach-desc,
+#enroll-result-container .location-row .location-desc {
+  width:400px;
+  float:left
+}
+#enroll-result-container .attach-row .attach-info {
+  clear:both;
+  float:left;
+  color:#777;
+  font-size:11px;
+  margin-left:0;
+  font-weight:normal
+}
+#enroll-result-container .session-row .session-label {
+  padding:10px 0;
+  float:left;
+  font-weight:bold
+}
+#enroll-result-container .session-row .session-desc {
+  clear:both;
+  width:550px;
+  margin-left:20px
+}
+#enroll-result-container .session-row .session-desc .sessionDet {
+  clear:both;
+  float:left;
+  min-width:450px;
+  padding:0 0 5px
+}
+#enroll-result-container .location-row .location-desc span {
+  padding-right:5px;
+  display:block;
+  float:left
+}
+#enroll-result-container .enroll-main-list .mypgm-recertify {
+  width: 65px;
+}
+#paintEnrollmentResults .ui-state-highlight.ui-state-hover .fade-out-image {
+ background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/title_gradient.png") no-repeat right -30px;
+}
+#paintEnrollmentResults .exp-sp-lnrenrollment-classCode,
+#paintEnrollmentResults .exp-sp-lnrenrollment-classloc {
+  max-width:100px;
+  display:inline-block;
+  margin-bottom:-3px
+}
+#paintEnrollmentResults .exp-sp-lnrenrollment-enrollfulltitle {
+  max-width:475px
+}
+#paintEnrollmentResults .exp-sp-lnrenrollment-ilt-timezone-from {
+  max-width:140px;
+  display:inline-block;
+  margin-bottom:-7px
+}
+#paintEnrollmentResults .item-title .exp-sp-lnrenrollment-enrollfulltitle {
+  max-width:320px
+}
+#paintEnrollmentResults .exp-sp-lnrenrollment-wbt-course-title {
+  max-width:380px
+}
+#paintEnrollmentResults .exp-sp-lnrenrollment-sesions-head {
+  max-width:200px
+}
+#paintEnrollmentResults .exp-sp-lnrenrollment-view-session-date {
+  max-width:175px 
+}
+#paintEnrollmentResults .session-time-zone {
+  margin-left:20px
+}

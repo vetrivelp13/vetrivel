@@ -1,0 +1,328 @@
+.addedit-form .class-fee-textfield, #two-col-row-type_expireComp .form-text {
+  width: 47px;
+}
+#program-tp-basic-addedit-form-disp #addedit-form-wrapper .admin-course-edit-button-container {
+  float: right;
+  padding-right: 0;
+  position: absolute;
+  right: 5px;
+  top: 0px;
+}
+.qtip-button .admin-bubble-close {
+  top: 2px;
+}
+.certificate-btn-container .addedit-form-cancel-container-actions {
+  margin-right: -8px;
+}
+#access-control {
+  margin-bottom: 15px;
+}
+.mro-wrapper .addedit-form-cancel-container-actions {
+  margin-right: 65px;
+}
+#admin-data-grid .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  line-height: 10px;
+  height: 10px;
+}
+#user-basic-addedit-form #two-col-row-country_zip img,
+#user-basic-addedit-form #two-col-row-othermanager_otherorganization img {
+  float: left;
+}
+#user-basic-addedit-form textarea.addedit-edit-textarea {
+  height:21px;
+}
+#organization-addedit-form .addedit-custom-field .addedit-new-field-value .addedit-edit-textarea {
+  height: 18px;
+}
+#catalog-survey-assesment-basic-addedit-form .addedit-customfields-wrapper .addedit-new-field-value .addedit-edit-textarea {
+  width: 390px;
+  height: 18px;
+}
+#catalog-survey-assesment-basic-addedit-form .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions {
+  margin-left: auto;
+}
+.popups-container #catalog-survey-assesment-basic-addedit-form .addedit-form-cancel-container-actions {
+  margin-right: 10px;
+}
+#catalog-question-basic-addedit-form .addedit-left-col > div.addedit-new-field:first-child {
+  width: 548px;
+}
+#catalog-question-basic-addedit-form .addedit-left-col .addedit-new-field .addedit-new-field-value textarea.addedit-edit-textarea {
+  height: 18px;
+}
+#two-col-row-question_type_disp .form-item-survey-language .addedit-edit-survey_language {
+  margin-left: 6px;
+}
+#catalog-question-basic-addedit-form .addedit-left-col .addedit-form-cancel-container-actions {
+  margin-right: 11px;
+}
+.add-choice-btn-div .addedit-new-field-value .addedit-form-cancel-container-actions,
+#survey-question-basic-addedit-form .answer-choices-block .addedit-new-field-value .addedit-form-cancel-container-actions {
+  float: left;
+}
+#survey-question-basic-addedit-form .assessment-answer-choice-textarea {
+	width: 282px;
+  max-width: 282px;
+  min-width: 282px;
+}
+#survey-question-basic-addedit-form .survey-answer-choice-textarea {
+	width: 360px;
+  max-width: 360px;
+  min-width: 360px;
+}
+#attach-question-mandatory-list .man-opt ul.sub-menu {
+  top: 20px;
+}
+.bubble-c .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-next,
+#admin-data-grid .admin-datagrid-pagination .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-next {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll -157px -408px transparent;
+  width:32px;
+  /* height:18px; */
+  padding-right:5px;
+  border:0 none;
+  opacity:8;
+  filter:Alpha(Opacity=100);
+}
+#banner-basic-addedit-form .addedit-left-col  div.addedit-new-field {
+  width: 550px;
+}
+#answer_choice_textarea .div-choice-textarea textarea {
+  width: 98%;
+}
+#answer_choice_textarea .svy-question-radioBtn-dotted-line-new {
+  width: 80px;
+}
+#answer_type_container td.div-align-top:first-child+td+td {
+  padding-left: 0px;
+}
+.location-basic-addedit-form-container .addedit-new-field {
+  clear: none;
+}
+.addedit-left-col .addedit-customfields-wrapper .addedit-custom-field textarea.addedit-edit-custom-value-field {
+  height: 18px;
+  width: 390px;
+}
+#select-location-list #location-list .loc-disp-selection {
+  margin-top: -14px;
+}
+#catalog-class-basic-addedit-form-container .selected-enrolled-status {
+  float: left;
+}
+#catalog-class-basic-addedit-form-container .enrolled-selection, 
+#program-tp-basic-addedit-form-container .enrolled-selection {
+  float: right;
+  margin-top: 0px;
+}
+#catalog-class-basic-addedit-form-container .enrolled-status ul.sub-menu { 
+  right: 186px;
+  left: 330px;
+}
+#program-tp-basic-addedit-form-container .enrolled-status ul.sub-menu {
+  left: 360px;
+  margin-top: 15px;
+  right: 150px;
+}
+#mandatory-list > .man-opt > li {
+  position: static;
+}
+#mandatory-list .man-opt ul.sub-menu {
+  left: 720px;
+  margin-top: 20px;
+  right: 60px;
+}
+.tag-fieldset-wrapper .addedit-tag_list {
+  position: relative;
+}
+.tag-fieldset-wrapper .addedit-tag_list .tag-delete-btn {
+  position: relative;
+  top: -10px;
+  left: -5px;
+  float: none;
+}
+.addedit-secondcol-field-value .form-item-validity-days input {
+  width: 98px;
+}
+#two-col-row-author_vendor_complete .form-item-completed-date .addedit-edit-completed_date,
+#two-col-row-author_vendor_complete .form-item-completed-days .admin-course-class-compliance-days-input {
+  margin-left: 7px;
+}
+#admin-course-class-list-pagination-wrapper .ui-jqgrid-toppager .ui-pager-control > .ui-pg-table {
+  position: absolute;
+}
+#multi-class-container {
+  left: -604px;
+  position: absolute;
+  top: -398px;
+  z-index: 1000;
+}
+#survey_attach_questions_dt .admin-surass-auto-search-container .admin-pagination-surass-search-go {
+  margin-left:119px;
+  margin-top: -24px;
+}
+#addquestions-addedit-form-html #admin-add-questions-survey-assessment .admin-save-button-container {
+  margin-right:7px;
+}
+#program-tp-basic-addedit-form-disp .admin-course-edit-button-container .admin-add-edit-button,
+#catalog-course-basic-addedit-form-disp .admin-course-edit-button-container .admin-add-edit-button {
+  margin-right: 40px;
+}
+#program-tp-basic-addedit-form-container .selected-enrolled-status {
+  float: left;  
+}
+#program-tp-basic-addedit-form-container .enrolled-selection {
+  margin-top: 3px;
+}
+#program-tp-basic-addedit-form-container .enrolled-status ul.sub-menu li {
+  float: right;
+}
+#esign-wizard #esign-pass-error, #esign-mandatory-error {
+  width: 95%;
+}
+/* REPORT DESIGN REPORT LAYOUT SCREEN HACK */
+#report_header_style_container span.apply_label {
+  margin-left: 73px;
+}
+
+#location-basic-addedit-form .addedit-form-cancel-container-actions {
+	margin-right:26px;
+}
+/* Fix for alignment in class screen */
+#catalog-class-basic-addedit-form-container .addedit-edit-new_location {
+  width: 162px; 	
+}	
+#program-addedit-form .addedit-new-field-two-col .addedit-edit-end_date.narrow-search-filterset-daterange-empty {
+  width: 128px;
+}
+/* Fix for alignment in Setup Tax screen */
+#tax-basic-addedit-form-container .addedit-new-field .addedit-new-field-value .resizable-textarea .addedit-edit-vat_number {
+  min-width: 260px;
+  max-width: 260px;
+  height: 20px;
+}
+#message-container .messages {
+  display: block;
+}
+#show_expertus_message {
+  position: relative;
+}
+/*div.messages ul li{
+  list-style: none inside none;
+}
+div.messages ul{
+  margin-left: 10px;
+}*/
+.addedit-left-col {
+  padding-top: 0;
+}
+#tax-basic-addedit-form-disp .catalog-pub-add-list li input,
+#tax-basic-addedit-form-disp .catalog-pub-add-list li:hover input,
+#tax-basic-addedit-form-disp .catalog-pub-add-list li,
+#tax-basic-addedit-form-disp .catalog-pub-add-list li:hover {
+  padding: 0 5px 0 0;
+  width: 110px;
+}
+#exp-sp-administration-tax-addedit-form .addedit-left-col,
+#tax-basic-addedit-form .addedit-left-col {
+  padding: 0px 0 13px 16px;
+}
+/* Fix for alignment in Conten Versioning screen */
+#content-addedit-form #upload_detail_container #edit-content-data {
+  z-index: 20;
+}
+.wrapper-browse #BrowserVisible,
+.wrapper-browse-url #BrowserVisible {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/btn_fileUpload.png") 100% 1px no-repeat;
+}
+.wrapper-browse #FileField {
+  width: 363px;
+}
+.wrapper-browse-url #FileField {
+  width: 287px;
+}
+#edit-content-data-url {
+  width: 353px;
+  margin-top: 3px;
+}
+#upload_browse_and_url #search-list-title-keyword {
+  top: 4px;
+}
+#content-addedit-form .addedit-edit-textfield {
+  width: 429px;
+}
+.edit-content-version-list-container .crs-publish-btn,
+.edit-content-version-list-container .crs-pub-enrolled-btn {
+  display: block;
+}
+.version-content-transfer-user #bubble-face-table td div#admin-move-users-content .admin-datagrid-save-cancel-button-align-bottom .addedit-form-cancel-container-actions .catalog-pub-add-list{
+  z-index: 105;
+  width: 200px;
+}
+#content-addedit-form .catalog-pub-add-list li input,
+#content-addedit-form .catalog-pub-add-list li:hover input,
+#content-addedit-form .catalog-pub-add-list li,
+#content-addedit-form .catalog-pub-add-list li:hover {
+  padding: 0 5px 0 0;
+  width: 110px;
+}
+.version-content-transfer-user .catalog-pub-add-list-move li input,
+.version-content-transfer-user .catalog-pub-add-list-move li:hover input,
+.version-content-transfer-user .catalog-pub-add-list-move li,
+.version-content-transfer-user .catalog-pub-add-list-move li:hover {
+  padding: 0 5px 0 0;
+  width: 145px;
+}
+.version-content-transfer-user-txt #bubble-face-table td div#admin-move-users-content .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  padding-left: 0;	
+}
+.version-content-transfer-user-txt #bubble-face-table td div#admin-move-users-content .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td input.multiselect-singlecheck {
+  margin-left: 1px;	
+}
+/* change for the ticket #0024235  */
+#catalog-class-basic-addedit-form-container .row-edit-option {
+  line-height: 20px;
+}
+#admin-course-class-list-pagination-wrapper .edit-class-list .version-content-transfer-user {
+  padding-bottom: 5px;	
+}
+/* change for the ticket #0024360 */
+.completion_container_roster .qtip-button .admin-bubble-close {
+  top: -43px;
+  right: -14px;
+}
+/* change for the ticket #0024415 */ 
+.admin_add_multi_search_container {
+  z-index: 2;
+  display: block;
+}
+#multi-class-container #show_expertus_tp_message {
+  position: relative;
+  top: 5px;
+}
+/* change for the ticket #0024169 */ 
+.catalog-course-basic-addedit-form-container #admin-data-grid #admin_list_values_container .exportcontainer-page {
+  top: 32px;
+  right: 64px;
+}
+.catalog-course-basic-addedit-form-container #admin-data-grid .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-prev {
+  margin-top: 0;	
+}
+/*.section-administration .catalog-course-basic-addedit-form-container .admin-course-class-tab-datagrid-wrapper {
+ height: 440px;
+}*/
+/* change for the ticket #0024262 */ 
+.page-administration-learning-program #training-plan-enroll-form-html .catalog-course-basic-addedit-form-container,
+.section-administration .admin-class-tp-enrollment .catalog-course-basic-addedit-form-container {
+  border: 0;
+}
+.page-administration-learning-program .catalog-course-basic-addedit-form-container #admin-data-grid #admin_list_values_container .exportcontainer-page,
+.section-administration .admin-class-tp-enrollment .catalog-course-basic-addedit-form-container #admin-data-grid #admin_list_values_container .exportcontainer-page {
+  top: 27px;
+}
+/*.page-administration-learning-program .admin-class-tp-enrollment .catalog-course-basic-addedit-form-container .admin-training-program-tab-datagrid-wrapper {
+  height: 420px;
+}*/
+/* change for the ticket #0023134  */ 
+.section-administration .catalog-pub-add-list li.incompletedandsave input {
+  float: none;
+  width:150px;
+}

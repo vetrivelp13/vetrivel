@@ -1,0 +1,4278 @@
+<?php
+
+/**
+* Implementation of hook_init().
+*/
+function exp_sp_administration_order_init(){
+	try {
+
+  if((arg(1) == 'commerce' && arg(2) == 'order') || (arg(0) == 'administration' && arg(1) == 'order')){
+    global $theme_key;
+  	$css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+  	drupal_add_css(drupal_get_path('module', 'uc_cart') . '/uc_cart.css',$css_theme_optional);
+    if($theme_key == 'expertusoneV2') {
+    	drupal_add_css(drupal_get_path('module', 'exp_sp_administration_order') .'/exp_sp_administration_order_v2.css', $css_theme_optional);
+    	drupal_add_css(drupal_get_path('module', 'exp_sp_commerce') .'/css/exp_sp_uc_cart_v2.css', $css_theme_optional);
+    	drupal_add_css(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_learning_v2.css', $css_theme_optional);
+    }
+    else{
+    	drupal_add_css(drupal_get_path('module', 'exp_sp_administration_order') .'/exp_sp_administration_order.css', $css_theme_optional);
+    	drupal_add_css(drupal_get_path('module', 'exp_sp_commerce') .'/css/exp_sp_uc_cart.css', $css_theme_optional);
+    	drupal_add_css(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_learning.css', $css_theme_optional);
+    }
+  if(arg(1) =='order'){
+        $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+        
+        //#custom_attribute_0078975        
+        if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status
+            drupal_add_css(drupal_get_path('module', 'exp_sp_administration_user') .'/jquery.multiselect.css');
+            drupal_add_css(drupal_get_path('module', 'exp_sp_administration_user') .'/jquery.multiselect.filter.css');
+            drupal_add_js(drupal_get_path('module', 'exp_sp_administration_user') .'/jquery.multiselect.filter.js', $js_module_optional);
+            drupal_add_js(drupal_get_path('module', 'exp_sp_administration_user') .'/jquery.multiselect.js', $js_module_optional);
+       }
+      
+        drupal_add_js(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_data_grid.js', $js_module_optional);
+       // drupal_add_js(drupal_get_path('module', 'currency_dropdown') .'/admin_currency_dropdown.js', $js_module_optional);
+        drupal_add_js(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_learning.js', $js_module_optional);
+
+        drupal_add_js(drupal_get_path('module', 'exp_sp_administration_order') .'/exp_sp_administration_order.js',$js_module_optional);
+        drupal_add_js(drupal_get_path('module', 'exp_sp_lnrsearch') .'/jquery.cookie.js', $js_module_optional);
+        global $theme_key;
+        $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+        if($theme_key == 'expertusoneV2') {
+            drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration_v2.css', $css_theme_optional);
+            drupal_add_css(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_data_grid_v2.css', $css_theme_optional);
+        } else {
+            drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration.css', $css_theme_optional);
+            drupal_add_css(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_data_grid.css', $css_theme_optional);
+        }
+        drupal_add_js (
+                '$(document).ready(function(){
+                setAdminLinkSelected();
+    });','inline');
+        //To set cart timers
+        drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/exp_sp_jquery/jquery.cartTimer.js',$js_module_optional);
+        expDebug::dPrint('admin_cart_elapsed_time valiue'.$_COOKIE['admin_cart_elapsed_time'],4);
+        // Cart Timer.
+        if (empty($_COOKIE['admin_cart_elapsed_time'])) {
+        	$checkout_time = ( getCheckoutTimeout() != '')? getCheckoutTimeout() : '59';
+        	$checkout_timer = $checkout_time*60;
+        
+        	// Secure cookie is disabled by Vincent on Dec 09, 2013
+        	// This cookie is need to be read by javascript for timer count, if it is a secure then javasctipt will not read it. #0029940
+        	setcookie("admin_cart_elapsed_time", $checkout_timer,null,'/','','','');
+    }
+        if(arg(2)!='finish'){
+         	drupal_add_js (
+        			'$(document).ready(function(){
+						checkoutTimeCount(1);
+	        });','inline');
+	}
+        else{
+        	expDebug::dPrint('removetimercheckout called');
+        	drupal_add_js (
+        			'$(document).ready(function(){
+						removeTimercheckout();
+	        });','inline');
+        }
+        
+    }else{
+    	if (!empty($_COOKIE['admin_cart_elapsed_time'])) {
+    		// Secure cookie is disabled by Vincent on Dec 09, 2013
+    		// This cookie is need to be read by javascript for timer count, if it is a secure then javasctipt will not read it. #0029940
+    		setcookie("admin_cart_elapsed_time", "", time()-3600,'','','','');
+    	}
+    }
+	}
+   $pages = array('/sites/default/files/',
+   		'taxes/calculate',
+   		'system/ajax',
+   		'administration/create/uc_discounts/calculate',
+   		'administration/order/',
+   		'ajax/',
+   		'cart/checkout/credit/cvv_info',
+   		'exp_sp_session_timeout_ahah_set_last',
+   		'exp_sp_session_timeout_ajax_get_time_left',
+   		'exp_sp_session_timeout_ahah_get_remaining_time',
+   		'exp_sp_paymetric');
+   $this_page = request_uri();
+   $retFlg =0;
+   foreach ($pages as $page) {
+    if ($page && strstr($this_page, $page) == true) {
+    	$retFlg = 1;
+    }
+   }
+   if(stristr($this_page, 'drupalchat') == true){
+   	$retFlg = 1;
+   }
+   $isImg = strrchr($this_page,'.');
+   $isImg = strtolower($isImg);
+   if($isImg == '.jpg' || $isImg == '.jpeg' || $isImg == '.gif' || $isImg == '.ico' || $isImg == '.png' || $isImg == '.css' || $isImg == '.js'){
+    $retFlg = 1;
+   }
+   if($retFlg == 0){
+   	unset($_SESSION['cart_admin_order']);
+   	
+   }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_order_init', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_block_info().
+ */
+function exp_sp_administration_order_block_info() {
+	try{
+		$blocks = array();
+		$blocks['admin_create_order'] = array(
+				'info' => t('Administration Create Order'),
+				'cache' => DRUPAL_CACHE_PER_ROLE,
+				'visibility' => BLOCK_VISIBILITY_LISTED,
+				'pages' => 'administration/order/create'
+		);
+		return $blocks;
+	}catch (Exception $ex) {
+		watchdog_exception('exp_sp_administration_order_block_info', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+ /**
+ * Implementation of hook_menu().
+ */
+function exp_sp_administration_order_menu() {
+	try {
+  $items = array();
+  
+  $items['administration/commerce/order'] = array(
+    'title' => t('LBL1025'),
+    'page callback' => 'empty_value',
+    'access callback' => 'user_access',
+    'type' => MENU_CALLBACK,
+    'weight' => 1,
+    'access arguments' => array('view all orders'),
+  );
+  $items['administration/commerce/order/search/all'] = array(
+    'title' => 'Fetch commerce order list to display in JQGrid',
+    'page callback' => 'sendManageOrderListToJqGrid',
+    'access callback' => 'user_access',
+    'access arguments' => array('view all orders'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_order.inc'
+    );
+
+  $items['administration/commerce/order/textfilter-autocomplete'] = array(
+    'title' => 'Search By Text Filter Autocomplete',
+    'page callback' => 'getFullnameAutoComplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('view all orders'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_user.inc',
+    'file path' => drupal_get_path('module', 'exp_sp_administration_user')  // #39363 - Issue fix
+  );
+
+  $items['administration/commerce/order/%ctools_js/addedit'] = array(
+    'title' => 'Edit a admin order',
+    'page callback' => 'exp_sp_administration_order_view_form',
+    'page arguments' => array(3),
+    'access callback' => 'user_access',
+    'access arguments' => array('view all orders'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_order.inc'
+  );
+
+  $items['administration/commerce/order/export'] = array(
+    'title' => 'Order Details Search Results CSV Export',
+    'page callback' => 'fetchManageOrderAll',
+    'page arguments' => array('CSV'),
+    'access callback' => 'user_access',
+    'access arguments' => array('view all orders'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_order.inc',
+   );
+
+   $items['administration/commerce/order/print'] = array(
+     'title' => 'Order Details Results Print to PDF',
+     'page callback' => 'fetchManageOrderAll',
+     'page arguments' => array('PDF'),
+     'access callback' => 'user_access',
+     'access arguments' => array('view all orders'),
+     'type' => MENU_CALLBACK,
+     'file' => 'exp_sp_administration_order.inc',
+   );
+   $items['administration/commerce/order/username-autocomplete'] = array( // Needed for search by manager username
+    'title' => 'Search by username autocomplete',
+    'page callback' => 'getUsernameAutoComplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('view all orders'),
+    'type' => MENU_CALLBACK,
+    );
+   $items['administration/commerce/order/orderid-autocomplete'] = array(
+     'title' => 'Search By Order Id Filter Autocomplete',
+     'page callback' => 'getOrderIdFilterAutoComplete',
+     'access callback' => 'user_access',
+     'access arguments' => array('view all orders'),
+     'type' => MENU_CALLBACK,
+     'file' => 'exp_sp_administration_order.inc',
+   );
+   $items['administration/orderupdate/ajax/%'] = array(
+  	'title' => 'Order Status Change',
+    'page callback' => 'exp_sp_administration_order_update_form',
+  	'page arguments' => array(3),
+    'access callback' => 'user_access',
+    'access arguments' => array('view all orders'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['administration/commerce/orderupdate/ajax/%/%'] = array(
+  	'title' => 'Order Status Change',
+    'page callback' => 'exp_sp_administration_order_update_narrow_action',
+  	'page arguments' => array(4,5),
+    'access callback' => 'user_access',
+    'access arguments' => array('view all orders'),
+    'type' => MENU_CALLBACK,
+  	'file' => 'exp_sp_administration_order.inc',
+  );
+
+  $items['administration/order/create'] = array(
+  	'title' => t('ACLBL0004'),
+  	'description' => 'Create a new order.',
+  	'page callback' => 'drupal_get_form',
+  	'page arguments' => array('admin_order_create_form'),
+  	'access arguments' => array('create orders'),
+  	//'file' => 'uc_order.admin.inc',
+  );
+  $items['administration/create/user/order/%/%'] = array(
+  	'title' => 'Administration order user create',
+  	'page callback' => 'admin_order_user_display',
+  	'page arguments' => array(4,5),
+  	'access callback' => 'user_access',
+  	'access arguments' => array('create orders'),
+  	'type' => MENU_CALLBACK,
+  );
+  $items['administration/order/user-select/%/%'] = array(
+  	'title' => 'Administration order user select',
+  	'page callback' => 'loadUserCreateOrder',
+  	'page arguments' => array(3,4),
+  	'access callback' => 'user_access',
+  	'access arguments' => array('create orders'),
+  	'type' => MENU_CALLBACK,
+  	'file' => 'exp_sp_administration_order.inc',
+  );
+  $items['administration/order/user-autocomplete'] = array(
+  	'title' => 'Administration order user autocomplete',
+  	'page callback' => 'getAdminOrderUserAutoComplete',
+  	'access callback' => 'user_access',
+  	'access arguments' => array('create orders'),
+  	'type' => MENU_CALLBACK,
+  	'file' => 'exp_sp_administration_order.inc',
+  );
+  $items['administration/order/add/product/%/%'] = array(
+  		'title' => 'Administration order add product',
+  		'page callback' => 'admin_order_product_display',
+  		'page arguments' => array(4,5),
+  		'access callback' => 'user_access',
+  		'access arguments' => array('create orders'),
+  		'type' => MENU_CALLBACK,
+  );
+  $items['administration/order/product-select/%/%'] = array(
+  		'title' => 'Administration order product select',
+  		'page callback' => 'loadOrderAddProduct',
+  		'page arguments' => array(3,4),
+  		'access callback' => 'user_access',
+  		'access arguments' => array('create orders'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_administration_order.inc',
+  );
+  $items['administration/order/product-autocomplete'] = array(
+  		'title' => 'Administration order product autocomplete',
+  		'page callback' => 'getAdminAddProductAutoComplete',
+  		'access callback' => 'user_access',
+  		'access arguments' => array('create orders'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_administration_order.inc',
+  );
+  $items['administration/order/userinfo-autocomplete/%'] = array(
+  		'title' => 'User Information autocomplete',
+  		'page callback' => 'getUserInfoAutoComplete',
+  		'page arguments' => array(3),
+  		'access callback' => 'user_access',
+  		'access arguments' => array('create orders'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_administration_order.inc',
+  );
+  $items['administration/order/pay'] = array(
+  		'title' => t('ACLBL0004'),
+  		'description' => 'Order payment.',
+  		'page callback' => 'drupal_get_form',
+  		'page arguments' => array('admin_order_payment_form'),
+  		'access arguments' => array('create orders'),
+  );
+  $items['administration/order/finish'] = array(
+  		'title' => t('Order Complete'),
+  		'description' => 'Display information upon completion of an order.',
+  		'page callback' => 'admin_cart_checkout_complete',
+  		'access arguments' => array('expertus learner'),
+  		'type' => MENU_CALLBACK,
+  		//'file' => 'exp_sp_administration_order.inc',
+  );
+  $items['ajax/order/cartpane/update'] = array(
+  		'title' => t('Cart currency update'),
+  		'description' => 'Update the currency type for the line items in the order.',
+  		'page callback' => 'admin_cart_update',
+  		'access arguments' => array('access content'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_administration_order.inc',
+  );
+  return $items;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_order_menu', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_permission().
+ */
+function exp_sp_administration_order_permission() {
+	try {
+  return array(
+    'administer order workflow' => array(
+      'title' => t('Administer order workflow'),
+    ),
+    'view own orders' => array(
+      'title' => t('View own orders'),
+    ),
+    'view all orders' => array(
+      'title' => t('View all orders'),
+    ),
+    'create orders' => array(
+      'title' => t('Create orders'),
+    ),
+    'edit orders' => array(
+      'title' => t('Edit orders'),
+    ),
+    'delete orders' => array(
+      'title' => t('Delete orders'),
+    ),
+    'administer store order perm' => array(
+      'title' => t('administer store order perm'),
+    ),
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_order_permission', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function exp_sp_administration_order_theme() {
+	try {
+  return array(
+    'exp_cart_order_exp_paymethod' => array(
+      'variables' => array('panes' => NULL),
+    ),
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_order_theme', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+// exp_sp_administration_order_update_form
+
+function exp_sp_administration_order_update_form($orderId){
+	try {
+  $form_state = array(
+   'no_redirect' => TRUE, // To confirm whether necessary
+   'build_info' => array('args' => array('ajax')), // The form builder function expects the first argument to be ajax or nojs.
+   'entity_id' => $orderId,
+   'entity_type' => 'Order',
+  );
+
+  $formId = 'exp_sp_administration_order_update_form_html';
+  $builtForm = drupal_build_form($formId, $form_state);
+  $renderedForm = drupal_render($builtForm);
+
+  $drupalSettings = getDrupalSettings();
+  $orderResponse = array(
+    'drupal_settings' => $drupalSettings,
+    'render_content_main' => $renderedForm,
+  );
+  echo drupal_json_output($orderResponse);
+  exit;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_order_update_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+function exp_sp_administration_order_update_form_html($form, &$form_state) {
+	try {
+  include_once(drupal_get_path('module', 'exp_sp_administration_order') .'/exp_sp_administration_order.inc');
+  $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+  global $theme_key;
+  	if($theme_key == 'expertusoneV2') {
+  		//NEWUI THEME STYLE SHEET
+  		drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration_v2.css', $css_theme_optional);
+  	} else {
+		drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration.css', $css_theme_optional);
+  	}
+  //drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration.css', $css_theme_optional);
+  expDebug::dPrint('Testing arguament valiue'.print_r($form_state,true),5);
+
+  $entityId      = $form_state['entity_id'];
+  $entityType    = $form_state['entity_type'];
+  $uniqueid      = $entityId.'-'.$entityType;
+
+  $dynamicwrapperid="order-addedit-form".$form_state['entity_id'].$form_state['entity_type'];
+  $form = orderAddEditFormWithCancelAndSave($dynamicwrapperid);
+
+  addHiddenValueToAddEditForm($form, 'entity_id', $form_state['entity_id']);
+  addHiddenValueToAddEditForm($form, 'entity_type', $form_state['entity_type']);
+
+  $form['attr_action'] = array(
+    '#type' => 'hidden',
+    '#name' => 'attr_action',
+    '#value' => 'order_update',
+  );
+
+  $form['order_change_table_start'] = array(
+    '#type' => 'markup',
+  );
+  $form['order_change_fieldset'] = array(
+    '#type' => 'markup',
+    '#prefix' => '<table width="98%" cellpadding="4" cellspacing="0" border="0">',
+    //'#suffix' => '',
+  );
+  /*$message ='';
+  $form['order_change_fieldset'] = array(
+    '#type' => 'markup',
+    '#markup' => '<tr><td class="info-text">'.$message.'</td></tr>',
+  );*/
+  $paymentReceived = uc_order_status_data('payment_received', 'title');
+  $order = uc_order_load($entityId);
+  $order_current_status = $order->order_status;
+  $checkedStatus = 'checked';
+  if($order_current_status == 'pending' ){
+	  $form['order_change_table_row_received'] = array(
+	    '#type' => 'markup',
+	    '#prefix' => '<tr><td class="brl-column-left"><input class="brl-checkbox-input" type="radio" name="attach_order_change" value="payment_received" '.$checkedStatus.'><span class="vtip" title="'.$paymentReceived.'"> '.$paymentReceived.'</span>',
+	    '#suffix' => '</td></tr>',
+	  );
+	  $checkedStatus = '';
+  }
+  $paymentCanceled = t('LBL109');
+  $form['order_change_table_row_cancelled'] = array(
+    '#type' => 'markup',
+    '#prefix' => '<tr><td class="brl-column-left"><input class="brl-checkbox-input" type="radio" name="attach_order_change" value="canceled" '.$checkedStatus.'><span class="vtip" title="'.$paymentCanceled.'"> '.$paymentCanceled.'</span>',
+    '#suffix' => '</td></tr>',
+  );
+  $form['order_change_table_end'] = array(
+    '#type' => 'markup',
+    '#suffix' => '</table>',
+  );
+
+  orderAddEditFormWithCancelAndSaveClose($form,$dynamicwrapperid,'newtheme-save-button','newtheme-cancel-link');
+  return $form;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_order_update_form_html', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_administration_order_update_form_html_submit ($form, &$form_state){
+	try {
+   expDebug::dPrint(":Calling order form : ".print_r($form_state,true),5);
+   if($form_state['triggering_element']['#name'] == 'orderstatuschange'){
+     $order_id      = $form_state['entity_id'];
+     if($order_id){
+       $order = uc_order_load($order_id);
+       $order_current_status = $order->order_status;
+       $order_update_status  = $form_state['input']['attach_order_change'];
+	     if ($order_update_status != $order_current_status) {
+	       if(uc_order_update_status($order_id, $order_update_status)) {
+				   //Added for LMS logic implementation in admin update the order
+				   $updatedorder = uc_order_load($order_id);
+				   $updatedorder->update_from = 'admin';
+	         exp_sp_cart_uc_checkout_complete($updatedorder);
+	         drupal_set_message(t('MSG576'),'status',false);
+
+	         //Audit trail for order status change
+	         $changefields = array(
+	           'order_id'  => $order_id,
+	           'status'    => $order_update_status,
+	         );
+	         $default[0] = new stdClass();
+	         $default[0]->order_id = $order_id;
+	         $default[0]->status   = $order_current_status;
+	         make_audit_trail_entries($changefields, getIdOfLoggedInUser() , $default ,$order_id, 'Updated','Commerce','exp_sp_administration_order','exp_sp_administration_order_update_form_html_submit',
+                                          array('order_id', 'status'));
+
+	         $form_state['rebuild'] = TRUE;
+	         $form_state['storage']['edited_entity'] = TRUE;
+	       }
+	     }
+     }
+   }
+   }catch (Exception $ex) {
+   	watchdog_exception('exp_sp_administration_order_update_form_html_submit', $ex);
+   	expertusErrorThrow($ex);
+   }
+}
+
+/*
+ * orderAddEditFormWithCancelAndSave() - Use this function to create your addedit form having Cancel and Save buttons at the bottom
+ */
+function orderAddEditFormWithCancelAndSave($wrapperId = 'addedit-form-wrapper', $miscAction = array()) {
+  try {
+  $form = array();
+  $form['#prefix'] = '<div id="' . $wrapperId . '" class="addedit-form-wrapper">';
+  $form['#suffix'] = '</div>';
+
+  // Add a class to the form so that we can apply custom style (margin, padding, etc).
+  $form['#attributes'] = array('class' => array('addedit-form'));
+  $form['#attributes']['autocomplete'] = 'off';
+  $form['#tree'] = TRUE; // Show full path of values (hierarchical values)
+
+  $form['addedit-left-col-start'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div>',
+  );
+  return $form;
+  }catch (Exception $ex) {
+  	watchdog_exception('orderAddEditFormWithCancelAndSave', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/*
+ * orderAddEditFormWithCancelAndSaveClose()
+ */
+function orderAddEditFormWithCancelAndSaveClose(&$form, $wrapperId = '', $saveButtonId = 'save-button', $cancelButtonId = 'cancel-button', $expandPopup = FALSE, $saveTabIndex = '', $esignature=false) {
+	try {
+  global $theme_key;
+  $customHiddenButtonId = 'esign-button-'.$wrapperId;
+
+  // Remove the temporary storage for API's to exchange information during form creation
+  unset($form['addedit_tmp_storage']);
+
+  if (isset($saveTabIndex) && $saveTabIndex > 0) {
+    $saveAttributes['tabindex'] = $saveTabIndex;
+    $cancelAttributes['tabindex'] = $saveTabIndex+1;
+  }
+
+  $ajaxCallbackCancel = 'addEditCancelRepaintForm';
+  $cancelAttributes['class'] = array('addedit-edit-' . $cancelButtonId); // This class must be prefixed with 'addedit-edit-' followed by the form field id.
+
+
+  // Using this class to applying bg color to the save button
+  $cancelAttributes['class'][] = 'admin-action-button-middle-bg';
+
+  // A common class for all addedit form submit buttons and ajax enabled fields for showing expertusone throbber.
+  $cancelAttributes['class'][] = 'addedit-form-expertusone-throbber admin-bubble-close';
+  // Communicate the wrapper to javascript for showing the expertusone throbber via HTML data tag
+  // Also used by multiselect to show input as selected for only the current form
+  $cancelAttributes['data-wrapperid'] = array($wrapperId);
+
+  // A common class for all addedit form cancel button, for styling to appear as a link.
+  $cancelAttributes['class'][] = 'exp-addedit-form-cancel-button';
+  $cancelAttributes['class'][] = 'tags-close-button';
+  $cancelAttributes['onclick'] = '$(".active-qtip-div").remove(); return false;';
+  $prfixPgLeft = '';
+  $suffixPgRight = '';
+  if($theme_key == 'expertusoneV2'){
+  	$prfixPgLeft = '<div class="white-btn-bg-left"></div>';
+  	$suffixPgRight = '<div class="white-btn-bg-right"></div>';
+  	$cancelAttributes['class'][] = 'white-btn-bg-middle';
+  }
+  $form[$cancelButtonId] = array(
+    '#type' => 'submit',
+    '#prefix' => '<div class="addedit-form-cancel-and-certificate-done-actions-row certificate-btn-container">' .
+     			       '<div class="addedit-form-cancel-container-actions">' .$prfixPgLeft,
+    '#suffix' => $suffixPgRight,
+    '#value' => t('LBL123'),
+    '#attributes' => $cancelAttributes,
+  );
+
+  // Add the Save button
+  $ajaxCallbackSave = 'orderStatusChangeRepaintForm';
+
+  $saveAttributes['class'] = array('addedit-edit-' . $saveButtonId); // This class must be prefixed with 'addedit-edit-' followed by the form field id.
+
+  $saveAttributes['class'][] = 'admin-save-button-middle-bg';
+
+
+  // A common class for all addedit form submit buttons and ajax enabled fields for showing expertusone throbber.
+  $saveAttributes['class'][] = 'addedit-form-expertusone-throbber';
+  $saveAttributes['data-wrapperid'] = array($wrapperId);
+
+  $form[$saveButtonId] = array(
+    '#type' => 'submit',
+    '#prefix' => '<div class="admin-save-button-container"><div class="admin-save-button-left-bg  order-status-change-actions"></div>',
+    '#suffix' =>
+               '<div class="admin-save-button-right-bg"></div></div>' .
+               '<div class="clearBoth"></div></div>' .
+               '<div class="clearBoth"></div></div>',
+    '#value' =>  t('LBL725'), //Apply
+    '#name' => 'orderstatuschange',
+    '#attributes' => $saveAttributes,
+      '#ajax' => array(
+	      'wrapper' => $wrapperId,
+	      'callback' => $ajaxCallbackSave,
+        'triggerEvent' => 'hidden-save',
+	      'method' => 'replace',
+	      'effect' => 'none', // 'fade',
+	      'event'=>'click',
+	      'keypress' => true,
+	      'progress' => array(
+	        'type' => 'throbber',
+	        'message' => ''
+	      ),
+    	)
+  );
+
+  $form['addedit-left-col-end'] = array(
+    '#type' => 'markup',
+    '#markup' => '</div><div class="clearBoth"></div>',
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('orderAddEditFormWithCancelAndSaveClose', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/*
+ * orderStatusChangeRepaintForm() - After the form has been validated and saved, this function returns the form
+ *                            to the client for re-rendering.
+ */
+function orderStatusChangeRepaintForm($form, &$form_state) {
+	try {
+  $commands = array();
+  //$commands[] = ajax_command_replace(NULL, drupal_render($form));
+
+  // Show the status messages, if any.
+  // Ensure the status messages are auto removed after a brief while
+  $statusMsgHTML = theme('status_messages');
+  expDebug::dPrint(' $statusMsgHTML = ' . print_r($statusMsgHTML, true) , 4);
+  if (!empty($statusMsgHTML)) {
+  	// Show the messages
+    //$commands[] = ajax_command_prepend(NULL, $statusMsgHTML);
+    $commands[] = ajax_command_html('#show_expertus_message', $statusMsgHTML);
+  }
+
+  // Resize the modal backdrop, adjust the model top (and left) to optimal
+  //$commands[] = exp_ctools_modal_adjust();
+
+  // If a new entity was added or an existing entity was edited, inform ctools to refresh narrow search results no modal close.
+  if ($form_state['storage']['edited_entity'] == TRUE) {
+    $commands[] = ajax_command_refresh_narrow_search_onapply('immediate');
+  }
+
+  if (module_exists('exp_sp_esignature') && isActiveEsignRegion() && (!$form_state['esign_validation_status'])){
+    $custButtonId  = $form_state['triggering_element']['#ajax']['customButtonId'];
+    $drupalUserId  = $form_state['triggering_element']['#ajax']['drupalUserId'];
+    $drupalUserId  = $form_state['values'][$drupalUserId];
+    $esignObj  = '{"popupDiv":"modalContent","esignFor":"AddAdmin","drupalUserId":"'.$drupalUserId.'","esignButtId":"'.$custButtonId.'"}';
+    if($form_state['esign_show_popup'] == true){
+      $commands[] = ajax_command_invoke(NULL, 'getNewEsignPopup',array($esignObj));
+      $form_state['esign_show_popup']=false; // this is ignored, as form state is not saved after the ajax callback is executed
+    }
+  }
+
+  expDebug::dPrint(' $commands = ' . print_r($commands, true) , 4);
+
+  return array('#type' => 'ajax', '#commands' => $commands);
+  }catch (Exception $ex) {
+  	watchdog_exception('orderStatusChangeRepaintForm', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/*
+ * ajax_command_refresh_narrow_search_onapply() - Interface to a custom ajax command to refresh a jgrid.
+ */
+function ajax_command_refresh_narrow_search_onapply($refreshMode) {
+	try {
+  return array (
+    'command' => 'refresnarrowsearchonsubmit',
+    'js_object_selector' => '#root-admin',
+    'js_object' => 'narrowsearch',
+    'refreshMode' => $refreshMode,
+    'click_object' => '.qtip-close-button'
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('ajax_command_refresh_narrow_search_onapply', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/*
+ * exp_sp_administration_order_edit_form() -Form implementation for order edit
+ */
+function exp_sp_administration_order_view_form($js = NULL, $orderId = ''){
+	try {
+  include_once(drupal_get_path('module', 'exp_sp_administration_order') .'/exp_sp_administration_order.inc');
+  $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+  $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+  drupal_add_js(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration_addedit_behaviours.js', $js_module_optional);
+
+  // Default modalTheme is ExpertusCToolsModalTheme (see exp_sp_core_extend_ctools_ajax.js:Drupal.CTools.Modal.show())
+  $sample_style = array(
+   'ctools-admin-order_edit-style' => array(
+      'modalSize' => array(
+        'width' => 800,
+        'minHeight' => 400,
+       ),
+    )
+  );
+
+  drupal_add_js($sample_style, 'setting');
+
+  if ($js) {
+    // Prepare the arguments list to be passed to $formState['build_info']['args'] of each form
+    $argsList = array();
+
+    $orderTitle = '';
+    if (!empty($orderId)) {
+      $argsList[] = $orderId;
+      $orderTitle = 'Order';
+    }
+
+   // Prepare list of forms to be displayed in the modal
+    $formIdList = array(
+                        array('id' => 'exp_sp_administration_order_edit_form', 'title' => (t('LBL1025'))), //Order
+                       );
+
+    exp_ctools_modal_multi_ajaxonly_forms_display($formIdList, $argsList);
+  }
+  else {
+  	throw new Exception('exp_sp_administration_order_view_form() : nojs');
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_order_view_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+/**
+ * exp_sp_administration_order_edit_form() - Build the addedit form for order settings.
+ */
+function exp_sp_administration_order_edit_form($form, &$form_state, $renderMode, $orderId){
+	try {
+	global $theme_key;
+	$css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+	$css_module_optional = array('type' => 'file', 'group' => CSS_DEFAULT);
+  //drupal_add_css(drupal_get_path('module', 'uc_cart') . '/uc_cart.css',$css_theme_optional);
+  //drupal_add_css(drupal_get_path('module', 'exp_sp_commerce') .'/css/exp_sp_uc_cart.css', $css_theme_optional);
+  drupal_add_js(drupal_get_path('module', 'uc_cart') . '/uc_cart.js');
+  $showCancelSave = 1;
+  if (empty($form_state['storage'])) {
+    if(!empty($orderId) && empty($form_state['storage'])) {
+      $form_state['storage']['step'] = 'view';
+    } elseif(empty($orderId)  && empty($form_state['storage'])) {
+      $form_state['storage']['step'] = 'add';
+    }
+  }
+
+  if (!empty($form_state['fromtooltip'])) {
+    $fromToolTip = $form_state['fromtooltip'];
+    $fromToolTipClassId = $form_state['fromtooltipClassId'];
+  }
+  $form 		       = newAddEditFormWithCancelAndSave('order-basic-addedit-form');
+
+  $orderDetails     = array();
+  if (!empty($orderId)) {
+    $orderDetails = uc_order_load($orderId);
+    //for multi currency related work
+    //select * from slt_profile_list_items where code like '%cre_sys_crn_%' order by id desc;
+    $currency_symbol_arr = getCurrencySymbol($orderDetails->currency_type);
+    $_SESSION['order_edit_page_currency_sym'] = $currency_symbol_arr['attr2'];
+    $_SESSION['order_edit_page_currency_code'] = $orderDetails->currency_type;
+    expDebug::dPrint(' order_edit_page_currency_code = ' . print_r($_SESSION['order_edit_page_currency_code'], true) , 4);
+    expDebug::dPrint(' orderDetails = ' . print_r($orderDetails, true) , 4);
+  }
+  $form['mapped_order_id'] = array(
+    '#type' => 'hidden',
+    '#name' => 'mapped_order_id',
+    '#value' => $orderId
+  );
+
+  $form['lineitem_nid'] = array(
+  		'#type' => 'hidden',
+  		'#name' => 'lineitem_nid',
+  		'#value' => '',
+  );
+  $form['lineitem_enrid'] = array(
+  		'#type' => 'hidden',
+  		'#name' => 'lineitem_enrid',
+  		'#value' => '',
+  );
+
+  $form['order_detail_disp'] = array(
+  	'#type'       => 'markup',
+    '#markup'     => '<div id="order-basic-addedit-form-disp">',
+  );
+
+  $form['order_detail_wrapper'] = array(
+  	'#type'       => 'markup',
+    '#markup'     => '<div class="order-basic-addedit-form-container" id="order-basic-addedit-form-container">',
+  );
+  $commerceCls = ($theme_key == 'expertusoneV2') ? 'commerce-container-v2' : 'commerce-container' ;
+  $panes = _uc_checkout_pane_list();
+  expDebug::dPrint('$panes = ' . print_r($panes, true), 5);
+	foreach ($panes as $id => $pane) {
+		if (($id == 'billing' || $id == 'productorg') && $pane['enabled']) {
+	    $func = $pane['callback'];
+	    if (function_exists($func)) {
+	    	$return = $func('review', $orderDetails, NULL);
+	      if (!is_null($return)) {
+	      	$data[$pane['title']] = array('pane_callback' => $pane['callback'], 'pane_render' => 'exp_sp_admin_order', 'render_html' => $return);
+	      }
+	    }
+	  }
+	  /*if (($id == 'payment') && $pane['enabled']) {
+	    $func = $pane['callback'];
+	    if (function_exists($func)) {
+	    	$return = $func('review', $orderDetails, NULL);
+	      if (!is_null($return)) {
+	      	$dataPay[$pane['title']] = array('pane_callback' => $pane['callback'], 'render_html' => $return);
+	      }
+	    }
+	  }*/
+	}
+  $form['order_detail_userinfo'] = array(
+  	'#type'       => 'markup',
+    '#markup'     => '<div class="clearBoth"></div><div class="'.$commerceCls.' commerce-container-override">'.theme('uc_cart_checkout_exp_paymethod', array('panes' => $data)).'</div>',
+  );
+
+if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status
+       $sltCreatedOrderId  = db_query("SELECT id FROM slt_order WHERE uc_order_id = '".$orderId."' limit 1")->fetchField();
+       include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderinforms.inc');
+       $theme_str=getCustomAttributesForView($sltCreatedOrderId, 'cre_sys_obt_ord');   
+       $form['customattribute_order_detail_container_theme'] = array(
+        '#type'       => 'markup',
+        '#markup'     => $theme_str,
+      ); 
+ } //#custom_attribute_0078975 - End Check module status 
+
+  $form['order_detail_container'] = array(
+  	'#type'       => 'markup',
+    '#markup'     => '<div id="order-detail-container">',
+  );
+
+  $form['order_detail_order_id'] = array(
+  	'#type'     => 'item',
+    '#title'    => t('LBL884').':',
+    '#prefix'   => '<div class="clear two-column-container-view"><div class="first-col-container-view course-view-mode">',
+    '#markup'   => '<div class="first-col-value-view view-mode-field-value-txt" ><span title="'.$orderDetails->order_id.'" class="vtip">'.$orderDetails->order_id.'</span></div>',
+    '#suffix'   => '</div>',
+  );
+  $orderDate = date_create('@' . $orderDetails->created);
+  $orderedDate = date_format($orderDate, 'M d, Y');
+  $form['order_detail_order_date'] = array(
+		'#type'     => 'item',
+		'#title'    => t('LBL042').':',
+		'#prefix'   => '<div class="second-col-container-view">',
+		'#markup'   => '<div class="second-col-value-view view-mode-field-value-txt">'.$orderedDate.'</div>',
+		'#suffix'   => '</div><div class="clearBoth"></div></div>',
+	);
+  $orderStatus = uc_order_status_data($orderDetails->order_status, 'title');//getPaymentStatusName($orderDetails->order_status,'name');
+  if($orderStatus == 'Completed') {
+  	$orderStatus = 'Payment received';
+  }
+  $form['order_detail_order_status'] = array(
+		'#type'     => 'item',
+		'#title'    => t('LBL885').':',
+		'#prefix'   => '<div class="clearBoth two-column-container-view"><div class="first-col-container-view course-view-mode">',
+		'#markup'   => '<div class="first-col-value-view view-mode-field-value-txt" ><span title="'.t($orderStatus).'" class="vtip">'.t($orderStatus).'</span></div>',
+		'#suffix'   => '</div>',
+	);
+  $paymentMethodName = getPaymentMethodName($orderDetails->payment_method,'name');
+	/*$form['order_detail_order_paymethod'] = array(
+		'#type'     => 'item',
+		'#title'    => t('LBL548').':',
+		'#prefix'   => '<div class="second-col-container-view">',
+		'#markup'   => '<div class="second-col-value-view view-mode-field-value-txt">'.$paymentMethodName.'</div>',
+		'#suffix'   => '</div><div class="clearBoth"></div></div>',
+	);*/
+  $pmtMtdName = ($paymentMethodName == 'Zero Cost') ? 'N/A' : $paymentMethodName;
+	if(empty($orderDetails->uc_discounts_codes)){$div = "</div></div>";}else{$div = "";}
+	$form['order_detail_order_paymethod'] = array(
+			'#type'     => 'item',
+			'#title'    => t('LBL548').':',
+			'#prefix'   => '<div class="second-col-container-view">',
+			'#markup'   => '<div class="second-col-value-view view-mode-field-value-txt">'.t($pmtMtdName).'</div>',
+			'#suffix'   => '</div><div class="clearBoth">'.$div.'',
+	);
+	if($orderDetails->uc_discounts_codes){
+		$form['order_detail_order_discount'] = array(
+				'#type'     => 'item',
+				'#title'    => ucwords(t('LBL904')).':',
+				'#prefix'   => '<div class="second-col-container-view">',
+				'#markup'   => '<div class="second-col-value-view view-mode-field-value-txt">'.implode(", ",$orderDetails->uc_discounts_codes).'</div>',
+				'#suffix'   => '</div><div class="clearBoth"></div></div>',
+		);
+	}
+ if($orderDetails->payment_method == 'po'){
+ 	$titleAttributes['class'] = array();
+ 	$titleAttributes['class'][] = 'input-field-set ';
+ 	$form['order_detail_order_paymethod_detail'] = array(
+ 			'#type' => 'textfield',
+ 			'#title' => $paymentMethodName.':<span class="addedit-mandatory">*</span>',
+ 			'#prefix' => '<div class="clear two-column-container-view" style = "width: 99%"><div class="first-col-container-view course-view-mode" style = "width: 99%"><div class="first-col-value-view view-moe-field-value-txt" ><span title="orderPaymentDetail" class="orderpaymentdetailpo" class="vtip">',
+ 			'#suffix' => '</span></div></div></div>',
+ 			'#default_value' => $orderDetails->payment_details['po_number'],
+ 			'#size' => 32,
+ 			'#maxlength' => 128,
+ 			'#attributes' => $titleAttributes,
+ 	);
+ 	/*$form['order_detail_order_paymethod_detail'] = array(
+ 			'#type'     => 'item',
+ 			'#title'    => $paymentMethodName.':',
+ 			'#prefix'   => '<div class="clear two-column-container-view" style = "width: 99%"><div class="first-col-container-view course-view-mode" style = "width: 99%">',
+ 			'#markup'   => '<div class="first-col-value-view view-mode-field-value-txt" ><span title="orderPaymentDetail" class="orderpaymentdetailpo" class="vtip">'.$orderDetails->payment_details['po_number'].'</span></div>',
+ 			'#suffix'   => '</div></div>',
+ 	);*/
+ }
+
+	/*$sltOrderId = getSltOrderId($orderDetails->order_id);
+  $authCode = getCCAuthCode($sltOrderId);
+  $form['order_detail_order_authorizecode'] = array(
+		'#type'     => 'item',
+		'#title'    => t('LBL886').':',
+		'#prefix'   => '<div class="admin-course-class-long-description"><div class="addedit-new-field"><div class="addedit-course-field-title">',
+		'#markup'   => '</div><div class="addedit-new-field-value view-mode-field-value-txt">'.$authCode.'</div><div class="clearBoth"></div>',
+		'#suffix'   => '</div></div>',
+	);*/
+	$form['order_detail_container_end'] = array(
+		'#type'       => 'markup',
+		'#markup'     => '</div>',
+	);
+	$form['order_detail_lists'] = array(
+		'#type'       => 'markup',
+		'#markup'     => '<div class="clearBoth"></div><div class="'.$commerceCls.'">'.theme('clone_admin_order_update_table', array('order' => $orderDetails)).'</div>',
+	);
+  /*$form['order_detail_payinfo'] = array(
+  	'#type'       => 'markup',
+    '#markup'     => '<div class="clearBoth"></div><div class="commerce-container commerce-container-override">'.theme('exp_cart_order_exp_paymethod', array('panes' => $dataPay)).'</div>',
+  ); */
+  $comments = uc_order_comments_load($orderDetails->order_id);
+  $orderComments =  $comments[0]->message;
+  $form['order_detail_user_comment'] = array(
+		'#type'     => 'item',
+		'#title'    => t('User').' '.t('LBL1140').':', //User Comment
+		'#prefix'   => '<div class="admin-course-class-long-description"><div class="addedit-new-field"><div class="addedit-course-field-title">',
+		'#markup'   => '</div><div class="addedit-new-field-value view-mode-field-value-txt">'.sanitize_data($orderComments).'</div><div class="clearBoth"></div>',
+		'#suffix'   => '</div></div>',
+	);
+  $adminComments = admin_comments_load($orderDetails->order_id, $orderDetails->uid);
+  $orderAdminComments =  $adminComments[0]->message;
+  addOrderTextAreaFieldToAddEditForm($form, 'admin_comment', t('LBL1026'), $orderAdminComments, 1); //Admin Comment
+  $form['admin_comment_id'] = array(
+    '#type' => 'hidden',
+    '#name' => 'admin_comment_id',
+    '#value' => $adminComments[0]->comment_id
+  );
+	orderEditFormWithCancelAndSaveClose($form, 'order-basic-addedit-form-container', 'order-basic-save', 'order-basic-cancel', $orderId,'','',$fromToolTip,$fromToolTipClassId);
+
+  $form['order_detail_disp_end'] = array(
+ 		'#type'       => 'markup',
+    '#markup'     => '<div class="clearBoth"></div></div>',
+  );
+
+  $form['order_detail_wrapper_end'] = array(
+  	'#type'       => 'markup',
+    '#markup'     => '</div>',
+  );
+	//for multi currency related work
+	unset($_SESSION['order_edit_page_currency_code']);
+	session_destroy('order_edit_page_currency_code');
+	unset($_SESSION['order_edit_page_currency_sym']);
+	session_destroy('order_edit_page_currency_sym');
+  return $form;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_order_edit_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/*
+ * addOrderTextAreaFieldToAddEditForm() -  Use this function to add a text area to the addedit form
+ */
+function addOrderTextAreaFieldToAddEditForm(&$form, $id, $title = '', $defaultValue = '', $tabIndex = null, $mandatory = false, $readOnly = false) {
+	try {
+  // Prepare the additional HTML attributes for the textfield
+  $attributes = array();
+  $attributes['autocomplete'] = 'off'; // Prevent browser autocomplete
+
+  // We need to add a class selector for any jQuery as we cannot use id which gets appended by an incrementing number
+  // each time the form is re-built.
+  $attributes['class'] = array('addedit-edit-' . $id); // This class must be prefixed with 'addedit-edit-' followed by the form field id.
+
+  // Add class to apply common style to all text area fields.
+  //$attributes['class'][] = 'addedit-edit-textarea';
+
+  if ($readOnly) {
+    $attributes['class'][] = 'addedit-readonly-textfield';
+  }
+
+  if (isset($tabIndex) && $tabIndex > 0) {
+    $attributes['tabindex'] = $tabIndex;
+  }
+  //$attributes['data-default-text'] = t('LBL405');
+  // Create the form element
+  $form[$id] = array(
+    '#type' => 'textarea',
+    '#prefix' => addEditGetPrefix('FIELD', $title, $mandatory, ':' ,'order_no_label'),
+    '#suffix' => '</div><div class="clearBoth"></div></div>',
+    '#title' => $title,
+    '#title_display' => 'invisible',
+    '#default_value' => $defaultValue,
+    '#disabled' => $readOnly,
+    '#attributes' => $attributes,
+    '#rows'=>'1',
+    '#cols'=>'50',
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('addOrderTextAreaFieldToAddEditForm', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_administration_order_edit_form_validate($form, &$form_state){
+	try {
+  $form_state['hidden-save-submit'] = false;
+  $form_state['esign_show_popup'] = false;
+  expDebug::dPrint('$form_state[triggering_element][#name] = ' . $form_state['triggering_element']['#name'], 4);
+  expDebug::dPrint('$form_state[values] = ' . print_r($form_state['values'], true), 4);
+
+  if ($form_state['values']['op'] == t('LBL123')) {
+    $form_state['input'] = array(); // Clear user input - raw
+    $form_state['values'] = array(); // Clear user input - security cleared
+    $form_state['rebuild'] = TRUE; // Rebuild the form. Submit handler will not be called.
+    return;
+  }
+  if(isset($form_state['values']['order_detail_order_paymethod_detail'])){
+  	// Fetch the CC details from the $_POST directly.
+  	$po_number = $form_state['values']['order_detail_order_paymethod_detail'];
+  	expDebug::dPrint("soun input".$po_number,5);
+  	$po_number = str_replace(' ', '', $po_number);
+  	if (empty($po_number)) {
+  		form_set_error('order_detail_order_paymethod_detail',t('Purchase Order').t('ERR101'));
+  	}
+  }
+  $triggerElementByName  = $form_state['triggering_element']['#name'];
+
+  if ($form_state['triggering_element']['#name'] == 'save') {
+  	$form_state['esign_show_popup']= true;
+  }
+
+  if ($triggerElementByName == 'hidden-save' ) {
+    $form_state['hidden-save-submit']=true;
+    $form_state['esign_show_popup']= false;
+  }
+
+  if($form_state['triggering_element']['#name'] == 'pay_canceled' ||  $form_state['triggering_element']['#name'] == 'payment_received' ||  $form_state['triggering_element']['#name'] == 'pay_lineitem_canceled'){
+    $form_state['esign_show_popup']= true;
+  }
+
+  $form_state['esign_validation_status'] = false;
+  if(!($form_state['hidden-save-submit'])){
+    unset($_SESSION['esign_validate']);
+  }
+
+  //$form_state['esign_show_popup'] = false;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_order_edit_form_validate', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_administration_order_edit_form_submit($form, &$form_state) {
+	try {
+   expDebug::dPrint('exp_sp_administration_order_edit_form esign validate ' . $_SESSION['esign_validate'] , 4);
+   $chkValidation = 1;
+   expDebug::dPrint('exp_sp_administration_order_edit_form esign validate trigger ' .$form_state['triggering_element']['#name'] , 5);
+   $tempEsigndisable = 1;
+   if($form_state['triggering_element']['#name'] == 'pay_lineitem_canceled'){
+     $tempEsigndisable = 0;
+   }
+   if(module_exists('exp_sp_esignature') && isActiveEsignRegion() && $tempEsigndisable){
+     $chkValidation = 0;
+     if($form_state['hidden-save-submit']==true && $_SESSION['esign_validate'] ==  1){
+       $chkValidation = 1;
+       $form_state['storage']['submit_triggering_element'] = $form_state['storage']['triggering_button_element'];
+     }
+     else{
+       $form_state['storage']['triggering_button_element'] = $form_state['triggering_element']['#name'];
+     }
+   }
+   else{
+     $form_state['storage']['submit_triggering_element'] = $form_state['triggering_element']['#name'];
+   }
+   if($chkValidation){
+     $form_state['esign_validation_status'] = true;
+     $loggedInUserId = getIdOfLoggedInUser();
+     $showCommentMsg = 0;
+     if ($form_state['values']['admin_comment'] && !$form_state['values']['admin_comment_id']) {
+     	 global $user;
+       uc_order_comment_save($form_state['values']['mapped_order_id'], $user->uid, $form_state['values']['admin_comment']);
+       $showCommentMsg = 1;
+     }
+     else if($form_state['values']['admin_comment_id']){
+     	 adminOrderCommentUpdated($form_state['values']);
+     	 $showCommentMsg = 1;
+     }
+     $triggeredElement = $form_state['storage']['submit_triggering_element'];
+     if($triggeredElement == 'save' || $triggeredElement == 'payment_received'){
+     		updatePoNumber($form_state['values']['order_detail_order_paymethod_detail'],$form_state['values']['mapped_order_id']);
+     		$showCommentMsg = 1;
+     }
+     if($triggeredElement == 'save' && $showCommentMsg){
+     	drupal_set_message(t('MSG601').'.');
+     }
+     if($triggeredElement == 'payment_received' || $triggeredElement == 'pay_canceled'){
+	     $order_id      = $form_state['values']['mapped_order_id'];
+	     $updateUser = getIdOfLoggedInUser();
+	     if($order_id){
+			   $order = uc_order_load($order_id);
+			   $order_current_status = $order->order_status;
+			   $order_update_status  = ($triggeredElement == 'payment_received') ? 'payment_received' : 'canceled';
+			   if ($order_update_status != $order_current_status) {
+	         updateUserOrder($order_id, $order_update_status, $order_current_status, $updateUser);
+			   }
+	     }
+    }
+    if($triggeredElement == 'pay_lineitem_canceled'){
+      $nodeId = $form_state['input']['lineitem_nid'];
+      $enrId = $form_state['input']['lineitem_enrid'];
+      $ucOrderId = $form_state['input']['mapped_order_id'];
+      expDebug::dPrint('lineitem_nid = ' . print_r($form_state['input'], true), 4);
+      //Refund Logic Check
+      dropPolicyListItem($ucOrderId,$nodeId,$enrId);
+    }
+    $form_state['rebuild'] = TRUE;
+    $form_state['storage']['edited_entity'] = TRUE;
+    unset($_SESSION['esign_validate']);
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_order_edit_form_submit', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+/**
+ * Themes the checkout review order page.
+ *
+ * @param $panes
+ *   An associative array for each checkout pane that has information to add to
+ *   the review page.  The key is the pane's title and the value is either the
+ *   data returned for that pane or an array of returned data.
+ * @param $form
+ *   The HTML version of the form that by default includes the 'Back' and
+ *   'Submit order' buttons at the bottom of the review page.
+ *
+ * @return
+ *   A string of HTML for the page contents.
+ *
+ * @ingroup themeable
+ */
+function theme_exp_cart_order_exp_paymethod($variables) {
+	try {
+  $panes = $variables['panes'];
+  //drupal_add_css(drupal_get_path('module', 'uc_cart') . '/uc_cart.css');
+  drupal_add_js(drupal_get_path('module', 'uc_cart') . '/uc_cart.js');
+
+  $output = '';
+  foreach ($panes as $title => $data) {
+  	expDebug::dPrint('$title = ' . print_r($title, true), 5);
+  	expDebug::dPrint('$data = ' . print_r($data, true), 5);
+
+  	$pieces = explode(" ", $title);
+    $pieces =  strtolower($pieces[0]);
+    $output .= '<div class="payment-user-details-wrapper"><span class="cls-pay-hide" onclick="paymentHideShowBehaviors(this)"></span><div class="payment-user-details-info">';
+    $output .= '<table class="order-review-table">';
+    if($pieces != 'expertus') {
+	    $output .= '<tr class="pane-title-row"><td colspan="2">' . $title
+	              . '</td></tr>';
+    }
+    if (is_array($data['render_html'])) {
+      foreach ($data['render_html'] as $row) {
+        if (is_array($row)) {
+          if (isset($row['border'])) {
+            $border = ' class="row-border-' . $row['border'] . '"';
+          }
+          else {
+            $border = '';
+          }
+          if(stristr($row['title'],t('LBL827')) || stristr($row['title'],t('Tax'))){
+
+          }
+          else{
+          	$output .= '<tr class="paint-payment-list" valign="top"' . $border . '><td class="title-col" '
+                    . 'nowrap>' . $row['title'] . ':</td><td class="data-col">'
+                   . $row['data'] . '</td></tr>';
+          }
+        }
+        else {
+          $output .= '<tr valign="top"><td colspan="2">' . $row . '</td></tr>';
+        }
+      }
+    }
+    else {
+      $output .= '<tr valign="top"><td colspan="2">' . $data['render_html'] . '</td></tr>';
+    }
+    $output .= '</table></div></div>';
+  }
+  return $output;
+  }catch (Exception $ex) {
+  	watchdog_exception('theme_exp_cart_order_exp_paymethod', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/*
+ * orderEditFormWithCancelAndSaveClose()
+ */
+function orderEditFormWithCancelAndSaveClose(&$form, $wrapperId = 'addedit-form-wrapper', $saveButtonId = 'save-button', $cancelButtonId = 'cancel-button', $orderId) {
+	try {
+  global $theme_key;
+  expDebug::dPrint(' orderEditFormWithCancelAndSaveClose() called.');
+
+  $customHiddenButtonId = 'last-button-account';
+
+  $esignHiddenButt = 'esign-'.$wrapperId;
+
+  // Remove the temporary storage for API's to exchange information during form creation
+  unset($form['addedit_tmp_storage']);
+
+  // Add the Cancel button
+  $ajaxCallbackCancel = 'addEditCancelRepaintForm';
+  $cancelAttributes = array();
+  // We need to add a class selector for any jQuery as we cannot use id which gets appended by an incrementing number
+  // each time the form is re-built.
+  $cancelAttributes['class'] = array('addedit-edit-' . $cancelButtonId); // This class must be prefixed with 'addedit-edit-' followed by the form field id.
+
+  // For common styling of all addedit cancel buttons
+  //$cancelAttributes['class'][] = 'addedit-edit-cancel';
+
+  // Using this class to applying bg color to the save button
+  $cancelAttributes['class'][] = 'admin-action-button-middle-bg';
+
+  // A common class for all addedit form submit buttons and ajax enabled fields for showing expertusone throbber.
+  $cancelAttributes['class'][] = 'addedit-form-expertusone-throbber';
+  // Communicate the wrapper to javascript for showing the expertusone throbber via HTML data tag
+  $cancelAttributes['data-wrapperid'] = array($wrapperId);
+
+  // A common class for all addedit form cancel button, for styling to appear as a link.
+  $cancelAttributes['class'][] = 'exp-addedit-form-cancel-button';
+
+  $cancelAttributes['onclick'] = 'Drupal.CTools.Modal.dismiss(); return false;';
+  $cancelLabel  = t('LBL123'); // Close
+  $cancelAttributes['tabindex'][] = '2';
+
+  $prfixPgLeft = '';
+  $suffixPgRight = '';
+  if($theme_key == 'expertusoneV2'){
+  	$prfixPgLeft = '<div class="white-btn-bg-left"></div>';
+  	$suffixPgRight = '<div class="white-btn-bg-right"></div>';
+  	$cancelAttributes['class'][] = 'white-btn-bg-middle';
+  }
+  $form[$cancelButtonId] = array(
+    '#type' => 'submit',
+    '#prefix' => '<div class="addedit-form-cancel-and-save-actions-row">' .
+                 '<div class="addedit-form-cancel-container-actions">' . $prfixPgLeft,
+    '#suffix' => $suffixPgRight,
+    '#value' => $cancelLabel,
+    '#name' => $cancelLabel,
+    '#attributes' => $cancelAttributes
+  );
+
+  // Add the Save button
+  $ajaxCallbackSave = 'addEditRepaintForm';
+  $saveAttributes = array();
+
+  // We need to add a class selector for any jQuery as we cannot use id which gets appended by an incrementing number
+  // each time the form is re-built.
+  $saveAttributes['class'] = array('addedit-edit-' . $saveButtonId); // This class must be prefixed with 'addedit-edit-' followed by the form field id.
+
+  // Using this class to applying bg color to the save button
+  //$saveAttributes['class'][] = 'admin-save-button-middle-bg';
+  $saveAttributes['class'][] = 'edit-catalog-course-save-publish';
+
+  // A common class for all addedit form submit buttons and ajax enabled fields for showing expertusone throbber.
+  $saveAttributes['class'][] = 'addedit-form-expertusone-throbber';
+  // Communicate the wrapper to javascript for showing the expertusone throbber via HTML data tag
+  $saveAttributes['data-wrapperid'] = array($wrapperId);
+  $saveAttributes['tabindex'][] = '1';
+
+  $orderStatus     = '';
+  if (!empty($orderId)) {
+    $orderDetails = uc_order_load($orderId);
+    $orderStatus  = $orderDetails->order_status;
+  }
+  $showUL = 1;
+  $sltOrderId = getSltOrderId($orderDetails->order_id);
+  $compStsCount = getCancelStatusFromSltOrderId($sltOrderId);
+    if(($orderStatus == 'payment_received' && $compStsCount) || $orderStatus == 'canceled' || ($orderStatus == 'completed' && $compStsCount) || $orderStatus == 'processing' ){
+  	$showUL = 0;
+  }
+
+  $leftBg = '';
+  if($theme_key == 'expertusoneV2'){
+  	$leftBg = '<div class="admin-save-button-left-bg"></div>';
+  }
+  $savePublishPrefix = '<div class="admin-save-pub-unpub-button-container">' . $leftBg;
+  $savePublishSuffix = (($showUL) ? ('<span id="pub-unpub-action-btn" onclick="displayPubActionList()" class="pub-unpub-add-action-wrapper pub-unbpub-more-btn ">&nbsp;</span>') : '<div class="admin-save-button-right-bg"></div>' ).'</div>';     
+
+  $saveButtonId = 'catalog-course-save-publish';
+  $saveAttributes['data-wrapperid'] = array($wrapperId);
+  $saveAttributes['onclick'] = array();
+  $saveAttributes['tabindex'][] = '3';
+  $saveAttributes['class'] = array('addedit-edit-' . $saveButtonId);
+  $saveAttributes['class'][] = 'addedit-form-expertusone-throbber';
+  if($theme_key == 'expertusoneV2'){
+	  $saveAttributes['class'][] = 'admin-save-button-middle-bg';
+  }
+  else{
+	  $saveAttributes['class'][] = ($showUL) ? 'edit-catalog-course-save-publish' : 'pub-unpub-only-save-btn';
+	}
+  $form[$saveButtonId] = array(
+    '#type'   => 'submit',
+    '#id'     => $setButtonId,
+    '#prefix' => $savePublishPrefix,
+    '#suffix' => $savePublishSuffix,
+    '#value'  =>  t('LBL141'),
+    '#name'   => 'save',
+    '#attributes' => $saveAttributes,
+    '#ajax' => array(
+      'wrapper' => $wrapperId,
+      'callback' => $ajaxCallbackSave,
+      'customButtonId'=>$customHiddenButtonId,
+      'method' => 'replace',
+      'effect' => 'none', // 'fade',
+      'event'=>'click',
+      'keypress' => true,
+      'progress' => array(
+        'type' => 'throbber',
+        'message' => ''
+      ),
+    )
+  );
+
+
+  $saveButtonId = 'order_lineitem_cancelled';
+  $singleCanceledAttributes['onclick'] = array();
+  $singleCanceledAttributes['class'] = array('addedit-edit-' . $saveButtonId);
+  $singleCanceledAttributes['class'][] = 'addedit-form-expertusone-throbber';
+  $singleCanceledAttributes['data-wrapperid'] = array($wrapperId);
+  $form[$saveButtonId] = array(
+  		'#type' => 'submit',
+  		'#prefix' => '<span style="display:none;">',
+  		'#suffix' => '</span>',
+  		'#value' => 'lineitem_cancel',
+  		'#name' => 'pay_lineitem_canceled',
+  		'#attributes' => $singleCanceledAttributes,
+  		'#ajax' => array(
+  				'wrapper' => $wrapperId,
+  				'callback' => $ajaxCallbackSave,
+  				'customButtonId'=>$customHiddenButtonId,
+  				'method' => 'replace',
+  				'effect' => 'none', // 'fade',
+  				'event'=>'click',
+  				'keypress' => true,
+  				'progress' => array(
+  						'type' => 'throbber',
+  						'message' => ''
+  				),
+  		)
+  );
+
+
+
+  $form['addedit-button-group-ul-start'] = array(
+    '#type' => 'markup',
+    '#markup' => '<ul class="catalog-pub-add-list">',
+  );
+
+	if($orderStatus == 'pending'){
+    $saveButtonId = 'order_payment_received';
+    $payReceivedAttributes['onclick'] = array();
+    $payReceivedAttributes['class'] = array('addedit-edit-' . $saveButtonId);
+    $payReceivedAttributes['class'][] = 'addedit-form-expertusone-throbber';
+    $payReceivedAttributes['data-wrapperid'] = array($wrapperId);
+    $form[$saveButtonId] = array(
+  	  '#type' => 'submit',
+  	  '#prefix' => '<li class="save-pub-unpub-sub-menu">',
+  	  '#suffix' => '</li>',
+  	  '#value' => t('Payment received'),
+      '#name' => 'payment_received',
+  	  '#attributes' => $payReceivedAttributes,
+      '#ajax' => array(
+    	  'wrapper' => $wrapperId,
+    	  'callback' => $ajaxCallbackSave,
+        'customButtonId'=>$customHiddenButtonId,
+    	  'method' => 'replace',
+        'effect' => 'none', // 'fade',
+    	  'event'=>'click',
+    	  'keypress' => true,
+    	  'progress' => array(
+    	     'type' => 'throbber',
+    	     'message' => ''
+    	   ),
+       )
+  	);
+	}
+	/*
+	 * Todo When admin trying to cancel the confirmed order before that need to check the session status and attendance status for order line items
+	 * currently $canCancelled = 1;
+	 */
+  $canCancelled = 1;
+  if($orderStatus == 'payment_received' && $compStsCount){
+  	 $canCancelled = 0;
+  }
+	if($canCancelled){
+    $saveButtonId = 'order_cancelled';
+    $payCanceledAttributes['onclick'] = array();
+    $payCanceledAttributes['class'] = array('addedit-edit-' . $saveButtonId);
+    $payCanceledAttributes['class'][] = 'addedit-form-expertusone-throbber';
+    $payCanceledAttributes['data-wrapperid'] = array($wrapperId);
+    $form[$saveButtonId] = array(
+  	  '#type' => 'submit',
+  	  '#prefix' => '<li class="save-pub-unpub-sub-menu">',
+  	  '#suffix' => '</li>',
+  	  '#value' => t('LBL109'),
+      '#name' => 'pay_canceled',
+  	  '#attributes' => $payCanceledAttributes,
+      '#ajax' => array(
+    	  'wrapper' => $wrapperId,
+    	  'callback' => $ajaxCallbackSave,
+        'customButtonId'=>$customHiddenButtonId,
+    	  'method' => 'replace',
+        'effect' => 'none', // 'fade',
+    	  'event'=>'click',
+    	  'keypress' => true,
+    	  'progress' => array(
+    	     'type' => 'throbber',
+    	     'message' => ''
+    	   ),
+       )
+  	);
+	}
+
+	$form['addedit-button-group-ul-end'] = array(
+      '#type' => 'markup',
+      '#markup' => '</ul><div class="clearBoth"></div></div>' .
+	             '<div class="clearBoth"></div></div>',
+  );
+  unset($saveAttributes['tabindex']);
+  $saveAttributes['onclick'] = array();
+  $saveAttributes['onclick'][] = 'Drupal.ajax.prototype.commands.addEditHideMessages();';
+  $saveAttributes['onclick'][] = 'increasePopWidth();';
+  $form[$customHiddenButtonId] = array(
+	      '#type' => 'submit',
+	      '#value' => t('hidden-save'),
+	      '#name'	=> 'hidden-save',
+      	'#prefix' => '<span id = "esign-admin-div" style="display:none;">',
+	      '#suffix' => '</span>',
+	      '#id' =>$customHiddenButtonId,
+  		  '#attributes' => $saveAttributes,
+	      '#ajax' => array(
+		      'wrapper' => $wrapperId,
+		      'callback' => 'addEditRepaintForm',
+		      'method' => 'replace',
+		      'effect' => 'none', // 'fade',
+          'event'=>'click',
+		      'keypress' => true,
+		      'progress' => array(
+		        'type' => 'throbber',
+		        'message' => ''
+		      ),
+	    	)
+	      );
+
+
+  $form['addedit-left-col-end'] = array(
+    '#type' => 'markup',
+    '#markup' => '</div><div class="clearBoth"></div>',
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('orderEditFormWithCancelAndSaveClose', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+function userOrderCall(){
+	try {
+
+		$form_state = array(
+				'no_redirect'  => TRUE, // To confirm whether necessary
+				'build_info'   => array('args' => array('ajax')) // The form builder function expects the first argument to be ajax or nojs.
+		);
+
+		$formId                 = 'admin_order_user_form';
+		$builtForm              = drupal_build_form($formId, $form_state,$entityId,$entityType);
+		$renderedTabContentHTML = drupal_render($builtForm);
+		$drupalSettings         = getDrupalSettings();
+
+		$addUsersResponse = array(
+				'drupal_settings'     => $drupalSettings,
+				'render_content_main' => $renderedTabContentHTML,
+		);
+
+		return $renderedTabContentHTML;
+	} catch (Exception $ex) {
+		watchdog_exception('userOrderCall', $ex);
+		expertusErrorThrow($ex);
+	}
+
+}
+function ucDiscountModule($order, &$form, &$form_state){
+	try {
+	$panes = _uc_checkout_pane_list();
+	expDebug::dPrint('$panes ucdiscount' . print_r($panes, true), 4);
+
+	if(!empty($panes['uc_discounts'])){
+		$id = 'uc_discounts';
+		$pane = $panes['uc_discounts'];
+		if (($id == 'uc_discounts') && $pane['enabled']) {
+			//expDebug::dPrint('$panes = ucdiscount id' . print_r($pane, true), 5);
+			$return = $pane['callback']('view', $order, $form, $form_state);
+			//expDebug::dPrint('$panes = ucdiscount return' . print_r($return, true), 5);
+			// Add the pane if any display data is returned from the callback.
+
+			if (is_array($return) && (!empty($return['description']) || !empty($return['contents']))) {
+
+				// Create the fieldset for the pane.
+				$form['panes'][$id] = array(
+						'#type' => 'fieldset',
+						'#title' => $pane['title'],
+						'#description' => !empty($return['description']) ? $return['description'] : NULL,
+						'#collapsible' => $pane['collapsible'],
+						//'#collapsed' => variable_get('uc_use_next_buttons', FALSE) ? $collapsed : FALSE,
+						'#id' => $id . '-pane',
+						'#theme' => isset($return['theme']) ? $return['theme'] : NULL,
+				);
+
+				// Add the contents of the fieldset if any were returned.
+				if (!empty($return['contents'])) {
+					$codes_string = uc_discounts_order_codes_get($order->order_id);
+					$return['contents']['uc-discounts-codes']['#id']='uc-discounts-codes';
+					$return['contents']['uc-discounts-button']['#id']='uc-discounts-button';
+					$return['contents']['uc-discounts-codes']['#value'] = ($codes_string) ? $codes_string : t("MSG472");
+					$form['panes'][$id] = array_merge($form['panes'][$id], $return['contents']);
+
+				}
+				// Log that this pane was actually displayed.
+				$displayed[$id] = False;
+			}
+			return $form['panes'][$id];
+		}
+
+	}
+
+	expDebug::dPrint('$form[panes][$id] =sss ' . print_r($form['panes'][$id], true), 5);
+	}catch (Exception $ex) {
+		watchdog_exception('ucDiscountModule', $ex);
+		expertusErrorThrow($ex);
+	}
+
+}
+
+function admin_order_create_form($form, &$form_state) {
+	try {
+	// Clear The Previous Messages set In Drupal Set Message Queue. #0040110
+	 drupal_get_messages();
+	expDebug::dPrint('$form_state[storage] = ' . print_r($form_state['storage'], true), 5);
+	expDebug::dPrint('$form_state[values] = ' . print_r($form_state, true), 5);
+	global $user;
+	global $theme_key;
+	includeJqGridJsCss();
+	$js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+	drupal_add_js(drupal_get_path('module', 'exp_sp_administration_order') .'/exp_sp_administration_order.js',$js_module_optional);
+	drupal_add_js(drupal_get_path('module', 'uc_cart') . '/uc_cart.js');
+	drupal_add_js(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration_addedit_behaviours.js', $js_module_optional);
+	unset($_SESSION['do_exp_admin_paymethod']);
+	
+	if (isset($form_state['admin_order_id'])) {
+		$orderId = $form_state['admin_order_id'];
+	}
+	else if (isset($_SESSION['cart_admin_order'])) {
+		$orderId = $_SESSION['cart_admin_order'];
+	}
+  else {
+		$orderId = 0;
+	}
+	$order = NULL;
+	$orderUId = 0;
+	if($orderId)
+	{
+		$order = uc_order_load($orderId);
+		$orderUId = $order->uid;
+	}
+	if (is_null($order)) {
+        
+        if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status
+             unset($_SESSION['ses_default_cust_attr_arr']); //Unset session for custom attribute - Added by ganesh #custom_attribute_0078975
+        } //#custom_attribute_0078975 - End Check module status
+        
+		$order = new UcOrder();
+		if(isset($form_state['values']['panes']['billing']['billing_country'])){ //#0062043: After selecting the country from the drop down list,its respective states are not getting displayed
+			$order->billing_country = $form_state['values']['panes']['billing']['billing_country'];
+		}
+		$order->products = array();//uc_cart_get_contents();
+	}
+	else{
+		$order->products = admin_cart_get_contents($orderId);
+	}
+	$form = array();
+	$form['#prefix'] = '<div id="order_create_form_wrapper">'.userOrderCall();
+	$form['#suffix'] = '</div>';
+	// Add a class to the form so that we can apply custom style (margin, padding, etc).
+	$form['#attributes'] = array('class' => array('addedit-form'));
+	$form['#attributes']['autocomplete'] = 'off';
+	$form['#tree'] = TRUE; // Show full path of values (hierarchical values)
+
+	$form['#order'] = $order;
+	$form['order_id'] = array('#type' => 'hidden', '#value' => $orderId);
+	$form['order_uid'] = array('#type' => 'hidden', '#value' => $order->uid);
+	$form['form_removed_nid'] = array(
+			'#type' => 'hidden',
+			'#name' => 'form_removed_nid',
+			'#value' => '',
+	);
+	$form['checkout_from_admin'] = array('#type' => 'hidden', '#value' => 'admin_order');
+	expDebug::dPrint('$order = ' . print_r($order, true), 5);
+
+	$commerceCls = ($theme_key == 'expertusoneV2') ? 'commerce-container-v2' : 'commerce-container' ;
+	$form['order_create_container_start'] = array(
+		'#type'       => 'markup',
+		'#markup'     => '<div id="admin_order"><div id="uc-cart-checkout"><div id="uc-cart-checkout-form">',
+	);
+	$entityType  = 'admin-order';
+	/*$data= "{'entityId':'".$orderId."','entityType':'admin-order','url':'administration/create/user/order/".$orderId."/".$orderUId."','popupDispId':'admin_order_user_select','catalogVisibleId':'admin_order_render_user_select','qtipClass':'display-message-positioning','wBubble':'450','hBubble':'auto','tipPosition':'tipfaceMiddleRight','tipFrom':'addUserOrder'}";
+	$paintUserQtip = "<div id='admin_order_user_select'><a class=\"admin-order-qtip-select\" onclick=\"$('body').data('learningcore').getLeanerQtipDiv(".$data." ,this);\">+ ".t("LBL1192")."</a></div>";
+	$form['order_create_add_user'] = array(
+			'#type'       => 'markup',
+			'#markup'     => '<div id="add_user" class="admin-order-user-sel">'.$paintUserQtip.'</div>',
+	);*/
+	$form['panes'] = array('#tree' => TRUE);
+	$panes = _uc_checkout_pane_list();
+	expDebug::dPrint('$panes = ' . print_r($panes, true), 5);
+
+	/* // If the cart isn't shippable, remove panes with shippable == TRUE.
+	if (!uc_cart_is_shippable() && variable_get('uc_cart_delivery_not_shippable', TRUE)) {
+		$panes = uc_cart_filter_checkout_panes($panes, array('shippable' => TRUE));
+	} */
+
+	expDebug::dPrint('$panes after shippable panes removed = ' . print_r($panes, true), 5);
+
+  $id = 'productorg';
+  $pane = (!empty($panes[$id]) && $panes[$id]['enabled'])? $panes[$id] : null;
+	if (!empty($pane)) {
+		if (!isset($pane['collapsed'])) {
+			$collapsed = ($pane['prev'] === FALSE || empty($displayed[$pane['prev']])) ? FALSE : TRUE;
+		}
+		if (isset($form_state['expanded_panes']) && in_array($id, $form_state['expanded_panes'])) {
+			$collapsed = FALSE;
+		}
+		$return = $pane['callback']('shortview', $order, $form, $form_state);
+		// Add the pane if any display data is returned from the callback.
+		if (is_array($return) && (!empty($return['description']) || !empty($return['contents']))) {
+			// Create the fieldset for the pane.
+			$form['panes'][$id] = array(
+					'#type' => 'fieldset',
+					'#title' => $pane['title'],
+					'#description' => !empty($return['description']) ? $return['description'] : NULL,
+					'#collapsible' => $pane['collapsible'],
+					//'#collapsed' => variable_get('uc_use_next_buttons', FALSE) ? $collapsed : FALSE,
+					'#id' =>  $id.'-pane',
+					'#theme' => isset($return['theme']) ? $return['theme'] : NULL,
+			);
+			// Add the contents of the fieldset if any were returned.
+			if (!empty($return['contents'])) {
+				$form['panes'][$id] = array_merge($form['panes'][$id], $return['contents']);
+				expDebug::dPrint('$form[panes][$id]productorg = ' . print_r($return['contents'], true), 5);
+			}
+			// Log that this pane was actually displayed.
+			$displayed[$id] = TRUE;
+		}
+	}
+
+	$form['panes']['order_create_user_info_divider'] = array(
+			'#type'       => 'markup',
+			'#markup'     => '<div class="clearBoth"></div><div class="order-divider"></div>',
+	);
+
+  $id = 'billing';
+  $pane = (!empty($panes[$id]) && $panes[$id]['enabled'])? $panes[$id] : null;
+  if (!empty($pane)) {
+		$pane['callback'] = 'expertus_admin_order_pane_billing';
+		$return = $pane['callback']('view', $order, $form, $form_state,'create');
+		expDebug::dPrint('$form[panes][$id]'.$id. 'billing= details ' . print_r($return, true), 5);
+		$return['description'] = '<div class="cart_head">'.t('LBL555').'</div>'; //Billing Information
+		// Add the pane if any display data is returned from the callback.
+		if (is_array($return) && (!empty($return['description']) || !empty($return['contents']))) {
+			// Create the fieldset for the pane.
+			$form['panes'][$id] = array(
+					'#type' => 'fieldset',
+					'#title' => $pane['title'],
+					'#description' => !empty($return['description']) ? $return['description'] : NULL,
+					'#collapsible' => $pane['collapsible'],
+					//'#collapsed' => variable_get('uc_use_next_buttons', FALSE) ? $collapsed : FALSE,
+					'#id' => $id . '-pane',
+					'#theme' => isset($return['theme']) ? $return['theme'] : NULL,
+			);
+			// Add the contents of the fieldset if any were returned.
+			if (!empty($return['contents'])) {
+				$form['panes'][$id] = array_merge($form['panes'][$id], $return['contents']);
+				expDebug::dPrint('$form[panes][$id] billing= ' . print_r($form['panes'][$id], true), 5);
+			}
+			// Log that this pane was actually displayed.
+			$displayed[$id] = TRUE;
+		}
+	}
+
+    if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status
+         //To display the Custom attributes UI - Start Custom Attribute rendering  - Ganesh #custom_attribute_0078975
+          include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderinforms.inc');
+          renderCustomAttributeinBillingPane($form,$form_state,'billing');
+    } //#custom_attribute_0078975 - End Check module status  
+
+	if($theme_key == 'expertusoneV2') {
+		$form['panes']['order_bill_information_divider'] = array(
+				'#type'       => 'markup',
+				'#markup'     => '<div class="clearBoth"></div><div class="shoppingcart-hdr-v2"><div class="order-admin-header">'.t("LBL1249").'</div>',
+		);
+	}else{
+		$form['panes']['order_bill_information_divider'] = array(
+				'#type'       => 'markup',
+				'#markup'     => '<div class="clearBoth"></div><div class="admin-hdr"><div class="order-admin-header">'.t("LBL1249").'</div>',
+		);
+	}
+	//$data= "{'entityId':'".$orderId."','entityType':'admin-order','url':'administration/order/add/product/".$orderId."/".$orderUId."','popupDispId':'admin_order_product_select','catalogVisibleId':'admin_order_render_product_select','qtipClass':'display-message-positioning','wBubble':'700','hBubble':'auto','tipPosition':'tipfaceMiddleRight','tipFrom':'addProductOrder'}";
+	//$data = "#paintCatalogContentResults";
+	$paintProductQtip = "<div id='admin_order_product_select'><a class=\"use-ajax admin-order-qtip-select\"  href='?q=administration/order/add/product/".$orderId."/".$orderUId."'>
+	<span class='narrow-search-actionbar-orange-btnLeft'></span>
+<span class='narrow-search-actionbar-orange-btnBG' title=".t('LBL1121').">".t('LBL1121')."</span>
+<span class='narrow-search-actionbar-orange-btnRight'></span></a></div>";
+	$form['panes']['order_create_add_product'] = array(
+			'#type'       => 'markup',
+			'#markup'     => '<div id="add_product" class="admin-order-product-sel">'.$paintProductQtip.'</div></div>',
+	);
+	$form['panes']['order_create_divider_billing'] = array(
+		'#type'       => 'markup',
+		'#markup'     => '<div class="clearBoth"></div>',
+	);
+
+  $id = 'clone_cart';
+  $pane = (!empty($panes[$id]) && $panes[$id]['enabled'])? $panes[$id] : null;
+  if (!empty($pane)) {
+		$form_state['order_from'] = 'admin_clone_cart';
+		$return = $pane['callback']('view', $order, $form, $form_state);
+		// Add the pane if any display data is returned from the callback.
+		if (is_array($return) && (!empty($return['description']) || !empty($return['contents']))) {
+			// Create the fieldset for the pane.
+			$form['panes'][$id] = array(
+					'#type' => 'fieldset',
+					'#title' => $pane['title'],
+					'#description' => !empty($return['description']) ? $return['description'] : NULL,
+					'#collapsible' => $pane['collapsible'],
+					//'#collapsed' => variable_get('uc_use_next_buttons', FALSE) ? $collapsed : FALSE,
+					'#id' => $id . '-pane',
+					'#theme' => isset($return['theme']) ? $return['theme'] : NULL,
+			);
+			// Add the contents of the fieldset if any were returned.
+			if (!empty($return['contents'])) {
+				$form['panes'][$id] = array_merge($form['panes'][$id], $return['contents']);
+				$_SESSION['cartform'] = $form['panes'][$id]; 
+				expDebug::dPrint('$form[panes][$id] = ' . print_r($form['panes'][$id], true), 5);
+			}
+			// Log that this pane was actually displayed.
+			$displayed[$id] = TRUE;
+		}
+	}
+	/**
+	 * Payment method section pane (hide when callout is enable with api type)
+	 */
+	if (module_exists('exp_sp_callout') && calloutIsActive() &&  calloutEntityIsActive('cme_pmt') && calloutEntityMethod('cme_pmt') == 'api') {
+		unset($panes['payment']);
+	} else {
+		$id = 'payment';
+		$pane = (!empty($panes[$id]) && $panes[$id]['enabled'])? $panes[$id] : null;
+		if (!empty($pane)) {
+			$return = $pane['callback']('view', $order, $form, $form_state);
+			if($theme_key == 'expertusoneV2') {
+				$form['panes']['order_payment_inform_divider'] = array(
+						'#type'       => 'markup',
+						'#markup'     => '<div class="clearBoth"></div><div class="shoppingcart-hdr-v2"><div class="order-admin-header">'.t('LBL548').'</div></div>',
+				);
+			}else{
+				$form['panes']['order_payment_inform_divider'] = array(
+						'#type'       => 'markup',
+						'#markup'     => '<div class="clearBoth"></div><div class="admin-hdr"><div class="order-admin-header">'.t('LBL548').'</div></div>',
+				);
+			}
+			expDebug::dPrint('only with in the payment block print'.print_r($pane,true));
+			// Add the pane if any display data is returned from the callback.
+			if (is_array($return) && (!empty($return['description']) || !empty($return['contents']))) {
+				// Create the fieldset for the pane.
+				$form['panes'][$id] = array(
+						'#type' => 'fieldset',
+						'#title' => $pane['title'],
+						'#description' => !empty($return['description']) ? $return['description'] : NULL,
+						'#collapsible' => $pane['collapsible'],
+						//'#collapsed' => variable_get('uc_use_next_buttons', FALSE) ? $collapsed : FALSE,
+						'#id' => $id . '-pane',
+						'#theme' => isset($return['theme']) ? $return['theme'] : NULL,
+				);
+				// Add the contents of the fieldset if any were returned.
+				if (!empty($return['contents'])) {
+					$form['panes'][$id] = array_merge($form['panes'][$id], $return['contents']);
+					expDebug::dPrint('$form[panes][$id] = ' . print_r($form['panes'][$id], true), 5);
+				}
+				// Log that this pane was actually displayed.
+				$displayed[$id] = TRUE;
+			}
+		}
+	}
+	expDebug::dPrint('debug after order screen gets submitted'.print_r($panes,true));
+
+	if($orderId){
+		$contents = admin_cart_get_contents($orderId);
+		$form['cart_contents'] = array(
+			'#type' => 'hidden',
+			'#value' => serialize($contents),
+		);
+	}
+
+	if($theme_key == 'expertusoneV2') {
+		$saveLeftBg   = '<div class="white-btn-bg-left"></div>';
+		$saveRightBg  = '<div class="white-btn-bg-right"></div>';
+		$saveMiddleBg['class'][] = 'white-btn-bg-middle';
+		//$buttonmiddleBg =''
+		$backButton   = t('LBL212');
+		$saveMiddleBg['onclick'] = 'if(opener.location.href.indexOf("admincalendar")>=0)window.close();return false;';
+	}else{
+		$saveLeftBg    = '';
+		$saveRightBg   = '';
+		$saveMiddleBg  = 'admin-action-button-middle-bg';
+		$backButton   = '[ '.t('LBL212').' ]';
+	}
+
+	$form['actions'] = array('#type' => 'actions','#Class' => '', '#prefix' => '<div class="clearBoth"></div><div id="admincheckout-form-bottom">','#suffix' => '</div>');
+	$form['actions']['continue'] = array(
+			'#type' => 'submit',
+			'#name' => 'process',
+			'#value' => t('LBL986'),//Enter Payment Details
+			'#prefix' => '<div id="learner-admin-review-order" class="addedit-form-cancel-container-actions"><div class="admin-save-button-left-bg"></div>',
+			'#suffix' => '<div class="admin-save-button-right-bg"></div></div>',
+			'#attributes' => array('Class' => "admin-save-button-middle-bg"),
+			'#validate' => array('expertus_xss_validate_checkout','admin_order_checkout_form_validate_pre', 'admin_order_checkout_form_validate'),
+	);
+
+	$form['actions']['cancel'] = array(
+			'#type' => 'submit',
+			'#name' => 'cancel_order',
+			'#prefix' => '<div class="addedit-form-cancel-container-actions learner-shopping-cart-payment-cancel">'.$saveLeftBg,
+			'#suffix' => $saveRightBg.'</div>',
+			'#attributes' => $saveMiddleBg,
+			'#value' => t('LBL109'),
+			'#validate' => array(), // Disable validation to prevent a new order from being created.
+			'#limit_validation_errors' => array(),
+			'#submit' => array('admin_order_create_form_cancel'),
+	);
+
+	$saveButtonId = 'order_remove_cart';
+	$removeAttributes['onclick'] = array();
+	$removeAttributes['class'] = array('addedit-edit-' . $saveButtonId);
+	$removeAttributes['class'][] = 'addedit-form-expertusone-throbber';
+	$removeAttributes['data-wrapperid'] = array('order_create_form_wrapper');
+	$form[$saveButtonId] = array(
+			'#type' => 'submit',
+			'#prefix' => '<span style="display:none;">',
+			'#suffix' => '</span>',
+			'#value' => 'order_remove_cart',
+			'#name' => 'order_remove_cart',
+			'#attributes' => $removeAttributes,
+			'#ajax' => array(
+					'wrapper' => 'order_create_form_wrapper',
+					//'callback' => 'userCreateOrderCallBack',
+					'order_id' =>$entityId,
+					'entity_type' =>$entityType,
+					'method' => 'replace',
+					'effect' => 'none', // 'fade',
+					'event'=>'click',
+					'keypress' => true,
+					'progress' => array(
+							'type' => 'throbber',
+							'message' => ''
+					),
+			)
+	);
+
+	$form['order_create_container_end'] = array(
+			'#type'       => 'markup',
+			'#markup'     => '</div></div></div>',
+	);
+
+  return $form;
+  }catch (Exception $ex) {
+  	watchdog_exception('admin_order_create_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Returns the customer to catalog page on cancel from paymethod page
+ *
+ * @see uc_cart_checkout_form_cancel()
+ */
+function admin_order_create_form_cancel($form, &$form_state) {
+	try {
+	expDebug::dPrint('$_SESSION = ' . print_r($_SESSION, true), 5);
+	if (isset($_SESSION['cart_admin_order']) && intval($_SESSION['cart_admin_order']) > 0) {
+		uc_order_comment_save($_SESSION['cart_admin_order'], 0, t('Admin cancelled this order from the admin checkout form.'));
+		if($_SESSION['slt_admin_orderid']){
+			admin_order_reserved_cancel($_SESSION['slt_admin_orderid']);
+		}
+	}
+	unset($_SESSION['cart_admin_order']);
+	unset($_SESSION['slt_admin_orderid']);
+	unset($_SESSION['do_exp_admin_paymethod']);
+	$form_state['redirect'] = 'administration/commerce/order';
+	}catch (Exception $ex) {
+		watchdog_exception('admin_order_create_form_cancel', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+/**
+ * admin_order_payment_form_validate - Validate the order submit form whether comments has HTML tags or not
+*/
+
+function admin_order_payment_form_validate($form, &$form_state){
+	try{
+		expDebug::dPrint('expertus_xss_validate_checkout from order submit form...',1);
+		expertus_xss_validate_checkout($form, $form_state,1);
+	}catch (Exception $ex) {
+			watchdog_exception('admin_order_payment_form_validate', $ex);
+			expertusErrorThrow($ex);
+		}
+}
+
+/**
+ * expertus_xss_validate_checkout - Validate the order creation form and order submit form whether billing and payment, comments details has HTML tags or not
+ * - It is common for order creation form and submit form
+ */
+
+function expertus_xss_validate_checkout($form, &$form_state,$from_order_subit_form=0) {
+	try{
+
+		expDebug::dPrint('expertus_xss_validate_checkout ...'.$from_order_subit_form,1);
+		expDebug::dPrint('$form_state = ' . print_r($form_state['values'], true), 5);
+
+		$terms =array('(?i)<\s*applet','(?i)<\s*base','(?i)<\s*bgsound','(?i)<\s*big','(?i)<\s*blink','(?i)<\s*blockquote','(?i)<\s*br','(?i)<\s*caption','(?i)<\s*center','(?i)<
+				\s*cite','(?i)<\s*code','(?i)<\s*del','(?i)<\s*dir','(?i)<\s*div','(?i)<\s*embed','(?i)<\s*font',
+				'(?i)<\s*form','(?i)<\s*frame','(?i)<\s*frameset','(?i)<\s*h','(?i)<\s*head','(?i)<\s*hr','(?i)<\s*html','(?i)<\s*i','(?i)<\s*link','(?i)<\s*marquee','(?i)<
+				\s*menu','(?i)<\s*note','(?i)<\s*ol','(?i)<\s*p','(?i)<\s*param','(?i)<\s*pre','(?i)<\s*q','(?i)<\s*select','(?i)<\s*small','(?i)<\s*strike','(?i)<\s*stron
+				g','(?i)<\s*sub','(?i)<\s*table','(?i)<\s*tbody','(?i)<\s*td','(?i)<\s*textarea','(?i)<\s*th','(?i)<\s*thead','(?i)<\s*title','(?i)<\s*tr','(?i)<\s*ul','(?i)<\s*var',
+				'(?i)<\s*script','(?i)<\s*img','(?i)<\s*b','(?i)<\s*input','(?i)<\s*a','(?i)<\s*body','(?i)<\s*meta','(?i)<\s*iframe','(?i)<\s*\?');
+
+
+		$err_identified=0;
+
+		$result = array();
+        $html_val_arr=array();
+
+        if($from_order_subit_form!='1'){  //check billing and payment details in order creation form
+	        $html_var_arr[0]=$form_state['values']['panes']['billing']; //Check billing panel
+
+	        if($form_state['values']['panes']['payment']['payment_method']=="po" || $form_state['values']['panes']['payment']['payment_method']=="credit"){
+	        	$html_var_arr[1]=$form_state['values']['panes']['payment']['details']; //Check payment panel
+	        }
+        }else{ //check comments from order submit form
+        	$html_var_arr[0]=$form_state['values']['panes']['comments']; //Check comments panel
+        }
+
+		if(count($html_var_arr)>0){
+
+			foreach($html_var_arr as $html_var_key=>$html_var_res){
+
+				foreach($html_var_res as $key=>$data){
+					if(is_array($data) or is_object($data)) continue;
+					foreach($terms as $term){
+						if(!count($result)){
+							$result = preg_filter('~' . $term . '~','$0', $data);
+						}else{
+							break;
+						}
+					}
+					if(count($result)){
+						$err_identified++;
+						unset($result);
+						break;
+					}
+
+				}
+				if($err_identified>0){
+					break;
+				}
+
+			}
+			expDebug::dPrint('HTML tag identified in Order = ' . $err_identified, 1);
+		}
+
+		if($err_identified>0){
+			form_set_error('',  t('LBL1273'));
+			$form_state["storage"]["form_validate"] = false;
+			if(module_exists('exp_sp_esignature')){
+				$form_state['esign_show_popup']= false;
+			}
+		}
+
+	}catch (Exception $ex) {
+		watchdog_exception('expertus_xss_validate_checkout', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+
+/**
+ * Form validation for uc_cart_checkout_form().
+ *
+ */
+function admin_order_checkout_form_validate_pre($form, &$form_state) {
+	try {
+	expDebug::dPrint('admin_order_checkout_form_validate_pre' . print_r($form_state, true), 5);
+	//If order session is empty the page is redirect to home page
+	if (empty($_SESSION['cart_admin_order'])) {
+		expDebug::dPrint('order screen checkout validation 1111',1);
+        if(!module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status
+          // drupal_goto('administration/order/create'); //Tmp Comment - Making billing validation common
+        } //#custom_attribute_0078975 - End Check module status 
+	}
+	else{
+		$order = uc_order_load($_SESSION['cart_admin_order']);
+		expDebug::dPrint('checking the session values'.print_r($_SESSION['cart_admin_order'],true));
+		expDebug::dPrint('order screen checkout validation 2222'.print_r($order,true));
+		$orderTotal = uc_order_get_total($order, TRUE);
+		expDebug::dPrint('checking the total order value'.print_r($orderTotal,true));
+		if (!empty($form_state['input']['panes']['billing']['billing_postal_code']) && preg_match('#[^a-zA-Z0-9]#', $form_state['input']['panes']['billing']['billing_postal_code'])) {
+			form_set_error('panes][billing][billing_postal_code',t('ERR071').' '.t('LBL562'));
+		}
+    } 
+        
+       if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status
+                // Validate custom fields
+                include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderinforms.inc');
+                validateCustomAttributesInAddEditForm($form, $form_state,'cre_sys_obt_ord');    
+                
+               // Set custom attribute form set values in session - Ganesh
+                storeCustomAttributeFormValuesinSession($form, $form_state);  
+                
+		if(!$orderTotal){
+			form_set_error('',t('Select training details'));
+                    //drupal_goto('administration/order/create');#custom_attribute_0078975
+		}
+        }else{ //if not enable the custom attribute - #custom_attribute_0078975
+              if(!$orderTotal){
+                form_set_error('',t('Select training details'));
+                //drupal_goto('administration/order/create');#custom_attribute_0078975 //Tmp Comment - Making billing validation common
+	}
+        } 
+         
+	}catch (Exception $ex) {
+		watchdog_exception('admin_order_checkout_form_validate_pre', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function admin_order_create_form_validate($form, &$form_state) {
+	try {
+	expDebug::dPrint('checking which one is the first function to get triggered',1);
+	$trigger_element = $form_state['triggering_element']['#name'];
+
+	$orderId = $_SESSION['cart_admin_order'];
+
+	/* if (empty($orderId)) {
+		drupal_goto('');
+	}
+	else{
+		$order = uc_order_load($orderId);
+		$orderTotal = uc_order_get_total($order, TRUE);
+		if(!$orderTotal){
+			drupal_goto('administration/order/create');
+		}
+	} */
+
+	unset($_SESSION['admin_checkout_validation_failed']);
+	$form_state['admin_checkout_pay_valid'] = TRUE;
+
+	$order = uc_order_load($orderId);
+
+	/* db_delete('uc_order_products')
+	 ->condition('order_id', $order->order_id)
+	->execute();
+
+	$order->products = unserialize($form_state['values']['cart_contents']); */
+
+	$order->order_total = uc_order_get_total($order, TRUE);
+
+	// Validate/process the cart panes.  A FALSE value results in failed checkout.
+	//$form_state['admin_checkout_pay_valid'] = TRUE;
+	foreach (element_children($form_state['values']['panes']) as $pane_id) {
+		if($pane_id == 'billing'){
+			expDebug::dPrint('form id values in validate'.$pane_id,1);
+			$func = _uc_checkout_pane_data($pane_id, 'callback');
+			expDebug::dPrint('admin_order_payment_form_validate order call func = ' . print_r($func, true), 5);
+			if (is_string($func) && function_exists($func)) {
+				$isvalid = $func('process', $order, $form, $form_state);
+				if ($isvalid === FALSE) {
+					expDebug::dPrint('checking in the validation'.print_r($isvalid,true));
+					$form_state['expanded_panes'][] = $pane_id;
+					$form_state['admin_checkout_pay_valid'] = FALSE;
+				}
+			}
+		}
+	}
+
+	//$order->line_items = uc_order_load_line_items($order, TRUE);
+	//$order->line_items = array_merge($order->line_items, uc_order_load_line_items($order, FALSE));
+	//usort($order->line_items, 'uc_weight_sort');
+
+	$formErrors = form_get_errors();
+	expDebug::dPrint('$formErrors = ' . print_r($formErrors, true).'$trigger_element'.$trigger_element, 5);
+	 if($trigger_element != 'order_remove_cart'){
+	 	$formErrors = '';
+		if ($form_state['admin_checkout_pay_valid'] == FALSE || !empty($formErrors)) {
+			$form_state['admin_checkout_pay_valid'] = FALSE; // is read by exp_sp_cybersource_tax.module hook_uc_order()
+		}
+	}
+
+	//expDebug::dPrint('admin_order_payment_form_validate order save $order = ' . print_r($order, true), 5);
+	//uc_order_save($order);
+	//unset($_SESSION['admin_cybersourceTaxError']);
+
+	/* if($trigger_element == 'checkout_submit'){
+		expDebug::dPrint('$_SESSION[admin_cybersourceTaxError] = ' . $_SESSION['admin_cybersourceTaxError'], 5);
+	if(isset($_SESSION['admin_cybersourceTaxError'])) {
+	form_set_error('tax_error', $_SESSION['admin_cybersourceTaxError']);
+	}
+	//unset($_SESSION['admin_cybersourceTaxError']);
+	} */
+	}catch (Exception $ex) {
+		watchdog_exception('admin_order_create_form_validate', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+/**
+ * Form validation for uc_cart_checkout_form().
+ *
+ * @see uc_cart_checkout_form()
+ * @see uc_cart_checkout_form_submit()
+ */
+function admin_order_checkout_form_validate(&$form, &$form_state) {
+	try {
+	unset($_SESSION['admin_checkout_validation_failed']);
+
+	global $user;
+
+	$orderId = $_SESSION['cart_admin_order'];
+
+  $order = uc_order_load($orderId);
+
+	/* db_delete('uc_order_products')
+	->condition('order_id', $order->order_id)
+	->execute();
+
+	$order->products = unserialize($form_state['values']['cart_contents']); */
+
+	$form_state['checkout_valid'] = TRUE;
+	$form_state['admin_checkout_pay_valid'] = TRUE;
+
+	$order->order_total = uc_order_get_total($order, TRUE);
+	$discount = get_discounts_for_order($order);
+	foreach($discount as $disc){
+		$totDisc += $disc->amount;
+	}
+//	$totalVal = $order->order_total - $totDisc;
+	if($order->order_total <= $totDisc){
+		foreach (element_children($form_state['values']['panes']) as $pane_id) {
+			expDebug::dPrint('order values of $pane_id'.print_r($pane_id,true),4);
+			if($pane_id == 'billing'){
+			$func = _uc_checkout_pane_data($pane_id, 'callback');
+			expDebug::dPrint('order details for dev'.print_r($order,true),4);
+			if (is_string($func) && function_exists($func)) {
+				$isvalid = $func('process', $order, $form, $form_state);
+				expDebug::dPrint('checking values for the total error'.print_r($func,true),4);
+				if ($isvalid === FALSE) {
+					$form_state['expanded_panes'][] = $pane_id;
+					$form_state['checkout_valid'] = FALSE;
+					$form_state['admin_checkout_pay_valid'] = FALSE;
+				}
+			}
+			}
+		}
+		$_SESSION['do_admin_complete'] = TRUE;
+		///drupal_goto('administration/order/pay');
+	}else{
+		// Validate/process the cart panes.  A FALSE value results in failed checkout.
+		foreach (element_children($form_state['values']['panes']) as $pane_id) {
+			expDebug::dPrint('order values of $pane_id'.print_r($pane_id,true),4);
+			$func = _uc_checkout_pane_data($pane_id, 'callback');
+			expDebug::dPrint('order details for dev'.print_r($order,true),4);
+			if (is_string($func) && function_exists($func)) {
+				$isvalid = $func('process', $order, $form, $form_state);
+				expDebug::dPrint('checking values for the total error'.print_r($func,true),4);
+				if ($isvalid === FALSE) {
+					$form_state['expanded_panes'][] = $pane_id;
+					$form_state['checkout_valid'] = FALSE;
+					$form_state['admin_checkout_pay_valid'] = FALSE;
+				}
+			}
+		}
+	}
+
+	$order->line_items = uc_order_load_line_items($order, TRUE);
+	$order->line_items = array_merge($order->line_items, uc_order_load_line_items($order, FALSE));
+	usort($order->line_items, 'uc_weight_sort');
+
+	$formErrors = form_get_errors();
+	expDebug::dPrint('$formErrors = ' . print_r($formErrors, true), 5);
+	if ($form_state['checkout_valid'] == FALSE || !empty($formErrors)) {
+		$_SESSION['admin_checkout_validation_failed'] = TRUE; // is read by exp_sp_cybersource_tax.module hook_uc_order()
+	}
+	if ($form_state['admin_checkout_pay_valid'] == FALSE || !empty($formErrors)) {
+		$form_state['admin_checkout_pay_valid'] = FALSE; // is read by exp_sp_cybersource_tax.module hook_uc_order()
+	}
+
+	expDebug::dPrint('admin_order_checkout_form_validate $order = ' . print_r($order, true), 5);
+	//unset for tax ajax call
+/* 	if(variable_get('exp_cybersource_soap_tax_calculate', FALSE)){
+		$order->billing_postal_code = '';
+	} */
+	uc_order_save($order);
+	if(isset($_SESSION['cartform']) && form_get_errors()){
+ 		$form['panes']['clone_cart'] = $_SESSION['cartform'];
+	}
+
+	}catch (Exception $ex) {
+		watchdog_exception('admin_order_checkout_form_validate', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function admin_order_create_form_submit($form, &$form_state) {
+	try {
+
+	expDebug::dPrint("admin_order_create_form_submit form_state: dfsfsf ".print_r($form_state,true) , 5);
+	expDebug::dPrint("admin_order_create_form_submit trigger: ".print_r($form_state['triggering_element']['#name'],true) , 5);
+	if($form_state['triggering_element']['#name'] == 'order_remove_cart'){
+        if(module_exists('exp_sp_administration_customattribute')){  //#custom_attribute_0078975 - Check module status/Set custom attribute form set values in session
+                include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderinforms.inc');
+                storeCustomAttributeFormValuesinSession($form, $form_state);  
+        } //#custom_attribute_0078975 - End Check module status
+		$removeNID = $form_state['input']['form_removed_nid'];
+		$orderId   = $form_state['values']['order_id'];
+		$drupalUId = $form_state['values']['order_uid'];
+		if($removeNID && $orderId){
+			$select = db_select('uc_order_products', 'uccart');
+			$select->addField('uccart','order_product_id');
+			$select->condition('uccart.order_id',$orderId,'=');
+			$select->condition('uccart.nid',$removeNID);
+			$select->range(0,1);
+			$order_product_id = $select->execute()->fetchField();
+		}
+		if($order_product_id){
+		  expertus_admin_order_item_object($removeNID, $orderId, $drupalUId);
+		  uc_order_product_delete($order_product_id);
+
+		  // Getting from uc_order_edit_form_submit
+		  $order = uc_order_load($orderId);
+		  $log = array();
+
+		  $order->products 			= admin_cart_get_contents($orderId,'rebuild');
+
+		  //Auto update of discount
+		  if($_SESSION['availableFunctionalities']->uc_discounts){
+		  	autoUpdateAdminDiscount($order);
+		  }
+
+  	  // Load line items again, since some may have been updated by the form.
+		  $order->line_items = uc_order_load_line_items($order, TRUE);
+
+		  // Merge it with the defaultish line items.
+		  $order->line_items = array_merge($order->line_items, uc_order_load_line_items($order, FALSE));
+		  usort($order->line_items, 'uc_weight_sort');
+
+		  uc_order_log_changes($order->order_id, $log);
+
+		  field_attach_submit('uc_order', $order, $form, $form_state);
+
+		  uc_order_save($order);
+		}
+	}
+	else if($form_state['triggering_element']['#name'] == 'process'){
+		unset($_SESSION['do_exp_admin_paymethod']);
+		if (empty($_SESSION['cart_admin_order'])) {
+			$payment_type = $form_state['input']['panes']['payment']['payment_method'];
+			expDebug::dPrint("cart admin order session expired in admin_order_create_form_submit",1);
+			insertPaymentErrorLog(null,$payment_type,'Cart admin order session expired','admin_order_create_form_submit'); 
+			drupal_goto('');
+		}
+		else{
+			$order = uc_order_load($_SESSION['cart_admin_order']);
+
+			$orderTotal = uc_order_get_total($order, TRUE);
+			$discount = get_discounts_for_order($order);
+
+			foreach($discount as $disc){
+
+				$totDisc += $disc->amount;
+			}
+			//$totalVal = $order->order_total - $totDisc;
+			if(!$orderTotal || $form_state['checkout_valid'] === FALSE || $form_state['admin_checkout_pay_valid'] === FALSE){
+				$url = 'administration/order/create';
+			}
+			else {
+				$order 								= uc_order_load($form_state['values']['order_id']);
+				$order->products 			= admin_cart_get_contents($form_state['values']['order_id'],'rebuild');
+				$order->order_total 	= uc_order_get_total($order, TRUE);
+				$order->order_total 	= ($order->order_total <= $totDisc) ? 0 : $order->order_total;
+				$order->line_items 		= uc_order_load_line_items($order, TRUE);
+				$order->line_items 		= array_merge($order->line_items, uc_order_load_line_items($order, FALSE));
+				usort($order->line_items, 'uc_weight_sort');
+				expDebug::dPrint('admin_order_tax_calculate line item '. print_r($order,true),5);
+				if($order->order_total <= $totDisc){
+					$_SESSION['do_admin_complete'] = TRUE;
+					if($_SESSION['availableFunctionalities']->uc_discounts){
+						$order->payment_method = '';
+						autoUpdateAdminDiscount($order);
+						uc_discounts_uc_order('submit', $order, NULL);
+						$order->payment_method = '';
+					}
+					uc_order_save($order);
+					drupal_goto('administration/order/finish');
+					$url = 'administration/order/finish';
+				}else{
+				$url = 'administration/order/pay';
+				$_SESSION['do_exp_admin_paymethod'] = TRUE;
+			}
+		}
+		}
+
+		unset($form_state['checkout_valid']);
+
+		$form_state['redirect'] = $url;
+	}
+	}catch (Exception $ex) {
+		watchdog_exception('admin_order_create_form_submit', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+/**
+ * Updates the quantity of all the items in a cart object
+ */
+function expertus_admin_order_item_object($removeNID, $orderId, $drupalUId) {
+	try {
+	    $loggedInUserId= getIdOfLoggedInUser();
+	if($removeNID) {
+	  //For Cancel the reserved status in Enrollment
+		$updateUserId = getSltpersonUserId();
+		$lmsUserId 		= 0;
+		if($drupalUId){
+			$lmsUserId  = getUserIdFromDrupalUid($drupalUId);
+		}
+		$result = getCatalogInfofromNodeId($removeNID);
+		$courseId = $result->CourseId;
+		$classId  = $result->ClassId;
+		$delivery_type = $result->DeliveryTypeId;
+		if($delivery_type == 'cre_sys_obt_cur' || $delivery_type == 'cre_sys_obt_trn' || $delivery_type == 'cre_sys_obt_crt'  ){
+		     
+		    //expDebug::dPrint('inside the loop');
+		    $select=db_select('slt_order_items','it');
+		    $sel->addField('it','id','id');
+		    $select->addField('it','order_id','p5');
+		    $select->addField('it','class_id','p4');
+		    $select->addField('it','course_id','p3');
+		    $select->addField('it','program_id','p2');
+		    $select->addField('it','user_id','p1');
+		    $select->condition('it','order_id', $_SESSION['slt_admin_orderid']);
+		    $select->condition('it','program_id', $classId);
+		    $select->condition('it','user_id', $lmsUserId);
+		    $select1=$select->execute()->fetchAll();
+		    
+		    expDebug::dPrint("order id : ".print_r($sel1,true),1);
+		    
+			//Delete order items
+			db_delete('slt_order_items')
+			->condition('order_id', $_SESSION['slt_admin_orderid'])
+			->condition('program_id', $classId)
+			->condition('user_id', $lmsUserId)
+			->execute();
+
+			foreach ($select1 as $val)
+			{
+			    $fields= array(
+			            'table_name' => 'slt_order_items',
+			            'entity_id' => $val->id,
+			            'entity_type' => 'order_item',
+			            'parent1_entity_id' => $val->p1,
+			            'parent1_entity_type' => 'user_id',
+			            'parent2_entity_id' => $val->p2,
+			            'parent2_entity_type' => 'program_id',
+			            'parent3_entity_id' => $val->p3,
+			            'parent3_entity_type' => 'course_id',
+			            'parent4_entity_id' => $val->p4,
+			            'parent4_entity_type' => 'class_id',
+			            'parent5_entity_id' => $val->p5,
+			            'parent5_entity_type' => 'order_id',
+			            'module_name' => 'exp_sp_administration_order',
+			            'functionality_name' => 'expertus_admin_order_item_object',
+			            'api_name' => $_REQUEST['apiname'],
+			            'deleted_on' => now(),
+			            'deleted_by' => $loggedInUserId,
+			    
+			    );
+			    deleted_log_entry($fields);
+			}
+			$masterEnrollId  = db_query("SELECT id FROM slt_master_enrollment WHERE program_id='".$classId."' AND overall_status='lrn_tpm_ovr_rsv' AND user_id='".$lmsUserId."' limit 1")->fetchField();
+			//Update slt_master_enroll
+			$updateEnr = db_update('slt_master_enrollment');
+			$updateEnr->fields(array(
+					'overall_status'=> 'lrn_tpm_ovr_rsc',
+					'comp_date'		=> NULL,
+					'updated_by'    => $updateUserId,
+					'updated_on'    => now()
+			));
+			$updateEnr->condition('id', $masterEnrollId);
+			$updateEnr->execute();
+
+			$resultEnr = db_query("SELECT id FROM slt_enrollment WHERE master_enrollment_id='".$masterEnrollId."' AND reg_status='lrn_crs_reg_rsv' AND user_id='".$lmsUserId."' AND order_id='".$_SESSION['slt_admin_orderid']."'");
+			foreach ($resultEnr as $row) {
+				$cartUpdate = "call slp_enrollment_del('".$row->id."', 'lrn_crs_reg_rsc','".$updateUserId."')";
+				expDebug::dPrint("Enroll order update to reseved cancel in cart module when User update cart: ".$cartUpdate,1);
+				db_query($cartUpdate);
+			}
+		}
+		else{
+		    
+		    $select=db_select('slt_order_items','it');
+		    $sel->addField('it','id','id');
+		    $select->addField('it','order_id','p5');
+		    $select->addField('it','class_id','p4');
+		    $select->addField('it','course_id','p3');
+		    $select->addField('it','program_id','p2');
+		    $select->addField('it','user_id','p1');
+		    $select->condition('it','order_id', $_SESSION['slt_admin_orderid']);
+		    $select->condition('it','program_id', $classId);
+		    $select->condition('it','user_id', $lmsUserId);
+		    $select1=$select->execute()->fetchAll();
+		    
+		    expDebug::dPrint("order id else: ".print_r($select1,true),1);
+
+			//Delete order items
+			db_delete('slt_order_items')
+			->condition('order_id', $_SESSION['slt_admin_orderid'])
+			->condition('class_id', $classId)
+			->condition('user_id', $lmsUserId)
+			->execute();
+
+			foreach ($select1 as $val)
+			{
+			    $fields= array(
+			            'table_name' => 'slt_order_items',
+			            'entity_id' => $val->id,
+			            'entity_type' => 'order_item',
+			            'parent1_entity_id' => $val->p1,
+			            'parent1_entity_type' => 'user_id',
+			            'parent2_entity_id' => $val->p2,
+			            'parent2_entity_type' => 'program_id',
+			            'parent3_entity_id' => $val->p3,
+			            'parent3_entity_type' => 'course_id',
+			            'parent4_entity_id' => $val->p4,
+			            'parent4_entity_type' => 'class_id',
+			            'parent5_entity_id' => $val->p5,
+			            'parent5_entity_type' => 'order_id',
+			            'module_name' => 'exp_sp_administration_order',
+			            'functionality_name' => 'expertus_admin_order_item_object',
+			            'api_name' => $_REQUEST['apiname'],
+			            'deleted_on' => now(),
+			            'deleted_by' => $loggedInUserId,
+			             
+			    );
+			    deleted_log_entry($fields);
+			}
+			//$lms_order_id  = db_query("SELECT order_id FROM slt_enrollment WHERE course_id= '".$courseId."' AND class_id='".$classId."' AND reg_status='lrn_crs_reg_rsv' AND user_id='".$lmsUserId."'")->fetchField();
+			$enrollId  = db_query("SELECT id FROM slt_enrollment WHERE master_enrollment_id is NULL AND course_id= '".$courseId."' AND class_id='".$classId."' AND reg_status='lrn_crs_reg_rsv' AND user_id='".$lmsUserId."'")->fetchField();
+			if($enrollId){
+				//$cartUpdate = "call slp_cartenrollmentcancel_upd('".$lms_order_id."','".$courseId."','".$classId."','','lrn_crs_reg_rsc', 'lrn_crs_reg_rsc','".$lmsUserId."')";
+				$cartUpdate = "call slp_enrollment_del('".$enrollId."', 'lrn_crs_reg_rsc','".$updateUserId."')";
+				expDebug::dPrint("Enroll order update in cart module when User update cart: ".$cartUpdate,1);
+				db_query($cartUpdate);
+			}
+		}
+		// To sync solr data
+		syncSolrData('MasterEnrollment');
+	}
+	}catch (Exception $ex) {
+		watchdog_exception('expertus_admin_order_item_object', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+/* hook form alter */
+function exp_sp_administration_order_form_alter(&$form, $form_state, $form_id) {
+	try {
+	switch($form_id){
+		case 'admin_order_create_form':
+			/**
+			 * Payment method section pane (hide when callout is enable with api type)
+			 */
+			if (module_exists('exp_sp_callout') && calloutIsActive() &&  calloutEntityIsActive('cme_pmt') && calloutEntityMethod('cme_pmt') == 'api') {
+				unset($form['panes']['payment']['payment_method']);
+				unset($form['panes']['payment']['details']);
+			} else {
+				foreach (_uc_payment_method_list() as $method) {
+					if ($method['checkout'] && $method['id'] == 'credit') {
+						$form['panes']['payment']['payment_method']['#options'][$method['id']] = 'Credit card';
+					}
+				}
+
+				$paymentType = getLocationBasedPaymentType();
+				if (is_array($paymentType) && !empty($paymentType)) {
+					$newArr = array();
+					foreach($paymentType as $k) {
+						$newArr[] = strtolower($k->name);
+					}
+
+					foreach (_uc_payment_method_list() as $method) {
+						if ($method['checkout']) {
+							if($method['name'] =='Other'){
+								$method['name'] ='Others';
+							}
+
+							if($method['name'] == 'Credit card') {
+								$method['title'] = t('Credit card'); //Credit card
+							}
+
+							if($method['name'] == 'Check'){
+								$method['title'] = t('Check'); //Check
+							}
+
+							if(in_array(strtolower($method['name']),$newArr)) {
+								$options[$method['id']] = $method['title'];
+							}
+						}
+					}
+
+					if (count($options)) {
+						if (isset($form_state['values'])  &&
+								isset($form_state['values']['panes']['payment']['payment_method']) &&
+								in_array($form_state['values']['panes']['payment']['payment_method'], array_keys($options))) {
+							$default = $form_state['values']['panes']['payment']['payment_method'];
+						}
+						else {
+							//$default = (count($options) == 1 || empty($order->payment_method)) ? key($options) : $order->payment_method;
+							$getPaymentMethod = $form['panes']['payment']['payment_method']['#default_value'];
+							$default = (count($options) == 1 || !isset($getPaymentMethod)) ? key($options) : $getPaymentMethod;
+						}
+					}
+
+					if (!in_array($default, array_keys($options))) {
+						$default = key($options);
+					}
+
+					$form['panes']['payment']['payment_method'] = array(
+							'#type' => 'radios',
+							'#title' => t('LBL548'), //Payment method
+							'#options' => $options,
+							'#default_value' => $default,
+							'#disabled' => count($options) == 1 ? TRUE : FALSE,
+							'#required' => TRUE,
+							//'#theme' => 'uc_payment_method_select',
+							'#attributes' => array('class'          => array('addedit-form-expertusone-throbber','admin-cart-payment-pane'),
+							'data-wrapperid' => 'payment-details'),
+							'#ajax' => array(
+									'callback' => 'uc_payment_checkout_payment_details',
+									'wrapper' => 'payment-details',
+									'progress' => array(
+											'type' => 'throbber',
+									),
+							),
+					);
+					$form['panes']['payment']['details'] = array(
+							'#prefix' => '<div id="payment-details" class="clearfix payment-details-' . $default . '">',
+							'#suffix' => '</div>',
+					);
+
+					$details = FALSE;
+					$func = _uc_payment_method_data($default, 'callback');
+					if (function_exists($func)) {
+						$details = $func('cart-details', $order, $form, $form_state);
+					}
+					if (is_array($details) && !empty($details)) {
+						$form['panes']['payment']['details'] += $details;
+					}
+					else {
+						$form['panes']['payment']['details']['#markup'] = t('MSG328'); //Continue with checkout to complete payment.
+					}
+
+					if($form['panes']['payment']['details']['instructions']['#markup']==''){
+						$form['panes']['payment']['details']['instructions']['#markup'] = t('MSG328'); //Continue with checkout to complete payment.
+					}
+				}
+				else if (is_array($paymentType) && empty($paymentType)) {
+					foreach (_uc_payment_method_list() as $method) {
+						if ($method['checkout']) {
+							unset($form['panes']['payment']['payment_method']['#options'][$method['id']]);
+							//$options[$method['id']] = $method['title'];
+						}
+					}
+					$form['panes']['payment']['payment_method']['#default_value'] ='';
+					if ($form['panes']['payment']['details']['instructions']['#markup']=='') {
+						$form['panes']['payment']['details']['instructions']['#markup'] = t('MSG334'); //Select one of the payment methods to complete the checkout process.
+					}
+				}
+
+				if(isset($form['panes']['payment'])) {
+					//$form['panes']['payment']['#description'] = '<div class="cart_head">'.t('LBL548').'</div>'; //Payment method
+				}
+			}
+		break;
+	}
+	}catch (Exception $ex) {
+		watchdog_exception('exp_sp_administration_order_form_alter', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function admin_order_user_display($orderId,$drupalUId) {
+	expDebug::dPrint("admin_order_user_display: --".$classId , 4);
+	try {
+		$form_state = array(
+				'no_redirect'  => TRUE,
+				'build_info'   => array('args' => array('ajax')),
+				'order_id'    => $orderId,
+				'user_id'  => $drupalUId,
+		);
+
+		$formId                 = 'admin_order_user_form';
+		$builtForm              = drupal_build_form($formId, $form_state);
+		$renderedTabContentHTML = drupal_render($builtForm);
+		$drupalSettings         = getDrupalSettings();
+
+		$response       = array(
+				'drupal_settings'     => $drupalSettings,
+				'render_content_main' => $renderedTabContentHTML,
+		);
+
+		echo drupal_json_output($response);
+		exit;
+	} catch (Exception $ex) {
+		watchdog_exception('admin_order_user_display', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function admin_order_user_form($form, &$form_state) {
+	try {
+	global $theme_key;
+  // $form = array();
+  $entityId   = $form_state['order_id'];
+  $entityType = 'admin-order';
+  $keyType = $entityId.'_'.$entityType;
+  $formName = 'create-user-order';
+  $uniqueId = 'add-user-admin-order';
+  $wrapperId = 'adduser-grid-wrapper-'.$uniqueId;
+
+ $form = array();
+ $form['#prefix'] = '<div id = "user_order_formId" style = "height:1px; width:1px; overflow: hidden;">';
+ $form['#suffix'] = '</div>';
+    /* $form['#prefix'] = ((stripos($_SERVER['HTTP_USER_AGENT'], 'Chrome'))? '</form>' : '' ) . '<div id="admin-data-grid"><div id="admin_user_addorder_container"><div id="'.$wrapperId.'" class="admin-datagrid-pagination admin-order-qtip-minheight">';
+  $form['#suffix'] = '</div></div></div>';
+
+  $form[$formName]['adduser_search_container'] = array(
+  		'#type' => 'markup',
+  		'#markup' => '<div class="admin_add_multi_search_container">',
+  ); */
+
+  $form['formitem_orderid'] = array(
+  		'#type' => 'hidden',
+  		'#name' => 'formitem_orderid',
+  		'#value' => $entityId,
+  );
+  $form['formitem_userid'] = array(
+  		'#type' => 'hidden',
+  		'#name' => 'formitem_userid',
+  		'#value' => '',
+  );
+
+ /*  $excludDrupalUId = $form_state['user_id'];
+  $searchAttributes['onClick'][] = 'searchAddUserOrderDataGrid("edit", "addUserOrder", $(\'#createuserorder-autocomplete\').val(), "'.$entityId.'", "'.$entityType.'", "'.$excludDrupalUId.'"); return false;';
+
+  $acMenuPath = 'administration/order/user-autocomplete';
+
+  $form[$formName]['add_user_search'] = array(
+  		'#type' => 'markup',
+  		'#markup' => '<div class="admin_add_multi_auto_search">',
+  );
+  $default_text_title = t('LBL036').' '.t('LBL107').' '.t('LBL644').' '.t('LBL054');
+  $autoCompleteAttributes['class'][] = 'admin_ac_input_mainform';
+  $autoCompleteAttributes['onkeydown'][]  = '$("body").data("mulitselectdatagrid").multiSelectSearchBoxKeyDown(event)';
+  addACFieldForMultiSelect($form[$formName], 'createuserorder-autocomplete', $acMenuPath, '', '', '', array(), array('excluded_user_id' => "'".$excludDrupalUId."'", 'id_required' => 0), false, false, $default_text_title,$autoCompleteAttributes);
+
+  $form[$formName]['add_user_search1'] = array(
+  		'#type' => 'markup',
+  		'#markup' => '</div>',
+  );
+
+  $searchAttributes['class'][] = 'admin-pagination-search-go';
+  $form[$formName]['search_adduserorder'] = array(
+  		'#type' => 'submit',
+  		'#title' => t('LBL304'), //Search
+  		'#name' => 'Search adduserorder',
+  		//'#submit' => array('search_adduserorder'), // No such function search_adduserorder(), apparently property is ignored.
+  		'#attributes' => $searchAttributes,
+  );
+  $form[$formName][] = array(
+  		'#type' => 'markup',
+  		'#markup' => '<div class="filter-search-start-date-right-bg"></div><div class="clearBoth"></div></div>',
+  );
+  $form[$formName]['adduser_view_grid_markup'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div id="datagrid-div-'.$uniqueId.'"><table id="datagrid-container-'.$uniqueId.'" class="datagrid-container-common"></table><div id="pager-datagrid-'.$uniqueId.'" class="pager-datagrid-common"></div></div>',
+  	//'#markup' => '<div id="datagrid-div-'.$uniqueId.'"><table id="datagrid-container-'.$uniqueId.'"></table><div id="pager-datagrid-'.$uniqueId.'" class="pager-datagrid-common"></div></div>',
+  );
+  $form[$formName]['adduser_view_grid_load'] = array(
+    '#type' => 'markup',
+    '#prefix' => '<div style="display:none"><img src="themes/seven/images/buttons.png" width="0" height="0" onload="loadOrderUserDataGrid(\'edit\', \'addUserOrder\', \'\', \''.$entityId.'\', \''.$entityType.'\', \''.$excludDrupalUId.'\');" width="1" height="1" /></div>',
+  );
+	 */
+ $saveButtonId = 'user_order_creation';
+  $singleCanceledAttributes['onclick'] = array();
+  $singleCanceledAttributes['class'] = array('addedit-edit-' . $saveButtonId);
+  $singleCanceledAttributes['class'][] = 'addedit-form-expertusone-throbber';
+  $singleCanceledAttributes['data-wrapperid'] = array('order_create_form_wrapper');
+  $form[$saveButtonId] = array(
+  		'#type' => 'submit',
+  		'#prefix' => '<span style="display:none;">',
+  		'#suffix' => '</span>',
+  		'#value' => 'user_order_creation',
+  		'#name' => 'user_order_creation',
+  		'#attributes' => $singleCanceledAttributes,
+  		'#ajax' => array(
+  				'wrapper' => 'order_create_form_wrapper',
+  				//'callback' => 'userCreateOrderCallBack',
+  				'order_id' =>$entityId,
+          'entity_type' =>$entityType,
+  				'method' => 'replace',
+  				'effect' => 'none', // 'fade',
+  				'event'=>'click',
+  				'keypress' => true,
+  				'progress' => array(
+  						'type' => 'throbber',
+  						'message' => ''
+  				),
+  		)
+  );
+
+  /* $cancelAttributes['class'][] = 'addedit-form-expertusone-throbber admin-action-button-middle-bg';
+  $cancelAttributes['onclick'][] = "$('.active-qtip-div').remove(); return false;";
+  $cancelAttributes['data-wrapperid'] = array($wrapperId);
+  if($theme_key == 'expertusoneV2') {
+    $prefix = '<div class="admin-datagrid-save-cancel-button-align-bottom"><div class="white-btn-bg-left"></div><div class="addedit-form-cancel-container-actions admin-save-button-container white-btn-bg-middle">';
+    $suffix = '</div><div class="white-btn-bg-right"></div></div>';
+  }else {
+    $prefix = '<div class="admin-datagrid-save-cancel-button-align-bottom"><div class="addedit-form-cancel-container-actions admin-save-button-container">';
+    $suffix = '</div></div>';
+  }
+  $form[$formName]['cancel_adduser_edit_mode'] = array(
+    '#type' => 'submit',
+    '#value' => t('LBL123'),
+    '#title' => t('LBL123'),
+    '#prefix' => $prefix,
+    '#suffix' => $suffix,
+    '#name' => 'Cancel',
+    '#attributes' => $cancelAttributes,
+  );
+     */
+  return $form;
+  }catch (Exception $ex) {
+  	watchdog_exception('admin_order_user_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function admin_order_user_form_validate($form, &$form_state) {
+	try {
+	$form_state['hidden-save-submit'] = false;
+  $form_state['esign_show_popup'] = false;
+  expDebug::dPrint('$form_state[triggering_element][#name] = ' . $form_state['triggering_element']['#name'], 4);
+  expDebug::dPrint('$form_state[values] = ' . print_r($form_state['values'], true), 4);
+  expDebug::dPrint('Admin user selected' .$form_state['input']['formitem_userid']);
+  if ($form_state['values']['op'] == t('LBL123')) {
+    $form_state['input'] = array(); // Clear user input - raw
+    $form_state['values'] = array(); // Clear user input - security cleared
+    $form_state['rebuild'] = TRUE; // Rebuild the form. Submit handler will not be called.
+    return;
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('admin_order_user_form_validate', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function admin_order_user_form_submit($form, &$form_state) {
+	try {
+	expDebug::dPrint("admin_order_user_form_submit form_state: ".print_r($form_state,true) , 5);
+	$uid = 0;
+	if($form_state['triggering_element']['#name'] == 'user_order_creation'){
+		$uid = $form_state['input']['formitem_userid'];
+		if($uid){
+			if (isset($_SESSION['cart_admin_order']) && intval($_SESSION['cart_admin_order']) > 0) {
+				uc_order_comment_save($_SESSION['cart_admin_order'], 0, t('Admin cancelled this order from the admin checkout form.'));
+				if($_SESSION['slt_admin_orderid']){
+					admin_order_reserved_cancel($_SESSION['slt_admin_orderid']);
+				}
+			}
+			unset($_SESSION['cart_admin_order']);
+			unset($_SESSION['slt_admin_orderid']);
+			unset($_SESSION['admin_total_discount']);
+			unset($_SESSION['total_discount']);
+			unset($_SESSION['admin_discount']);
+  		unset($_SESSION['discount']);
+			$order = uc_order_new($uid, 'in_checkout','admin_checkout');
+			$_SESSION['cart_admin_order'] = $order->order_id;
+			//uc_order_comment_save($order->order_id, $order->uid, t('Order created by the administration.'), 'admin');
+			$form_state['admin_order_createdid'] = $order->order_id;
+			$form_state['admin_order_uid'] = $order->uid;
+			drupal_goto('administration/order/create');
+		}
+	}
+	}catch (Exception $ex) {
+		watchdog_exception('admin_order_user_form_submit', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function admin_order_reserved_cancel($lmsOrderId){
+	try {
+	expDebug::dPrint("admin_order_reserved_cancel lms order id  : ".$lmsOrderId,1);
+	$result = db_query("SELECT id,master_enrollment_id,course_id,class_id,order_id FROM slt_enrollment WHERE order_id='".$lmsOrderId."' AND reg_status='lrn_crs_reg_rsv'");
+	foreach ($result as $row) {
+		$updateUserId = getSltpersonUserId();
+		$cartUpdate = "call slp_enrollment_del('".$row->id."', 'lrn_crs_reg_rsc','".$updateUserId."')";
+		expDebug::dPrint("admin_order_reserved_cancel in commerce module : ".$cartUpdate,1);
+		db_query($cartUpdate);
+		if($row->master_enrollment_id){
+			//update master_enroll
+			$updateEnr = db_update('slt_master_enrollment');
+			$updateEnr->fields(array(
+					'overall_status'=> 'lrn_tpm_ovr_rsc',
+					'comp_date'		=> NULL,
+					'updated_by'    => $updateUserId,
+					'updated_on'    => now()
+			));
+			$updateEnr->condition('id', $row->master_enrollment_id);
+			$updateEnr->condition('overall_status' , 'lrn_tpm_ovr_rsv');
+			$updateEnr->execute();
+		}
+	}
+	db_query('UPDATE slt_order SET order_status=\'cme_pmt_sts_rcl\' WHERE id='.$lmsOrderId);	
+	$uc_detail = db_query("SELECT uc_order_id FROM slt_order WHERE id='".lmsOrderId."' AND uc_order_id IS NOT NULL");
+	$ucOrderID = $uc_detail->fetchField();
+	if(!empty($ucOrderID)){
+	db_query("UPDATE uc_orders SET order_status='reserved_cancelled' WHERE order_id=".$ucOrderID);
+	}
+	// To sync solr data
+	syncSolrData('MasterEnrollment');
+	}catch (Exception $ex) {
+		watchdog_exception('admin_order_reserved_cancel', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function userCreateOrderCallBack($form, &$form_state){
+	try {
+	$min_form_state = array(
+			'ajax' => TRUE,
+			're_render' => TRUE,
+			'no_redirect' => TRUE,
+			'admin_order_id' => $form_state['admin_order_createdid'],
+			'build_info' => array('args' => array('ajax'))
+	);
+
+	$form_state = $min_form_state;
+
+	expDebug::dPrint('userCreateOrderCallBack : '.print_r($form_state,true) , 5);
+
+	$formId = 'admin_order_create_form';
+	$builtForm = drupal_build_form($formId, $form_state);
+	$commands = array();
+	$commands[] = ajax_command_replace(NULL, drupal_render($builtForm));
+	$statusMsgHTML = theme('status_messages');
+	expDebug::dPrint(' $statusMsgHTML = ' . print_r($statusMsgHTML, true) , 4);
+	if (!empty($statusMsgHTML)) {
+		// Show the messages
+		$commands[] = ajax_command_html('#show_expertus_message', $statusMsgHTML);
+	}
+	$commands[] = ajax_command_invoke(NULL, "attachClose", array($orderId, $entityType));
+
+	return array(
+			'#type' => 'ajax',
+			'#commands' => $commands
+	);
+	}catch (Exception $ex) {
+		watchdog_exception('userCreateOrderCallBack', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+
+function admin_order_product_display($orderId,$drupalUId) {
+	expDebug::dPrint("admin_order_product_display: --".$orderId , 1);
+	include_once(drupal_get_path('module', 'exp_sp_administration_order') .'/exp_sp_administration_order.inc');
+	include_once(drupal_get_path('module', 'exp_sp_cart') .'/exp_sp_cart.inc');
+	includeJqGridJsCss();
+	$js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+	$js_settings = array();
+	$defaults = array(
+			'showall' => 0,
+			'js_widget' => 1,
+			'js_widget_settings' => array(
+					'row_height' => 23,
+					'width' => '65',
+					'animation' => 'slideDown',
+			),
+			/*'currencyicons' => array(
+			 'flag_position' => 1,
+			),*/
+	);
+	$settings = array_merge($defaults, variable_get('currency_dropdown', $defaults));
+
+	if ($settings['js_widget']) {
+		drupal_add_js(drupal_get_path('module', 'currency_dropdown') .'/msdropdown/jquery.dd.js', $js_module_optional);
+
+		$js_settings += array(
+				'visibleRows' => $settings['js_widget_settings']['visible_rows'],
+				'rowHeight' => $settings['js_widget_settings']['row_height'],
+				'animStyle' => $settings['js_widget_settings']['animation'],
+		);
+
+		drupal_add_css(drupal_get_path('module', 'currency_dropdown') .'/dd_currency.css', $css_theme_optional);
+		$js_settings += array(
+				'mainCSS' => 'dd',
+		);
+
+		drupal_add_js(array('currency_dropdown' => array('jsWidget' => $js_settings)), 'setting');
+	}
+	//drupal_add_js(drupal_get_path('module', 'currency_dropdown') .'/msdropdown/jquery.dd.js', $js_module_optional); //$module_path . '/msdropdown/jquery.dd.js');
+	drupal_add_js(drupal_get_path('module', 'currency_dropdown') .'/admin_currency_dropdown.js', $js_module_optional);
+	//drupal_add_css(drupal_get_path('module', 'currency_dropdown') .'/dd_currency.css', $css_theme_optional);
+
+	try {
+		$form_state = array(
+				'no_redirect'  => TRUE,
+				'build_info'   => array('args' => array('ajax')),
+				'order_id'    => $orderId,
+				'user_id'  => $drupalUId,
+		);
+
+		$formId                 = 'admin_add_product_form';
+		$builtForm              = drupal_build_form($formId, $form_state);
+		$renderedTabContentHTML = drupal_render($builtForm);
+		/* $drupalSettings         = getDrupalSettings();
+
+		$response       = array(
+				'drupal_settings'     => $drupalSettings,
+				'render_content_main' => $renderedTabContentHTML,
+		); */
+		expDebug::dPrint('checking the respone for the order'.print_r($response,true),4);
+
+
+		$commands = array();
+		$commands[] = replaceorderInReportSchedulesPopup($renderedTabContentHTML, $orderId);
+		expDebug::dPrint('$commands = ' . print_r($commands, true), 4);
+		print ajax_render($commands);
+		exit;
+
+		/* echo drupal_json_output($response);
+		//return $response;
+		exit; */
+	} catch (Exception $ex) {
+		watchdog_exception('admin_order_user_display', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+
+
+/**
+ * Wrapper for Drupal ajax command replaceContentInReportSchedulesPopup
+ */
+function replaceorderInReportSchedulesPopup($html,$orderId){
+	try {
+	return array(
+			'command' => 'renderOrderClassPopup',
+			'html' => $html,
+			'order_id'=> $orderId,
+	);
+	}catch (Exception $ex) {
+		watchdog_exception('replaceorderInReportSchedulesPopup', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function admin_add_product_form($form, &$form_state) {
+	try {
+	global $theme_key;
+	// $form = array();
+	$entityId   = $form_state['order_id'];
+	$entityType = 'admin-order';
+	$keyType = $entityId.'_'.$entityType;
+	$formName = 'add-product-order';
+	$uniqueId = 'add-product-admin-order';
+	$wrapperId = 'addproduct-grid-wrapper-'.$uniqueId;
+	$drupalUID = $form_state['user_id'];
+	$lmsUserId = 0;
+	if($drupalUID){
+		$lmsUserId = getUserIdFromDrupalUid($drupalUID);
+	}
+	$form = array();
+	$form['#prefix'] = /* (( stripos($_SERVER['HTTP_USER_AGENT'], 'Chrome') || stripos($_SERVER['HTTP_USER_AGENT'], 'Firefox') )? '</form>' : '' ) */'</form>' .'<div id="add_product_form_wrapper">';
+	$form['#suffix'] = '</div>';
+
+	$form['admin_orderid'] = array(
+			'#type' => 'hidden',
+			'#name' => 'admin_orderid',
+			'#value' => $entityId,
+	);
+	$form['form_selected_nid'] = array(
+			'#type' => 'hidden',
+			'#name' => 'form_selected_nid',
+			'#value' => '',
+	);
+	$form['form_selected_classid'] = array(
+			'#type' => 'hidden',
+			'#name' => 'form_selected_classid',
+			'#value' => '',
+	);
+	$form[$formName] = array(
+			'#type' => 'markup',
+			'#prefix' => '<div id="admin-data-grid"><div id="admin_product_addorder_container"><div id="'.$wrapperId.'" class="admin-datagrid-pagination">',
+			'#suffix' => '</div></div></div>',
+	);
+	$form[$formName]['addproduct_search_container'] = array(
+			'#type' => 'markup',
+			'#markup' => '<div class="admin_add_multi_search_container">',
+	);
+	$paintMultiAction  = "<div id='search-list-title-keyword' class='search-list-keyword' style='display:block;'>";
+	$paintMultiAction .= "<span id='search-dropdwn-list'>";
+	$paintMultiAction .= "<input type='hidden' id='search_all_enroll_type-hidden' value='user' />";
+	$paintMultiAction .= "<input type='hidden' id='addproduct-autocomplete_hidden' value='".str_replace('\'','u0027',t('LBL428'))."' />";
+	$paintMultiAction .= "<span id='select-list-dropdown' class='select-list-dropdown'>".t('LBL428')."</span>";
+	$paintMultiAction .= "<a  id='admin-dropdown-arrow' class='select-list-dropdown-link dropdown-link-font ' onclick='deliveryProductHideShow()'>&nbsp;</a>";
+	$paintMultiAction .= "<ul id='select-list-dropdown-list'>";
+	$delivery_types = getOrderLearningObjectType();
+	$searchAny = str_replace('\'','\u0027',t('LBL428'));
+	$paintMultiAction .= "<li class='searchany sortype-high-lighter' onclick=\"deliveryTypeSearch('".$searchAny."', '".$searchAny."', '".$lmsUserId."');\" >".t('LBL428')."</li>";
+
+	foreach ($delivery_types as $code => $name) {
+		$delType = str_replace('\'','\u0027',t($name));
+		$paintMultiAction .= "<li class='".$code."'  onclick=\"deliveryTypeSearch('".$code."','".$delType."','".$lmsUserId."');\">".t($name)."</li>";
+	}
+	$paintMultiAction .= "</ul>";
+	$paintMultiAction .= "</span></div>";
+
+	$form[$formName]['more_add_enrolluser_search'] = array(
+			'#type' => 'markup',
+			'#markup' => $paintMultiAction,
+	);
+
+	$excludedUserId = $lmsUserId;
+	$searchAttributes['onClick'][] = 'searchAddOrderProductDataGrid("edit", "addProductOrder", $(\'#addproduct-autocomplete\').val(), "'.$entityId.'", "'.$entityType.'", "'.$lmsUserId.'"); return false;';
+
+	$acMenuPath = 'administration/order/product-autocomplete';
+
+	$form[$formName]['add_user_search'] = array(
+			'#type' => 'markup',
+			'#markup' => '<div class="admin_add_multi_auto_search">',
+	);
+	$default_text_title = t('LBL545');
+	$autoCompleteAttributes['class'][] = 'admin_ac_input_mainform';
+	$autoCompleteAttributes['onkeydown'][]  = '$("body").data("mulitselectdatagrid").multiSelectSearchBoxKeyDown(event)';
+	addACFieldForMultiSelect($form[$formName], 'addproduct-autocomplete', $acMenuPath, '', '', '', array(), array('user_id' => "'".$excludedUserId."'", 'id_required' => 0), false, false, $default_text_title,$autoCompleteAttributes);
+
+	$form[$formName]['add_user_search1'] = array(
+			'#type' => 'markup',
+			'#markup' => '</div>',
+	);
+	$searchAttributes['class'][] = 'admin-pagination-search-go';
+	$form[$formName]['search_addproduct_order'] = array(
+			'#type' => 'submit',
+			'#title' => t('LBL304'), //Search
+			'#name' => 'Search search_addproduct_order',
+			//'#submit' => array('search_addproduct_order'), // No such function search_addproduct_order(), apparently property is ignored.
+			'#attributes' => $searchAttributes,
+	);
+	$form[$formName]['filter-search-start'] = array(
+			'#type' => 'markup',
+			'#markup' => '<div class="filter-search-start-date-right-bg"></div><div class="clearBoth"></div></div>',
+	);
+	$block = block_load('currency_dropdown', 'admin_currency_selection');
+	//$node = admin_currency_dropdown_form();
+	//Added by Subin. Ticket #59698
+	 $form_currency = drupal_get_form('admin_currency_dropdown_form',$lmsUserId);
+   //$output = drupal_render_children($form);
+	//$form_currency = drupal_retrieve_form('admin_currency_dropdown_form');
+	//$form_currency = drupal_prepare_form('admin_currency_dropdown_form', $form_currency1);
+  //$form_currency = drupal_prepare_form('admin_currency_dropdown_form', $form, $form_state);
+ 	$render_array = _block_get_renderable_array(_block_render_blocks(array($block)));
+ 	$currency_selection_blk = render($render_array);
+	expDebug::dPrint('$$block test1= ' . print_r($currency_selection_blk, true), 4);
+	expDebug::dPrint('$$block test form= ' . print_r($form_currency, true), 4);
+	$form[$formName]['admin_order_currency'] = array(
+			'#type' => 'markup',
+			'#markup' => '<div class="dummy-class currency-dropdown-form-position"><div id="admin-currency-dropdown-form" >' . drupal_render_children($form_currency). "</div></div>",
+	);
+	//$form['filter'] = admin_currency_dropdown_form();
+	$form[$formName]['adduser_view_grid_markup'] = array(
+			'#type' => 'markup',
+			'#markup' => '<div id="datagrid-div-'.$uniqueId.'"><table id="datagrid-container-'.$uniqueId.'" class="datagrid-container-common"></table><div id="pager-datagrid-'.$uniqueId.'" class="pager-datagrid-common"></div></div>',
+			//'#markup' => '<div id="datagrid-div-'.$uniqueId.'"><table id="datagrid-container-'.$uniqueId.'"></table><div id="pager-datagrid-'.$uniqueId.'" class="pager-datagrid-common"></div></div>',
+	);
+	$form[$formName]['adduser_view_grid_load'] = array(
+			'#type' => 'markup',
+			'#prefix' => '<div style="display:none"><img src="themes/seven/images/buttons.png" width="0" height="0" onload="loadAddProductDataGrid(\'edit\', \'addProductOrder\', \'\', \''.$entityId.'\', \''.$entityType.'\', \''.$excludedUserId.'\');" width="1" height="1" /></div>',
+	);
+
+	$saveButtonId = 'order_product_creation';
+	$singleCanceledAttributes['onclick'] = array();
+	$singleCanceledAttributes['class'] = array('addedit-edit-' . $saveButtonId);
+	$singleCanceledAttributes['class'][] = 'addedit-form-expertusone-throbber';
+	$singleCanceledAttributes['data-wrapperid'] = array('add_product_form_wrapper');
+	$form[$saveButtonId] = array(
+			'#type' => 'submit',
+			'#prefix' =>  '<span style="display:none;">',
+			'#suffix' => '</span>',
+			'#value' => 'order_product_creation',
+			'#name' => 'order_product_creation',
+			'#attributes' => $singleCanceledAttributes,
+			'#ajax' => array(
+					'wrapper' => 'add_product_form_wrapper',
+					'callback' => 'addProductOrderCallBack',
+					'order_id' =>$entityId,
+					'entity_type' =>$entityType,
+					'method' => 'replace',
+					'effect' => 'none', // 'fade',
+					'event'=>'click',
+					'keypress' => true,
+					'progress' => array(
+							'type' => 'throbber',
+							'message' => ''
+					),
+			)
+	);
+
+
+	/* $cancelAttributes['class'][] = 'addedit-form-expertusone-throbber admin-action-button-middle-bg';
+	$cancelAttributes['onclick'][] = "$('.active-qtip-div').remove(); return false;";
+	$cancelAttributes['data-wrapperid'] = array($wrapperId);
+	if($theme_key == 'expertusoneV2') {
+		$prefix = '<div class="admin-datagrid-save-cancel-button-align-bottom"><div class="white-btn-bg-left"></div><div class="addedit-form-cancel-container-actions admin-save-button-container white-btn-bg-middle">';
+		$suffix = '</div><div class="white-btn-bg-right"></div></div>';
+	}else {
+		$prefix = '<div class="admin-datagrid-save-cancel-button-align-bottom"><div class="addedit-form-cancel-container-actions admin-save-button-container">';
+		$suffix = '</div></div>';
+	}
+	$form[$formName]['cancel_addproduct_edit_mode'] = array(
+			'#type' => 'submit',
+			'#value' => t('LBL123'),
+			'#title' => t('LBL123'),
+			'#prefix' => $prefix,
+			'#suffix' => $suffix,
+			'#name' => 'Cancel',
+			'#attributes' => $cancelAttributes,
+	); */
+	expDebug::dPrint('form attributes for admin order sccreen'.print_r($form,true),4);
+
+	return $form;
+	}catch (Exception $ex) {
+		watchdog_exception('admin_add_product_form', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function admin_add_product_form_validate($form, &$form_state) {
+	try {
+	$form_state['hidden-save-submit'] = false;
+	$form_state['esign_show_popup'] = false;
+	expDebug::dPrint('$form_state[triggering_element][#name] = ' . $form_state['triggering_element']['#name'], 4);
+	expDebug::dPrint('$form_state[values] = ' . print_r($form_state['values'], true), 4);
+	expDebug::dPrint('Admin node selected' .$form_state['input']['form_selected_nid']);
+	if($form_state['triggering_element']['#name'] == 'order_product_creation'){
+		if(!$form_state['order_id'] || !$form_state['user_id']){
+			form_set_error('',t('ERR226'));
+		}
+		else{
+			$drupalUID = $form_state['user_id'];
+			$nodeId    = $form_state['input']['form_selected_nid'];
+			$lmsUserId = 0;
+			if($drupalUID){
+				$lmsUserId = getUserIdFromDrupalUid($drupalUID);
+			}
+			$updateUserId = getSltpersonUserId();
+
+
+			$result =   getCatalogInfofromNodeId($nodeId);
+			expDebug::dPrint('getCatalogInfofromNodeId ' .print_r($result,true), 4);
+			expDebug::dPrint('lms UserId ' .print_r($lmsUserId,true), 4);
+
+			$vCourseId  	 = $result->CourseId;
+			$vClassId      = $result->ClassId;
+			$vObjectType   = $result->DeliveryTypeId;
+
+			if($vObjectType == 'cre_sys_obt_cur' || $vObjectType == 'cre_sys_obt_trn' || $vObjectType == 'cre_sys_obt_crt'){
+				if(!empty($lmsUserId) && !empty($vClassId)){
+					$EnrollId = checkAlreadyReservedForTp($lmsUserId,$vClassId);
+					expDebug::dPrint('$EnrollId: '.$EnrollId, 1);
+					if(!empty($EnrollId) || $EnrollId<>'') {
+						form_set_error('', t('ERR246'));
+						return false;
+						exit;
+					}
+				}
+
+			}
+			else{
+				if(!empty($lmsUserId) && !empty($vClassId) && !empty($vCourseId)){
+					$EnrollId = checkAlreadyReserved($lmsUserId,$vClassId,$vCourseId);
+					expDebug::dPrint('$EnrollId: '.$EnrollId, 1);
+					if(!empty($EnrollId) || $EnrollId<>'') {
+						form_set_error('', t('ERR246'));
+						return false;
+						exit;
+					}
+				}
+			}
+
+			$vOrderId 		= $_SESSION['slt_admin_orderid'];
+			if($lmsUserId && !($vOrderId)){
+				$aResp 				= CreateNewOrder($lmsUserId,'cme_pmt_sts_rsv',$updateUserId);
+				$vOrderId 		= $aResp['OrderId'];
+				$_SESSION['slt_admin_orderid'] = $vOrderId;
+				db_query("update slt_order set uc_order_id= ".$form_state['order_id']." where id = ".$vOrderId);
+			}
+
+
+			$personDt			 = getPersonDetails($lmsUserId, array('user_name'));
+			$vUserName     = $personDt['user_name'];
+			$ForceReg 		 = 1; // Enabled for waitlist
+
+			$aReq = array('LMSUserId'=>$lmsUserId,'OrderId'=>$vOrderId,'DrupalUserId'=>$drupalUID,'UserName'=>$vUserName,
+					'CourseId'=>$vCourseId,'ClassId'=>$vClassId,'ForceReg'=>$ForceReg,'Object_Type'=>$vObjectType,'NodeId'=>$nodeId,'updateUserId'=>$updateUserId,'CartFrom'=>'adminorder');
+			expDebug::dPrint('getCatalog reg request ' .print_r($aReq,true), 4);
+			$error_msg = '';
+			if($vObjectType == 'cre_sys_obt_cur' || $vObjectType == 'cre_sys_obt_trn' || $vObjectType == 'cre_sys_obt_crt'){
+				$objectId = $vClassId;
+				$maxCount = getCourseClassCountForLP($objectId,$lmsUserId,'N','');
+				$prm_waitlist_status = -1;
+				$totalcrsmappingcnt =  getCourseMappingCount($objectId);
+				$prm_available_seats = getObjectAvailableSeats($objectId);
+				if($prm_available_seats == 0){
+					$prm_waitlist_status = getProgramWaitlistStatus($objectId,$lmsUserId,'N');
+				}
+				if($prm_available_seats == 0 && $prm_waitlist_status == 0) {
+					$error_msg = t('MSG380');
+				}
+				else if($totalcrsmappingcnt == 0){
+					$error_msg = t('MSG268');    // no courses associated with modules
+				}
+				else if($maxCount[0]->cnt == '-1' || $maxCount[0]->cnt == 0){
+					$error_msg = t('ERR108');     	// no classes under any one of the courses
+				}
+				else if($maxCount[0]->cnt >= 1) {
+					if($maxCount[0]->cnt == 1){
+						$class_ids    = $maxCount[0]->classids;
+					}
+					else{
+						$class_ids    = $form_state['input']['form_selected_classid'];
+					}
+					if($class_ids){
+						$entity_id = array();
+						$crs_entity_id = array();
+						$ins_conflict  = array();
+						$listIds = explode(',',$class_ids);
+
+						$getTPConflictCheck = trainingProgramMultiClassConflictCheck($listIds);
+						if($getTPConflictCheck > 0){
+							expDebug::dPrint(' return = ' . print_r($getTPConflictCheck, true) , 4);
+							$entity_id[] = $getTPConflictCheck;
+						}
+						if($getTPConflictCheck == 0){
+							for($i=0;$i<count($listIds);$i++){
+								$getConflictCheck   = enrollmentsConflictCheck($lmsUserId,$listIds[$i],'Class');
+								$conflictInstructor = getClassInstructorConflict($lmsUserId, $listIds[$i]);
+								if($getConflictCheck > 0) {
+									$entity_id[] = $listIds[$i];
+								}elseif($conflictInstructor == false){
+									$ins_conflict[] = $listIds[$i];
+								}else{
+									$courseConflict = courseConflictCheck($lmsUserId, '', $listIds[$i], 'Class');
+									if($courseConflict > 0) {
+										$crs_entity_id[] = $listIds[$i];
+									}
+								}
+							}
+						}
+						if(count($ins_conflict) > 0){
+							$title = getCourseTitle($ins_conflict[0]);
+							$error_msg = t("ERR147")." - <b>".$title."</b>";
+						}
+						elseif(count($entity_id) > 0) {
+							$title = getCourseTitle($entity_id[0]);
+							$error_msg = str_replac('.','',t("ERR021")) ." - <b>".$title."</b>";
+						}
+						elseif(count($crs_entity_id) > 0){
+							$title = getCourseTitle($crs_entity_id[0]);
+							$error_msg = t("MSG026")." - <b>".$title."</b>";
+						}
+						else{
+							$aReq['ListedClassIds'] = $class_ids;
+							$aCatalogRegStatus = getCartTPRegistrationStatus($aReq);
+						}
+					}
+					else{
+						$error_msg = t("ERR066");
+					}
+				}
+				 else if($maxCount[0]->cnt == 1) {
+					$aReq['ListedClassIds'] = $maxCount[0]->classids;
+					$aCatalogRegStatus = getCartTPRegistrationStatus($aReq);
+				} 
+			}
+			else{
+				$aCatalogRegStatus = getCartCatalogRegistrationStatus($aReq);
+			}
+
+			$cart_msg    = $aCatalogRegStatus;
+			$setCart_msg = '';
+
+			//CART Status
+			//changes done by ayyappans for 45841: Incorrect message when creating an order for user
+			if($cart_msg == 'AlreadyEnrolled'){
+				$setCart_msg = t('ERR020');	//"The user is already registered for this class"
+			}
+			else if($cart_msg == 'Conflict'){
+				$setCart_msg = t('ERR021');
+			}
+			else if($cart_msg == 'AlreadyReserved'){
+				$setCart_msg = t('ERR246');	//new string added "The user has already reserved to this class."
+			}
+			else if($cart_msg == 'Invalid'){
+				$setCart_msg = t('ERR134');
+			}
+			else if($cart_msg == 'Full'){
+				$setCart_msg = t('ERR022');
+			}
+			else if($cart_msg == 'InvalidUser'){
+				$setCart_msg = t('ERR135');
+			}
+			else if($cart_msg == 'CourseConflict'){
+				$setCart_msg = t('MSG026');	//"The user has already registered for another class in this course"
+			}
+			else if($cart_msg == 'InstructorConflict'){
+				$setCart_msg = $vUserName.' '.t('ERR147');	// ." cannot be registered. User is the instructor to the class."
+			}
+
+			if($error_msg){
+				$setCart_msg = $error_msg;
+			}
+
+			if($setCart_msg!=''){
+				form_set_error('', $setCart_msg);
+			}
+			else{
+				drupal_set_message(t('LBL049'));
+			}
+		}
+	}
+	}catch (Exception $ex) {
+		watchdog_exception('admin_add_product_form_validate', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function admin_add_product_form_submit($form, &$form_state) {
+	try {
+	expDebug::dPrint("admin_add_product_form_submit: ".print_r($form_state,true) , 5);
+	$nId = 0;
+	if($form_state['triggering_element']['#name'] == 'order_product_creation'){
+		$nId 		 = intval($form_state['input']['form_selected_nid']);
+		$orderId = $form_state['order_id'];
+		if($nId && $orderId){
+			$order   = uc_order_load($orderId);
+			$product = node_load($nId);
+			$product->qty = 1;
+			$product->price = $product->sell_price;
+			$form_values = array();
+			$form_values['nid'] = $nId;
+			$product->data = module_invoke_all('uc_add_to_cart_data', $form_values);
+			$product->data['module'] = 'uc_product';
+			foreach (module_implements('uc_cart_item') as $module) {
+				$function = $module . '_uc_cart_item';
+				if (function_exists($function)) {
+					// $product must be passed by reference.
+					$function('load', $product);
+				}
+			}
+
+			drupal_alter('uc_order_product', $product, $order);
+			uc_order_product_save($order->order_id, $product);
+			//$order->products[] = $product;
+			//Auto update of discount
+			if($_SESSION['availableFunctionalities']->uc_discounts){
+				autoUpdateAdminDiscount($order);
+			}
+
+			$order->products 			= admin_cart_get_contents($orderId,'rebuild');
+			$order->order_total 	= uc_order_get_total($order, TRUE);
+			$order->line_items 		= uc_order_load_line_items($order, TRUE);
+			$order->line_items 		= array_merge($order->line_items, uc_order_load_line_items($order, FALSE));
+			usort($order->line_items, 'uc_weight_sort');
+			//uc_order_save($order);
+			uc_order_log_changes($order->order_id, array('add' => t('Added (@qty) @title to order.', array('@qty' => $product->qty, '@title' => $product->title))));
+
+			// Decrement stock.
+			if (module_exists('uc_stock')) {
+				uc_stock_adjust_product_stock($product, 0, $order);
+			}
+
+			// Add this product to the form values for accurate tax calculations.
+			//$form_state['values']['products'][] = (array) $product;
+		}
+	}
+	}catch (Exception $ex) {
+		watchdog_exception('admin_add_product_form_submit', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function addProductOrderCallBack($form, &$form_state){
+	try {
+	if($form_state['triggering_element']['#name'] != 'order_product_creation'){
+		expDebug::dPrint('addProductOrderCallBack : coms herere',1);
+	 return;
+	}
+	$min_form_state = array(
+			'ajax' => TRUE,
+			're_render' => TRUE,
+			'no_redirect' => TRUE,
+			'admin_order_id' => $form_state['admin_order_createdid'],
+			'build_info' => array('args' => array('ajax'))
+	);
+	$orderId = $form_state['order_id'];
+	$order   = uc_order_load($orderId);
+	expDebug::dPrint('$form[panes] order products = ' . print_r($order->products, true), 5);
+	$form_state = $min_form_state;
+
+	expDebug::dPrint('addProductOrderCallBack : '.print_r($form_state,true) , 5);
+
+	$formId = 'admin_add_product_form';
+	$builtForm = drupal_build_form($formId, $form_state);
+	$commands = array();
+	$commands[] = ajax_command_replace(NULL, drupal_render($builtForm));
+	$statusMsgHTML = theme('status_messages');
+	expDebug::dPrint(' $statusMsgHTML = ' . print_r($statusMsgHTML, true) , 4);
+	if (!empty($statusMsgHTML)) {
+		// Show the messages
+		$commands[] = ajax_command_html('#paintAdminOrderResults #show_expertus_message', $statusMsgHTML);
+	}
+
+	$panes = _uc_checkout_pane_list();
+	foreach ($panes as $id => $pane) {
+		if (($id == 'clone_cart') && $pane['enabled']) {
+			if($id == 'clone_cart'){
+				$form_state['order_from'] = 'admin_clone_cart';
+			}
+			$return = $pane['callback']('view', $order, $form, $form_state);
+			// Add the pane if any display data is returned from the callback.
+			if (is_array($return) && (!empty($return['description']) || !empty($return['contents']))) {
+				// Create the fieldset for the pane.
+				$form['panes'][$id] = array(
+						'#type' => 'fieldset',
+						'#title' => $pane['title'],
+						'#description' => !empty($return['description']) ? $return['description'] : NULL,
+						'#collapsible' => $pane['collapsible'],
+						//'#collapsed' => variable_get('uc_use_next_buttons', FALSE) ? $collapsed : FALSE,
+						'#id' => $id . '-pane',
+						'#theme' => isset($return['theme']) ? $return['theme'] : NULL,
+				);
+				// Add the contents of the fieldset if any were returned.
+				if (!empty($return['contents'])) {
+					$form['panes'][$id] = array_merge($form['panes'][$id], $return['contents']);
+					$_SESSION['cartform'] = $form['panes'][$id];
+					expDebug::dPrint('$form[panes][$id] = ' . print_r($return['contents'], true), 5);
+				}
+				// Log that this pane was actually displayed.
+				$displayed[$id] = TRUE;
+			}
+		}
+	}
+	expDebug::dPrint('addProductOrderCallBack clone cart : '.print_r($form['panes']['clone_cart'],true) , 5);
+	$commands[] = ajax_command_replace('#clone_cart-pane', drupal_render($form['panes']['clone_cart']));
+
+	return array(
+			'#type' => 'ajax',
+			'#commands' => $commands
+	);
+	}catch (Exception $ex) {
+		watchdog_exception('addProductOrderCallBack', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+
+/**
+ * Grabs the items in a shopping cart for a user.
+ *
+ * If $cid is not passed in, this function uses the uid of the person currently
+ * accessing this function.
+ */
+function admin_cart_get_contents($cid = NULL, $action = NULL) {
+	try {
+	static $items = array();
+
+	// If we didn't get a cid, return empty.
+	if (!$cid) {
+		return array();
+	}
+
+	if ($action == 'rebuild') {
+		unset($items[$cid]);
+	}
+
+	if (!isset($items[$cid])) {
+		$items[$cid] = array();
+		$result = db_query("SELECT c.*, n.title, n.vid FROM {node} n INNER JOIN {uc_order_products} c ON n.nid = c.nid WHERE c.order_id = :id",
+				array(':id' => $cid));
+
+		foreach ($result as $item) {
+			for ($i = 0; $i < count($items[$cid]); $i++) {
+				if ($items[$cid][$i]->nid == $item->nid && $items[$cid][$i]->data == $item->data) {
+					$items[$cid][$i]->qty += $item->qty;
+					continue 2;
+				}
+			}
+			$product = node_load($item->nid);
+			$item->cost = $product->cost;
+			$item->price = $product->sell_price;
+			$item->weight = $product->weight;
+			$item->weight_units = $product->weight_units;
+			$item->data = unserialize($item->data);
+			$item->module = $item->data['module'];
+			$item->model = $product->model;
+
+			// Invoke hook_uc_cart_item() with $op = 'load' in enabled modules.
+			foreach (module_implements('uc_cart_item') as $module) {
+				$func = $module . '_uc_cart_item';
+				if (function_exists($func)) {
+					// $item must be passed by reference.
+					$func('load', $item);
+				}
+			}
+
+			$items[$cid][] = $item;
+		}
+
+		// Allow other modules a chance to alter the fully loaded cart object.
+		drupal_alter('uc_cart', $items[$cid]);
+	}
+
+	return $items[$cid];
+	}catch (Exception $ex) {
+		watchdog_exception('admin_cart_get_contents', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function admin_order_payment_form($form, &$form_state) {
+	try {
+	expDebug::dPrint('$form_state[storage] = ' . print_r($form_state['storage'], true), 5);
+	expDebug::dPrint('$form_state[values] = ' . print_r($form_state, true), 5);
+	global $user;
+	global $theme_key;
+	$js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+	drupal_add_js(drupal_get_path('module', 'exp_sp_administration_order') .'/exp_sp_administration_order.js',$js_module_optional);
+	drupal_add_js(drupal_get_path('module', 'uc_cart') . '/uc_cart.js');
+	drupal_add_js(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration_addedit_behaviours.js', $js_module_optional);
+
+	if (empty($_SESSION['do_exp_admin_paymethod']) || empty($_SESSION['cart_admin_order'])) {
+		drupal_goto('administration/order/create');
+	}
+
+	$order = uc_order_load($_SESSION['cart_admin_order']);
+
+	if ($order === FALSE || uc_order_status_data($order->order_status, 'state') != 'in_checkout') {
+		unset($_SESSION['cart_admin_order']);
+		drupal_goto('administration/order/create');
+	}
+
+	$orderId  = $_SESSION['cart_admin_order'];
+	$orderUId = $order->uid;
+
+  $form = array();
+	$form['#prefix'] = '<div id="order_payment_form_wrapper">';
+	$form['#suffix'] = '</div>';
+	$form['#order'] = $order;
+	$form['order_id'] = array('#type' => 'hidden', '#value' => $orderId);
+	$form['order_uid'] = array('#type' => 'hidden', '#value' => $order->uid);
+	$form['order_address_state'] = array('#type' => 'hidden', '#value' => 'adminorderpay');
+
+	$commerceCls = ($theme_key == 'expertusoneV2') ? 'commerce-container-v2' : 'commerce-container' ;
+	$form['order_pay_container_start'] = array(
+			'#type'       => 'markup',
+			'#markup'     => '<div id="admin_order"><div id="uc-cart-checkout"><div id="uc-cart-checkout-form">',
+	);
+
+	$form['panes'] = array('#tree' => TRUE);
+	$panes = _uc_checkout_pane_list();
+	expDebug::dPrint('$panes = ' . print_r($panes, true), 5);
+
+	$id = 'productorg';
+	$pane = (!empty($panes[$id]) && $panes[$id]['enabled'])? $panes[$id] : null;
+	if(!empty($pane)) {
+		if (!isset($pane['collapsed'])) {
+			$collapsed = ($pane['prev'] === FALSE || empty($displayed[$pane['prev']])) ? FALSE : TRUE;
+		}
+		if (isset($form_state['expanded_panes']) && in_array($id, $form_state['expanded_panes'])) {
+			$collapsed = FALSE;
+		}
+		//$form_state['values']['order_address_state'] = 'adminorderpay';
+		$return = $pane['callback']('shortview', $order, $form, $form_state,'pay');
+		// Add the pane if any display data is returned from the callback.
+		if (is_array($return) && (!empty($return['description']) || !empty($return['contents']))) {
+			// Create the fieldset for the pane.
+			$form['panes'][$id] = array(
+					'#type' => 'fieldset',
+					'#title' => $pane['title'],
+					'#description' => !empty($return['description']) ? $return['description'] : NULL,
+					'#collapsible' => $pane['collapsible'],
+					//'#collapsed' => variable_get('uc_use_next_buttons', FALSE) ? $collapsed : FALSE,
+					'#id' => $id . '-pane',
+					'#theme' => isset($return['theme']) ? $return['theme'] : NULL,
+			);
+			// Add the contents of the fieldset if any were returned.
+			if (!empty($return['contents'])) {
+				$form['panes'][$id] = array_merge($form['panes'][$id], $return['contents']);
+				expDebug::dPrint('$form[panes][$id] = ' . print_r($form['panes'][$id], true), 5);
+			}
+			// Log that this pane was actually displayed.
+			$displayed[$id] = TRUE;
+		}
+	}
+	$form['panes']['order_pay_user_info_divider'] = array(
+			'#type'       => 'markup',
+			'#markup'     => '<div class="clearBoth"></div><div class="order-divider divider-margin"></div>',
+	);
+
+	$id = 'billing';
+	$pane = (!empty($panes[$id]) && $panes[$id]['enabled'])? $panes[$id] : null;
+	if(!empty($pane)) {
+		$pane['callback'] = 'expertus_admin_order_pane_billing';
+		$return = $pane['callback']('view', $order, $form, $form_state);
+		$return['description'] = '<div class="cart_head">'.t('LBL555').'</div>'; //Billing Information
+		// Add the pane if any display data is returned from the callback.
+		if (is_array($return) && (!empty($return['description']) || !empty($return['contents']))) {
+			// Create the fieldset for the pane.
+			$form['panes'][$id] = array(
+					'#type' => 'fieldset',
+					'#title' => $pane['title'],
+					'#description' => !empty($return['description']) ? $return['description'] : NULL,
+					'#collapsible' => $pane['collapsible'],
+					//'#collapsed' => variable_get('uc_use_next_buttons', FALSE) ? $collapsed : FALSE,
+					'#id' => $id . '-pane',
+					'#theme' => isset($return['theme']) ? $return['theme'] : NULL,
+			);
+			// Add the contents of the fieldset if any were returned.
+			if (!empty($return['contents'])) {
+				$form['panes'][$id] = array_merge($form['panes'][$id], $return['contents']);
+				expDebug::dPrint('$form[panes][$id] = ' . print_r($form['panes'][$id], true), 5);
+			}
+		}
+	}
+
+    if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status - To display the Custom attributes UI - Start Custom Attribute rendering in Payment Form
+         include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderinforms.inc');
+         renderCustomAttributeinBillingPane($form,$form_state,'billing','admin_payment');
+    } //#custom_attribute_0078975 - End Check module status
+
+	if($theme_key == 'expertusoneV2') {
+		$form['panes']['order_pay_divider_billing'] = array(
+				'#type'       => 'markup',
+				'#markup'     => '<div class="clearBoth"></div><div class="shoppingcart-hdr-v2"><div class="order-admin-header">'.t("LBL1249").'</div></div>',
+		);
+	}else{
+		$form['panes']['order_pay_divider_billing'] = array(
+				'#type'       => 'markup',
+				'#markup'     => '<div class="clearBoth"></div><div class="admin-hdr"><div class="order-admin-header">'.t("LBL1249").'</div></div>',
+		);
+	}
+
+	$form['panes']['order_cart_review'] = array(
+			'#type'       => 'markup',
+			'#markup'     => '<div class="'.$commerceCls.'"><div class="order-review-table"><div id="admin_cart_review_container">' . theme('clone_uc_cart_order_review_table', array('order' => $order)).'</div></div></div>',
+	);
+	/**
+	 * Payment method section pane (hide when callout is enable with api type)
+	 */
+	if (module_exists('exp_sp_callout') && calloutIsActive() &&  calloutEntityIsActive('cme_pmt') && calloutEntityMethod('cme_pmt') == 'api') {
+		unset($panes['payment']);
+	} else {
+		$id = 'payment';
+		$pane = (!empty($panes[$id]) && $panes[$id]['enabled'])? $panes[$id] : null;
+		if(!empty($pane)) {
+			$return = $pane['callback']('review', $order, $form, $form_state);
+			expDebug::dPrint('Add the pane if any display data is returned from the callback'.print_r($return,true));
+			if($pane['title'] == 'Payment method'){
+				$pane['title'] = t('LBL548');
+			}
+			if($theme_key == 'expertusoneV2') {
+				$form['panes']['order_pay_clone_divider'] = array(
+						'#type'       => 'markup',
+						'#markup'     => '<div class="clearBoth"></div><div class="shoppingcart-hdr-v2"><div class="order-admin-header">'.$pane['title'].'</div></div>',
+				);
+			}else{
+				$form['panes']['order_pay_clone_divider'] = array(
+						'#type'       => 'markup',
+						'#markup'     => '<div class="clearBoth"></div><div class="admin-hdr"><div class="order-admin-header">'.$pane['title'].'</div></div>',
+				);
+			}
+
+			if (is_array($return)) {
+				foreach ($return as $row) {
+					if (is_array($row)) {
+						if($row['title'] == t('LBL553').":" || $row['title'] == "" || $row['title'] == t('Discount')  || $row['title'] == t('Discount').":" || $row['title'] == 'Tax' || $row['title'] == t('Tax') || $row['title'] == t('LBL827').":")
+							continue;
+						if(empty($row['data']))
+							$row['data'] = '&nbsp;';
+						$total_padding_bottom = '';
+						if(stristr($row['title'],'total') || stristr($row['title'],'tax'))
+							$total_padding_bottom = "padding-bottom:5px;padding-top:5px;";
+						if(strstr($row['data'], "$") && strstr($row['data'], 'class="uc-price"')) {
+						}
+						else {
+							$output_payment_pane .= '<div>';
+								$row['data'] = ($row['data'] == 'Check') ? t('Check') : $row['data'];
+								$row['data'] = ($row['data'] == 'Credit card') ? t('Credit card') : $row['data'];
+								$output_payment_pane .= '<div class="order-method-title">'. $row['title'] .': </div>';
+								$output_payment_pane .= '<div class="order-method-data" >'. t($row['data']) .'</div>';
+							$output_payment_pane .= '</div>';
+						}
+					}
+				}
+			}
+	    $form['panes']['order_pay_payment_details_form'] = array(
+	    		'#type'       => 'markup',
+	    		'#markup'     => '<div class="clearBoth"></div><div id="order-payment-details">'.$output_payment_pane.'</div>',
+	    );
+			expDebug::dPrint('output checking from the admin side'.print_r($output_payment_pane,true));
+
+		}
+	}
+	$form['panes']['order_pay_payment_divider'] = array(
+			'#type'       => 'markup',
+			'#markup'     => '<div class="clearBoth"></div><div class="order-divider divider-margin divider-top-margin"></div>',
+	);
+
+	$id = 'comments';
+	$pane = (!empty($panes[$id]) && $panes[$id]['enabled'])? $panes[$id] : null;
+	if(!empty($pane)) {
+		$return = $pane['callback']('view', $order, $form, $form_state);
+		// Add the pane if any display data is returned from the callback.
+		if (is_array($return) && (!empty($return['description']) || !empty($return['contents']))) {
+			// Create the fieldset for the pane.
+			$form['panes'][$id] = array(
+					'#type' => 'fieldset',
+					'#title' => $pane['title'],
+					'#description' => !empty($return['description']) ? $return['description'] : NULL,
+					'#collapsible' => $pane['collapsible'],
+					//'#collapsed' => variable_get('uc_use_next_buttons', FALSE) ? $collapsed : FALSE,
+					'#id' => $id . '-pane',
+					'#theme' => isset($return['theme']) ? $return['theme'] : NULL,
+			);
+			// Add the contents of the fieldset if any were returned.
+			if (!empty($return['contents'])) {
+				$form['panes'][$id] = array_merge($form['panes'][$id], $return['contents']);
+				expDebug::dPrint('$form[panes][$id] = ' . print_r($form['panes'][$id], true), 5);
+			}
+			// Log that this pane was actually displayed.
+			$displayed[$id] = TRUE;
+		}
+	}
+
+	unset($form_state['expanded_panes']);
+	if($orderId){
+		$contents = admin_cart_get_contents($orderId);
+		$form['cart_contents'] = array(
+				'#type' => 'hidden',
+				'#value' => serialize($contents),
+		);
+	}
+
+	if($theme_key == 'expertusoneV2') {
+		$saveLeftBg   = '<div class="white-btn-bg-left"></div>';
+		$saveRightBg  = '<div class="white-btn-bg-right"></div>';	
+		$saveMiddleBg['class'][] = 'white-btn-bg-middle';		
+		$saveMiddleBg['onclick'] = 'if(opener.location.href.indexOf("admincalendar")>=0)window.close();return false;';
+		//$buttonmiddleBg =''
+		$backButton   = t('LBL212');
+	}else{
+		$saveLeftBg    = '';
+		$saveRightBg   = '';
+		$saveMiddleBg['class'][]  = 'admin-action-button-middle-bg';
+		$backButton   = '[ '.t('LBL212').' ]';
+	}
+
+	$form['actions'] = array('#type' => 'actions','#Class' => '', '#prefix' => '<div class="clearBoth"></div><div id="admincheckout-form-bottom">','#suffix' => '</div>');
+	$form['actions']['back'] = array(
+			'#type' => 'submit',
+			'#value' => $backButton,
+			'#prefix' => '<div class="addedit-form-cancel-container-actions learner-shopping-cart-back-btn">'.$saveLeftBg,
+			'#suffix' => $saveRightBg.'</div>',
+			'#attributes' => array('Class' => 'white-btn-bg-middle'),
+			'#validate' => array(), // Disable validation to prevent a new order from being created.
+			'#limit_validation_errors' => array(),
+			'#submit' => array('admin_cart_checkout_paymethod_form_back'),
+			'#id' => 'checkout_back_button',
+			'#weight' => 0,
+	);
+	$form['actions']['continue'] = array(
+			'#type' => 'submit',
+			'#name' => 'checkout_submit',
+			'#value' => t('LBL124'),
+			'#prefix' => '<div id="learner-admin-review-order" class="addedit-form-cancel-container-actions"><div class="admin-save-button-left-bg"></div>',
+			'#suffix' => '<div class="admin-save-button-right-bg"></div></div>',
+			'#attributes' => array('Class' => "admin-save-button-middle-bg"),
+			'#validate' => array('admin_order_payment_form_validate'),
+	);
+
+	$form['actions']['cancel'] = array(
+			'#type' => 'submit',
+			'#prefix' => '<div class="addedit-form-cancel-container-actions learner-shopping-cart-payment-cancel">'.$saveLeftBg,
+			'#suffix' => $saveRightBg.'</div>',
+			'#attributes' => $saveMiddleBg,
+			'#value' => t('LBL109'),
+			'#validate' => array(), // Disable validation to prevent a new order from being created.
+			'#limit_validation_errors' => array(),
+			'#submit' => array('admin_order_create_form_cancel'),
+	);
+
+	$form['order_pay_container_end'] = array(
+			'#type'       => 'markup',
+			'#markup'     => '</div></div></div>',
+	);
+
+	return $form;
+	}catch (Exception $ex) {
+		watchdog_exception('admin_order_payment_form', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+/*function admin_order_payment_form_validate($form, &$form_state) {
+	$trigger_element = $form_state['triggering_element']['#name'];
+
+	$orderId = $_SESSION['cart_admin_order'];
+
+	if (empty($orderId)) {
+		drupal_goto('');
+	}
+	else{
+		$order = uc_order_load($orderId);
+		$orderTotal = uc_order_get_total($order, TRUE);
+		if(!$orderTotal){
+			drupal_goto('administration/order/create');
+		}
+	}
+
+	unset($_SESSION['admin_checkout_validation_failed']);
+	$form_state['admin_checkout_pay_valid'] = TRUE;
+
+  $order = uc_order_load($orderId);
+
+	/* db_delete('uc_order_products')
+	->condition('order_id', $order->order_id)
+	->execute();
+
+	$order->products = unserialize($form_state['values']['cart_contents']); */
+
+	 //$order->order_total = uc_order_get_total($order, TRUE);
+
+	// Validate/process the cart panes.  A FALSE value results in failed checkout.
+	//expDebug::dPrint('values of the form state in validate funtion'.print_r($form_state['values']['panes'],true));
+ /*  $form_state['admin_checkout_pay_valid'] = TRUE;
+  foreach (element_children($form_state['values']['panes']) as $pane_id) {
+    $func = _uc_checkout_pane_data($pane_id, 'callback');
+    expDebug::dPrint('admin_order_payment_form_validate order call func = ' . print_r($func, true), 5);
+    if (is_string($func) && function_exists($func)) {
+      $isvalid = $func('process', $order, $form, $form_state);
+      if ($isvalid === FALSE) {
+        $form_state['expanded_panes'][] = $pane_id;
+        $form_state['admin_checkout_pay_valid'] = FALSE;
+      }
+    }
+  }
+
+
+  $order->line_items = uc_order_load_line_items($order, TRUE);
+  $order->line_items = array_merge($order->line_items, uc_order_load_line_items($order, FALSE));
+  usort($order->line_items, 'uc_weight_sort');
+
+  $formErrors = form_get_errors();
+  expDebug::dPrint('$formErrors = ' . print_r($formErrors, true), 5);
+  if ($form_state['admin_checkout_pay_valid'] == FALSE || !empty($formErrors)) {
+    $form_state['admin_checkout_pay_valid'] = FALSE; // is read by exp_sp_cybersource_tax.module hook_uc_order()
+  }
+
+  expDebug::dPrint('admin_order_payment_form_validate order save $order = ' . print_r($order, true), 5);
+  uc_order_save($order);
+
+	/* if($trigger_element == 'checkout_submit'){
+		expDebug::dPrint('$_SESSION[admin_cybersourceTaxError] = ' . $_SESSION['admin_cybersourceTaxError'], 5);
+		if(isset($_SESSION['admin_cybersourceTaxError'])) {
+			form_set_error('tax_error', $_SESSION['admin_cybersourceTaxError']);
+		}
+		//unset($_SESSION['admin_cybersourceTaxError']);
+	}
+}*/
+
+/**
+ * Final checks to make sure the order can be completed.
+ *
+ * @see admin_order_payment_form()
+ */
+function admin_order_payment_form_submit($form, &$form_state) {
+	try {
+	expDebug::dPrint('debug stage 1 admin_order_payment_form_submit', 5);
+	expDebug::dPrint('$_SESSION[cart_admin_order] = ' . $_SESSION['cart_admin_order'], 5);
+	expDebug::dPrint('$form_state[values] = ' . print_r($form_state['values'], true), 5);
+	expDebug::dPrint('$form_state[storage] = ' . print_r($form_state['storage'], true), 5);
+
+	if ($form_state['admin_checkout_pay_valid'] === FALSE) {
+		 $url = 'administration/order/pay';
+		 $form_state['redirect'] = $url;
+	}
+	else{
+		// Invoke hook_uc_order($op = 'submit') to test to make sure the order can
+		// be completed... used for auto payment in uc_credit.module.
+		$order = uc_order_load($_SESSION['cart_admin_order']);
+		expdebug::dPrint('$order = ' . print_r($order, true), 5);
+
+		$error = FALSE;
+
+		// Invoke it on a per-module basis instead of all at once.
+		foreach (module_implements('uc_order') as $module) {
+			$function = $module . '_uc_order';
+			if (function_exists($function)) {
+				expDebug::dPrint('admin_order_payment calling function ' . $function, 5);
+				// $order must be passed by reference.
+				$result = $function('submit', $order, NULL);
+				expDebug::dPrint('$result = ' . print_r($result, true), 5);
+				$msg_type = 'status';
+				if ($result[0]['pass'] === FALSE) {
+					$error = TRUE;
+					$msg_type = 'error';
+				}
+				if (!empty($result[0]['message'])) {
+					expDebug::dPrint('Setting message and type = ' . $result[0]['message'] .  ' --> ' . $msg_type, 5);
+					drupal_set_message(t('We were unable to process your credit card payment. Please verify your details and try again.  If the problem persists, contact us to complete your order.'), $msg_type);
+				}
+
+				expDebug::dPrint('$error = ' . ($error? 'TRUE' : 'FALSE'), 5);
+				// Stop invoking the hooks if there was an error.
+				if ($error) {
+					$sltOrderId  = db_query("SELECT id FROM slt_order WHERE uc_order_id = '".$order->order_id."' limit 1")->fetchField();
+					$lmsUserId = getSltpersonUserId();
+				  $insertStmt = db_insert('slt_payment_log');
+      		$fields = array(
+      			'order_id'    => $sltOrderId,
+      			'type'        => 'CC',
+      			'paytime'     => now(),
+      			'requestxml'  => 'not available',
+      			'responsexml' => $result[0]['message'],
+      			'created_by'  => $lmsUserId,
+      			'created_on'  => now(),
+      			'updated_by'  => $lmsUserId,
+      			'updated_on'  => now()
+      		);
+      		$insertStmt->fields($fields);
+					break;
+				}
+			}
+		}
+
+		if ($error) {
+			$form_state['redirect'] = 'administration/order/pay';
+		}
+		else {
+			adminOrderCommentUpdateFromOrderCreation($form_state['values']['order_id'],$form_state['values']['order_uid'],$form_state['values']['panes']['comments']['comments']);
+            
+            if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status/Save Custom Attribute Values
+                  $lmsUserLoginId = getSltpersonUserId();
+                  $sltCreatedOrderId  = db_query("SELECT id FROM slt_order WHERE uc_order_id = '".$order->order_id."' limit 1")->fetchField();
+                  include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderinforms.inc');
+                  saveCustomAttributesInAddEditForm($form, $form_state, $sltCreatedOrderId, 'cre_sys_obt_ord', $lmsUserLoginId,'Created');   
+             } //#custom_attribute_0078975 - End Check module status 
+             
+			$_SESSION['do_admin_complete'] = TRUE;
+			$form_state['redirect'] = 'administration/order/finish';
+		}
+	}
+	}catch (Exception $ex) {
+		watchdog_exception('admin_order_payment_form_submit', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+/**
+ * Returns the customer to the checkout page to edit their information.
+ *
+ */
+function admin_cart_checkout_paymethod_form_back($form, &$form_state) {
+	try {
+		// Delete cybersource_tax line items from uc_order_line_items table
+		$orderId = $_SESSION['cart_admin_order'];
+		if ($orderId) {
+			db_query('DELETE FROM {uc_order_line_items} WHERE order_id = :oid AND type = :typ',
+					array(':oid' => $orderId, ':typ' => 'cybersource_tax'));
+		}
+
+		// Reset item level tax in slt_order_items table to 0 for all order items
+		if ($_SESSION['slt_admin_orderid']) {
+			$updateStmt = db_update('slt_order_items');
+			$updateStmt->fields(array(
+					'tax_amount' => 0,
+					'updated_by' => getSltpersonUserId(),
+					'updated_on' => now()
+			)
+			);
+			$updateStmt->condition('order_id', $_SESSION['slt_admin_orderid'], '=');
+			expDebug::dPrintDBAPI('$updateStmt', $updateStmt);
+			$updateStmt->execute();
+		}
+
+		unset($_SESSION['do_exp_admin_paymethod']);
+		$form_state['redirect'] = 'administration/order/create';
+	}
+	catch (Exception $ex) {
+		watchdog_exception('admin_cart_checkout_paymethod_form_back', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+/**
+ * Completes the sale and finishes checkout.
+ */
+function admin_cart_checkout_complete() {
+	try {
+	global $user;
+	expDebug::dPrint('debug stage 2 admin_cart_checkout_complete', 5);
+	if (!isset($_SESSION['do_admin_complete']) || !$_SESSION['do_admin_complete']) {
+		drupal_goto('administration/order/create');
+	}
+
+	$order = uc_order_load(intval($_SESSION['cart_admin_order']));
+
+	if (empty($order)) {
+		// Display messages to customers and the administrator if the order was lost.
+		drupal_set_message(t("We're sorry.  An error occurred while processing your order that prevents us from completing it at this time. Please contact us and we will resolve the issue as soon as possible."), 'error');
+		watchdog('uc_cart', 'An empty order made it to checkout! Cart order ID: @cart_order', array('@cart_order' => $_SESSION['cart_admin_order']), WATCHDOG_ERROR);
+		drupal_goto('administration/order/create');
+	}
+
+	$build = admin_cart_complete_sale($order, variable_get('uc_new_customer_login', FALSE));
+
+	// Add a comment to let sales team know this came in through the site.
+	//uc_order_comment_save($order->order_id, $user->uid, t('Order created through website.'), 'admin');
+	unset($_SESSION['cartform']);
+	unset($_SESSION['admin_shop_cart_currency_code']);
+	unset($_SESSION['admin_shop_cart_currency_sym']);
+	unset($_COOKIE['admin_shop_cart_currency_code']);
+	unset($_COOKIE['admin_shop_cart_currency_sym']);
+	setcookie('admin_shop_cart_currency_code', null, -1, '/');
+	setcookie('admin_shop_cart_currency_sym', null, -1, '/');
+	//Kill cookie value in cart timer
+	// Secure cookie is disabled by Vincent on Dec 09, 2013
+	// This cookie is need to be read by javascript for timer count, if it is a secure then javasctipt will not read it. #0029940
+	setcookie("admin_cart_elapsed_time", "checkout", '', '', '','','');
+	return $build;
+	}catch (Exception $ex) {
+		watchdog_exception('admin_cart_checkout_complete', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+/**
+ * Completes a sale, including adjusting order status and creating user account.
+ *
+ * @param $order
+ *   The order object that has just been completed.
+ * @param $login
+ *   Whether or not to login a new user when this function is called.
+ *
+ * @return
+ *   The HTML text of the default order completion page.
+ */
+function admin_cart_complete_sale($order, $login = FALSE) {
+	try {
+	expDebug::dPrint('debug stage 3 admin_cart_complete_sale', 5);
+  $message_type = 'existing_user';
+	$account = user_load($order->uid);
+
+	$messages = array();
+
+	$messages[] = '<div class=commerce-message-wrapper>' .t('MSG486') . ' ';
+
+	// $messages[] = '<a href=/?q=administration/commerce/order>Go to Order Screen.</a></div>';
+	$messages[] = '<a href=/?q=administration/commerce/order>'.t('LBL906').' '.t('LBL1025').' '.t('Screen').'</a></div>';
+
+	$output_message = '';
+	foreach ($messages as $message) {
+		//$message = filter_xss_admin(token_replace($message, array('uc_order' => $order)));
+		$message = token_replace($message, array('uc_order' => $order));
+		$output_message .= $message;
+	}
+
+	// Move an order's status from "In Checkout" to "Pending"
+	if (uc_order_status_data($order->order_status, 'state') == 'in_checkout') {
+		$status = uc_order_state_default('post_checkout');
+		if (uc_order_update_status($order->order_id, $status)) {
+			$order->order_status = $status;
+		}
+	}
+	//hook call for checkout complete
+	$order->update_from = 'admin_create';
+	module_invoke_all('uc_checkout_complete', $order, $account);
+
+	// Clear our the session variables used to force the cart workflow.
+	unset($_SESSION['cart_admin_order'],$_SESSION['do_admin_complete'],$_SESSION['do_exp_admin_paymethod'], $_SESSION['callout_response'],$_SESSION['cart_page_messages']);
+	return array(
+			'#theme' => 'uc_cart_complete_sale',
+			'#message' => $output_message,
+			'#order' => $order,
+	);
+	}catch (Exception $ex) {
+		watchdog_exception('admin_cart_complete_sale', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function admin_order_tax_calculate($form, &$form_state) {
+	try {
+	expDebug::dPrint('inside admin_order_tax_calculate', 5);
+	//Rebuild the order
+	$order 								= uc_order_load($form_state['values']['order_id']);
+	$order->products 			= admin_cart_get_contents($form_state['values']['order_id'],'rebuild');
+	$order->order_total 	= uc_order_get_total($order, TRUE);
+	$order->line_items 		= uc_order_load_line_items($order, TRUE);
+	$order->line_items 		= array_merge($order->line_items, uc_order_load_line_items($order, FALSE));
+	usort($order->line_items, 'uc_weight_sort');
+	expDebug::dPrint('admin_order_tax_calculate line item '. print_r($order->line_items,true),5);
+	/* $commands = array();
+	expDebug::dPrint('admin_order_tax_calculate order ' . print_r($order,true), 5);
+  //$commands[] = ajax_command_replace('#order_payment_form_wrapper', theme('clone_uc_cart_order_review_table', array('order' => $order)));
+
+	$formId = 'admin_order_payment_form';
+	$builtForm = drupal_build_form($formId, $form_state);
+	$commands = array();
+	$commands[] = ajax_command_replace('#order_payment_form_wrapper', drupal_render($builtForm));
+	return array(
+			'#type' => 'ajax',
+			'#commands' => $commands
+	); */
+	}catch (Exception $ex) {
+		watchdog_exception('admin_order_tax_calculate', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function admin_order_tax_calculate_field_validate($element, &$form_state) {
+	try {
+	expDebug::dPrint('admin_order_tax_calculate_field_validate'. print_r($form_state,true), 5);
+	expDebug::dPrint('admin_order_tax_calculate_field_validate input'. print_r($form_state['input']['panes']['billing']['billing_postal_code'],true), 5);
+	expDebug::dPrint('admin_order_tax_calculate_field_validate values'. print_r($form_state['uc_address'],true), 5);
+	$isTaxCalculate = ($form_state['values']['panes']['billing']['address']->data['order_create_from'] == 'admin_checkout' && variable_get('exp_cybersource_soap_tax_calculate', FALSE) &&
+			variable_get('uc_payment_credit_gateway' , '') == 'exp_cybersource') ? 1 : 0;
+	if((!$form_state['input']['panes']['billing']['billing_city'] || !$form_state['input']['panes']['billing']['billing_postal_code']) && $isTaxCalculate){
+		//$form_state['values']['panes']['billing']['address']->billing_postal_code = '';
+		//$form_state['uc_address']['address']->billing_postal_code = '';
+		form_set_error('tax_error', t('MSG593'));
+		expDebug::dPrint('admin_order_tax_calculate_field_validate '. print_r($form_state,true), 5);
+	}
+	return;
+	}catch (Exception $ex) {
+		watchdog_exception('admin_order_tax_calculate_field_validate', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+/*
+ *  Get a admin comments updated
+*/
+function adminOrderCommentUpdateFromOrderCreation($order_id,$user_id,$orderComment){
+	try{
+	    global $user;
+		expDebug::dPrint('$orderComment$orderComment : '.$orderComment);
+		$orderComment = stripApostrophe(stripRegStatus($orderComment)); // Strip the Special Character's For Security Purpose
+		expDebug::dPrint('Striped Comments : '.$orderComment);
+		// Select If Any Comments Previously There.
+		$selectStmt = db_select('uc_order_admin_comments', 'ord');
+		$selectStmt->condition('ord.order_id', $order_id, '=');
+		$selectStmt->condition('ord.uid', $user->uid, '=');
+		$selectStmt->addField('ord', 'comment_id');
+		expDebug::dPrintDBAPI(' $selectStmt SQL = ' , $selectStmt);
+		$commentId = $selectStmt->execute()->fetchField();
+		$loggedUser_id = getSltpersonUserId(); // Get the Logged In User Id
+		// If There Is No Comments Available Insert Or Update the Entry. Changes Made For This Ticket #0040107
+		if(!empty($orderComment)){
+			if(empty($commentId)){
+				uc_order_comment_save($order_id, $user->uid, $orderComment, 'admin');
+			}else{
+				$updComment  = db_update('uc_order_admin_comments');
+				$updComment->fields(array(
+						'message' => $orderComment,
+				));
+				$updComment->condition('order_id', $order_id);
+				$updComment->condition('uid', $user->uid , '=');
+				expDebug::dPrintDBAPI(' adminOrderCommentUpdateFromOrderCreation updComment SQL = ' , $updComment);
+				$updComment->execute();
+			}
+		}else {
+		  if(!empty($commentId)) {
+			  $updComment  = db_update('uc_order_admin_comments');
+			  $updComment->fields(array(
+			      'uid' => 0,
+			  ));
+			  $updComment->condition('comment_id', $commentId);
+			  $updComment->condition('order_id', $order_id);
+			  $updComment->condition('uid', 0 , '!=');
+			  expDebug::dPrintDBAPI(' adminOrderCommentUpdateFromOrderCreation updComment SQL = ' , $updComment);
+			  $updComment->execute();
+
+		  }
+
+		}
+	}catch (Exception $ex) {
+		watchdog_exception('adminOrderCommentUpdateFromOrderCreation', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+

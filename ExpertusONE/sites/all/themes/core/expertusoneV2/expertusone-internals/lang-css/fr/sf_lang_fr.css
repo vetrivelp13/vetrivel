@@ -1,0 +1,66 @@
+/* Catalog */
+#page-container #lnr-catalog-search .find-trng-sort-text {
+    /* background-position: 59px -2814px !important; */
+} 
+#widget #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .filter_labelclass{
+	width:104px;
+}
+#widget #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .mylearning-filter-by .reg.dropdown-set-wrapper, 
+#widget #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .mylearning-filter-by .textfilter-set-wrapper,
+#widget #block-exp-sp-lnrenrollment-tab-my-enrollment-customized .mylearning-filter-by .assignedby.dropdown-set-wrapper{
+	width:250px;
+}
+#widget #block-exp-sp-lnrlearningplan-tab-my-learningplan-customized .reg.dropdown-set-wrapper .filter_labelclass,
+#widget #block-exp-sp-lnrlearningplan-tab-my-learningplan-customized .textfilter-set-wrapper .filter_labelclass,
+#widget #block-exp-sp-lnrlearningplan-tab-my-learningplan-customized .assignedby.dropdown-set-wrapper .filter_labelclass{
+	width:96px;
+}
+/* My Learning */
+
+#page-container .enroll-sort-by-container .sort-by-text, #page-container .instructor-sort-by-container .sort-by-text{
+	/* background-position: 60px -2814px !important; */
+}
+
+.page-learning-enrollment-search #page-container .sort-by-text, .page-learning-enrollment-search #widget .sort-by-text{
+	/* min-width: 60px !important; */
+}
+
+
+.salesforce-widget #myteam-find-trng-sort-display .find-trng-sort-text{
+ background-position: 60px -2815px
+}
+.salesforce-widget #catalog-admin-cal-legend .first-row-cell .cal-legent-td-tdy{
+  width:auto;
+  padding-right:5px
+}
+
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -94px !important;
+}
+/* Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -111px !important;
+	 width: 182px !important;
+}
+}
+ 
+/* IE 10 hack */
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -94px !important;
+}
+
+.iframe-mylearning #page-container #enroll-lp-result-container .enroll-datatable-column2{
+	/*width:15% !important; */
+}
+
+}
+	
+/* IE9 */
+
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links, .iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	left: -106px\9 !important;
+}
+

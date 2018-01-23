@@ -1,0 +1,2349 @@
+<?php
+
+/**
+ * Implementation of hook_cron().
+ */
+function exp_sp_administration_content_cron() {
+    try {
+        $config=getConfig("exp_sp");
+        $local_server_ip = $_SERVER['SERVER_ADDR'];
+        
+        $convert_pdf_on_background      = $config['convert_pdf_on_background'];
+        $mylearn_version                = $config['mylearn_version'];
+        $content_conversion             = $config['content_conversion'];
+        $content_conversiont_timeout    = $config['content_conversiont_timeout'];
+        $content_upload_path            = $config['content_upload_path'];
+        expDebug::dPrint('$$convert_pdfswf_on_background value = ' . print_r($convert_pdf_on_background, true), 4);
+        expDebug::dPrint('$$$mylearn_version value = ' . print_r($mylearn_version, true), 4);
+        if($mylearn_version && $content_conversion){
+            
+            $select = db_select('slt_content_master', 'content');
+            $select->leftJoin('slt_content_version', 'conver', 'content.id = conver.content_master_id');
+            $select->leftjoin('slt_content_lesson', 'conles', 'conver.id = conles.content_version_id');
+            $select->addField('content', 'id', 'id');
+            $select->addField('content', 'code', 'code');
+            $select->addField('content', 'custom4', 'pid');
+            $select->addField('content', 'custom3', 'start_time');
+            $select->addField('conver', 'file_path', 'file_path');
+            $select->addField('conles', 'launchurl', 'launchurl');
+            $select->addField('content', 'created_by', 'created_by');
+            $select->condition('content.status', 'lrn_cnt_sts_del','!=');
+            $select->condition('content.type', 'lrn_cnt_typ_knc');
+            $select->condition('content.conversion_status', 'lrn_cnt_sts_pen', '=');
+            $select->condition('content.custom4','','is not null');
+            $select->groupBy('content.id');
+            $select->orderBy('content.id','ASC');
+            $convertion_content_details = $select->execute()->fetchAll();
+            expDebug::dPrint("process details--> ".print_r($convertion_content_details,1),4);
+            foreach ($convertion_content_details as $content_details){
+                $content_excecution_expire_time = $content_details->start_time + (60 * $content_conversiont_timeout);
+                $cur_time = time();
+                expDebug::dPrint(' unix current time ->' . print_r($cur_time, true) , 4);
+                if($cur_time > $content_excecution_expire_time){
+                    $updateStmt = db_update('slt_content_master');
+                    $updateStmt->condition('id', $content_details->id);
+                    $fields = array(
+                            'custom4' => null,
+                            'custom3' =>null,
+                            'conversion_status' => 'lrn_cnt_sts_fal'
+                    );
+                    $updateStmt->fields($fields);
+                    $updateStmt->execute();
+                    $kill_comment = 'kill -9 '.$content_details->pid. ' > /dev/null 2>&1 & echo $!; ';
+                    expDebug::dPrint(' jod convetion kill_comment->' . print_r($kill_comment, true) , 4);
+                    $pid1= exec($kill_comment, $output1);
+                    sendContentFailureMailToUser($content_details->code,$content_details->created_by);
+                }else{
+                    //find expention of upload file
+                    $url_arr  = explode("/", $content_details->launchurl);
+                    $filename = end($url_arr);
+                    $file_arr = explode(".", $filename);
+                    $ext = strtolower(end($file_arr));
+                    $image_ext =  array('gif','png' ,'jpg', 'jpeg','pdf');
+                    if(!in_array($ext, $image_ext)){
+                        $uri_arr = explode('/',$content_details->file_path);
+                        $designation_folder = end($uri_arr);;
+                        //create convertion folder name
+                        $designation_folder = $content_upload_path.'/contentupload/convertioncontent/'.$designation_folder;
+                        $file_arr_cnt = count($file_arr);
+                        $file_name = '';
+                        for($i=0;$i<($file_arr_cnt-1);$i++){
+                            if($file_name=='')
+                                $file_name=$file_arr[$i];
+                            else
+                                $file_name=$file_name.'.'.$file_arr[$i];
+                        }
+                        $designation_path = $designation_folder.'/'.$file_name.'.pdf';
+                    }
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $mime = finfo_file($finfo, $designation_path);
+                    expDebug::dPrint(' jod convetion mime->' . print_r($mime, true) , 4);
+                    expDebug::dPrint(' jod file url->' . print_r($designation_path, true) , 4);
+                    expDebug::dPrint(' file_exists ->' . var_export(file_exists($designation_path), true) , 4);
+                    $file_size = filesize($designation_path);
+                    if($mime == 'application/pdf' && file_exists($designation_path) && $file_size>0 && !is_dir("/proc/$content_details->pid")){
+                        $updateStmt = db_update('slt_content_master');
+                        $updateStmt->condition('id', $content_details->id);
+                        $fields = array(
+                                'custom4' => null,
+                                'custom3' =>null,
+                                'conversion_status' => null
+                        );
+                        $updateStmt->fields($fields);
+                        $updateStmt->execute();
+                    }
+                }
+            }
+            
+            /* $select = db_select('slt_content_master', 'content');
+            $select->leftJoin('slt_content_version', 'conver', 'content.id = conver.content_master_id');
+            $select->leftjoin('slt_content_lesson', 'conles', 'conver.id = conles.content_version_id');
+            $select->addField('content', 'id', 'id');
+            $select->addField('content', 'code', 'code');
+            $select->addField('content', 'type', 'type');
+            $select->addField('content', 'created_by', 'created_by');
+            $select->addField('content', 'updated_by', 'updated_by');
+            $select->addField('conver', 'file_path', 'file_path');
+            $select->addField('conles', 'launchurl', 'launchurl');
+            $select->condition('content.status', 'lrn_cnt_sts_del','!=');
+            $select->condition('content.type', 'lrn_cnt_typ_knc');
+            $select->condition('content.conversion_status', 'lrn_cnt_sts_pen', '=');
+            $select->groupBy('content.id');
+            $select->orderBy('content.id','ASC');
+            $select->range(0,1);
+            expDebug::dPrintDBAPI("cron convertion query---> ", $select);
+            $convertion_content_details = $select->execute()->fetchAll();
+            expDebug::dPrint('cron convertion data details---->'.print_r($convertion_content_details,1),4);
+            include_once(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content.inc');
+            if($convertion_content_details[0]){
+                $file_convertion_flag = false;
+                $updateStmt = db_update('slt_content_master');
+                $updateStmt->condition('id', $convertion_content_details[0]->id);
+                $fields = array(
+                        'conversion_status' => 'lrn_cnt_sts_pro',
+                );
+                $updateStmt->fields($fields);
+                $updateStmt->execute();
+                $dummy = '';
+                $file_convertion_flag = file_convertion_logic($convertion_content_details[0],1,'',$dummy);
+                
+                include_once(drupal_get_path('module', 'exp_sp_core') .'/exp_sp_core.inc');
+                $person_detail = getUserInformations($convertion_content_details[0]->created_by);               
+                $notificationTemplateInfo = getNotificationTemplateInfo('user_notification_for_ffmpeg_conversion', 'cre_sys_lng_eng');
+                if($notificationTemplateInfo['status']== 'cre_ntn_sts_atv' && $file_convertion_flag){
+                    expDebug::dPrint("exp_sp_ffmpeg_conversion_mail_entry function entred... ",4);
+                    expDebug::dPrint("ffmpeg already in progress... ",4);
+                    
+                    if(empty($person_detail['preferred_language'])) {
+                        $person_detail['preferred_language'] = "cre_sys_lng_eng";
+                    }
+                    
+                    expDebug::dPrint("person_detail... ".print_r($person_detail),4);
+                    
+                    $notificationInfo = array();
+                    $nullValue = NULL;
+                    $customAdmin = 1;
+                    
+                    $notificationInfo['msg_id']         = 'user_notification_for_ffmpeg_conversion';
+                    $notificationInfo['lang_code']      = $person_detail['preferred_language'];
+                    $notificationInfo['msg_type']       = 'User Notification for Video conversion';
+                    $notificationInfo['token_str']      = 'first_name>|' . $person_detail['first_name'] . '~|' .'file_name>|' . $convertion_content_details[0]->code. '~|';
+                    $notificationInfo['user_id']        = $convertion_content_details[0]->created_by;
+                    $notificationInfo['send_to_id']     = $convertion_content_details[0]->created_by;
+                    $notificationInfo['send_to_name']   = $person_detail['first_name'];
+                    $notificationInfo['send_to_email']  = $person_detail['email'];
+                    $notificationInfo['send_type']      = 'php mailer';
+                    $notificationInfo['send_status']    = N;
+                    $notificationInfo['attach_content'] = $nullValue;
+                    $notificationInfo['remarks']        = $nullValue;
+                    
+                    expDebug::dPrint("exp_sp_ffmpeg_conversion_mail_entry function entred... ".print_r($notificationInfo),4);
+                    
+                    $insertStmt1 = db_insert('slt_notification');
+                    $insertStmt1->fields(array(
+                            'msg_id'        => $notificationInfo['msg_id'],
+                            'lang_code'     => $notificationInfo['lang_code'],
+                            'msg_type'      => $notificationInfo['msg_type'],
+                            'token_str'     => $notificationInfo['token_str'],
+                            'user_id'       => $notificationInfo['user_id'],
+                            'send_to_id'    => $notificationInfo['user_id'],
+                            'send_to_name'  => $notificationInfo['send_to_name'],
+                            'send_to_email' => $notificationInfo['send_to_email'],
+                            'send_type'     => $notificationInfo['send_type'],
+                            'send_status'   => 'N',
+                            'attach_content'=> $nullValue,
+                            'remarks'       => $nullValue,
+                            'created_by'    => $customAdmin,
+                            'created_on'    => now(),
+                            'updated_by'    => $customAdmin,
+                            'updated_on'    => now(),
+                            'custom0'       => $nullValue
+                    ));
+                    
+                    
+                    $userNotificationId = $insertStmt1->execute();
+                }
+            } */
+        }
+        
+    }catch (Exception $ex) {
+        watchdog_exception('exp_sp_administration_content_cron function for convert to pdf have error:', $ex);
+        throw $ex;
+        
+    }
+    try {
+        expDebug::dPrint("entered into ffmpeg cron function",4);
+        $config=getConfig("exp_sp");
+        $local_server_ip = $_SERVER['SERVER_ADDR'];
+        
+        $servers            = explode(',',$config['ffmpeg_server_ip']);
+        $ffmpeg_user_name   = explode(',',$config['ffmpeg_server_username']);
+        $ffmpeg_password    = explode(',',$config['ffmpeg_server_password']);
+        $ffmpeg_mount_path  = explode(',',$config['ffmpeg_mount_path']);
+        expDebug::dPrint('$servers '.print_r($servers, 1) ,5);
+        expDebug::dPrint('$ffmpeg_user_name '.print_r($ffmpeg_user_name, 1), 5);
+        expDebug::dPrint('$ffmpeg_password '.print_r($ffmpeg_password, 1), 5);
+        expDebug::dPrint('$ffmpeg_mount_path '.print_r($ffmpeg_mount_path, 1), 5);
+        expDebug::dPrint('$local_server_ip '.print_r($local_server_ip, 1), 5);
+
+        if(!empty($servers[0])) {
+            foreach($servers as $key => $server) {
+                if($server == $local_server_ip) {
+                    exp_sp_ffmpeg_conversion_process($server,$ffmpeg_user_name[$key],$ffmpeg_password[$key], $ffmpeg_mount_path[$key], false);
+                } else {
+                    if(function_exists('ssh2_connect')) {
+                        if(!($con = ssh2_connect($server, 22))){
+                            expDebug::dPrint("fail: unable to establish connection with ffmpeg server".print_r($server, true), 5);
+                        } else {
+                            // try to authenticate with username root, password secretpassword
+                            if(!ssh2_auth_password($con, $ffmpeg_user_name[$key], $ffmpeg_password[$key])) {
+                                expDebug::dPrint("fail: unable to authenticate  with ffmpeg server".print_r($server, true), 5);
+                            } else {
+                                //command for ffmpeg running or not.
+                                $cmd = "ps ax | grep -v grep | grep ffmpeg";
+                                $stream = ssh2_exec($con, $cmd);
+                                $ffmpeg_progress = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
+                                stream_set_blocking($stream, true);
+                                stream_set_blocking($ffmpeg_progress, true);
+
+                                $ffmpeg_status =  stream_get_contents($stream);
+                                /* occurrences - number of ffmpeg process is running. where ffmpeg_log.txt is created after successful conversion.
+                                 * Otherwise its available in ffmpeg conversion command.
+                                * By using this string we can find out howmany ffmpeg conversion is going on. */
+
+                                $occurrences = substr_count($ffmpeg_status, 'ffmpeg_log.txt');
+                                expDebug::dPrint("ffmpge status occurrences :".print_r($occurrences,true), 5);
+
+                                if($occurrences < ($config['ffmpeg_conversion_count']+1)) {
+                                    //close ssh2 connection
+                                    unset($con);
+                                    //call a function for ffmpeg conversion start.
+                                    exp_sp_ffmpeg_conversion_process($server,$ffmpeg_user_name[$key],$ffmpeg_password[$key], $ffmpeg_mount_path[$key], true);
+                                }
+                            }
+                        }
+                    } else {
+                        expDebug::dPrint("ssh2 function is not exists in this server ", 5);
+                        exp_sp_ffmpeg_conversion_process($server,$ffmpeg_user_name[$key],$ffmpeg_password[$key], $ffmpeg_mount_path[$key], false);
+                    }
+                }
+            }
+        }
+    }catch (Exception $ex) {
+        watchdog_exception('exp_sp_administration_content_cron function have error:', $ex);
+        throw $ex;
+    }
+}
+function sendContentFailureMailToUser($content_code,$user_id){
+    global $base_url;
+    try {
+        $config=getConfig("exp_sp");
+        $reply_to           = $config['reply_to'];
+        $send_to_email      = $config['pdf_conversion_failed_notification_ids'];
+        
+        
+        $subject = "Conversion failed for Knowledge Content Content ".sanitize_data($content_code);
+        
+        $site_name = variable_get('site_name', 'ExpertusONE');
+        $site_url  = '<a href="'.$base_url.'" target="_blank">'.variable_get('site_name', 'ExpertusONE').'</a>';
+        
+        
+        $message  = '<html><body>';
+        $message .= '<table cellspacing="0" cellpadding="0" border="0" width="100%">';
+        $message .= '<tr><td style="padding:15px">';
+        $message .= '<span style="font-size:10pt;font-family:arial,helvetica,sans-serif">';
+        $message .= '<br><br>Hi,';
+        $message .= '<br><br>The PDF conversion process for Knowledge Content '.sanitize_data($content_code) .' has failed.<br><br>';
+        $message .= '<br><br>This may be because of a large volume data present in the content.<br><br>';
+        $message .= '<br>Thank you,<br><br>'.$site_name.'&nbsp;Team<br>';
+        $message .= $site_url.'<br><br>';
+        $message .= '</span>';
+        $message .= '</td></tr></table>';
+        $message .= '</body></html>';
+        
+        
+        $headers = 'From: ' . strip_tags($reply_to) . '\r\n';
+        $headers .= 'Reply-To: '. strip_tags($reply_to) . '\r\n';
+        $headers .= 'X-Mailer: PHP/' . phpversion();
+        $headers .= 'MIME-Version: 1.0\r\n';
+        $headers .= 'Content-Type: text/html; charset=ISO-8859-1\r\n';
+        
+        expDebug::dPrint("send_to_email... ".print_r($send_to_email,1),4);
+        expDebug::dPrint("subject... ".print_r($subject,1),4);
+        expDebug::dPrint("message... ".print_r($message,1),4);
+        expDebug::dPrint("headers... ".print_r($headers,1),4);
+        
+        require_once('sites/all/commonlib/phpmailer/PHPMailerAutoload.php');
+        $phpMailer = new PHPMailer();
+        $phpMailer->CharSet = 'UTF-8';
+        $phpMailer->setFrom($reply_to, $site_name);
+        $phpMailer->addReplyTo($send_to_email);
+        $phpMailer->Subject  = $subject;
+        $phpMailer->Body = $message;
+        $phpMailer->isHTML(true);
+        foreach (explode(',', $send_to_email) as $address) {
+            $address = trim($address);
+            expDebug::dPrint("Maile id-------->: " . $address, 4);
+            if (!empty($address)) {
+                $phpMailer->AddAddress($address);
+            }
+            else {
+                throw new Exception ('Bad schedule email address list');
+            }
+        }
+        if(!$phpMailer->Send()) {
+           expDebug::dPrint("Mailer Error: " . $phpMailer->ErrorInfo, 4);
+        }else {
+            expDebug::dPrint("Message has been sent ", 4);
+        }
+        //mail($send_to_email, $subject, $message, $headers);
+    }catch (Exception $ex) {
+        watchdog_exception('content Mail send expectional error :', $ex);
+        throw $ex;
+    }
+}
+
+function exp_sp_ffmpeg_conversion_process($server,$ffmpeg_user_name,$ffmpeg_password, $ffmpeg_mount_path, $remote_ffmpeg_server = false) {
+
+    try {
+        $config=getConfig("exp_sp");
+        if (db_table_exists(slt_ffmpeg_queue)) {
+            $obj = exp_sp_ffmpeg_queue();
+
+            expDebug::dPrint("value of return object:.".print_r($obj,true), 5);
+
+            if(!empty($obj)) {
+                expDebug::dPrint("entered remote system object", 5);
+                $cmd = "ps ax | grep -v grep | grep ffmpeg";
+                if($remote_ffmpeg_server == true ) {
+                    expDebug::dPrint('ssh2_connect $server '.print_r($server, 1), 5);
+                    $con = ssh2_connect($server, 22);
+                    expDebug::dPrint('ssh2_connect resource '.var_export($con, 1), 5);
+                    $ssh2_auth = ssh2_auth_password($con, $ffmpeg_user_name, $ffmpeg_password);
+                    expDebug::dPrint('ssh2_connect ssh2_auth_password '.var_export($ssh2_auth, 1), 5);
+                    $stream = ssh2_exec($con, $cmd);
+                    $ffmpeg_progress = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
+                    stream_set_blocking($stream, true);
+                    stream_set_blocking($ffmpeg_progress, true);
+                    $ffmpeg_status =  stream_get_contents($stream);
+                    $occurrences = substr_count($ffmpeg_status, 'ffmpeg_log.txt');
+                }else {
+                    $occurrences = shell_exec($cmd."; echo $?");
+                    expDebug::dPrint("ffmpeg conversion command in cron function: occurrences".print_r($occurrences,true), 5);
+                }
+
+                if($occurrences < ($config['ffmpeg_conversion_count']+1) || ($remote_ffmpeg_server == true)) {
+
+                    $update = db_update('slt_ffmpeg_queue');
+                    $update->fields(array('progress_status' => 1));
+                    $update->condition('id',trim($obj[0]->id , '='));
+                    expDebug::dPrintDBAPI('update amaran=',$update);
+                    $result = $update->execute();
+
+
+                    //$command  = $obj[0]->command;
+
+                    $flDir    = $obj[0]->folder_name;
+                    $fileName = $obj[0]->name;
+                    $bit_rate = $obj[0]->bit_rate;
+
+                    $mobile_file_name = str_replace(".mp4", "", $fileName);
+                    $srcFileName = $ffmpeg_mount_path.'/' .$flDir.'/'.$fileName;
+                    
+                    include_once(drupal_get_path('module', 'exp_sp_administration_module_info') .'/exp_sp_administration_module_info.inc');
+                    $module_name = array('exp_sp_stream_server');
+                    $video_stream_server_status  = getDrupalModuleStatus($module_name);
+
+                    /* sample conversion command
+                     * $command = "ffmpeg -i ".$srcFileName." -vcodec libx264 -vprofile baseline  -b:v ".$bit_rate."k  -f mp4 -y  ".$ffmpeg_mount_path.'/'.$flDir.'/'.$bit_rate.'/'.$fileName.'
+                    * && ffmpeg -i '.$ffmpeg_mount_path.'/'.$flDir.'/'.$bit_rate.'/'.$fileName.' -hls_time 10 '.$ffmpeg_mount_path.'/'.$flDir.'/'.$bit_rate.'/'.$mobile_file_name.'.m3u8
+                    * && echo successfully decoded >' .$ffmpeg_mount_path.'/'.$flDir.'/'.$bit_rate.'/ffmpeg_log.txt 2>&1';
+                    */
+                    if($video_stream_server_status == 1) {
+                        $command = "ffmpeg -i ".$srcFileName." -vcodec libx264 -vprofile baseline  -b:v ".$bit_rate."k  -f mp4 -y  ".$ffmpeg_mount_path.'/'.$flDir.'/'.$bit_rate.'/'.$fileName.'&& echo successfully decoded >'.$ffmpeg_mount_path.'/'.$flDir.'/'.$bit_rate.'/ffmpeg_log.txt 2>&1 && ffmpeg -i '.$ffmpeg_mount_path.'/'.$flDir.'/'.$bit_rate.'/'.$fileName.' -hls_time 10 '.$ffmpeg_mount_path.'/'.$flDir.'/'.$bit_rate.'/'.$mobile_file_name.'.m3u8';
+                    } else {
+                        $command = "ffmpeg -i ".$srcFileName." -vcodec libx264 -vprofile baseline  -b:v ".$bit_rate."k  -f mp4 -y  ".$ffmpeg_mount_path.'/'.$flDir.'/'.$bit_rate.'/'.$fileName.'&& echo successfully decoded >'.$ffmpeg_mount_path.'/'.$flDir.'/'.$bit_rate.'/ffmpeg_log.txt 2>&1';
+                    }
+                    expDebug::dPrint("ffmpeg conversion command in cron function:".print_r($command,true),4);
+
+                    $desination_folder = $ffmpeg_mount_path;
+                    $srcFileName = $desination_folder .'/'.$flDir.'/'.$fileName;
+
+                    $cmd_creation = "mkdir -m 755 ".$desination_folder .'/'.$flDir.'/'.$bit_rate;
+                        
+                    if($remote_ffmpeg_server == true ) {
+
+
+                        $stream = ssh2_exec($con, $cmd_creation);
+                        
+                        $stream1 = ssh2_exec($con, $command);
+                        $stream_out_error = ssh2_fetch_stream($stream1, SSH2_STREAM_STDERR);
+                        stream_set_blocking($stream1, true);
+                        stream_set_blocking($stream_out_error, true);
+                        $output_status = stream_get_contents($stream1);
+                    } else {
+                        $stream = shell_exec($cmd_creation."; echo $?");
+                        $stream1 = shell_exec($command."; echo $?");
+                    }
+
+                    $path = 'public://contentupload';
+                    $content_upload_path = drupal_realpath($path);
+
+                    $file = $content_upload_path .'/'.$flDir.'/'.$bit_rate.'/ffmpeg_log.txt';
+                    $searchfor = "successfully decoded";
+
+                    if (file_exists($file)) {
+                        $contents = file_get_contents($file);
+                        // escape special characters in the query
+
+                        $pattern = preg_quote($searchfor, '/');
+                        // finalise the regular expression, matching the whole line
+                        $pattern = "/^.*$pattern.*\$/m";
+                        // search, and store all matching occurences in $matches
+                        if(preg_match_all($pattern, $contents, $matches)){
+
+                            db_delete('slt_ffmpeg_queue')
+                            ->condition('folder_name',$obj[0]->folder_name)
+                            ->condition('name', $obj[0]->name)
+                            ->condition('bit_rate', $obj[0]->bit_rate)
+                            ->execute();
+
+                            $check_file_name = str_replace(".mp4", "", $fileName);
+                            $check_for_folder_name ='./sites/default/files/contentupload/'.$flDir;
+                            include_once(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content.inc');
+                            expDebug::dPrint("check file name without mp4:".print_r($check_file_name,true),4);
+                            $conversion_format = array('256');
+                            if (streamingOrNot($check_for_folder_name, $check_file_name, $conversion_format)) {
+                                if($obj[0]->bit_rate =='256') {
+                                    $user_id    = $obj[0]->user_id;
+                                    $user_email = $obj[0]->user_email;
+                                    $user_preferred_language = $obj[0]->user_preferred_language;
+                                    expDebug::dPrint('$stream_server_status = ' .print_r($video_stream_server_status,true), 4);
+
+                                    if($video_stream_server_status == 1) {
+                                        exp_sp_ffmpeg_conversion_mail_entry($fileName, $user_id, $user_email);
+                                    }
+
+
+                                }
+                            }
+                        }
+                    }else {
+                        $update = db_update('slt_ffmpeg_queue');
+                        $update->fields(array('progress_status' => 0));
+                        $update->condition('id',trim($obj[0]->id , '='));
+                        expDebug::dPrintDBAPI('update amaran=',$update);
+                        $result = $update->execute();
+                    }
+
+                }else {
+                    expDebug::dPrint("ffmpeg already in progress... ",4);
+                }
+            }else {
+                expDebug::dPrint("There is no value in ffmpeg queue ...",4);
+            }
+        }else {
+            expDebug::dPrint("ffmpeg table not exist",4);
+        }
+
+    }catch (Exception $ex) {
+        $txn->rollback();
+        watchdog_exception('ffmpeg expectional error :', $ex);
+
+        throw $ex;
+    }
+}
+function exp_sp_ffmpeg_queue () {
+    $select = db_select('slt_ffmpeg_queue','ffmpeg');
+    $select->addField('ffmpeg','id','id');
+    $select->addField('ffmpeg','folder_name','folder_name');
+    $select->addField('ffmpeg','name','name');
+    $select->addField('ffmpeg','user_id','user_id');
+    $select->addField('ffmpeg','user_email','user_email');
+    $select->addField('ffmpeg','bit_rate','bit_rate');
+    $select->addField('ffmpeg','user_preferred_language','user_preferred_language');
+    $select->condition('ffmpeg.progress_status', '0');
+    $select->orderBy('bit_rate', 'ASC')->range(0,1);
+    
+    expDebug::dPrintDBAPI('$select for slt_ffmpeg_queue=',$select);
+    $obj = $select->execute()->fetchAll();
+    return $obj;
+}
+
+function exp_sp_ffmpeg_conversion_mail_entry($fileName, $user_id, $user_email, $user_preferred_language) {
+    expDebug::dPrint("exp_sp_ffmpeg_conversion_mail_entry function entred... ",4);
+    expDebug::dPrint("ffmpeg already in progress... ",4);
+    include_once(drupal_get_path('module', 'exp_sp_core') .'/exp_sp_core.inc');
+    if(empty($user_preferred_language)) {
+        $user_preferred_language = "cre_sys_lng_eng";
+    }
+    $person_detail = getUserInformations($user_id);
+    expDebug::dPrint("person_detail... ".print_r($persion_detail),4);
+
+    $notificationInfo = array();
+
+    /*
+     *  $insertStmt1->fields(array(
+                                                'msg_id' => $notificationInfo['message_id'],
+                                                'lang_code' => $classInstructorInfo['preferred_language'],
+                                                'msg_type' => $notificationInfo['message_type'],
+                                                'token_str' => $notificationInfo['tokens_string'],
+                                                'user_id' => $notificationInfo['user_id'],
+                                                'send_to_id' => $notificationInfo['user_id'],
+                                                'send_to_name' => $notificationInfo['send_to_name'],
+                                                'send_to_email' => $notificationInfo['send_to_mail'],
+                                                'send_type' => $notificationInfo['send_type'],
+                                                'send_status' => 'N',
+                                                'attach_content' => $nullValue,
+                                                'ical' =>$iCal,
+                                                'remarks' => $nullValue,
+                                                'created_by' => $customAdmin,
+                                                'created_on' => now(),
+                                                'updated_by' => $customAdmin,
+                                                'updated_on' => now(),
+                                                'custom0'    => $nullValue
+                                        ));
+     */
+    $nullValue = NULL;
+    $customAdmin = 1;
+
+    $notificationInfo['msg_id']         = 'user_notification_for_ffmpeg_conversion';
+    $notificationInfo['lang_code']      = $person_detail[preferred_language];
+    $notificationInfo['msg_type']       = 'User Notification for Video conversion';
+    $notificationInfo['token_str']      = 'first_name>|' . $person_detail['first_name'] . '~|' .'file_name>|' . $fileName. '~|';
+    $notificationInfo['user_id']        = $user_id;
+    $notificationInfo['send_to_id']     = $user_id;
+    $notificationInfo['send_to_name']   = $persion_detail['first_name'];
+    $notificationInfo['send_to_email']  = $user_email;
+    $notificationInfo['send_type']      = 'php mailer';
+    $notificationInfo['send_status']    = N;
+    $notificationInfo['attach_content'] = $nullValue;
+    $notificationInfo['remarks']        = $nullValue;
+
+    expDebug::dPrint("exp_sp_ffmpeg_conversion_mail_entry function entred... ".print_r($notificationInfo),4);
+
+    $insertStmt1 = db_insert('slt_notification');
+    $insertStmt1->fields(array(
+            'msg_id'        => $notificationInfo['msg_id'],
+            'lang_code'     => $notificationInfo['lang_code'],
+            'msg_type'      => $notificationInfo['msg_type'],
+            'token_str'     => $notificationInfo['token_str'],
+            'user_id'       => $notificationInfo['user_id'],
+            'send_to_id'    => $notificationInfo['user_id'],
+            'send_to_name'  => $notificationInfo['send_to_name'],
+            'send_to_email' => $notificationInfo['send_to_email'],
+            'send_type'     => $notificationInfo['send_type'],
+            'send_status'   => 'N',
+            'attach_content'=> $nullValue,
+            'remarks'       => $nullValue,
+            'created_by'    => $customAdmin,
+            'created_on'    => now(),
+            'updated_by'    => $customAdmin,
+            'updated_on'    => now(),
+            'custom0'       => $nullValue
+    ));
+
+
+    $userNotificationId = $insertStmt1->execute();
+    //add_audit_trail_entry(1, $key, $classInfo['delivery_type'], 'exp_sp_learning', $notificationInfo['send_type'],    $notificationInfo['msg_type'] . $notificationInfo['send_to_mail']);
+}
+
+
+/**
+ * Implementation of hook_init().
+ */
+function exp_sp_administration_content_init() {
+if ((substr($_SERVER['REQUEST_URI'], -strlen('administration/manage/content')) == 'administration/manage/content')) {
+  global $theme_key;
+  $js_module_optional   = array('type' => 'file', 'group' => JS_DEFAULT);
+  $css_theme_optional   = array('type' => 'file', 'group' => CSS_THEME);
+  drupal_add_js(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content.js', $js_module_optional);
+  if($theme_key == 'expertusoneV2') {
+    drupal_add_css(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content_v2.css', array('type' => 'file', 'group' => CSS_THEME, 'weight'=>1300));
+    if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status
+         drupal_add_css(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_v2.css', $css_theme_optional);  
+    } //#custom_attribute_0078975 - End Check module status
+  }
+  else{
+    drupal_add_css(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content.css', $css_theme_optional);
+  }
+  }
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function exp_sp_administration_content_menu() {
+    try {
+  $items = array();
+    /*
+  $items['administration/manage/content'] = array(
+    'title' => t('LBL595'),
+    'page callback' => 'getContentAdminTabContent',
+    'access callback' => 'user_access',
+    'access arguments' => array('Content Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'weight' => 1,
+    'file' => 'exp_sp_administration_content.inc'
+  );
+    */
+  $items['administration/manage/content'] = array(
+    'title' => t('Content'),
+    'page callback' => 'empty_value',
+    'access callback' => 'user_access',
+    'type' => MENU_CALLBACK,
+    'weight' => 1,
+    'access arguments' => array('Content Admin Perm'),
+    );
+
+  $items['administration/manage/content/search/all'] = array(
+    'title' => 'Fetch Content List to display in JQGrid',
+    'page callback' => 'sendContentListToJqGrid',
+    'access callback' => 'user_access',
+    'access arguments' => array('Content Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_content.inc'
+  );
+
+  $items['administration/manage/content/textfilter-autocomplete'] = array(
+    'title' => 'Search By Text Filter Autocomplete',
+    'page callback' => 'getContentTextFilterAutoComplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('Content Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_content.inc',
+  );
+
+   $items['administration/manage/content/export'] = array(
+    'title' => 'Content Search Results CSV Export',
+    'page callback' => 'fetchContentAll',
+    'page arguments' => array('CSV'),
+    'access callback' => 'user_access',
+    'access arguments' => array('Content Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_content.inc',
+    );
+
+    $items['administration/manage/content/print'] = array(
+     'title' => 'Content Search Results Print to PDF',
+     'page callback' => 'fetchContentAll',
+     'page arguments' => array('PDF'),
+     'access callback' => 'user_access',
+     'access arguments' => array('Content Admin Perm'),
+     'type' => MENU_CALLBACK,
+     'file' => 'exp_sp_administration_content.inc',
+    );
+
+    $items['administration/manage/content/%ctools_js/addedit'] = array(
+    'title' => 'Add/Edit Content',
+    'page callback' => 'exp_sp_administration_content_display_addedit_form',
+    'page arguments' => array(3),
+    'access callback' => 'user_access',
+    'access arguments' => array('Content Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_content.inc'
+    );
+
+  $items['ajax/administration/manage/content/publish-and-unpublish/%'] = array (
+    'title' => 'Publish Or Unpublish Content',
+    'page callback' => 'publishOrUnpublishContent',
+    'page arguments' => array(5),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('Content Admin Perm'),
+    'file' => 'exp_sp_administration_content.inc'
+    );
+
+   $items['administration/manage/content/version-list/%'] = array(
+    'title' => 'Fetch available versions',
+    'page callback' => 'getContentVersionResults',
+    'page arguments' => array(4),
+    'access callback' => 'user_access',
+    'access arguments' => array('Content Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_content.inc'
+  );
+
+  $items['ajax/administration/manage/content/set-default-version/%/%'] = array (
+    'title' => 'Set content version to default',
+    'page callback' => 'setContentVersionToDefault',
+    'page arguments' => array(5,6),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('Content Admin Perm'),
+    'file' => 'exp_sp_administration_content.inc'
+  );
+
+  $items['administration/manage/content/check-version-transfer-conflict/%/%'] = array (
+    'title' => 'check content transfer conflict',
+    'page callback' => 'checkContentVersionTConflict',
+    'page arguments' => array(4,5),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('Content Admin Perm'),
+    'file' => 'exp_sp_administration_content.inc'
+  );
+  $items['ajax/administration/manage/content/cancel-version-transfer/%/%'] = array (
+    'title' => 'cancel content transfer conflict',
+    'page callback' => 'cancelContentVersionTConflict',
+    'page arguments' => array(5,6),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('Content Admin Perm'),
+    'file' => 'exp_sp_administration_content.inc'
+  );
+  
+  $items['ajax/administration/manage/content/delete-version/%'] = array (
+    'title' => 'Delete content version',
+    'page callback' => 'deleteContentVersion',
+    'page arguments' => array(5),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('Content Admin Perm'),
+    'file' => 'exp_sp_administration_content.inc'
+  );
+
+  $items['administration/manage/content/moveusers/%/%'] = array(
+    'title' => 'Move Users to New Version',
+    'page callback' => 'getUserDetailsToMove',
+    'page arguments' => array(4, 5),
+    'access callback' => 'user_access',
+    'access arguments' => array('Content Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_content.inc'
+    );
+
+  $items['administration/content/grid-moveusers/%/%/%/%/%/%'] = array(
+    'title' => 'User Grid List',
+    'page callback' => 'loadMoveUserDataGridType',
+    'page arguments' => array(3,4,5,6,7,8),
+    'access callback' => 'user_access',
+    'access arguments' => array('Content Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_content.inc'
+  );
+
+  $items['administration/manage/content/allassocversionusers-autocomplete'] = array(
+    'title' => 'Search Version Users Autocomplete',
+    'page callback' => 'getUserClassForVersionAutocomplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('Content Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_content.inc',
+    );
+
+
+  $items['ajax/administration/manage/content/getlesson-list/%'] = array(
+    'title' => 'Get Lessons For Version',
+    'page callback' => 'getLessonList',
+    'page arguments' => array(5),
+    'access callback' => 'user_access',
+    'access arguments' => array('Content Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_content.inc',
+    );
+
+  $items['ajax/administration/manage/content/preview/%'] = array(
+    'title' => 'Video Preview',
+    'page callback' => 'previewVideoInQtipPopup',
+    'page arguments' => array(5),
+    'access arguments' => array('Content Admin Perm'),
+    'file' => 'exp_sp_administration_content.inc',
+    'type' => MENU_CALLBACK
+  );
+  $items['administration/learning/content/tag-autocomplete'] = array(
+        'title' => 'Tag Autocomplete',
+        'page callback' => 'getContentTagnameAutoComplete',
+        'access callback' => 'user_access',
+        'access arguments' => array('Content Admin Perm'),
+        'type' => MENU_CALLBACK
+  );
+  $items['administration/manage/view-content/%ctools_js/addedit/%'] = array(
+        'title' => 'view content',
+        'page callback' => 'exp_sp_administration_viewcontent_addedit_form',
+        'page arguments' => array(4,5),
+        'access callback' => 'user_access',
+        'access arguments' => array('Content Admin Perm'),
+        'file' => 'exp_sp_administration_content.inc',
+        'type' => MENU_CALLBACK
+  );
+  expDebug::dPrint(' $items = ' . print_r($items, true) , 4);
+    return $items;
+    } catch (Exception $ex) {
+        watchdog_exception('exp_sp_administration_content_menu', $ex);
+        expertusErrorThrow($ex);
+    }
+}
+
+/*
+ * Implementation of hook_theme - for version list display
+ */
+function exp_sp_administration_content_theme() {
+    try {
+  return array(
+    'exp_sp_administration_content_version_list' => array('
+        variables' => array('detail' => array()),
+        'template' => 'exp_sp_administration_content_version_list'
+        ),
+    );
+  } catch (Exception $ex) {
+    watchdog_exception('exp_sp_administration_content_theme', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+
+function exp_sp_administration_content() {
+    try {
+    return array(
+    'Content Admin Perm' => array(
+      'title' => t('Content Admin Perm')
+    )
+  );
+    } catch (Exception $ex) {
+        watchdog_exception('exp_sp_administration_content', $ex);
+        expertusErrorThrow($ex);
+    }
+}
+
+/*
+ * exp_sp_administration_content_display_addedit_form() -Form implementation for content
+ */
+function exp_sp_administration_content_display_addedit_form($js = NULL, $contentId = ''){
+  try {
+  include_once(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content.inc');
+  $css_theme_optional   = array('type' => 'file', 'group' => CSS_THEME);
+  global $theme_key;
+  if($theme_key == 'expertusoneV2') {
+    drupal_add_css(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content_v2.css', $css_theme_optional);
+    drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration_v2.css', $css_theme_optional);
+    drupal_add_css(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_data_grid_v2.css', $css_theme_optional);
+  }
+  else{
+    drupal_add_css(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content.css', $css_theme_optional);
+    drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration.css', $css_theme_optional);
+  }
+    $js_module_optional   = array('type' => 'file', 'group' => JS_DEFAULT);
+    drupal_add_js(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content.js', $js_module_optional);
+    drupal_add_js(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration_addedit_behaviours.js', $js_module_optional);
+
+
+  // Default modalTheme is ExpertusCToolsModalTheme (see exp_sp_core_extend_ctools_ajax.js:Drupal.CTools.Modal.show())
+  $sample_style = array(
+   'ctools-admin-content-addedit-style' => array(
+      'modalSize' => array(
+        'width' => 680,
+        'minHeight' => 290,
+       ),
+    )
+  );
+  drupal_add_js($sample_style, 'setting');
+  if ($js) {
+    // Prepare the arguments list to be passed to $formState['build_info']['args'] of each form
+    $argsList = array();
+
+    $contentTitle = '';
+    if (!empty($contentId)) {
+      $argsList[] = $contentId;
+      $contentTitle = 'Content';
+    }
+
+   // Prepare list of forms to be displayed in the modal
+    $formIdList = array(
+                        array('id' => 'exp_sp_administration_content_addedit_form', 'title' => (t('Content'))),
+                        array('id' => 'exp_sp_administration_content_versionedit_form', 'title' => (t('LBL952'))),
+                       );
+
+    exp_ctools_modal_multi_ajaxonly_forms_display($formIdList, $argsList);
+  }
+  else {
+    throw new Exception('exp_sp_administration_catalog.module: exp_sp_administration_courseclass_addedit_form() : nojs');
+  }
+  } catch (Exception $ex) {
+    watchdog_exception('exp_sp_administration_content_display_addedit_form', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * exp_sp_administration_user_basic_addedit_form() - Build the addedit form.
+ */
+function exp_sp_administration_content_addedit_form($form, &$form_state, $renderMode, $contentId) {
+    try {
+        $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+        include_once(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content.inc');
+        drupal_add_js(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content.js', $js_module_optional);
+    global $theme_key;
+  expDebug::dPrint(' $form_state[values] = ' . print_r($form_state['values'], true) ,5);
+  expDebug::dPrint(' $form_state[build_info] = ' . print_r($form_state['build_info'], true), 5);
+  expDebug::dPrint(' $contentId = ' . print_r($contentId, true) , 4);
+
+  $contentDetails = array();
+  unset($form_state['content_storage']);
+  unset($form_state['values']['content_data_url']);
+  unset($form_state['input']['content_data_url']);
+  expDebug::dPrint(' $buildinfo = ' . print_r($form_state['build_info']['args'], true) , 5);
+
+  if (!empty($contentId)) {
+    // Fetch user details to be displayed in the form
+    $contentDetails = getAllContentDetails($contentId);
+
+    expDebug::dPrint(' $contentDetails = ' . print_r($contentDetails, true) , 4);
+  }else{
+        $emptyId        = empty($form_state['values']['empty_id']) ? microtime(false) : $form_state['values']['empty_id'];
+  }
+  // Create a new add/edit form
+  $form = newAddEditFormWithCancelAndSave('content-addedit-form');
+
+  addHiddenValueToAddEditForm($form, 'id', $contentId);
+  addHiddenFieldToAddEditForm($form, 'empty_id', $emptyId);
+  addHiddenFieldToAddEditForm($form, 'entity_value', 'cre_sys_obt_cnt');
+  addTwoColumnRowToAddEditForm($form, 'content_language');
+  $readonly = empty($contentId) ? false : true;
+  $defaultValue =  getDefaultAddEditFormFieldValue('content_type', $form_state, $contentDetails);
+  $attributes['onchange']          = array('contentTypeSelect();');
+  //addDropDownToAddEditForm($form, 'content_type', t('LBL608'), getProfileItemNamesKeyed('lrn_cnt_typ_'), $defaultValue, 1, true,$readonly,$attributes);
+  /**/$options                         = getProfileItemNamesKeyed('lrn_cnt_typ_');
+  $attributes                      = array();
+  $attributes['class']             = array('addedit-edit-dropdown');
+  $attributes['class'][]           = 'addedit-form-expertusone-throbber';
+  $attributes['data-wrapperid']    = array('content-addedit-form');
+  $attributes['tabindex']          = 1;
+  //$attributes['onchange']          = 'contentTypeSelect();';
+  $nullOption[]                    = t('LBL674');
+  $finalOptions                    = $nullOption + $options;
+  $defaultOption                   = $defaultValue;//$defaultValue['content_type'];
+    if($theme_key == 'expertusoneV2') {
+      $newuiPrefix = '<div class="expertus-dropdown-bg"><div class="expertus-dropdown-icon ">';
+      $newuiSuffix = '</div></div>';
+  } else {
+      $newuiPrefix = '';
+      $newuiSuffix = '';
+  }
+  $form['addedit_tmp_storage']['two_column']['current_column'] = 1;
+  $form['content_type'] = array(
+    '#type'          => 'select',
+    '#name'          => 'content_type',
+    '#id'            => 'content_type',
+    '#prefix'        => addEditGetPrefix('TWOCOL_FIRSTCOL_FIELD', t('LBL608'), TRUE) . $newuiPrefix,
+    '#suffix'        => $newuiSuffix . addEditGetSuffix('TWOCOL_FIRSTCOL_FIELD'),
+    '#title'         => t('LBL608'),
+    '#title_display' => 'invisible',
+    '#options'       => $finalOptions,
+    '#default_value' => $defaultOption,
+    '#disabled'      => $readonly,
+    '#attributes'    => $attributes,
+    '#ajax' => array(
+                  'wrapper'        => 'content-addedit-form',
+                  'callback'       => 'content_repaint_callback',
+                  'method'         => 'replace',
+                  'effect'         => 'none',
+                  'event'          => 'change',
+                  'keypress'       => true,
+                  'progress' => array(
+                    'type'     => 'throbber',
+                    'message'  => ''
+                  ),
+              )
+  );
+  /**/
+  $pngPath = base_path().'sites/all/themes/core/expertusone/expertusone-internals/images/spacer.gif';
+  $form['new_browser_onload'] = array(
+        '#type' => 'markup',
+        '#prefix' => '<div style="display:none;"><img id= "edit-course-class-img" src="'.$pngPath.'""></div>',
+        );
+  $contentDetails['lang_code'] = !empty($contentDetails['lang_code']) ? $contentDetails['lang_code'] : 'cre_sys_lng_eng';
+  $defaultValue =  getDefaultAddEditFormFieldValue('lang_code', $form_state, $contentDetails);
+  expDebug::dPrint('$contentDetails status : '.$contentDetails['status'], 4);
+  $readonly = empty($contentId) || $contentDetails['status'] =='lrn_cnt_sts_itv' ? false : true; // if there is empty content Id or content is in inactive state, the Admin can edit the language of the Content
+  addDropDownToAddEditForm($form, 'lang_code', t('LBL038'), getProfileItemNamesKeyed('cre_sys_lng_'), $defaultValue, 2, true,$readonly);
+
+  endAddEditTwoColumnRow($form);
+
+  $form['addedit-long-description-container'] = array(
+        '#type'   => 'markup',
+        '#markup' => '<div class="addedit-long-description-container">',
+  );
+  addHiddenFieldToAddEditForm($form, 'ckeditor_word_count', '5000');
+  //$defaultValue =  getDefaultContentDescriptionAddEditFormFieldValue('short_description', $form_state, $contentDetails);
+  $defaultValue = empty($form_state['values']['short_description']['value'])?
+                                    (empty($contentDetails['short_description'])? '' : $contentDetails['short_description']) :
+                                                          $form_state['values']['short_description']['value'];
+  addTextFormatFieldToAddEditForm($form, 'short_description', t('LBL229'), $defaultValue, 'full_html', 3, true, false, 5000);
+  $form['addedit-long-description-container1'] = array(
+    '#type'   => 'markup',
+    '#markup' => '</div>',
+  );
+
+  // Upload Data
+  //if(empty($contentId)){
+    $contentType = $form_state['seleceted_content_type'];
+    $form['upload_detail_container_start'] = array(
+      '#type'   => 'markup',
+      '#markup' => '<div style="clear:both;"></div><div id="upload_detail_container">',
+    );
+    //if($contentType == 'lrn_cnt_typ_vod' || $contentType == 'lrn_cnt_typ_knc' || 1==1){
+      //addTwoColumnRowToAddEditForm($form, 'content_data_upload');
+      $mandCheck = (!empty($contentId)) ? '' : '<span class="addedit-mandatory">*</span>';
+      $defaultHostedType = ($form_state['values']['hosted_type'] == '' || $form_state['values']['hosted_type'] == 'FILE') ? 'FILE' : 'URL';
+      $form['content_upload_label_container'] = array(
+        '#type'   => 'markup',
+        '#markup' => '<div class="addedit-new-field-title">'.
+                          (($defaultOption == 'lrn_cnt_typ_knc' || $defaultOption == 'lrn_cnt_typ_vod') ? ($defaultHostedType == 'FILE'? t('LBL609') : t('LBL611')) : t('LBL609')) . ':'.$mandCheck.'</div>',
+      );
+      $form['content_upload_browse_container_start'] = array(
+        '#type'   => 'markup',
+        '#markup' => '<div class="addedit-new-field-value">',
+      );
+      $defaultContentType = $form_state['values']['content_type'];
+      $fileAttrSize = 48;
+      if((($defaultHostedType == 'URL') || ($defaultHostedType == 'FILE')) &&
+                   ($defaultOption == 'lrn_cnt_typ_knc')|| ($defaultOption == 'lrn_cnt_typ_vod')){
+        $browseonly    = 'style="display:none;"';
+        $browseonly = ($defaultHostedType == 'FILE') ? 'style="display:block;"' : 'style="display:none;"';
+        $browseControl = ($defaultHostedType == 'FILE') ? 'style="display:block;"' : 'style="display:none;"';
+        $browseAndUrl  = ($defaultHostedType == 'FILE') ?  'style="display:block;"' : 'style="display:none;"';
+        $urlControl  = ($defaultHostedType == 'FILE') ?  'style="display:none;"' : 'style="display:block;"';
+        $browseAndUrl  = 'style="display:block;"';
+        $fileAttrSize = 37;
+
+      }else{
+        $browseonly  = 'style="display:block;"';
+        $browseControl = 'style="display:block;"';
+        $browseAndUrl  = 'style="display:none;"';
+        $urlControl = 'style="display:none;"';
+        $fileAttrSize = 37;
+      }
+
+       $wrapperBrowse = ($defaultOption == 'lrn_cnt_typ_knc' || $defaultOption == 'lrn_cnt_typ_vod') ? 'wrapper-browse-url' : 'wrapper-browse';
+
+     $form['content_upload_wrapper'] = array(
+             '#type'   => 'markup',
+             '#markup' => '<div class="'.$wrapperBrowse.'">',
+     );
+
+      $form['content_upload_type1_start'] = array(
+        '#type'   => 'markup',
+        '#markup' => '<div class="content-browse-upload" id="upload_browse_only" '.$browseonly.'>',
+      );
+      $msgStyle = '';
+      if($defaultOption == ''){
+        $contentmsg='';
+        $contentmsg_url = '';
+       }
+       else if($defaultOption=='lrn_cnt_typ_knc'){
+            $contentmsg = t('MSG373', array('@extensions'=>'txt, doc(x), ppt(x), pps(x) xls(x), pdf, png, jpg, jpeg, gif')); // Upload files with the following extensions: txt, doc(x), ppt(x), pps(x), xls(x), pdf, png, jpg, jpeg
+            expDebug::dPrint("knowledge content");
+            $msgStyle = 'upload-msg-style';
+       }
+      else if($defaultOption != 'lrn_cnt_typ_vod'){
+        $contentmsg = t('MSG449'); // Upload the zip file
+      }
+      else{
+        if($defaultHostedType == 'URL')
+            $contentmsg_url = t('Video URL from YouTube or Vimeo'); //upload an url from youtube or vimeo
+        else
+            $contentmsg = t('MSG369');// Upload video files with a .mp4 extensions
+        $msgStyle = 'upload-msg-style';
+      }
+      $form['content_data'] = array(
+        '#type' => 'file',
+        '#prefix' => '<div id="content_browse_control"'.$browseControl.'> <div id="BrowserVisible"><input type="text" id="FileField" /></div> <img src=\'themes/seven/images/buttons.png\' width="0" height="0" style="display:none;" onload="sizeOfUploadButton(\''.$defaultOption.'\');" />',
+        '#suffix' => '<div id="upload_msg_part" class="'.$msgStyle.'" style="display:block;">'.$contentmsg.'</div></div>',
+        '#default_value' => '',
+        '#size' => $fileAttrSize,
+        '#title' => t('LBL609'),
+        '#title_display' => 'invisible',
+      );
+      $form['content_upload_type1_end'] = array(
+        '#type'   => 'markup',
+        '#markup' => '</div>',
+      );
+      $form['content_upload_type2_start'] = array(
+        '#type'   => 'markup',
+        '#markup' => '<div class="content-url-upload" id="upload_browse_and_url" '.$browseAndUrl.'>',
+      );
+      //$defaultValUrl = empty($form_state['values']['content_data_url']) ? '' : $form_state['values']['content_data_url'];
+      $form['content_data_url'] = array(
+        '#type' => 'textfield',
+        '#prefix' => '<div class="content-url-upload" id="content_url_control" '.$urlControl.'>', //left
+        '#suffix' => '<div id="upload_msg_part" class="'.$msgStyle.'" style="display:block;">'.$contentmsg_url.'</div></div>',
+        '#default_value' => '',
+        '#title' => t('LBL611'),
+        '#title_display' => 'invisible',
+        '#size' => 52,
+        '#maxlength' => 2050,
+      );
+
+      /*$options = array('FILE' => t('LBL610'), 'URL' => t('LBL611'));
+      $attributes = array();
+      $attributes['class'][]           = 'addedit-edit-radioset';
+      $attributes['class'][]           = 'addedit-form-expertusone-throbber';
+      $attributes['data-wrapperid']    = array('content-addedit-form');
+      //$attributes['onclick'][] = '$(document).ready(function(){ selContentHostedType(this); });';
+
+      $form['hosted_type'] = array (
+        '#type' => 'select',
+        '#prefix' => '<div class="content-url-upload">',
+        '#suffix' => '</div>',
+        '#title' => '',
+        '#name' => 'hosted_type',
+        '#title_display' => 'invisible',
+        '#default_value' =>  'FILE',
+        '#options' => $options,
+        '#disabled' => FALSE,
+        '#attributes' => $attributes,
+        '#ajax' => array(
+                    'wrapper'        => 'content-addedit-form',
+                    'callback'       => 'content_repaint_callback',
+                    'method'         => 'replace',
+                    'effect'         => 'none',
+                    'event'          => 'change',
+                    'keypress'       => true,
+                    'progress' => array(
+                      'type'     => 'throbber',
+                      'message'  => ''
+                    ),
+                )
+      );*/
+
+       $form['hosted_type'] = array (
+        '#type' => 'hidden',
+        '#default_value' => !empty($form_state['values']['hosted_type']) ?  $form_state['values']['hosted_type'] : 'FILE',
+        '#attributes' => array('id'=>'hosted_type')
+       );
+       $defHosted = !empty($form_state['values']['hosted_type']) ?  (($form_state['values']['hosted_type'] == "FILE") ? t('LBL610') : t('LBL611')) : t('LBL610');
+       $paintMultiAction  = "<div id='search-list-title-keyword' class='search-list-keyword' style='display:block;'>";
+       $paintMultiAction .= "<span id='search-dropdwn-list'>";
+       $paintMultiAction .= "<span id='select-list-dropdown' class='select-list-dropdown'>".$defHosted."</span>";
+       $paintMultiAction .= "<a id='admin-dropdown-arrow' class='select-list-dropdown-link dropdown-link-font ' onclick='moreBrowseSearchHideShow();'> </a>";
+       $paintMultiAction .= "<ul id='select-list-dropdown-list'>";
+       $paintMultiAction .= "<li onclick=\"moreBrowseSearchTypeText('".t('LBL610')."','FILE');$('#hidden-upload-trigger').click();\">".t('LBL610')."</li>";
+       $paintMultiAction .= "<li onclick=\"moreBrowseSearchTypeText('".t('LBL611')."','URL');$('#hidden-upload-trigger').click();\">".t('LBL611')."</li>";
+       $paintMultiAction .= "</ul>";
+       $paintMultiAction .= "</span></div>";
+
+      $form['content-upload-dropdown'] = array(
+         '#type' => 'markup',
+         '#markup' => $paintMultiAction,
+      );
+
+      $form['content_data_url'] = array(
+        '#type' => 'textfield',
+        '#prefix' => '<div class="content-url-upload" id="content_url_control" '.$urlControl.'>', //left
+        '#suffix' => '<div id="upload_msg_part" class="'.$msgStyle.'" style="display:block;">'.$contentmsg_url.'</div></div>',
+        '#default_value' => '',
+        '#title' => t('LBL611'),
+        '#title_display' => 'invisible',
+        '#size' => 52,
+        '#maxlength' => 2050,
+      );
+      addHiddenFieldToAddEditForm($form, 'pdf_conversion_status', '1');
+      $hidattributes = array();
+      $hidattributes['class'][]           = 'addedit-form-expertusone-throbber';
+      $hidattributes['data-wrapperid']    = array('content-addedit-form');
+      $form['hidden-upload-trigger'] = array(
+          '#type' => 'submit',
+          '#value' => t('hidden-save'),
+          '#name'   => 'hidden-upload-trigger',
+          '#prefix' => '<span style="display:none;">',
+          '#suffix' => '</span>',
+          '#id' => 'hidden-upload-trigger',
+      '#attributes' => $hidattributes,
+          '#ajax' => array(
+              'wrapper' => 'content-addedit-form',
+              'callback' => 'content_repaint_callback',
+              'method' => 'replace',
+              'effect' => 'none', // 'fade',
+              'event'=>'click',
+              'keypress' => true,
+              'progress' => array(
+                'type' => 'throbber',
+                'message' => ''
+              ),
+
+            )
+          );
+
+      $form['content_upload_type2_end'] = array(
+        '#type'   => 'markup',
+        '#markup' => '</div>',
+      );
+
+      $form['content_upload_wrapper_end'] = array(
+             '#type'   => 'markup',
+             '#markup' => '</div>',
+     );
+
+      $form['content_upload_type1_start'] = array(
+        '#type'   => 'markup',
+        '#markup' => '<div class="content-browse-upload" id="upload_browse_only" '.$browseonly.'>',
+      );
+      $msgStyle = '';
+      if($defaultOption == ''){
+            $contentmsg='';
+       }
+       else if($defaultOption=='lrn_cnt_typ_knc'){
+            $contentmsg = t('MSG373', array('@extensions'=>'txt, doc(x), ppt(x), pps(x) xls(x), pdf, png, jpg, jpeg, gif')); // Upload files with the following extensions: txt, doc(x), ppt(x), xls(x), pdf, png, jpg, jpeg
+            $msgStyle = 'upload-msg-style';
+       }
+      else if($defaultOption != 'lrn_cnt_typ_vod'){
+        $contentmsg = t('MSG449'); // Upload the zip file
+      }
+      else{
+        if($defaultHostedType == 'URL')
+            $contentmsg = t('Video URL from YouTube or Vimeo'); //upload an url from youtube or vimeo
+        else
+            $contentmsg = t('MSG369');// Upload video files with a .mp4 extensions
+        $msgStyle = 'upload-msg-style';
+      }
+      $form['content_data'] = array(
+        '#type' => 'file',
+        '#prefix' => '<div id="content_browse_control"'.$browseControl.'> <div id="BrowserVisible"><input type="text" id="FileField" /></div> <img src=\'themes/seven/images/buttons.png\' width="0" height="0" style="display:none;" onload="sizeOfUploadButton(\''.$defaultOption.'\');" />',
+        '#suffix' => '<div id="upload_msg_part" class="'.$msgStyle.'" style="display:block;">'.$contentmsg.'</div></div>',
+        '#default_value' => '',
+        '#size' => $fileAttrSize,
+        '#title' => t('LBL609'),
+        '#title_display' => 'invisible',
+      );
+      $form['content_upload_type1_end'] = array(
+        '#type'   => 'markup',
+        '#markup' => '</div>',
+      );
+
+      $form['content_upload_browse_container_end'] = array(
+        '#type'   => 'markup',
+        '#markup' => '</div><div class="clearBoth"></div>',
+      );
+      //endAddEditTwoColumnRow($form);
+    /*}
+    else{
+      $defaultValue =  getDefaultAddEditFormFieldValue('content_data', $form_state, $contentDetails);
+      addFileUploadControlToAddEditForm($form, 'content_data', t('LBL609'), $defaultValue, 4,true,false,35);
+    }*/
+    $form['upload_detail_container_end'] = array(
+      '#type'   => 'markup',
+      '#markup' => '</div>',
+    );
+
+    /*added the Name text box for adding title to content...read only during
+         creation of content...can be edited only during the edit mode */
+    //addHiddenValueToAddEditForm($form, 'content_title1', $title);
+    if (!empty($contentId)) {
+       //unset($form_state['storage']['form_info_list']);
+       $title = $contentDetails['title'];
+       $title = html_entity_decode($title , ENT_COMPAT, 'UTF-8');
+       addTextFieldToAddEditForm($form, 'content_title1', t('LBL083'), $title, 1, true);
+    }/*else{
+       addTextFieldToAddEditForm($form, 'content_title1', 'Name', '', '', false,true);
+    }*/
+ // }
+  /*else{
+    $title = $contentDetails['title']; //$contentDetails['content_type']
+    $title = html_entity_decode($title , ENT_COMPAT, 'UTF-8');
+
+    //addTwoColumnRowToAddEditForm($form, 'content_lesson_title');
+    $titleFieldLabel = ($contentDetails['content_type'] == 'lrn_cnt_typ_knc' || $contentDetails['content_type'] == 'lrn_cnt_typ_vod') ? (($contentDetails['hosted_type']==2) ? t('LBL611'): t('LBL627')).':' : t('LBL612').':';
+    $form['addedit-lesson-title-container'] = array(
+      '#type'   => 'markup',
+      '#markup' => '<div class="addedit-new-field-title">'.$titleFieldLabel.'</div>',
+    );
+    if($contentDetails['content_type']) {/* == 'lrn_cnt_typ_knc' || $contentDetails['content_type'] == 'lrn_cnt_typ_vod'){
+      $form['addedit-uploaded-lesson'] = array(
+        '#type'   => 'markup',
+        '#markup' => '<div class="addedit-new-field-title">'.$title.'</div><div class="clearBoth"></div>',
+      );
+      addHiddenValueToAddEditForm($form, 'content_title1', $title);
+    }
+    else{
+      $i= 1;
+      $titleAttributes                 = array();
+      $titleAttributes['class'][]      = 'addedit-edit-crs_code addedit-edit-textfield non-editable-txt attachment-txt-box';
+      $titleAttributes['class'][]      = 'attachment-list-txtbox';
+      $titleAttributes['onblur'][]     = 'toEditContentLessonTitle('.$i.',"txtbox");'; //onblur
+      $titleAttributes['onkeydown'][]   = 'toEditLessonKeyDown(event);';
+      //$txt_box_length = strlen($readingType)-1;
+      //$txt_box_length = ($txt_box_length <30) ? $txt_box_length : 30;
+      $form["content_title".$i] = array(
+          '#type'         => 'textfield',
+          '#name'         => 'content_title'.$i,
+          '#title'        => 'content_title'.$i,
+          '#id'           => 'content_title'.$i,
+          '#attributes'   => $titleAttributes,
+          '#prefix'       => '<div id="edit-lesson-title-container"><div id="content_title_label_'.$i.'" onblur="toEditContentLessonTitle('.$i.',\'label\')" onclick="toEditContentLessonTitle('.$i.',\'label\')" class="attachment-label-text addedit-edit-crs_code addedit-edit-textfield non-editable-txt attachment-txt-box vtip" title="'.$title.'">'.titleController(' ', $title,60).'</div>
+                                <div id="content_title_label_edit_'.$i.'" style="display:none;"  onblur="toEditContentLessonTitle('.$i.',\'txtbox\')">',
+          '#suffix'       => '</div></div><div class="clearBoth"></div>',
+          '#title_display' => 'invisible',
+          '#size'         => 50,//strlen($readingType)-1,
+          '#default_value'=> $title,
+       );
+    }
+   //endAddEditTwoColumnRow($form);
+  }*/
+
+    if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status/To display the Custom attributes UI
+        include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderinforms.inc');
+        renderCustomAttributesInAddEditForm($form, $form_state,'cre_sys_obt_cnt',$contentId);
+        addCustomAttributesBlockToAddEditForm($form, $form_state, $contentId, 'content', 'contentbasic-custom-attributes', 'content-addedit-form');  
+    } //#custom_attribute_0078975 - End Check module status
+  
+  addEditFormWithContentCancelAndSaveClose($form, 'content-addedit-form', 'content-basic-save', 'content-basic-cancel', $contentId,$emptyId);
+  return $form;
+  } catch (Exception $ex) {
+    watchdog_exception('exp_sp_administration_content_addedit_form', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/* Function for rendering version list form -- with rendermode edit
+*/
+
+function exp_sp_administration_content_versionedit_form($form, &$form_state,$renderMode,$contentId)
+{
+    try {
+        $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+        drupal_add_js(drupal_get_path('module', 'exp_sp_administration_content') .'/exp_sp_administration_content.js', $js_module_optional);
+        drupal_add_js(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_data_grid.js', $js_module_optional);
+    expDebug::dPrint(' version formstate ------------> '.$renderMode. ' ------------- > '.$contentId);
+
+     $versionList      = getAdminContentVersionList($contentId);
+
+      if($versionList == 0){
+        // Ref to TICKET 0021973: Remove </div> from $form['edit-class-details-end'] and added to $form['no-class-msg'] markup end.
+         $form['no-class-msg'] = array(
+          '#type' => 'markup',
+          '#markup' => '<div class="no-records-msg" id="add-edit-class-norecords">'.t('No records').'</div></div>'
+        );
+
+      }else{
+             $form['edit-class-details-end'] = array(
+              '#suffix' => '<div id="admin-course-class-list-pagination-wrapper"><div id="paint-class-search-results-datagrid">',
+            );
+                    $form['class_list_grid_table'] = array(
+                        '#type' => 'markup',
+                        '#markup' => '<table id="admin-version-list-'.$contentId.'-pagination"></table><div class="ui-jqgrid-toppager" id="admin-version-list-'.$contentId.'-pagination_toppager"></div>',
+                        '#suffix' => '</div></div>',
+                    );
+      }
+
+      if($versionList != 0){
+                $form['version_trigger123'] = array (
+                    '#prefix' => '<img src=\'themes/seven/images/buttons.png\' width="0" height="0" style="display:none;" onload="contentVersionListDisplay('.$contentId.');" />',
+                );
+        }
+      $form['#prefix'] = '<div id="move-users-form-wrapper">';
+      $form['#suffix'] = '</div>';
+      return $form;
+      } catch (Exception $ex) {
+        watchdog_exception('exp_sp_administration_content_versionedit_form', $ex);
+        expertusErrorThrow($ex);
+      }
+}
+
+/*
+ * content_repaint_callback() - #ajax callback to repaint form for the 2 non submit ajax form elements
+ */
+function content_repaint_callback($form, $form_state){
+    try {
+  $commands = array();
+
+  $renderHTML = drupal_render($form);
+  expDebug::dPrint(' $renderHTML = ' . print_r($renderHTML, true)  , 4);
+  $commands[] = ajax_command_replace(NULL, $renderHTML);
+
+  // Resize the modal backdrop, adjust the model top (and left) to optimal
+  // $commands[] = exp_ctools_modal_adjust();
+
+  expDebug::dPrint(' $commands = ' . print_r($commands, true) , 4);
+  return array('#type' => 'ajax', '#commands' => $commands);
+  } catch (Exception $ex) {
+    watchdog_exception('content_repaint_callback', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/*
+ * addEditFormWithContentCancelAndSaveClose()
+ */
+function addEditFormWithContentCancelAndSaveClose(&$form, $wrapperId = 'addedit-form-wrapper', $saveButtonId = 'save-button', $cancelButtonId = 'cancel-button', $contentId,$emptyId = '',$subStage = '',$objectString = '') {
+    try {
+  global $theme_key;
+    expDebug::dPrint(' addEditFormWithContentCancelAndSaveClose() called.');
+
+  $customHiddenButtonId = 'last-button-account';
+
+  $esignHiddenButt = 'esign-'.$wrapperId;
+
+  // Remove the temporary storage for API's to exchange information during form creation
+  unset($form['addedit_tmp_storage']);
+
+  // Add the Cancel button
+  $ajaxCallbackCancel = 'addEditCancelRepaintForm';
+  $cancelAttributes = array();
+  // We need to add a class selector for any jQuery as we cannot use id which gets appended by an incrementing number
+  // each time the form is re-built.
+  $cancelAttributes['class'] = array('addedit-edit-' . $cancelButtonId); // This class must be prefixed with 'addedit-edit-' followed by the form field id.
+
+  // For common styling of all addedit cancel buttons
+  //$cancelAttributes['class'][] = 'addedit-edit-cancel';
+
+  // Using this class to applying bg color to the save button
+  $cancelAttributes['class'][] = 'admin-action-button-middle-bg';
+
+  // A common class for all addedit form submit buttons and ajax enabled fields for showing expertusone throbber.
+  $cancelAttributes['class'][] = 'addedit-form-expertusone-throbber';
+  // Communicate the wrapper to javascript for showing the expertusone throbber via HTML data tag
+  $cancelAttributes['data-wrapperid'] = array($wrapperId);
+
+  // A common class for all addedit form cancel button, for styling to appear as a link.
+  $cancelAttributes['class'][] = 'exp-addedit-form-cancel-button';
+
+  $cancelAttributes['onclick'] = 'Drupal.CTools.Modal.dismiss(); return false;';
+  $cancelLabel  = t('LBL123'); // Close
+  $cancelAttributes['tabindex'][] = '6';
+  $prfixPgLeft = '';
+  $suffixPgRight = '';
+  if($theme_key == 'expertusoneV2'){
+    $prfixPgLeft   = '<div class="white-btn-bg-left"></div>';
+    $suffixPgRight = '<div class="white-btn-bg-right"></div>';
+    $cancelAttributes['class'][] = 'white-btn-bg-middle';
+  }
+  $entityId = $contentId;
+  if(!empty($emptyId)){
+    $entityId = 0;
+  } else {
+    $emptyId = 0;
+  }
+  if($subStage == 'details' || empty($subStage)){
+    $tagsentityType    = $objectString;
+    $tagsentityType = str_replace(' ','-',$tagsentityType);
+    if(empty($programId)){
+        $programId = 0;
+        $tagsentityType = "Content";
+    }
+
+    $tagsentityId      = $contentId;//.',"'.$entityType
+    if(empty($tagsentityId )){
+        $tagsentityId=0;
+    }
+    $qtipTagsIdInit          = $tagsentityId.'_'.$tagsentityType;
+    expDebug::dPrint('$tagsentityType :'.$tagsentityType);
+    if($theme_key == 'expertusoneV2') {
+        $tagsvisibPopupId  = 'qtip_visible_disp_tags_'.$qtipTagsIdInit;
+        $qtipTagsOptObj    = "{'entityId':".$tagsentityId.",'entityType':'".$tagsentityType."',
+                                                        'url':'administration/catalog-tags/ajax/".$tagsentityId."/".$tagsentityType."/".$emptyId."',
+                                                        'popupDispId':'".$tagsvisibPopupId."','catalogVisibleId':'renderTagsId".$qtipTagsIdInit."',
+                                                        'wid':400,'heg':'170','postype':'bottomleft','poslwid':'','qdis':'ctool',
+                                                            'linkid':'visible-content-ctool-tags-".$tagsentityId."','scrollid':'tag-scroll-id'}";
+    } else {
+        $tagsvisibPopupId  = 'qtip_visible_disp_tags_'.$qtipTagsIdInit;
+        $qtipTagsOptObj    = "{'entityId':".$tagsentityId.",'entityType':'".$tagsentityType."',
+                                                        'url':'administration/catalog-tags/ajax/".$tagsentityId."/".$tagsentityType."/".$emptyId."',
+                                                        'popupDispId':'".$tagsvisibPopupId."','catalogVisibleId':'renderTagsId".$qtipTagsIdInit."',
+                                                        'wid':400,'heg':'140','postype':'bottomleft','poslwid':'','qdis':'ctool',
+                                                            'linkid':'visible-content-ctool-tags-".$tagsentityId."','scrollid':'tag-scroll-id'}";
+    }
+
+    $entityId            = $contentId;
+    if(!empty($emptyId)){
+        $entityId = 0;
+    } else {
+        $emptyId = 0;
+    }
+
+    $entityType          = 'cre_sys_obt_cnt';
+    $qtipIdInit          = $entityId.'_'.$entityType;
+    $qtipOptAccessObjacc      = "{'entityId':".$entityId.",'entityType':'$entityType',
+                                                                'url':'administration/catalogaccess/".$entityId."/".$entityType."/".$emptyId."',
+                                                                'popupDispId':'qtip_visible_disp_".$qtipIdInit."','catalogVisibleId':'qtipAccessqtip_visible_disp_".$qtipIdInit."',
+                                                                'wid':650,'heg':'270','postype':'topleft','poslwid':'40','qdis':'ctool',
+                                                                'linkid':'visible-content-".$entityId."'}";
+
+    $form['addedit-left-col-extend-func_acc'] = array(
+            '#type' => 'markup',
+            '#prefix' => '<div class="addedit-form-cancel-and-save-actions-row">' ,
+            '#markup' => '<div class="crs-tab-titles-container"><div class="access-tab-icon"></div>'.
+            "<div id='qtip_visible_disp_".$qtipIdInit."'><a id='visible-content-".$entityId."' onclick = \"callVisibility(".$qtipOptAccessObjacc.");\" class=\"tab-title\">".t('LBL642')."</a><span id='visible-popup-".$entityId."' class='qtip-popup-visible' style='display:none; position:absolute; left:0px; top:0px;'></span></div>".
+            '</div>',
+    );
+
+    $form['addedit-left-col-extend-func'] = array(
+            '#type' => 'markup',
+
+            '#markup' => '<div class="crs-tab-titles-container Content-tab-titles-container"><div class="tags-tab-icon"></div>'.
+            "<div id='".$tagsvisibPopupId."'><a id='visible-content-ctool-tags-".$tagsentityId."' class=\"tab-title\" onclick = \"callVisibility(".$qtipTagsOptObj.");\">".t('LBL191')."</a>
+            <span id='visible-popup-".$tagsentityId."' class='qtip-popup-visible' style='display:none; position:absolute; left:0px; top:0px;'></span></div>".
+            '</div>',
+    );
+  }
+
+
+
+  $form[$cancelButtonId] = array(
+    '#type' => 'submit',
+    '#prefix' =>'<div class="addedit-form-cancel-container-actions">' . $prfixPgLeft,
+    '#suffix' => $suffixPgRight,
+    '#value' => $cancelLabel,
+    '#name' => $cancelLabel,
+    '#attributes' => $cancelAttributes
+  );
+
+  // Add the Save button
+  $ajaxCallbackSave = 'addEditContentRepaintForm';
+  $saveAttributes = array();
+
+  // We need to add a class selector for any jQuery as we cannot use id which gets appended by an incrementing number
+  // each time the form is re-built.
+  $saveAttributes['class'] = array('addedit-edit-' . $saveButtonId); // This class must be prefixed with 'addedit-edit-' followed by the form field id.
+
+  // For common styling of all addedit save buttons
+  //$saveAttributes['class'][] = 'addedit-edit-save';
+
+  // Using this class to applying bg color to the save button
+  //$saveAttributes['class'][] = 'admin-save-button-middle-bg';
+  $saveAttributes['class'][] = 'edit-catalog-course-save-publish';
+
+
+  //Increase the width of the popup while clicking on save button
+  $saveAttributes['onclick'][] = 'increasePopWidth();';
+
+  // A common class for all addedit form submit buttons and ajax enabled fields for showing expertusone throbber.
+  $saveAttributes['class'][] = 'addedit-form-expertusone-throbber';
+  // Communicate the wrapper to javascript for showing the expertusone throbber via HTML data tag
+  $saveAttributes['data-wrapperid'] = array($wrapperId);
+  $saveAttributes['tabindex'][] = '4';
+
+  $contentStatus     = '';
+  if (!empty($contentId)) {
+    $contentDetails   = getAllContentDetails($contentId);
+    $contentStatus    =  $contentDetails['status'];
+  }
+   $isSaveParent = 0;
+   $leftBg = '';
+   if($theme_key == 'expertusoneV2'){
+     $leftBg = '<div class="admin-save-button-left-bg"></div>';
+   }
+   $setButtonId =  'content_save_btn';
+   if(empty($contentId) || $contentStatus != 'lrn_cnt_sts_atv'){
+      $isSaveParent = 1;
+      $saveAttributes['onclick'] = array();
+      $saveAttributes['onclick'][] = 'increasePopWidth();';
+      $form[$saveButtonId] = array(
+        '#type' => 'submit',
+        '#id'         => $setButtonId,
+        '#prefix' => '<div class="admin-save-pub-unpub-button-container">' . $leftBg,
+        '#suffix' => '<span id="pub-unpub-action-btn" onclick="displayPubActionList()" class="pub-unpub-add-action-wrapper pub-unbpub-more-btn ">&nbsp;</span></div>',
+        '#value' => t('LBL141'),
+        '#name' => 'save',
+        '#attributes' => $saveAttributes,
+        '#ajax' => array(
+          'wrapper' => $wrapperId,
+          'callback' => $ajaxCallbackSave,
+          'customButtonId'=>$customHiddenButtonId,
+          'method' => 'replace',
+          'effect' => 'none', // 'fade',
+          'event'=>'click',
+          'keypress' => true,
+          'progress' => array(
+            'type' => 'throbber',
+            'message' => ''
+          ),
+        )
+      );
+   }
+
+    if($contentId){
+      $resultCnt = delete_object_record($contentId,'Content');
+    }
+
+    if($isSaveParent){
+      $setButtonId =  'content_save_pub_btn';
+      $form['addedit-button-group-ul-start'] = array(
+        '#type' => 'markup',
+        '#markup' => '<ul class="catalog-pub-add-list">',
+      );
+      $savePublishPrefix = '<li class="save-pub-unpub-sub-menu">';
+      $savePublishSuffix = '</li>';
+    }else{
+      $savePublishPrefix = '<div class="admin-save-pub-unpub-button-container">' . $leftBg;
+      $savePublishSuffix = ((($resultCnt==0) && ($contentStatus == 'lrn_cnt_sts_atv')) ? ('<span id="pub-unpub-action-btn" onclick="displayPubActionList()" class="pub-unpub-add-action-wrapper pub-unbpub-more-btn ">&nbsp;</span>') : '<div class="admin-save-button-right-bg"></div>' ).'</div>';
+    }
+      $saveButtonId = 'catalog-course-save-publish';
+      $savePublishAttributes['data-wrapperid'] = array($wrapperId);
+      $savePublishAttributes['onclick'] = array();
+      $savePublishAttributes['tabindex'][] = '5';
+
+     $savePublishAttributes['onclick'][] = 'increasePopWidth();';
+     $buttonLabel = ($contentStatus == 'lrn_cnt_sts_atv') ? t('LBL141') : t('LBL614');
+     $savePublishAttributes['class'] = array('addedit-edit-' . $saveButtonId);
+     $savePublishAttributes['class'][] = 'addedit-form-expertusone-throbber';
+     $saveOnlyBtnCls = ($theme_key == 'expertusoneV2') ? 'admin-save-button-middle-bg' : 'pub-unpub-only-save-btn';
+     $savePublishAttributes['class'][] = (($resultCnt==0) && ($contentStatus == 'lrn_cnt_sts_atv')) ? 'edit-catalog-course-save-publish' : $saveOnlyBtnCls;
+      $form[$saveButtonId] = array(
+        '#type' => 'submit',
+        '#id'         => $setButtonId,
+        '#prefix' => $savePublishPrefix,
+        '#suffix' => $savePublishSuffix,
+        '#value' => $buttonLabel,
+        '#name' => 'saveandpublish',
+        '#attributes' => $savePublishAttributes,
+        '#ajax' => array(
+          'wrapper' => $wrapperId,
+          'callback' => $ajaxCallbackSave,
+          'customButtonId'=>$customHiddenButtonId,
+          'method' => 'replace',
+          'effect' => 'none', // 'fade',
+          'event'=>'click',
+          'keypress' => true,
+          'progress' => array(
+            'type' => 'throbber',
+            'message' => ''
+          ),
+        )
+      );
+
+   if(!$isSaveParent){
+      $form['addedit-button-group-ul-start'] = array(
+        '#type' => 'markup',
+        '#markup' => '<ul class="catalog-pub-add-list">',
+      );
+    }
+
+    if(($contentId) && $contentStatus == 'lrn_cnt_sts_atv'){
+      if($resultCnt == 0){
+        $saveButtonId = 'catalog-course-save-unpublish';
+        $saveUnPublishAttributes['onclick'] = array();
+        $saveUnPublishAttributes['onclick'][] = 'increasePopWidth();';
+        $saveUnPublishAttributes['class'] = array('addedit-edit-' . $saveButtonId);
+        $saveUnPublishAttributes['class'][] = 'addedit-form-expertusone-throbber';
+        $saveUnPublishAttributes['data-wrapperid'] = array($wrapperId);
+        $form[$saveButtonId] = array(
+        '#type' => 'submit',
+        '#prefix' => '<li class="save-pub-unpub-sub-menu">',
+        '#suffix' => '</li>',
+        '#value' => t('LBL571'),
+        '#name' => 'unpublish',
+        '#attributes' => $saveUnPublishAttributes,
+        '#ajax' => array(
+              'wrapper' => $wrapperId,
+              'callback' => $ajaxCallbackSave,
+              'customButtonId'=>$customHiddenButtonId,
+              'method' => 'replace',
+              'effect' => 'none', // 'fade',
+              'event'=>'click',
+              'keypress' => true,
+              'progress' => array(
+                'type' => 'throbber',
+                'message' => ''
+              ),
+            )
+       );
+      }
+    }
+    $deleteCheck = adminVisibilityForAddEditDelete($entityId,'cre_sys_obt_cnt','cre_sys_obt_cnt','slt_content_master');
+    if($deleteCheck[0]->deletevisible > 0 || !empty($deleteCheck[0]->deletecount) || $GLOBALS["user"]->uid == 1){
+    if(($contentId)){
+      if($resultCnt == 0){
+        $displayTitle = titleController('EXP-SP-ADMIN-CONTENT-MODULE-TITLE', $contentDetails['title'],34);
+       $saveButtonId = 'catalog-course-delete';
+
+       $deleteAttributes['onclick'] = array();
+        $deleteAttributes['onclick'][] = '$("#root-admin").data("narrowsearch").displayDeleteWizard("'.t('MSG357').' '.strtolower(t('Content')).' '.
+                                                   escape_string($contentDetails['title']) . '","'.$contentId.'","Content"); return false;';
+        $deleteAttributes['class'][] = 'admin-delete-button-bg';
+         $form[$saveButtonId] = array(
+            '#type' => 'button',
+            '#prefix' => '<li class="save-pub-unpub-sub-menu">',
+            '#suffix' => '</li>',
+            '#value' => t('LBL286'),
+            '#name' => 'delete',
+            '#attributes' => $deleteAttributes
+          );
+      }
+    }
+    }
+
+    $form['addedit-button-group-ul-end'] = array(
+      '#type' => 'markup',
+      '#markup' => '</ul><div class="clearBoth"></div></div>' .
+                 '<div class="clearBoth"></div></div>',
+    );
+  unset($saveAttributes['tabindex']);
+      $saveAttributes['onclick'] = array();
+      $saveAttributes['onclick'][] = 'Drupal.ajax.prototype.commands.addEditHideMessages();';
+      $saveAttributes['onclick'][] = 'increasePopWidth();';
+      $form[$esignHiddenButt] = array(
+              '#type' => 'submit',
+              '#value' => t('hidden-save'),
+              '#name'   => 'hidden-save',
+              '#prefix' => '<span id = "esign-admin-div" style="display:none">',
+              '#suffix' => '</span>',
+              '#id' =>$esignHiddenButt,
+              '#attributes' => $saveAttributes,
+              '#ajax' => array(
+                  'wrapper' => $wrapperId,
+                  'callback' => 'addEditContentRepaintForm',
+                  'method' => 'replace',
+                  'effect' => 'none', // 'fade',
+                  'event'=>'click',
+                  'keypress' => true,
+                  'progress' => array(
+                  'type' => 'throbber',
+                  'message' => ''
+                  ),
+                )
+              );
+
+
+
+
+
+  $form['addedit-left-col-end'] = array(
+    '#type' => 'markup',
+    '#markup' => '</div><div class="clearBoth"></div>',
+  );
+  } catch (Exception $ex) {
+    watchdog_exception('addEditFormWithContentCancelAndSaveClose', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+
+/**
+ * exp_sp_administration_content_addedit_form_validate() - Class form validation.
+ */
+function exp_sp_administration_content_addedit_form_validate($form, &$form_state) {
+    try {
+        // 53078: System allowing to upload the content even if the content upload path is invalid or empty.
+        $config = getConfig("exp_sp");
+        $content_upload_path = trim($config['content_upload_path']);
+        $ffmpeg_home = trim($config['ffmpeg_home']);
+        $convert_video_on_background = trim($config['convert_video_on_background']);
+        $convert_video = trim($config['convert_video_for_mobile_access']);
+        $ffmpeg_server_ip = trim($config['ffmpeg_server_ip']);
+    
+        /* if(empty($content_upload_path)) { // content upload path is mandatory
+            form_set_error('', t('ERR057'));
+        } */
+        
+        if($convert_video) {
+            if($form_state['values']['content_type'] == 'lrn_cnt_typ_vod' && ! empty($_FILES['files']['name']['content_data']) && ($convert_video_on_background == '0') && empty($ffmpeg_home)) {
+                expDebug::dPrint('ffmpege home path is not available . system error throw it.', 5);
+                form_set_error('', t('ERR057'));
+            }
+            
+            if($form_state['values']['content_type'] == 'lrn_cnt_typ_vod' && ! empty($_FILES['files']['name']['content_data']) && ($convert_video_on_background == '1') && empty($ffmpeg_server_ip)) {
+                expDebug::dPrint('ffmpege server ip is not available . system error throw it.', 5);
+                form_set_error('', t('ERR057'));
+            }
+        }
+        
+        if($form_state['triggering_element']['#name'] == 'hidden-upload-trigger') {
+            $form_state['rebuild'] = TRUE;
+            return;
+        }
+        if($form_state['triggering_element']['#name'] == 'content_type') {
+            unset($form_state['values']['hosted_type']);
+            unset($form_state['input']['hosted_type']);
+            return;
+        }
+        
+        $form_state['hidden-save-submit'] = false;
+        $form_state['esign_show_popup'] = false;
+        
+        if($form_state['values']['op'] == t('LBL123')) {
+            $form_state['input'] = array(); // Clear user input - raw
+            $form_state['values'] = array(); // Clear user input - security cleared
+            $form_state['rebuild'] = TRUE; // Rebuild the form. Submit handler will not be called.
+            return;
+        }
+        
+        if(module_exists('exp_sp_esignature') && isActiveEsignRegion()) {
+            $triggerValue = 'save';
+        } else {
+            $triggerValue = 'hidden-save';
+        }
+        $triggerElementByName = $form_state['triggering_element']['#name'];
+        $getTypeURL = $form_state['values']['hosted_type'];
+        unset($form_state['content_storage']);
+        unset($form_state['storage']['new_entity']);
+        
+        $title = $form_state['values']['content_title1'];
+        if(strlen($title) > 2048) {
+            form_set_error('content_data_url', t("!name cannot be longer than %max characters but is currently %length characters long.", array("!name" => "Name","%max" => "2048","%length" => strlen($title))));
+        }
+        
+        if(($triggerElementByName == 'save' || $triggerElementByName == 'saveandpublish' || $triggerElementByName == 'hidden-save')) {
+            addEditCheckMandatoryFields($form, $form_state, array('content_type','lang_code'));
+            if(! empty($form_state['values']['id'])) {
+                addEditCheckMandatoryFields($form, $form_state, array('content_title1'));
+                addEditContentValidate($form_state, $form_state['values']['id'], "Edit");
+            }
+            $form_state["storage"]["form_validate"] = true;
+            $form_state['esign_show_popup'] = true;
+            $descriptionValidate = 1;
+            if(empty($form_state['values']['short_description']['value'])) {
+                $descriptionValidate = 0;
+                form_set_error('short_description', $form['short_description']['#title'] . t('ERR101'));
+                $form_state['esign_show_popup'] = false;
+            }
+            if($getTypeURL == 'URL' && empty($form_state['values']['content_data_url']) && empty($form_state['values']['id'])) {
+                form_set_error('content_data_url', $form['content_data_url']['#title'] . t('ERR101'));
+            }
+            if(! empty($form_state['values']['content_data_url'])) {
+                $parseurl = parse_url($form_state['values']['content_data_url']);
+                if(strlen($form_state['values']['content_data_url']) > 2048) {
+                    form_set_error('content_data_url', t("!name cannot be longer than %max characters but is currently %length characters long.", array("!name" => "URL","%max" => "2048","%length" => strlen($form_state['values']['content_data_url']))));
+                }
+                if($parseurl['scheme'] == 'ftp' || $parseurl['scheme'] == 'ftps') {
+                    form_set_error('content_data_url', t('ftp or ftps should not be allowed.'));
+                }
+                $config=getConfig("exp_sp");
+                if($config['mylearn_version']==1 && $form_state['values']['content_type'] =='lrn_cnt_typ_knc'){
+                    if(!in_array(parse_url($form_state['values']['content_data_url'], PHP_URL_SCHEME),array('https'))){
+                        form_set_error('content_data_url', t('ERR220'));
+                    }
+                }
+                if (valid_url($form_state['values']['content_data_url'],true) == false) {
+                    form_set_error('content_data_url',ERR171.' '.t('LBL611'));
+                }
+                
+                if ($config['content_restricted_domains']!='') {
+                    $array= explode(",",$config['content_restricted_domains']);
+                    foreach($array as $value){
+                    if(strpos($form_state['values']['content_data_url'],$value)!==FALSE){
+                        form_set_error('content_data_url youtube',t('ERR1761'));
+                    }
+                    }
+                    
+                }
+                
+            }
+            if($getTypeURL == 'FILE' && empty($_FILES['files']['name']['content_data']) && empty($form_state['values']['id'])) {
+                form_set_error('content_data', $form['content_data']['#title'] . t('ERR101'));
+                $form_state['esign_show_popup'] = false;
+            }
+            if($form_state["storage"]["form_validate"] && $descriptionValidate) {
+                $contentType = $form_state['values']['content_type'];
+                $hostedType = $form_state['values']['hosted_type'];
+                $contentDataValidate = 1;
+                if($contentType == 'lrn_cnt_typ_vod' || $contentType == 'lrn_cnt_typ_knc') {
+                    if($hostedType == 'URL') {
+                        $contentDataValidate = 0;
+                        if(empty($form_state['values']['id'])) {
+                            addEditCheckMandatoryFields($form, $form_state, array('content_data_url'));
+                        }
+                        if(! empty($form_state['values']['content_data_url'])) {
+                            $content_data = URLContentValidate($form_state['values']['content_data_url']);
+                            $form_state['content_storage'] = $content_data;
+                        }
+                    }
+                }
+                if($contentDataValidate) {
+                    if(! empty($_FILES['files']['name']['content_data'])) {
+                        expDebug::dPrint('$_FILES = ' . print_r($_FILES, true), 5);
+                        $contenttype = $_FILES[files][type][content_data];
+                        expDebug::dPrint('content file type>>>>>>>>>>>'.print_r($contenttype,true),5);
+                        if(($filenameEncoding = mb_detect_encoding($_FILES['files']['name']['content_data'], array('UTF-8','ASCII','ISO-8859-1','ISO-8859-2','ISO-8859-3','ISO-8859-4','ISO-8859-5','ISO-8859-6','ISO-8859-7','ISO-8859-8','ISO-8859-9','ISO-8859-10','ISO-8859-13','ISO-8859-14','ISO-8859-15','ISO-8859-16','Windows-1251','Windows-1252','Windows-1254'), true)) === false) {
+                            expDebug::dPrint('Could not detect encoding for uploaded file\'s name', 4);
+                            throw new Exception('System could not detect encoding of the uploaded content\'s zip file name.');
+                        } else {
+                            expDebug::dPrint('Encoding of uploaded file name = ' . $filenameEncoding, 4);
+                            $origFilename = $_FILES['files']['name']['content_data'];
+                            if($filenameEncoding == 'UTF-8') {
+                                $_FILES['files']['name']['content_data'] = urlencode($_FILES['files']['name']['content_data']);
+                            } else if($filenameEncoding == 'ISO-8859-1') {
+                                $origFilename = utf8_encode($_FILES['files']['name']['content_data']);
+                                $_FILES['files']['name']['content_data'] = urlencode($origFilename);
+                            } else {
+                                // @TODO: to build support for other encodings as and when an issue is observed
+                                throw new Exception('Zip file name in unsupported encoding: ' . $filenameEncoding);
+                            }
+                            
+                            $vId = getLatestVersionId() + 1;
+                            $_FILES['files']['name']['content_data'] = str_replace(" ", "", $_FILES['files']['name']['content_data']);
+                            $_FILES['files']['name']['content_data'] = str_replace("%", "p", $_FILES['files']['name']['content_data']);
+                            $_FILES['files']['name']['content_data'] = str_replace("+", "l", $_FILES['files']['name']['content_data']);
+                            $_FILES['files']['name']['content_data'] = str_replace('.zip', '_v' . $vId . '.zip', $_FILES['files']['name']['content_data']);
+                            
+                            // checking if its a video and changing extension to lowercase -- issue fix for 0084046
+                             if($contenttype == 'video/mp4'){
+                                 $file_arr = explode(".", $_FILES['files']['name']['content_data']);
+                                 end($file_arr);
+                                 $key = key($file_arr);
+                                 expDebug::dPrint("key" . print_r($key, true), 5);
+                                 $file_arr[$key] = strtolower($file_arr[$key]);
+                                 expDebug::dPrint("trunck checkig content dataaa file_arr" . print_r($file_arr, true), 5);
+                                 $_FILES['files']['name']['content_data'] = implode(".",$file_arr);
+                             }
+                            expDebug::dPrint("trunck checkig content dataaa " . print_r($_FILES['files']['name']['content_data'], true), 5);
+                            $content_data = getUploadContentData($form, $form_state, 'content_data', $vId);
+                            $contentDataIdx = ($contentType == 'lrn_cnt_typ_aic') ? 1 : 0;
+                            
+                            $launchUrl = $content_data[$contentDataIdx]->launchurl;
+                            expDebug::dPrint("trunck checkig " . print_r($content_data, true), 5);
+                            if(count($content_data) > 0 && $launchUrl != '') {
+                                $content_data[$contentDataIdx]->orig_file_name = $origFilename;
+                                $form_state['content_storage'] = $content_data;
+                            } else {
+                                form_set_error('content_data', t('LBL613'));
+                            }
+                        }
+                    } else if(empty($form_state['values']['id'])) { // empty($_FILES['files']['name']['content_data'])
+                        form_set_error('content_data', $form['content_data']['#title'] . t('ERR101'));
+                    }
+                }
+            }
+
+            if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status/Validate Custom Attributes
+                include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderinforms.inc');
+                validateCustomAttributesInAddEditForm($form, $form_state,'cre_sys_obt_cnt');
+            } //#custom_attribute_0078975 - End Check module status
+        }
+        if($triggerElementByName == 'hidden-save') {
+            $form_state['hidden-save-submit'] = true;
+            $form_state['esign_show_popup'] = false;
+        }
+        if($triggerElementByName == 'delete') {
+            $form_state['esign_show_popup'] = true;
+        }
+        if($triggerElementByName == 'unpublish') {
+            $form_state['esign_show_popup'] = true;
+        }
+        if($triggerElementByName == 'saveandpublish') {
+            $form_state['esign_show_popup'] = true;
+        }
+        $form_state['esign_validation_status'] = true; // temproary false changeed to true for e-sign
+        if(! ($form_state['hidden-save-submit'])) {
+            unset($_SESSION['esign_validate']);
+        }
+    } catch(Exception $ex) {
+        watchdog_exception('exp_sp_administration_content_addedit_form_validate', $ex);
+        expertusErrorThrow($ex);
+    }
+}
+
+
+/*
+ * addEditContentRepaintForm() - After the form has been validated and saved, this function returns the form
+ *                            to the client for re-rendering.
+ */
+function addEditContentRepaintForm($form, &$form_state) {
+
+  try {
+  if (!empty($form_state['storage']['new_entity']) && $form_state['storage']['new_entity'] == TRUE) {
+    // Create the additional now editable forms if any present
+    $formInfoList = $form_state['storage']['form_info_list'];
+    $argsList = $form_state['build_info']['args'];
+    array_shift($argsList); // The first arg is 'ajax', which we need to drop from $argsList
+    expDebug::dPrint(' $$argsList = ' . print_r($argsList, true) , 4);
+    $renderedAddlForms = exp_ctools_modal_multi_ajaxonly_forms_render($formInfoList, $argsList, 'ADD-TO-EDIT');
+  }
+
+  $commands = array();
+  $commands[] = ajax_command_replace(NULL, drupal_render($form));
+
+  if (!empty($renderedAddlForms)) {
+    $commands[] = ajax_command_after(NULL, $renderedAddlForms);
+  }
+
+  // Show the status messages, if any.
+  // Ensure the status messages are auto removed after a brief while
+  $statusMsgHTML = theme('status_messages');
+  expDebug::dPrint(' $statusMsgHTML = ' . print_r($statusMsgHTML, true) , 4);
+  if (!empty($statusMsgHTML)) {
+    // Show the messages
+    //$commands[] = ajax_command_prepend(NULL, $statusMsgHTML);
+    $commands[] = ajax_command_html('#show_expertus_message', $statusMsgHTML);
+  }
+
+  // Resize the modal backdrop, adjust the model top (and left) to optimal
+  $commands[] = exp_ctools_modal_adjust();
+
+  // If a new entity was added or an existing entity was edited, inform ctools to refresh narrow search results no modal close.
+  if ($form_state['storage']['new_entity'] == TRUE || $form_state['storage']['edited_entity'] == TRUE) {
+    $commands[] = ajax_command_refresh_narrow_search_results('onclose');
+  }
+  if($form_state['storage']['edited_entity'] == TRUE){
+    $commands[] = ajax_command_invoke(NULL, "refreshVersionList", array($form_state['values']['id']));
+  }
+
+  if (module_exists('exp_sp_esignature') && isActiveEsignRegion()){
+    $custButtonId  = $form_state['triggering_element']['#ajax']['customButtonId'];
+    $drupalUserId  = $form_state['triggering_element']['#ajax']['drupalUserId'];
+    $drupalUserId  = $form_state['values'][$drupalUserId];
+    $esignObj  = '{"popupDiv":"modalContent","esignFor":"AddAdmin","drupalUserId":"'.$drupalUserId.'","esignButtId":"'.$custButtonId.'"}';
+    if($form_state['esign_show_popup'] == true){
+      $commands[] = ajax_command_invoke(NULL, 'getNewEsignPopup',array($esignObj));
+      $form_state['esign_show_popup']=false; // this is ignored, as form state is not saved after the ajax callback is executed
+    }
+  }
+  expDebug::dPrint(' $commands = ' . print_r($commands, true) , 4);
+
+  return array('#type' => 'ajax', '#commands' => $commands);
+  } catch (Exception $ex) {
+    watchdog_exception('addEditContentRepaintForm', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+
+/*
+ * exp_sp_administration_content_addedit_form_submit() - Save the data entered by the user in the exp_sp_administration_catalog_course_addedit_form_submit form
+ */
+function exp_sp_administration_content_addedit_form_submit($form, &$form_state) {
+    try {
+        include_once(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_tags.inc');
+   expDebug::dPrint('exp_sp_administration_content_addedit_form_submit esign validate ' . $_SESSION['esign_validate'] , 4);
+   $chkValidation = 1;
+    expDebug::dPrint('exp_sp_administration_content_addedit_form_submit esign validate trigger ' .$form_state['triggering_element']['#name'] , 5);
+   $tempEsigndisable = 0;
+   if(module_exists('exp_sp_esignature') && isActiveEsignRegion() && $tempEsigndisable){
+     $chkValidation = 0;
+     if($form_state['hidden-save-submit']==true && $_SESSION['esign_validate'] ==  1){
+       $chkValidation = 1;
+       $form_state['storage']['submit_triggering_element'] = $form_state['storage']['triggering_button_element'];
+     }
+     else{
+       $form_state['storage']['triggering_button_element'] = $form_state['triggering_element']['#name'];
+     }
+   }
+   else{
+     $form_state['storage']['submit_triggering_element'] = $form_state['triggering_element']['#name'];
+   }
+   if($form_state['triggering_element']['#name'] == 'Add custom'){
+     $chkValidation = 0;
+   }
+   if($chkValidation){
+     $form_state['esign_validation_status'] = true;
+     $loggedInUserId = getIdOfLoggedInUser();
+     expDebug::dPrint('exp_sp_administration_content_addedit_form_submit success validation ' . $form_state['storage']['submit_triggering_element'] , 5);
+    //  Check whether add or edit
+    if(empty($form_state['values']['id'])) {
+      $returnArr = addNewContenteDetails($form, $form_state,$loggedInUserId);
+      expDebug::dPrint(' $returnArr = ' . print_r($returnArr, true) , 5);
+      $newContentId = $returnArr[0]->id;
+      
+      if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status/Save Custom Attribute Values
+          include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderinforms.inc');
+          saveCustomAttributesInAddEditForm($form, $form_state, $newContentId, 'cre_sys_obt_cnt', $loggedInUserId, 'Inserted');
+      } //#custom_attribute_0078975 - End Check module status
+      
+      if($form_state['values']['content_type'] == 'lrn_cnt_typ_vod' ) {
+        $config=getConfig("exp_sp");
+        $ffmpeg_servers = explode(',',$config['ffmpeg_server_ip']);
+        include_once(drupal_get_path('module', 'exp_sp_administration_module_info') .'/exp_sp_administration_module_info.inc');
+        $module_name = array('exp_sp_stream_server');
+        $video_stream_server_status  = getDrupalModuleStatus($module_name);
+        expDebug::dPrint('$stream_server_status = ' .print_r($video_stream_server_status,true), 4);
+
+        if($form_state['values']['hosted_type'] == 'FILE'  && (!empty($ffmpeg_servers)) &&($video_stream_server_status == 1)) {
+            drupal_set_message(t('MSG700'));
+        }else {
+            drupal_set_message(t('LBL272').' '.t('MSG601').'.');
+        }
+      }else {
+        $msg = t('LBL272').' '.t('MSG600').'.';
+        $config=getConfig("exp_sp");
+        $convert_pdf_on_background      = $config['convert_pdf_on_background'];
+        $mylearn_version                    = $config['mylearn_version'];
+        $content_conversion     = $config['content_conversion'];
+        if($mylearn_version && $content_conversion && $convert_pdf_on_background == 1 && $form_state['values']['content_type'] =='lrn_cnt_typ_knc'){
+            $msg = $msg.' '.t('File convertion is pending.');
+      }
+        drupal_set_message($msg);
+      }
+      $entityId                            = $form_state['values']['id'];
+      $form_state['storage']['step']       = 'view';
+      $form_state['build_info']['args'][]  = $newContentId;
+      $form_state['storage']['new_entity'] = TRUE;
+    } else {
+        unset($form_state['storage']['form_info_list']);
+      updateContentDetails($form, $form_state,$loggedInUserId);
+      
+      if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status/Save Custom Attribute Values
+          include_once(drupal_get_path('module', 'exp_sp_administration_customattribute') .'/exp_sp_administration_customattribute_renderinforms.inc');
+          saveCustomAttributesInAddEditForm($form, $form_state, $form_state['values']['id'], 'cre_sys_obt_cnt', $loggedInUserId, 'Updated');
+      } //#custom_attribute_0078975 - End Check module status
+      
+      if($form_state['values']['hosted_type'] == 'FILE'  && (!empty($ffmpeg_servers)) &&($video_stream_server_status == 1)) {
+        drupal_set_message(t('MSG700'));
+      }else {
+        drupal_set_message(t('LBL272').' '.t('MSG601').'.');
+      }
+      $form_state['storage']['step']          = 'edit';
+      $entityId                               = $form_state['values']['id'];
+      $form_state['storage']['edited_entity'] = TRUE;
+      unset($form_state['storage']['new_entity']);
+    }
+    $entityId                            = $form_state['values']['id'];
+    $form_state['storage']['step']       = 'view';
+    $form_state['build_info']['args'][]  = $entityId;
+    $form_state['storage']['new_entity'] = TRUE;
+    $emptyId = $form_state['values']['empty_id'];
+    _updateAccessEntity($entityId, 'cre_sys_obt_cnt', $emptyId);
+    _updateTagsEntity($entityId, "Content", $emptyId);
+   $form_state['rebuild'] = TRUE;
+   unset($_SESSION['esign_validate']);
+   }
+   } catch (Exception $ex) {
+    watchdog_exception('exp_sp_administration_content_addedit_form_submit', $ex);
+    expertusErrorThrow($ex);
+   }
+}
+
+/**
+ * Show video preview in qtip like iframe free popup
+ */
+function previewVideoInQtipPopup($versionId){
+  try {
+    $lessonList = getLessonList($versionId);
+    expDebug::dPrint('$lessonList = ' . print_r($lessonList, true), 4);
+
+    $htmlId = 'vod_' . $versionId;
+    $title = $lessonList[0]->title;
+    $contenthosttype = $lessonList[0]->contenthostedtype;
+    include_once(drupal_get_path('module', 'exp_sp_administration_module_info') .'/exp_sp_administration_module_info.inc');
+    $cdn_status  = getDrupalModuleStatus(array('cloud_files'));
+    if($cdn_status == 1 && $contenthosttype != '2'){
+    $contentSubTypeCode = 3;
+    } else{
+    $contentSubTypeCode = $contenthosttype;
+    }
+    $pathArr = explode ( '/' , $lessonList[0]->launchurl);
+    expDebug::dPrint(' $pathArr = ' . print_r($pathArr, true), 4);
+
+    $output = '';
+    if ($contentSubTypeCode == '1') { //hosted video
+        $uploadDir = '';
+        $pathArrLen = count($pathArr);
+        for ($i = 0; $i <= ($pathArrLen - 3); $i++) {
+          if ($pathArr[$i] != '') {
+            $uploadDir .= ($uploadDir == '')? $pathArr[$i] : '/' . $pathArr[$i];
+          }
+        }
+        expDebug::dPrint('$pathArr = ' . print_r($pathArr, true), 4);
+
+        $videoFoldername = $pathArr[$pathArrLen - 2];
+
+        $uploadDirectory = './sites/default/files/contentupload/' . $videoFoldername;
+        $videoBasename = null;
+        if ($handle = opendir($uploadDirectory)) {
+          while (false !== ($file = readdir($handle))) {
+            $lowerCaseFileName = strtolower($file);
+            if ($file != '.' && $file != '..' && substr($lowerCaseFileName, -strlen('.mp4')) === '.mp4' &&
+                                                        (strpos($lowerCaseFileName, 'mobile_') === false || strpos($lowerCaseFileName, 'mobile_') !== 0))   {
+                          $videoBasename =  substr($file, 0, strrpos($file, '.') + 0);
+              break;
+            }
+          }
+          closedir($handle);
+        }
+
+        expDebug::dPrint('$htmlId = ' . print_r($htmlId, true) , 4 );
+        expDebug::dPrint('$uploadDir = ' . print_r($uploadDir, true), 4 );
+        expDebug::dPrint('$videoBasename = ' . $videoFoldername . '---->' . $videoBasename, 4);
+
+        if (empty($videoBasename)) {
+            throw new Exception('Missing video file in $uploadDirectory ' . $uploadDirectory);
+        }
+
+        $config=getConfig("exp_sp");
+        $red5_server_host_entry = $config['red5_host_entry'].':5080';
+        $conversion_format = array('256');
+
+        include_once(drupal_get_path('module', 'exp_sp_administration_module_info') .'/exp_sp_administration_module_info.inc');
+        include_once($_SERVER["DOCUMENT_ROOT"]. '/sites/all/modules/core/exp_sp_learning/exp_sp_learning.inc');
+        $module_name = array('exp_sp_stream_server');
+        $stream_server_status  = getDrupalModuleStatus($module_name);
+        expDebug::dPrint('$stream_server_status = ' . $stream_server_status . '---->' .print_r($stream_server_status,true), 4);
+
+        if($stream_server_status == 1) {
+            $stream_server  = true;
+        } else {
+            $stream_server  = false;
+        }
+
+        if($stream_server && (urlExists($red5_server_host_entry) && (streamingOrNot($uploadDirectory, $videoBasename, $conversion_format)))) {
+            $site_name = variable_get('site_name');
+                /* $output = theme('rtmp_jwplayer', array(
+                    'html_id' => $htmlId,
+                    'upload_dir' => $uploadDir,
+                    'video_foldername' => $videoFoldername,
+                    'video_basename' => $videoBasename,
+                    'is_preview' => true)); */
+               
+                $kb = 512;
+                expDebug::dPrint("streaming $kb Kb...<!-");
+                flush();
+                $time = explode(" ", microtime());
+                $start = $time[0] + $time[1];
+                for($x = 0; $x < $kb; $x ++) {
+                    flush();
+                }
+                $time = explode(" ", microtime());
+                $finish = $time[0] + $time[1];
+                $deltat = $finish - $start;
+                $bandwidth = round($kb / $deltat, 0);
+                $bandwidth = round($bandwidth / 1024, 0);
+                expDebug::dPrint("end user bandwidth = $bandwidth");
+                /* end user bandwidth detect end here */
+                /* file available check start here here */
+                $file_900 = $content_upload_path . '/' . $video_foldername . '/900/' . $video_basename . '.mp4';
+                $file_512 = $content_upload_path . '/' . $video_foldername . '/512/' . $video_basename . '.mp4';
+                $file_256 = $content_upload_path . '/' . $video_foldername . '/256/' . $video_basename . '.mp4';
+                $file_900_logfile = $content_upload_path . '/' . $video_foldername . '/900/ffmpeg_log.txt';
+                $file_512_logfile = $content_upload_path . '/' . $video_foldername . '/512/ffmpeg_log.txt';
+                $file_256_logfile = $content_upload_path . '/' . $video_foldername . '/256/ffmpeg_log.txt';
+                /* file available check end here */
+                
+                /* choose a single file with bandwidth detection start here */
+                if(($bandwidth > 22000) && file_exists($file_256) && file_exists($file_256_logfile)) {
+                    $bit_rate = 256;
+                } else if(($bandwidth > 19000) && file_exists($file_512) && file_exists($file_512_logfile)) {
+                    $bit_rate = 512;
+                } else if(($bandwidth < 19000) && file_exists($file_900) && file_exists($file_900_logfile)) {
+                    $bit_rate = 900;
+                } else {
+                    $bit_rate = 256;
+                }
+                $output = theme('videojs-player', array(
+                    'html_id' => $htmlId,
+                    'video_session_id' => $htmlId,
+                    'video_url' => "rtmp://".$config['red5_host_entry']."/oflaDemo/$videoFoldername/$bit_rate/$videoBasename.mp4",
+                    'video_source' => $video_source,
+                    'is_preview' => true
+                ));
+        }
+        else {
+            $video_source = "mp4";
+            expDebug::dPrint('$$capital letter  12347 = ');
+            $output = theme('videojs-player', array(
+                        'html_id' => $htmlId,
+                        'video_session_id' => $htmlId,
+                        'video_url' => $base_url . '/' . $uploadDir . '/' . $videoFoldername . '/' . $videoBasename . ".mp4",
+                        'video_source' => $video_source,
+                        'is_preview' => true
+                    ));
+        }
+    }
+    elseif ($contentSubTypeCode == '3') {
+        expDebug::dPrint(' CDN video details --> '.print_r($pathArr,true),4);
+        
+        $videoFileName = '';
+        $pathArrLen = count($pathArr);
+        for ($i = 0; $i <= ($pathArrLen - 1); $i++) {
+            if ($pathArr[$i] != '') {
+                $videoFileName .= ($videoFileName == '')? $pathArr[$i] : '/' . $pathArr[$i];
+            }
+        }
+        $videoFileName = str_replace('sites/default/files', '', $videoFileName);
+        $cdnpathURL = getCDNURL($videoFileName);
+        if($cdnpathURL == ""){
+           $output = theme('videojs-player', array(
+                        'html_id' => $htmlId,
+                        'video_session_id' => $htmlId,
+                        'video_url' => $lessonList[0]->launchurl,
+                        'video_source' => "mp4",
+                        'is_preview' => true
+                   ));
+        }else {
+        
+        expDebug::dPrint(' CDN video name --> '.$videoFileName,4);          
+            
+        $output = theme('videojs-player', array(
+                        'html_id' => $htmlId,
+                        'video_session_id' => $htmlId,
+                        'video_url' => $cdnpathURL,
+                        'video_source' => "mp4",
+                        'is_preview' => true
+                    ));
+        }
+      }  
+    else { //youtube video
+        if(strpos($lessonList[0]->launchurl, 'vimeo.com') !== false) {
+            $video_source = $title = 'vimeo';
+        } elseif(strpos($lessonList[0]->launchurl, 'youtu.be') !== false || strpos($lessonList[0]->launchurl, 'youtube.com') !== false ) {
+            $video_source = $title = 'youtube';
+        } else {
+            $video_source = $title = 'mp4';
+        }
+        $output = theme('videojs-player', array(
+                        'html_id' => $htmlId,
+                        'video_session_id' => $htmlId,
+                        'video_url' => $lessonList[0]->launchurl,
+                        'video_source' => $video_source,
+                        'is_preview' => true
+                    ));
+    }
+
+    // Render the qtip box html to be directly appended to the container div
+    // (see $popupVideoPreview settings in exp_sp_administration_content.inc: getOnclick())
+    $output = theme('drupalajax_qtip', array('popup_id' => 'video-preview-popup-' . $versionId, // The id to be given to the popup
+                                             'popup_width' => '359px', // Popup width with unit
+                                             'class' => 'video-preview-popup',  // Class(es) to be added to the popup for styling etc.
+                                             'display_html' => $output // The html to display inside the popup
+                           ));
+
+    expDebug::dPrint('$video_url outputttttttt = ' . print_r($output, true), 4 );
+    $commands = array();
+    $commands[] = video_preview_qtip($output);
+    $commands[] = video_preview_initialize($htmlId);
+    expDebug::dPrint(' $commands = ' . print_r($commands, true) , 4);
+    print ajax_render($commands);
+    exit;
+  }
+  catch (Exception $ex) {
+    watchdog_exception('previewVideoInQtipPopup', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/*
+ * Drupal.ajax command to show video preview in qtip-like popup
+ */
+function video_preview_qtip($html) {
+    try {
+  return array(
+    'command' => 'expVideoPreviewQtip',
+    'html' => $html
+  );
+  } catch (Exception $ex) {
+    watchdog_exception('video_preview_qtip', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/*
+ * Drupal.ajax command to show initialize video-js player in qtip popup
+ */
+function video_preview_initialize($video_id) {
+    try {
+        return array(
+            'command' => 'initializeVideoJSPlayer',
+            'video_id' => $video_id
+        );
+    } catch (Exception $ex) {
+        watchdog_exception('video_preview_qtip', $ex);
+        expertusErrorThrow($ex);
+    }
+}
+
+
+
+?>

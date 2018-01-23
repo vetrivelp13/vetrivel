@@ -1,0 +1,112 @@
+<?php 
+
+/**
+ * @Desc: Implementation of hook_menu().
+ * @Author: Ilayaraja Esackimuthu
+ * @Since: 27-Jul-2011
+ */
+function exp_sp_surveylearner_menu($delta = ''){
+  try{
+  $items = array();
+  
+  $items['learning/take-survey/get-class/%/%'] = array (
+  	'title' => 'Get Class details for Take Survey',
+  	'page callback' => 'getClassDetailsSurvey',
+    'page arguments' => array(3,4),
+  	'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+  	'file' => 'exp_sp_surveylearner.inc'
+  );
+  
+  $items['learning/take-survey/get-surveys/%/%/%/%/%/%'] = array (
+  	'title' => 'Get Assigned Surveys for Class',
+  	'page callback' => 'getAssignedSurveys',
+    'page arguments' => array(3,4,5,6,7,8),
+  	'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+  	'file' => 'exp_sp_surveylearner.inc'
+  );
+  $items['learning/take-survey/get-survey-questions'] = array (
+  	'title' => 'Get Questions for the selected survey',
+  	'page callback' => 'getSurveyQuestions',
+    //'page arguments' => array(3),
+  	'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+  	'file' => 'exp_sp_surveylearner.inc'
+  );
+  $items['learning/take-survey/update-survey/%'] = array (
+  	'title' => 'Submit suvery answers for questions',
+  	'page callback' => 'submitSurvey',
+    'page arguments' => array(3),
+  	'type' => MENU_CALLBACK,
+    'access arguments' => array('expertus learner'),
+  	'file' => 'exp_sp_surveylearner.inc'
+  );
+  
+  expDebug::dPrint(" items = ". print_r($items, true) , 4);
+  return $items;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_surveylearner_menu', $ex);
+    expertusErrorThrow($ex);
+  } 	
+}//End of exp_sp_surveylearner_menu()
+
+/**
+ * @Desc: Implementation of hook_block_info().
+ * @author: Ilayaraja Esackimuthu
+ * @since: 27-Jul-2011
+ *
+ */
+function exp_sp_surveylearner_block_info() {
+  try{
+  $blocks = array();
+  $blocks['take-survey'] = array(
+    'info' => t('Take Survey'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,  
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'learning/take-survey/
+				learning/take-survey/*'
+  );
+  return $blocks;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_surveylearner_block_info', $ex);
+    expertusErrorThrow($ex);
+  }   
+}//End of exp_sp_surveylearner_block_info()
+
+/**
+ * @Desc: Implementation of hook_block_view().
+ * @author: Ilayaraja Esackimuthu
+ * @since: 27-Jul-2011
+ *
+ */
+function exp_sp_surveylearner_block_view($delta = ''){
+  try{
+  $css_module_optional = array('type' => 'file', 'group' => CSS_DEFAULT);
+  $js_module_optional  = array('type' => 'file', 'group' => JS_DEFAULT);
+  global $theme_key;  
+  require_once('exp_sp_surveylearner.inc');
+  $block = array();
+  switch ($delta) {
+  case 'take-survey':
+    drupal_add_js(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/js/exp_sp_surveylearner/exp_sp_surveylearner.js',$js_module_optional);
+    if($theme_key == 'expertusoneV2') {
+    	if (contentPlayerIsActive()) { // Based on a content player activation load the needed files.
+    		drupal_add_css(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/css/Survey_formatter_cp.css',$css_module_optional);
+    	} else {
+    		drupal_add_css(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/css/Survey_formatter_v2.css',$css_module_optional);
+    	}	
+    }else{
+    drupal_add_css(drupal_get_path('module', 'exp_sp_survey').'/exp_sp_survey_learner/css/Survey_formatter.css',$css_module_optional);
+    }
+    $block['subject'] = t('Take Survey');
+    $block['content'] = "test";
+    break;
+  }
+  return $block;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_surveylearner_block_view', $ex);
+    expertusErrorThrow($ex);
+  } 
+}//End of exp_sp_lnrsearch_block_view()
+?>

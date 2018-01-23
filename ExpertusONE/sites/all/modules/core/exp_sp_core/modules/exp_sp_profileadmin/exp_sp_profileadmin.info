@@ -1,0 +1,6 @@
+name = List Value engine
+description = Core List Value.
+package = ExpertusONE Core
+version = VERSION
+core = 7.x
+dependencies[] = exp_sp_core

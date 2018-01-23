@@ -1,0 +1,3661 @@
+<?php
+require_once "exp_sp_cart.inc";
+/**
+ * Implementation of hook_uc_cart_pane().
+ */
+
+function exp_sp_cart_uc_cart_pane($items) {
+ try{
+  $panes['uc_deleted_classes_pane'] = array(
+    //'id' => 'uc_deleted_classes_pane',
+    'enabled' => TRUE,
+    'title' => t('LBL559'), //Deleted classes from cart
+    'weight' => -1,
+    'body' => !is_null($items) ? drupal_get_form('uc_deleted_classes_cart_pane_output', $items) : array() ,
+  );
+  $body = array();
+
+  if (!is_null($items)) {
+    $body = drupal_get_form('expertus_cart_view_form', $items) + array(
+      '#prefix' => '<div id="cart-form-pane">',
+      '#suffix' => '</div>',
+    );
+  }
+
+  $panes['expertus_cart_form'] = array(
+    'title' => t('LBL558'), //Expertusone cart form
+    'enabled' => TRUE,
+    'weight' => 0,
+    'body' => $body,
+   );
+
+   return $panes;
+   }catch (Exception $ex) {
+   	watchdog_exception('exp_sp_cart_uc_cart_pane', $ex);
+   	expertusErrorThrow($ex);
+   }
+}
+
+/**
+ * Implements hook_uc_checkout_pane().
+ */
+function exp_sp_cart_uc_checkout_pane() {
+ try{
+  $panes['clone_cart'] = array(
+    'enabled' => TRUE,
+    'callback' => 'clone_uc_checkout_pane_cart',
+    'title' => t('LBL557'), //Expertus Cart contents
+    'desc' => t("MSG338"), //Display the contents of a customer's shopping cart.
+    'weight' => 1,
+    'process' => FALSE,
+    'collapsible' => FALSE,
+  );
+
+	  $panes['productorg'] = array(
+	    'enabled' => TRUE,
+	    'callback' => 'expertus_checkout_pane_userorginfo',
+	    'title' => t('LBL556'), //User Information
+	    'desc' => t('MSG339'), //Get basic information of learner.
+	    'weight' => 9,
+	  );
+
+  return $panes;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_uc_checkout_pane', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function exp_sp_cart_theme(){
+ try{
+  return array(
+    'clone_uc_cart_review_table' => array(
+      'variables' => array('items' => array(), 'show_subtotal' => TRUE, 'order_from' => NULL,'form' => NULL, 'form_state' => NULL),
+    ),
+
+    'clone_uc_cart_order_review_table' => array(
+      'variables' => array('order' => null),
+    ),
+  	'clone_admin_order_update_table' => array(
+  		'variables' => array('order' => null),
+  	),
+
+    'expertus_cart_view_form' => array(
+      'render element' => 'form',
+    ),
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_theme', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Display the cart contents for review during checkout.
+ */
+function clone_uc_checkout_pane_cart($op, $order, $form = NULL, &$form_state = NULL) {
+	try {
+  switch ($op) {
+    case 'view':
+    	if(count($order->products)){
+    		$theme = 'clone_uc_cart_review_table';
+    		$items = $order->products;
+    		$show_subtotal = TRUE;
+    	}
+    	else{
+    		$theme = 'clone_uc_cart_review_table';
+    		$items = array();
+    		$show_subtotal = FALSE;
+    	}
+      $contents['clone_uc_cart_review_table'] = array(
+        '#theme' => $theme,
+        '#items' => $items,
+      	'#form'	=> $form,
+      	'#form_state' => $form_state,
+      	'#show_subtotal' => $show_subtotal,
+      	'#order_from'   => $form_state['order_from'],
+        '#weight' => variable_get('uc_pane_cart_field_cart_weight', 2),
+      );
+       return array('contents' => $contents, 'next-button' => FALSE);
+
+    case 'review':
+      $review[] = theme('clone_uc_cart_order_review_table', array('order' => $order));
+      return $review;
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('clone_uc_checkout_pane_cart', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Formats the cart contents table on the checkout page.
+ *
+ * @param $show_subtotal
+ *   TRUE or FALSE indicating if you want a subtotal row displayed in the table.
+ *
+ * @return
+ *   The HTML output for the cart review table.
+ *
+ * @ingroup themeable
+ */
+function theme_clone_uc_cart_review_table($variables) {
+	try{
+	expDebug::dPrint('$variables = ' . print_r($variables, true), 5);
+
+  $items = $variables['items'];
+  //TBD remove duplicate
+  $show_subtotal = $variables['show_subtotal'];
+  $order_from 	 = $variables['order_from'];
+  $subtotal = 0;
+	$form = $variables['form'];
+	$form_state = $variables['form_state'];
+  // Set up table header.
+  if($order_from == 'admin_clone_cart'){
+  	$colspan = 5;
+	  $header = array(
+	   // array('data' => t('Qty'), 'class' => array('qty')),
+	    array('data' => t('LBL083'), 'class' => array('products')), //Title
+	    array('data' => t('LBL084'), 'class' => array('deliverytype')), //Delivery Type
+	    array('data' => t('Location'), 'class' => array('location')), //Location
+	    array('data' => t('LBL040'), 'class' => array('price')), //Price
+	  	array('data' => '', 'class' => array('admin-remove')), //remove
+	  );
+  }
+  else{
+  	$colspan = 4;
+  	$header = array(
+	   // array('data' => t('Qty'), 'class' => array('qty')),
+	    array('data' => t('LBL083'), 'class' => array('products')), //Title
+	    array('data' => t('LBL084'), 'class' => array('deliverytype')), //Delivery Type
+	    array('data' => t('Location'), 'class' => array('location')), //Location
+	    array('data' => t('LBL040'), 'class' => array('price')), //Price
+	  );
+  }
+
+  // Set up table rows.
+  foreach ($items as $item) {
+    expertus_cart_add_get_contents($item);
+    $total = $item->price * $item->qty;
+    $subtotal += $total;
+
+    $description = check_plain($item->title) . uc_product_get_description($item);
+    $description = '<span class="limit-title vtip" title="'.sanitize_data(check_plain($item->title)) . uc_product_get_description($item).'">'.check_plain($item->title) . uc_product_get_description($item).'</span>';
+
+    // Remove node from context to prevent the price from being altered.
+    $deliveryType[]= $item->delivery_type;
+    if($order_from == 'admin_clone_cart'){
+	    $rows[] = array(
+	     // array('data' => t('@qty&times;', array('@qty' => $item->qty)), 'class' => array('qty')),
+	      array('data' => $description, 'class' => array('products')),
+	      array('data' => $item->delivery_type, 'class' => array('deliverytype')),
+	      array('data' => '<span class="vtip" title="'.sanitize_data($item->location).'">'.titleController('EXP-SP-CART-MODULE-LOCATION',$item->location,25), 'class' => array('location')),
+	      array('data' => array('#theme' => 'uc_price', '#price' => $total), 'class' => array('price','price-override')),
+	    	array('data' => '<input type="button" value="" name="remove-cart-'.$item->nid.'" onclick="removeAdminCartItem(\''.$item->nid.'\')" id="edit-items-'.$item->nid.'-remove" class="exp-remove-cart-item form-submit" title="Remove">', 'class' => array('remove')),
+	    );
+    }
+    else{
+    	$rows[] = array(
+    			// array('data' => t('@qty&times;', array('@qty' => $item->qty)), 'class' => array('qty')),
+    			array('data' => $description, 'class' => array('products')),
+    			array('data' => $item->delivery_type, 'class' => array('deliverytype')),
+    			array('data' => '<span class="vtip" title="'.sanitize_data($item->location).'">'.titleController('EXP-SP-CART-MODULE-LOCATION',$item->location,25), 'class' => array('location')),
+    			array('data' => array('#theme' => 'uc_price', '#price' => $total), 'class' => array('price')),
+    	);
+    }
+  }
+  $couponHtml = '';
+  // Add the subtotal as the final row.
+  if ($show_subtotal) {
+  if (!empty($_SESSION['availableFunctionalities']->uc_discounts) ||
+          (!empty($_SESSION['availableFunctionalities']->exp_sp_cybersource_tax) && variable_get('exp_cybersource_soap_tax_calculate', FALSE))) {
+    if($order_from == 'admin_clone_cart'){
+	    $rows[] = array(
+	      'data' => array(
+	      		array(
+	      				'data' => array(
+	      				),
+	      				// Cell attributes
+	      				'colspan' => 1,
+	      				'class' => array('products subtotal'),
+	      		),
+	      		array(
+	      				'data' => array(
+	      				),
+	      				// Cell attributes
+	      				'colspan' => 1,
+	      				'class' => array('deliverytype subtotal'),
+	      		),
+	        // One cell
+	        array(
+	          'data' => array(
+	            //'#theme' => 'uc_price',
+	            '#prefix' => '<span>' . t('LBL553').":" . '</span> ', // Subtotal:
+	          ),
+	          // Cell attributes
+	          'colspan' => 1,
+	          'class' => array('location subtotal'),
+	        ),
+      		array(
+      				'data' => array(
+      						'#theme' => 'uc_price',
+      						'#price' => $subtotal,
+      						 
+      						 
+      				),
+      				// Cell attributes
+      				'colspan' => 1,
+      				'class' => array('price subtotal'),
+      		),
+	        array(
+	          'data' => array(
+	            
+	          ),
+	          // Cell attributes
+	          'colspan' => 1,
+	          'class' => array('remove subtotal'),
+	        ),
+	      ),
+	      // Row attributes
+	      'class' => array('subtotal'),
+	    );
+    }else{
+       $rows[] = array(
+       		'data' => array(
+       				array(
+       						'data' => array(
+       						),
+       						// Cell attributes
+       						'colspan' => 1,
+       						'class' => array('products subtotal'),
+       				),
+       				array(
+       						'data' => array(
+       						),
+       						// Cell attributes
+       						'colspan' => 1,
+       						'class' => array('deliverytype subtotal'),
+       				),
+	        // One cell
+	        array(
+	          'data' => array(
+	           // '#theme' => 'uc_price',
+	            '#prefix' => '<span >' . t('LBL553').":" . '</span> ', // Subtotal:
+	          ),
+	          // Cell attributes
+	          'colspan' => 1,
+	          'class' => array('location subtotal'),
+	        ),
+	        array(
+	          'data' => array(
+	            '#theme' => 'uc_price',
+	            '#price' => $subtotal,
+	          
+	            
+	          ),
+	          // Cell attributes
+	          'colspan' => 1,
+	          'class' => array('price amount'),
+	        ),
+	      ),
+	      // Row attributes
+	      'class' => array('subtotal'),
+	    );
+		}
+    }
+    $totalDiscounts = 0;
+    if($order_from == 'admin_clone_cart' && ($_SESSION['cart_admin_order'])){
+    	$order = uc_order_load($_SESSION['cart_admin_order']);
+	    $totalDiscounts = 0; // Since uc_discount amounts are negative, this will also be a negative value after all uc_discounts are added up
+	    $totalTax = 0;
+	    if (!empty($order->line_items)) {
+	    	foreach($order->line_items as $lineItem) {
+	    		if (!empty($_SESSION['availableFunctionalities']->uc_discounts) && $lineItem['type'] == 'uc_discounts') {
+	    			$totalDiscounts += $lineItem['amount'];
+	    		}
+	    	}
+	    }
+	    $subtotal = $subtotal + $totalDiscounts;
+	    $totalDiscounts = -($totalDiscounts);
+	    expDebug::dPrint('$totalDiscounts = ' . $totalDiscounts, 5);
+	    expDebug::dPrint('$totalTax = ' . $subtotal, 5);
+    }
+
+
+    if (!empty($_SESSION['availableFunctionalities']->uc_discounts)) {
+    	expDebug::dPrint('>uc_discounts'.print_r($order,true));
+    	if($order->data['order_create_from'] == 'admin_checkout'){
+    		$discountPane = ucDiscountModule($order, $form, $form_state);
+    		$rows[] = array(
+    				'data' => array(
+    						// One cell
+    						array(
+    								'data' => $discountPane,
+    								'class' => array('discount-pane subtotal'),
+    								'colspan' => 2,
+    						),
+    						array(
+    								'data' => array(
+    										//'#theme' => 'uc_price',
+    										'#prefix' => '<span>' . t('Discount') . ':</span>', // Discount
+    		
+    								),
+    								// Cell attributes
+    								'class' => array('location subtotal admin-discount-subtotal'),
+    								'colspan' => 1,
+    						),
+    						array(
+    								'data' => array(
+    										'#theme' => 'uc_price',
+    										'#prefix' => '<span id="subtotal-title" style="display:none;"></span>&nbsp;<span id="exp-clone-cart-discount">', // Discount
+    										'#suffix' => '</span>',
+    										'#price' => $totalDiscounts,
+    										//'colspan' => 3,
+    								),
+    								// Cell attributes
+    								'class' => array('subtotal admin-discount-subtotal'),
+    								'colspan' => 1,
+    						),
+    						array(
+	          'data' => array(
+	            
+	          ),
+	          // Cell attributes
+	          'colspan' => 1,
+	          'class' => array('subtotal remove'),
+	        ),
+    				),
+    				// Row attributes
+    				'class' => array('subtotal discount'),
+
+    		);
+    	}else{
+    		$rows[] = array(
+    				'data' => array(
+    						array(
+    								'data' => array(
+    								),
+    								// Cell attributes
+    								'colspan' => 1,
+    								'class' => array('products subtotal'),
+    						),
+    						array(
+    								'data' => array(
+    								),
+    								// Cell attributes
+    								'colspan' => 1,
+    								'class' => array('deliverytype subtotal'),
+    						),
+    						// One cell
+    						array(
+    								'data' => array(
+    										// '#theme' => 'uc_price',
+    										'#prefix' => '<span>' . t('Discount') . ':</span>', // Discount
+    								),
+    								// Cell attributes
+    								'colspan' => 1,
+    								'class' => array('location subtotal'),
+    						),
+    						array(
+    								'data' => array(
+    										'#theme' => 'uc_price',
+    										'#prefix' => '<span id="exp-clone-cart-discount">', // Discount
+    										'#suffix' => '</span>',
+    										'#price' => $_SESSION['admin_total_discount'],
+    										 
+    										 
+    								),
+    								// Cell attributes
+    								'colspan' => 1,
+    								'class' => array('price amount'),
+    						),
+    				),
+    				// Row attributes
+    				'class' => array('subtotal'),
+    		);
+    	}
+    	
+    	//$discountPane = ucDiscountModule($order, &$form, &$form_state);
+
+    }
+
+    if (!empty($_SESSION['availableFunctionalities']->uc_discounts) ||
+        (empty($_SESSION['availableFunctionalities']->exp_sp_cybersource_tax) || !variable_get('exp_cybersource_soap_tax_calculate', FALSE))) {
+      if($order->data['order_create_from'] == 'admin_checkout'){
+	    $rows[] = array(
+	      'data' => array(
+      		array(
+      				'data' => array(
+      				),
+      				// Cell attributes
+      				'colspan' => 1,
+      				'class' => array('products subtotal'),
+      		),
+      		array(
+      				'data' => array(
+      				),
+      				// Cell attributes
+      				'colspan' => 1,
+      				'class' => array('deliverytype subtotal'),
+      		),
+	        // One cell
+	        array(
+	          'data' => array(
+	           // '#theme' => 'uc_price',
+	            '#prefix' => '<span>' . t('LBL827') . ':</span>', //Total
+	          ),
+	          // Cell attributes
+	          'colspan' => 1,
+	          'class' => array('location subtotal'),
+	        ),
+	      		array(
+	      				'data' => array(
+	      						'#theme' => 'uc_price',
+	      						'#prefix' => '<span id="exp-clone-cart-total">', //Total
+	      						'#suffix' => '</span>',
+	      						'#price' => $subtotal,
+	      				),
+	      				// Cell attributes
+	      				'colspan' => 1,
+	      				'class' => array('price subtotal'),
+	      		),
+	        array(
+	          'data' => array(
+	            
+	          ),
+	          // Cell attributes
+	          'colspan' => 1,
+	          'class' => array('remove subtotal'),
+	        ),
+	      ),
+	      // Row attributes
+	      'class' => array('subtotal total'),
+	    );
+      }else{
+      	$rows[] = array(
+      			'data' => array(
+      					array(
+      							'data' => array(
+      							),
+      							// Cell attributes
+      							'colspan' => 1,
+      							'class' => array('products subtotal'),
+      					),
+      					array(
+      							'data' => array(
+      							),
+      							// Cell attributes
+      							'colspan' => 1,
+      							'class' => array('deliverytype subtotal'),
+      					),
+      					// One cell
+      					array(
+      							'data' => array(
+      									// '#theme' => 'uc_price',
+      									'#prefix' => '<span>' . t('LBL827') . ':</span>', //Total
+      							),
+      							// Cell attributes
+      							'colspan' => 1,
+      							'class' => array('location subtotal'),
+      					),
+      					array(
+      							'data' => array(
+      									'#theme' => 'uc_price',
+      									'#prefix' => '<span id="exp-clone-cart-total">', //Total
+      									'#suffix' => '</span>',
+      									'#price' => $subtotal,
+      										
+      										
+      							),
+      							// Cell attributes
+      							'colspan' => 1,
+      							'class' => array('price amount'),
+      					),
+      			),
+      			// Row attributes
+      			'class' => array('subtotal'),
+      	);
+      }
+    }
+
+   $couponHtml .='<table width="100%">' .
+                   '<tr>' .
+                     '<td  style="text-align:right;padding-bottom:0px; padding-top:0;">' .
+                       '<div id="line-items-div">' .
+                         '<table style="width:100%">' .
+                           '<tr>' .
+                             '<td align="right" style="width:95%">' .
+                               '<div id="checkout_view_taxapply">' .
+                                 ((!empty($_SESSION['availableFunctionalities']->exp_sp_cybersource_tax) &&
+                                   variable_get('exp_cybersource_soap_tax_calculate', FALSE))? t('MSG337') : '') . //Sales Tax or VAT as applicable may apply.
+                               '</div>' .
+                             '</td>' .
+                           '</tr>' .
+                         '</table>' .
+                       '</div>' .
+                     '</td>' .
+                   '</tr>' .
+/*                   '<tr>' .
+                     '<td style="text-align:right;">' .
+                       '<div class="uc-discounts-messages-container"></div>' .
+                     '</td>' .
+                   '</tr>' .
+*/                 '</table>';
+  }
+  else{
+  	if($order_from == 'admin_clone_cart')
+  		$clonemessage = t('MSG707');
+  	else
+  		$clonemessage = t('MSG471');
+
+  	$rows[] = array(
+  			array('data' => '<p>' . $clonemessage .'</p>', 'class' => array('location'), 'colspan' => $colspan),
+  	);
+  }
+
+  return theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('class' => array('cart-review')))) . $couponHtml;
+  }catch (Exception $ex) {
+  	watchdog_exception('theme_clone_uc_cart_review_table', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Formats the cart contents table on the checkout page.
+ *
+ * @param $show_subtotal
+ *   TRUE or FALSE indicating if you want a subtotal row displayed in the table.
+ *
+ * @return
+ *   The HTML output for the cart review table.
+ *
+ * @ingroup themeable
+ */
+function theme_clone_admin_order_update_table($variables) {
+ try{
+	expDebug::dPrint('$variables = ' . print_r($variables, true), 5);
+	$order = $variables['order'];
+	expDebug::dPrint('$order = ' . print_r($order, true), 5);
+  $items = $order->products;
+  $show_subtotal = FALSE;
+
+  $subtotal = 0;
+	$sts = '';
+  // Set up table rows.
+  foreach ($items as $item) {
+  	$item->content_from = 'admin_update';
+    expertus_cart_add_get_contents($item);
+     $orderDet = uc_order_load($item->order_id); 
+    $total = $item->price * $item->qty;
+    $subtotal += $total;
+    $subRefundAmt   += ($item->refund_amount) ? $item->refund_amount : 0;
+    $subTaxAmt      += $item->tax_amount;
+    $subDiscountAmt += $item->discount_amount;
+    $description = check_plain($item->title) . uc_product_get_description($item);
+    if($sts == '')
+    	$sts = $item->order_status;
+	$description = '<span class="limit-title vtip" title="'.sanitize_data(check_plain($item->title)).'">'.check_plain($item->title).'</span>';
+	$code = '<span class="vtip" title="'.sanitize_data(check_plain($item->ClassCode)).'">'.titleController('EXP-SP-CART-MODULE-CLASSCODE',check_plain($item->ClassCode) ,15).'</span>';
+    // Remove node from context to prevent the price from being altered.
+    $deliveryType[]= $item->delivery_type;
+    if($item->order_status == 'na' && ($orderDet->order_status == "payment_received" || $orderDet->order_status == "completed") ){
+    	$cancelAction = '';
+    }
+    else{
+    	$cancelAction = ($item->order_status == 'cme_pmt_sts_rjt' || $order->order_status == 'canceled') ? t('Canceled') : '<a class="cart-cancel-link" onclick="deleteOrderLineItem(\''.$item->nid.'\',\''.$item->enr_id.'\')">'.t('LBL109').'</a>';
+    }
+    $itemRefundAmt = ($item->refund_amount || ($item->refund_amount == 0 && $item->order_status == 'cme_pmt_sts_rjt')) ? '<div class="refund-price">$'. number_format($item->refund_amount,2).'</div>' : '&nbsp;';
+    $rows[] = array(
+     // array('data' => t('@qty&times;', array('@qty' => $item->qty)), 'class' => array('qty')),
+      array('data' => $description, 'class' => array('products')),
+      array('data' => $code, 'class' => array('code')),
+      array('data' => $item->delivery_type, 'class' => array('deliverytype')),
+      array('data' => '<span class="vtip" title="'.sanitize_data($item->location).'">'.titleController('EXP-SP-CART-MODULE-LOCATION',$item->location,10), 'class' => array('location')),
+      array('data' => array('#theme' => 'uc_price', '#price' => $total), 'class' => array('price')),
+   	  array('data' => '<div class="cart-cancel">'.$cancelAction.'</div>', 'class' => array('price refund')),
+    );
+  }
+  if($subRefundAmt || ($subRefundAmt == 0 && $sts == 'cme_pmt_sts_rjt'))
+  {
+  	// Set up table header.
+  	$header = array(
+  			// array('data' => t('Qty'), 'class' => array('qty')),
+  			array('data' => t('LBL083'), 'class' => array('products')), //Title
+  			array('data' => t('LBL096'), 'class' => array('code')), //Title
+  			array('data' => t('LBL084'), 'class' => array('deliverytype')), //Delivery Type
+  			array('data' => t('Location'), 'class' => array('location')), //Location
+  			array('data' => t('LBL040'), 'class' => array('price')), //Price
+  			array('data' => t('LBL1165'), 'class' => array('refund')), //Refund
+  	);
+  	$rows[] = array(
+  			'data' => array(
+  					array(
+  							'data' => array(
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('products subtotal'),
+  					),
+  					array(
+  							'data' => array(
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('code subtotal'),
+  					),
+  					array(
+  							'data' => array(
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('deliverytype subtotal'),
+  					),
+  					// One cell
+  					array(
+  							'data' => array(
+  									//'#theme' => 'uc_price',
+  									'#prefix' => '<span>' . t('LBL553').':' . '</span> ', //Subtotal:
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('location subtotal'),
+  					),
+  					array(
+  							'data' => array(
+  									'#theme' => 'uc_price',
+  									'#price' => $subtotal,
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('price subtotal'),
+  					),
+  					// Last cell
+  					array(
+  							'data' => array(
+  									'#theme' => 'uc_price',
+  									'#price' => $subRefundAmt,
+  							),
+  							'class' => array('price subtotal'),
+  					),
+  			),
+  			// Row attributes
+  			'class' => array('subtotal refund discount'),
+  	);
+  
+  	$totalDiscounts = 0; // Since uc_discount amounts are negative, this will also be a negative value after all uc_discounts are added up
+  	$totalTax = 0;
+  	if (!empty($order->line_items)) {
+  		foreach($order->line_items as $lineItem) {
+  			if ($lineItem['type'] == 'uc_discounts') {
+  				$totalDiscounts += $lineItem['amount'];
+  			}
+  			else if ($lineItem['type'] == 'cybersource_tax') {
+  				$totalTax += $lineItem['amount'];
+  			}
+  		}
+  	}
+
+  	expDebug::dPrint('$totalDiscounts = ' . $totalDiscounts, 5);
+  	expDebug::dPrint('$totalTax = ' . $totalTax, 5);
+  	
+  	$rows[] = array(
+  			'data' => array(
+  					array(
+  							'data' => array(
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('products subtotal'),
+  					),
+  					array(
+  							'data' => array(
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('code subtotal'),
+  					),
+  					array(
+  							'data' => array(
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('deliverytype subtotal'),
+  					),
+  					// One cell
+  					array(
+  							'data' => array(
+  									//'#theme' => 'uc_price',
+  									'#prefix' => '<span>' . t('Discount') . ' : </span> ', //Discount
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('location subtotal'),
+  					),
+  					array(
+  							'data' => array(
+  									'#theme' => 'uc_price',
+  									'#price' => '-'.-($totalDiscounts),
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('price subtotal'),
+  					),
+  					// Last cell
+  					array(
+  							'data' => array(
+  									'#theme' => 'uc_price',
+  									'#price' => '-'. $subDiscountAmt,
+  							),
+  							'class' => array('price subtotal'),
+  					),
+  			),
+  			// Row attributes
+  			'class' => array('subtotal refund discount'),
+  	);
+  	
+  	
+  	$rows[] = array(
+  			'data' => array(
+  					array(
+  							'data' => array(
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('products subtotal'),
+  					),
+  					array(
+  							'data' => array(
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('code subtotal'),
+  					),
+  					array(
+  							'data' => array(
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('deliverytype subtotal'),
+  					),
+  					// One cell
+  					array(
+  							'data' => array(
+  									//'#theme' => 'uc_price',
+  									'#prefix' => '<span>' . t('Tax').':' . '</span> ', //Subtotal:
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('location subtotal'),
+  					),
+  					array(
+  							'data' => array(
+  									'#theme' => 'uc_price',
+  									'#price' => $totalTax,
+  							),
+  							// Cell attributes
+  							'colspan' => 1,
+  							'class' => array('price subtotal'),
+  					),
+  					// Last cell
+  					array(
+  							'data' => array(
+  									'#theme' => 'uc_price',
+  									'#price' => $subTaxAmt,
+  							),
+  							'class' => array('price subtotal'),
+  					),
+  			),
+  			// Row attributes
+  			'class' => array('subtotal refund discount'),
+  	);
+  	
+
+  $subTotal = $subtotal + $totalDiscounts + $totalTax;
+
+  	// Calculate the total and display it next
+  $rows[] = array(
+  		'data' => array(
+  				array(
+  						'data' => array(
+  						),
+  						// Cell attributes
+  						'colspan' => 1,
+  						'class' => array('products subtotal'),
+  				),
+  				array(
+  						'data' => array(
+  						),
+  						// Cell attributes
+  						'colspan' => 1,
+  						'class' => array('code subtotal'),
+  				),
+  				array(
+  						'data' => array(
+  						),
+  						// Cell attributes
+  						'colspan' => 1,
+  						'class' => array('deliverytype subtotal'),
+  				),
+  				// One cell
+  				array(
+  						'data' => array(
+  								//'#theme' => 'uc_price',
+  								'#prefix' => '<span>' . t('LBL827').':' . '</span> ', //Subtotal:
+  						),
+  						// Cell attributes
+  						'colspan' => 1,
+  						'class' => array('location subtotal'),
+  				),
+  				array(
+  						'data' => array(
+  								'#theme' => 'uc_price',
+  								'#price' => ($subTotal < 0) ? 0 : $subTotal,
+  						),
+  						// Cell attributes
+  						'colspan' => 1,
+  						'class' => array('price subtotal'),
+  				),
+  				// Last cell
+  				array(
+  						'data' => array(
+  								'#theme' => 'uc_price',
+  								'#price' => ($subRefundAmt - $subDiscountAmt) + $subTaxAmt,
+  						),
+  						'class' => array('price subtotal'),
+  				),
+  		),
+  		// Row attributes
+  		'class' => array('subtotal refund discount'),
+  );
+  }
+ 	else{
+ 		// Set up table header.
+ 		$header = array(
+ 				// array('data' => t('Qty'), 'class' => array('qty')),
+ 				array('data' => t('LBL083'), 'class' => array('products')), //Title
+ 				array('data' => t('LBL096'), 'class' => array('code')), //Title
+ 				array('data' => t('LBL084'), 'class' => array('deliverytype')), //Delivery Type
+ 				array('data' => t('Location'), 'class' => array('location')), //Location
+ 				array('data' => t('LBL040'), 'class' => array('price')), //Price
+ 				array('data' => '&nbsp;', 'class' => array('refund')), //Refund
+ 		);
+ 		$rows[] = array(
+ 				'data' => array(
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('products subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('code subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('deliverytype subtotal'),
+ 						),
+ 						// One cell
+ 						array(
+ 								'data' => array(
+ 										//'#theme' => 'uc_price',
+ 										'#prefix' => '<span id="subtotal-title">' . t('LBL553').':' . '</span> ', //Subtotal:
+								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('location subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 										'#theme' => 'uc_price',
+ 										'#price' => $subtotal,
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('price subtotal'),
+ 						),
+ 						array('data'=>'','class'=>'price refund'),
+ 				),
+ 				// Row attributes
+ 				'class' => array('subtotal'),
+ 		);
+
+ 		$totalDiscounts = 0; // Since uc_discount amounts are negative, this will also be a negative value after all uc_discounts are added up
+ 		$totalTax = 0;
+ 		if (!empty($order->line_items)) {
+ 			foreach($order->line_items as $lineItem) {
+ 				if ($lineItem['type'] == 'uc_discounts') {
+ 					$totalDiscounts += $lineItem['amount'];
+ 				}
+ 				else if ($lineItem['type'] == 'cybersource_tax') {
+ 					$totalTax += $lineItem['amount'];
+ 				}
+ 			}
+ 		}
+
+ 		expDebug::dPrint('$totalDiscounts = ' . $totalDiscounts, 5);
+ 		expDebug::dPrint('$totalTax = ' . $totalTax, 5);
+ 		$rows[] = array(
+ 				'data' => array(
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('products subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('code subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('deliverytype subtotal'),
+ 						),
+ 						// One cell
+ 						array(
+ 								'data' => array(
+ 										//'#theme' => 'uc_price',
+ 										'#prefix' => '<span id="subtotal-title">' . t('Discount') . ' : </span> ', //Discount
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('location subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 										'#theme' => 'uc_price',
+ 										'#price' => '-'.-($totalDiscounts),
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('price subtotal'),
+ 						),
+ 						array('data'=>'','class'=>'price refund'),
+ 				),
+ 				// Row attributes
+ 				'class' => array('subtotal'),
+ 		);
+ 		$rows[] = array(
+ 				'data' => array(
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('products subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('code subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('deliverytype subtotal'),
+ 						),
+ 						// One cell
+ 						array(
+ 								'data' => array(
+ 										//'#theme' => 'uc_price',
+ 										'#prefix' => '<span id="subtotal-title">' . t('Tax') . ' : </span> ', //Tax
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('location subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 										'#theme' => 'uc_price',
+ 										'#price' => $totalTax,
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('price subtotal'),
+ 						),
+ 						array('data'=>'','class'=>'price refund'),
+ 				),
+ 				// Row attributes
+ 				'class' => array('subtotal'),
+ 		);
+
+ 		
+
+ 		// Calculate the total and display it next
+ 		$subTotal = $subtotal + $totalDiscounts + $totalTax;
+ 		$rows[] = array(
+ 				'data' => array(
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('products subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('code subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('deliverytype subtotal'),
+ 						),
+ 						// One cell
+ 						array(
+ 								'data' => array(
+ 										//'#theme' => 'uc_price',
+ 										'#prefix' => '<span id="subtotal-title">' . t('LBL827') . ' : </span> ', //Total
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('location subtotal'),
+ 						),
+ 						array(
+ 								'data' => array(
+ 										'#theme' => 'uc_price',
+ 										'#price' => ($subTotal < 0) ? 0 : $subTotal,
+ 								),
+ 								// Cell attributes
+ 								'colspan' => 1,
+ 								'class' => array('price subtotal'),
+ 						),
+ 						array('data'=>'','class'=>'price refund'),
+ 				),
+ 				// Row attributes
+ 				'class' => array('subtotal'),
+ 		);
+ 	}
+  return theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('class' => array('cart-review'))));
+  }catch (Exception $ex) {
+  	watchdog_exception('theme_clone_admin_order_update_table', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Formats the cart contents table on the checkout page.
+ *
+ * @param $show_subtotal
+ *   TRUE or FALSE indicating if you want a subtotal row displayed in the table.
+ *
+ * @return
+ *   The HTML output for the cart review table.
+ *
+ * @ingroup themeable
+ */
+function theme_clone_uc_cart_order_review_table($variables) {
+	try{
+	expDebug::dPrint('$variables = ' . print_r($variables, true), 5);
+	$order = $variables['order'];
+	expDebug::dPrint('$order = ' . print_r($order, true), 5);
+	$items = $order->products;
+	$show_subtotal = FALSE;
+
+	$subtotal = 0;
+
+	// Set up table header.
+	$header = array(
+			// array('data' => t('Qty'), 'class' => array('qty')),
+			array('data' => t('LBL083'), 'class' => array('products')), //Title
+			array('data' => t('LBL084'), 'class' => array('deliverytype')), //Delivery Type
+			array('data' => t('Location'), 'class' => array('location')), //Location
+			array('data' => t('LBL040'), 'class' => array('price')), //Price
+	);
+
+	// Set up table rows.
+	foreach ($items as $item) {
+		expertus_cart_add_get_contents($item);
+		$total = $item->price * $item->qty;
+		$subtotal += $total;
+
+		$description = check_plain($item->title) . uc_product_get_description($item);
+		$description = '<span class="limit-title vtip" title="'.sanitize_data(check_plain($item->title)) . uc_product_get_description($item).'">'.check_plain($item->title) . uc_product_get_description($item).'</span>';
+		// Remove node from context to prevent the price from being altered.
+		$deliveryType[]= $item->delivery_type;
+		$rows[] = array(
+				// array('data' => t('@qty&times;', array('@qty' => $item->qty)), 'class' => array('qty')),
+				array('data' => $description, 'class' => array('products')),
+				array('data' => $item->delivery_type, 'class' => array('deliverytype')),
+				array('data' => '<span class="vtip" title="'.sanitize_data($item->location).'">'.titleController('EXP-SP-CART-MODULE-LOCATION',$item->location,25), 'class' => array('location')),
+				array('data' => array('#theme' => 'uc_price', '#price' => $total), 'class' => array('price')),
+		);
+	}
+
+	if (!empty($_SESSION['availableFunctionalities']->uc_discounts) ||
+			(!empty($_SESSION['availableFunctionalities']->exp_sp_cybersource_tax) && variable_get('exp_cybersource_soap_tax_calculate', FALSE))) {
+		$rows[] = array(
+				'data' => array(
+						array(
+								'data' => array(
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('products subtotal'),
+						),
+						array(
+								'data' => array(
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('deliverytype subtotal'),
+						),
+						// One cell
+						array(
+								'data' => array(
+										// '#theme' => 'uc_price',
+										'#prefix' => '<span >' . t('LBL553').":" . '</span> ', // Subtotal:
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('location subtotal'),
+						),
+						array(
+								'data' => array(
+										'#theme' => 'uc_price',
+										'#price' => $subtotal,
+										 
+										 
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('price amount'),
+						),
+				),
+				// Row attributes
+				'class' => array('subtotal'),
+		);
+	}
+
+	$totalDiscounts = 0; // Since uc_discount amounts are negative, this will also be a negative value after all uc_discounts are added up
+	$totalTax = 0;
+	if (!empty($order->line_items)) {
+		foreach($order->line_items as $lineItem) {
+			if (!empty($_SESSION['availableFunctionalities']->uc_discounts) && $lineItem['type'] == 'uc_discounts') {
+				$totalDiscounts += $lineItem['amount'];
+			}
+			else if (!empty($_SESSION['availableFunctionalities']->exp_sp_cybersource_tax) &&
+					variable_get('exp_cybersource_soap_tax_calculate', FALSE) &&
+					$lineItem['type'] == 'cybersource_tax') {
+				$totalTax += $lineItem['amount'];
+			}
+		}
+	}
+
+	expDebug::dPrint('$totalDiscounts = ' . $totalDiscounts, 5);
+	expDebug::dPrint('$totalTax = ' . $totalTax, 5);
+
+	if (!empty($_SESSION['availableFunctionalities']->uc_discounts)) {
+		$rows[] = array(
+				'data' => array(
+						array(
+								'data' => array(
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('products subtotal'),
+						),
+						array(
+								'data' => array(
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('deliverytype subtotal'),
+						),
+						// One cell
+						array(
+								'data' => array(
+										// '#theme' => 'uc_price',
+										'#prefix' => '<span >' . t('Discount') . ' : </span> ', //Discount
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('subtotal location'),
+						),
+						array(
+								'data' => array(
+										'#theme' => 'uc_price',
+										'#price' => -($totalDiscounts),
+											
+											
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('price amount'),
+						),
+				),
+				// Row attributes
+				'class' => array('subtotal discount'),
+		);
+	}
+
+	if (!empty($_SESSION['availableFunctionalities']->exp_sp_cybersource_tax) && variable_get('exp_cybersource_soap_tax_calculate', FALSE)) {
+		$rows[] = array(
+				'data' => array(
+						array(
+								'data' => array(
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('products subtotal'),
+						),
+						array(
+								'data' => array(
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('deliverytype subtotal'),
+						),
+						// One cell
+						array(
+								'data' => array(
+										// '#theme' => 'uc_price',
+										'#prefix' => '<span>' . t('Tax') . ' : </span> ', //Tax
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('subtotal location'),
+						),
+						array(
+								'data' => array(
+										'#theme' => 'uc_price',
+										'#price' => $totalTax,
+											
+											
+								),
+								// Cell attributes
+								'colspan' => 1,
+								'class' => array('price amount'),
+						),
+				),
+				// Row attributes
+				'class' => array('subtotal'),
+		);
+	}
+
+	// Calculate the total and display it next
+	$rows[] = array(
+			'data' => array(
+					array(
+							'data' => array(
+							),
+							// Cell attributes
+							'colspan' => 1,
+							'class' => array('products subtotal'),
+					),
+					array(
+							'data' => array(
+							),
+							// Cell attributes
+							'colspan' => 1,
+							'class' => array('deliverytype subtotal'),
+					),
+					// One cell
+					array(
+							'data' => array(
+									// '#theme' => 'uc_price',
+									'#prefix' => '<span >' . t('LBL827') . ' : </span> ', //Total
+							),
+							// Cell attributes
+							'colspan' => 1,
+							'class' => array('location subtotal'),
+					),
+					array(
+							'data' => array(
+									'#theme' => 'uc_price',
+								    '#price' => $subtotal + $totalDiscounts + $totalTax,
+										
+										
+							),
+							// Cell attributes
+							'colspan' => 1,
+							'class' => array('price amount'),
+					),
+			),
+			// Row attributes
+			'class' => array('subtotal'),
+	);
+	return theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('class' => array('cart-review'))));
+	}catch (Exception $ex) {
+		watchdog_exception('theme_clone_uc_cart_order_review_table', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+
+function exp_sp_cart_init(){
+	try{
+  // to clear drupal messages.
+  global $theme_key;
+  $msgState = isset($_SESSION['messages']['status'])?$_SESSION['messages']['status']:array();
+  $statusMsgCount = count($msgState);
+  if($statusMsgCount>0){
+    $statusMsg = $_SESSION['messages']['status'][0];
+    if(stristr($statusMsg,'your shopping cart') || stristr($statusMsg,'Your cart has been updated') ){
+      drupal_get_messages('status');
+    }
+  }
+  if(arg(0)=='cart')
+  {
+    $header_optional = array('type' => 'file', 'scope' => 'header', 'group' => JS_LIBRARY);
+    $css_module_optional = array('type' => 'file', 'group' => CSS_DEFAULT);
+    $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+    $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+   if($theme_key == 'expertusoneV2') {
+  		//NEWUI THEME STYLE SHEET
+     drupal_add_css(drupal_get_path('module', 'exp_sp_commerce') .'/css/exp_sp_uc_cart_v2.css', array('type' => 'file', 'group' => CSS_THEME, 'weight'=>1300));
+    }else{
+  	 drupal_add_css(drupal_get_path('module', 'exp_sp_commerce') .'/css/exp_sp_uc_cart.css', $css_theme_optional);
+  }
+
+    //To set cart timers
+    drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/exp_sp_jquery/jquery.cartTimer.js',$js_module_optional);
+     drupal_add_js('jQuery(document).ready(function () {console.log("cart init"); $(".limit-title").trunk8(trunk8.shoppingCart_title);});', 'inline');
+  	// Cart Timer.
+ 	if (empty($_COOKIE['cart_elapsed_time'])) {
+	 	$checkout_time = ( getCheckoutTimeout() != '')? getCheckoutTimeout() : '59';
+	 	$checkout_timer = $checkout_time*60;
+
+	 	// Secure cookie is disabled by Vincent on Dec 09, 2013
+	 	// This cookie is need to be read by javascript for timer count, if it is a secure then javasctipt will not read it. #0029940
+	  setcookie("cart_elapsed_time", $checkout_timer,null,'/','','','');
+		//setcookie("cart_elapsed_time", $checkout_timer,null,'/','',(isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]=='on'?TRUE:""),(isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]=='on'?TRUE:""));
+	 }
+    if(arg(2)!='complete'){
+	    drupal_add_js (
+	            '$(document).ready(function(){
+						checkoutTimeCount();
+	        });','inline');
+    }
+    else{
+    	drupal_add_js (
+	            '$(document).ready(function(){
+						removeTimercheckout();
+	        });','inline');
+    }
+  }
+  else{
+  $pages = array('cart',
+                 'cart/checkout',
+                 'cart/checkout/paymethod',
+                 'cart/checkout/review',
+                 'cart/checkout/complete',
+                 '/sites/default/files/',
+                 'taxes/calculate',
+                 'system/ajax',
+                 'learning/fetch-online-users-list');
+  $this_page = request_uri();
+
+	$retFlg = 0;
+	foreach ($pages as $page) {
+	  if ($page && strstr($this_page, $page) == true && arg(0)!= "learning") {
+		  $retFlg = 1;
+	  }
+	}
+	if(stristr($this_page, 'drupalchat') == true){
+	  $retFlg = 1;
+	}
+    $isImg = strrchr($this_page,'.');
+    $isImg = strtolower($isImg);
+    if($isImg == '.jpg' || $isImg == '.jpeg' || $isImg == '.gif' || $isImg == '.ico' || $isImg == '.png' || $isImg == '.css' || $isImg == '.js'){
+      $retFlg = 1;
+    }
+	if($retFlg == 0){
+	  if (!empty($_COOKIE['cart_elapsed_time'])) {
+	  	// Secure cookie is disabled by Vincent on Dec 09, 2013
+	 	// This cookie is need to be read by javascript for timer count, if it is a secure then javasctipt will not read it. #0029940
+	  setcookie("cart_elapsed_time", "", time()-3600,'','','','');
+		//setcookie("cart_elapsed_time", "", time()-3600,'','',(isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]=='on'?TRUE:""),(isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]=='on'?TRUE:""));
+		//unset($_COOKIE['cart_elapsed_time']);
+	  }
+	}
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_init', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_exit().
+ *
+ * Code from CacheExclude - http://drupal.org/project/cacheexclude
+ */
+
+function exp_sp_cart_exit() {
+ try{
+  global $base_root;
+  $solrSyncFlag = FALSE;
+   $select = db_select('slt_enrollment', 'enr');
+  $select->addField('enr', 'user_id','user_id');
+  $select->condition('enr.order_id', $_SESSION['slt_admin_orderid']);
+  $adminCreateUserId = $select->execute()->fetchField();
+  expDebug::dPrint("admin create user id ".print_r($adminCreateUserId,true),5);
+  $loggedinUserId = getSltpersonUserId();
+  //41432: Unable to continue shopping cart the following condition modified because in user side lms and log in id are same but admin side diff
+  if((arg(0) == 'administration' && arg(1) == 'order') || (isset($_SESSION['slt_admin_orderid']) && !empty($_SESSION['slt_admin_orderid'])))
+  	$lmsUserId = $adminCreateUserId;
+  else
+  	$lmsUserId = $loggedinUserId;
+  
+  $user_cart_pages = array('cart',
+                 'cart/checkout',
+                 'cart/checkout/review',
+                 'cart/checkout/paymethod',
+   				 'exp_sp_session_timeout_ahah_set_last',
+   				 'exp_sp_session_timeout_ajax_get_time_left',
+   				 'exp_sp_session_timeout_ahah_get_remaining_time',
+  				 'learning/login-process',
+                 'cart/checkout/complete');
+
+  $pages = array('cart',
+                 'cart/checkout',
+                 'cart/checkout/review',
+                 'cart/checkout/paymethod',
+                 'cart/checkout/complete',
+                 '/sites/default/files/',
+                 'taxes/calculate',
+   				 'exp_sp_session_timeout_ahah_set_last',
+   				 'exp_sp_session_timeout_ajax_get_time_left',
+   				 'exp_sp_session_timeout_ahah_get_remaining_time',
+                 'system/ajax',
+  				 'learning/login-process',
+                 'learning/fetch-online-users-list',
+  				'administration/order/',
+  		'ajax/',
+  'cart/checkout/credit/cvv_info');
+  $this_page = request_uri();
+  $retFlg =0;
+  foreach ($pages as $page) {
+    if ($page && strstr($this_page, $page) == true) {
+    $retFlg = 1;
+    }
+  }
+  
+  if(stristr($this_page, 'drupalchat') == true){
+	  $retFlg = 1;
+	}
+  $isImg = strrchr($this_page,'.');
+  $isImg = strtolower($isImg);
+  if($isImg == '.jpg' || $isImg == '.jpeg' || $isImg == '.gif' || $isImg == '.ico' || $isImg == '.png' || $isImg == '.css' || $isImg == '.js'){
+    $retFlg = 1;
+  }
+  $uc_cart_empty = 0;
+  foreach ($user_cart_pages as $cart_page) {
+  	if ($cart_page && strstr($this_page, $cart_page) == true) {
+  		if(!isset($_SERVER['HTTP_REFERER']) || empty($_SERVER['HTTP_REFERER'])){
+  			$retFlg = 0;
+  			$uc_cart_empty = 1;
+  		}
+  	}
+  }
+  //71588: Incorrect order is getting placed. (After user checkout a cart, user tries to add a new trainings from another tab/screen (set $retFlg as 0), system cancel existing order items to reservedcanceled state and create a new order from a latest cart items);
+  // We allow this exception url only in a order reset process(set $retFlg as 0), existing ajax call will work as normally.
+  $ajax_call_exception = array(
+								'ajax/trainingplan/class-cnt-for-course',
+  								'ajax/cart/product/add'
+							  );
+  foreach ($ajax_call_exception as $ajaxpage) {
+  	if ($ajaxpage && strstr($this_page, $ajaxpage) == true) {
+  		$retFlg = 0;
+  	}
+  }
+  expDebug::dPrint("browser session uc_cart_empty--> : ".$uc_cart_empty,4);
+  //db_query("insert into slt_enrollment (reg_status) values('".$_SESSION['slt_order_id']."')");
+  expDebug::dPrint("ret flag value check in exp_sp_cart_exit".$retFlg,4);
+  expDebug::dPrint("ret flag value check in exp_sp_cart_exit".print_r($_SESSION['cart_cybersource'],1),5);
+   if(($retFlg ==0 && empty($_SESSION['cart_cybersource']) || $uc_cart_empty==1)){
+     //db_query("insert into slt_enrollment (reg_status) values('".$_SESSION['slt_order_id']."')");
+  	//db_query("UPDATE slt_enrollment SET reg_status='lrn_crs_reg_rsc', reg_status_date = NOW() WHERE user_id ='".$lmsUserId."' AND reg_status ='lrn_crs_reg_rsv'");
+   	unset($_SESSION['cart_order']);
+   	unset($_SESSION['cart_admin_order']);
+   	unset($_SESSION['cart_page_messages']);
+  	unset($_SESSION['slt_order_id']);
+  	unset($_SESSION['cartform']);
+  	unset($_SESSION['shop_cart_currency_code']);
+  	unset($_SESSION['shop_cart_currency_sym']);
+  	unset($_SESSION['admin_shop_cart_currency_code']);
+  	unset($_SESSION['admin_shop_cart_currency_sym']);
+        unset($_SESSION['useriplocation']);
+  	unset($_COOKIE['admin_shop_cart_currency_code']);
+  	unset($_COOKIE['admin_shop_cart_currency_sym']);
+  	setcookie('admin_shop_cart_currency_code', null, -1, '/');
+  	setcookie('admin_shop_cart_currency_sym', null, -1, '/');
+  	expDebug::dPrint("TEMP CART CURRENCY CODE--> : ".$_SESSION['shop_cart_currency_code'].'--'.$_SESSION['shop_cart_currency_sym'],4);
+  	$result = db_query("SELECT id,course_id,class_id,order_id,browser_session FROM slt_enrollment WHERE user_id='".$lmsUserId."' AND reg_status='lrn_crs_reg_rsv' AND created_by='".$loggedinUserId."'");
+  	expDebug::dPrint("TEMP CART CURRENCY CODE--> : "."SELECT id,course_id,class_id,order_id,browser_session FROM slt_enrollment WHERE user_id='".$lmsUserId."' AND reg_status='lrn_crs_reg_rsv' AND created_by='".$loggedinUserId."'",4);
+  	//have checked the already user checkout process in other browser. added by yogaraja
+  	$browser_session_id = session_id();
+  	expDebug::dPrint("browser session--> : ".$browser_session_id,4);
+  	foreach ($result as $row) {
+  		$solrSyncFlag = TRUE;
+    //$cartUpdate = "call slp_cartenrollmentcancel_upd('".$row->order_id."','".$row->course_id."','".$row->class_id."','','lrn_crs_reg_rsc', 'lrn_crs_reg_rsc','".$lmsUserId."')";
+  		if($row->browser_session==$browser_session_id || $uc_cart_empty){
+  			expDebug::dPrint("browser session--> : ".$browser_session_id,4);
+   $cartUpdate = "call slp_enrollment_del('".$row->id."', 'lrn_crs_reg_rsc','".$lmsUserId."')";
+		expDebug::dPrint("Enroll order update to reseved cancel in commerce module : ".$cartUpdate,4);
+    db_query($cartUpdate);
+    db_query('UPDATE slt_order SET order_status=\'cme_pmt_sts_rcl\' WHERE id='.$row->order_id);
+    $uc_detail = db_query("SELECT uc_order_id FROM slt_order WHERE id='".$row->order_id."' AND uc_order_id IS NOT NULL");
+    $ucOrderID = $uc_detail->fetchField();
+    expDebug::dPrint("ROWWWWWWWW result: ".print_r($ucOrderID,1),4);
+    if(!empty($ucOrderID)){
+     db_query("UPDATE uc_orders SET order_status='reserved_cancelled' WHERE order_id=".$ucOrderID);
+    }
+/*    if (isset($_SESSION['cart_order']) && intval($_SESSION['cart_order']) > 0) {
+			uc_order_update_status($_SESSION['cart_order'], 'canceled');
+    }*/
+
+  	}
+    /*if($row->reg_status == 'lrn_crs_reg_rsc') {
+      $updateEnrol = db_update('slt_enrollment');
+      $updateEnrol->fields(array(
+                          'waitlist_flag' => 'NULL',
+                          'waitlist_priority' => 'NULL',
+                          ));
+      $updateEnrol->condition('id', $row->id);
+      $updateEnrol->condition('reg_status', 'lrn_crs_reg_rsc');
+      $updateEnrol->execute();
+      }*/
+  	}
+  	//update master_enroll
+  	$vLMSUserId = isset($vLMSUserId)?!empty($vLMSUserId)?$vLMSUserId:getSltpersonUserId():getSltpersonUserId();
+  	$result = db_query("SELECT browser_session,order_id FROM slt_master_enrollment WHERE user_id='".$lmsUserId."' AND overall_status='lrn_tpm_ovr_rsv' AND created_by='".$loggedinUserId."'");
+  	$browser_session_id = session_id();
+  	foreach ($result as $row) {
+  		$solrSyncFlag = TRUE;
+  		if($row->browser_session==$browser_session_id){
+			    $updateEnr = db_update('slt_master_enrollment');
+			    $updateEnr->fields(array(
+			                        'overall_status'=> 'lrn_tpm_ovr_rsc',
+			                        'comp_date'		=> NULL,
+			                        'updated_by'    => $vLMSUserId,
+			    					'updated_on'    => now()
+			                        ));
+			    $updateEnr->condition('user_id', $lmsUserId);
+			    $updateEnr->condition('created_by', $loggedinUserId);
+			    $updateEnr->condition('overall_status' , 'lrn_tpm_ovr_rsv');
+			    $updateEnr->execute();
+			    db_query('UPDATE slt_order SET order_status=\'cme_pmt_sts_rcl\' WHERE id='.$row->order_id);
+  		}
+  	}
+  }
+	  // To sync solr data
+	  if($solrSyncFlag == TRUE){
+		  syncSolrData('Enrollment');
+		  syncSolrData('MasterEnrollment');
+	  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_exit', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+
+/**
+ * Implements hook_uc_checkout_complete().
+ *
+ * Sends basic e-mail notifications if Rules is not installed.
+ */
+function exp_sp_cart_uc_checkout_complete($order , $callFromAPI = 0) {
+	try{
+  $url = $_SERVER["QUERY_STRING"];
+  $arrUrl = parse_url($url);
+  $qryStr = $arrUrl['path'];
+  $qryArgument = explode('/',$qryStr);
+  $qryArg =  $qryArgument[0];
+  expDebug::dPrint("Order results argument : ".$qryArg,4);
+  $updateFrom = '';
+  if($qryArg == 'q=system' || $callFromAPI || $qryArg == 'q=administration'){
+  	$updateFrom = $order->update_from;
+  }
+  expDebug::dPrint('order update from ' .$updateFrom, 5);
+  if ($order !== FALSE){
+    $balance = uc_payment_balance($order);
+    expDebug::dPrint("exp_sp_cart_uc_checkout_complete balanceajjjjjj" .$balance,4);
+    if(!($balance)){
+        if(($qryArg != 'q=portalpages') && ($qryArg != 'q=admin') && ($updateFrom != 'admin')){
+          $order->order_status = 'completed';
+        }
+      $paymentOn = 'cc';
+    } else {
+      $paymentOn = 'noncc';
+    }
+  }
+  expDebug::dPrint("ORDER STATUS : ".$order->order_status,4);
+  if(!($order->order_total) &&  $order->order_status == 'pending' && ($qryArg != 'q=portalpages') && ($qryArg != 'q=admin') && ($updateFrom != 'admin')){
+    expDebug::dPrint("exp_sp_cart_uc_checkout_complete return val : ".$order->order_status .' - OrderTotal->' .$order->order_total, 4);
+    return;
+  }
+
+  // Token replacements for the subject and body
+  $settings['replacements'] = array(
+    'global' => NULL,
+    'order' => $order,
+  );
+
+  expDebug::dPrint('$order----> :  ' . print_r($order, true), 5);
+  $lms_order_id  = db_query("SELECT id FROM slt_order WHERE uc_order_id =:oid", array(':oid' =>$order->order_id))->fetchField();
+  
+  $order_tax_amt = db_query("SELECT amount FROM uc_order_line_items WHERE order_id = :oid  and type = 'cybersource_tax'", array(':oid' => $order->order_id))->fetchField();
+  if(empty($order_tax_amt)) $order_tax_amt = '0.00000';
+
+  $order_sub_tol = db_query("SELECT ifnull(sum(price),'0.00000') FROM uc_order_products WHERE order_id = :oid", array(':oid' => $order->order_id))->fetchField();
+
+  expDebug::dPrint('$lms_order_id $lms_order_id  '.$lms_order_id);
+  /*$order_result = db_query("SELECT e.id enroll_id,e.master_enrollment_id master_enrid, oi.order_id,oi.user_id, oi.course_id, oi.class_id FROM slt_order_items oi,slt_order o,slt_enrollment e
+  WHERE e.order_id=oi.order_id AND e.class_id = oi.class_id and o.id= oi.order_id AND o.uc_order_id ='". $order->order_id."'");*/
+
+  $orderResultArgs = array(':orderid' => $lms_order_id);
+  $order_result = db_query("SELECT id enroll_id, master_enrollment_id master_enrid, order_id,user_id, course_id, class_id, waitlist_flag FROM slt_enrollment WHERE order_id =:orderid and reg_status not in('lrn_crs_reg_rsc','lrn_crs_reg_can')", $orderResultArgs);
+  expDebug::dPrintDBAPI('$order_result dbapi ', $order_result, $orderResultArgs);
+  /*Viswanathan changed 'null' to null for #75680*/
+  $vRegStatus = null;
+  $valRegDate = null;
+  $valCompletionStatus = null;
+  $valcompDate = null;
+   $overallStatus = null;
+
+
+  //$lms_order_id  = $_SESSION['slt_order_id'];
+  if($order->order_status == 'payment_received' && $order->payment_method == 'credit' && ($qryArg != 'q=portalpages') && ($qryArg != 'q=admin') && ($updateFrom != 'admin')){
+    return false;
+  }
+  elseif($order->order_status == 'canceled'){
+    $valPaymentStatus = "'cme_pmt_sts_rjt'";
+    $overallStatus = 'lrn_tpm_ovr_cln';
+  }
+  else if($order->order_status == 'payment_received'){
+  	$valPaymentStatus = "'cme_pmt_sts_cnm'";
+  	$overallStatus = 'lrn_tpm_ovr_enr';
+  }
+  else if($order->order_status == 'pending'){
+    $valPaymentStatus = 'null';
+    $enroll_status ='lrn_crs_reg_ppm';
+    $order_status ='cme_pmt_sts_pnd';
+    $notify_ststus ='pay_checkout_pending';
+    $overallStatus = 'lrn_tpm_ovr_ppm';
+  }
+  else if($order->order_status == 'completed'){
+    $valPaymentStatus = 'null';
+    $enroll_status ='lrn_crs_reg_cnf';
+    $order_status ='cme_pmt_sts_cnm';
+    $notify_ststus ='pay_checkout_confirmed';
+    $overallStatus = 'lrn_tpm_ovr_enr';
+  }
+
+  expDebug::dPrint("Order status in update Lms Order id " . $lms_order_id,4);
+  /*Viswanathan changed 'null' to null for #75680*/
+  $valPaymentDate = null;
+  $vValidateFrom = null;
+  $vValidateTo = null;
+  $valScore = null;
+  $vUpdateuserid = getSltpersonUserId();
+
+  /*$current_theme = variable_get('theme_default',0);
+  $admin_theme =variable_get('admin_theme', '0');
+  expDebug::dPrint("Order results theme : ".$current_theme);*/
+
+  if(($qryArg != 'q=portalpages') && ($qryArg != 'q=admin') && ($updateFrom != 'admin')){
+  //if($current_theme != $admin_theme) {
+    $currency_code = (isset($_SESSION['admin_shop_cart_currency_code']) && !empty($_SESSION['admin_shop_cart_currency_code']))?$_SESSION['admin_shop_cart_currency_code']:$_SESSION['shop_cart_currency_code'];
+    $orderUpdate = "call slp_order_upd('".$lms_order_id."','".$order->payment_method."','','".$order_status."','".$order->order_total."','".$order_sub_tol."','".$order_tax_amt."','','','".$vUpdateuserid."','".$currency_code."')";
+    expDebug::dPrint("Enroll order update in commerce : ".$orderUpdate,4);
+    db_query($orderUpdate);
+  }
+  $repeatChk =0;
+  $transaction = db_transaction();
+ // $dao = new AbstractDAO();
+  $loopCnt = 0;
+  $currMasterEnrollId = 0;
+  expDebug::dPrintDBAPI('$order_result :' , $order_result);
+  foreach ($order_result as $orders ) {
+  	expDebug::dPrint('$orders :' . print_r($orders, true), 5);
+    $vEnrollid = $orders->enroll_id;
+    $vMasterEnrollid = $orders->master_enrid;
+    $vUserId = $orders->user_id;
+    $OrderId = $orders->order_id;
+    $ClassId = $orders->class_id;
+    $CourseId = $orders->course_id;
+    $ordWaitlistFlag = $orders->waitlist_flag;
+
+    $noOfSeat        = check_waitlist($CourseId,$ClassId,$vUserId);
+
+    // #8951 - waitlist purchased item via PO and confirmed. but reg-status remain as waitlist
+    if($order->order_status == 'payment_received'){
+      if($ordWaitlistFlag == 'lrn_crs_reg_wtl') {
+        if($noOfSeat >0){
+          $vRegStatus = "'lrn_crs_reg_cnf'";
+          $overallStatus = 'lrn_tpm_ovr_enr';
+        }
+        else{
+          $vRegStatus = "'lrn_crs_reg_wtl'";
+          $overallStatus = 'lrn_tpm_ovr_wtl';
+        }
+      }
+    }
+
+    expDebug::dPrint("Order results in Commerce : ",4);
+    expDebug::dPrint($orders,4);
+    $cls_deliveryType  = db_query("SELECT pli.code FROM slt_course_class cls, slt_profile_list_items pli WHERE pli.code = cls.delivery_type AND cls.id='".$ClassId."'")->fetchField();
+    expDebug::dPrint('Delivery Type in commerce '. $cls_deliveryType, 4);
+
+
+    //$dao->connect();
+    if(($qryArg == 'q=portalpages') || ($qryArg == 'q=admin') || ($updateFrom == 'admin')){
+      if($cls_deliveryType == 'lrn_cls_dty_wbt' || $cls_deliveryType == 'lrn_cls_dty_vod'){
+        $vValidateFrom = NULL;
+        $vValidateTo = NULL;
+        $selectValidityDays = db_select('slt_course_content_mapper','map');
+        $selectValidityDays->addField('map','validity_days');
+        $selectValidityDays->condition('map.class_id', $ClassId);
+        $selectValidityDays->condition('map.course_id', $CourseId);
+        $selectValidityDays->range(0,1);
+        $validityDays = $selectValidityDays->execute()->fetchField();
+        if($validityDays){
+          $vValidateFrom = date('Y-m-d H:i:s');
+          $vValidateTo = date('Y-m-d H:i:s', mktime(date('H'),date('i'),date('s'), date('m'),date('d')+$validityDays,date('Y')));
+        }
+      }
+      expDebug::dPrint("testing for discount issue".$vRegStatus,4);
+    //if($current_theme == $admin_theme) {
+      $sql = lp_enrollment_upd($vRegStatus,$valRegDate,$valCompletionStatus,$valcompDate,$valPaymentStatus,$valPaymentDate,$vValidateFrom,$vValidateTo,$valScore,$vEnrollid,$vUpdateuserid,$vUserId,$OrderId,$ClassId,$CourseId,$arr=array(),0);
+      expDebug::dPrint("exp_sp_cart_module slp_enrollment_upd : ".$sql,4);
+      //$rst = db_query($sql)->fetchAll();
+      $rst = $sql;
+      addICalToNotification();
+      expDebug::dPrint('Adding ical to notification after calling slp_enrollment_upd()', 4);
+        if(($order->order_status == 'payment_received' || $order->order_status == 'canceled') && empty($vMasterEnrollid)) {
+           // Audit trail entries
+           if($order->order_status =='canceled'){
+                $moduleName = 'classcancelled';
+             }else{
+                $moduleName = 'enrollUserToClass';
+           }
+          $insertaudit = array(
+                              'user_id' => $vUserId,
+                              'order_id' => $OrderId,
+                              'class_id' => $ClassId,
+                              'course_id' => $CourseId,
+                              'reg_status' => $vRegStatus,
+                              'reg_date' => now(),
+                             // 'reg_status_date' => ($regDate) ? $regDate :now(),
+                              'comp_status' => $enroll_status,
+                              'created_by' =>  $vUpdateuserid,
+                              'created_on' => now(),
+                            );
+        make_audit_trail_entries($insertaudit, $vUserId , null ,$ClassId, 'Inserted','cre_sys_obt_cls','exp_sp_cart',$moduleName,
+                                          array('user_id', 'order_id', 'class_id', 'course_id', 'reg_status','reg_date', 'comp_status','created_by','created_on'));
+        expDebug::dPrintDBAPI(' audit trail entries : ' , $insertaudit);
+      }
+    }
+    else{
+      if($order->order_status == 'pending' || $order->order_status == 'completed' ){
+
+        $check_cartin_waitlist = check_cartin_waitlist($CourseId,$ClassId,$vUserId);
+
+        if(($check_cartin_waitlist > 0) && ($noOfSeat == 0)) {
+          //update_waitlist_item($OrderId,$CourseId,$ClassId,'$cls_deliveryType','$enroll_status', 'lrn_crs_reg_rsv',$vUserId);
+           expDebug::dPrint("update_waitlist_item update: ",4);
+          update_waitlist_item($OrderId,$CourseId,$ClassId,$vUserId,$paymentOn);
+        } else {
+          expDebug::dPrint("Order status in update call: ",4);
+      	  $sql ="call slp_cartenrollmentassignment_upd($OrderId,$CourseId,$ClassId,'$cls_deliveryType','$enroll_status', 'lrn_crs_reg_rsv',$vUserId)";
+      	  expDebug::dPrint("Order status in update call: ".$sql,4);
+      	  //$res = $dao->query($sql);
+      	   db_query($sql);
+      	   if (empty($vMasterEnrollid)){
+        	   $insertaudit = array(
+                                'user_id' => $vUserId,
+                                'order_id' => $OrderId,
+                                'class_id' => $ClassId,
+                                'course_id' => $CourseId,
+                                'reg_status' => $vRegStatus,
+                                'reg_date' => now(),
+                               // 'reg_status_date' => ($regDate) ? $regDate :now(),
+                                'comp_status' => $enroll_status,
+                                'created_by' =>  $vUpdateuserid,
+                                'created_on' => now(),
+                              );
+          make_audit_trail_entries($insertaudit, $vUserId , null ,$ClassId, 'Inserted','cre_sys_obt_cls','exp_sp_cart','enrollUserToClass',
+                                            array('user_id', 'order_id', 'class_id', 'course_id', 'reg_status','reg_date', 'comp_status','created_by','created_on'));
+          expDebug::dPrintDBAPI(' audit trail entries : ' , $insertaudit);
+      	 }
+         /* insert into new table to differentiate users registered for multiple contents and their active versions */
+      	 // waitlist does not apply to wbt or vod, so it is okay to put this code here after waitlist check
+         if ($cls_deliveryType == 'lrn_cls_dty_wbt' || $cls_deliveryType == 'lrn_cls_dty_vod') {
+           $enrollContentObj = new stdClass();
+           $enrollContentObj->enroll_id = $vEnrollid;
+           $enrollContentObj->class_id = $ClassId;
+           $enrollContentObj->course_id = $CourseId;
+           $enrollContentObj->user_id = $vUserId;
+           insertEnrollmentContentMapping($enrollContentObj);
+         }
+        }
+      }
+     }
+
+   // $dao->closeconnect();
+    expDebug::dPrint("Order status in update call: END",4);
+
+    //Set Course Compliance
+    $selectIsComp = db_select('slt_course_class', 'class');
+    $selectIsComp->addField('class','is_compliance');
+    $selectIsComp->condition('class.id', $ClassId);
+    $isCompliance = $selectIsComp->execute()->fetchField();
+
+    $updateIsComp = db_update('slt_enrollment');
+    $updateIsComp->condition('id', $vEnrollid);
+    $updateIsComp->fields(array('is_compliance'  => $isCompliance,
+                                'reg_status_date' => now()));
+    $updateIsComp->execute();
+
+    try{
+      $selectEnrollCnt = db_select('slt_enrollment','enr');
+      $selectEnrollCnt->addExpression('COUNT(1)', 'cnt');
+      $selectEnrollCnt->addExpression('comp_date', 'cmpdate');
+      $selectEnrollCnt->condition('enr.course_id', $CourseId,'=');
+      $selectEnrollCnt->condition('enr.class_id', $ClassId,'=');
+      $selectEnrollCnt->condition('enr.user_id', $vUserId,'=');
+      $selectEnrollCnt->condition('enr.reg_status', 'lrn_crs_reg_cnf','=');
+      $selectEnrollCnt->condition('enr.comp_status', 'lrn_crs_cmp_cmp','=');
+      expDebug::dPrintDBAPI(' exp_sp_cart_uc_checkout_complete() completed count : ' ,$selectEnrollCnt);
+      $isCompleted  = $selectEnrollCnt->execute()->fetchField(0);
+      $compDate  = $selectEnrollCnt->execute()->fetchField(1);
+      expDebug::dPrint(' exp_sp_cart_uc_checkout_complete() completed date : ' .$compDate, 4);
+      if($isCompleted){
+        //Enrollment set to completed status when same class is completed
+        $updateEnr = db_update('slt_enrollment');
+        $updateEnr->condition('id', $vEnrollid);
+        $updateEnr->condition('course_id', $CourseId,'=');
+        $updateEnr->condition('class_id', $ClassId,'=');
+        $updateEnr->condition('user_id', $vUserId,'=');
+        //$updateEnr->condition('comp_status', 'lrn_crs_cmp_enr','=');
+        $updateEnr->fields(array(
+                            'comp_status'  => 'lrn_crs_cmp_cmp',
+                            'comp_date'    => $compDate,
+                            'updated_on'   => now(),
+        										'updated_by'   => $vUpdateuserid
+                            ));
+        expDebug::dPrintDBAPI(' exp_sp_cart_uc_checkout_complete() update completed qry : ' , $updateEnr);
+        $updateEnr->execute();
+      }
+    }catch (Exception $e) {
+              $transaction->rollback();
+              throw $e;
+           }
+     //update master enroll
+    expDebug::dPrint('master_enroll_id = ' . $vMasterEnrollid, 4);
+    if($vMasterEnrollid){// && $vMasterEnrollid != $repeatChk){
+      expDebug::dPrint(' exp_sp_cart_uc_checkout_complete() master_enroll_id : -->' . $vMasterEnrollid,4);
+      $repeatChk = $vMasterEnrollid;
+      $cmp_count = 1;
+      $cmp_status = $overallStatus;
+      //Get complition status check
+      if($order->order_status == 'completed' || $order->order_status == 'payment_received'){
+        $selectComplition = db_select('slt_enrollment','enroll');
+        $selectComplition->leftJoin('slt_module_crs_mapping', 'map', 'map.course_id= enroll.course_id AND map.program_id = (SELECT program_id FROM slt_master_enrollment  WHERE id = '.$vMasterEnrollid.')');
+        $selectComplition->addExpression('MAX(CASE WHEN enroll.comp_status=\'lrn_crs_cmp_cmp\' THEN 0 ELSE 1 END)','cmp_status');
+        $selectComplition->condition('enroll.user_id', $vUserId,'=');
+        $selectComplition->condition('map.is_required', 'Y','=');
+        $selectComplition->where('FIND_IN_SET(enroll.master_enrollment_id, '.$vMasterEnrollid.') >0');
+        $selectComplition->groupBy('enroll.master_enrollment_id');
+        expDebug::dPrintDBAPI(' selectComplition SQL = ' , $selectComplition );
+        $cmp_count  = $selectComplition->execute()->fetchField();
+        $cmp_status = ($cmp_count == 0)? 'lrn_tpm_ovr_cmp' : $overallStatus;
+      }
+      //Check Waitlist Status
+      if($order->order_status != 'canceled'){
+        $selectWaitlistCnt = db_select('slt_enrollment','enrr');
+        $selectWaitlistCnt->addExpression('COUNT(1)', 'cnt');
+        $selectWaitlistCnt->condition('enrr.master_enrollment_id', $vMasterEnrollid,'=');
+        $selectWaitlistCnt->condition('enrr.waitlist_flag', 'lrn_crs_reg_wtl','=');
+        $selectWaitlistCnt->condition('enrr.reg_status', array('lrn_crs_reg_wtl','lrn_crs_reg_ppm'),'IN');
+        $waitlist_count  = $selectWaitlistCnt->execute()->fetchField();
+        expDebug::dPrintDBAPI(' selectWaitlistCnt Qry' , $selectWaitlistCnt);
+         expDebug::dPrint(' selectWaitlistCnt ' .$waitlist_count, 3);
+        if($waitlist_count){
+        	$cmp_status = 'lrn_tpm_ovr_wtl';
+        }
+      }
+
+      //Update overall_status in slt_master_enrollment
+      try{
+        $updateMasterEnr = db_update('slt_master_enrollment');
+        $updateMasterEnr->condition('id', $vMasterEnrollid);
+        $updateMasterEnr->condition('user_id', $vUserId);
+        if($order->order_status != 'canceled'){
+          $updateMasterEnr->condition('overall_status', array('lrn_tpm_ovr_cmp','lrn_tpm_ovr_rsc'), 'NOT IN');
+        }
+        $updateMasterEnr->fields(array(
+                  'overall_status'  => $cmp_status,
+        					'comp_date'	      => ($cmp_count == 0)? now() : NULL,
+        					'custom4'		  => $cmp_status,
+        					//'grade'           => ($cmp_count == 0)? 'lrn_cnt_grd_pas': NULL,
+                  'updated_on'      => now(),
+        					'updated_by'      => $vUpdateuserid
+                            ));
+        expDebug::dPrintDBAPI(' exp_sp_cart_uc_checkout_complete() master_enroll_update sql : ' , $updateMasterEnr);
+        $updateMasterEnr->execute();
+
+        // Audit trail for TP
+        if(($order->order_status == 'payment_received' || $order->order_status == 'canceled' || $order->order_status == 'completed')) {
+          $getTpType = db_select('slt_program','prog');
+          $getTpType->leftJoin('slt_master_enrollment', 'mas', 'mas.program_id= prog.id AND prog.id = (SELECT program_id FROM slt_master_enrollment  WHERE id = '.$vMasterEnrollid.')');
+          $getTpType->addField('prog','object_type');
+          $getTpType->addField('prog','id');
+          $getTpType->condition('mas.id', $vMasterEnrollid);
+          $result = $getTpType->execute()->fetchAssoc();
+          expDebug::dPrint(' Select object typer : ' .print_r($result,true),5);
+          //if($loopCnt == 0) { // 	0034362: Purchase items by cart , only the First item Triggering the audit trial Entry.
+          $inserttpaudit = array(
+                    'overall_status'  => $cmp_status,
+          					'comp_date'	      => ($cmp_count == 0)? now() : NULL,
+          					//'grade'           => ($cmp_count == 0)? 'lrn_cnt_grd_pas': NULL,
+                    'updated_on'      => now(),
+          					'updated_by'      => $vUpdateuserid
+                              );
+            if($order->order_status == 'canceled') {
+                $moduleName        = 'tpcancelled';
+               }else{
+                $moduleName        = 'tpregistered';
+            }
+          make_audit_trail_entries($inserttpaudit, $vUserId , null ,$result['id'], 'Inserted',$result['object_type'],'exp_sp_cart',$moduleName,
+                                            array('comp_date','overall_status','updated_on','updated_by'));
+          //}
+        }
+
+       if(($order->order_status == 'payment_received' || $order->order_status == 'completed') && $currMasterEnrollId != $vMasterEnrollid) { // user point get added for each TP
+       	insertUserPointsForEachActionsPerformed($vUserId,'register_class',$vMasterEnrollid,'insert','tp');
+       	if($order->order_status == 'completed' || ($order->order_status == 'payment_received' && ($updateFrom == 'admin_create' || $updateFrom == 'admin'))  && $cmp_status == 'lrn_tpm_ovr_enr'){
+       		$iCal = getPublishICal($vMasterEnrollid, 'TP');
+       		expDebug::dPrint('Generating certCurrLPRegister notification with ical', 4);
+       		insertNotification("certCurrLPRegister", $vMasterEnrollid, $result['id'], $vUserId, $vUpdateuserid, $iCal);
+       	}
+       	$currMasterEnrollId = $vMasterEnrollid;
+       }
+       // To sync solr data
+       syncSolrData('MasterEnrollment');
+
+      }catch (Exception $e) {
+              $transaction->rollback();
+              throw $e;
+           }
+    }
+    else {
+    	if ($order->order_status == 'payment_received' || $order->order_status == 'completed') { // user point get added for each class
+    		insertUserPointsForEachActionsPerformed($vUserId,'register_class',$vEnrollid,'insert','class');
+    		if (($order->order_status == 'payment_received' && ($updateFrom == 'admin_create' || $updateFrom == 'admin') && $valPaymentStatus == "'cme_pmt_sts_cnm'") ||
+    				     $order->order_status == 'completed') {
+    			if ($cls_deliveryType == 'lrn_cls_dty_ilt' || $cls_deliveryType == 'lrn_cls_dty_vcl') {
+    				expDebug::dPrint('Generating register notification with ical', 4);
+    				$iCal = getPublishICal($vEnrollid, 'Class');
+    			}
+    			insertNotification('Register', $CourseId, $ClassId, $vUserId, $vUpdateuserid, $iCal);
+    		}
+    	}
+    }
+    $loopCnt++;
+  }
+  $vUserId = empty($vUserId) ? getUserIdFromDrupalUid($order->uid) : $vUserId;
+ $notifyUserId = ($vUserId) ? $vUserId : $vUpdateuserid;
+ if(($qryArg != 'q=portalpages') && ($qryArg != 'q=admin') && ($updateFrom != 'admin')){
+  //if($current_theme != $admin_theme) {
+  	$lnr_notification = "CALL slp_lnr_notification_ins('$notify_ststus',null,$lms_order_id,'','',$notifyUserId)";
+  	expDebug::dPrint("Insert Notification For PAYMENT: ".$lnr_notification ,4);
+  	db_query($lnr_notification); 
+  	if($order->order_status == 'pending' || $order->order_status == 'completed' ){
+      $lnr_new_order_notify = "CALL slp_lnr_notification_ins('new_order_training_admin',null,$lms_order_id,'','',$notifyUserId)";
+      expDebug::dPrint("Insert Notification For New Order: ".$lnr_new_order_notify, 4);
+      db_query($lnr_new_order_notify);
+  	}
+  }
+  if($updateFrom == 'admin_create'){
+  	unset($_SESSION['slt_admin_orderid']);
+  }
+  else{
+  	unset($_SESSION['slt_order_id']);  //Order Session make a empty after lms order is updated
+  }
+  // To sync solr data
+  unset($transaction);
+  syncSolrData('Enrollment');
+ // commerce_notification_trigger($order);  -- Instant notification is commented
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_uc_checkout_complete', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+function check_cartin_waitlist($CourseId,$ClassId,$vUserId) {
+	try{
+  $selectEnrollCnt = db_select('slt_enrollment','enr');
+  $selectEnrollCnt->addExpression('COUNT(1)', 'cnt');
+  //$selectEnrollCnt->addExpression('comp_date', 'cmpdate');
+  $selectEnrollCnt->condition('enr.course_id', $CourseId,'=');
+  $selectEnrollCnt->condition('enr.class_id', $ClassId,'=');
+  $selectEnrollCnt->condition('enr.user_id', $vUserId,'=');
+  $selectEnrollCnt->condition('enr.reg_status', 'lrn_crs_reg_rsv','=');
+  $selectEnrollCnt->condition('enr.waitlist_flag', 'lrn_crs_reg_wtl','=');
+  $cmp_count  = $selectEnrollCnt->execute()->fetchField();
+  //$cmp_status = ($cmp_count == 0)? 'lrn_tpm_ovr_cmp' : $overallStatus;
+  expDebug::dPrint(" check_cartin_waitlist 12233 ".$cmp_count, 3);
+  return $cmp_count;
+  }catch (Exception $ex) {
+  	watchdog_exception('check_cartin_waitlist', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+function update_waitlist_item($OrderId,$CourseId,$ClassId,$vUserId,$paymentOn) {
+ try{
+  if($paymentOn == 'cc') {
+    $reg_status = 'lrn_crs_reg_wtl';
+    $waitlist_flag  = 'lrn_crs_reg_wtl';
+  } else {
+    $reg_status = 'lrn_crs_reg_ppm';
+    $waitlist_flag  = 'lrn_crs_reg_wtl';
+  }
+  $check_waitlist_position = check_waitlist_position($CourseId,$ClassId,$vUserId)+1;
+
+
+  $updateEnr = db_update('slt_enrollment');
+  //$updateEnr->condition('id', $vEnrollid);
+  $updateEnr->condition('course_id', $CourseId,'=');
+  $updateEnr->condition('class_id', $ClassId,'=');
+  $updateEnr->condition('user_id', $vUserId,'=');
+  $updateEnr->condition('order_id', $OrderId,'=');
+  $updateEnr->condition('reg_status', 'lrn_crs_reg_rsv','=');
+  $updateEnr->condition('waitlist_flag', 'lrn_crs_reg_wtl','=');
+  $updateEnr->fields(array(
+                      'reg_status'  => $reg_status,
+  					  'waitlist_flag'  => $waitlist_flag,
+  					  'waitlist_priority'  => $check_waitlist_position,
+                      'comp_date'    => $compDate,
+                      'updated_on'   => now(),
+  					  'updated_by'   => $vUserId
+                      ));
+  expDebug::dPrintDBAPI(' update_waitlist_item() update waitlist qry : ' , $updateEnr);
+  $updateEnr->execute();
+  }catch (Exception $ex) {
+  	watchdog_exception('update_waitlist_item', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+function check_waitlist($CourseId,$ClassId,$vUserId) {
+ try{
+  $selectEnrollCnt = db_select('slt_enrollment','enr');
+  $selectEnrollCnt->addExpression('COUNT(1)', 'cnt');
+  $selectEnrollCnt->condition('enr.course_id', $CourseId,'=');
+  $selectEnrollCnt->condition('enr.class_id', $ClassId,'=');
+  $selectEnrollCnt->condition('enr.user_id', $vUserId,'<>');
+  $selectEnrollCnt->condition('enr.reg_status', array('lrn_crs_reg_rsv','lrn_crs_reg_ppm','lrn_crs_reg_cnf'),'IN');
+  //$selectEnrollCnt->condition('enr.waitlist_flag', 'lrn_crs_reg_wtl','NULL');
+  expDebug::dPrintDBAPI(' check_waitlist qry 1: ' , $selectEnrollCnt);
+  $no_of_confirmed  = $selectEnrollCnt->execute()->fetchField();
+
+  $selClsSession =  db_select('slt_course_class_session','sc');
+  $selClsSession->addField('sc','capacity_max', 'capacity_max');
+  $selClsSession->condition('sc.course_id', $CourseId,'=');
+  $selClsSession->condition('sc.class_id', $ClassId,'=');
+  $selClsSession->range(0, 1);
+  expDebug::dPrintDBAPI(' check_waitlist qry 2: ' , $selClsSession);
+  $qry_result_session = $selClsSession->execute()->fetchObject();
+  $no_of_available_seats = 0;
+  if($qry_result_session->capacity_max) {
+  	$no_of_available_seats = $qry_result_session->capacity_max  - $no_of_confirmed;
+  }
+
+
+  expDebug::dPrint(" check_waitlist check_waitlist ".$no_of_available_seats." || max capacity : ".$qry_result_session->capacity_max." || noof confirmed :".$no_of_confirmed,3);
+  return $no_of_available_seats;
+  }catch (Exception $ex) {
+  	watchdog_exception('check_waitlist', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function check_waitlist_position($CourseId,$ClassId,$vUserId) {
+	try{
+  $selectEnrollCnt = db_select('slt_enrollment','enr');
+  $selectEnrollCnt->addExpression('COUNT(1)', 'cnt');
+  //$selectEnrollCnt->addExpression('comp_date', 'cmpdate');
+  $selectEnrollCnt->condition('enr.course_id', $CourseId,'=');
+  $selectEnrollCnt->condition('enr.class_id', $ClassId,'=');
+  $selectEnrollCnt->condition('enr.user_id', $vUserId,'<>');
+  $selectEnrollCnt->condition('enr.reg_status', array('lrn_crs_reg_rsc','lrn_crs_reg_can'),'NOT IN');
+  $selectEnrollCnt->condition('enr.waitlist_flag', 'lrn_crs_reg_wtl','=');
+  $cmp_count  = $selectEnrollCnt->execute()->fetchField();
+  //$cmp_status = ($cmp_count == 0)? 'lrn_tpm_ovr_cmp' : $overallStatus;
+  expDebug::dPrint("check_waitlist_position",4);
+  return $cmp_count;
+  }catch (Exception $ex) {
+  	watchdog_exception('check_waitlist_position', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Return a formatted list of line items for an order total preview.
+ *
+ * @param $return
+ *   TRUE or FALSE to specify whether or not to return the results instead of
+ *     printing them and exiting.
+ * @param $order
+ *   Optionally pass in a full order object to use instead of finding it in the
+ *     $_POST data.
+ * @return
+ *   The formatted HTML of the order total preview if $return is set to TRUE.
+ */
+function clone_uc_payment_get_totals($variables) { //@TODO Unused function to be removed. All references in uc_discounts.module are commented.
+	try{
+  $order = $variables['order'];
+  $output = '';
+
+  if (empty($order) && is_array($_POST) && isset($_POST['order'])) {
+    $order = unserialize($_POST['order']);
+  }
+
+  if ($order) {
+    usort($order->line_items, 'uc_weight_sort');
+
+    $output = '<table style="width:100%">';
+    $grand_total = 0;
+
+    $context = array(
+      'type' => 'line_item',
+      'subject' => array(
+        'order' => $order,
+      ),
+    );
+
+  foreach ($order->line_items as $line) {
+      if (!empty($line['title'])) {
+        $context['revision'] = 'themed';
+        $context['subject']['line_item'] = $line;
+
+        $output .= '<tr><td align="right" style="width:93%;padding-right:8px;"><b>'. filter_xss($line['title']) .'</b></td>'
+                  .'<td align="right">'. theme('uc_price', array('price' => $line['amount'])) .'</td></tr>'; //uc_price($line['amount'], $context)
+
+        if ($line['summed']) {
+          $context['revision'] = 'altered';
+        }
+      }
+    }
+
+  $context['revision'] = 'themed';
+    $context['type'] = 'amount';
+    unset($context['subject']);
+    $output .= '<tr><td align="right" style="width:93%;padding-right:8px;"><b>'. t('LBL827') .'</b></td>' . //Total
+               '<td align="right">'. theme('uc_price', array('price' => uc_order_get_total($order))) .
+               '</td></tr>'; //uc_price(uc_order_get_total($order), $context)
+  }
+  $output .= '<tr><td align="right" style="width:95%" colspan="2"><div id="checkout_view_taxapply">'.t("MSG337").'</div></td></tr></table>'; //Sales Tax or VAT as applicable may apply.
+  if (!empty($return)) {
+    return $output;
+  }
+  print $output;
+  exit();
+  }catch (Exception $ex) {
+  	watchdog_exception('clone_uc_payment_get_totals', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+/**
+ * Display a page allowing the customer to view the contents of his or her cart.
+ *
+ * Handles simple or complex objects. Some cart items may have a list of
+ * products that they represent. These are displayed but are not able to
+ * be changed by the customer.
+ *
+ * @see expertus_cart_view_form_submit()
+ * @see theme_expertus_cart_view_form()
+ * @see theme_uc_cart_view_price()
+ * @see expertus_cart_view_table()
+ * @ingroup forms
+ */
+function expertus_cart_view_form($form, &$form_state, $items = NULL) {
+ try {
+
+  $inc = 0;
+  $vCartId = uc_cart_get_id();
+  foreach ($items as $item) {
+    $msgStatus 	= $_SESSION['cart_page_messages'][$item->cart_item_id]['msgStatus'];
+    // to delete items from cart
+    if($msgStatus =='AlreadyReserved' || $msgStatus =='AlreadyEnrolled' || $msgStatus =='Conflict' ||
+                $msgStatus =='LearnerDelete' || $msgStatus =='Invalid' || $msgStatus =='Full' || $msgStatus =='InvalidUser' ||
+                           $msgStatus == 'CourseConflict'|| $msgStatus == 'InstructorConflict'
+    													|| $msgStatus=='classSessionExpired' || $msgStatus=='classNotActive' ||  $msgStatus=='TrainingWithAccess'){
+      unset($items[$inc]);
+      $new_items = uc_cart_get_contents($vCartId);
+      uc_cart_remove_item($item->nid , $vCartId, $new_items[0]->data);
+    }
+    $inc++;
+  }
+
+  $form['items'] = array(
+    '#type' => 'tapir_table',
+    '#tree' => TRUE,
+  );
+  $i = 0;
+  foreach ($items as $item) {
+    expertus_cart_add_get_contents($item);
+    module_invoke_all('uc_cart_item', 'view', $item);
+    $display_item = module_invoke($item->module, 'uc_cart_display', $item);
+    if (!empty($display_item)) {
+      $form['items'][$i] = $display_item;
+      $form['items'][$i]['image'] = uc_product_get_picture($display_item['nid']['#value'], 'uc_cart');
+
+      $description = $display_item['title']['#markup'] . $display_item['description']['#markup'];
+      $form['items'][$i]['desc']['#markup'] = $description;
+
+      $form['items'][$i]['cart_item_id'] = array(
+        '#type' => 'hidden',
+        '#value' => $item->cart_item_id,
+      );
+
+     if (isset($form['items'][$i]['remove'])) {
+        // Backward compatibility with old checkbox method.
+        if ($form['items'][$i]['remove']['#type'] == 'checkbox') {
+          $form['items'][$i]['remove'] = array('#type' => 'submit',
+                                               '#attributes' => array('title' => t('LBL082'), //Remove
+                                                                      'class' => array('exp-remove-cart-item')));
+        }
+        else if ($form['items'][$i]['remove']['#type'] == 'submit') {
+        	unset($form['items'][$i]['remove']['#value']);
+        	$form['items'][$i]['remove']['#attributes'] = array('title' => t('LBL082'), //Remove
+                                                              'class' => array('exp-remove-cart-item'));
+        }
+
+        $form['items'][$i]['remove']['#name'] = 'remove-' . $i;
+      }
+
+      $form['items'][$i]['title']['#type'] = 'value';
+      $form['items'][$i]['description']['#type'] = 'value';
+
+      $form['items'][$i]['delivery_type']['#markup']  = $item->delivery_type;
+      expDebug::dPrint('expertus_cart_view_form Delivery Type ->' .$item->delivery_type . ' and location ->' .$item->location, 4);
+      $form['items'][$i]['location']['#markup']  = '<span class="vtip" title="'.sanitize_data($item->location).'">'.titleController('EXP-SP-CART-MODULE-LOCATION',$item->location,25).'</span>';
+
+
+      if (empty($display_item['qty'])) {
+        $form['items'][$i]['qty'] = array(
+          '#type' => 'hidden',
+          '#value' => 0,
+        );
+      }
+
+      $form['items'][$i]['total'] = array(
+        '#theme' => 'uc_price',
+        '#price' => $display_item['#total'],
+      );
+      $i++;
+    }
+  }
+
+  $form['items'] = tapir_get_table('expertus_cart_view_table', $form['items']);
+
+  $form['actions'] = array('#type' => 'actions');
+
+  // If the continue shopping element is enabled...
+  if (($cs_type = variable_get('uc_continue_shopping_type', 'link')) !== 'none') {
+    // Setup the text used for the element.
+    $cs_text = variable_get('uc_continue_shopping_text', '') ? variable_get('uc_continue_shopping_text', '') : t('LBL549'); //Continue Shopping
+
+    // Add the element to the form based on the element type.
+    if (variable_get('uc_continue_shopping_type', 'link') == 'link') {
+      $form['continue_shopping'] = array(
+        '#markup' => l($cs_text, uc_cart_continue_shopping_url()),
+      );
+    }
+    elseif (variable_get('uc_continue_shopping_type', 'link') == 'button') {
+      $form['actions']['continue_shopping'] = array(
+        '#type' => 'submit',
+        '#value' => $cs_text,
+      );
+    }
+  }
+
+  if (variable_get('uc_checkout_enabled', TRUE)) {
+    $form['actions']['checkout'] = array(
+      '#type' => 'submit',
+      '#prefix' => '<div class="addedit-form-cancel-container-actions">' .
+                     '<div class="admin-save-button-left-bg"></div>',
+      '#attributes' => array('Class' => 'admin-save-button-middle-bg'),
+      '#suffix' =>   '<div class="admin-save-button-right-bg"></div>' .
+                   '</div>' .
+                   '<div class="clearBoth"></div>'.
+                 '</div>',
+      '#value' => t('LBL986'), //Checkout
+    );
+  }
+
+  return $form;
+  }catch (Exception $ex) {
+  	watchdog_exception('expertus_cart_view_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+
+
+/**
+ * Remove the failiure class
+ */
+function uc_deleted_classes_cart_pane_output($form, &$form_state, $items = NULL,$user_id,$isAPI = '') {
+ try{
+if($isAPI != 'api'){
+ 		 	global $user;
+ 		 	$userID = $user->uid;
+  	}else{
+  		$userID = $user_id;
+  	}
+  if($userID && empty($_SESSION['slt_order_id'])){
+    $ucCartInfo = uc_cart_get_contents($userID,'rebuild');
+    $vTotalProduct = count($ucCartInfo);
+    $vOrderId=0;
+
+    if ($_REQUEST['apiname'] !=  'CheckOutAPI'){
+
+        $lmsUserId = getSltpersonUserId();
+       
+    }
+    else{
+   
+    $lms_select = db_query("SELECT sp.id AS id FROM users ur
+    INNER JOIN slt_person sp ON sp.user_name = ur.name
+    WHERE  ur.uid = ".$userID);
+
+  	$lmsUserId=$lms_select->fetchField();
+  
+    }
+
+    if($vTotalProduct > 0){
+      $aResp = CreateNewOrder($lmsUserId,'cme_pmt_sts_rsv',$lmsUserId);
+      $vOrderId = $aResp['OrderId'];
+      $_SESSION['slt_order_id'] = $vOrderId;
+    }
+     //$msgStatus = array();
+     $apiRes = array();
+    unset($_SESSION['cart_page_messages']);
+    expDebug::dPrint("uc_deleted_classes_cart_pane_output total product => ".$vTotalProduct,4);
+    $removeNodeArr = array();
+    $avilableClasses = getLearnerClasses($lmsUserId);
+    for($i=0;$i<$vTotalProduct;$i++ ){
+    	$deleteFlag = true;
+      $oCurItem = $ucCartInfo[$i];
+      $vIndex = $oCurItem->cart_item_id;
+      expDebug::dPrint("test cart item id".$vIndex, 3);
+      $vNodeId  = $oCurItem->nid;
+      //$vTotalCost  += floatval($oCurItem->cost);
+      $aPriceDev = explode(".",$oCurItem->cost);
+      $vPriceDev =$aPriceDev[0].'.'.substr($aPriceDev[1],0,2);
+
+      $result =   getCatalogInfofromNodeId($vNodeId);
+      expDebug::dPrint("Node Info Result => ", 4);
+      expDebug::dPrint($result, 4);
+      expDebug::dPrint("result->deliverytypeid  => ".$result->DeliveryTypeId,4);
+       //36037: Payment flow is work when class has expire session time added by yogaraja
+      if($result->Status != 'lrn_cls_sts_atv' && $result->Status != 'lrn_lpn_sts_atv')
+      {
+      	$deleteFlag = false;
+      	$removeNodeArr[$vNodeId] = $vNodeId;
+      	$_SESSION['cart_page_messages'][$vIndex] = array('msgStatus'=>'classNotActive','nId'=>$vNodeId,'Object_Type'=>$result->DeliveryTypeId);
+      	unset($result);
+      }
+      if($result->DeliveryTypeId == 'lrn_cls_dty_ilt' || $result->DeliveryTypeId == 'lrn_cls_dty_vcl'){
+          
+          $start_date = $result->start_date;
+          $start_time = $result->start_time;
+          $course_timezone = $result->course_timezone;
+          
+      	$reson = toGetSessionExpired($course_timezone,$start_date,$start_time);
+      	
+      	if($reson == 'classSessionExpired')
+      	{
+      		$deleteFlag = false;
+      		$removeNodeArr[$vNodeId] = $vNodeId;
+      		$_SESSION['cart_page_messages'][$vIndex] = array('msgStatus'=>'classSessionExpired','nId'=>$vNodeId,'Object_Type'=>$result->DeliveryTypeId);
+      		unset($result);
+      	}
+      }
+      if (!in_array($vNodeId, $avilableClasses)) {
+      	$deleteFlag = false;
+      	$removeNodeArr[$vNodeId] = $vNodeId;
+      	$_SESSION['cart_page_messages'][$vIndex] = array('msgStatus'=>'TrainingWithAccess','nId'=>$vNodeId,'Object_Type'=>$result->DeliveryTypeId);
+      	unset($result);
+      }
+      if($deleteFlag)
+	    {
+	      $result->order_id = $vOrderId;
+	      $result->total_product = $vTotalProduct;
+	      $apiRes[] = $result;
+
+	      expDebug::dPrint("Node Info Result => ", 4);
+	      expDebug::dPrint($result, 4);
+
+
+	      $vCourseId  = $result->CourseId;
+	      $vClassId   = $result->ClassId;
+	      $vObjectType   = $result->DeliveryTypeId;
+
+	      $vDrupalUserId      = $userID;
+	      $vLMSUserId         = $lmsUserId;
+	      $vUserName          = $user->name;
+	      $ForceReg 		  = 1; // Enabled for waitlist
+	      $aReq = array('LMSUserId'=>$vLMSUserId,'OrderId'=>$vOrderId,'DrupalUserId'=>$vDrupalUserId,'UserName'=>$vUserName,
+	      'CourseId'=>$vCourseId,'ClassId'=>$vClassId,'ForceReg'=>$ForceReg,'Object_Type'=>$vObjectType,'NodeId'=>$vNodeId,'updateUserId'=>$vLMSUserId);
+
+      if($isAPI != 'api'){
+	      //have checked the already user checkout process in other browser. added by yogaraja
+	      $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
+	      $is_ajax = false;
+	      if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+	      	$is_ajax = true;
+	      expDebug::dPrint('$is_ajax: '.print_r($is_ajax,true), 4);
+	      if(empty($pageWasRefreshed) && !$is_ajax)
+	      {
+	      	if($vObjectType == 'cre_sys_obt_cur' || $vObjectType == 'cre_sys_obt_trn' || $vObjectType == 'cre_sys_obt_crt'){
+	      		$EnrollId = checkAlreadyReservedForTp($vLMSUserId,$vClassId);
+	      		expDebug::dPrint('$EnrollId Sp: '.print_r($EnrollId,true), 4);
+	      		if(!empty($EnrollId) || $EnrollId<>'') {
+	      			expDebug::dPrint("User already reserved for TP in uc_deleted_classes_cart_pane_output- Order id".$vOrderId,1);
+	      			insertPaymentErrorLog($vOrderId,$payment_type,'User already reserved for TP','uc_deleted_classes_cart_pane_output'); 
+	      			drupal_goto('');
+	      			exit;
+	      		}
+	      	}
+	      	else {
+	      		$EnrollId = checkAlreadyReserved($vLMSUserId,$vClassId,$vCourseId);
+	      		expDebug::dPrint('$EnrollId: '.print_r($EnrollId,true), 4);
+	      		if(!empty($EnrollId) || $EnrollId<>'') {
+	      			expDebug::dPrint("User already reserved for class in uc_deleted_classes_cart_pane_output - Order id".$vOrderId,1);
+	      			insertPaymentErrorLog($vOrderId,$payment_type,'User already reserved for class','uc_deleted_classes_cart_pane_output'); 
+	      			drupal_goto('');
+	      			exit;
+	      		}
+	      	}
+	      }
+	      //have checked the already user checkout process in other browser end. added by yogaraja
+      }
+	      if($vObjectType == 'cre_sys_obt_cur' || $vObjectType == 'cre_sys_obt_trn' || $vObjectType == 'cre_sys_obt_crt'){
+	        $aCatalogRegStatus = getCartTPRegistrationStatus($aReq);
+	      }
+	      else{
+	        $aCatalogRegStatus = getCartCatalogRegistrationStatus($aReq);
+	      }
+	      $msgStatus=$aCatalogRegStatus;
+	      if($i == 0)
+	      	$_SESSION['cart_page_messages'][0] = array('msgStatus'=>$msgStatus,'CourseId'=>$vCourseId,'ClassId'=>$vClassId,'OrderId'=>$vOrderId,'nId'=>$vNodeId,'Object_Type'=>$vObjectType);
+	      
+	      $_SESSION['cart_page_messages'][$vIndex] = array('msgStatus'=>$msgStatus,'CourseId'=>$vCourseId,'ClassId'=>$vClassId,'OrderId'=>$vOrderId,'nId'=>$vNodeId,'Object_Type'=>$vObjectType);
+	    }
+      //$aResp = DeleteUndesirableUserCartLineItem($aCatalogRegStatus, $vNodeId, $vDrupalUserId);
+    }
+  }
+  $html='';
+  $html.='<div style="width:100%;" class="chkoutcleardiv"><table cellspacing="0" cellpadding="3" border="0" align="center" width="100%">';
+  $html.='<tbody style="margin-top: 1em; margin-bottom: 1em;"><tr><td style="text-align: center; padding:0px 0 0 5px;" class="remove-cart-mess">';
+  $html.='<span class="cart-item-total">'.t('Your request to register to the following items failed. These items were removed from your cart.').'</span></td></tr></tbody></table></div>';
+  $html.='<div style="width:100%;" class="chkoutcleardiv"><table cellspacing="0" cellpadding="0" border="0" align="left" class="removed-items-cart" >';
+  $html.='<tbody>';
+  $html.='<tr>';
+  //$html.='<td style="border-bottom: 1px solid #cccccc; text-align: left; width: 10%; vertical-align: top;"><strong>'.t('LBL082').'</strong></td>';
+  $html.='<th style="padding-left:5px; text-align: left; width: 33.6%; vertical-align: top; color:#474747;"><strong>'.t('LBL083').'</strong></th>';
+  $html.='<th style="text-align: left; width: 15%; vertical-align: top; color:#474747;"><strong>'.t('LBL084').'</strong></th>';
+  $html.='<th style="text-align: left; width: 10%; vertical-align: top; color:#474747;"><strong>'.t('LBL040').'</strong></th>';
+  $html.='<th style="text-align: left; width: 30%; vertical-align: top; color:#474747;"><strong>'.t('LBL552').'</strong></th>';
+  $html.='</tr>';
+
+ /* print "<pre>";
+  print_r($items);
+  print "</pre>";*/
+  $removeFlg = 0;
+  $i = 0;
+
+  $form = array();
+  expDebug::dPrint("uc_deleted_classes_cart_pane_output cart msg => ".print_r($_SESSION['cart_page_messages'],1),4);
+  if(is_array($items))
+  foreach ($items as $item) {
+    expertus_cart_add_get_contents($item);
+    $i = $item->cart_item_id;
+    $cart_msg 	= $_SESSION['cart_page_messages'][$i]['msgStatus'];
+    $cClassId 	= $_SESSION['cart_page_messages'][$i]['ClassId'];
+    $cCourseId 	= $_SESSION['cart_page_messages'][$i]['CourseId'];
+    $cOrderId 	= $_SESSION['cart_page_messages'][$i]['OrderId'];
+    $nodeid  		= $_SESSION['cart_page_messages'][$i]['nId'];
+    $Object_Type = $_SESSION['cart_page_messages'][$i]['Object_Type'];
+    $lmsUserId = getSltpersonUserId();
+    updateSltOrederItems($cCourseId,$cClassId,$Object_Type,$cOrderId,$lmsUserId);
+    $setCart_msg='';
+    expDebug::dPrint("uc_deleted_classes_cart_pane_output cart msg => ".$cart_msg,4);
+   /* if($cart_msg =='Waitlist')
+    {
+      $param = '{"classid" : "'.$cClassId.'","courseid" : "'.$cCourseId.'","orderid" : "'.$cOrderId.'","nid" : "'.$nodeid.'","userid" : "'.$lmsUserId.'"}';
+      $setCart_msg = '<a id="set_shoppingCart_Waitlist" href=\'javascript:void(0);\' onclick=\'callShoppingCartDetails("LnrShoppingCartDetails","setShoppingCartWaitlist",'.$param.');\'>'.t('Click to Join Waitlist').'</a>';
+    }
+    else*/ if($cart_msg == 'AlreadyEnrolled')
+    {
+    	$setCart_msg = t('MSG329');
+    }
+    else if($cart_msg == 'classNotActive')
+    {
+    	$setCart_msg = t('LBL412');
+    }
+    else if($cart_msg == 'classSessionExpired')
+    {
+    	$setCart_msg = t('ERR254');
+    }
+    else if($cart_msg == 'Conflict')
+    {
+    	$setCart_msg = t('ERR048');
+    }
+    else if($cart_msg == 'AlreadyReserved')
+    {
+    	$setCart_msg = t('ERR052');
+    }
+    else if($cart_msg == 'Invalid')
+    {
+    	$setCart_msg = t('ERR134');
+    }
+    else if($cart_msg == 'Full')
+    {
+    	$setCart_msg = t('ERR022');
+    }
+    else if($cart_msg == 'InvalidUser')
+    {
+    	$setCart_msg = t('ERR135');
+    }
+    else if($cart_msg == 'CourseConflict'){
+        $setCart_msg = t('ERR049');
+    }
+    else if($cart_msg == 'InstructorConflict'){
+        $setCart_msg = t('ERR075');
+    }
+    else if($cart_msg == 'TrainingWithAccess'){
+        $setCart_msg = t('ERR254');
+    }
+
+    if($setCart_msg!=''){
+    if($isAPI != 'api'){
+      $removeFlg = 1;
+      }
+      $aPrice = explode(".",$item->price);
+      $itemPrice =$aPrice[0].'.'.substr($aPrice[1],0,2);
+      $html.='<tr>';
+      //$html.='<td align="left" style="vertical-align: middle; text-align: center;"><input type="checkbox" checked="checked" disabled="disabled" ></td>';
+      $html.='<td align="left" style="vertical-align: middle; text-align: left;"><span class="limit-title vtip" title="'.sanitize_data($item->title).'">'.$item->title.'</span></td>';
+      $html.='<td align="left" style="vertical-align: middle; text-align: left;">'.$item->delivery_type.'</td>';
+      $html.='<td align="left" style="vertical-align: middle; text-align: left;">$'.$itemPrice.'</td>';
+      $html.='<td style="vertical-align: middle;"><span class="vtip" title="'.sanitize_data($setCart_msg).'" id="cart-removed-indx-msg-'.$cClassId.'">'.titleController('EXP-SP-CART-MODULE-CART-MSG',$setCart_msg,45).'</span></td>';
+      $html.='</tr>';
+
+    }
+  //$i++;
+  }
+  //$html.='<tr><td style="border-bottom: 1px solid rgb(170, 170, 170); text-align: left; width: 40%; vertical-align: top;" colspan="5">&nbsp;</td></tr>';
+  $html.='</tbody></table></div>';
+  // $htmlCartHead ='<div class="chkoutcleardiv"><div id="verify-cart-head">Please Verify the Contents of Your Cart</div></div>';
+  $htmlCartHead ='<div class="chkoutcleardiv"></div>';
+  $html.=$htmlCartHead;
+
+  if($removeFlg ==1) {
+    $form['items']['desc']['#markup'] = $html;
+    return $form;
+  }else if($isAPI == 'api')
+  {
+  return $vOrderId;
+  }
+  else {
+    $form['items']['desc']['#markup'] = $htmlCartHead;
+    return $form;
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('uc_deleted_classes_cart_pane_output', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+function updateSltOrederItems($vCourseId,$vClassId,$vObjectType,$sltOrderId,$userID,$orderProductId='',$nID='',$vOrderId='',$cartFrom=''){
+		if($vObjectType == 'cre_sys_obt_cur' || $vObjectType == 'cre_sys_obt_trn' || $vObjectType == 'cre_sys_obt_crt')
+			$vProgramId  = $vClassId;
+		else
+			$vProgramId = '';
+		  $user_pre_currency = (isset($_SESSION['admin_shop_cart_currency_code']) && !empty($_SESSION['admin_shop_cart_currency_code']))?$_SESSION['admin_shop_cart_currency_code']:$_SESSION['user_preferred_currency_code'];
+			$currency_converted_amount =  function_exists('getPriceUserCurrencyOfClass') ? getPriceUserCurrencyOfClass($vCourseId, $vClassId,$vProgramId) : '';
+  		$currency_converted_amount =empty($currency_converted_amount) ? NULL : $currency_converted_amount;
+  		$convertion_rate =  function_exists('getCurrencyconvertionRateOfClass') ? getCurrencyconvertionRateOfClass($vCourseId, $vClassId,$vProgramId,$user_pre_currency) : '';
+  		$convertion_rate = ($convertion_rate)?$convertion_rate:1.0000;
+  		$updateCart = db_update('slt_order_items');
+  		$updateCart->fields(array(
+  				'currency_type' => $user_pre_currency,
+  				'convertion_rate' => $convertion_rate,
+  				'item_price' => $currency_converted_amount,
+  		));
+  		$updateCart->condition('order_id', $sltOrderId, '=');
+  		$updateCart->condition('user_id', $userID, '=');
+  		if(!empty($vProgramId))
+  			$updateCart->condition('program_id', $vProgramId, '=');
+  		else{
+  			$updateCart->condition('class_id', $vClassId, '=');
+  			$updateCart->condition('course_id', $vCourseId, '=');
+  		}
+  		expDebug::dPrint("currency_type => ".$user_pre_currency,4);
+  		expDebug::dPrint("convertion_rate => ".$convertion_rate,4);
+  		expDebug::dPrint("item_price => ".$currency_converted_amount,4);
+  		expDebug::dPrint("order id => ".$sltOrderId,4);
+  		expDebug::dPrintDBAPI('  updateSltOrederItems= ' , $updateCart);
+  		$updateCart->execute();
+  		if($cartFrom=='adminorder')
+  			updateUcOrderProducts($orderProductId,$vOrderId,$nID,$currency_converted_amount);
+}
+function updateUcOrderProducts($orderProductId,$vOrderId,$nID,$currency_converted_amount){
+	$user_pre_currency = (isset($_SESSION['admin_shop_cart_currency_code']) && !empty($_SESSION['admin_shop_cart_currency_code']))?$_SESSION['admin_shop_cart_currency_code']:$_SESSION['user_preferred_currency_code'];
+	$updateCart = db_update('uc_order_products');
+	$updateCart->fields(array(
+			'currency_type' => $user_pre_currency,
+			'price' => $currency_converted_amount,
+	));
+	$updateCart->condition('order_id', $vOrderId, '=');
+	$updateCart->condition('nid', $nID, '=');
+	$updateCart->condition('order_product_id', $orderProductId, '=');
+	expDebug::dPrint("currency_type => ".$user_pre_currency,4);
+	expDebug::dPrint("convertion_rate => ".$convertion_rate,4);
+	expDebug::dPrint("item_price => ".$currency_converted_amount,4);
+	expDebug::dPrint("order id => ".$vOrderId,4);
+	expDebug::dPrintDBAPI('  updateUcOrderProducts= ' , $updateCart);
+	$updateCart->execute();
+}
+/**
+ * List the products in the cart in a TAPIr table.
+ */
+function expertus_cart_view_table($table) {
+ try {
+  $table['#attributes'] = array('width' => '100%');
+
+  $table['#columns'] = array(
+    'desc' => array(
+      'cell' => t('LBL083'), //Title
+      'weight' => 1,
+    ),
+    'delivery_type' => array(
+      'cell' => t('LBL084'), //Delivery Type
+      'weight' => 2,
+    ),
+    'location' => array(
+      'cell' => t('Location'), //Location
+      'weight' => 3,
+    ),
+    'total' => array(
+      'cell' => '<span style="display:block">'.t('LBL040').'</span>', //Price
+      'weight' => 4,
+    ),
+    'remove' => array(
+      'cell' => '&nbsp;',
+      'weight' => 5,
+    ),
+  );
+
+  $subtotal = 0;
+  foreach (element_children($table) as $i) {
+    $subtotal += $table[$i]['#total'];
+
+    $table[$i]['remove']['#cell_attributes'] = array('align' => 'center', 'class' => 'remove');
+    $table[$i]['desc']['#cell_attributes'] = array('class' => 'product');
+    $table[$i]['delivery_type']['#cell_attributes'] = array('class' => 'deliverytype');
+    $table[$i]['location']['#cell_attributes'] = array('class' => 'location');
+   // $table[$i]['qty']['#cell_attributes'] = array('class' => 'qty');
+    $table[$i]['total']['#cell_attributes'] = array('class' => 'price');
+    $table[$i]['#attributes'] = array('valign' => 'top');
+  }
+  
+  $table[] = array(
+    	'desc' => array(
+    			'#cell_attributes' => array(
+    					'class' => array('product','subtotal'),
+    			),
+    ),
+    'delivery_type' => array(
+    		'#cell_attributes' => array(
+    				'class' => array('deliverytype','subtotal'),
+    		),
+    ),
+    'location' => array(
+      //'#theme' => 'uc_price',
+  				'#prefix' => '<span >' .
+				  				((!empty($_SESSION['availableFunctionalities']->uc_discounts) ||
+				  					(!empty($_SESSION['availableFunctionalities']->exp_sp_cybersource_tax) &&
+				  						variable_get('exp_cybersource_soap_tax_calculate', FALSE)))? t('LBL553').':' : t('LBL827').':') . //Subtotal:, Total:
+  				 				'</span> ',
+  				//'#price' => $subtotal,
+  				'#cell_attributes' => array(
+  				//		'colspan' => '3',
+  						'align' => 'right',
+  					'class' => array('location','subtotal'),
+  				),
+    ),
+    'total' => array(
+      '#theme' => 'uc_price',
+   				'#price' => $subtotal,
+   				'#cell_attributes' => array(
+   				//		'colspan' => '2',
+   						'align' => 'right',
+   						'class' => array('price','subtotal'),
+   				),
+    		),
+   		'remove' => array(
+   				'#cell_attributes' => array(
+   						'class' => array('remove','subtotal'),
+   				),
+   		),
+    	);
+   
+  return $table;
+  }catch (Exception $ex) {
+  	watchdog_exception('expertus_cart_view_table', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * @ingroup themeable
+ * @see expertus_cart_view_form()
+ */
+ function theme_expertus_cart_view_form($variables) {
+ 	try{
+  $form = $variables['form'];
+
+  drupal_add_css(drupal_get_path('module', 'uc_cart') . '/uc_cart.css');
+
+  $output = '<div id="cart-form-products">'
+          . drupal_render($form['items']) . '</div>';
+
+  foreach (element_children($form['items']) as $i) {
+    foreach (array('title', 'options', 'remove', 'image', 'qty','cartmessage') as $column) {
+      $form['items'][$i][$column]['#printed'] = TRUE;
+    }
+    $form['items'][$i]['#printed'] = TRUE;
+  }
+
+  // If Expertus calculation of taxes through the CyberSource tax service is enabled...
+  if (!empty($_SESSION['availableFunctionalities']->exp_sp_cybersource_tax) && variable_get('exp_cybersource_soap_tax_calculate', FALSE)) {
+  	$output .='<div id="checkout_view_taxapply">'.t("MSG337").'</div>'; //Sales Tax or VAT as applicable may apply.
+  }
+  // Add the continue shopping element and cart submit buttons.
+  if (($type = variable_get('uc_continue_shopping_type', 'link')) != 'none') {
+    // Render the continue shopping element into a variable.
+    $cs_element = drupal_render($form['continue_shopping']);
+
+    // Add the element with the appropriate markup based on the display type.
+    if ($type == 'link') {
+      $output .= '<div id="cart-form-buttons"><div id="continue-shopping-link">'
+               . $cs_element . '</div>' . drupal_render_children($form) . '</div>';
+    }
+    elseif ($type == 'button') {
+      $output .= '<div id="cart-form-buttons"><div id="update-checkout-buttons">'
+               . drupal_render_children($form) . '</div><div id="continue-shopping-button">'
+               . $cs_element . '</div></div>';
+    }
+  }
+  else {
+    $output .= '<div id="cart-form-buttons">' . drupal_render_children($form) . '</div>';
+  }
+
+  return $output;
+  }catch (Exception $ex) {
+  	watchdog_exception('theme_expertus_cart_view_form', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Form submission handler for expertus_cart_view_form().
+ *
+ * @see expertus_cart_view_form()
+ */
+function expertus_cart_view_form_submit($form, &$form_state) {
+	try{
+  // Remove the cart order variable if the customer came here during checkout.
+  if (isset($_SESSION['cart_order'])) {
+    unset($_SESSION['cart_order']);
+  }
+  // If a remove button was clicked, set the quantity for that item to 0.
+  if (substr($form_state['triggering_element']['#name'], 0, 7) == 'remove-') {
+    $item = substr($form_state['triggering_element']['#name'], 7);
+    $form_state['values']['items'][$item]['qty'] = 0;
+    drupal_set_message(t('MSG907', array('@product-title' => strip_tags($form['items'][$item]['title']['#markup']))), 'warning');
+  }
+
+  // Update the items in the shopping cart based on the form values.
+  expertus_cart_update_item_object((object)$form_state['values']);
+
+  // Specify the appropriate redirect based on the button used to submit.
+  switch ($form_state['triggering_element']['#value']) {
+    // Continue shopping button.
+    //case variable_get('uc_continue_shopping_text', t('Continue shopping')):
+    case t(ucwords('LBL549')): //Continue Shopping
+      $form_state['redirect'] = uc_cart_continue_shopping_url();
+      break;
+
+    // Checkout button.
+    case t('LBL986'): //Checkout
+      $form_state['redirect'] = variable_get('uc_checkout_enabled', TRUE) ? 'cart/checkout' : 'cart';
+      break;
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('expertus_cart_view_form_submit', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Updates the quantity of all the items in a cart object
+ */
+function expertus_cart_update_item_object($cart) {
+ try {
+  if (is_object($cart)) {
+  	if(is_array($cart->items)){
+      foreach ($cart->items as $item) {
+        if ($item['qty']  == 0) {  // $item['remove']
+          module_invoke($item['module'], 'uc_update_cart_item', $item['nid'], unserialize($item['data']), 0);
+
+         //For Cancel the reserved status in Enrollment
+         $lmsUserId = getSltpersonUserId();
+         $result = getCatalogInfofromNodeId($item['nid']);
+         $courseId = $result->CourseId;
+         $classId  = $result->ClassId;
+         $delivery_type = $result->DeliveryTypeId;
+         if($delivery_type == 'cre_sys_obt_cur' || $delivery_type == 'cre_sys_obt_trn' || $delivery_type == 'cre_sys_obt_crt'  ){
+           $masterEnrollId  = db_query("SELECT id FROM slt_master_enrollment WHERE program_id='".$classId."' AND overall_status='lrn_tpm_ovr_rsv' AND user_id='".$lmsUserId."' limit 1")->fetchField();
+           //Update slt_master_enroll
+           $updateEnr = db_update('slt_master_enrollment');
+           $vLMSUserId = isset($vLMSUserId)?!empty($vLMSUserId)?$vLMSUserId:getSltpersonUserId():getSltpersonUserId();
+           $updateEnr->fields(array(
+                              'overall_status'=> 'lrn_tpm_ovr_rsc',
+                              'comp_date'		=> NULL,
+                              'updated_by'    => $vLMSUserId,
+          					  'updated_on'    => now()
+                              ));
+           $updateEnr->condition('id', $masterEnrollId);
+           $updateEnr->execute();
+
+           	$resultEnr = db_query("SELECT id FROM slt_enrollment WHERE master_enrollment_id='".$masterEnrollId."' AND reg_status='lrn_crs_reg_rsv' AND user_id='".$lmsUserId."'");
+          	foreach ($resultEnr as $row) {
+              $cartUpdate = "call slp_enrollment_del('".$row->id."', 'lrn_crs_reg_rsc','".$lmsUserId."')";
+          	  expDebug::dPrint("Enroll order update to reseved cancel in cart module when User update cart: ".$cartUpdate,4);
+              db_query($cartUpdate);
+          	}
+         }
+         else{
+           //$lms_order_id  = db_query("SELECT order_id FROM slt_enrollment WHERE course_id= '".$courseId."' AND class_id='".$classId."' AND reg_status='lrn_crs_reg_rsv' AND user_id='".$lmsUserId."'")->fetchField();
+           $enrollId  = db_query("SELECT id FROM slt_enrollment WHERE master_enrollment_id is NULL AND course_id= '".$courseId."' AND class_id='".$classId."' AND reg_status='lrn_crs_reg_rsv' AND user_id='".$lmsUserId."'")->fetchField();
+           if($enrollId){
+             //$cartUpdate = "call slp_cartenrollmentcancel_upd('".$lms_order_id."','".$courseId."','".$classId."','','lrn_crs_reg_rsc', 'lrn_crs_reg_rsc','".$lmsUserId."')";
+             $cartUpdate = "call slp_enrollment_del('".$enrollId."', 'lrn_crs_reg_rsc','".$lmsUserId."')";
+             expDebug::dPrint("Enroll order update in cart module when User update cart: ".$cartUpdate,4);
+             db_query($cartUpdate);
+           }
+         }
+        }
+        /*else{
+        module_invoke($item['module'], 'uc_update_cart_item', $item['nid'], unserialize($item['data']), $item['qty']);
+        }*/
+      }
+  	}
+    // Rebuild the cached cart items.
+    uc_cart_get_contents(NULL, 'rebuild');
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('expertus_cart_update_item_object', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/* Cart form alter */
+function exp_sp_cart_form_alter(&$form, $form_state, $form_id) {
+try{
+ global $theme_key;
+ // have added the new session for cart proced only.
+ $_SESSION['shop_cart_currency_code'] = $_SESSION['user_preferred_currency_code'];
+ $_SESSION['shop_cart_currency_sym'] = $_SESSION['user_preferred_currency_sym'];
+ if($theme_key == 'expertusoneV2') {
+   $saveLeftBg   = '<div class="white-btn-bg-left"></div>';
+   $saveRightBg  = '<div class="white-btn-bg-right"></div>';
+   $saveMiddleBg = 'white-btn-bg-middle';
+   //$buttonmiddleBg =''
+   $backButton   = t('LBL212');
+ }else{
+   $saveLeftBg    = '';
+   $saveRightBg   = '';
+   $saveMiddleBg  = 'admin-action-button-middle-bg';
+   $backButton   = '[ '.t('LBL212').' ]';
+ }
+  switch($form_id){
+	case 'uc_order_view_update_form':
+  		$form['order_comment_field']['#collapsed'] = FALSE;
+  		$form['admin_comment_field']['#collapsed'] = FALSE;
+  		// to hide checkbox of notifications
+  		$form['controls']['notify']['#type'] = 'hidden';
+		$form['controls']['notify']['#default_value'] = 1;
+		// to disbale unwanted status
+		unset($form['controls']['status']['#options']['chargeable']);
+		unset($form['controls']['status']['#options']['processing']);
+		unset($form['controls']['status']['#options']['paypal_pending']);
+		//unset($form['controls']['status']['#options']['payment_received']);
+		unset($form['controls']['status']['#options']['pending']);
+		unset($form['controls']['status']['#options']['completed']);
+		//unset($form['controls']['status']['#options']['canceled']);
+		unset($form['controls']['status']['#options']['in_checkout']);
+		unset($form['controls']['status']['#options']['in_google_checkout']);
+  	break;
+
+  	case 'uc_cart_view_form':
+  	  unset($form);
+  	break;
+
+    case 'expertus_cart_view_form':
+      // to change the label of checkout button.
+      if(!empty($form['checkout']))
+        $form['checkout']['#value'] = t('Next');
+      $enroll_exist = array();
+      foreach($form['items'] as $key => $item) {
+      	if(isset($form['items'][$key]['nid']['#value'])) {	//change by ayyappans for 46087
+      		$course_title = check_if_enrollment_exists_by_node_id(getSltpersonUserId(), $form['items'][$key]['nid']['#value']);
+      		if(!empty($course_title)) {
+      			$enroll_exist[] = $course_title;
+      		}
+      	}
+
+        // to remov the link from title
+        if(!empty($item['desc']['#markup'])) {
+          $form['items'][$key]['desc']['#markup'] =  '<span class="limit-title vtip" title="'.strip_tags($form['items'][$key]['title']['#markup']).'">'.strip_tags($form['items'][$key]['title']['#markup']).'</span>';
+        }
+        // to hide quantity field in cart page.
+        if(!empty($item['qty']['#type'])) {
+          $form['items'][$key]['qty']['#type'] =  'hidden';
+        }
+      }
+      if(!isset($form_state['input']['form_build_id'])) {	// to check if the form is built very first time
+      	foreach ($enroll_exist as $course) {
+       	drupal_set_message(t('LBL1267') . ' - ' . $course, 'status', false);
+       }
+      }
+
+      $form['actions']['continue_shopping']['#prefix'] = '<div class="leaner-shopping-action-wrapper">'.$saveLeftBg;
+      $form['actions']['continue_shopping']['#attributes'] = array('Class' => "$saveMiddleBg");
+      $form['actions']['continue_shopping']['#value'] = t('LBL549'); //Continue Shopping
+      $form['actions']['continue_shopping']['#suffix'] = $saveRightBg;
+
+    break;
+
+    case 'uc_cart_checkout_form':
+      $form['#prefix'] ='<div id="uc-cart-checkout">';
+      $form['#suffix'] ='</div>';
+      $form['#after_build'][] = 'uc_cart_checkout_form_rebuild';	//change by ayyappans for 45900 and 41363
+      if(!getOrderTotal())
+      {
+          $form['panes']['uc_discounts']['#access'] = FALSE;
+      }
+
+      if(isset($form['panes']['billing'])) {
+        $form['panes']['billing']['#description'] = '<div class="cart_head">'.t('LBL555').'</div>'; //Billing Information
+      }
+
+      $form['actions']['back'] = array(
+        '#type' => 'submit',
+        //'#value' => t('[ Back ]'),
+        '#value' => $backButton,//'[ '.t('LBL212').' ]', //Back
+        '#prefix' => '<div class="addedit-form-cancel-container-actions learner-shopping-cart-back-btn">'.$saveLeftBg,
+        '#suffix' => $saveRightBg.'</div>',
+        //'#attributes' => array('Class' => 'admin-action-button-middle-bg'),
+        '#attributes' => array('Class' => "$saveMiddleBg"),
+        '#validate' => array(), // Disable validation to prevent a new order from being created.
+        '#limit_validation_errors' => array(),
+        '#submit' => array('exp_sp_cart_checkout_form_back'),
+        '#id' => 'checkout_back_button',
+        '#weight' => 0,
+       );
+
+      $form['actions']['cancel']['#prefix'] = '<div class="addedit-form-cancel-container-actions learner-shopping-cart-payment-cancel">'.$saveLeftBg;
+      $form['actions']['cancel']['#weight'] = 2;
+      $form['actions']['cancel']['#value'] = t('LBL109'); //Cancel
+      $form['actions']['cancel']['#attributes'] = array('Class' => "$saveMiddleBg");
+      $form['actions']['cancel']['#suffix'] = $saveRightBg.'</div>';
+      $form['actions']['cancel']['#submit'][0] ='exp_sp_cart_checkout_form_cancel';
+
+      $form['#validate'] = array('exp_sp_cart_checkout_form_validate_pre', 'uc_cart_checkout_form_validate', 'exp_sp_cart_checkout_form_validate_post');
+
+      $form['actions']['continue']['#prefix'] = '<div id="learner-admin-review-order" class="addedit-form-cancel-container-actions"><div class="admin-save-button-left-bg"></div>';
+      $form['actions']['continue']['#weight'] = 1;
+      $form['actions']['continue']['#attributes'] = array('Class' => 'admin-save-button-middle-bg');
+      $form['actions']['continue']['#suffix'] = '<div class="admin-save-button-right-bg"></div></div>';
+      expDebug::dPrint('uc_cart_checkout_form $form = ' . print_r($form, true), 5);
+    break;
+
+    case 'uc_cart_checkout_exp_paymethod_form':
+    	expDebug::dPrint('modifying form uc_cart_checkout_exp_paymethod_form in exp_sp_cart_form_alter()'. print_r(calloutIsActive(), 1), 4);
+      $form['#prefix'] ='<div id="uc-cart-checkout">';
+      $form['#suffix'] ='</div>';
+      $form['#after_build'][] = 'uc_cart_checkout_exp_paymethod_form_rebuild';
+      // unset the payment form for callout is external
+      if (module_exists('exp_sp_callout') && calloutIsActive() &&  calloutEntityIsActive('cme_pmt') && calloutEntityMethod('cme_pmt') == 'api') {
+      	unset($form['panes']['payment']);
+      	//$form['#validate'] = array('exp_sp_cart_checkout_exp_paymethod_form_validate', 'uc_cart_checkout_exp_paymethod_form_validate');
+      }
+      else {
+      	foreach (_uc_payment_method_list() as $method) {
+	        if ($method['checkout'] && $method['id'] == 'credit') {
+	        	$form['panes']['payment']['payment_method']['#options'][$method['id']] = 'Credit card';
+	        }
+      	}
+
+      	if(getOrderTotal()) {
+        $paymentType = getLocationBasedPaymentType();
+        if (is_array($paymentType) && !empty($paymentType)) {
+        	$newArr = array();
+        	foreach($paymentType as $k) {
+        		$newArr[] = strtolower($k->name);
+        	}
+
+        	foreach (_uc_payment_method_list() as $method) {
+        		if ($method['checkout']) {
+        			if($method['name'] =='Other'){
+        				$method['name'] ='Others';
+        			}
+
+        			if($method['name'] == 'Credit card') {
+        				$method['title'] = t('Credit card'); //Credit card
+        			}
+
+        			if($method['name'] == 'Check'){
+        				$method['title'] = t('Check'); //Check
+        			}
+
+        			if(in_array(strtolower($method['name']),$newArr)) {
+        				$options[$method['id']] = $method['title'];
+        			}
+        		}
+        	}
+
+        	if (count($options)) {
+        		if (isset($form_state['values'])  &&
+        				isset($form_state['values']['panes']['payment']['payment_method']) &&
+        				in_array($form_state['values']['panes']['payment']['payment_method'], array_keys($options))) {
+        			$default = $form_state['values']['panes']['payment']['payment_method'];
+        		}
+        		else {
+        			//$default = (count($options) == 1 || empty($order->payment_method)) ? key($options) : $order->payment_method;
+        			$getPaymentMethod = $form['panes']['payment']['payment_method']['#default_value'];
+        			$default = (count($options) == 1 || !isset($getPaymentMethod)) ? key($options) : $getPaymentMethod;
+        		}
+        	}
+
+        	if (!in_array($default, array_keys($options))) {
+        		$default = key($options);
+        	}
+
+          $form['panes']['payment']['payment_method'] = array(
+            '#type' => 'radios',
+                  '#title' => t('LBL548'), //Payment method
+                  '#options' => $options,
+                  '#default_value' => $default,
+                  '#disabled' => count($options) == 1 ? TRUE : FALSE,
+                  '#required' => TRUE,
+                  //'#theme' => 'uc_payment_method_select',
+                  '#attributes' => array('class'          => array('addedit-form-expertusone-throbber'),
+                                         'data-wrapperid' => 'payment-details'),
+                  '#ajax' => array(
+                    'callback' => 'uc_payment_checkout_payment_details',
+                    'wrapper' => 'payment-details',
+                    'progress' => array(
+                      'type' => 'throbber',
+                    ),
+                  ),
+          );
+          $form['panes']['payment']['details'] = array(
+                  '#prefix' => '<div id="payment-details" class="clearfix payment-details-' . $default . '">',
+                  '#suffix' => '</div>',
+                );
+
+          $details = FALSE;
+          $func = _uc_payment_method_data($default, 'callback');
+          if (function_exists($func)) {
+            $details = $func('cart-details', $order, $form, $form_state);
+          }
+          if (is_array($details) && !empty($details)) {
+            $form['panes']['payment']['details'] += $details;
+          }
+          else {
+            $form['panes']['payment']['details']['#markup'] = t('MSG328'); //Continue with checkout to complete payment.
+          }
+
+          if($form['panes']['payment']['details']['instructions']['#markup']==''){
+            $form['panes']['payment']['details']['instructions']['#markup'] = t('MSG328'); //Continue with checkout to complete payment.
+          }
+        }
+        else if (is_array($paymentType) && empty($paymentType)) {
+          foreach (_uc_payment_method_list() as $method) {
+            if ($method['checkout']) {
+              unset($form['panes']['payment']['payment_method']['#options'][$method['id']]);
+              //$options[$method['id']] = $method['title'];
+            }
+          }
+          $form['panes']['payment']['payment_method']['#default_value'] ='';
+            if ($form['panes']['payment']['details']['instructions']['#markup']=='') {
+              $form['panes']['payment']['details']['instructions']['#markup'] = t('MSG334'); //Select one of the payment methods to complete the checkout process.
+            }
+        }
+      }
+
+      if(isset($form['panes']['payment'])) {
+        $form['panes']['payment']['#description'] = '<div class="cart_head">'.t('LBL548').'</div>'; //Payment method
+      }
+      	// payment forms validate
+      	$form['#validate'] = array('exp_sp_cart_checkout_exp_paymethod_form_validate', 'uc_cart_checkout_exp_paymethod_form_validate');
+      }
+      $form['actions']['back'] = array(
+        '#type' => 'submit',
+        //'#value' => t('[ Back ]'),
+        '#value' => $backButton,// '[ '.t('LBL212').' ]', //Back
+        '#prefix' => '<div class="addedit-form-cancel-container-actions learner-shopping-cart-back-btn">'.$saveLeftBg,
+        '#suffix' => $saveRightBg.'</div>',
+        //'#attributes' => array('Class' => 'admin-action-button-middle-bg'),
+        '#attributes' => array('Class' => "$saveMiddleBg"),
+        '#validate' => array(), // Disable validation to prevent a new order from being created.
+        '#limit_validation_errors' => array(),
+        '#submit' => array('exp_sp_cart_checkout_exp_paymethod_form_back'),
+        '#id' => 'checkout_back_button',
+        '#weight' => 0,
+       );
+
+       $form['actions']['cancel']['#prefix'] = '<div class="addedit-form-cancel-container-actions learner-shopping-cart-payment-cancel">'.$saveLeftBg;
+       $form['actions']['cancel']['#weight'] = 2;
+       $form['actions']['cancel']['#value'] = t('LBL109'); //Cancel
+       $form['actions']['cancel']['#attributes'] = array('Class' => "$saveMiddleBg");
+       $form['actions']['cancel']['#suffix'] = $saveRightBg.'</div>';
+       $form['actions']['cancel']['#submit'][0] ='exp_sp_cart_checkout_exp_paymethod_form_cancel';
+
+      $form['actions']['continue']['#prefix'] = '<div id="learner-admin-review-order" class="addedit-form-cancel-container-actions"><div class="admin-save-button-left-bg"></div>';
+      $form['actions']['continue']['#value'] = t('LBL986'); //Review order
+      $form['actions']['continue']['#weight'] = 1;
+      $form['actions']['continue']['#attributes'] = array('Class' => "admin-save-button-middle-bg");
+      $form['actions']['continue']['#suffix'] = '<div class="admin-save-button-right-bg"></div></div>';
+
+      expDebug::dPrint('uc_cart_checkout_exp_paymethod_form $form = ' . print_r($form, true), 5);
+      break;
+
+    case 'uc_cart_checkout_review_form':
+
+      $form['actions']['back']['#prefix'] = '<div class="addedit-form-cancel-container-actions learner-shopping-cart-back-btn">'.$saveLeftBg;
+
+      $form['actions']['back']['#suffix'] =   $saveRightBg.'</div>';
+      $form['actions']['back']['#attributes'] = array('Class' => "$saveMiddleBg");
+      $form['actions']['back']['#id'] = 'checkout_review_back_button';
+      $form['actions']['back']['#value'] = $backButton; //'[ '.t('LBL212').' ]' //Back
+      $form['actions']['back']['#weight'] = 0;
+
+      $form['actions']['cancel'] = array(
+        '#type' => 'submit',
+        '#prefix' => '<div class="addedit-form-cancel-container-actions learner-shopping-cart-payment-cancel">'.$saveLeftBg,
+        '#attributes' => array('Class' => "$saveMiddleBg"),
+        '#suffix' => $saveRightBg.'</div><div class="clearBoth"></div>',
+        '#value' => t('LBL109'), //Cancel
+        '#validate' => array(), // Disable validation to prevent a new order from being created.
+        '#submit' => array('exp_sp_cart_checkout_review_form_cancel'),
+      	'#id' => 'checkout_review_cancel_button',
+        '#weight' => 2,
+      );
+
+  	  $form['actions']['submit']['#prefix'] = '<div class="addedit-form-cancel-container-actions"><div class="admin-save-button-left-bg"></div>';
+	    $form['actions']['submit']['#value'] = t('LBL124'); //Submit Order  -- Continue (LBL986) is Changed In to Submit (LBL124) For this Ticket #0036761.
+	    $form['actions']['submit']['#attributes'] = array('Class' => "admin-save-button-middle-bg");
+	    $form['actions']['submit']['#suffix'] = '<div class="admin-save-button-right-bg"></div></div>';
+	    $form['actions']['submit']['#weight'] = 1;
+	    $form['actions']['submit']['#id'] = 'checkout_submit_button';
+      	$form['#validate'] = array('exp_sp_cart_checkout_review_form_validate');
+      $form['#submit'] = array('exp_sp_cart_checkout_review_form_submit', 'uc_cart_checkout_review_form_submit');
+      expDebug::dPrint('uc_cart_checkout_review_form $form = ' . print_r($form, true), 5);
+    break;
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_form_alter', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function uc_cart_checkout_form_rebuild($form, &$form_state) {
+	try{
+	$query_string = parse_url($_SERVER['HTTP_REFERER']);
+	//to ensure check out form is reached from STEP 1 and no validation errors added
+	$is_valid_failed = count(form_get_errors());
+	if($query_string['query'] == 'q=cart' && empty($form_state['storage']['order']->order_id) && !$is_valid_failed) {
+		$js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+		drupal_add_js(drupal_get_path('module', 'exp_sp_cart') .'/exp_sp_cart.js', $js_module_optional);
+		$form['#prefix'] .= '<div id="uc-cart-checkout-loader-wrapper"><div id="loaderdiv-uc-cart-checkout" class="loadercontent"><div><table width="100%" border="0"><tbody><tr><td width="100%" valign="middle" height="100%" align="center"><div class="loaderimg"></div></td></tr></tbody></table></div></div><div id="CartMessageDisplay">'.t('MSG720').'</div></div>';
+		$form['#attributes']['class'][] = "cart-checkout-step-two";
+	}
+	return $form;
+	}catch (Exception $ex) {
+		watchdog_exception('uc_cart_checkout_form_rebuild', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+function uc_cart_checkout_exp_paymethod_form_rebuild($form, &$form_state) {
+	try{		
+		$query_string = parse_url($_SERVER['HTTP_REFERER']);
+		expDebug::dPrint("wesadasd".print_r($form_state['storage']['order']->order_id,true),5);
+		$is_valid_failed = count(form_get_errors());
+		if($query_string['query'] == 'q=cart/checkout' && empty($form_state['storage']['order']->order_id) && !$is_valid_failed) {
+			$js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+			drupal_add_js(drupal_get_path('module', 'exp_sp_cart') .'/exp_sp_cart.js', $js_module_optional);
+			$form['#prefix'] .= '<div id="step-three"><div id="uc-cart-checkout-loader-wrapper"><div id="loaderdiv-uc-cart-checkout" class="loadercontent"><div><table width="100%" border="0"><tbody><tr><td width="100%" valign="middle" height="100%" align="center"><div class="loaderimg"></div></td></tr></tbody></table></div></div></div></div>';
+			$form['#attributes']['class'][] = "cart-checkout-step-three";
+		}
+		return $form;
+	}
+	catch (Exception $ex) {
+		watchdog_exception('uc_cart_checkout_exp_paymethod_form_rebuild', $ex);
+		expertusErrorThrow($ex);
+	}
+}	
+
+/**
+ * hook_uc_order($op, $order, $arg2).
+ */
+function exp_sp_cart_uc_order($op, $order, $arg2) {
+	try{
+		if($order->data['order_create_from'] == 'admin_checkout'){
+			//expDebug::dPrint("order create from admin_checkout", 5);
+		 if($op == 'presave'){
+		 	/*--- Callout call to process the payment ---*/
+		 		if (module_exists('exp_sp_callout') && calloutIsActive() &&  calloutEntityIsActive('cme_pmt') && calloutEntityMethod('cme_pmt') == 'api') {
+		 			$order->payment_method = ($order->payment_method == '') ? 'credit' : $order->payment_method;
+		 			$order->data['order_pay_method'] = 'callout';
+		 		}
+		 	else {
+		 		$order->payment_method = ($order->payment_method == '') ? 'Zero Cost' : $order->payment_method;
+		 	}
+		 	return;
+		 }
+		}
+  switch ($op) {
+    case 'presave':
+    	/*--- Callout call to process the payment ---*/
+    	if (module_exists('exp_sp_callout') && calloutIsActive() &&  calloutEntityIsActive('cme_pmt') && calloutEntityMethod('cme_pmt') == 'api') {
+    		$order->payment_method = ($order->payment_method == '') ? 'credit' : $order->payment_method;
+    		$order->data['order_pay_method'] = 'callout';
+    	}
+    	else {
+      $order->payment_method = ($order->payment_method == '' && $order->order_total == 0 ) ? 'Zero Cost' : $order->payment_method;
+    	}
+    break;
+    case 'can_update':
+      //This trigger before submit the order
+    break;
+    case 'new':
+      $lms_order_id =$_SESSION['cart_page_messages'][0]['OrderId'];
+      if($lms_order_id !=''){
+        expDebug::dPrint("exp_sp_order_new  : Lms order id ".$lms_order_id ,4);
+        db_query("update slt_order set uc_order_id= ".$order->order_id." where id = ".$lms_order_id);
+      }
+    break;
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_uc_order', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Form validation for uc_cart_checkout_form().
+ *
+ */
+function exp_sp_cart_checkout_form_validate_pre($form, &$form_state) {
+	try{
+  //If order session is empty the page is redirect to home page
+  if (empty($_SESSION['slt_order_id'])) {
+  	expDebug::dPrint("Order id session expired in exp_sp_cart_checkout_form_validate_pre",1);
+  	insertPaymentErrorLog(null,'','Order id session expired','exp_sp_cart_checkout_form_validate_pre'); 
+    drupal_goto('');
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_checkout_form_validate_pre', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Form validation for uc_cart_checkout_form().
+ *
+ */
+function exp_sp_cart_checkout_form_validate_post($form, &$form_state) {
+	try{
+  expDebug::dPrint('$_SESSION[cybersourceTaxError] = ' . $_SESSION['cybersourceTaxError'], 5);
+  if(isset($_SESSION['cybersourceTaxError'])) {
+  	form_set_error('tax_error', $_SESSION['cybersourceTaxError']);
+  }
+  unset($_SESSION['cybersourceTaxError']);
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_checkout_form_validate_post', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/*
+ * Validate function for uc_cart_checkout_exp_paymethod_form()
+ */
+function exp_sp_cart_checkout_exp_paymethod_form_validate($form, &$form_state) {
+	try{
+  //If order session is empty the page is redirect to home page
+  if (empty($_SESSION['slt_order_id'])) {
+  	$UCorderID  =  $form_state['build_info']['args'][1]->order_id;
+	$get_slt_order_id = getSltOrderId($UCorderID);
+	expDebug::dPrint("slt order id session expired in exp_sp_cart_checkout_exp_paymethod_form_validate- slt order id".$get_slt_order_id,1);
+  	insertPaymentErrorLog($get_slt_order_id,'','Order id session expired','exp_sp_cart_checkout_exp_paymethod_form_validate');
+    drupal_goto('');
+  }
+
+  if(variable_get('uc_payment_credit_gateway' ,'') == 'exp_paymetric') {
+    $_SESSION["cc_token"] = $form_state['input']['panes']['payment']['details']['cc_token'];
+  }
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_checkout_exp_paymethod_form_validate', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function chkSeatCountForClass($order_id){
+	$order_result = db_query("SELECT se.class_id, se.course_id, ifnull(sccs.capacity_max, 0) + ifnull(sccs.waitlist_count, 0) as class_max_capacity FROM slt_enrollment se
+			Inner Join slt_course_class scc on scc.id = se.class_id
+			Inner Join slt_course_class_session sccs on sccs.class_id = se.class_id
+			WHERE se.order_id =:orderid and scc.delivery_type IN ('lrn_cls_dty_ilt', 'lrn_cls_dty_vcl')
+			and se.reg_status not in('lrn_crs_reg_ppm','lrn_crs_reg_can') group by se.id,se.class_id",array(':orderid' => $order_id));
+	$bool = false;
+	foreach ($order_result as $orders ) {
+		$classId = $orders->class_id;
+		$courseId = $orders->course_id;
+		$class_tot_seat_cnt = $orders->class_max_capacity;
+		$tot_enroll_cnt = classEnrollCnt($courseId, $classId,"confirm");
+		expDebug::dPrint('$tot_enroll_cnt123 :'.$tot_enroll_cnt.", ".$class_tot_seat_cnt, 3);
+		if($class_tot_seat_cnt <= $tot_enroll_cnt)
+		{
+			//db_query("UPDATE slt_enrollment set reg_status='lrn_crs_reg_rsc' where order_id =:orderid", array($order_id));
+			$bool = true;
+			break;
+		}
+	}
+	return $bool;
+}
+
+
+/*
+ * Final Validate function for uc_cart_checkout_review_form()
+ */
+function exp_sp_cart_checkout_review_form_validate($form, &$form_state) {
+	try{
+		$uc_order_id = $form_state['build_info']['args'][0]->order_id;
+		expDebug::dPrint("uc order ids ".print_r($uc_order_id ,true),5);
+  		$slt_payment_order_id = getSltOrderId($uc_order_id);
+  		$prgInvalid = getClassSessionValidate($slt_payment_order_id);
+  		expDebug::dPrint("session invalid check >>>> ". print_r($prgInvalid,true),5);
+  		
+  		foreach($prgInvalid as $key=>$val){
+			form_set_error($key, $val);
+	  	}
+
+  		//expDebug::dPrint("slt order id session expired ". $slt_payment_order_id, 5);
+  	}catch (Exception $ex) {
+  		watchdog_exception('exp_sp_cart_checkout_exp_paymethod_form_validate', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Final checks to make sure the order can be completed.
+ *
+ * @see uc_cart_checkout_review_form()
+ */
+function exp_sp_cart_checkout_review_form_submit($form, &$form_state) {
+	try {
+  //If order session is empty the page is redirect to home page
+  $order_id = $_SESSION['slt_order_id'];
+  $log_payment_type = $form_state['build_info']['args'][0]->payment_method;
+  $uc_order_id = $form_state['build_info']['args'][0]->order_id;
+  $slt_payment_order_id = getSltOrderId($uc_order_id);
+  if (empty($order_id)) {
+  	expDebug::dPrint("slt order id session expired in exp_sp_cart_checkout_review_form_submit - payment order id".$slt_payment_order_id,1);
+  	insertPaymentErrorLog($slt_payment_order_id,$log_payment_type,'Order id session expired','exp_sp_cart_checkout_review_form_submit'); 
+    drupal_goto('');
+  }else{
+  	$var1 = chkSeatCountForClass($order_id);
+  	if($var1) {
+  		expDebug::dPrint("Total seat count and enrolled user count is equal in exp_sp_cart_checkout_review_form_submit".$slt_payment_order_id,1);
+  		insertPaymentErrorLog($slt_payment_order_id,$log_payment_type,'Total seat count and enroll user count is equal','exp_sp_cart_checkout_review_form_submit'); 
+  		drupal_goto('');
+  	}
+  	$result = checkOrderEntrrolmentStatus($_SESSION['slt_order_id']);
+  	$cnt = count($result);
+  	expDebug::dPrint('yogaraja review submit come here '.$cnt, 1);
+	if(count($result) <= 0){
+		expDebug::dPrint("Order is not in reserved state in exp_sp_cart_checkout_review_form_submit- Order id".$slt_payment_order_id,1);
+  		insertPaymentErrorLog($slt_payment_order_id,$log_payment_type,'Order id is not in reserved state','exp_sp_cart_checkout_review_form_submit'); 
+  		drupal_goto('');
+  	}
+  }
+
+  //Kill cookie value in cart timer
+  	// Secure cookie is disabled by Vincent on Dec 09, 2013
+	 	// This cookie is need to be read by javascript for timer count, if it is a secure then javasctipt will not read it. #0029940
+	 	setcookie("cart_elapsed_time", "checkout", '', '', '','','');
+  //setcookie("cart_elapsed_time", "checkout", '', '', '',(isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on'? TRUE : ""), (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == 'on'? TRUE : ""));
+	 	}catch (Exception $ex) {
+	 		watchdog_exception('exp_sp_cart_checkout_review_form_submit', $ex);
+	 		expertusErrorThrow($ex);
+	 	}
+}
+
+/**
+ * @see uc_checkout_form()
+ */
+function exp_sp_cart_checkout_form_back($form, &$form_state) {
+	try{
+	expDebug::dPrint('$_SESSION[cart_order] = ' . $_SESSION['cart_order'], 5);
+  if (isset($_SESSION['cart_order']) && intval($_SESSION['cart_order']) > 0) {
+    uc_order_comment_save($_SESSION['cart_order'], 0, t('MSG331')); //Customer cancelled this order from the checkout form.
+    unset($_SESSION['cart_order']);
+  }
+
+  $form_state['redirect'] = 'cart';
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_checkout_form_back', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * @see uc_checkout_form()
+ */
+function exp_sp_cart_checkout_form_cancel($form, &$form_state) {
+	try {
+	expDebug::dPrint('$_SESSION = ' . print_r($_SESSION, true), 5);
+  if (isset($_SESSION['cart_order']) && intval($_SESSION['cart_order']) > 0) {
+  	//uc_order_update_status($_SESSION['cart_order'], 'canceled');
+    uc_order_comment_save($_SESSION['cart_order'], 0, t('MSG331')); //Customer cancelled this order from the checkout form.
+    unset($_SESSION['cart_order']);
+    unset($_SESSION['cart_page_messages'][0]['OrderId']);
+  }
+
+  $form_state['redirect'] = 'learning/catalog-search';
+  expDebug::dPrint('$_SESSION after unsets = ' . print_r($_SESSION, true), 5);
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_checkout_form_cancel', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Returns the customer to catalog page on cancel from review page
+ *
+ * @see uc_cart_checkout_form_cancel()
+ */
+function exp_sp_cart_checkout_review_form_cancel($form, &$form_state) {
+	try {
+	expDebug::dPrint('$_SESSION = ' . print_r($_SESSION, true), 5);
+  if (isset($_SESSION['cart_order']) && intval($_SESSION['cart_order']) > 0) {
+  	//uc_order_update_status($_SESSION['cart_order'], 'canceled');
+    uc_order_comment_save($_SESSION['cart_order'], 0, t('MSG590')); //Customer cancelled this order from the checkout review form.
+    unset($_SESSION['cart_order']);
+    unset($_SESSION['cart_page_messages'][0]['OrderId']);
+  }
+
+  unset($_SESSION['do_review']);
+  $form_state['redirect'] = 'learning/catalog-search';
+  expDebug::dPrint('$_SESSION after unsets = ' . print_r($_SESSION, true), 5);
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_checkout_review_form_cancel', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Returns the customer to the checkout page to edit their information.
+ *
+ * @see uc_cart_checkout_review_form()
+ */
+function exp_sp_cart_checkout_exp_paymethod_form_back($form, &$form_state) {
+  try {
+  	if (module_exists('exp_sp_callout') && calloutIsActive() &&  calloutEntityIsActive('cme_tax')) {
+  		if (!empty($_SESSION['cart_order'])) {
+  			// include the external source file
+  			require_once DRUPAL_ROOT. '/sites/all/modules/core/exp_sp_core/modules/exp_sp_callout/exp_sp_callout.inc';
+  			clearTaxCalculationTables($_SESSION['slt_order_id'],$_SESSION['cart_order']);
+  		}
+  	}
+  	else {
+  		// Delete cybersource_tax line items from uc_order_line_items table
+  		if (!empty($_SESSION['cart_order'])) {
+  			db_query('DELETE FROM {uc_order_line_items} WHERE order_id = :oid AND type = :typ',
+  					array(':oid' => $_SESSION['cart_order'], ':typ' => 'cybersource_tax'));
+  		}
+
+  		// Reset item level tax in slt_order_items table to 0 for all order items
+  		if (!empty($_SESSION['slt_order_id'])) {
+  			$updateStmt = db_update('slt_order_items');
+  			$updateStmt->fields(array('tax_amount' => 0,
+  					'updated_by' => getSltpersonUserId(),
+  					'updated_on' => now()
+  			)
+  			);
+  			$updateStmt->condition('order_id', $_SESSION['slt_order_id'], '=');
+  			$updateStmt->condition('user_id', getSltpersonUserId(), '=');
+  			expDebug::dPrintDBAPI('$updateStmt', $updateStmt);
+  			$updateStmt->execute();
+  		}
+  	}
+	  unset($_SESSION['do_exp_paymethod']);
+	  $form_state['redirect'] = 'cart/checkout';
+  }
+  catch (Exception $ex) {
+    watchdog_exception('exp_sp_cart_checkout_exp_paymethod_form_back', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Returns the customer to catalog page on cancel from paymethod page
+ *
+ * @see uc_cart_checkout_form_cancel()
+ */
+function exp_sp_cart_checkout_exp_paymethod_form_cancel($form, &$form_state) {
+	try{
+	expDebug::dPrint('$_SESSION = ' . print_r($_SESSION, true), 5);
+  if (isset($_SESSION['cart_order']) && intval($_SESSION['cart_order']) > 0) {
+  	//uc_order_update_status($_SESSION['cart_order'], 'canceled');
+    uc_order_comment_save($_SESSION['cart_order'], 0, t('MSG591')); //Customer cancelled this order from the checkout paymethod form.
+    unset($_SESSION['cart_order']);
+    unset($_SESSION['cart_page_messages'][0]['OrderId']);
+  }
+
+  unset($_SESSION['do_exp_paymethod']);
+  $form_state['redirect'] = 'learning/catalog-search';
+  expDebug::dPrint('$_SESSION after unsets = ' . print_r($_SESSION, true), 5);
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_cart_checkout_exp_paymethod_form_cancel', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Find list of trainings available in catalog page
+ * @param string $userId
+ * @return array
+ */
+function getLearnerClasses($userId = '') {
+	try {
+		global $catalog_reg;
+		// prepare select query for programs
+		$select = db_select("slt_program", "prm");
+		$select->innerJoin('slt_node_learning_activity', 'nl', 'prm.id = nl.entity_id AND nl.entity_type != \'cre_sys_obt_cls\'');
+		$select->innerJoin('node', 'n', 'n.nid = nl.node_id AND n.type = \'product\'');
+		$select->addExpression('DISTINCT (nl.node_id)', 'training_id');
+		//$select->condition('prm.status','lrn_lpn_sts_atv','=');
+		$select->where('prm.status =  \'lrn_lpn_sts_atv\'');
+		filterByUserAccessPrivileges($select, 'prm',$userId,'','','Program');
+		$tpquery = $select;
+		//expDebug::dPrintDBAPI(' getLearnerClasses $tpquery SQL = ' , $tpquery);
+		
+		
+		// prepare select query for classes
+		$alisename = 'cls';
+		$entity_type = 'cre_sys_obt_cls';
+		$select = db_select("slt_course_class", "cls");
+		$select->innerJoin('slt_node_learning_activity', 'nl', 'cls.id = nl.entity_id AND nl.entity_type = \'cre_sys_obt_cls\'');
+		$select->innerJoin('node', 'n', 'n.nid = nl.node_id AND n.type  = \'product\'');
+		$select->addExpression('DISTINCT (nl.node_id)', 'training_id');
+		$select->where('cls.dedicated_class_flag = \'N\' or cls.dedicated_class_flag is null and cls.status = \'lrn_cls_sts_atv\'');
+		filterByUserAccessPrivileges($select, $alisename, $userId, '',$entity_type, $catalog_reg);
+		$clsQuery = $select;
+		//expDebug::dPrintDBAPI(' getLearnerClasses $clsquery SQL = ' , $clsQuery);
+		
+		$select = $clsQuery->union($tpquery,'UNION ALL');
+		expDebug::dPrintDBAPI(' getLearnerClasses union query SQL = ' , $select);
+		$result = $select->execute()->fetchAllKeyed(0,0);
+		expDebug::dPrint('  getLearnerClasses $result = ' . print_r($result, true) , 3);
+		return $result;
+	} catch(Exception $ex) {
+		
+	}
+}
+
+?>

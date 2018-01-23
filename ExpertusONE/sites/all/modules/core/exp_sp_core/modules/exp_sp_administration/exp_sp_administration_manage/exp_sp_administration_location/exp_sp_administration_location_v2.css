@@ -1,0 +1,491 @@
+.components-sub-title{
+  font-size:13px;
+  color:#333
+}
+#exp-sp-administration-resource-addedit-form .classroom-details-row .input-name-field,
+.classroom-details-row .input-name-field {
+  width:78px;
+  color:#333;
+  font-size:13px
+}
+#exp-sp-administration-resource-addedit-form .classroom-details-row .input-capacity-field,
+.classroom-details-row .input-capacity-field {
+  width:45px
+}
+#exp-sp-administration-resource-facility-addedit-form .admin-tab-list-row {
+  border-bottom:1px dotted #ccc;
+  width:97%
+} 
+#exp-sp-administration-resource-addedit-form .custom-fieldset-wrapper .custom-details-row .admin-delete-img {
+  padding-left:37px
+}
+#exp-sp-administration-resource-addedit-form #edit-status {
+  width:125px
+}
+#resource-addedit-form .addedit-edit-dropdown {
+  width:394px
+}
+#resource-addedit-form .addedit-new-field-value .addedit-edit-status {
+  width:125px
+}
+.resource-add-action-wrapper {
+  color:#333;
+  cursor:pointer;
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  height:21px;
+  padding:8px 0 0 28px;
+  width:50px;
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png") no-repeat -88px -912px
+}
+.resource-add-list {
+  display:none;
+  margin:0;
+  padding:0;
+  width:100px;
+  border:1px solid #ccc
+}
+.resource-add-list li {
+  display:block
+}
+.resource-add-list li a {
+  color:#4686DD;
+  display:block;
+  font-size:12px;
+  padding:9px 0 4px 10px;
+  text-align:left;
+  text-decoration:none;
+  width:90%
+}
+.resource-add-list li a:hover {
+  color:#4686DD;
+  display:block;
+  font-size:12px;
+  padding:9px 0 4px 10px;
+  text-align:left;
+  text-decoration:none;
+  width:90%;
+  background:#dbeefa
+}
+#location-basic-addedit-form {
+  float:none
+}		
+#exp-sp-administration-resource-addedit-form .addedit-new-field-title-custom{
+  width:216px
+}
+#exp-sp-administration-resource-addedit-form .admin-custom-required-col2-dropdown{
+  width:35%
+}
+#exp-sp-administration-resource-addedit-form .addedit-form-cancel-container-actions {
+   float:right;
+   margin-right:8px
+}
+.edit-location-btn{
+  float:right
+}
+#resource-facility-addedit-form-details {
+  position:relative
+}
+#resource-facility-addedit-form-details .add-class-button {
+  margin-right:15px;
+  position:absolute;
+  right:0;
+  top:-28px
+}
+#resource-location-basic-addedit-form-disp .addedit-edit-loc_name {
+  width:409px
+}
+#resource-facility-basic-addedit-form-container .addedit-edit-textfield {
+  width:408px
+}
+.resource-facility-basic-addedit-form-container .addedit-edit-dropdown {
+  width:414px
+}
+.resource-facility-basic-addedit-form-container .custom-details-row .admin-custom-required-col2-dropdown {
+  width:43.5%
+}
+.resource-facility-basic-addedit-form-container .custom-details-row .admin-add-button-container {
+  margin-left:34px
+}
+resource-facility-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row {
+  width:98.7%
+}
+.resource-facility-basic-addedit-form-container .admin-text-field-column {
+  width:94.8%
+}
+#resource-facility-addedit-form-details .addedit-form-class-button {
+  padding-right:18px
+}
+#resource-location-basic-addedit-form-disp .admin-course-edit-button-container {
+  padding-right:6px
+}
+.resource-location-basic-addedit-form-container .addedit-form-cancel-container-actions,
+.resource-facility-basic-addedit-form-container .addedit-form-cancel-container-actions {
+  margin-right:8px
+}
+#exp-sp-administration-resource-facility-title-form .addedit-form {
+  border-bottom:1px solid #ccc
+}
+#exp-sp-administration-resource-facility-addedit-form .addedit-left-col {
+  padding-bottom:0
+}
+#location-basic-addedit-form .addedit-edit-custom-label-field {
+  width:101px
+}
+#location-basic-addedit-form .addedit-custom-field .addedit-new-field-value .addedit-edit-textarea {
+  height:25px;
+  width:400px;
+  overflow:hidden;
+  text-indent:3px
+}
+#location-basic-addedit-form .addedit-form-cancel-container-actions {
+   margin-right:21px
+}
+#location-basic-addedit-form .expertus-dropdown-bg {
+   width:146px
+}
+#location-basic-addedit-form .expertus-dropdown-icon {
+   width:100%
+}
+#location-basic-addedit-form-disp  .addedit-firstcol-field-value .addedit-edit-dropdown,
+#location-basic-addedit-form-disp  .addedit-secondcol-field-value .addedit-edit-country {
+   width:160px
+}
+.page-administration-manage-location .addedit-left-col .addedit-new-field .addedit-new-field-value textarea.addedit-edit-textarea {
+   max-width:385px;
+   min-width:385px;
+   overflow:hidden
+}
+.theme-ctool-popup #location-basic-addedit-form .addedit-twocol-secondcol .ui-multiselect .ui-icon, .theme-ctool-popup #location-basic-addedit-form .addedit-twocol-firstcol .ui-multiselect .ui-icon {
+   background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/select_icon.png") no-repeat right 0;
+   height:19px;
+   margin:-3px -2px 0 0;
+   width:22px
+}
+.theme-ctool-popup #location-basic-addedit-form .addedit-twocol-firstcol .ui-multiselect, .theme-ctool-popup #location-basic-addedit-form .addedit-twocol-secondcol .ui-multiselect {
+  background: -ms-linear-gradient(#fafafa,#e9e9e9);/*For IE10*/
+  background: linear-gradient(#fafafa,#e9e9e9);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#fafafa', endColorstr='#e9e9e9'); /*For IE7-8-9*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fafafa, endColorstr=#e9e9e9)"; 
+   color:#333;
+   font-family:openSansRegular, Arial;
+   font-size:12px;
+   font-weight:normal;
+   width:192px;
+   border-radius: 10px 4px 4px 10px;
+   border:1px solid #e5e5e5;
+   border-right:0;
+   height:20px
+}
+#location-basic-addedit-form .catalog-pub-add-list, .catalog-pub-add-list-move {
+   min-width:73px;
+   right:4px
+}
+.page-administration-manage-location .ui-multiselect-menu {
+   border:1px solid #e7e7e7;
+   margin-top:-1px
+}
+.page-administration-manage-location .narrow-search-results-item-details .fade-out-title-container.admin-narrow-search-fadeout-container {
+  max-width:490px
+}
+.page-administration-manage-location .narrow-search-results-item-details .admin-narrow-search-edit-tooltip-code-fadeout-container {
+  max-width:350px
+}
+.page-administration-manage-location #narrow-search-results .narrow-search-country-fadeout-container {
+  max-width:230px;
+  display:inline-block;
+  margin-bottom:-8px
+}
+.page-administration-manage-location #narrow-search-results .narrow-search-equipment-fadeout-container{
+  max-width:190px;
+  display:inline-block;
+  margin-bottom:-8px
+}
+.page-administration-manage-location #narrow-search-results .ui-state-hover .fade-out-image,
+.page-administration-manage-location #narrow-search-results .ui-state-highlight.ui-state-hover .fade-out-image {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/title_gradient.png") no-repeat right -30px;
+}
+.page-administration-manage-location .location-basic-addedit-form-container .admin-save-pub-unpub-button-container {
+  margin-top:1px;
+  padding-left:10px
+}
+.page-administration-manage-location .location-basic-addedit-form-container .addedit-edit-location-basic-cancel {
+  padding:3px 6px 2px;
+  margin-top:1px
+}
+.page-administration-manage-location .location-basic-addedit-form-container .admin-save-pub-unpub-button-container .admin-save-button-left-bg {
+  display:block;
+  background:#27245e;
+  border:1px solid #27245e;
+  border-radius:6px 0 0 6px;
+  width:6px;
+  height:22px;
+  float:left;
+}
+.page-administration-manage-location .location-basic-addedit-form-container .admin-save-pub-unpub-button-container .admin-save-button-right-bg {
+  display:block;
+  background:#27245e;
+  border:1px solid #27245e;
+  border-radius:0 6px 6px 0;
+  width:6px;
+  height:22px;
+  float:left;  
+}
+.page-administration-manage-location .location-basic-addedit-form-container .edit-catalog-course-save-publish {
+  border-radius:0;
+  padding:4px 0 2px
+}
+.page-administration-manage-location .location-basic-addedit-form-container .admin-save-pub-unpub-button-container .pub-unbpub-more-btn {
+  border-radius:0 6px 6px 0;
+  float:left;
+  height:22px;
+  width:15px;
+  cursor:pointer;
+  display:block;
+  margin-top:0 
+}
+.page-administration-manage #ctools-face-table .admin-save-pub-unpub-button-container .pub-unbpub-more-btn{
+  background-position: -107px -622px
+}
+.theme-ctool-popup .addedit-new-field-two-col .addedit-edit-dropdown.addedit-edit-equipment{
+  width:148px
+}
+#location-basic-addedit-form-container .addedit-twocol-firstcol .addedit-firstcol-field-value .addedit-edit-dropdown,
+#location-basic-addedit-form-container .addedit-twocol-secondcol .addedit-secondcol-field-value .addedit-edit-dropdown{
+  padding-left:6px /* Added by ganeshbabuv for #0078369 */
+}
+#location-basic-addedit-form .addedit-left-col{
+  padding-bottom:5px
+}
+.page-administration-commerce-order #page-container #narrow-search-results-holder .narrow-search-results-item-details .narrow-search-results-item-detail {
+  margin-top:1px
+}
+.page-administration-manage-location #custom_attr_container .cus_attr_jscroll_set {
+    /*height: 63px;*/
+   height: 67px;
+}
+#location-basic-addedit-form #custom_attr_container #location_checkbox_full_row .addedit-new-field-value {
+  width:75%;
+}
+
+/* Added by ganeshbabuv for #0078369 */
+.theme-ctool-popup .addedit-new-field-two-col .addedit-edit-dropdown.addedit-edit-state{
+	width:147px
+}
+/* Custom Attribute Styles - Scroll Bar #custom_attribute_0078975*/
+.page-administration-manage-location #location-basic-addedit-form #custom_attr_container .addedit-new-field-two-col #customcheckboxradio_checkbox_first_col #customattribute-display-vertical.cus_attr_jscroll_set,
+.page-administration-manage-location #location-basic-addedit-form #custom_attr_container .addedit-new-field-two-col #customcheckboxradio_checkbox_second_col #customattribute-display-vertical.cus_attr_jscroll_set{
+		width: 146px
+}
+/* End Scrollbar */
+
+/* location */
+#location-basic-addedit-form #custom_attr_container .addedit-twocol-firstcol .addedit-new-field-title .addedit-label{
+   	word-wrap: break-word;
+   	width: 110px;
+}
+#location-basic-addedit-form #custom_attr_container.customattr-both .addedit-twocol-secondcol .addedit-new-field-title .addedit-label{
+width: unset
+}
+#location-basic-addedit-form #custom_attr_container.customattr-info .addedit-twocol-secondcol .addedit-new-field-title .addedit-label{
+   	width: unset
+}
+#location-basic-addedit-form #custom_attr_container.customattr-mandatory .addedit-twocol-secondcol .addedit-new-field-title .addedit-label{
+   	width: unset
+}
+#location-basic-addedit-form #custom_attr_container.customattr-plain .addedit-twocol-secondcol .addedit-new-field-title .addedit-label{
+   	width: unset
+}
+#location-basic-addedit-form .addedit-twocol-firstcol {
+    width: 54%;
+}
+#location-basic-addedit-form .addedit-twocol-secondcol {
+    width: 46%;
+}
+
+/* checkbox radio in form */
+#location-basic-addedit-form #custom_attr_container .addedit-new-field-two-col #customcheckboxradio_checkbox_first_col #customattribute-display-horizontal,
+#location-basic-addedit-form #custom_attr_container .addedit-new-field-two-col #customcheckboxradio_checkbox_first_col #customattribute-display-vertical
+{
+    width: 140px;
+}
+#location-basic-addedit-form #custom_attr_container .addedit-new-field-two-col #customcheckboxradio_checkbox_second_col #customattribute-display-horizontal,
+#location-basic-addedit-form #custom_attr_container .addedit-new-field-two-col #customcheckboxradio_checkbox_second_col #customattribute-display-vertical
+{
+    width: 140px;
+    padding-left:2px
+}
+/* dropdown in location form */
+#location-basic-addedit-form #custom_attr_container .expertus-dropdown-bg {
+    width: 146px;
+}
+/* dropdown fix */
+#location-basic-addedit-form-container #custom_attr_container .addedit-twocol-secondcol .addedit-edit-dropdown {
+    width: 147px;
+}
+.page-administration-manage-location #location-basic-addedit-form-container #custom_attr_container #vtip_custom_attr
+{
+ position: relative;
+ top: 1px;
+}
+/* radio button for location */
+.page-administration-manage-location #location-basic-addedit-form #custom_attr_container input[type="radio"] {
+    margin-left: -2px;
+}
+.page-administration-manage-location #location-basic-addedit-form .ui-multiselect
+{
+	padding-left:9px;
+}
+/*#custom_attribute_0078975*/
+/* rendering */
+.page-administration-manage-location  #customattribute-basic-addedit-form-disp .addedit-form-main-container {
+    float: left;
+    /*width: 391px;*/
+   width: 364px;
+}
+.page-administration-manage-location #customattribute-basic-addedit-form-disp #form-attribute 0customattribute-basic-addedit-form-container {
+    min-height: 0;
+    padding: 0 0 1px;
+    width: 368px;
+}
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_checkbox #customattribute-basic-addedit-form-container, 
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_radio #customattribute-basic-addedit-form-container, 
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_dropdown #customattribute-basic-addedit-form-container {
+    width: 421px;
+}
+.page-administration-manage-location #customattribute-basic-addedit-form-disp .addedit-new-field-title {
+    width: 82px;
+}
+.page-administration-manage-location #location-basic-addedit-form #customattribute-basic-addedit-form-disp .addedit-edit-cattr_length {
+    width: 59px;
+}
+.page-administration-manage-location #location-basic-addedit-form #customattribute-basic-addedit-form .addedit-form-cancel-container-actions input
+{
+margin-top:0px;
+margin-left:0px;	
+}
+.page-administration-manage-location #location-basic-addedit-form #customattribute-basic-addedit-form .addedit-edit-textfield{
+margin-top:0px;
+}
+.page-administration-manage-location #location-basic-addedit-form #customattribute-basic-addedit-form .addedit-edit-customattributetextfield
+{
+margin-top:0px;	
+}
+#location-basic-addedit-form #customattribute-basic-addedit-form-container .expertus-dropdown-bg {
+    width: auto;
+}
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp #form-attribute .round-corner-left, 
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp #form-attribute .round-corner-footer-left {
+    border: 0 none;
+}
+#location-basic-addedit-form .customattribute-basic-addedit-form-container {
+    border: 0 none;
+}
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .addedit-edit-cattr_name {
+    width: 259px;
+}
+/*#location-basic-addedit-form .addedit-customattributes-wrapper #customattribute-basic-addedit-form #pub-unpub-action-btn {
+    height:20px;
+}*/
+/*.page-administration-manage-location .location-basic-addedit-form-container #customattribute-basic-addedit-form .admin-save-pub-unpub-button-container .admin-save-button-left-bg {
+ background: none;
+    border: 0;
+    border-radius: 0;
+    display: none;
+    float: none;
+    height: 0;
+    width: 0;
+}*/
+#location-basic-addedit-form #bubble-face-table #customattribute-basic-addedit-form .addedit-left-col {
+    margin: -13px -8px 0 4px;
+    padding: 0;
+}
+#location-basic-addedit-form #customattribute-basic-addedit-form .addedit-form-cancel-and-save-actions-row {
+    margin-bottom: -10px;
+}
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_checkbox #customattribute-basic-addedit-form-container, 
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_radio #customattribute-basic-addedit-form-container, 
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_dropdown #customattribute-basic-addedit-form-container {
+    width: 421px;
+}
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-edit-cattr_name, 
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-edit-cattr_name, 
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-edit-cattr_name {
+    width: 281px;
+}
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom-answer-choice-customattributetextfield{
+    width: 281px;
+}
+/* checkbox display options */
+#location-basic-addedit-form #customattribute-basic-addedit-form .custom_attr_checkbox .addedit-twocol-secondcol .addedit-secondcol-field-value, 
+#location-basic-addedit-form #customattribute-basic-addedit-form .custom_attr_radio .addedit-twocol-secondcol .addedit-secondcol-field-value, 
+#location-basic-addedit-form #customattribute-basic-addedit-form .custom_attr_dropdown .addedit-twocol-secondcol .addedit-secondcol-field-value {
+    padding-right: 11px;
+}
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_checkbox .addedit-edit-cattr_help_txt, 
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_radio .addedit-edit-cattr_help_txt, 
+#location-basic-addedit-form #customattribute-basic-addedit-form-disp .custom_attr_dropdown .addedit-edit-cattr_help_txt {
+    max-width: 286px;
+    min-width: 286px;
+}
+#location-basic-addedit-form #customattribute-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions {
+    margin-right: 11px;
+}
+/* field length */
+/*#location-basic-addedit-form #customattribute-basic-addedit-form .addedit-edit-cattr_length {
+    padding-left:10px;
+}*/
+.page-administration-manage-location #location-basic-addedit-form #customattribute-basic-addedit-form-disp .addedit-twocol-secondcol .addedit-new-field-title {
+    text-align: right;
+}
+#location-basic-addedit-form #customattribute-basic-addedit-form .custom_attr_textbox .addedit-twocol-secondcol .addedit-new-field-title
+{
+	 width: 81px;
+}
+.page-administration-manage-location #customattribute-basic-addedit-form-disp #form-attribute .customattribute-basic-addedit-form-container {
+    min-height: 0;
+    padding: 0 0 1px;
+    width: 368px;
+}
+
+.page-administration-manage-location #location-basic-addedit-form-disp #custom_attr_container #customattribute-display-vertical .jspHorizontalBar .jspTrack .jspDrag{
+ display:none
+}
+.page-administration-manage-location .location-basic-addedit-form-container #customattribute-basic-addedit-form-container .admin-save-pub-unpub-button-container {
+    margin-top: 1px;
+    padding-left: 10px;
+}
+.page-administration-manage-location .location-basic-addedit-form-container #customattribute-basic-addedit-form-container .admin-save-pub-unpub-button-container .admin-save-button-middle-bg {
+    border-radius: 0;
+    padding: 4px 0 2px;
+    font-size:11px;
+}
+
+/*! Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+ #location-basic-addedit-form-disp {
+   min-height:300px;
+   max-height:auto
+ }
+ #location-basic-addedit-form {margin-bottom:-1px}
+ .theme-ctool-popup .addedit-new-field-two-col .addedit-edit-dropdown.addedit-edit-equipment{
+   width:147px
+ }
+ .page-administration-manage-location #new-customattribute-wrapper .bottom-qtip-tip-visible {
+    margin-top:-2px;
+ }
+ /*#new-customattribute-link{    
+ line-height: 11px;
+ margin-top: -3px;
+ }*/
+}
+
+/*safari hack Start*/
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0), not all and (min-resolution:.001dpcm) { @media { _:-webkit-full-screen,
+  .page-administration-manage-location #narrow-search-results .narrow-search-country-fadeout-container,
+  .page-administration-manage-location #narrow-search-results .narrow-search-equipment-fadeout-container {
+    margin-bottom:0
+  }
+}}
+/*safari hack End*/

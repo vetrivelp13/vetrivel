@@ -1,0 +1,9 @@
+name = Leaderboard
+description = Shows the leaderboard details
+package = ExpertusONE Learning
+dependencies[] = exp_sp_administration_module_info
+testing_api = 2.x
+files[] = exp_sp_admin_userpoints.inc
+files[] = tests/administration_module_info.test
+version = VERSION
+core = 7.x

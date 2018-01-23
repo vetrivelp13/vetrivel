@@ -1,0 +1,222 @@
+#banner-basic-addedit-form {	
+  float:none
+}		
+#banner-basic-addedit-form .delete-picture-chkbox {
+  margin-left:155px
+}
+#banner-basic-addedit-form .addedit-edit-datefield {
+  height:16px;
+  width:109px
+}
+#banner-basic-addedit-form #two-col-row-banner_from_date_banner_until_date .addedit-secondcol-field-value  input.addedit-edit-datefield + img {
+  left:92px;
+  top:3px
+}		
+#banner-basic-addedit-form .addedit-twocol-secondcol .addedit-secondcol-field-value input.addedit-edit-datefield + img {
+  left:92px;
+  top:3px
+}
+#banner-basic-addedit-form .addedit-twocol-secondcol .addedit-secondcol-field-value{
+  margin-right:8px
+}
+#banner-basic-addedit-form #two-col-row-lang_status .addedit-twocol-secondcol .addedit-new-field-title {
+  width:116px
+}
+#banner-basic-addedit-form #two-col-row-banner_from_date_banner_until_date .addedit-twocol-secondcol .addedit-new-field-title{
+  width:100px;
+  text-align: left;
+}
+#banner-basic-addedit-form #two-col-row-banner_from_display_hidden_field_value .addedit-twocol-secondcol .addedit-new-field-title{
+  width:97px
+}		
+#banner-basic-addedit-form .addedit-new-field-value .addedit-edit-banner_seq_num {
+  width:115px
+}
+#banner-basic-addedit-form type-file input.addedit-edit-file-upload {
+ width:0
+}		
+#banner-basic-addedit-form .text-format-wrapper #switch_edit-bannerdescription-value{
+ display:none
+}
+#banner-basic-addedit-form #two-col-row-banner_from_display_hidden_field_value {
+  margin-top:-2px
+}		
+#banner-basic-addedit-form .addedit-new-field-two-col {
+  width:550px
+}
+#banner-basic-addedit-form .addedit-form-cancel-and-save-actions-row {
+  margin-top:10px;
+  width:96%
+}
+#banner-basic-addedit-form .admin-delete-img {
+  background:none;
+  border:0;
+  cursor:pointer;
+  height:10px;
+  padding-left:8px;
+  padding-top:1px;
+  width:9px
+}		 		
+#banner-basic-addedit-form .admin-save-pub-unpub-button-container{
+  padding-left:9px
+}
+#banner-basic-addedit-form .addedit-left-col {
+  padding:9px 0 5px 16px
+}   
+#banner-basic-addedit-form .catalog-pub-add-list li input, .catalog-pub-add-list-move li input {
+ background:none
+}
+#banner-basic-addedit-form .catalog-pub-add-list li, .catalog-pub-add-list-move li {
+  border-bottom:0
+}
+#banner-basic-addedit-form .addedit-firstcol-field-value{
+  width:113px
+}
+#banner-basic-addedit-form .addedit-firstcol-field-value input.addedit-edit-file-upload, 
+#banner-basic-addedit-form .addedit-secondcol-field-value input.addedit-edit-file-upload {
+  font-size:11px;
+  width:160px
+}
+#banner-basic-addedit-form .crs-tab-titles-container{
+  margin-left:0;
+  margin-top:-36px
+}
+#banner-basic-addedit-form .addedit-twocol-secondcol .addedit-new-field-title {
+  width:87px
+}
+/* .page-administration-manage-banner #bubble-face-table .bubble-blt {
+  width:18px
+} */
+.page-administration-manage-banner #bubble-face-table .bubble-blm {
+  width:48px
+}
+#banner-file-image-wrapper .banner-change-image-link{
+  cursor:pointer
+}
+#banner-basic-addedit-form .addedit-form-cancel-container-actions {
+  margin-right:50px
+}
+.page-administration-manage-banner .addedit-new-field .form-type-file input.addedit-edit-file-upload {
+  font-size:12px;
+  width:175px
+}
+/* .theme-ctool-popup .addedit-new-field-two-col #edit-banner-seq-num {
+  height:20px;
+  margin-top:-1px
+} */
+.page-administration-manage-banner .detail-desc img.admin-user-load-picture{
+  width:50px
+}
+.page-administration-manage-banner #page-container .admin-narrow-search-user {
+  margin-top: 0
+}
+.page-administration-manage-banner #ui-datepicker-div .ui-datepicker-prev:hover{
+  margin-left:24px
+}
+.page-administration-manage-banner #ui-datepicker-div .ui-datepicker-next:hover{
+  margin-left:10px
+}
+.page-administration-manage-banner .narrow-search-results-item-details .fade-out-title-container.admin-narrow-search-fadeout-container {
+  max-width:405px
+}
+.page-administration-manage-banner #viewbanner-detail-wrapper .admin-narrow-banner-view-title-fadeout-container,
+.page-administration-manage-banner #viewbanner-detail-wrapper .admin-narrow-banner-view-accessname-fadeout-container {
+  max-width:430px
+}
+.page-administration-manage-banner #viewbanner-detail-wrapper #view-scroll-wrapper span.vtip  {
+  float:left
+}
+.page-administration-manage-banner #narrow-search-results .ui-state-hover .fade-out-image,
+.page-administration-manage-banner #narrow-search-results .ui-state-highlight.ui-state-hover .fade-out-image {
+ background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/title_gradient.png") no-repeat right -30px;
+}
+.page-administration-manage-banner #banner-basic-addedit-form .admin-save-pub-unpub-button-container {
+  margin-top:1px;
+  padding-left:10px
+}
+.page-administration-manage-banner #banner-basic-addedit-form .addedit-edit-banner-basic-cancel {
+  padding:3px 6px 2px;
+  margin-top:1px
+}
+.page-administration-manage-banner #banner-basic-addedit-form .admin-save-pub-unpub-button-container .admin-save-button-left-bg {
+  display:block;
+  background:#27245e;
+  border:1px solid #27245e;
+  border-radius:6px 0 0 6px;
+  width:6px;
+  height:22px;
+  float:left;
+}
+.page-administration-manage-banner #banner-basic-addedit-form .admin-save-pub-unpub-button-container .admin-save-button-right-bg {
+  display:block;
+  background:#27245e;
+  border:1px solid #27245e;
+  border-radius:0 6px 6px 0;
+  width:6px;
+  height:22px;
+  float:left;  
+}
+.page-administration-manage-banner #banner-basic-addedit-form .admin-save-pub-unpub-button-container .edit-catalog-course-save-publish {
+  border-radius:0;
+  padding:4px 0 2px
+}
+.page-administration-manage-banner #banner-basic-addedit-form .admin-save-pub-unpub-button-container .pub-unbpub-more-btn {
+  border-radius:0 6px 6px 0;
+  float:left;
+  height:22px;
+  width:15px;
+  cursor:pointer;
+  display:block;
+  margin-top:0 
+}
+.page-administration-manage-banner #page-container #narrow-search-results-holder .narrow-search-results-item-action a.crs-pub-enrolled-btn.glossy-btn {
+  border:1px solid #e5e5e5;
+  border-radius:10px;
+  display:inline-block;
+  vertical-align:middle;
+  float:right;
+  margin-right:0;
+  height:28px;
+  padding:10px 3px
+}
+/*-- home page customization --*/
+#banner-basic-addedit-form .addedit-new-field-title {
+    width: 100px;
+}
+#banner-basic-addedit-form .banner_size_txt {
+	color: #ccc;
+    display: inline-block;
+    font-family: ProximaNova,Arial;
+    font-size: 9px;
+    font-weight: normal;
+    width: 64px;
+    text-align: left;
+}
+#banner-basic-addedit-form input#edit-title { width: 433px }
+#banner-basic-addedit-form .addedit-long-description-container .addedit-new-field-value { width: 435px }
+#banner-basic-addedit-form .form-type-file, #banner-basic-addedit-form .admin-user-load-picture { padding-top: 6px }
+.page-administration-manage-banner #show_expertus_message { width: 580px }
+.page-administration-manage-banner  div #message-container { width: 94% }
+/*-- home page customization --*/
+.page-administration-manage #ctools-face-table .admin-save-pub-unpub-button-container .pub-unbpub-more-btn{
+  background-position: -107px -622px
+}
+.page-administration-manage-banner .fade-out-title-container.narrow-search-lang-fadeout-container{
+  margin-bottom:-7px
+}
+.page-administration-manage-banner .admin-narrow-search-user img{
+  margin:0 7px 7px;
+}
+/*! Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	#banner-basic-addedit-form .admin-save-pub-unpub-button-container{
+	  padding-left:7px
+	}
+	#access-control .access-divider-controller {
+	  top:-9px
+	}
+	.page-administration-manage-banner .admin-narrow-search-user img#header-profile-img{
+    /*   margin-top:3px */
+    }
+}
+

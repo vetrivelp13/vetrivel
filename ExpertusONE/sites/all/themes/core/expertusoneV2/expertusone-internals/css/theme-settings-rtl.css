@@ -1,0 +1,56 @@
+/**
+ * @file
+ * Theme settings styling
+ *
+ * This file is only loaded on the Theme Settings page for expertusone and its
+ * subthemes: admin/build/themes/settings
+ */
+
+
+#expertusone-settings fieldset .form-item
+{
+  padding-left: 0;
+  padding-right: 200px;
+}
+
+#expertusone-settings fieldset .form-checkboxes .form-item,
+#expertusone-settings fieldset .form-radios .form-item
+{
+  padding-right: 0;
+}
+
+#expertusone-settings fieldset .form-item label
+{
+  float: right;
+  margin-left: 10px;
+  margin-right: -200px;
+  text-align: left;
+}
+
+#expertusone-settings fieldset .form-item label.option
+{
+  text-align: right;
+}
+
+#div-expertusone-registry strong,
+#div-expertusone-wireframes strong
+{
+  float: right;
+  margin-left: 10px;
+  margin-right: 0;
+  text-align: left;
+}
+
+#div-expertusone-registry fieldset .form-item,
+#div-expertusone-wireframes fieldset .form-item
+{
+  margin-right: 0;
+  padding-right: 0;
+}
+
+#div-expertusone-registry fieldset .form-item .description,
+#div-expertusone-wireframes fieldset .form-item .description
+{
+  margin-left: 0;
+  margin-right: 200px;
+}

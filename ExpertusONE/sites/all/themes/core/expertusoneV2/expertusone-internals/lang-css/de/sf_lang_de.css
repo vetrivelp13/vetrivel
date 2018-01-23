@@ -1,0 +1,27 @@
+/* Catalog */
+#page-container #lnr-catalog-search .find-trng-sort-text {
+    /* background-position: 95px -2815px !important; */
+} 
+ 
+ /* My Learning */
+ 
+.page-learning-enrollment-search #page-container .sort-by-text{
+	 /* background-position: 99px -2814px !important; */
+}
+
+.salesforce-widget #myteam-find-trng-sort-display .find-trng-sort-text{
+	background-position: 95px -2815px
+}
+.salesforce-widget #catalog-admin-cal-legend .first-row-cell .cal-legent-td-upcg,
+.salesforce-widget #catalog-admin-cal-legend .first-row-cell .cal-legent-td-comp{
+  width:auto;
+  padding-right:5px
+}
+.iframe-mylearning #page-container .enroll-sort-by-container .sort-by-links,.iframe-mylearning #page-container .instructor-sort-by-container .sort-by-links{
+	 left: -3px !important;
+	 width: 125px !important;
+}
+
+.iframe-mylearning #page-container .enroll-sort-by-container, .iframe-mylearning #page-container .instructor-sort-by-container{
+	 width: 115px !important;
+}

@@ -1,0 +1,88 @@
+<?php
+/**
+ * Implementation of hook_block_info().
+ */
+function exp_sp_footer_block_info() {
+	try{
+  $blocks = array();
+ 
+  $blocks['footer'] = array(
+    'info' => t('Footer'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+    'pages' => '*/preview/*'
+  );
+ 
+  return $blocks;
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_footer_block_info', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function exp_sp_footer_block_view($delta = ''){
+  try{
+   $block = array();
+ 
+   $block['subject'] = "";
+   $block['content'] = _admin_footer_content();
+ 
+   return $block;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_footer_block_view', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+function _admin_footer_content() {	
+  try{
+  	
+  global $theme_key;
+  $copyright_text = t(urldecode(getConfigValue('copyright_txt')));
+  $copyright_text= str_replace("CurrentYear",date("Y"),$copyright_text);
+  
+  if($theme_key == "expertusoneV2"){
+  	$outhtml .= '<div class="footer-web-links">';
+  	$link_url = '';
+  	$linksArr = array('twitter_url'=> 'web-linnk-twitter',
+  						'linkedin_url'=> 'web-linnk-linked',
+  							'facebook_url'=> 'web-linnk-facebook',
+  								'googleplus_url'=> 'web-linnk-google-plus',
+  									'persent_url'=> 'web-linnk-persent',
+  										'youtube_url'=> 'web-linnk-you-tube',
+  											'wordpress_url'=>'web-linnk-word-press');
+	foreach($linksArr as $link => $linkClass){	      
+	  	$link_url = getConfigValue($link);
+	  	if($link_url){
+	  		$outhtml .= '<a href="javascript:void(0);" class="'.$linkClass.' " onclick="window.open(\''.$link_url.'\',\'footerlinkwin\',\'toolbar=1,location=1,statusbar=1,resizable =1,scrollbars=1,width=900,height=900\');"></a>';
+	  	}
+	}
+	$outhtml .= '</div>'; 
+	$outhtml .='<div class="poweredby"><a href="http://www.expertus.com"><div class="poweredby-txt">Powered by</div> <div class="poweredby-logo"><img src="'.get_logo_path('folder').'powered-by_new.png'.'"></div></a></div>' ; 
+	$outhtml .='<div class="copyright-container"><span class="FooterCpyText">'.$copyright_text.'</span></div>';
+	
+  }else{
+  	$outhtml = '<div id="footer">
+	    			<div class="copyright-page">
+	    				<div class="ftrLeft"><span class="FooterCpyText">';
+	  $versionTxt = file_get_contents('./VERSION.txt', true);
+	  $outhtml .= substr($versionTxt,0,strpos($versionTxt, " "));
+	  if($copyright_text!=""){
+	  	$outhtml .= ' | '."$copyright_text";
+	  }
+	  $outhtml .= '</span>
+	    				</div>
+	    				<div class="poweredby"><a href="http://www.expertus.com"><img height="30" width="185" src="'.file_create_url(path_to_theme().'/images/powered-by.png').'"></a></div>
+					</div>				
+				</div>
+				</div>';
+  }
+  return $outhtml;
+  }catch (Exception $ex) {
+    watchdog_exception('admin_footer_content', $ex);
+    expertusErrorThrow($ex);
+  }
+}

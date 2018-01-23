@@ -1,0 +1,165 @@
+#reg-new-div #create-lnr-captcha {
+  width:105px;
+  float:left
+}
+#reg-new-div > table > tbody > tr > td {
+  padding:4px 0 4px 5px;
+  text-align:left
+}
+.create-lnr-container {
+  padding:1px 0 0;
+  width:100%
+}
+#reg-new-div .captch-refersh {
+  display:block;
+  float:left;
+  margin:2px 5px 5px 9px;
+  padding:5px 0 0
+}
+#reg-new-div .captcha-textfield {
+  float:left;
+  padding:37px 10px 0 0
+}
+div.error {
+  display:block
+}
+.reg-form-wrapper div.error {
+  display:block;
+  margin-bottom:0
+}
+#reg-new-div .form-text {
+  width:309px
+}
+#reg-new-div .form-select {
+  width:314px;
+  height:23px
+}
+#reg-new-div .form-item-captchatxt .form-text {
+  width:129px
+}
+#ajax-userregister .create-lnr-container .user-profile-box {
+  margin:0 0 0 10px;
+  width:97.8%
+}
+#ajax-userregister .create-lnr-content {
+  padding-top:5px
+}
+#ajax-userregister label {
+  display:none
+}
+#reg-new-div .createlnr-container .form-type-textfield {
+  float:left
+}
+.reg-form-wrapper .require-image {
+  float:left
+}
+#reg-new-div .register-user-btn-cont, .form-submit {
+  float:left;
+  margin-top:5px;
+  padding-left:12px
+}
+#reg-new-div .receive-news-txt {
+  vertical-align:middle;
+  padding:10px 0 0;
+  width:500px
+}
+#reg-new-div .receive-news-txt .form-item { 
+  margin:-2px 5px 0 0
+}
+#reg-new-div .receive-news-txt #edit-sub-check {
+  padding:0;
+  margin:0
+}
+#reg-new-div .register-user-btn-cont .form-submit {
+  margin-right:2px;
+  width:66px
+}
+#ajax-userregister .form-item, .form-actions {
+  margin:0;
+  float:left
+}
+.page-learning-register .block-title {
+  color:#333
+}
+#reg-new-div .reg-field-title {
+  font-size:13px;
+  color:#666
+}
+#reg-new-div .reg-require-image-bottom {
+  margin-left:0;
+  margin-bottom:10px
+}
+.reg-form-wrapper {
+  padding-top:5px;
+  padding-bottom:5px
+}
+#reg-new-div .reg-link-back{
+  float:left;
+  padding-right:0;
+  padding-top:8px;
+  padding-left:170px
+}
+#reg-new-div .reg-link-back a {
+  text-decoration:none;
+  color:#4686DD;
+  padding:13px 0 0 0
+}
+.reg-form-wrapper .require-text {
+  color:#FF0000;
+  font-weight:bold
+}
+.create-lnr-content .messages {
+  display:none
+}
+#reg-new-div .password-note-cls {
+  float:left;
+  padding:2px 0 0 10px
+}
+#reg-new-div .password-note-cls ul li {
+  list-style-type:none
+}
+.captch-refresh-img {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -139px -607px;
+  display:block;
+  height:25px;
+  width:27px
+}
+.admin-user-register-button {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -49px -876px;
+  border:0;
+  color:#FFF;
+  cursor:pointer;
+  height:33px;
+  padding:0;
+  width:115px;
+  font-size:14px;
+  font-weight:bold
+}
+.admin-user-register-button {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -3px -1022px;
+  font-size:12px;
+  font-weight:normal;
+  color:#FFF;
+  text-align:center;  
+  line-height:16px;
+  width:auto; 
+  height:22px;   
+  margin:0;
+  padding:0;
+  border:0;
+  cursor:pointer;
+  float:left
+}
+.form-item-captcha-response .description {
+  display:none
+}
+#reg-new-div .form-item-captcha-response .form-text {
+  width:129px;
+  margin-top:2px
+}
+#reg-new-div #show_expertus_message #message-container{
+  top:-11px
+}
+select option {
+  color:#333
+}

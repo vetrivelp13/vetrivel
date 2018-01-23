@@ -1,0 +1,388 @@
+<?php
+// $Id: uc_po.module,v 1.2 2009/04/24 00:59:42 rszrama Exp $
+
+/**
+ * @file
+ * Defines a purchase order payment method and the appropriate checkout and
+ *   order panes.
+ *
+ * Maintained by Ryan (rszrama) of Commerce Guys - http://www.commerceguys.com
+ */
+
+
+/*******************************************************************************
+ * Hook Functions
+ ******************************************************************************/
+
+/**
+ * Implementation of hook_menu().
+ */
+function uc_po_menu() {
+  $items = array();
+
+  $items['admin/store/orders/po'] = array(
+    'title' => 'Search by PO',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('uc_po_search_form'),
+    'access arguments' => array('administer store'),
+    'description' => 'Search orders by PO number.',
+    'weight' => 5,
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implementation of hook_permission().
+ */
+function uc_po_permission() {
+  return array(    
+    'pay by purchase order' => array(
+      'title' => t('pay by purchase order')
+    )
+  );
+}
+
+
+/**
+ * Implementation of hook_token().
+ */
+function uc_po_token($type, $tokens, array $data = array(), array $options = array()) {  
+  // Declare to the token module the value for the [po-number] token.
+  switch ($type) {
+    case 'order':
+      $values['po-number'] = $tokens->payment_details['po_number'];
+      break;
+  }
+  return $values;
+}
+
+/**
+ * Implementation of hook_token_alter().
+ */
+function uc_po_token_alter(array &$replacements, array $context) {
+  // When listing the available values for order tokens, include [po-number].
+  if ($context['type'] == 'uc_order') {
+    $tokens['uc_order']['po-number'] = t('The PO number for the order if one exists.');
+    //$replacements[$context['tokens']['title']]
+  }
+
+  return $tokens;
+}
+
+/*******************************************************************************
+ * Hook Functions (Ubercart)
+ ******************************************************************************/
+
+/**
+ * Implementation of hook_uc_message().
+ */
+function uc_po_uc_message() {
+  $messages['po_instructions'] = t('Enter your purchase order number in the field below.');
+
+  return $messages;
+}
+
+
+/**
+ * Implementation of hook_uc_order().
+ */
+function uc_po_uc_order($op, $order, $arg2) {
+  switch ($op) {
+	// Save the PO number to the database.
+    case 'submit':
+    case 'save':
+    
+    	$pattern = getHtmlEventPattern();
+    	$replacement = '$1$5';
+      if (isset($order->payment_method) && $order->payment_method == 'po') {
+        if(!empty($order->order_id)){
+        	if( preg_match($pattern, $order->payment_details['po_number']) ){
+        		$order->payment_details['po_number'] = preg_replace($pattern, $replacement, $order->payment_details['po_number']);
+        	}
+          //die($order->order_id .'gaja');
+          db_merge('uc_payment_po')
+            ->key(array('order_id' => $order->order_id))
+            ->updateFields(array(
+              'po_number' => $order->payment_details['po_number'] ? $order->payment_details['po_number']:'',
+            ))
+            ->insertFields(array(
+              'order_id' => $order->order_id,
+              'po_number' => $order->payment_details['po_number'] ? $order->payment_details['po_number']:'',
+            ))
+            ->execute();
+          if (!empty($order->payment_details)) {
+            _uc_po_save_po_data_to_order($order->payment_details, $order->order_id);
+          }
+        }
+      }
+      break;
+
+    // Load the PO number from the database.
+    case 'load':
+    	if (isset($order->payment_method) && $order->payment_method == 'po') {
+      	$order->payment_details['po_number'] = db_query("SELECT po_number FROM {uc_payment_po} WHERE order_id = :oid", array(':oid' =>$order->order_id))->fetchField();
+    	}
+      break;
+
+    // Delete the PO number from the database.
+    case 'delete':
+      db_query("DELETE FROM {uc_payment_po} WHERE order_id =" .$order->order_id);
+      break;
+  }
+}
+
+/**
+ * Saves a PO data array to an order's data array.
+ */
+function _uc_po_save_po_data_to_order($po_data, $order_id) {
+
+  // Load up the existing data array.
+  $data = db_query("SELECT data FROM {uc_orders} WHERE order_id = :id", array(':id' => $order_id))->fetchField();
+  $data = unserialize($data);
+  if($data['cc_data']){
+  	unset($data['cc_data']);
+  }
+  // Stuff the serialized and encrypted CC details into the array.
+  $data['po_data'] = serialize($po_data);
+
+
+  // Save it again.
+  db_update('uc_orders')
+    ->fields(array('data' => serialize($data)))
+    ->condition('order_id', $order_id)
+    ->execute();
+}
+
+/**
+ * Implementation of hook_uc_payment_method().
+ */
+function uc_po_uc_payment_method() {
+  // The if statement checks to see if the user has permission to pay by
+  // purchase order or if the user is browsing admin pages before telling
+  // Ubercart that the purchase order payment method exists.
+  // if (user_access('pay by purchase order') || arg(0) == 'admin') {
+    $methods['po'] = array(
+      // 'name' => t('Purchase Order'),
+      // 'title' => t('Purchase Order'),
+      'name' => 'Purchase Order',
+      'title' => t('Purchase Order'), //variable_get('uc_payment_method_po_label', t('LBL771')),
+      'desc' => t('Pay by purchase order.'),
+      'callback' => 'uc_payment_method_po',
+      'weight' => 4,
+      'checkout' => TRUE,
+      'backend' => TRUE,
+    );
+  //}
+
+  return $methods;
+}
+
+/**
+ * Implementatio of hook_theme().
+ */
+function uc_po_theme() {
+  return array(
+    'uc_payment_method_po_form' => array(
+      'render element' => 'form',
+    ),
+  );
+}
+
+
+/*******************************************************************************
+ * Callback Functions, Forms, and Tables
+ ******************************************************************************/
+
+function uc_payment_method_po($op, &$order, $form = NULL, &$form_state = NULL) {
+  switch ($op) {
+    // Displayed during checkout for the customer to enter a PO number.
+    case 'cart-details':
+      $details = uc_payment_method_po_form(array(), $form_state, $order);
+      return $details;     
+
+    // Handles receiving the data entered by the customer.
+    case 'cart-process':
+       if (!isset($form_state['values']['panes']['payment']['details']['po_number'])) {
+         return;
+       }
+      // Fetch the CC details from the $_POST directly.
+      $po_number = $form_state['values']['panes']['payment']['details'];
+      $order->payment_details = $po_number;
+      $po_number['po_number'] = str_replace(' ', '', $po_number['po_number']);
+      
+      //array_walk($po_number, 'check_plain');
+      // Make sure an owner value was entered.
+      if (empty($po_number['po_number'])) {
+        form_set_error('panes][payment][details][po_number', t('LBL1160'));
+        $return = FALSE;
+      }
+      return TRUE;
+
+    // Display the PO number on the order review page prior to submission.
+    case 'cart-review':
+       if (!_uc_checkout_pane_data('po', 'enabled')) {
+       	  $payIns = getPaymentInstructionMessage('cme_pmt_typ_por');
+       	  if($payIns){
+       	    $payIns = "<br><b>".t("LBL803").":</b> ".$payIns;
+       	  }
+          $review[] = array(
+          	'title' => t('LBL778'),      	
+            'data' => check_plain($order->payment_details['po_number']). $payIns,
+          );
+          return $review;
+       }
+    break;
+    // Display the PO number in the payment order pane.
+    case 'customer-view':
+    case 'order-view':
+      //return t('PO number: @po_number', array('@po_number' => $order->payment_details['po_number']));
+      return array('#markup' => t('PO number').': '.$order->payment_details['po_number']);
+
+    // Displayed on the order edit screen so admin can update the PO number.
+   case 'order-details':
+     $details = drupal_get_form('uc_payment_method_po_form', $order);
+     return uc_strip_form($details);
+
+    // Update the PO number when the order form is submitted.
+    case 'edit-process':
+      $changes = array();
+      $changes['payment_details']['po_number'] = check_plain($_POST['po_number']);
+      return $changes;
+
+    // Add a few PO related fields to the payment methods settings form.
+    case 'settings':
+     /* $form['uc_po_permission'] = array(
+        '#value' => '<div>'. t('To checkout using the purchase order payment method, users must have the permission setting to pay by purchase order.')
+                   .'<br />'. t('You can use account roles and permissions to give customers access to this payment method.') .'</div>',
+      );
+      $form['uc_po_instructions'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Purchase order instructions'),
+        '#description' => t('Enter instructions to appear in the payment details at checkout.'),
+        '#default_value' => variable_get('uc_po_instructions', uc_get_message('po_instructions')),
+      );*/
+      $form['uc_payment_method_po_label'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Label'),
+        '#default_value' => variable_get('uc_payment_method_po_label', t('Purchase Order')),
+        '#description' => t('Enter the label of this payment method as it should appear on the checkout form.'),
+      );
+      /*$form['uc_po_instructions'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Purchase order instructions'),
+        '#description' => t('Enter instructions to appear in the payment details at checkout.'),
+        '#default_value' => variable_get('uc_po_instructions', uc_get_message('po_instructions')),
+      );*/
+      return $form;
+  }
+}
+
+// Returns the form for users to enter or adjust a PO number.
+function uc_payment_method_po_form($form, &$form_state, $order) {
+  if (!isset($order->payment_details) && isset($form_state['values']['panes']['payment']['details'])) {
+    $order->payment_details = $form_state['values']['panes']['payment']['details'];
+    $order->payment_details['po_number'] = str_replace(' ', '', $order->payment_details['po_number']);
+  }
+
+  if (!isset($order->payment_details)) {
+    $order->payment_details = array();
+  }
+  $form['po_instructions'] = array(
+    '#markup' => '<div class="payment-instructions">'
+              //. variable_get('uc_po_instructions', uc_get_message('po_instructions'))
+              .getPaymentInstructionMessage('cme_pmt_typ_por')
+               .'</div>',
+  );
+  $form['po_number'] = array(
+    '#type' => 'textfield',
+    '#title' => t('PO number'),
+    '#default_value' => isset($order->payment_details['po_number']) ? $order->payment_details['po_number'] : '',
+    '#size' => 32,
+  );
+  $form['#theme'] = 'uc_payment_method_po_form';
+  return $form;
+}
+
+// Themes the PO entry form to be in a table with the appropriate CSS rules for
+// checkout and for the order edit screen.
+function theme_uc_payment_method_po_form($variables) {
+  $form = $variables['form'];
+  $form['po_number']['#title'] = '';
+  $table = 'order-edit-table';
+  $label = 'oet-label';
+
+  if (arg(0) !== 'admin') {
+    $output = drupal_render($form['po_instructions']);
+    $table = 'inline-pane-table';
+    $label = 'field-label';
+  }
+  $output .= '<table class="'. $table .'"><tr><td class="'. $label .'">'
+           . t('LBL778') .':</td><td style="width:75%;">'. drupal_render($form['po_number'])
+            .'</td></tr></table>';
+
+  return $output;
+}
+
+// Allow administrators to search orders by PO number.
+function uc_po_search_form($form, &$form_state, $po_number = '', $keys = '', $module = NULL, $prompt = NULL) {
+  // If a PO number was specified...
+  if (!empty($po_number)) {
+    $header = array(
+       array('data' =>t('Order ID')), 
+       array('data' =>t('PO Number'))
+    );
+    $rows = array();
+
+    // Query the database for any orders with a near-match of the PO number.
+   // $result = db_query("SELECT order_id, po_number FROM {uc_payment_po} WHERE po_number LIKE '%:po%'", array(':po' => $po_number));
+    $select = db_select('uc_payment_po','po');  
+    $select->addField('po','order_id');
+    $select->addField('po','po_number');  
+    $select->condition('po.po_number', '%' . db_like($po_number) . '%', 'LIKE');
+    $result = $select->execute()->fetchAll();
+
+    // Add a link to each order as a table row.
+    foreach ($result as $order) {
+      $rows[] = array(
+                  array('data' => l($order->order_id, 'admin/store/orders/'. $order->order_id)),
+                  array('data' => $order->po_number),
+                );
+    }
+    // Alert the user if no orders were found.
+    if (empty($rows)) {
+      $rows[] = array(
+                array('data' => t('No orders matched that PO number.'), 'colspan' =>2),
+                );      
+    }
+
+    $form['results'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Search returned the following results'),
+      '#collapsible' => TRUE,
+    );
+    $form['results']['table'] = array(
+      '#markup' => theme('table', array('header' => $header, 'rows' => $rows)),
+    ); 
+
+  }
+  
+
+  $form['po_number'] = array(
+    '#type' => 'textfield',
+    '#title' => t('PO number'),
+    '#default_value' => $po_number,
+    '#size' => 32,
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit'),
+  );
+  return $form;
+}
+
+function uc_po_search_form_submit($form, &$form_state) {
+  $form_state['redirect'] = 'admin/store/orders/po/'. urlencode($form_state['values']['po_number']);
+}
+

@@ -1,0 +1,236 @@
+.RegistrationContainer {
+	width:100%;
+	/*height:212px; INORDER TO AVOID SCROLL*/
+	overflow-y:scroll;
+	overflow-x:hidden;
+}
+.RegistrationTable {
+	width: 100%;
+	*width: 98%;
+	table-layout: fixed;
+}
+.RegistrationBox {
+	width:100%;
+	margin-bottom:10px;
+}
+.RegistrationTable tr td {
+	text-align:center;
+	font-size: 11px;
+}
+.RegistrationTopHeader {
+	background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/layoutBg.gif") repeat-x left -788px;
+	width:100%;
+	height:30px;
+}
+.RegistrationRow {
+	width:100%;
+	height:37px;
+	background: url('images/RegistrationRowBg1.png') repeat left bottom;
+}
+.SelectBtn {
+	height:37px;
+	background:url('images/Select_bg.png') repeat left top;
+	border-right:1px solid #868686;
+	text-align:center;
+	cursor:pointer;
+}
+.SelectActivebg {
+	height:37px;
+	background:  url('images/SelectActivebg1.png') repeat left bottom;
+	border-right:1px solid #868686;
+	cursor:pointer;
+}
+.DeliverTypeCell {
+	padding:0 0 0 0px;
+}
+.RegisterLaunchBtn {
+    border: 1px solid #454545;
+    background:#545454;
+    color: #D7D7D7;
+    padding: 2px 0px;
+    margin:0 2px;
+    text-align:center;
+}
+.RegBar {
+	border-right:1px solid #d7d7d7;
+}
+
+/* Accordion styles */
+.RegBox {
+	width:100%;
+/*	background: #d9d9d9; */
+	padding-bottom: 1px;
+}
+.RegCont {
+    background: #F2F2F2;
+    border: 1px solid #8f8f8f;
+	display: block;
+    padding:10px;
+    margin: 5px 2px 5px 63px;
+}
+*+html .RegCont {
+    background: #F2F2F2;
+    border-left: 1px solid #8f8f8f;
+    border-right: 1px solid #8f8f8f;
+    border-bottom: 1px solid #8f8f8f;
+    float: left;
+    padding:10px;
+    margin:0px 34px 0px 97px;
+    width: 83%;
+}
+
+.RegContList {
+	width:100%;
+	float:left;
+	padding:0px 0px 10px 0px;
+}
+.RegContTitle {
+	font-size:12px;
+	font-weight:bold;
+	text-align:left;
+	width: 100%;
+	padding:0 10px 0 0;
+}
+.RegTitle {
+    float: left;
+    margin-bottom: 10px;
+    width: 65%;
+    font-weight:normal;
+    text-align:left;
+}
+.RegStatus {
+	float: left;
+    width: 15%;
+    font-weight:bold;
+    text-align:left;
+}
+.RegLunchBtn {
+	float: left;
+	width: 15%;
+	text-align:left;
+}
+.RegistrationTable intpue{
+	margin-top: 2px;
+}
+/* Form Containers*/
+.RegFieldRow
+{
+	margin-top: 5px;
+}
+
+
+/* Start: Class Options more details */
+.COMoreDetailsMain {
+	width:100%;
+	margin-left:3px;
+	margin-right:3px;
+	float:left;
+	/*border: 3px solid red;*/
+}
+.COMoreDetailsLeftCol {
+ 	width:47%;
+ 	float:left;
+ 	margin-left:6px;
+ 	/*border: 2px solid green; */
+ }
+ .COMoreDetailsRightCol {
+ 	width:47%;
+ 	float:right;
+ 	margin-right:6px;
+ 	/* border: 2px solid green; */
+ }
+
+ .COMoreDetailsRow {
+ 	text-align:left;
+ 	width:320px;
+ 	float:left;
+ 	padding:2px;
+ 	/* border: 1px solid blue; */
+ }
+
+ .COMoreDetailsLabel {
+ 	padding:0 0px 0 0;
+ 	font-weight:bold;
+ 	width:100px;
+ 	float:left;
+ 	/* border: 1px solid gold; */
+ }
+
+ .COMoreDetailsColon {
+ 	padding:0 15px;
+ 	float:left;
+ 	/* border: 1px solid gold; */
+ }
+
+.COMoreDetailsValue {
+ 	width:184px;
+ 	float:left;
+ 	/*border: 1px solid gold;*/
+ }
+
+.COMoreDetailsDateTimeTable {
+	border:1px solid #AAAAAA;
+	width:95%;
+	height:10px;
+	margin:5px 6px 5px 0px;
+}
+
+.COMoreDetailsDateTimeTableHeader {
+	background-color:#EFEFEF;
+	font-weight:bold;
+}
+
+.COMoreDetailsDateTimeTableHeaderField1 {
+	width:30%;
+}
+
+.COMoreDetailsDateTimeTableHeaderField2 {
+	width:30%;
+}
+
+.COMoreDetailsDateTimeTableHeaderField3 {
+	width:40%;
+}
+
+.COMoreDetailsDateTimeTableOddRow {
+	background-color:#FFFFFF;
+}
+
+.COMoreDetailsDateTimeTableEvenRow {
+	background-color:#777777;
+}
+
+.COMoreDetailsDateTimeTableRow {
+	font-size:11px;
+}
+
+.COMoreDetailsAttachmentsLabel {
+	color:#C40000;
+	cursor:pointer;
+	font-weight:bold;
+	font-style:italic;
+	float:left;
+	width:100%;
+	/* border: 1px solid pink;*/
+}
+
+.COMoreDetailsNoAttachmentMsg {
+	margin:5px;
+	float:left;
+	width:100%;
+	/* border: 1px solid pink;*/
+}
+
+.COMoreDetailsAttachmentLink {
+	color:#285EA6;
+	cursor:pointer;
+	margin:5px;
+	float: left;
+	width:100%;
+	/* border: 1px solid pink; */
+}
+.rt-searchrst-div
+{
+	background-color: #e5f6fe;
+}
+/* End: Class Options more details */

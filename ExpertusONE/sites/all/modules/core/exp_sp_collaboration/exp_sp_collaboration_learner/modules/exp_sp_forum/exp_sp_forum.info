@@ -1,0 +1,9 @@
+name = Expertus Forum
+description = Responsible for forum.
+package = ExpertusONE Forum
+dependencies[] = exp_sp_learning
+dependencies[] = forum
+testing_api = 2.x
+files[] = tests/exp_sp_forum.test
+version = VERSION
+core = 7.x

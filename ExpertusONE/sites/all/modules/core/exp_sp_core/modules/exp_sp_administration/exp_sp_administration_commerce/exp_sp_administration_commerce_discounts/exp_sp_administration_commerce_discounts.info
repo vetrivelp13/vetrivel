@@ -1,0 +1,12 @@
+name = Commerce Discounts Details Administration 
+description = Responsible for commerce discount administration.
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration_commerce
+dependencies[] = uc_discounts
+testing_api = 2.x
+files[] = exp_sp_administration_commerce_discounts.inc
+files[] = tests/exp_sp_administration_discount.test
+files[] = tests/exp_sp_administration_discount_create.test
+files[] = tests/exp_sp_administration_discount_update.test
+version = VERSION
+core = 7.x

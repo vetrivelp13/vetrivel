@@ -1,0 +1,13 @@
+name = Expertus Meetings
+description = Enables universities and colleges to deliver a high-quality learning experience.
+package = ExpertusONE Meetings
+core = 7.x
+
+configure = admin/config/media/expertusmeeting
+
+; Information added by drupal.org packaging script on 2012-04-10
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "Expertus Meetings"
+datestamp = "1334016324"
+

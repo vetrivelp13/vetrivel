@@ -1,0 +1,387 @@
+/* Common styles Start */
+/* Common styles End */
+
+
+/* Home Page Widgets Start */
+/* Home Page Widgets End */
+
+/* Course/Class/Tp Details Start */
+/* Course/Class/Tp Details End */
+
+
+/* Sign In styles Start */
+.ctool-login-modal .theme-ctool-popup .my-login-frm .single-req-pwd-form-wrapper {
+  padding-left: 134px
+}
+#my-login-container .login-admin-save-button-container .saml-signin{
+  right:12px
+}
+div.saml-helptext {
+  right:125px
+}
+/* Sign In styles End */
+
+
+/* Register styles Start */
+/* Register styles End */
+
+
+/* Forget Password styles Start */
+/* Forget Password styles End */
+
+
+/* Account styles Start */
+.page-learning-my-account #page-container .my-account-wrapper .form-select{
+  width:313px
+}
+#exp-sp-my-account-shopping-cart-form .ui-jqgrid #account-pager.ui-jqgrid-pager {
+  height:22px
+}
+/* Account styles End */
+
+
+/* Catalog styles Start */
+#block-exp-sp-lnrsearch-tab-find-training #paintContent .find-trng-sortby .sort-by-links {  left: -26px }
+#lnr-catalog-search #pager_center .ui-pg-table{
+ min-width:194px	
+}
+/* Catalog styles End */
+
+/* Profile styles Start */
+.page-learning-my-profile #activity-pager_center .ui-pg-table, #userdetailsactivity-pager_center .ui-pg-table {
+  min-width: 200px;
+}
+#my_transcript_loader .my-transcript-inner #my_transcript_pager #my_transcript_pager_center .ui-pg-table {
+  min-width:190px
+}
+/* Profile styles End */
+
+/* Discussions styles Start */
+#page-container #frm-paint-content #discuss-frm-sort-display .sort-by-links{
+    left: -54px
+}
+#page-container #forum-list-display .forumListResultsPaintInfo .learner-forum-action-type .learner-forum-action-link{
+	height:45px;
+  	line-height:14px;
+  	padding-top:8px;
+  	white-space:normal
+}
+.page-learning-forum-topic-list #page-container .admin-forum-topic-detail-action-btn .admin-forum-add-topic-list .addedit-form-cancel-container-actions{
+  width:153px
+}
+/* Discussions styles End */
+
+/* Team styles Start */
+#my-team-dialog .title-mandatory-clr{
+  margin-top:0
+}
+#my-team-dialog .expertusV2PopupContainer .ui-dialog-title{
+  font-size:12px
+}
+.myteam-cat-delivery-type{
+  font-size:11px
+}
+/* Team styles End */
+
+
+/* Shopping Cart styles Start */
+#page-container .region-sidebar-widget-bg .commerce-container-v2 .shoppingcart-hdr-v2 .cart-step-region div{
+  padding:0 7px 5px 7px;
+  font-size:11px;
+}
+#page-container .region-sidebar-widget-bg .commerce-container-v2 .shoppingcart-hdr-v2 .cart-step-region .cart-step{
+  font-size:11px
+}
+/* Shopping Cart styles End */
+
+
+/* My Learning(My Enrollments) styles Start */
+/*
+.page-learning-enrollment-search #page-container .enroll-sort-by-container #sort-by-enroll,
+.page-learning-enrollment-search #page-container .enroll-sort-by-container #sort-by-lp-enroll,
+.page-learning-enrollment-search #page-container .instructor-sort-by-container #sort-by-instructor {
+  background-position-x: 97px
+}*/
+#narrow-search-results-pager_center .ui-pg-table,#pager_center .ui-pg-table,
+#activity-pager_center .ui-pg-table, #userdetailsactivity-pager_center .ui-pg-table,
+#pager-lp_center .ui-pg-table,
+.my-transcript-inner #my_transcript_pager #my_transcript_pager_center .ui-pg-table,
+#instructor-result-container #pager-ins_center .ui-pg-table{
+  min-width:200px;
+}
+/* My Learning(My Enrollments) styles End */
+
+
+/* My Learning(My Programs) styles Start */
+#page-container #div_my_transcript .my-transcript-inner #my_transcript_pager #my_transcript_pager_center .ui-pg-table {
+  margin-right: 10px
+}
+/* My Learning(My Programs) styles End */
+
+
+/* My Learning(My Classes) styles Start */
+.page-learning-enrollment-search #page-container  #paintInstructorResults .paint-mark-completion .enroll-launch-full{
+  margin-left:0
+}
+.expertusV2PopupContainer #mark-complete-wizard .require-text{
+  margin-left:-7px
+} 
+/* My Learning(My Classes) styles End */
+
+/* My Learning(My Transcripts) styles Start */
+/* My Learning(My Transcripts) styles End */
+
+/* My Learning(My CalEndar) styles Start */
+#page-container #catalog-admin-cal-legend .cal-legent-td .mycalendar-class-types{
+  display:inline;
+  font-size:11px
+}
+#catalog-admin-cal-legend .cal-legent-td{
+  float:left;
+  width:auto
+}
+/* My Learning(My CalEndar) styles End */
+
+
+/* Chat styles Start */
+/* Chat styles End */
+
+
+/* Learning(Course/Class) styles Start */
+/*input.attach-browse-hid {
+  left:74px
+}
+.qtip-content #bubble-face-table #attachment-addedit-form-html input.attach-browse-hid {
+  left:67px
+}
+#program-tp-basic-addedit-form-container #attachment-addedit-form-html input.attach-browse-hid {
+  left:91px
+}*/
+#catalog-class-basic-addedit-form-container #add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper #session_meeting_id {
+  width:100px
+}
+/* .page-administration-learning-catalog .theme-ctool-popup .addedit-new-field-two-col .crs-compliance-dropdown .expertus-dropdown-icon,
+.page-administration-learning-catalog .theme-ctool-popup .addedit-new-field-two-col .expertus-dropdown-bg.crs-compliance-dropdown {
+  width:110px
+} */
+/* Learning(Course/Class) styles End */
+
+/* Learning(Training Plan) styles Start */
+
+/* Learning(Training Plan) styles End */
+
+
+/* People(User) styles Start */
+/* .page-administration-people-user #admin-data-grid .ui-jqgrid-toppager .ui-pg-table{
+  right:166px
+} */
+#admin-data-grid .user-enrollment-div-cls .narrow-text-search{
+  z-index:100
+}
+#admin-data-grid .user-enrollment-div-cls .ac_input{
+  z-index:99
+}
+.page-administration #group-control #autoimg{
+  right:12px;
+  top:-22px
+}
+.page-administration #page-container .narrow-search-sortbar-sortlinks{left:-16px}
+/* People(User) styles End */
+
+/* People(Organization) styles Start */
+.page-administration-people-organization #organization-addedit-form .catalog-pub-add-list{width:99px}
+/* People(Organization) styles End */
+
+/* People(Groups) styles Start */
+.page-administration-people-group #catalog-class-addedit-form-details #add-class-list-wrapper #search-dropdwn-list-class{width:150px}
+.page-administration-people-group #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class,
+.page-administration-people-group #catalog-class-addedit-form-details #add-class-list-wrapper #select-list-class-dropdown-list li{
+ width:114px
+}
+.page-administration-people-group #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper #search-dropdwn-list-class{width:147px}
+.page-administration-people-group #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class{width:115px;text-align:left}
+.page-administration-people-group #narrow-search-results-holder #bubble-face-table #add-user-role-page.assigned-users-grps .addedit-edit-username-search-autocomplete {
+  width: 145px
+}
+.page-administration-people-group #role-detail-wrapper #add-user-role-page #add-class-list-wrapper .admin_class_ac_input_mainform{
+  width:155px
+}
+.page-administration-people-group #security-role-detail-wrapper #catalog-class-addedit-form-details #add-class-list-wrapper #search-addusers{
+  right:0
+}
+.page-administration-people-group #role-detail-wrapper #add-user-role-page #add-class-list-wrapper .filter-search-start-date-right-bg{
+  margin-right: 17px;
+}
+/* People(Groups) styles End */
+
+/* People(settings) styles Start */
+.page-administration-people-setup #page-container .narrow-search-results-item-details{
+  margin-top:5px
+}
+#addedit-listvalues-detail-wrapper .addedit-new-field-title {
+  padding-top:3px
+}
+.page-administration-people-setup #list-values-addedit-form-details .disable-delete-icon,
+.page-administration-people-setup #list-values-addedit-form-details .delete-class-button{
+  margin-top:0
+}
+/* People(settings) styles End */
+
+/* Survey/Assessment styles Start */
+input.layout-add-edit-button{
+  width:78px
+}
+/* Survey/Assessment styles End */
+
+/* Manage(Content) styles Start */
+#modal-content #content-addedit-form .addedit-new-field-two-col .addedit-edit-dropdown {
+  width: 179px
+}
+.page-administration-manage #page-container #page-wrapper .AdminsublinktabNavigation li a span span{
+  font-size:10px
+}
+/* Manage(Content) styles End */
+
+
+/* Manage(Location) styles Start */
+#location-basic-addedit-form-container .addedit-new-field-title {
+    margin-top:-2px
+}
+.page-administration #page-container .narrow-search-sortbar-sortlinks{left:-16px}
+/* Manage(Location) styles End */
+
+
+/* Manage(Banner) styles Start */
+#ctools-face-table #banner-basic-addedit-form  .addedit-form-wrapper  .mro-wrapper #access-search-list-class-title-keyword{
+  left:28px
+}
+#banner-basic-addedit-form .addedit-left-col{
+  width:97.2%
+}
+/* Manage(Banner) styles End */
+
+
+/* Manage(Notification/Certificate) styles Start */
+/* Manage(Notification/Certificate) styles End */
+
+/* Manage(Announcement) styles Start */
+/* Manage(Announcement) styles End */
+
+/* Commerce(Order) styles Start */
+#admin-data-grid .discount-grid-wrapper .trainings-view-grid .ui-pager-control .ui-pg-table{
+  min-width:165px
+}
+.page-administration-order-create #select-order-dialog #add_product_form_wrapper #admin-data-grid #admin_product_addorder_container .select-list-dropdown {
+  width: 135px
+}
+.page-administration-order-create #select-order-dialog #add_product_form_wrapper #admin-data-grid #admin_product_addorder_container  #search-dropdwn-list{
+  width: 160px
+}
+.page-administration-commerce.page-administration-commerce-order .mro-wrapper #access-select-list-class-dropdown-list li{
+  min-width:110px
+}
+.page-administration-commerce.page-administration-commerce-order .mro-wrapper #access-select-list-class-dropdown-list{
+  left:-4px
+}
+.page-administration-commerce-order #page-container #narrow-search-results-holder .catalog-pub-add-list,
+.page-administration-commerce-order #page-container #narrow-search-results-holder .narrowsearch-pub-add-list{
+  right:14px
+}
+.page-administration-order #page-container .shoppingcart-hdr-v2 .cart-step-region div{
+  padding-left:0
+}
+.page-administration-order-finish #page-container .shoppingcart-hdr-v2 .cart-step-region .cart-step,
+.page-administration-order-pay #page-container .shoppingcart-hdr-v2 .cart-step-region .cart-step{
+  padding-left:5px
+}
+.page-administration-order #admin_order .order-method-title{
+  width:130px
+}
+/* Commerce(Order) styles End */
+
+
+/* Commerce(Discount) styles Start */
+.page-administration-commerce-discounts #admin-data-grid .ui-jqgrid-toppager .ui-pg-table{
+  right:11px
+}
+.discount-grid-wrapper .ui-jqgrid-hdiv .ui-jqgrid-htable input.multiselect-selectall{
+  margin-left:-10px;
+  position:relative;
+  left:-5px
+}
+/* Commerce(Discount) styles End */
+
+/* Commerce(Tax) styles Start */
+.page-administration-commerce-tax #catalog-question-basic-addedit-form .admin-save-pub-unpub-button-container .edit-catalog-course-save-publish,
+.page-administration-commerce-tax .pub-unpub-only-save-btn{
+  float:none
+}
+/* Commerce(Tax) styles End */
+
+/* Commerce(Settings) styles Start */
+.page-administration-commerce.page-administration-commerce-setting #commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-twocol-secondcol .addedit-new-field-title{
+  width:80px;
+  font-size:11px;
+  padding-left:2px;
+  padding-right:2px
+}
+#commerce-cc-settings-form-wrapper .commerce-cc-settings-form .ui-multiselect {
+  min-width: 120px;
+  max-width: 120px
+}
+/* Commerce(Settings) styles End */
+
+
+/* site settings style starts*/
+/* site settings style ends*/
+
+/* Reports styles Start */
+#report-add-wizard #report_criteria_form .narrow-filter-fields-conatiner .bubble-modifier-container {
+    width:320px
+}
+/* Reports styles End */
+
+/*Start SalesForce Style */
+#innerWidgetTagEnroll #page-container #paintReportsContent .narrow-search-sortbar-sorttext{
+   background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 95px -466px;
+}
+/*End SalesForce Style */
+
+/* Reserved Block CSS Start - Here we can create a new block CSS styles*/
+/* Reserved Block CSS End */
+
+/*Start title restriction style*/
+.fade-out-title-container.cart-order-billing-name-fadeout-container {
+    max-width: 210px
+}
+.fade-out-title-container.cart-order-user-name-fadeout-container {
+  max-width: 220px
+}
+.page-learning-myteam-search .fade-out-title-container.myteam-compliance-course-title-fadeout-container{
+  max-width:338px 
+}
+.page-learning-myteam-search .fade-out-title-container.myteam-mandatory-course-title-fadeout-container{
+  max-width:310px 
+}
+.page-learning-myteam-search .fade-out-title-container.myteam-recommended-course-title-fadeout-container{
+  max-width:337px 
+}
+/*End title restriction style*/
+.page-learning-forum-list .search-pagination-right {
+	font-family:ProximaNovaBold, Arial;
+    font-size:11px
+}
+.page-learning-my-profile  #learner-myskill-details #myskill-parent .prof-parent{
+  width:174px
+}
+body.page-learning.page-learning-myteam-search table#paintContentResults .top-record-div-left{
+  width:270px
+}
+#program-tp-basic-addedit-form-container .tp-enroll-list-statistics-count{
+	bottom:-10px;
+}
+/*Salesforce Settings*/
+#sfserver-basic-addedit-form .addedit-form-cancel-container-actions{
+	width: 154px;
+  }
+/*End of Salesforce*/

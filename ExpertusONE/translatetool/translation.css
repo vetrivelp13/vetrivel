@@ -1,0 +1,131 @@
+.dataTables_empty
+ {
+    display:none;
+ }
+  .loadercontent
+  {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/spacer.gif") repeat;
+  opacity:.8;
+  position:absolute;
+  z-index:98;
+  filter:Alpha(Opacity=80);
+  text-align:center
+}
+.loaderimg {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/loader.gif") no-repeat 50% 50%;
+  height:60px;
+  text-align:center;
+  width:60px;
+  z-index:99;
+  vertical-align:middle;
+  margin:0 auto
+}
+
+#throw
+{
+    background: linear-gradient(#fefefe,#ebebeb);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#fefefe', endColorstr='#ebebeb');
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#fefefe, endColorstr=#ebebeb)";
+    text-align: left;
+    padding: 0 2px 0 0;
+    border: 1px solid #e5e5e5;
+    border-width: 1px 1px 0 0;
+    height:35px;
+}
+
+#throw th
+{
+    border-bottom:0px;
+    border-right:1px solid #d3d3d3;
+}
+.dataTables_filter 
+{ 
+    display:none;
+    padding-bottom:20px;
+}
+
+.header
+{
+
+    font-family:openSansRegular, Arial;
+    font-size:12px;
+ }
+.dataTables_info
+{
+    display:none;
+}
+
+#my-example{
+    border:1px SOLID #ddd;
+}
+.dataTables_processing
+{
+    display:none;
+}
+table.dataTable tr th
+{
+    color:#474747;
+    font-size:12px;
+    font-family:ProximaNovaBold, Arial;
+    text-transform:uppercase;
+    text-align:left;
+}
+
+
+.dataTables_filter label
+{
+    font-family:openSansRegular, Arial;
+    font-size:12px;
+}
+table.dataTable tr.odd td{
+    font-family:openSansRegular, Arial;
+    color:rgb(71, 71, 71);
+    font-size:12px;
+    vertical-align:top;
+}
+
+table.dataTable tr.even td{
+    font-family:openSansRegular, Arial;
+    color:rgb(71, 71, 71);
+    font-size:12px;
+    vertical-align:top;
+}
+
+
+table.dataTable tr.odd td.sorting_1{ background-color: white !important; }
+table.dataTable tr.even td.sorting_1{ background-color: #E5E5E5  !important; }
+table.dataTable tr.odd { background-color: white  !important;} 
+table.dataTable tr.even { background-color: rgb(247, 247, 247)  !important;} 
+
+.save-button
+{
+    font-family: ProximaNovaBold, Arial;
+    font-size: 12px;
+    color: #FFF;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 16px;
+    background: #27245E;
+    margin: 0;
+    border: 1px solid #27245E;
+    border-radius: 6px;
+    padding: 3px 6px 2px;
+    float: left;
+    cursor: pointer;
+}
+
+.textbox
+{
+    border: 1px solid #E5E5E5;
+    border-radius: 10px;
+    padding-left: 2px;
+    font-size: 12px;
+    width:110px;
+}
+
+.trans_error
+{
+	border:1px solid #FC4646;
+}
+
+

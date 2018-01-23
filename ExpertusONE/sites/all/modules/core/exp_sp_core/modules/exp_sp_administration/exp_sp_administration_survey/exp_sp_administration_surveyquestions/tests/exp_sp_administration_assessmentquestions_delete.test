@@ -1,0 +1,81 @@
+<?php 
+
+class AdministrationAssessmentQuestionDeleteBase extends AdministrationAssessmentQuestionTestHelper
+{
+	public function deleteAssessmentQuestionTestCase($scope = 'all'){
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['assessmentQuestionDelete'];
+		} else {
+			$testCases = array($this->testcases['assessmentQuestionDelete'][$scope]);
+		}
+		
+		foreach($testCases as $test){
+			$assessmentTitle = $this->getAssessmentQuestionTitle($test['id']);
+			debug("AssessmentQuestions name to delete: " . $assessmentTitle);
+	
+			//drupalPost($path, $edit, $submit, $options, $headers, $form_html_id);
+			$assessmentId = $test['id'];
+			$deletePath = 'ajax/admincore/deleteprocessobject/' . $assessmentId . '/SurAssQues';
+			$out = $this->drupalPost($deletePath, array(), t('Delete'));
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+	
+			$assessmentStatus = $this->getAssessmentQuestionStatus($test['id']);
+			debug("AssessmentQuestions status : " . $assessmentStatus);
+		}
+	
+	}
+}
+
+class AdministrationAssessmentQuestionDeleteAll extends AdministrationAssessmentQuestionDeleteBase
+{
+public static function getInfo() {
+		return array(
+				'name' => 'Administration - AssessmentQuestions - Delete - AllTest',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1402 - Administration - Assessment - AssessmentQuestions - Delete',
+		);
+	}
+
+	public function testAssessmentQuestionsDeleteAll() {
+		$this->deleteAssessmentQuestionTestCase('all');
+		$this->manageAdminAssessmentQuestions();
+	}
+}
+
+class AdministrationAssessmentQuestionDeleteCase1 extends AdministrationAssessmentQuestionDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - AssessmentQuestions - Delete - Case 1',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1402 - Administration - Assessment - AssessmentQuestions - Delete',
+		);
+	}
+
+	public function testAssessmentQuestionsDeleteCase1() {
+		debug('testAdminAssessmentQuestionsListCase1 called');
+		$this->deleteAssessmentQuestionTestCase('st_case1');
+		$this->manageAdminAssessmentQuestions();
+	}
+}
+
+class AdministrationAssessmentQuestionDeleteCase2 extends AdministrationAssessmentQuestionDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - AssessmentQuestions - Delete - Case 2',
+				'description' => 'Module : exp_sp_administration_people',
+				'group' => '1402 - Administration - Assessment - AssessmentQuestions - Delete',
+		);
+	}
+
+	public function testAssessmentQuestionsDeleteCase2() {
+		debug('testAdminAssessmentQuestionsListCase1 called');
+		$this->deleteAssessmentQuestionsTestCase('st_case2');
+		$this->manageAdminAssessmentQuestions();
+	}
+}
+
+?>

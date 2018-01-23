@@ -1,0 +1,358 @@
+<?php
+
+/**
+ * Implementation of hook_init().
+ */
+function exp_sp_administration_learning_init() {
+	try {
+		$request_uri = request_uri();
+	if(	stripos(request_uri(),'administration/learning')!==false || 
+		stripos(request_uri(),'administration/people/role')!==false || 
+		stripos(request_uri(),'administration/manage/content')!==false || 
+		stripos(request_uri(),'administration/contentauthor/video')!==false  ||
+		stripos(request_uri(),'administration/contentauthor/presentation')!==false  || 
+		stripos(request_uri(),'administration/manage/notification_template')!==false  || stripos(request_uri(),'administration/manage/certificate')!==false){
+		
+	  global $theme_key;
+	  $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+	  $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+	  drupal_add_js(drupal_get_path('module', 'exp_sp_administration_learning') . '/jquery.jscrollpane.js', $js_module_optional);
+	  drupal_add_js(drupal_get_path('module', 'exp_sp_administration_learning') . '/mwheelIntent.js', $js_module_optional);
+	  drupal_add_js(drupal_get_path('module', 'exp_sp_administration_learning') . '/exp_sp_administration_learning.js', $js_module_optional);
+	  if($theme_key == 'expertusoneV2') {
+	  	drupal_add_css(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_learning_v2.css', $css_theme_optional);
+	  }else{
+	  	drupal_add_css(drupal_get_path('module', 'exp_sp_administration_learning') .'/exp_sp_administration_learning.css', $css_theme_optional);
+	  }
+	  if(getConfigValue('wbt_content_launch_style') == 1) {
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM-API-WRAPPER-MODAL.js', $js_module_optional);
+	  } else {
+	  	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM-API-WRAPPER.js', $js_module_optional);
+	  }
+	  drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM12-LMS-API.js', $js_module_optional);
+	  drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner').'/js/exp_sp_registrationdetail/SCORM2004-LMS-API.js', $js_module_optional);
+	}
+  } catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_learning_init', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function exp_sp_administration_learning_menu() {
+try {
+  $items = array();
+		
+    $items['administration/learning'] = array(
+    'title' => t('Learning'),
+    'page callback' => 'empty_value',
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK
+    );
+    
+  $items['administration/learning/tags/tags-autocomplete'] = array(
+    'title' => 'Tags',
+    'page callback' => 'getTagsAutoComplete',
+    'page arguments' => array(3),
+    'access callback' => 'user_access',
+    'access arguments' => array('expertus learner'),
+    'type' => MENU_CALLBACK,
+    //'file path' => drupal_get_path('module','exp_sp_administration_learning'),
+    'file' => 'exp_sp_administration_learning.inc',
+  );     
+ 
+  $items['administration/learning/instructor/instructor-autocomplete'] = array(
+    'title' => 'Instructor Autocomplete',
+    'page callback' => 'getInstructorAutoComplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_learning.inc',   
+  );  
+  
+  $items['administration/learning/instructor/instructor-autocomplete-withoutid'] = array(
+    'title' => 'Instructor Autocomplete Without Id',
+    'page callback' => 'getInstructorAutoCompleteWithoutId',
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_learning.inc',   
+  );   
+  
+  $items['administration/learning/survey-assessment/autocomplete'] = array( 
+    'title' => 'Survey Autocomplete',
+    'page callback' => 'getSurveyAssessmentAutoComplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file path' => drupal_get_path('module','exp_sp_administration_learning'),
+    'file' => 'exp_sp_administration_survey_assessment.inc',
+    );
+
+  $items['administration/learning/survey/autocomplete'] = array( 
+    'title' => 'Survey Autocomplete',
+    'page callback' => 'getSurveyAutoComplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file path' => drupal_get_path('module','exp_sp_administration_learning'),
+    'file' => 'exp_sp_administration_survey.inc',
+    );    
+
+  $items['administration/learning/assessment/autocomplete'] = array( 
+    'title' => 'Survey Autocomplete',
+    'page callback' => 'getAssessmentAutoComplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file path' => drupal_get_path('module','exp_sp_administration_learning'),
+    'file' => 'exp_sp_administration_assessment.inc',
+    );    
+    
+    $items['administration/learning/wbt-content/autocomplete'] = array( 
+    'title' => 'Content Autocomplete',
+    'page callback' => 'getContentAutoComplete',
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file path' => drupal_get_path('module','exp_sp_administration_learning'),
+    'file' => 'exp_sp_administration_content_details.inc',
+    );
+    
+  $items['administration/catalog-promote/%ctools_js/%/%/%'] = array(
+    'title' => 'Catalog control',
+    'page callback' => 'catalog_promote_action',
+    'page arguments' => array(2,3,4,5),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_promote.inc'
+  );
+  
+  $items['administration/multiselect-grid/%/%/%/%/%/%'] = array(
+    'title' => 'Data Grid List',
+    'page callback' => 'loadCtoolDataGridType',
+    'page arguments' => array(2,3,4,5,6,7),
+    'access callback' => 'user_access',
+    'access arguments' => array('expertus learner'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_learning.inc'
+  );
+  
+  $items['administration/exportoption/%/%/%/%/%/%/CSV'] = array(
+    'title' => 'Data Grid List',
+    'page callback' => 'fetchEnrollUserList',
+    // There seems a limit to number of page arguments.
+    // Using page argument 5 to pass the search type when this menu path is invoked from class roster export to xls
+    'page arguments' => array(2,3,4,5,6,7,8),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_learning.inc'
+  );
+  
+  
+  $items['administration/tpexportoption/%/%/%/%/%/CSV'] = array(
+    'title' => 'Export Data Grid User List',
+    'page callback' => 'fetchEnrollTPUserList',
+    // Using page argument 4 to pass the search type when this menu path is invoked from tp roster export to xls
+    'page arguments' => array(2,3,4,5,6,7),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+  );  
+  $items['administration/tprecertify/%/%/%/%'] = array(
+    'title' => 'Export Data Grid Recertify',
+    'page callback' => 'fetchEnrollmentHistory',
+    'page arguments' => array(2,3,4,5),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_tp_register.inc',
+  );  
+  
+/*  $items['administration/multiselect-grid/add/%/%/%/%'] = array(
+    'title' => 'Data Grid Add',
+    'page callback' => 'multiselectEntityAssociate',
+    'page arguments' => array(3,4,5,6),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_learning.inc'
+  );*/
+  
+  $items['administration/multiselect-grid/edit-option-save/%/%'] = array(
+    'title' => 'Data Grid Edit and Save',
+    'page callback' => 'gridEditOptionSave',
+    'page arguments' => array(3,4),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_learning.inc'
+  );
+  
+  $items['administration/multiselect-grid/delete/%/%/%/%'] = array(
+    'title' => 'Data Grid Delete',
+    'page callback' => 'multiselectEntityDeleteAssociate',
+    'page arguments' => array(3,4,5,6),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_learning.inc'
+  );
+  $items['administration/sequence-drag-drop/%/%'] = array(
+    'title' => 'Sequence Ordering',
+    'page callback' => 'sequenceDragDrop',
+    'page arguments' => array(2,3),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_learning.inc'
+  );
+  $items['administration/update-custom-fields/%/%'] = array(
+    'title' => 'Updating Custom Fields',
+    'page callback' => 'updateCustomFieldsById',
+    'page arguments' => array(2,3),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_learning.inc'
+  );
+  $items['ajax/administration/getClassStartDate/%'] = array(
+    'title' => 'Updating Custom Fields',
+    'page callback' => 'getClassStartDate',
+    'page arguments' => array(3),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file path' => drupal_get_path('module','exp_sp_administration_catalog'),
+    'file' => 'exp_sp_administration_catalog.inc'
+  );
+  
+  //Add menu for get Session Start and End Dates. Ref Ticket: 0023408
+  $items['ajax/administration/getSessionStartEndDates/%'] = array(
+    'title' => 'Start and End Session Dates',
+    'page callback' => 'getSessionStartEndDates',
+    'page arguments' => array(3),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file path' => drupal_get_path('module','exp_sp_administration_catalog'),
+    'file' => 'exp_sp_administration_catalog.inc'
+  );
+  
+  $items['administration/catalog-class-enroll/%/%/%'] = array(
+    'title' => 'Catalog Class Enrollment',
+    'page callback' => 'catalog_enroll_display',
+    'page arguments' => array(2,3,4),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+	'file path' => drupal_get_path('module', 'exp_sp_administration_catalog'),
+    'file' => 'exp_sp_administration_catalog_class.inc',
+  ); 
+  
+  $items['administration/training-plan-enroll/%/%'] = array(
+    'title' => 'Training PLan Enrollment',
+    'page callback' => 'training_plan_enroll_display',
+    'page arguments' => array(2,3),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+	'file path' => drupal_get_path('module', 'exp_sp_administration_program'),
+    'file' => 'exp_sp_administration_program.inc',
+  );
+   $items['administration/training-plan-enroll/recertify-history/%/%/%'] = array(
+    'title' => 'Training PLan Enrollment',
+    'page callback' => 'training_plan_enroll_recertify_history',
+    'page arguments' => array(3,4,5),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+	'file path' => drupal_get_path('module', 'exp_sp_administration_program'),
+    'file' => 'exp_sp_administration_program.inc',
+  );
+  $items['administration/meeting-details/%/%'] = array(
+    'title' => 'Meeting Details - Virtual Class',
+    'page callback' => 'meeting_detail_virtual_class',
+    'page arguments' => array(2,3),
+    'access callback' => 'user_access',
+  	'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_session_details.inc',
+  );
+  $items['administration/role-users/%/%'] = array(
+    'title' => 'Role Users List',
+    'page callback' => 'exp_sp_administration_groups_attaching_user_form',
+    'page arguments' => array(2,3),
+    'access callback' => 'user_access',
+    'access arguments' => array('Learning Admin Perm'),
+    'type' => MENU_CALLBACK,
+	'file path' => drupal_get_path('module', 'exp_sp_administration_groups'),
+    'file' => 'exp_sp_administration_groups.inc',
+  );
+  
+  $items['administration/enrollment/exempted/%/%/%/%/%'] = array(
+  		'title' => 'Enrollment exempted by Admin',
+  		'page callback' => 'roster_enrollment_exempted',
+  		'page arguments' => array(3,4,5,6,7),
+  		'access callback' => 'user_access',
+  		'access arguments' => array('Learning Admin Perm'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_administration_learning.inc',
+  );
+  
+  $items['ajax/exempted-save/%/%/%/%'] = array(
+  		'title' => 'Enrollment exempted save',
+  		'page callback' => 'roster_enrollment_exempted_save',
+  		'page arguments' => array(2,3,4,5),
+  		'access callback' => 'user_access',
+  		'access arguments' => array('Learning Admin Perm'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_administration_learning.inc',
+  );
+  
+  $items['administration/enrollment/exempted/view/%/%/%/%'] = array(
+  		'title' => 'Enrollment exempted by Admin',
+  		'page callback' => 'roster_enrollment_exempted_details',
+  		'page arguments' => array(4,5,6,7),
+  		'access callback' => 'user_access',
+  		'access arguments' => array('Learning Admin Perm'),
+  		'type' => MENU_CALLBACK,
+  		'file' => 'exp_sp_administration_learning.inc',
+  ); 
+  
+  $items['administration/survey/sharelink/%/%/%'] = array( 
+		'title' => 'Survey Sharelink',
+		'page callback' => 'getSurveyShareLink',
+		'page arguments' => array(3,4,5),
+		'access callback' => 'user_access',
+		'access arguments' => array('Learning Admin Perm'),
+		'type' => MENU_CALLBACK,
+		'file path' => drupal_get_path('module','exp_sp_administration_learning'),
+		'file' => 'exp_sp_administration_survey.inc',
+  );
+  return $items;
+  } catch (Exception $ex) {
+  	watchdog_exception('exp_sp_administration_learning_menu', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_administration_learning_permission() {
+	try {
+    return array(    
+    'Learning Admin Perm' => array(
+      'title' => t('Learning Admin Perm')
+    )
+  );
+    } catch (Exception $ex) {
+    	watchdog_exception('exp_sp_administration_learning_permission', $ex);
+    	expertusErrorThrow($ex);
+    }
+} 
+
+?>

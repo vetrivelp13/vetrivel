@@ -1,0 +1,201 @@
+<?php 
+
+class AdministrationNotificationTemplateTestHelper extends AdministrationNotificationTestHelper {
+	private $searchResultContent=null;
+	
+	protected $testcases = array();
+
+	
+	private $srcParam = array(
+			'title'=>'',		// Title base search
+			'notificationTempdaterange'=>'',		// date range on notificationTemp
+			'notificationTemplang'=>'cre_sys_lng_eng', 	// Selected languages pipe separated
+			'sortby'=> 'desc',		//	Sort by option
+			'announcemanage' => 'cre_sys_fop_me'
+	);
+
+	public function setUp() {
+		parent::setUp();
+		$this->getNotificationTemplateTestCases();
+	}
+	
+	public function manageAdminNotificationTemplate($scope = 'all') {
+		$ctoolModel = array(
+				'modelWidth' => 890,
+				'modelClass' => 'ctools-modal-ctools-admin-notification-notice-addedit-style',
+				'modelTitle' => t('Notification'),
+				'contentWidth' => 625,		// from #modal-content
+				'contentMhight' => 235,		// from #modal-content
+				'outerHeight' => 378,
+				'outerWidth' => 593,
+				'blockHeight' => 1232,		// Document Height
+				'blockWidth' => 1343,		// Document Height
+				'modelTop' => 72,			// from #modalContent
+				'modelLeft' => 630,			// from #modalContent
+				'docHeight' => 1232,		// Document Height
+				'docWidth' => 1343			// Document Width
+		);
+		
+		$this->addCtoolModelContent($ctoolModel);
+		
+		$modelContent = $this->content;
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['notificationTemplateList'];
+		} else {
+			$testCases = array($this->testcases['notificationTemplateList'][$scope]);
+		}
+		expDebug::dPrint('run testcases: ' . print_r($testCases, 1));
+		foreach($testCases as $test){
+			
+			//Reset content with the ctool model
+			$this->content = $modelContent;
+		
+			//Get empty form
+			$post_field = array('wrapper'=>'paint-narrow-search-results');
+			$update_id = $test['id'];
+			unset($test['id']);
+			$out = $this->drupalPostAJAX(null, $edit,'Save','?q=/administration/manage/notification_template/ajax/addedit/' . $update_id, array(), array(), '', $post_field);
+		
+			$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+		
+			// Do General validations
+			$this->assertResponse(200,'Form Rended successfully');
+		
+			
+			$prev = $this->content;
+			
+			$opt = array(
+				'_search' => false,
+				'page' => 1,
+				'rows' => 5,
+				'sidx' => '',
+				'sord' => 'asc'	
+			);
+			$ajaxUrl = 'administration/manage/notification_template/temp-pagination/'.$update_id.'/0';
+			
+			debug('ajax Ulr: ' . $ajaxUrl);
+			$srcRc = $this->drupalGetAJAX($ajaxUrl,array('query'=>$opt));
+			$dom = new DOMDocument();
+			$dom->loadHTML($prev);
+			$xpath = new DOMXPath($dom);
+			
+			// Prepare Search Result data
+			$src = '';
+			$this->cId = null;
+			$i=0;
+			foreach($srcRc['rows'] as $row){
+				$this->cId[$i]['id']=$row['id'];
+				//$this->cId[$i]['id']=$row['id'];
+				$src = '<tr><td>'.$row['cell']['detail'].'</td></tr>';
+				$i++;
+			}
+			
+			// Appending Search Details
+			if(!empty($src)){
+				$idPath = 'admin-notification-template-list-'.$update_id.'-pagination';
+				$Node = $xpath->query('//*[@id="'.$idPath.'"]')->item(0);
+				$Node->setAttribute('style','width:620px');
+				$newDom = new DOMDocument();
+				$newDom->loadHTML($src);
+				$newNode = $dom->importNode($newDom->getElementsByTagName('tr')->item(0), TRUE);
+				$Node->appendChild($newNode);
+				$this->content = $dom->saveHTML();
+			}
+			
+			$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+			
+					
+		}
+	}
+	
+	public function getNotificationTemplateTestCases(){
+		$rand = $this->randomName();
+		$templateCases = array(
+				'notificationTemplateList' => array(
+						'basic' => array(
+								"id" => $this->getNotificationId('st_case1'),
+						),
+						'case1' => array(
+								"id" => $this->getNotificationId('st_case1'),
+						),
+						'case2' => array(
+								"id" => $this->getNotificationId('st_case2'),
+						),
+				),		
+				'notificationTemplateCreate' => array(
+		  				'st_case1' => array(
+		  						"subject" 			=> 'st_case1 notification template '. $rand,
+								"lang_code"			=> 'cre_sys_lng_eng',
+								"message[value]"	=> 'notification template description goes here.',
+								"sms_text"			=> 'notification template sms description goes here.',
+		  						"id"				=> $this->getNotificationId('st_case1'),
+		  				 ),
+						'st_case2' => array(
+		  						"subject" 			=> 'st_case1 notification template '. $rand,
+								"lang_code"			=> 'cre_sys_lng_eng',
+								"message[value]"	=> 'notification template description goes here.',
+								"sms_text"			=> 'notification template sms description goes here.',
+								"id"				=> $this->getNotificationId('st_case2'),
+						),
+				),
+				'notificationTemplateUpdate' => array(
+						'st_case1' => array(
+		  						"subject" 			=> 'st_case1 notification template updated '. $rand,
+								"lang_code"			=> 'cre_sys_lng_eng',
+								"template_id"		=> $this->getNotificationTemplateId('st_case1'),
+		  				 ),
+						'st_case2' => array(
+		  						"subject" 			=> 'st_case1 notification template updated '. $rand,
+								"lang_code"			=> 'cre_sys_lng_eng',
+								"template_id"		=> $this->getNotificationTemplateId('st_case2'),
+						),
+						
+				),
+		);
+		$this->testcases = array_merge($this->testcases, $templateCases); // merge with parent test case results
+	}
+	
+
+	
+	public function getNotificationTemplateId($search_str = '') {
+		$select = db_select('slt_notification_frame', 'nt');
+		$select->addField('nt', 'id', 'id');
+		$select->condition('nt.notification_subject', '%' . db_like($search_str) . '%', 'LIKE');
+		$select->orderBy('nt.id', 'DESC');
+		$select->range(0,1);
+		$notificationTempId = $select->execute()->fetchField();
+		return $notificationTempId;
+	}
+}
+
+
+class AdministrationNotificationTemplateListBase extends AdministrationNotificationTemplateTestHelper
+{
+	
+}
+
+class AdministrationNotificationTemplateListCase1 extends AdministrationNotificationTemplateListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Notification Template - List - Case 1',
+				'description' => 'Module : exp_sp_administration_notification_template',
+				'group' => '1504 - Administration - Manage - Notification Template - List',
+		);
+	}
+
+	public function testNotificationTemplateListCase1() {
+		debug('testAdminNotificationTemplateListCase1 called');
+		$this->manageAdminNotification();
+		$this->manageAdminNotificationTemplate('case1');
+	}
+}
+
+
+
+
+
+
+?>

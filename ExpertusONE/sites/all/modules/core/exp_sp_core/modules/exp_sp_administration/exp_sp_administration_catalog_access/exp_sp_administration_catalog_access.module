@@ -1,0 +1,2607 @@
+<?php
+
+/**
+ * Implementation of hook_menu().
+ */
+function exp_sp_administration_catalog_access_menu() {
+try{
+  $items = array();
+
+  $items['administration/catalogaccess'] = array(
+        'title' => 'M/R/O Access',
+        'page callback' => 'catalog_access_display',
+        //'page arguments' => array(2,3,4,5), // possible to get a optional arguments. page arguments commented for the fix #38557
+        'access callback' => 'user_access',
+        'access arguments' => array('Administration Perm'),
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_administration_catalog_access.inc'
+  );
+
+$items['administration/catalogaccess/group/%/%'] = array(
+    'title' => 'Fet group details',
+    'page callback' => 'getGroupAccessDetails',
+    'page arguments' => array(3,4),
+    'access callback' => 'user_access',
+    'access arguments' => array('Administration Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_catalog_access.inc'
+  );
+  $items['administration/catalogaccess/user/%/%'] = array(
+    'title' => 'Fet group details',
+    'page callback' => 'getUserAccessDetails',
+    'page arguments' => array(3,4),
+    'access callback' => 'user_access',
+    'access arguments' => array('Administration Perm'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_administration_catalog_access.inc'
+  );
+  $items['administration/catalogaccess/group/autocomplete'] = array(
+        'title' => 'autocomplete groups',
+        'page callback' => 'getGroupAutocomplete',
+        'page arguments' => array(3),
+        'access callback' => 'user_access',
+        'access arguments' => array('Administration Perm'),
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_administration_catalog_access.inc'
+  );
+  $items['administration/catalogaccess/user/autocomplete'] = array(
+        'title' => 'autocomplete groups',
+        'page callback' => 'getAccessUserAutocomplete',
+        'page arguments' => array(3),
+        'access callback' => 'user_access',
+        'access arguments' => array('Administration Perm'),
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_administration_catalog_access.inc'
+  );
+  $items['administration/catalogaccess/discount/group/%'] = array(
+        'title' => 'Fetch group details for Discount',
+        'page callback' => 'getDiscountGroupAccessDetails',
+        'page arguments' => array(4),
+        'access callback' => 'user_access',
+        'access arguments' => array('Administration Perm'),
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_administration_catalog_access.inc'
+  );
+  $items['administration/catalogaccess/delete/%/%'] = array(
+        'title' => 'Delete emptyId Insert',
+        'page callback' => 'delMrRoleAccess',
+        'page arguments' => array(3,4),
+        'access callback' => 'user_access',
+        'access arguments' => array('Administration Perm'),
+        'type' => MENU_CALLBACK,
+        'file' => 'exp_sp_administration_catalog_access.inc'
+  );
+  return $items;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_administration_catalog_access_menu', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_administration_catalog_access_init() {
+ try {
+    $request_uri = request_uri();
+ // if($request_uri == '/?q=administration/learning/program' || $request_uri == '/?q=administration/learning/catalog' ){
+    //if(stripos(request_uri(),'administration/')!==false){
+        $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+        $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+        global $theme_key;
+        if($theme_key == 'expertusoneV2') {
+            //NEWUI THEME STYLE SHEET
+            drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration_v2.css', $css_theme_optional);
+            drupal_add_css(drupal_get_path('module', 'exp_sp_administration_catalog_access') .'/exp_sp_administration_catalog_access_v2.css', $css_theme_optional);
+        } else {
+            drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration.css', $css_theme_optional);
+            drupal_add_css(drupal_get_path('module', 'exp_sp_administration_catalog_access') .'/exp_sp_administration_catalog_access.css', $css_theme_optional);
+        }
+        /*drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/exp_sp_jquery/exp_multiselect/jquery.expertus.multiselectDropdown.js',$js_module_optional);
+        drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/exp_sp_jquery/exp_multiselect/jquery.expertus.multiselectDropdown_custom.js',$js_module_optional);
+        drupal_add_css(drupal_get_path('module', 'exp_sp_core').'/js/exp_sp_jquery/exp_multiselect/css/jquery.expertus.multiselect.css',$css_theme_optional);*/
+        drupal_add_js(drupal_get_path('module', 'exp_sp_administration_catalog_access') .'/exp_sp_administration_catalog_access.js', $js_module_optional);
+        //CUSTOM SCROLLBAR "JSscrollbar"
+        drupal_add_js(drupal_get_path('module', 'exp_sp_lnrreports') .'/jscrollbar/jquery.mousewheel.js', $js_module_optional);
+        drupal_add_js(drupal_get_path('module', 'exp_sp_lnrreports') .'/jscrollbar/jquery.jscrollpane.js', $js_module_optional);
+ // }
+  } catch (Exception $ex) {
+    watchdog_exception('exp_sp_administration_catalog_access_init', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function catalog_access_display($entityId, $entityType, $emptyId, $courseId = '') {
+
+  try {
+
+    $form_state = array(
+     'no_redirect' => TRUE, // To confirm whether necessary
+     'build_info' => array('args' => array('ajax')), // The form builder function expects the first argument to be ajax or nojs.
+     'entity_id' => $entityId,
+     'entity_type' => $entityType,
+     'empty_id' => $emptyId,
+     'course_id' => $courseId,
+    );
+
+    $formId = 'exp_sp_administration_catalog_access_addedit_form_html';
+    $builtForm = drupal_build_form($formId, $form_state);
+    $renderedForm = drupal_render($builtForm);
+
+    $renderedTabContentHTML = $renderedForm;//$builtForm;
+
+    $drupalSettings = getDrupalSettings();
+
+    $commerceResponse = array(
+      'drupal_settings' => $drupalSettings,
+      'render_content_main' => $renderedTabContentHTML,
+
+    );
+
+    return drupal_json_output($commerceResponse);
+    exit;
+
+  }catch (Exception $ex) {
+    watchdog_exception('catalog_access_display', $ex);
+    expertusErrorThrow($ex);
+  }
+
+
+}
+
+/**
+ * exp_sp_administration_catalog_access_addedit_html_form()
+ * @param $form
+ * @param $form_state
+ * @param $renderMode
+ * @param $entity_id
+ * @param $entityType
+ * @return multitype:string
+ */
+function exp_sp_administration_catalog_access_addedit_form_html($form, &$form_state, $renderMode) {
+
+  include_once(drupal_get_path('module', 'exp_sp_administration_catalog_access') .'/exp_sp_administration_catalog_access.inc');
+  $css_theme_optional = array('type' => 'file', 'group' => CSS_THEME);
+  global $theme_key;
+    if($theme_key == 'expertusoneV2') {
+        //NEWUI THEME STYLE SHEET
+        drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration_v2.css', $css_theme_optional);
+    } else {
+        drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration.css', $css_theme_optional);
+    }
+  //drupal_add_css(drupal_get_path('module', 'exp_sp_administration') .'/exp_sp_administration.css', $css_theme_optional);
+
+  $cataloAccessDetails = array();
+
+  expDebug::dPrint('exp_sp_administration_catalog_access_addedit_html_form form_state : '.print_r($form_state, true),5);
+
+  try {
+        $entityId = $form_state['entity_id'];
+        $entityType = $form_state['entity_type'];
+        $entityDisplayName = getEntityDisplayName($entityType);
+        $emptyId = $form_state['empty_id'];
+        $courseId = $form_state['course_id'];
+
+        $learningEntities = array('cre_sys_obt_crs','cre_sys_obt_cls','cre_sys_obt_crt','cre_sys_obt_cur','cre_sys_obt_trn');
+        if($entityType == 'cre_sys_obt_cls') {
+            $uniqueId = core_encrypt($entityId.'-'.$entityType.'-'.$courseId);
+        } else {
+            $uniqueId = core_encrypt($entityId.'-'.$entityType);
+        }
+        $grpDetails = $form_state['input']['group_id'];
+        $mroDetails = $form_state['input']['mro'];
+        $popupId = $form_state['popupId'];
+        $emptyId = $form_state['empty_id'];
+        $mroOption = in_array($entityType,$learningEntities) ? true : false;
+        
+/*        ($entityType == 'cre_sys_obt_crs' || $entityType == 'cre_sys_obt_cls' || $entityType=='cre_sys_obt_crt'
+                 || $entityType == 'cre_sys_obt_cur' || $entityType == 'cre_sys_obt_trn') ? true : false;*/
+
+        $type = ($entityType == 'cre_usr' || $entityType == 'cre_org' || $entityType == 'cre_sec' || $entityType == 'sry_det_typ_sry' || $entityType == 'sry_det_typ_ass' || $entityType == 'sry_det_typ_sry_qus'
+                || $entityType == 'sry_det_typ_ass_qus' || $entityType == 'cre_sys_obt_cnt' || $entityType == 'cre_ntn' || $entityType == 'cme_ord' || $entityType == 'cme_dis'
+                || $entityType == 'cre_usr_dpt' || $entityType == 'cre_usr_etp' || $entityType == 'cre_usr_jrl' || $entityType == 'cre_usr_jtl' || $entityType == 'cre_usr_ptp' || $entityType == 'cre_cer' || $entityType == 'cre_sys_obt_loc' || $entityType == 'cre_sys_obt_cnt_aut' || $entityType == 'cre_sys_obt_cnt_aut_pre' ) ? 'Admin' :'Any';
+                expDebug::dPrint(' entity type checking'.$entityType);
+        $form = newAddEditFormMulti($miscActions, false);
+
+        $opList = getoptionsList();
+        expDebug::dPrint('$opList:==> '.print_r($opList, true),5);
+        addHiddenFieldToAddEditForm($form, 'hidden_oplist',$opList);
+
+        // Create a new add/edit form
+
+
+        $form['msgdiv'] = array(
+                '#type' => 'markup',
+                '#markup' => '<div id="show_vc_detail_message"></div>',
+        );
+
+
+        //("The selected groups have access to the training")
+        $paintMultiAction  = "<div id='access-search-list-class-title-keyword' class='access-search-list-keyword' style='display:block;'>";
+        $paintMultiAction .= "<span id='access-search-dropdwn-list-class'>";
+        $paintMultiAction .= "<input type='hidden' id='access-search_all_classs_type-hidden' value='any' />";
+        $paintMultiAction .= "<span id='access-select-list-class-dropdown' class='access-select-list-dropdown-class'>".t('LBL428')."</span>";
+        $paintMultiAction .= "<a id='access-admin-dropdown-arrow' class='access-select-list-class-dropdown-link' onclick='$(\"#root-admin\").data(\"accessgroup\").moreAccessSearchHideShow();'> </a>";
+        $paintMultiAction .= "<ul id='access-select-list-class-dropdown-list' style='display:none;'>";
+          $paintMultiAction .= "<li onclick=\"$('#root-admin').data('accessgroup').moreAccessSearchTypeText('".addslashes(t('LBL428'))."','any');\">".t('LBL428')."</li>";
+          $paintMultiAction .= "<li onclick=\"$('#root-admin').data('accessgroup').moreAccessSearchTypeText('".addslashes(t('Admin'))."','admin');\">".t('Admin')."</li>";
+          $paintMultiAction .= "<li onclick=\"$('#root-admin').data('accessgroup').moreAccessSearchTypeText('".addslashes(t('Learner'))."','learner');\">".t('Learner')."</li>";
+          $paintMultiAction .= "</ul>";
+        $paintMultiAction .= "</span></div>";
+
+        
+        $paintMultiAction1  = "<div id='search-list-title-keyword' class='access-search-list-keyword' style='display:block;'>";
+                $paintMultiAction1 .= "<span id='search-dropdwn-list'>";
+                $paintMultiAction1 .= "<input type='hidden' id='search_all_enroll_type-hidden' value='username' />";
+                $paintMultiAction1 .= "<input type='hidden' id='enrolluser-autocomplete_hidden' value='".t('LBL181')."' />";
+                $paintMultiAction1 .= "<span id='select-list-dropdown' class='access-select-list-dropdown-class'>".t('LBL054')."</span>";
+                $paintMultiAction1 .= "<a  id='admin-dropdown-arrow' class='access-select-list-user-dropdown-link' onclick='$(\"#root-admin\").data(\"accessgroup\").moreUserAccessSearchHideShow();'>&nbsp;</a>";
+                $paintMultiAction1 .= "<ul id='select-list-dropdown-list'>";
+                $paintMultiAction1 .= "<li id='user-enr-search' onclick=\"$('#root-admin').data('accessgroup').moreUserAccessSearchTypeText('".addslashes(t('LBL054'))."','username');\">".t('LBL054')."</li>";
+                $paintMultiAction1 .= "<li id='fullname-enr-search' onclick=\"$('#root-admin').data('accessgroup').moreUserAccessSearchTypeText('".addslashes(t('LBL107'))."','name');\">".t('LBL107')."</li>";
+                $paintMultiAction1 .= "<li id='org-enr-search' onclick=\"$('#root-admin').data('accessgroup').moreUserAccessSearchTypeText('".addslashes(t('Organization'))."','org');\">".t('Organization')."</li>";
+                $paintMultiAction1 .= "<li id='jobrole-enr-search' onclick=\"$('#root-admin').data('accessgroup').moreUserAccessSearchTypeText('".addslashes(t('LBL133'))."','jobrole');\">".t('LBL133')."</li>";
+                $paintMultiAction1 .= "<li id='usertype-enr-search' onclick=\"$('#root-admin').data('accessgroup').moreUserAccessSearchTypeText('".addslashes(t('LBL173'))."','usertype');\">".t('LBL173')."</li>";
+                $paintMultiAction1 .= "<li id='manager-enr-search' onclick=\"$('#root-admin').data('accessgroup').moreUserAccessSearchTypeText('".addslashes(t('Manager'))."','manager');\">".t('Manager')."</li>";
+                $paintMultiAction1 .= "<li id='group-enr-search' onclick=\"$('#root-admin').data('accessgroup').moreUserAccessSearchTypeText('".addslashes(t('Group'))."','group');\">".t('Group')."</li>";
+                $paintMultiAction1 .= "</ul>";
+                $paintMultiAction1 .= "</span></div>";
+                
+        if($entityType == 'cre_usr' || $entityType == 'cre_org' || $entityType == 'cre_sec' || $entityType == 'sry_det_typ_sry' || $entityType == 'sry_det_typ_ass' || $entityType == 'sry_det_typ_sry_qus'
+                || $entityType == 'sry_det_typ_ass_qus' || $entityType == 'cre_sys_obt_cnt' || $entityType == 'cre_ntn' || $entityType == 'cme_ord' || $entityType == 'cme_dis' 
+                || $entityType == 'cre_usr_dpt' || $entityType == 'cre_usr_etp' || $entityType == 'cre_usr_jrl' || $entityType == 'cre_usr_jtl' || $entityType == 'cre_usr_ptp' 
+                || $entityType == 'cre_cer' || $entityType == 'cre_sys_obt_loc' || $entityType=='cme_pmt' || $entityType == 'cre_sys_obt_cnt_aut' || $entityType == 'cre_sys_obt_cnt_aut_pre'){
+
+                $paintMultiAction  = "<div id='access-search-list-class-title-keyword' class='access-search-list-keyword' style='display:block;'>";
+                $paintMultiAction .= "<span id='access-search-dropdwn-list-class'>";
+                $paintMultiAction .= "<span id='access-select-list-class-dropdown' class='access-select-list-dropdown-class'>".t('Admin')."</span>";
+                $paintMultiAction .= "</span></div>";
+        }
+        $form['start-div'] = array(
+                '#type' => 'markup',
+                '#markup' => '<div id="group-control" style="height:260px;overflow:visible;">',
+        );
+        $form['access-left-start-div'] = array(
+                '#type' => 'markup',
+                '#markup' => '<div id="access-left-control">',
+        );
+        if(in_array($entityType,$learningEntities)){
+            $form['group-start-div'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '<div id="sel-unsel-grplist-wrapper">',
+            );
+        }
+        $clsTiparrow = (in_array($entityType,$learningEntities)) ? 'right-tip-arrow ' : '';
+        // Group list 
+        $form['left-side-group'] = array(
+          '#type' => 'markup',
+          //'#markup' => '<div id="sel-unsel-grplist"><img src="themes/seven/images/buttons.png" width="0" height="0" onload="$(\'#root-admin\').data(\'accessgroup\').callMultiSelect(\''.$uniqueId.'\',\''.$mroOption.'\',\''.$type.'\',\''.$emptyId.'\');"  width="100" height="132" /><span class="grp-label">'.t('Groups').'</span></div>',
+            '#markup' => '<div id="group-list-control" onClick="$(\'#root-admin\').data(\'accessgroup\').callMultiSelect(\'sel-unsel-grplist\', \''.$uniqueId.'\',\''.$mroOption.'\',\''.$type.'\',\''.$emptyId.'\');"><span class="list-group margin-left-3 grp-label">'.t('Groups').'</span><span class="'.$clsTiparrow.'" /></div><div id="avil_group" class="narrow-search-results-item-detail" style="display:none"></div>'
+        );
+        $class = in_array($entityType,$learningEntities) ? 'sel-unsel-grplist' : 'sel-unsel-grplist-alone'; 
+        $form['more_add_enrolluser_search'] = array(
+                '#type' => 'markup',
+                '#markup' => '<div id="sel-unsel-grplist" class="'.$class.'">'.$paintMultiAction.'</div>',
+        );
+/*        $form['separator1'] = array(
+                '#type' => 'markup',
+                '#markup' => '<div id="line-separator"></div>',
+        );*/
+        $form['group-end-div'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '</div>',
+            );
+        if(in_array($entityType,$learningEntities)){
+        
+        // User list
+        
+            $form['user-start-div'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '<div id="sel-unsel-usrlist-wrapper">',
+            );
+           
+            $form['left-side-users'] = array(
+              '#type' => 'markup',
+              //'#markup' => '<div id="sel-unsel-usrlist"><img src="themes/seven/images/buttons.png" width="0" height="0" onload="$(\'#root-admin\').data(\'accessgroup\').callMultiSelect(\''.$uniqueId.'\',\''.$mroOption.'\',\''.$type.'\',\''.$emptyId.'\');"  width="100" height="132" /><span class="grp-label">'.t('Users').'</span></div>',
+              '#markup' => '<div id="user-list-control" onClick="$(\'#root-admin\').data(\'accessgroup\').callMultiSelect(\'sel-unsel-usrlist\', \''.$uniqueId.'\',\''.$mroOption.'\',\'username\',\''.$emptyId.'\');"><span class="list-group margin-left-3 grp-label">'.t('Users').'</span><span class="right-tip-arrow " /></div><div id="avil_users" class="narrow-search-results-item-detail" style="display:none"></div>'
+            );
+            
+            $form['more_add_user_search'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '<div id="sel-unsel-usrlist">'.$paintMultiAction1,
+            );
+            
+            $form['user-end-div'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '</div></div>',
+            );
+            $form['access-left-end-div'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '</div>',
+            );
+        }
+        $idClass = in_array($entityType,$learningEntities) ? 'line-separator' : 'line-separator-grp-alone'; 
+        $form['separator2'] = array(
+                '#type' => 'markup',
+                '#markup' => '<div id="'.$idClass.'"></div>',
+        );
+        $selOpt1 = getSelectedValues($entityId, $entityType,$emptyId);
+        $default=array();
+        $var = '';
+        expDebug::dPrint('sabeeee->'.print_r($selOpt,true),5);
+        foreach($selOpt1 as $dt){
+            expDebug::dPrint('$selOpt->'.print_r($selOpt,true),5);
+            $mro = ($dt->admin == 1)?"-":'-'.$dt->code;
+            $default['name'] = empty($default['name'])?"-"." ".$dt->name:"-"." ".$dt->name;
+            $default['mro']  = ($dt->mro=="Optional" || $dt->admin== 1 || $dt->mro =='')?"": " "."(".t($dt->mro).")";
+            $default['id']   = empty($default['id']) ? $dt->id.$mro :$default['id'].",".$dt->id.$mro;
+            if(empty($default['mro']))
+                $var .= '<div class="cls-access-list-select"><span id="group-names-'.$dt->id.'" class="vtip" title="'.sanitize_data($default['name']).'">'.titleController('ADDEDIT-CATAOG-ACCESS-GROUP-NAME',$default['name'],43).'</span><span class="cls-mro-option" id="mro-names-'.$dt->id.'"><span>'.$default['mro'].'</span></span></div>';
+            else
+                $var .= '<div class="cls-access-list-select"><span id="group-names-'.$dt->id.'" class="vtip" title="'.sanitize_data($default['name']).'">'.titleController('ADDEDIT-CATAOG-ACCESS-GROUP-NAME',$default['name'],32).'</span><span class="cls-mro-option" id="mro-names-'.$dt->id.'"><span>'.$default['mro'].'</span></span></div>';
+        }
+                $selOpt2 = '';
+                $var1='';
+        if(in_array($entityType,$learningEntities)){
+                $selOpt2 = getUserSelectedValues($entityId, $entityType,$emptyId);
+            $default1=array();
+            $var1 = '';
+            expDebug::dPrint('sabeeee->'.print_r($selOpt,true),5);
+            foreach($selOpt2 as $dt){
+                expDebug::dPrint('$selOpt->'.print_r($selOpt,true),5);
+                $mro = ($dt->admin == 1)?"-":'-'.$dt->code;
+                $default1['name'] = empty($default1['name'])?"-"." ".$dt->fullname.' ('.$dt->username.')':"-"." ".$dt->fullname.' ('.$dt->username.')';
+                $default1['mro']  = ($dt->mro=="Optional" || $dt->admin== 1 || $dt->mro =='')?"": " "."(".t($dt->mro).")";
+                $default1['id']   = empty($default1['id']) ? $dt->id.$mro :$default1['id'].",".$dt->id.$mro;
+                if(empty($default1['mro']))
+                    $var1 .= '<div class="cls-access-list-select"><span id="group-names-'.$dt->id.'" class="vtip" title="'.sanitize_data($default1['name']).'">'.titleController('ADDEDIT-CATAOG-ACCESS-GROUP-NAME',$default1['name'],43).'</span><span class="cls-mro-option" id="mro-names-'.$dt->id.'"><span>'.$default1['mro'].'</span></span></div>';
+                else
+                    $var1 .= '<div class="cls-access-list-select"><span id="group-names-'.$dt->id.'" class="vtip" title="'.sanitize_data($default1['name']).'">'.titleController('ADDEDIT-CATAOG-ACCESS-GROUP-NAME',$default1['name'],32).'</span><span class="cls-mro-option" id="mro-names-'.$dt->id.'"><span>'.$default1['mro'].'</span></span></div>';
+            }
+        }
+        $selOpt = (empty($selOpt1) && empty($selOpt2)) ? '' : 'Value Exists';
+/*        $object = t('Groups').'/'.t('Users');
+        if(!empty($selOpt1)){
+            $form['right-side-txt'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '<div id="help-msg" style="display:block;">'.t('LBL1265', array('@object' => $object,'@name' => $entityDisplayName)).'</div>',
+            );
+        }else{
+            $form['right-side-txt'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '<div id="help-msg" style="display:none;">'.t('LBL1265', array('@object' => $object,'@name' => $entityDisplayName)).'</div>',
+            );
+        }*/
+
+         $form['scroll-start'] = array(
+                '#type' => 'markup',
+                '#prefix' => '<div id="group-scroll-wrapper">',
+        );
+        if(!empty($selOpt1)){
+            $form['right-side-txt-grp'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '<div id="help-msg-grp" style="display:block;">'.t('LBL1265', array('@name' => $entityDisplayName)).'</div>',
+            );
+        }else{
+            $form['right-side-txt-grp'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '<div id="help-msg-grp" style="display:none;">'.t('LBL1265', array('@name' => $entityDisplayName)).'</div>',
+            );
+        }
+         //(empty($selOpt)? (=style="display:none;") : ($style='style="display:block;"'));
+
+                 $form['right-side-value'] = array(
+                        '#type' => 'markup',
+                        '#markup' => '<div id="sel-group-list">'.$var.'</div>',
+                 );
+                 if(in_array($entityType,$learningEntities)){
+                    $style = (!empty($var) && !empty($var1)) ? 'display:block' : 'display:none';
+                    $form['right-side-value-separator'] = array(
+                        '#type' => 'markup',
+                        '#markup' => '<div class="right-separator" id="right-separator" style="'.$style.'"><span class="item-short-desc sel-attr-separator">AND</span></div>',
+                    );
+                    
+                    if(!empty($selOpt2)){
+            $form['right-side-txt-usr'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '<div id="help-msg-usr" style="display:block;">'.t('LBL3208', array('@name' => $entityDisplayName)).'</div>',
+            );
+        }else{
+            $form['right-side-txt-usr'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '<div id="help-msg-usr" style="display:none;">'.t('LBL3208', array('@name' => $entityDisplayName)).'</div>',
+            );
+        }
+                
+                 $form['right-side-value-user'] = array(
+                        '#type' => 'markup',
+                        '#markup' => '<div id="sel-user-list">'.$var1.'</div>',
+                 );
+                 
+                 }
+        
+                 
+                 $inlineStyle = (empty($selOpt)) ? 'display:inline;' : 'display:none;';
+                 // changes made for the seperate the multilanguage one string into two rows
+                 $linetext = t('LBL1261');
+                 $exploded_string=explode(",", $linetext);
+                 expDebug::dPrint('$exploded_string : '.print_r($exploded_string,true), 4);
+           $form['right-side-text'] = array(
+                    '#type' => 'markup',
+                    '#markup' => '<div id="sel-group-text" style="'.$inlineStyle.'">'.t('LBL1260', array('@name' => $entityDisplayName)).'</div><br/><div id="sel-message" style="'.$inlineStyle.'">'.$exploded_string[0].','.'</div><div id="sel-msg" style="'.$inlineStyle.'">'.$exploded_string[1].'</div>',
+          );
+        $form['entity'] = array(
+                '#type' => 'markup',
+                '#markup' => '<input type="hidden" value="'.$uniqueId.'" id="entity-val" />',
+        );
+        $form['stop-div'] = array(
+                '#type' => 'markup',
+                '#markup' => '</div>',
+        );
+        $form['scroll-end'] = array(
+                '#type' => 'markup',
+                '#prefix' => '</div>',
+        );
+        $form['addedit-left-col-end'] = array(
+                '#type' => 'markup',
+                '#markup' => '</div><div class="clearBoth"></div>',
+        );
+        
+        if(empty($selOpt1) && !empty($selOpt2)){
+            $form['addedit-left-col-open-script'] = array(
+                '#type' => 'markup',
+                '#markup' => '<img src="themes/seven/images/buttons.png" width="0" height="0" onload="$(\'#user-list-control\').click();"  width="100" height="132" />',
+            );
+        }else{
+            $form['addedit-left-col-open-script'] = array(
+                '#type' => 'markup',
+                '#markup' => '<img src="themes/seven/images/buttons.png" width="0" height="0" onload="$(\'#group-list-control\').click();"  width="100" height="132" />',
+            );
+        }
+        expDebug::dPrint('$$default$default$default->'.print_r($default,true),5);
+        addHiddenFieldToAddEditForm($form, 'hidden_idlist',$default['id']);
+                addHiddenFieldToAddEditForm($form,'hidden_selection', $default['id']);
+                if(in_array($entityType,$learningEntities)){
+                    addHiddenFieldToAddEditForm($form, 'hidden_idlist_usr',$default1['id']);
+                    addHiddenFieldToAddEditForm($form,'hidden_selection_usr', $default1['id']);
+                }
+                
+        addEditFormMultiClose($form, $uniqueId,$entityId);
+        expDebug::dPrint('fffffffffff'.print_r($form,true),4);
+
+        return $form;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_administration_catalog_access_addedit_form_html', $ex);
+    expDebug::dPrint("ERROR -- ".$ex);
+    expertusErrorThrow($ex);
+  }
+
+}
+
+function prepareMultiSelectControl($form, $form_state){
+    
+}
+
+/**
+ * exp_sp_administration_catalog_access_addedit_html_form_validate()
+ * @param $form
+ * @param $form_state
+ */
+function exp_sp_administration_catalog_access_addedit_form_html_validate($form, &$form_state) {
+  // Validation not required
+  /*
+  if(empty($form_state['input']['org_selected_id']) && empty($form_state['input']['jobroles_selected_id']) && count($form_state['input']['usertype'])==0){
+    form_set_error('error', t('Please select one of Organization / Job Roles / User Type'));
+  }
+  */
+        try{
+            expDebug::dPrint('$form_state$form_state$form_state->'.print_r($form_state,true),5);
+            $entityId = $form_state['entity_id'];
+            $entityType = $form_state['entity_type'];
+            $emptyId = $form_state['empty_id'];
+            $exstVal = existingGroupMapEntries($entityId, $entityType, $emptyId);
+            $extUserVal = existingUserMapEntries($entityId, $entityType, $emptyId);
+            $catalogAvailability = _checkCatalogAccessAvailablity($entityId, $entityType, $emptyId);
+            $catalogUserAvailability = _checkCatalogUserAccessAvailablity($entityId, $entityType, $emptyId);
+            if((empty($exstVal) && (empty($form_state['input']['hidden_idlist']))) && (empty($extUserVal) && (empty($form_state['input']['hidden_idlist_usr']))))
+                expertus_set_message(t('ERR106'));
+            if(($entityType == 'cre_sys_obt_crs' && !empty($entityId) && ((!empty($form_state['input']['hidden_idlist']) || !empty($exstVal)) || (!empty($form_state['input']['hidden_idlist_usr']) || !empty($extUserVal)))))
+                expertus_set_message(t('MSG721').'.');
+                
+            if((count($catalogAvailability) || !empty($form_state['input']['hidden_idlist']))||(count($catalogUserAvailability) || !empty($form_state['input']['hidden_idlist_usr'])))
+            {
+                expertus_set_message(t('LBL272').' '.t('MSG600').'.');
+            }
+            
+        }catch (Exception $ex) {
+            watchdog_exception('exp_sp_administration_catalog_access_addedit_html_form_validate', $ex);
+            expDebug::dPrint("ERROR -- ".$ex);
+            expertusErrorThrow($ex);
+        }
+
+}
+
+/**
+ * exp_sp_administration_catalog_access_addedit_html_form_submit()
+ * @param $form
+ * @param $form_state
+ */
+function exp_sp_administration_catalog_access_addedit_form_html_submit(&$form, &$form_state) {
+  try {
+    $entityId = $form_state['entity_id'];
+    $entityType = $form_state['entity_type'];
+    $emptyId = $form_state['empty_id'];
+    $creatorId = getIdOfLoggedInUser();
+    expDebug::dPrint('exp_sp_administration_catalog_access_addedit_form_html_submit form_state[input]222 : '.print_r($form_state['input'], true),4);
+
+    expDebug::dPrint('exp_sp_administration_catalog_access_addedit_html_form_submit form_state[input]1111 : '.print_r($form_state['values'], true),4);
+    expDebug::dPrint('$form_state[input][hidden_idlist] : '.$entityType);
+
+    _updateAccessControl($entityId, $entityType, $emptyId, $form_state);
+    _updateUserAccess($entityId, $entityType, $emptyId, $form_state);
+   // updateGroupMapping($entityId, $entityType, $grpList, $mroList, $emptyId);
+
+    $form_state['rebuild'] = TRUE;
+    syncSolrData('Course'); //To sync solr
+    syncSolrData('Program'); //To sync solr
+    syncSolrData('Enrollment');
+    syncSolrData('MasterEnrollment');
+    syncSolrData('User');
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_administration_catalog_access_addedit_form_html_submit', $ex);
+    expertusErrorThrow($ex);
+  }
+
+
+}
+
+/**
+ * updateGroupMapping()
+ */
+function updateGroupMapping($entityId, $entityType, $grpList, $mroList, $emptyId){
+    $txn = db_transaction();
+    try{
+        expDebug::dPrint('enter1111');
+        $creatorId = getIdOfLoggedInUser();
+        if($callFromAPI){
+            $creatorId = $emptyId;
+        }
+        $catalogAvailability = _checkCatalogAccessAvailablity($entityId, $entityType, $emptyId);
+        expDebug::dPrint('$catalogAvailability '.print_r($catalogAvailability, true),5);
+        if(count($catalogAvailability)){
+            updateGrpMap($entityId, $entityType, $creatorId, $grpList, $mroList, $emptyId);
+        } else {
+            insertGrpMap($entityId, $entityType, $creatorId, $grpList, $mroList, $emptyId);
+        }
+        if($callFromAPI){
+            return array((object)array('id'=>'success'));
+        }
+    }catch (Exception $ex) {
+            $txn->rollback();
+            unset($txn);
+            if($callFromAPI){
+                //return array((object)array('id'=>'Failure'));
+                $errobj=new stdClass();
+                $errobj->isValidateError = 1;
+                $errobj->errcode = 'L_012';
+                $errobj->errormsg = "Group id is invalid.";
+                return $errobj;
+            }
+            else {
+                return array((object)array('id'=>'Failure'));
+            }
+        watchdog_exception('exp_sp_administration_catalog_access_addedit_html_form_submit', $ex);
+        expertusErrorThrow($ex);
+    }
+}
+/**
+ * updateGrpMap
+ */
+function updateGrpMap($entityId, $entityType, $creatorId, $grpList, $mroList, $emptyId){
+    $txn = db_transaction();
+    try{
+        expDebug::dPrint('ente2222');
+            expDebug::dPrint('ente22221111'.print_r($groMroIds, true),5);
+
+        $sel = db_select('slt_group_mapping','s');
+        $sel->addField('s','id','id');
+        $sel->addField('s','group_id','groupd_id');
+        $sel->addField('s','group_type','group_type');
+        $sel->condition('s','entity_id',$entityId);
+        $sel->condition('s','entity_type',$entityType);
+        $sel1=$sel->execute()->fetchAll();
+        
+        expDebug::dPrint("result of ids for update-->".print_r($sel1,1),4);
+        //deleted_log_entry('slt_group_mapping',$sel1->id,'group_mapping','exp_sp_administration_catalog_access','updateGrpMap',null,getIdOfLoggedInUser());
+
+        $select = db_delete('slt_group_mapping','grpMap');
+        $select->condition('grpMap','entity_id',$entityId);
+        $select->condition('grpMap','entity_type',$entityType);
+        expDebug::dPrintDBAPI('delete userlist ' , $select);
+        $select->execute();
+
+        $fields = array(
+                'table_name' => 'slt_group_mapping',
+                'entity_id' => $sel1->id,
+                'entity_type' => 'group_mapping',
+                'module_name' => 'exp_sp_administration_catalog_access',
+                'functionality_name' => 'deleteAttachedGroup',
+                'api_name' => null,
+                'deleted_on' => now(),
+                'deleted_by' => getIdOfLoggedInUser(),
+                'parent1_entity_id' => $entityId,
+                'parent1_entity_type' => 'entity_id',
+                'parent2_entity_id' => $sel1->group_id,
+                'parent2_entity_type' => 'group_id',
+                'parent3_entity_id' => $sel1->group_type,
+                'parent3_entity_type' => 'group_type',
+        );
+        deleted_log_entry($fields);
+        
+        //Added to log deleted entries from slt_group_mapping table.
+
+        $catalogFields['group_id'] = $grpList;
+        $catalogFields['mro'] = $mroList;
+        $catalogFields['updated_by'] = $creatorId;
+        $catalogFields['updated_on'] = now();
+
+        $update = db_update('slt_group_mapping','grpMap');
+        $update->fields($catalogFields);
+        if($entityId == 0){
+            $update->condition('grpMap','custom0', $emptyId);
+        } else {
+            $update->condition('grpMap','entity_id', $entityId);
+        }
+        $update->condition('grpMap','entity_id', $entityId);
+        $update->condition('grpMap','entity_type', $entityType);
+        $update->execute();
+        updateGroupMappingDetails($entityId, $entityType, $creatorId,'update',$grpList);
+        make_audit_trail_entries($catalogFields, getIdOfLoggedInUser() , $default ,$entityId, 'Updated','cre_sys_obt_crs','exp_sp_administration_catalog_access','updateGrpMap',
+                array('group_id', 'mro'));
+
+    }catch (Exception $ex){
+     $txn->rollback();
+     unset($txn);
+     watchdog_exception('updateGrpMap', $ex);
+   expertusErrorThrow($ex);
+    }
+}
+/**
+ * insertGrpMap
+ */
+function insertGrpMap($entityId, $entityType, $creatorId, $grpList, $mroList, $emptyId,$grptype,$classId='',$oldval=''){
+    $txn = db_transaction();
+    try{
+        if(empty($mroList) || $mroList == 'undefined')
+            $mroList = ($grptype == 0) ? 'cre_sys_inv_opt' : NULL;
+        if($entityId == 0){
+            $catalogFields['custom0'] = $emptyId;
+        } else {
+            $catalogFields['entity_id'] = $entityId;
+        }
+        $catalogFields['entity_id'] = $entityId;
+        $catalogFields['entity_type'] = $entityType;        
+        if($entityType == 'cre_sys_obt_crs' || ($entityType == "cre_sys_obt_cur" || $entityType == "cre_sys_obt_crt" || $entityType =="cre_sys_obt_trn")){
+            $catalogFields['parent_id'] = $entityId."-0";
+            if($entityType == 'cre_sys_obt_crs'){
+                $parentType = "learning";
+            }else if($entityType == "cre_sys_obt_cur" || $entityType == "cre_sys_obt_crt" || $entityType =="cre_sys_obt_trn"){
+                $parentType = "program";
+            }
+            $catalogFields['parent_type'] = $parentType;
+            
+        }else if($entityType == 'cre_sys_obt_cls'){
+            $course_id = getCourseIdFromClassId($entityId);
+            $catalogFields['parent_id'] = $course_id."-".$entityId;
+            $catalogFields['parent_type'] = 'learning';
+        }
+        $catalogFields['group_id'] = $grpList;
+        $catalogFields['group_type'] = $grptype;
+        $catalogFields['mro'] = $mroList;
+        $catalogFields['created_by'] = $creatorId;
+        $catalogFields['created_on'] = NOW();
+        $catalogFields['updated_by'] = $creatorId;
+        $catalogFields['updated_on'] = NOW();
+
+        // Insert catalog access
+        $insert = db_insert('slt_group_mapping');
+        $insert->fields($catalogFields);
+        expDebug::dprintDBAPI('$insert',$insert);
+        $insert->execute();
+        if($grptype==1 && $entityId > 0)
+            updateGroupMappingDetails($entityId, $entityType, $creatorId,'add',$grpList);
+        if($entityType == 'cre_sys_obt_crs'){
+            if(!empty($classId)){
+                $classIdList = explode(',',$classId);
+                foreach($classIdList as $key => $value){
+                    $catalogFields['entity_type'] = 'cre_sys_obt_cls';
+                    $catalogFields['entity_id'] = $value;
+                    $catalogFields['group_id'] = $grpList;
+                    $catalogFields['parent_id'] = $entityId."-".$value;
+                    $catalogFields['parent_type'] = 'learning';                 
+                    $grpMapQry = db_select('slt_group_mapping','grpmap');
+                    $grpMapQry->addExpression('COUNT(1)','cnt');
+                    $grpMapQry->condition('entity_id',$value,'=');
+                    $grpMapQry->condition('entity_type','cre_sys_obt_cls','=');
+                    $grpMapQry->condition('group_id',$grpList,'=');
+                    expDebug::dPrintDBAPI("Query for checking the class id exist or not",$grpMapQry);
+                    $grpMapCnt = $grpMapQry->execute()->fetchField();
+                    expDebug::dPrint("Result for group mapping count".$grpMapCnt,3);
+
+                    if(empty($grpMapCnt)){
+                        $insertCls = db_insert('slt_group_mapping');
+                        $insertCls->fields($catalogFields);
+                        expDebug::dprintDBAPI('$insert class mapping',$insertCls);
+                        $insertCls->execute();
+                        if($grptype==1 && $entityId > 0)
+                            updateGroupMappingDetails($value, 'cre_sys_obt_cls', $creatorId,'add',$grpList);
+                    }
+                    
+                }
+            }
+        }
+        if(empty($oldval)){$action = 'Inserted';}else{$action = 'Updated';}
+        make_audit_trail_entries($catalogFields, getIdOfLoggedInUser() , $oldval ,$entityId, $action,$entityType,'exp_sp_administration_catalog_access','insertGrpMap',
+                array('group_id', 'mro'));
+    }catch (Exception $ex){
+     $txn->rollback();
+     unset($txn);
+     watchdog_exception('insertGrpMap', $ex);
+     expertusErrorThrow($ex);
+    }
+}
+
+/**
+ * insertGrpMap
+ */
+function insertUserMap($entityId, $entityType, $creatorId, $usrList, $mroList, $emptyId,$accesstype,$classId='',$oldval=''){
+    $txn = db_transaction();
+    try{
+        if(empty($mroList) || $mroList == 'undefined')
+            $mroList = ($accesstype == 0) ? 'cre_sys_inv_opt' : NULL;
+        if($entityId == 0){
+            $catalogFields['custom0'] = $emptyId;
+        } else {
+            $catalogFields['entity_id'] = $entityId;
+        }
+        $catalogFields['entity_id'] = $entityId;
+        $catalogFields['entity_type'] = $entityType;        
+        if($entityType == 'cre_sys_obt_crs' || ($entityType == "cre_sys_obt_cur" || $entityType == "cre_sys_obt_crt" || $entityType =="cre_sys_obt_trn")){
+            $catalogFields['parent_id'] = $entityId."-0";
+            if($entityType == 'cre_sys_obt_crs'){
+                $parentType = "learning";
+            }else if($entityType == "cre_sys_obt_cur" || $entityType == "cre_sys_obt_crt" || $entityType =="cre_sys_obt_trn"){
+                $parentType = "program";
+            }
+            $catalogFields['parent_type'] = $parentType;
+            
+        }else if($entityType == 'cre_sys_obt_cls'){
+            $course_id = getCourseIdFromClassId($entityId);
+            $catalogFields['parent_id'] = $course_id."-".$entityId;
+            $catalogFields['parent_type'] = 'learning';
+        }
+        $catalogFields['user_id'] = $usrList;
+        $catalogFields['access_type'] = $accesstype;
+        $catalogFields['mro'] = $mroList;
+        $catalogFields['created_by'] = $creatorId;
+        $catalogFields['created_on'] = NOW();
+        $catalogFields['updated_by'] = $creatorId;
+        $catalogFields['updated_on'] = NOW();
+
+        // Insert catalog access
+        $insert = db_insert('slt_user_access_mapping');
+        $insert->fields($catalogFields);
+        expDebug::dprintDBAPI('$insert',$insert);
+        $insert->execute();
+        /*if($accesstype==1 && $entityId > 0)
+            updateGroupMappingDetails($entityId, $entityType, $creatorId,'add',$usrList);*/
+        if($entityType == 'cre_sys_obt_crs'){
+            if(!empty($classId)){
+                $classIdList = explode(',',$classId);
+                foreach($classIdList as $key => $value){
+                    $catalogFields['entity_type'] = 'cre_sys_obt_cls';
+                    $catalogFields['entity_id'] = $value;
+                    $catalogFields['user_id'] = $usrList;
+                    $catalogFields['parent_id'] = $entityId."-".$value;
+                    $catalogFields['parent_type'] = 'learning';                 
+                    $grpMapQry = db_select('slt_user_access_mapping','grpmap');
+                    $grpMapQry->addExpression('COUNT(1)','cnt');
+                    $grpMapQry->condition('entity_id',$value,'=');
+                    $grpMapQry->condition('entity_type','cre_sys_obt_cls','=');
+                    $grpMapQry->condition('user_id',$usrList,'=');
+                    expDebug::dPrintDBAPI("Query for checking the class id exist or not",$grpMapQry);
+                    $grpMapCnt = $grpMapQry->execute()->fetchField();
+                    expDebug::dPrint("Result for group mapping count".$grpMapCnt,3);
+
+                    if(empty($grpMapCnt)){
+                        $insertCls = db_insert('slt_user_access_mapping');
+                        $insertCls->fields($catalogFields);
+                        expDebug::dprintDBAPI('$insert class mapping',$insertCls);
+                        $insertCls->execute();
+                        /*if($accesstype==1 && $entityId > 0)
+                            updateGroupMappingDetails($value, 'cre_sys_obt_cls', $creatorId,'add',$usrList);*/
+                    }
+                    
+                }
+            }
+        }
+        if(empty($oldval)){$action = 'Inserted';}else{$action = 'Updated';}
+        make_audit_trail_entries($catalogFields, getIdOfLoggedInUser() , $oldval ,$entityId, $action,$entityType,'exp_sp_administration_catalog_access','insertUserMap',
+                array('user_id', 'mro'));
+    }catch (Exception $ex){
+     $txn->rollback();
+     unset($txn);
+     watchdog_exception('insertUserMap', $ex);
+     expertusErrorThrow($ex);
+    }
+}
+
+function _updateAccessControl($entityId, $entityType, $emptyId, $form_state, $callFromAPI = 0){
+
+  $txn = db_transaction();
+  expDebug::dPrint('$form_state _updateAccessControl'.print_r($form_state, 1), 4);
+  try {
+
+    $creatorId = getIdOfLoggedInUser();
+    if($callFromAPI){
+      $creatorId = $emptyId;
+    }
+    $hidden_selection_list=trim($form_state['input']['hidden_selection'],',');
+    //$groupids = explode('-',$hidden_selection_list);
+    
+    $exstVal = existingGroupMapEntries($entityId, $entityType, $emptyId);
+    $exstVal1 = existingUserMapEntries($entityId, $entityType, $emptyId);
+    if(empty($callFromAPI)){
+        $classId = getAssociatedClassid($entityId);
+        //Delete existing entry
+        $catalogAvailability = _checkCatalogAccessAvailablity($entityId, $entityType, $emptyId);
+        if(count($catalogAvailability)){
+            $selectedGrpids = array();
+            deleteAttachedGroup($entityId,$entityType);
+            if($entityType == 'cre_sys_obt_crs'){
+                if(!empty($classId)){
+                    $clsId = explode(',',$classId);
+                    $groupId = array();
+                    foreach($catalogAvailability as $value){
+                        $groupId[]=$value->group_id;
+                        expDebug::dPrint("Hidden list variable for groups".print_r($groupId,true));
+                    }
+                    deleteAttachedGroup($classId,'cre_sys_obt_cls',$groupId);
+                }
+            }
+        }
+        if(!empty($form_state['input']['hidden_selection'])) {
+            $grpmroIds = explode(',',$hidden_selection_list);
+            foreach($grpmroIds as $value){
+                $splitIds = explode('-',$value);
+                $grpList = $splitIds[0];
+                $mroList = $splitIds[1];
+                $grptype = getgroupType($grpList);
+                $selectedGrpids[] = $grpList;
+                
+                if(!is_numeric($grpList) || $grpList <= 0)
+                    continue;
+                    
+                $select = db_select('slt_group_mapping','grpMap');
+                $select->addField('grpMap' , 'mro','mro');
+                $select->condition('entity_id',$entityId);
+                $select->condition('entity_type',$entityType);
+                $select->condition('group_id',$grpList);
+                expDebug::dPrintDBAPI('select group mapping ' , $select);
+                $oldval = $select->execute()->fetchAll();
+    
+                //Insert new group list
+                insertGrpMap($entityId, $entityType, $creatorId, $grpList, $mroList, $emptyId,$grptype[0]->is_admin,$classId,$oldval);
+            }
+        }
+    }else{
+        $classId = getAssociatedClassid($entityId);
+        if(!empty($form_state['values']['group_mro'])) {
+            $grpmroIds = explode(',',$form_state['values']['group_mro']);
+            $delVal = 0;
+            $selectedGrpids = array();
+            $enrGrpid = array();
+            $typesOfEntity = array();
+            foreach($grpmroIds as $value){
+                $splitIds = explode('::',$value);
+                $grpList = $splitIds[0];
+                $grpMroVal = $splitIds[1];
+                $selectedGrpids[] = $splitIds[0];
+                $typesOfEntity = array('cre_sys_obt_crs','cre_sys_obt_cls','cre_sys_obt_crt','cre_sys_obt_cur','cre_sys_obt_trn');
+                expDebug::dPrint('$splitIds'.print_r($splitIds, 1), 4);
+                $grptype = getgroupType($grpList,1);
+                expDebug::dPrint('$grptype'.print_r($grptype, 1), 4); 
+                
+                $select = db_select('slt_group_mapping','grpMap');
+                $select->addField('grpMap' , 'mro','mro');
+                $select->condition('entity_id',$entityId);
+                $select->condition('entity_type',$entityType);
+                $select->condition('group_id',$grpList);
+                expDebug::dPrintDBAPI('select group mapping ' , $select);
+                $oldval = $select->execute()->fetchAll();
+                
+                //$mroList = ($grptype[0]->is_admin == 0) ? $splitIds[1] : null;
+                if(empty($grpMroVal) && ($grptype[0]->is_admin == 0)){
+                    $mroList = 'cre_sys_inv_opt';
+                }elseif($grptype[0]->is_admin == 0 && in_array($entityType,$typesOfEntity)){
+                    //if compliance then the mro shouldn't reflect in the access mapping
+                    if($entityType == 'cre_sys_obt_crs' || $entityType == 'cre_sys_obt_cls'){
+                        $chkCompl = checkCourseClassCompliance($entityId,$entityType);
+                        $mroList = ($chkCompl[0]->is_compliance == '1') ? 'cre_sys_inv_opt' : $splitIds[1];
+                    }else{
+                        $mroList = $splitIds[1];
+                    }
+                }else {
+                    $mroList = null;
+                }
+                            
+                if(!empty($grptype[0]->id)){
+                    $enrGrpid[] = $grptype[0]->id.'-'.$mroList;
+                    $catalogAvailability = _checkCatalogAccessAvailablity($entityId, $entityType, $emptyId);
+                    // check if this group already mapped to this entity and then update if its available....
+                    $selectQry = db_select('slt_group_mapping','map');
+                    $selectQry->addField('map','id','mapping_id');
+                    $selectQry->condition('map.entity_id',$entityId,'=');
+                    $selectQry->condition('map.entity_type',$entityType,'=');
+                    $selectQry->condition('map.group_id',$grptype[0]->id,'=');                  
+                    $checkGrpExist = $selectQry->execute()->fetchAll();
+                    
+                    // get the group status from the given group id
+                    $selGroup = db_select('slt_groups','grp');
+                    $selGroup->addField('grp','status','status');
+                    $selGroup->condition('grp.id',$grptype[0]->id,'=');
+                    $selGroup = $selGroup->execute()->fetchAll();
+                    
+                    $is_active = ($selGroup[0]->status == 'cre_sec_sts_atv') ? 1 : 0 ;
+                    expDebug::dPrint('Check if group is active: ' .$is_active,5);
+                    
+                    $crsMappingId= $checkGrpExist[0]->mapping_id;
+                    $catalogFields['group_id'] = $grpList;
+                    $catalogFields['group_type'] = $grptype;
+                    $catalogFields['mro'] = $mroList;
+                    $catalogFields['updated_by'] = $emptyId;
+                    $catalogFields['updated_on'] = NOW();
+                    
+                    if(count($checkGrpExist) != 0){
+                        $updateQry = db_update('slt_group_mapping');
+                        $updateQry->condition('id',$crsMappingId,'=');
+                        $updateQry->fields(array(
+                                'mro'=> $mroList,
+                                'updated_by'=> $emptyId,
+                                'updated_on'=> NOW()
+                        ));
+                        
+                        $updateQry->execute();
+                    }else{
+                        //check if the group is active before adding them to the entity
+                        if($is_active == 1){
+                            insertGrpMap($entityId, $entityType, $creatorId, $grptype[0]->id, $mroList, $emptyId,$grptype[0]->is_admin,$classId,$oldval);
+                        }else{
+                            $errobj=new stdClass();
+                            $errobj->isValidateError = 1;
+                            $errobj->errcode = 'L_012';
+                            $errobj->errormsg = "Invalid group ID.";
+                            
+                            return $errobj;
+                        }
+                        
+                    }
+                        if($entityType == 'cre_sys_obt_crs'){
+                            if(!empty($classId)){
+                            $cls_id = explode(',',$classId);
+                            foreach($cls_id as $value){
+                                $tmp_value=array($value);
+                                $catalogFields['entity_type'] = 'cre_sys_obt_cls';
+                                $catalogFields['entity_id'] = $tmp_value;
+                                $catalogFields['mro'] = $mroList;
+                                $catalogFields['updated_by'] = $emptyId;
+                                $catalogFields['updated_on'] = NOW();
+                                $checkGroup = db_select('slt_group_mapping','mapping');
+                                $checkGroup->addField('mapping','id', 'mapId');
+                                $checkGroup->condition('entity_id',$tmp_value,'IN');
+                                $checkGroup->condition('entity_type','cre_sys_obt_cls','=');
+                                $checkGroup->condition('group_id',$grptype[0]->id,'=');
+                                
+                                $checkGroup = $checkGroup->execute()->fetchAll();
+                                $clsMappingId= $checkGroup[0]->mapid;
+                            if(count($checkGroup) != 0){
+                                $updateQ = db_update('slt_group_mapping');
+                                $updateQ->condition('id',array($clsMappingId),'IN');
+                                $updateQ->fields(array(
+                                    'mro'=> $mroList,
+                                    'updated_by'=> $emptyId,
+                                    'updated_on'=> NOW()
+                                ));
+                                $updateQ->execute();
+                                }
+                            }
+                        }
+                    }
+                     $action = ($oldval == '') ? 'Inserted' : 'Updated';
+                     make_audit_trail_entries($catalogFields, getIdOfLoggedInUser() , $oldval ,$entityId, $action,$entityType,'exp_sp_administration_catalog_access','updateGrpMap',
+                            array('group_id', 'mro'));
+                }else{
+                    $errobj=new stdClass();
+                    $errobj->isValidateError = 1;
+                    $errobj->errcode = 'L_012';
+                    $errobj->errormsg = "The Groupname is Invalid.";
+                    
+                    if($entityType == 'cre_sys_obt_crs' || $entityType == 'cre_sys_obt_cls' || $entityType == 'cre_sys_obt_crt' || $entityType == 'cre_sys_obt_cur' || $entityType == 'cre_sys_obt_trn')
+                        updateMandatoryForEnrollments($enrGrpid,$exstVal,$entityId,$entityType);
+                    
+                    return $errobj;
+                }
+            }
+        }else{
+            expDebug::dPrint('No Value provided in the group_mro. Thus no action will perform here.',5);
+                    }
+        
+        $grpmroIds = $enrGrpid;
+    }
+    if(!empty($catalogAvailability)) {
+        //audit trail entries for deleted groups
+        $existingGroupIds = $catalogAvailability;
+        expDebug::dPrint('existing groups '.print_r($existingGroupIds, 1));
+        expDebug::dPrint('new groups '.print_r($selectedGrpids, 1));
+        foreach($existingGroupIds as $key => $val){
+//          expDebug::dPrint('existing group '.print_r($val, 1));
+            expDebug::dPrint('needle '.print_r($val->group_id, 1));
+            expDebug::dPrint('stack '.print_r($selectedGrpids, 1));
+            if(!in_array($val->group_id, $selectedGrpids)){
+                expDebug::dPrint('inside if'.print_r($selectedGrpids, 1));
+                $catalogFields['entity_id'] = $entityId;
+                $catalogFields['entity_type'] = $entityType;
+                $catalogFields['group_id'] = $val->group_id;
+                $catalogFields['created_by'] = $creatorId;
+                $catalogFields['created_on'] = NOW();
+                $catalogFields['updated_by'] = $creatorId;
+                $catalogFields['updated_on'] = NOW();
+                make_audit_trail_entries($catalogFields, getIdOfLoggedInUser() , null ,$entityId, 'Deleted',$entityType,'exp_sp_administration_catalog_access','_updateAccessControl',
+                        array('group_id'));
+            }
+        }
+    }
+    if($entityType == 'cre_sys_obt_crs' || $entityType == 'cre_sys_obt_cls' || $entityType == 'cre_sys_obt_crt' || $entityType == 'cre_sys_obt_cur' || $entityType == 'cre_sys_obt_trn')
+        updateMandatoryForEnrollments($grpmroIds,$exstVal,$entityId,$entityType);
+    
+   /* if($entityType == 'cre_sys_obt_crs' && !empty($entityId) && (!empty($form_state['input']['hidden_idlist']) || !empty($exstVal)))
+        expertus_set_message(t('MSG721').'.');
+    if(empty($exstVal) && empty($form_state['input']['hidden_idlist']))
+            expertus_set_message(t('ERR106'));
+
+    if(count($catalogAvailability) || !empty($form_state['input']['hidden_idlist']))
+    {
+        expertus_set_message(t('LBL272').' '.t('MSG600').'.');
+    }*/
+    if($callFromAPI){
+      return array((object)array('id'=>'success'));
+    }
+  } /**
+     * @var unknown_type
+     */
+    catch (Exception $ex) {
+
+    $txn->rollback();
+    unset($txn);
+    if($callFromAPI){
+      //return array((object)array('id'=>'Failure'));
+        $errobj=new stdClass();
+        $errobj->isValidateError = 1;
+        $errobj->errcode = 'L_012';
+        $errobj->errormsg = "Unable to update access control id.";
+        return $errobj;
+    }
+    else {
+        return array((object)array('id'=>'Failure'));
+    }
+    watchdog_exception('_updateAccessControl', $ex);
+    expertusErrorThrow($ex);
+    //throw $ex;
+
+  }
+
+  // Commit the transaction
+  unset($txn);
+
+}
+
+function _updateUserAccess($entityId, $entityType, $emptyId, $form_state, $callFromAPI = 0){
+    if(!isset($form_state['input']['hidden_selection_usr']) && empty($callFromAPI)) {
+        return true; // Do Nothing if user access control not available
+    }
+    $typesOfEntity = array('cre_sys_obt_crs','cre_sys_obt_cls','cre_sys_obt_crt','cre_sys_obt_cur','cre_sys_obt_trn');
+    
+    if(in_array($entity_type,$typesOfEntity) && !empty($callFromAPI)){
+        $courseIdAvailability = checkCourseIdAvailability($entityId);
+    $classIdAvailability = checkClassIdAvailability($entityId);
+    if(($entityType=='cre_sys_obt_cls' && $classIdAvailability=='') || ($entityType=='cre_sys_obt_crs' && $courseIdAvailability=='')) {
+        $errobj=new stdClass();
+        $errobj->isValidateError = 1;
+        $errobj->errcode = 'L_012';
+        $errobj->errormsg = "Entity Id is Invalid / Not Found.";
+        return $errobj;
+    }
+    }
+  $txn = db_transaction();
+  expDebug::dPrint('$form_state _updateAccessControl'.print_r($form_state, 1), 4);
+  try {
+
+    $creatorId = getIdOfLoggedInUser();
+    if($callFromAPI){
+      $creatorId = $emptyId;
+    }
+    $hidden_selection_list=trim($form_state['input']['hidden_selection_usr'],',');
+    //$groupids = explode('-',$hidden_selection_list);
+    $exstVal = existingUserMapEntries($entityId, $entityType, $emptyId);
+    $exstVal1 = existingGroupMapEntries($entityId, $entityType, $emptyId);
+    $classId = getAssociatedClassid($entityId);
+    if(empty($callFromAPI)){
+        //Delete existing entry
+        $catalogAvailability = _checkCatalogUserAccessAvailablity($entityId, $entityType, $emptyId);
+        if(count($catalogAvailability)){
+            $selectedGrpids = array();
+            deleteAttachedUsers($entityId,$entityType);
+            if($entityType == 'cre_sys_obt_crs'){
+                if(!empty($classId)){
+                    $clsId = explode(',',$classId);
+                    $userId = array();
+                    foreach($catalogAvailability as $value){
+                        $userId[]=$value->user_id;
+                    }
+                    expDebug::dPrint("Hidden list variable for groups".print_r($userId,true));
+                    deleteAttachedUsers($classId,'cre_sys_obt_cls',$userId);
+                }
+            }
+        }
+        if(!empty($form_state['input']['hidden_selection_usr'])) {
+            $grpmroIds = explode(',',$hidden_selection_list);
+            foreach($grpmroIds as $value){
+                $splitIds = explode('-',$value);
+                $grpList = $splitIds[0];
+                $mroList = $splitIds[1];
+                //$grptype = getgroupType($grpList);
+                $selectedGrpids[] = $grpList;
+                
+                if(!is_numeric($grpList) || $grpList <= 0)
+                    continue;
+                
+                $select = db_select('slt_user_access_mapping','grpMap');
+                $select->addField('grpMap' , 'mro','mro');
+                $select->condition('entity_id',$entityId);
+                $select->condition('entity_type',$entityType);
+                $select->condition('user_id',$grpList);
+                expDebug::dPrintDBAPI('select group mapping ' , $select);
+                $oldval = $select->execute()->fetchAll();
+                
+                //Insert new user list
+                insertUserMap($entityId, $entityType, $creatorId, $grpList, $mroList, $emptyId,0,$classId,$oldval);
+            }
+        }
+    }else{
+        if(!empty($form_state['values']['user_mro'])) {
+            $grpmroIds = explode(',',$form_state['values']['user_mro']);
+            $delVal = 0;
+            $selectedGrpids = array();
+            $enrGrpid = array();
+            //$typesOfEntity = array();
+            foreach($grpmroIds as $value){
+                $splitIds = explode('::',$value);
+                $grpList = $splitIds[0];
+                $grpMroVal = $splitIds[1];
+                $selectedGrpids[] = $splitIds[0];
+                expDebug::dPrint('$splitIds'.print_r($splitIds, 1), 4);
+                
+                //TODO: Right now the adding user will be handled only for the learner side if it enhanced to admin
+                // the below needs to be modified to get the exact access type
+                //$grptype = getgroupType($grpList,1);
+                $grptype[0] =  new stdClass();
+                $grptype[0]->is_admin = 0;
+                $grptype[0]->id = db_query('SELECT id FROM slt_person WHERE user_name = :uname',array(':uname'=>$grpList))->fetchField();
+                expDebug::dPrint('$grptype'.print_r($grptype, 1), 4); 
+                
+                //$mroList = ($grptype[0]->is_admin == 0) ? $splitIds[1] : null;
+                if(empty($grpMroVal) && ($grptype[0]->is_admin == 0)){
+                    $mroList = 'cre_sys_inv_opt';
+                }elseif($grptype[0]->is_admin == 0 && in_array($entityType,$typesOfEntity)){
+                    //if compliance then the mro shouldn't reflect in the access mapping
+                    if($entityType == 'cre_sys_obt_crs' || $entityType == 'cre_sys_obt_cls'){
+                        $chkCompl = checkCourseClassCompliance($entityId,$entityType);
+                        $mroList = ($chkCompl[0]->is_compliance == '1') ? 'cre_sys_inv_opt' : $splitIds[1];
+                    }else{
+                        $mroList = $splitIds[1];
+                    }
+                }else {
+                    $mroList = null;
+                }
+                            
+                if(!empty($grptype[0]->id)){
+                    $enrGrpid[] = $grptype[0]->id.'-'.$mroList;
+                    $catalogAvailability = _checkCatalogUserAccessAvailablity($entityId, $entityType, $emptyId);
+                    // check if this group already mapped to this entity and then update if its available....
+                    $selectQry = db_select('slt_user_access_mapping','map');
+                    $selectQry->addField('map','id','mapping_id');
+                    $selectQry->condition('map.entity_id',$entityId,'=');
+                    $selectQry->condition('map.entity_type',$entityType,'=');
+                    $selectQry->condition('map.user_id',$grptype[0]->id,'=');                   
+                    $checkGrpExist = $selectQry->execute()->fetchAll();
+                    
+                    // get the user status from the given group id
+                    $selGroup = db_select('slt_person','grp');
+                    $selGroup->addField('grp','status','status');
+                    $selGroup->condition('grp.id',$grptype[0]->id,'=');
+                    $selGroup = $selGroup->execute()->fetchAll();
+                    
+                    $is_active = ($selGroup[0]->status == 'cre_usr_sts_atv') ? 1 : 0 ;
+                    expDebug::dPrint('Check if user is active: ' .$is_active,4);
+                    
+                    $crsMappingId= $checkGrpExist[0]->mapping_id;
+                    $catalogFields['user_id'] = $grptype[0]->id ;
+                    $catalogFields['access_type'] = $grptype[0]->is_admin;
+                    $catalogFields['mro'] = $mroList;
+                    $catalogFields['updated_by'] = $emptyId;
+                    $catalogFields['updated_on'] = NOW();
+                    
+                    if(count($checkGrpExist) != 0){
+                        $updateQry = db_update('slt_user_access_mapping');
+                        $updateQry->condition('id',$crsMappingId,'=');
+                        $updateQry->fields(array(
+                                'mro'=> $mroList,
+                                'updated_by'=> $emptyId,
+                                'updated_on'=> NOW()
+                        ));
+                        
+                        $updateQry->execute();
+                    }else{
+                        //check if the group is active before adding them to the entity
+                        if($is_active == 1){
+                            insertUserMap($entityId, $entityType, $creatorId, $grptype[0]->id, $mroList, $emptyId,$grptype[0]->is_admin,$classId,$oldval);
+                        }else{
+                            $errobj=new stdClass();
+                            $errobj->isValidateError = 1;
+                            $errobj->errcode = 'L_012';
+                            $errobj->errormsg = "Invalid User ID.";
+                            
+                            return $errobj;
+                        }
+                        
+                    }
+                        if($entityType == 'cre_sys_obt_crs'){
+                            if(!empty($classId)){
+                            $cls_id = explode(',',$classId);
+                            foreach($cls_id as $value){
+                                $tmp_value=array($value);
+                                $catalogFields['entity_type'] = 'cre_sys_obt_cls';
+                                $catalogFields['entity_id'] = $tmp_value;
+                                $catalogFields['mro'] = $mroList;
+                                $catalogFields['updated_by'] = $emptyId;
+                                $catalogFields['updated_on'] = NOW();
+                                $checkGroup = db_select('slt_user_access_mapping','mapping');
+                                $checkGroup->addField('mapping','id', 'mapId');
+                                $checkGroup->condition('entity_id',$tmp_value,'IN');
+                                $checkGroup->condition('entity_type','cre_sys_obt_cls','=');
+                                $checkGroup->condition('user_id',$grptype[0]->id,'=');
+                                
+                                $checkGroup = $checkGroup->execute()->fetchAll();
+                                $clsMappingId= $checkGroup[0]->mapid;
+                            if(count($checkGroup) != 0){
+                                $updateQ = db_update('slt_user_access_mapping');
+                                $updateQ->condition('id',array($clsMappingId),'IN');
+                                $updateQ->fields(array(
+                                    'mro'=> $mroList,
+                                    'updated_by'=> $emptyId,
+                                    'updated_on'=> NOW()
+                                ));
+                                $updateQ->execute();
+                                }
+                            }
+                        }
+                    }
+                     $action = ($oldval == '') ? 'Inserted' : 'Updated';
+                     make_audit_trail_entries($catalogFields, getIdOfLoggedInUser() , $oldval ,$entityId, $action,$entityType,'exp_sp_administration_catalog_access','updateUserMap',
+                            array('group_id', 'mro'));
+                }else{
+                    $errobj=new stdClass();
+                        $errobj->isValidateError = 1;
+                        $errobj->errcode = 'L_012';
+                        $errobj->errormsg = "The username is Invalid.";
+                    
+                    if($entityType == 'cre_sys_obt_crs' || $entityType == 'cre_sys_obt_cls' || $entityType == 'cre_sys_obt_crt' || $entityType == 'cre_sys_obt_cur' || $entityType == 'cre_sys_obt_trn')
+                        updateMandatoryForEnrollments($enrGrpid,$exstVal,$entityId,$entityType,'UserAccess');
+                    
+                    return $errobj;
+                }
+            }
+        }else{
+            expDebug::dPrint('No Value provided in the group_mro. Thus no action will perform here.',5);
+        }
+        
+        $grpmroIds = $enrGrpid;
+    }
+    if(!empty($catalogAvailability)) {
+        //audit trail entries for deleted groups
+        $existingGroupIds = $catalogAvailability;
+        expDebug::dPrint('existing groups '.print_r($existingGroupIds, 1));
+        expDebug::dPrint('new groups '.print_r($selectedGrpids, 1));
+        foreach($existingGroupIds as $key => $val){
+//          expDebug::dPrint('existing group '.print_r($val, 1));
+            expDebug::dPrint('needle '.print_r($val->group_id, 1));
+            expDebug::dPrint('stack '.print_r($selectedGrpids, 1));
+            if(!in_array($val->group_id, $selectedGrpids)){
+                expDebug::dPrint('inside if'.print_r($selectedGrpids, 1));
+                $catalogFields['entity_id'] = $entityId;
+                $catalogFields['entity_type'] = $entityType;
+                $catalogFields['user_id'] = $val->user_id;
+                $catalogFields['created_by'] = $creatorId;
+                $catalogFields['created_on'] = NOW();
+                $catalogFields['updated_by'] = $creatorId;
+                $catalogFields['updated_on'] = NOW();
+                make_audit_trail_entries($catalogFields, getIdOfLoggedInUser() , null ,$entityId, 'Deleted',$entityType,'exp_sp_administration_catalog_access','_updateAccessControl',
+                        array('group_id'));
+            }
+        }
+    }
+    if($entityType == 'cre_sys_obt_crs' || $entityType == 'cre_sys_obt_cls' || $entityType == 'cre_sys_obt_crt' || $entityType == 'cre_sys_obt_cur' || $entityType == 'cre_sys_obt_trn')
+        updateMandatoryForEnrollments($grpmroIds,$exstVal,$entityId,$entityType,'UserAccess');
+    
+    /*if((empty($exstVal1) && empty($form_state['input']['hidden_idlist'])) || (empty($exstVal) && empty($form_state['input']['hidden_idlist_usr']))){
+        $msg = drupal_get_messages(null,true);
+
+        if((empty($exstVal1) && (empty($form_state['input']['hidden_idlist']))) && (empty($exstVal) && (empty($form_state['input']['hidden_idlist_usr']))))
+            expertus_set_message(t('ERR106'));
+        if(($entityType == 'cre_sys_obt_crs' && !empty($entityId) && ((!empty($form_state['input']['hidden_idlist']) || !empty($exstVal)) || (!empty($form_state['input']['hidden_idlist_usr']) || !empty($extUserVal)))))
+            expertus_set_message(t('MSG721').'.');
+        
+    
+        if((count($catalogAvailabilityGrp) || !empty($form_state['input']['hidden_idlist']))||(count($catalogAvailability) || !empty($form_state['input']['hidden_idlist_usr'])))
+        {
+            expertus_set_message(t('LBL272').' '.t('MSG600').'.');
+        }
+    }*/
+    if($callFromAPI){
+      return array((object)array('id'=>'success'));
+    }
+
+  } catch (Exception $ex) {
+
+    $txn->rollback();
+    unset($txn);
+    if($callFromAPI){
+      //return array((object)array('id'=>'Failure'));
+        $errobj=new stdClass();
+        $errobj->isValidateError = 1;
+        $errobj->errcode = 'L_012';
+        $errobj->errormsg = "Unable to update access control id.";
+        return $errobj;
+    }
+    else {
+        return array((object)array('id'=>'Failure'));
+    }
+    watchdog_exception('_updateAccessControl', $ex);
+    expertusErrorThrow($ex);
+    //throw $ex;
+
+  }
+
+  // Commit the transaction
+  unset($txn);
+
+}
+
+/**
+ * _insertCatalogAccess() -> To insert the catalog access entry
+ */
+function _insertCatalogAccess($entityId, $entityType, $userTypeList, $orgList, $jobRoles, $creatorId, $emptyId){
+  $txn = db_transaction();
+  try {
+      if($entityId == 0){
+        $catalogFields['custom0'] = $emptyId;
+      } else {
+        $catalogFields['entity_id'] = $entityId;
+      }
+      $catalogFields['entity_id'] = $entityId;
+      $catalogFields['entity_type'] = $entityType;
+      $catalogFields['user_type'] = $userTypeList;
+      $catalogFields['org_id'] = $orgList;
+      $catalogFields['job_role'] = $jobRoles;
+      $catalogFields['created_by'] = $creatorId;
+      $catalogFields['created_on'] = NOW();
+      $catalogFields['updated_by'] = $creatorId;
+      $catalogFields['updated_on'] = NOW();
+
+      // Insert catalog access
+      $insert = db_insert('slt_catalog_access');
+      $insert->fields($catalogFields);
+      $insert->execute();
+      make_audit_trail_entries($catalogFields, getIdOfLoggedInUser() , null ,$entityId, 'Inserted',$entityType,'exp_sp_administration_catalog_access','_insertCatalogAccess',
+                                              array('user_type', 'org_id' ,'job_role'));
+  }catch (Exception $ex) {
+    $txn->rollback();
+    unset($txn);
+    watchdog_exception('_insertCatalogAccess', $ex);
+    expertusErrorThrow($ex);
+  }
+  // Commit the transaction
+  unset($txn);
+
+}
+
+
+/**
+ * _updateCatalogAccess() -> To update the catalog access entry
+ */
+function _updateCatalogAccess($entityId, $entityType, $userTypeList, $orgList, $jobRoles, $creatorId, $emptyId){
+  $txn = db_transaction();
+  try {
+      $catalogFields['user_type'] = $userTypeList;
+      $catalogFields['org_id'] = $orgList;
+      $catalogFields['job_role'] = $jobRoles;
+      $catalogFields['updated_by'] = $creatorId;
+      $catalogFields['updated_on'] = now();
+
+      $default= db_query("SELECT user_type ,org_id ,job_role from slt_catalog_access where entity_id=:cid",array(":cid"=>$entityId))->fetchAll();
+      //update slt_enrollment - #0032377
+      if($entityType == 'cre_sys_obt_crs' || $entityType == 'cre_sys_obt_cls')
+        updateComplianceUsersEnrollment($entityId,$entityType,$default,$catalogFields);
+      // Insert catalog access
+      $update = db_update('slt_catalog_access');
+      $update->fields($catalogFields);
+      if($entityId == 0){
+        $update->condition('custom0', $emptyId);
+      } else {
+        $update->condition('entity_id', $entityId);
+      }
+      $update->condition('entity_id', $entityId);
+      $update->condition('entity_type', $entityType);
+      $update->execute();
+      make_audit_trail_entries($catalogFields, getIdOfLoggedInUser() , $default ,$entityId, 'Updated',$entityType,'exp_sp_administration_catalog_access','_updateCatalogAccess',
+                                              array('user_type', 'org_id' ,'job_role'));
+  }catch (Exception $ex) {
+    $txn->rollback();
+    unset($txn);
+    watchdog_exception('_updateCatalogAccess', $ex);
+    expertusErrorThrow($ex);
+  }
+  unset($txn);
+
+}
+
+/**
+ * _insertMroAccess() -> To insert the MRO entry
+ */
+function _insertMroAccess($entityId, $entityType, $jobRole, $mroFlag, $creatorId, $emptyId){
+  $txn = db_transaction();
+  try {
+      if($entityId == 0){
+        $fields['custom0'] = $emptyId;
+      } else {
+        $fields['entity_id'] = $entityId;
+      }
+      $fields['entity_id'] = $entityId;
+      $fields['entity_type'] = $entityType;
+      $fields['job_role_id'] = $jobRole;
+      $fields['mro_flag'] = $mroFlag;
+      $fields['created_by'] = $creatorId;
+      $fields['created_on'] = NOW();
+      $fields['updated_by'] = $creatorId;
+      $fields['updated_on'] = NOW();
+
+      // Insert catalog access
+      $insert = db_insert('slt_mro_mapping');
+      $insert->fields($fields);
+      $insert->execute();
+  }catch (Exception $ex) {
+    $txn->rollback();
+    unset($txn);
+    watchdog_exception('_insertMroAccess', $ex);
+    expertusErrorThrow($ex);
+  }
+  unset($txn);
+}
+
+/**
+ * _updateMroAccess() -> To update the MRO entry
+ */
+function _updateMroAccess($entityId, $entityType, $jobRole, $mroFlag, $creatorId, $emptyId){
+  $txn = db_transaction();
+  try {
+      $fields['mro_flag'] = $mroFlag;
+      $fields['updated_by'] = $creatorId;
+      $fields['updated_on'] = now();
+
+      // Insert catalog access
+      $update = db_update('slt_mro_mapping');
+      $update->fields($fields);
+      $update->condition('job_role_id', $jobRole);
+      if($entityId == 0){
+        $update->condition('custom0', $emptyId);
+      } else {
+        $update->condition('entity_id', $entityId);
+      }
+      $update->condition('entity_type', $entityType);
+      $update->execute();
+  } catch (Exception $ex) {
+    $txn->rollback();
+    unset($txn);
+    watchdog_exception('_updateMroAccess', $ex);
+    expertusErrorThrow($ex);
+  }
+  unset($txn);
+}
+
+/**
+ * _checkCatalogAccessAvailablity() - To check the access control available or not
+ */
+function _checkCatalogAccessAvailablity($entityId, $entityType, $emptyId, $groupId=''){
+  try {
+   // $select = db_select('slt_catalog_access', 'catalog');
+    $select = db_select('slt_group_mapping', 'catalog');
+    $select->addField('catalog' , 'id');
+    $select->addField('catalog' , 'group_id');
+    if($entityId == 0){
+      $select->condition('catalog.custom0', $emptyId);
+    } else {
+      $select->condition('catalog.entity_id', $entityId);
+    }
+    if($groupId!=''){
+      $select->condition('catalog.group_id', $groupId);
+    }
+    $select->condition('catalog.entity_type', $entityType);
+    expDebug::dPrintDBAPI('dsssss-->',$select);
+    return $select->execute()->fetchAll();
+  } catch (Exception $ex) {
+    watchdog_exception('_checkCatalogAccessAvailablity', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * _checkCatalogUserAccessAvailablity() - To check the access control available or not
+ */
+function _checkCatalogUserAccessAvailablity($entityId, $entityType, $emptyId, $userId=''){
+  try {
+   // $select = db_select('slt_catalog_access', 'catalog');
+    $select = db_select('slt_user_access_mapping', 'catalog');
+    $select->addField('catalog' , 'id');
+    $select->addField('catalog' , 'user_id');
+    if($entityId == 0){
+      $select->condition('catalog.custom0', $emptyId);
+    } else {
+      $select->condition('catalog.entity_id', $entityId);
+    }
+    if($userId!=''){
+      $select->condition('catalog.user_id', $userId);
+    }
+    $select->condition('catalog.entity_type', $entityType);
+    expDebug::dPrintDBAPI('dsssss-->',$select);
+    return $select->execute()->fetchAll();
+  } catch (Exception $ex) {
+    watchdog_exception('_checkCatalogAccessAvailablity', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * _checkMroAvailablity() -> To check the MRO availability
+ */
+function _getMroAvailablity($entityId, $entityType, $emptyId, $jobRoleId = ''){
+  try {
+      $select = db_select('slt_mro_mapping', 'mro');
+      $select->addField('mro', 'id');
+      $select->addField('mro', 'job_role_id');
+      $select->addField('mro', 'mro_flag');
+      if($entityId == 0){
+        $select->condition('mro.custom0', $emptyId);
+      } else {
+        $select->condition('mro.entity_id', $entityId);
+      }
+      $select->condition('mro.entity_type', $entityType);
+      if(!empty($jobRoleId)){
+        $select->condition('mro.job_role_id', $jobRoleId);
+      }
+      return $select->execute()->fetchAll();
+  } catch (Exception $ex) {
+    watchdog_exception('_getMroAvailablity', $ex);
+    expertusErrorThrow($ex);
+  }
+
+}
+
+/**
+ * _deleteMro() -> To delete the MRO entry
+ */
+function _deleteMro($entityId, $entityType, $emptyId){
+  try {
+    $delete = db_delete('slt_mro_mapping');
+    if($entityId == 0){
+      $delete->condition('custom0', $emptyId);
+    } else {
+      $delete->condition('entity_id', $entityId);
+    }
+    $delete->condition('entity_type', $entityType);
+    $delete->execute();
+  } catch (Exception $ex) {
+    watchdog_exception('_deleteMro', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_administration_catalog_access_permission() {
+  try {
+      return array(
+      'Administration Perm' => array(
+        'title' => t('Administration Perm')
+      )
+    );
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_administration_catalog_access_permission', $ex);
+    expertusErrorThrow($ex);
+  }
+
+}
+
+/*
+ * To store catalog access details from the API
+ */
+function addCatalogAccessByAPI( &$form_state,$createuserid="") {
+  try {
+    $form=array();
+    $form["form_id"]="";
+    drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+    expDebug::dPrint('$form_state'.print_r($form_state, 1), 4);
+    $form_state['values']   = array_map('stripslashes', $form_state['values']);
+    expDebug::dPrint('$form_state stripslashes'.print_r($form_state, 1), 4);
+    $entityId               = $form_state['values']['entity_id'];
+    $entityType             = $form_state['values']['entity_type'];
+    $emptyId                = $createuserid;
+    $validEntityStatus      = checkEntityStatus($entityId, $entityType);
+    expDebug::dPrint('$validEntityStatus  '.print_r($validEntityStatus, 1), 4);
+    if($validEntityStatus->isValidateError == 1){
+                return $validEntityStatus;
+    }else{
+        $checkemptygroup = objectLevelAccessCheckInGroupMap($entityType,array($entityId));
+        if(!empty($checkemptygroup)){
+            $check=apiUseraccesscheck($createuserid,$entityType,$entityId);
+            if(empty($check)) {
+                $errobj=new stdClass();
+                $errobj->isValidateError = 1;
+                $errobj->errcode = 'L_013';
+                $errobj->errormsg = "user dont have this privilege";
+                return $errobj;
+            }
+        }
+        if(!empty($form_state['values']['group_mro'])) {
+            $grpmroIds = explode(',',$form_state['values']['group_mro']);
+            $delVal = 0;
+            $selectedGrpids = array();
+            $enrGrpid = array();
+            $typesOfEntity = array();
+            foreach($grpmroIds as $value){
+                $splitIds = explode('::',$value);
+                expDebug::dPrint('$$splitIds'.print_r($splitIds, 1), 4);
+                $qry = db_select('slt_groups','grp');
+                $qry -> addField('grp', 'id');
+                $qry-> condition('grp.name', array($splitIds[0]), 'IN');
+                $qry-> condition('grp.status','cre_sec_sts_atv', '=');
+                $result= $qry->execute()->fetchField();
+                expDebug::dPrintDBAPI('select query groups',$qry);
+                if(empty($result)){
+                    $errobj=new stdClass();
+                    $errobj->isValidateError = 1;
+                    $errobj->errcode = 'L_012';
+                    $errobj->errormsg = "The Groupname is Invalid.";
+                    return $errobj;
+                }
+                $checkemptygroup = objectLevelAccessCheckInGroupMap('cre_sec',array($result));
+                if(!empty($checkemptygroup)){
+                    $check=apiUseraccesscheck($createuserid,'cre_sec',$result);
+                    if(empty($check)) {
+                        $errobj=new stdClass();
+                        $errobj->isValidateError = 1;
+                        $errobj->errcode = 'L_013';
+                        $errobj->errormsg = "user dont have privilege to one of the group";
+                        return $errobj;
+                    }
+                }
+            }
+        }
+        
+        if(isset($form_state['values']['user_mro']) && !empty($form_state['values']['user_mro'])) {
+             $typesOfEntity = array('cre_sys_obt_crs','cre_sys_obt_cls','cre_sys_obt_crt','cre_sys_obt_cur','cre_sys_obt_trn');
+             if(!in_array($entityType,$typesOfEntity)){
+             unset($form_state['values']['user_mro']);
+             unset($form_state['input']['hidden_selection_usr']);
+             $errobj=new stdClass();
+             $errobj->isValidateError = 1;
+             $errobj->errcode = 'L_013';
+             $errobj->errormsg = "User access set for invalid entity";
+             return $errobj;
+             } 
+             
+            $usrmroIds = explode(',',$form_state['values']['user_mro']);
+            $delVal = 0;
+            $selectedUsrids = array();
+            $enrUsrid = array();
+            $typesOfEntity = array();
+            foreach($usrmroIds as $value){
+                $splitIds = explode('::',$value);
+                expDebug::dPrint('$$splitIds'.print_r($splitIds, 1), 4);
+                $qry = db_select('slt_person','per');
+                $qry -> addField('per', 'id');
+                $qry-> condition('per.user_name', $splitIds[0], '=');
+                $qry-> condition('per.status','cre_usr_sts_atv', '=');
+                $result= $qry->execute()->fetchField();
+                expDebug::dPrintDBAPI('select query groups',$qry);
+                if(empty($result)) {
+                        $errobj = new stdClass();
+                        $errobj->isValidateError = 1;
+                        $errobj->errcode = 'L_012';
+                        $errobj->errormsg = "The Username is Invalid.";
+                        return $errobj;
+                }
+                $checkemptygroup = objectLevelAccessCheckInGroupMap('cre_usr',array($result));
+                if($checkemptygroup){
+                    $check=apiUseraccesscheck($createuserid,'cre_usr',$result);
+                    if(empty($check)) {
+                        $errobj=new stdClass();
+                        $errobj->isValidateError = 1;
+                        $errobj->errcode = 'L_013';
+                        $errobj->errormsg = "user dont have privilege to one of the given user";
+                        return $errobj;
+                    }
+                }
+            }
+        }
+        $rollAccessId           = _updateAccessControl($entityId, $entityType, $emptyId,$form_state, 1);
+        $rollAccessId1      = _updateUserAccess($entityId, $entityType, $emptyId, $form_state,1);
+        expDebug::dPrint(' addCatalogAccessByAPI created $rollAccessId id:' . print_r($rollAccessId,true) , 4);
+        expDebug::dPrint(' addCatalogAccessByAPI created $rollAccessId id:' . print_r($rollAccessId1,true) , 4);
+        if($rollAccessId[0]->id == $rollAccessId1[0]->id)
+            return $rollAccessId;
+        else
+            return array_merge($rollAccessId,$rollAccessId1) ;
+    }
+//     if(!is_array($validEntityStatus))
+//     {
+//      $rollAccessId           = _updateAccessControl($entityId, $entityType, $emptyId,$form_state, 1);
+//      expDebug::dPrint(' addCatalogAccessByAPI created $rollAccessId id:' . print_r($rollAccessId,true) , 4);
+//      return $rollAccessId;
+//     } else {
+//      return $validEntityStatus;
+//     }
+  }catch (Exception $ex) {
+    watchdog_exception('addCatalogAccessByAPI', $ex);
+    expertusErrorThrow($ex);
+  }
+
+}
+
+
+/*
+ * To remove catalog access details from the API
+*/
+function removeCatalogAccessByAPI($form_state,$createuserid="") {
+    try {
+        $form["form_id"]="";
+        drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+        $form_state['values']   = array_map('stripslashes', $form_state['values']);
+        expDebug::dPrint('$form_state stripslashes'.print_r($form_state, 1), 4);
+        $entityId               = $form_state['values']['entity_id'];
+        $entityType             = $form_state['values']['entity_type'];
+        $grpId                  = $form_state['values']['group_id'];
+        $usrId                  = $form_state['values']['user_id'];
+        if(empty($grpId) && empty($usrId)){
+            $errobj=new stdClass();
+        $errobj->isValidateError = 1;
+        $errobj->errcode = 'L_013';
+        $errobj->errormsg = "Group id or User id is mandatory";
+        return $errobj;
+        }
+        $emptyId                = $createuserid;
+        $validEntityStatus      = checkEntityStatus($entityId, $entityType);
+        expDebug::dPrint('$validEntityStatus  '.print_r($validEntityStatus, 1), 4);
+        if($validEntityStatus->isValidateError == 1){
+            return $validEntityStatus;
+        }else{
+            $group_ids = array();
+            $group_ids = explode(',',$grpId);
+            $user_ids = array();
+            $user_ids = explode(',',$usrId);
+            foreach($group_ids as $val){
+                $gid = array($val);
+                $catalogAvailability = _checkCatalogAccessAvailablity($entityId, $entityType, $emptyId, $gid);
+                deleteAttachedGroup($entityId,$entityType,$gid);
+                if($entityType == 'cre_sys_obt_crs'){
+                    $classId = getAssociatedClassid($entityId);
+                    if(!empty($classId)){
+                        $clsId = explode(',',$classId);
+                        $groupId = array();
+                        foreach($catalogAvailability as $value){
+                            $groupId[]=$value->group_id;
+                            expDebug::dPrint("Hidden list variable for groups".print_r($groupId,true));
+                        }
+                        deleteAttachedGroup($classId,'cre_sys_obt_cls',$groupId);
+                    }
+                }
+          } 
+          foreach($user_ids as $val){
+                    $gid = array($val);
+                    $catalogAvailability = _checkCatalogUserAccessAvailablity($entityId, $entityType, $emptyId, $gid);
+                    deleteAttachedUsers($entityId,$entityType,$gid);
+                    if($entityType == 'cre_sys_obt_crs'){
+                        $classId = getAssociatedClassid($entityId);
+                        if(!empty($classId)){
+                            $clsId = explode(',',$classId);
+                            $UserId = array();
+                            foreach($catalogAvailability as $value){
+                                $UserId[]=$value->user_id;
+                                expDebug::dPrint("Hidden list variable for groups".print_r($UserId,true));
+                            }
+                            deleteAttachedUsers($classId,'cre_sys_obt_cls',$UserId);
+                    }
+                }
+          } 
+        }
+     return array((object)array('id'=>'success'));
+    }catch (Exception $ex) {
+        watchdog_exception('removeCatalogAccessByAPI', $ex);
+        expertusErrorThrow($ex);
+    }
+
+}
+
+/**
+ * Check the entity type and entity is valid
+ * @param int $entityId
+ * @param string $entityType
+ * @return multitype:StdClass | boolean
+ */
+function checkEntityStatus($entityId = '', $entityType = '') {
+    try {
+        $select = db_select('slt_profile_list_items', 'profile');
+        $select->addField('profile','id');
+        $select->condition('code', $entityType, '=');
+        $select->condition('is_active', 'Y', '='); // active status
+        expDebug::dPrintDBAPI('$select query in checkEntityStatus---->', $select);
+        $result = $select->execute();
+        $count = $result->rowCount();
+        if ($count) {
+            $tableList = array(
+                'cre_sys_obt_crs' => 'slt_course_template',
+                'cre_sys_obt_cls' => 'slt_course_class',
+                'cre_sys_obt_crt' => 'slt_program',
+                'cre_sys_obt_cur' => 'slt_program',
+                'cre_sys_obt_trn' => 'slt_program',
+                'cre_usr' => 'slt_person',
+                'cre_org' => 'slt_organization',
+                'cre_sec' => 'slt_groups',
+                'sry_det_typ_sry' => 'slt_survey',
+                'sry_det_typ_ass' => 'slt_survey',
+                'sry_det_typ_sry_qus' => 'slt_survey_questions',
+                'sry_det_typ_ass_qus' => 'slt_survey_questions',
+                'cre_sys_obt_cnt' => 'slt_content_master',
+                'cbn_anm_typ_ban' => 'slt_announcement_master',
+                'cre_ntn' => 'slt_notification_info',
+                'cre_cer' => 'slt_notification_info',
+                'cre_sys_obt_not' => 'slt_site_notice',
+                'cme_ord' => 'slt_order',
+                'cme_dis' => 'slt_discounts'
+            );
+            
+            $tableListstatus=array(
+                'cre_sys_obt_crs' => 'lrn_crs_sts_del',
+                'cre_sys_obt_cls' => 'lrn_cls_sts_del',
+                'cre_sys_obt_crt' => 'lrn_lpn_sts_del',
+                'cre_sys_obt_cur' => 'lrn_lpn_sts_del',
+                'cre_sys_obt_trn' => 'lrn_lpn_sts_del',
+                'cre_usr' => 'cre_usr_sts_del',
+                'cre_org' => 'cre_org_sts_del',
+                'cre_sec' => 'cre_sec_sts_del',
+                'sry_det_typ_sry' => 'sry_det_sry_del',
+                'sry_det_typ_ass' => 'sry_det_sry_del',
+                'sry_det_typ_sry_qus' => 'sry_qtn_sts_del',
+                'sry_det_typ_ass_qus' => 'sry_qtn_sts_del',
+                'cre_sys_obt_cnt' => 'lrn_cnt_sts_del',
+                'cbn_anm_typ_ban' => 'cbn_anm_sts_del',
+                'cre_ntn' => 'cre_ntn_sts_del',
+                'cre_cer' => 'cre_ntn_sts_del',
+                'cre_sys_obt_not' => 'cre_sys_obt_not_del' 
+                //Status check not needed for order and discount
+            );
+            if (!array_key_exists($entityType, $tableList)) {
+                $errobj=new stdClass();
+                $errobj->isValidateError = 1;
+                $errobj->errcode = 'L_012';
+                $errobj->errormsg = "Entity Type is not available in the list.";
+                return $errobj;
+            }
+            $selectEntity = db_select($tableList[$entityType], 'entity');
+            $selectEntity->addField('entity','id');
+            $selectEntity->condition('id', $entityId, '=');
+            if(isset($tableListstatus[$entityType])) {
+                $selectEntity->condition('status', $tableListstatus[$entityType], '!=');
+            }
+            expDebug::dPrintDBAPI('$select query in checkEntityId---->', $selectEntity);
+            $resultEntity = $selectEntity->execute();
+            $countEntity = $resultEntity->rowCount();
+            if ($countEntity) {
+                return true;
+            } else {
+                //return array((object)array('id'=>'Entity Id is Invalid / Not Found'));
+                $errobj=new stdClass();
+                $errobj->isValidateError = 1;
+                $errobj->errcode = 'L_012';
+                $errobj->errormsg = "Entity Id is Invalid / Not Found.";
+                return $errobj;
+            }
+
+        } else {
+            $errobj=new stdClass();
+            $errobj->isValidateError = 1;
+            $errobj->errcode = 'L_012';
+            $errobj->errormsg = "Entity type is Invalid / Inactive state.";
+            return $errobj;
+        }
+    } Catch(Exception $ex) {
+        watchdog_exception('checkEntityStatus', $ex);
+        expertusErrorThrow($ex);
+    }
+}
+
+function getOrgList($org_name,$selectedIds,$page){
+    try{
+    if($org_name == (t('LBL182'))){
+        $org_name='';
+    }
+    $org_name=$org_name=='-'?'':$org_name;
+    $selectedIds=$selectedIds=='-'?array():$selectedIds;
+    $orgDetailsArray = explode(',',$selectedIds);
+    $orgListArray = getOrganizationLst($org_name,$orgDetailsArray,'Exclude','',$page);
+    $orgList='';
+  foreach($orgListArray as $key => $value){
+    $orgId = $value->org_id;
+    $orgName = $value->org_name;
+    $orgNameRestricted = titleController('ADMIN-CATALOG-ACCESS-ORGNAME', $orgName,25);
+    $orgList .= '<li class="movable" id="'.$orgId.'" onkeydown="selectKeyDownAccess('.$orgId.', event, \'organization-available\')" ><span class="vtip" data="'.$orgName.'" title="'.$orgName.'">'.$orgNameRestricted.'</span></li>';
+  }
+  if(sizeOf($orgListArray)>=15)
+    $orgList .= '<li id="org_more"><span onclick="getOrganizationList($(\'#org_list_sel\').val(),\'more\')">'.t('LBL543').'</span></li>';
+  print $orgList;
+  }catch (Exception $ex) {
+    watchdog_exception('getOrgList', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function getJobRoles($jobrole,$selectedIds,$page){
+    try{
+    if($jobrole == (t('LBL036').' '.t('LBL133'))){
+        $jobrole='';
+    }
+    $jobrole=$jobrole=='-'?'':$jobrole;
+    $selectedIds=$selectedIds=='-'?array():$selectedIds;
+    $jobroleSelectArray1 = explode(',',$selectedIds);
+    foreach($jobroleSelectArray1 as $key=>$value){
+        $tmp = explode('-',$value);
+        $jobroleSelectArray[] = $tmp[0];
+    }
+    $jobRolesArray = getProfileItemNamesKeyedForAccessControl("cre_usr_jrl_",'cre_sys_lng_eng',$jobrole,$jobroleSelectArray,'Exclude','',$page);
+    $jobRoles='';
+    foreach($jobRolesArray as $roleId => $roleName){
+        $jobRoles .= '<li class="movable" id='.$roleId.'  tabindex="0" onkeydown="selectKeyDownAccess('.$roleId.', event, \'jobroles-available\')" ><span class="vtip" data="'.$roleName.'" title="'.$roleName.'">'.titleController('ADMIN-CATALOG-ACCESS-ROLENAME', $roleName,25).'</span></li>';
+    }
+    if(sizeOf($jobRolesArray)>=15)
+     $jobRoles .= '<li id="jobrole_more"><span onclick="getJobRoles($(\'#jobrole_list_sel\').val(),\'more\')">'.t('LBL543').'</span></li>';
+
+  print $jobRoles;
+  }catch (Exception $ex) {
+    watchdog_exception('getJobRoles', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function getUserType($usertype,$selectedIds,$page){
+    try {
+    if($usertype == (t('LBL036').' '.t('LBL173'))){
+        $usertype='';
+    }
+    $usertype=$usertype=='-'?'':$usertype;
+    $selectedIds=$selectedIds=='-'?array():$selectedIds;
+    $usertypeSelectArray = explode(',',$selectedIds);
+    $userTypeArray = getProfileItemNamesKeyedForAccessControl("cre_usr_ptp_",'cre_sys_lng_eng',$usertype,$usertypeSelectArray,'Exclude','',$page);
+    //$userTypeArray = getProfileItemNamesKeyed("cre_usr_ptp_",'cre_sys_lng_eng', false, '',$usertype, 25);
+  $userType = '';
+  foreach($userTypeArray as $userTypeKey => $userTypeName){
+    $userTypeRestricted = titleController('ADMIN-CATALOG-ACCESS-USER-TYPE-NAME', $userTypeName,25);
+      $userType .= '<li class="movable" id="'.$userTypeKey.'" tabindex="0" onkeydown="selectKeyDownAccess('.$userTypeKey.', event, \'usertype-available\')"><span class="vtip" data="'.$userTypeName.'" title="'.$userTypeName.'">'.$userTypeRestricted.'</span></li>';
+  }
+  if(sizeOf($userTypeArray)>=15)
+    $userType .= '<li id="usertype_more"><span onclick="getUserTypes($(\'#user_type_sel\').val(),\'more\')">'.t('LBL543').'</span></li>';
+
+  print $userType;
+  }catch (Exception $ex) {
+    watchdog_exception('getUserType', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+/*
+*update compliance Users Enrollment when admin changes jobrole or ORG or usertype for course/class.
+*/
+function updateComplianceUsersEnrollment($entityId,$entityType,$default,$catalogFields){
+  try{
+    $UserId = getIdOfLoggedInUser();
+    $field = ($entityType == 'cre_sys_obt_cls') ? 'class_id' : 'course_id';
+    $defaultJobrle = explode(",",$default[0]->job_role);
+    $defaultUsrtyp = explode(",",$default[0]->user_type);
+    $defaultOrgLst = explode(",",$default[0]->org_id);
+
+    $newJobrle = explode(",",$catalogFields['job_role']);
+    $newUsrtyp = explode(",",$catalogFields['user_type']);
+    $newOrgLst = explode(",",$catalogFields['org_id']);
+
+    if((empty($defaultJobrle) && !empty($newJobrle)) || (empty($defaultUsrtyp) && !empty($newUsrtyp)) || (empty($defaultOrgLst) && !empty($newOrgLst)) ){
+      //since there will be no enrolments to modify and new enrollments were inserted in table where user login
+      return true;
+    }
+    else if($defaultJobrle!=$newJobrle || $defaultUsrtyp!=$newUsrtyp  || $defaultOrgLst != $newOrgLst ){
+      resetCompliance(array_diff($defaultJobrle, $newJobrle),$entityId,$field,$UserId,'job_role');
+      resetCompliance(array_diff($defaultUsrtyp, $newUsrtyp),$entityId,$field,$UserId,'user_type');
+      resetCompliance(array_diff($defaultOrgLst, $newOrgLst),$entityId,$field,$UserId,'org_id');
+    }
+  }catch(Exception $ex) {
+    watchdog_exception('getUpadeEnrollidForJobrole', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function resetCompliance($access,$entityId,$field,$UserId,$accType){
+    $UpdenrIdjbrl = '';
+    foreach($access as $jbrl){
+        $UpdenrIdjbrl = getEnrollidForcomplianceupdate($entityId,$field,$jbrl,$accType);
+        if(!empty($UpdenrIdjbrl))
+            getComplianceCourseEnrollAutoCancel($UpdenrIdjbrl,$UserId);
+    }
+}
+/*
+*function to fetch compliance enroll id for access.
+*/
+function getEnrollidForcomplianceupdate($entityId,$field,$default,$fieldType){
+ try{
+    $select = db_select('slt_catalog_access','cat');
+    $select->leftJoin('slt_enrollment','enr','((cat.entity_id = enr.class_id and cat.entity_type = \'cre_sys_obt_cls\') OR (cat.entity_id = enr.course_id and cat.entity_type = \'cre_sys_obt_crs\') OR
+                (cat.entity_id = enr.class_id and cat.entity_type = \'cre_sys_obt_cls\') ) and enr.'.$field.'='.$entityId.' and enr.reg_status = \'lrn_crs_reg_cnf\'');
+    $select->addExpression('GROUP_CONCAT(DISTINCT(enr.id))', 'enroll_id');
+    $select->where('find_in_set(\''.$default.'\',cat.'.$fieldType.') >0');
+    expDebug::dPrintDBAPI('$select query---->', $select);
+    $result = $select->execute()->fetchField();
+    $enrollId = explode(",", $result);
+    expDebug::dPrint('result variable-->>'.print_r($enrollId,true),5);
+    return $enrollId;
+ }catch (Exception $ex) {
+    watchdog_exception('getUpadeEnrollidForJobrole', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function getgroupType($grpVal,$fromApi){
+    try{
+    $select = db_select('slt_groups','grps');
+    $select->addField('grps','is_admin');
+    $select->addField('grps','id');
+    if($fromApi)
+        $select->condition('grps.name',$grpVal,'=');
+    else
+        $select->condition('grps.id',$grpVal,'=');
+    expDebug::dPrintDBAPI('select grp', $select);
+    return $select->execute()->fetchAll();
+    }catch(Exception $ex){
+        watchdog_exception('getgroupType', $ex);
+        expertusErrorThrow($ex);
+    }
+}
+
+function getAssociatedClassid($courseId){
+    try{
+        $select = db_select('slt_course_class','cls');
+        $select->addExpression('group_concat(cls.id)','clsid');
+        $select->condition('cls.course_id',$courseId,'=');
+        return $select->execute()->fetchField();
+    }catch(Exception $ex){
+        watchdog_exception('getAssociatedClassid', $ex);
+        expertusErrorThrow($ex);
+    }
+}
+/**
+ * Get the display name for the entity type
+ * @param string $entityType
+ * @return string
+ */
+function getEntityDisplayName($entityType = '') {
+    try{
+        $grpDisType = array();
+        $grpDisType['cre_sys_obt_crs'] = t('Course');
+        $grpDisType['cre_sys_obt_cls'] = t('Class');
+        $grpDisType['cre_sys_obt_crt'] = t('Training Plan');
+        $grpDisType['cre_sys_obt_cur'] = t('Training Plan');
+        $grpDisType['cre_sys_obt_trn'] = t('Training Plan'); // training
+        $grpDisType['cre_usr'] = t('User'); // user
+        $grpDisType['cre_org'] = t('Organization'); // organization
+        $grpDisType['cre_sec'] = t('Group'); // group
+        $grpDisType['sry_det_typ_sry'] = t('Survey'); //survey
+        $grpDisType['sry_det_typ_ass'] = t('Assessment'); //assessment
+        $grpDisType['sry_det_typ_sry_qus'] = t('LBL323'); //survey question
+        $grpDisType['sry_det_typ_ass_qus'] = t('LBL626'); // Assessment Question
+        $grpDisType['cre_sys_obt_cnt'] = t('Content'); //content
+        $grpDisType['cbn_anm_typ_ban'] = t('LBL623'); //banner
+        $grpDisType['cre_ntn'] = t('LBL204'); //notification
+        $grpDisType['cre_sys_obt_not'] = t('LBL350'); // announcement
+        if(module_exists('exp_sp_administration_customattribute')){   //#custom_attribute_0078975 - Check module status
+          $grpDisType['cre_sys_obt_cattr'] = t('LBL2015'); // customattribute #custom_attribute_0078975
+        }
+        $grpDisType['cme_ord'] = t('LBL1025'); // order
+        $grpDisType['cme_pmt'] = t('LBL1025'); // order
+        $grpDisType['cme_dis'] = t('Discount');
+        $grpDisType['cre_cer'] = t('LBL205'); // Certificate
+        $grpDisType['cre_sys_obt_loc'] = t('Location');
+        $grpDisType['cre_usr_dpt'] = t('LBL179');
+        $grpDisType['cre_usr_etp'] = t('LBL174');
+        $grpDisType['cre_usr_jrl'] = t('LBL133');
+        $grpDisType['cre_usr_jtl'] = t('LBL073');
+        $grpDisType['cre_usr_ptp'] = t('LBL173');
+        $grpDisType['cre_sys_obt_cnt_aut_pre']=t('LBL3018');//Presentation
+        $grpDisType['cre_sys_obt_cnt_aut']=t('Content');//video
+        if (array_key_exists($entityType, $grpDisType)) {
+            return $grpDisType[$entityType];
+        } else {
+            return t('LBL272'); // Details
+        }
+    }catch(Exception $ex){
+        watchdog_exception('getEntityDisplayName', $ex);
+        expertusErrorThrow($ex);
+    }
+}
+
+/**
+ * @desc - Function to update the mandatory for the enrollment based on user access
+ * @param Integer $grpId
+ */
+function updateEnrollmentasMandatoryForUserAccess($grpId,$entId,$entType,$mandorNot){
+    try{
+        $logUserid = getSltpersonUserId();
+        
+        $insQry = '';
+        
+        $insQry .= "INSERT INTO slt_audit_trail(logged_user_id,entity_id,entity_type,module_name,functionality_name,logged_user_action,mod_user_id,
+                                                                new_value,esign_date_time,timezone,created_on,dataload_by) ";
+        $madmsg = ($mandorNot == 'Y') ? "Update as mandatory" : "Update as non mandatory";
+        if($entType == 'cre_sys_obt_crt' || $entType == 'cre_sys_obt_cur' || $entType == 'cre_sys_obt_trn'){
+            $insQry .= " SELECT $logUserid, e.program_id,'$entType','exp_sp_administration_catalog_access','_updateUserAccessControl',
+                '$madmsg',e.user_id,e.id,CONVERT_TZ(CONCAT(DATE_FORMAT(CURDATE(), _utf8'%Y-%m-%d'),' ',CURTIME()) ,(SELECT pro1.attr2 FROM slt_profile_list_items pro1 WHERE pro1.code= p.time_zone), spli.attr2) ,
+                'spli.code',now(),'mandGrp'
+                FROM slt_master_enrollment e
+                INNER JOIN slt_person p ON p.id = e.user_id
+                INNER JOIN slt_program cls ON cls.id = e.program_id
+                LEFT JOIN slt_profile_list_items spli ON spli.code = p.time_zone
+                LEFT JOIN slt_user_access_mapping g on g.access_type = 0 AND p.id = g.user_id AND g.user_id IN ( $grpId )
+                WHERE e.program_id = :crsid ";
+        } else {
+            $insQry .= " SELECT $logUserid, e.class_id,'$entType','exp_sp_administration_catalog_access','_updateUserAccessControl',
+                '$madmsg',e.user_id,e.id,CONVERT_TZ(CONCAT(DATE_FORMAT(CURDATE(), _utf8'%Y-%m-%d'),' ',CURTIME()) ,(SELECT pro1.attr2 FROM slt_profile_list_items pro1 WHERE pro1.code= p.time_zone), spli.attr2) ,
+                'spli.code',now(),'mandGrp'
+                FROM slt_enrollment e
+                INNER JOIN slt_person p ON p.id = e.user_id
+                INNER JOIN slt_course_class cls ON cls.id = e.class_id
+                LEFT JOIN slt_profile_list_items spli ON spli.code = p.time_zone
+                LEFT JOIN slt_user_access_mapping g on g.access_type = 0 AND p.id = g.user_id AND g.user_id IN ( $grpId )";
+            
+            if($entType == 'cre_sys_obt_crs')
+            $insQry .= " WHERE e.course_id = :crsid and master_enrollment_id IS NULL";
+            else
+            $insQry .= " WHERE e.class_id = :crsid and master_enrollment_id IS NULL";
+        }
+        if($mandorNot == 'Y')
+            $insQry .= ($entType == 'cre_sys_obt_crs' || $entType == 'cre_sys_obt_cls') ? " AND e.mandatory IS NULL " : " AND (e.mandatory = 0 OR e.mandatory IS NULL) ";
+        else
+            $insQry .= " AND e.mandatory IS NOT NULL ";
+        
+        $insQry .= " GROUP BY e.id";
+        
+        $args = array(':crsid' => $entId);
+        expDebug::dPrintDBAPI("Query for insert into audit trail enrollments as mandatory",$insQry,$args);
+        db_query($insQry,$args);
+        
+        
+        // Update mandatory column of enrollments.
+        
+        $updQry = '';
+        if($entType == 'cre_sys_obt_crt' || $entType == 'cre_sys_obt_cur' || $entType == 'cre_sys_obt_trn'){
+            $updQry = "UPDATE slt_master_enrollment enr
+            INNER JOIN (SELECT e.id as eid, e.user_id FROM slt_master_enrollment e
+            INNER JOIN slt_person p ON p.id = e.user_id
+            INNER JOIN slt_program cls ON cls.id = e.program_id
+            LEFT JOIN slt_user_access_mapping g on g.access_type = 0 AND p.id = g.user_id AND g.user_id IN ( $grpId )
+            WHERE e.program_id = :crsid ";
+        } else {
+            $updQry = "UPDATE slt_enrollment enr
+            INNER JOIN (SELECT e.id as eid, e.user_id FROM slt_enrollment e
+            INNER JOIN slt_person p ON p.id = e.user_id
+            INNER JOIN slt_course_class cls ON cls.id = e.class_id
+            LEFT JOIN slt_user_access_mapping g on g.access_type = 0 AND p.id = g.user_id AND g.user_id IN ( $grpId )
+            ";
+            
+            if($entType == 'cre_sys_obt_crs')
+                $updQry .= " WHERE e.course_id = :crsid AND master_enrollment_id IS NULL";
+            else
+                $updQry .= " WHERE e.class_id = :crsid AND master_enrollment_id IS NULL";
+        }
+        if($mandorNot == 'Y')
+            $updQry .= ($entType == 'cre_sys_obt_crs' || $entType == 'cre_sys_obt_cls') ? " AND e.mandatory IS NULL " : " AND (e.mandatory = 0 OR e.mandatory IS NULL) ";
+        else
+            $updQry .= " AND e.mandatory IS NOT NULL ";
+        
+        $updQry .= " GROUP BY e.id) x ON x.user_id = enr.user_id AND x.eid = enr.id";
+        
+        if($mandorNot == 'Y'){
+            $manVal = ($entType =='cre_sys_obt_crs' || $entType =='cre_sys_obt_cls') ? 'Y' : 1;
+            $updQry .= " SET enr.mandatory = :y , updated_on = now(),updated_by = :updusr
+            WHERE enr.id = x.eid AND enr.user_id = x.user_id";
+            $args = array(':y' => $manVal,':crsid' => $entId,':updusr' => $logUserid);
+        }else{
+            $updQry .= " SET enr.mandatory = NULL, updated_on = now(),updated_by = :updusr
+            WHERE enr.id = x.eid AND enr.user_id = x.user_id";
+            $args = array(':crsid' => $entId,':updusr' => $logUserid);
+        }
+        
+        expDebug::dPrintDBAPI("Query for update enrollments as mandatory",$updQry,$args);
+        db_query($updQry,$args);
+        
+        // Update dataload_by as null in slt_audit_trail table
+        
+        $qry = "UPDATE slt_audit_trail SET dataload_by = NULL WHERE dataload_by = 'mandGrp'";
+        db_query($qry);
+    }catch(Exception $ex){
+        watchdog_exception('getEntityDisplayName', $ex);
+        expertusErrorThrow($ex);
+    }
+}
+
+/**
+ * @desc - Function to update the mandatory for the enrollment has privilege under the course
+ * @param Integer $grpId
+ */
+function updateEnrollmentasMandatory($grpId,$entId,$entType,$mandorNot){
+    try{
+        
+        $logUserid = getSltpersonUserId();
+        
+        // Audit trail entry for the updated enrollments
+        $insQry = '';
+        
+        $insQry .= "INSERT INTO slt_audit_trail(logged_user_id,entity_id,entity_type,module_name,functionality_name,logged_user_action,mod_user_id,
+                                                                new_value,esign_date_time,timezone,created_on,dataload_by) ";
+        $madmsg = ($mandorNot == 'Y') ? "Update as mandatory" : "Update as non mandatory";
+        if($entType == 'cre_sys_obt_crt' || $entType == 'cre_sys_obt_cur' || $entType == 'cre_sys_obt_trn'){
+            $insQry .= " SELECT $logUserid, e.program_id,'$entType','exp_sp_administration_catalog_access','_updateAccessControl',
+                '$madmsg',e.user_id,e.id,CONVERT_TZ(CONCAT(DATE_FORMAT(CURDATE(), _utf8'%Y-%m-%d'),' ',CURTIME()) ,(SELECT pro1.attr2 FROM slt_profile_list_items pro1 WHERE pro1.code= p.time_zone), spli.attr2) ,
+                'spli.code',now(),'mandGrp'
+                FROM slt_master_enrollment e
+                INNER JOIN slt_person p ON p.id = e.user_id
+                INNER JOIN slt_program cls ON cls.id = e.program_id
+                LEFT JOIN slt_profile_list_items spli ON spli.code = p.time_zone
+                LEFT JOIN slt_person_jobrole_mapping pm ON pm.user_id = p.id
+                LEFT JOIN slt_groups g on g.is_admin = 0 AND g.id IN ( $grpId )
+                LEFT JOIN slt_group_attributes grpatt on grpatt.group_id = g.id
+                WHERE e.program_id = :crsid AND IF(FIND_IN_SET(p.id,g.added_users)>0, 1=1, (g.removed_users IS NULL OR FIND_IN_SET(p.id,g.removed_users)<=0)";
+        } else {
+            $insQry .= " SELECT $logUserid, e.class_id,'$entType','exp_sp_administration_catalog_access','_updateAccessControl',
+                '$madmsg',e.user_id,e.id,CONVERT_TZ(CONCAT(DATE_FORMAT(CURDATE(), _utf8'%Y-%m-%d'),' ',CURTIME()) ,(SELECT pro1.attr2 FROM slt_profile_list_items pro1 WHERE pro1.code= p.time_zone), spli.attr2) ,
+                'spli.code',now(),'mandGrp'
+                FROM slt_enrollment e
+                INNER JOIN slt_person p ON p.id = e.user_id
+                INNER JOIN slt_course_class cls ON cls.id = e.class_id
+                LEFT JOIN slt_profile_list_items spli ON spli.code = p.time_zone
+                LEFT JOIN slt_person_jobrole_mapping pm ON pm.user_id = p.id
+                LEFT JOIN slt_groups g on g.is_admin = 0 AND g.id IN ( $grpId ) 
+                LEFT JOIN slt_group_attributes grpatt on grpatt.group_id = g.id";
+            
+        if($entType == 'cre_sys_obt_crs')
+        $insQry .= " WHERE e.course_id = :crsid AND IF(FIND_IN_SET(p.id,g.added_users)>0, 1=1, (g.removed_users IS NULL OR FIND_IN_SET(p.id,g.removed_users)<=0) and master_enrollment_id IS NULL";
+        else
+        $insQry .= " WHERE e.class_id = :crsid AND IF(FIND_IN_SET(p.id,g.added_users)>0, 1=1, (g.removed_users IS NULL OR FIND_IN_SET(p.id,g.removed_users)<=0) and master_enrollment_id IS NULL";
+        }
+        
+                $enabledValues = getEnabledAttrForVisibility();
+                expDebug::dPrint("Values of enabled attribute in site settings".print_r($enabledValues,true),4);
+                foreach($enabledValues as $key => $value){
+            
+        $insQry .= " AND ";
+        if($value == 'org_id')
+            $insQry .= "if(g.org_id='All',p.org_id is not null,(FIND_IN_SET(p.org_id,g.org_id)>0) OR g.org_id is null) ";
+                
+            if($value =='country')
+                    $insQry .= "if(g.country='All',p.country is not null,(FIND_IN_SET(p.country,g.country)>0) OR g.country is null) ";
+                                
+                            if($value =='department')
+                            $insQry .= "if(g.department='All',p.dept_code is not null,(FIND_IN_SET(p.dept_code,g.department)>0) OR g.department is null) ";
+                                        
+                                    if($value =='employment_type')
+            $insQry .= "if(g.employment_type='All',p.employment_type is not null,(FIND_IN_SET(p.employment_type,g.employment_type)>0) OR g.employment_type is null) ";
+                        
+                    if($value =='language')
+                    $insQry .= "if(g.language='All',p.preferred_language is not null,(FIND_IN_SET(p.preferred_language,g.language)>0) OR g.language is null) ";
+                        
+                    if($value =='state')
+                    $insQry .= "if(g.state='All',p.state is not null,(FIND_IN_SET(concat(p.country,'-',p.state),g.state)>0) OR g.state is null) ";
+                                
+                            if($value =='user_type')
+                            $insQry .= "if(g.user_type='All',p.user_type is not null,(FIND_IN_SET(p.user_type,g.user_type)>0) OR g.user_type is null) ";
+                                        
+                                    if($value =='job_role')
+                                $insQry .= "if(g.job_role='All',(select count(1) from slt_person_jobrole_mapping as jobmap where p.id= jobmap.user_id)>0,g.job_role IS NULL OR (FIND_IN_SET(ifnull(pm.job_role,''),ifnull(g.job_role,''))>0)) ";
+                                            
+                                        if($value =='role')
+                                        $insQry .= "(CASE WHEN (g.is_manager='Y' AND g.is_instructor='Y')
+                                                THEN
+                                                (ifnull(p.is_manager,'N') = g.is_manager or ifnull(p.is_instructor,'N') = g.is_instructor)
+                                                WHEN (g.is_manager='Y' AND g.is_instructor='N')
+                                                THEN
+                                                (ifnull(p.is_manager,'N') = g.is_manager)
+                                                WHEN (g.is_manager='N' AND g.is_instructor='Y')
+                                                THEN
+                                                (ifnull(p.is_instructor,'N') = g.is_instructor)
+                                                ELSE
+                                                1=1
+                                                END )";
+                                        if($value =='hire_date')
+                                            $insQry .= "(if(grpatt.id is not null,if(grpatt.on_or_after_start_date is not null ,DATE_FORMAT(grpatt.on_or_after_start_date,'%Y-%m-%d') <= DATE_FORMAT(p.hire_date,'%Y-%m-%d'),1=0) OR 
+                    if(grpatt.on_or_before_start_date is not null, DATE_FORMAT(grpatt.on_or_before_start_date,'%Y-%m-%d') >= DATE_FORMAT(p.hire_date,'%Y-%m-%d'), 1=0) OR
+                    if(grpatt.between_start_date is not null ,DATE_FORMAT(p.hire_date,'%Y-%m-%d') between DATE_FORMAT(grpatt.between_start_date,'%Y-%m-%d') AND DATE_FORMAT(grpatt.between_end_date,'%Y-%m-%d'), 1=0),1=1)  )";
+        }
+                                                $insQry .= ")";
+        
+                                                if($mandorNot == 'Y')
+                                                $insQry .= ($entType == 'cre_sys_obt_crs' || $entType == 'cre_sys_obt_cls') ? " AND e.mandatory IS NULL " : " AND (e.mandatory = 0 OR e.mandatory IS NULL) ";
+                                                else
+                            $insQry .= " AND e.mandatory IS NOT NULL ";
+        
+                            $insQry .= " GROUP BY e.id";
+        
+                            $args = array(':crsid' => $entId);
+                            expDebug::dPrintDBAPI("Query for insert into audit trail enrollments as mandatory",$insQry,$args);
+                            db_query($insQry,$args);
+        
+        
+        // Update mandatory column of enrollments.
+        
+        $updQry = '';
+        if($entType == 'cre_sys_obt_crt' || $entType == 'cre_sys_obt_cur' || $entType == 'cre_sys_obt_trn'){
+            $updQry = "UPDATE slt_master_enrollment enr
+            INNER JOIN (SELECT e.id as eid, e.user_id FROM slt_master_enrollment e
+            INNER JOIN slt_person p ON p.id = e.user_id
+            INNER JOIN slt_program cls ON cls.id = e.program_id
+            LEFT JOIN slt_person_jobrole_mapping pm ON pm.user_id = p.id
+            LEFT JOIN slt_groups g on g.is_admin = 0 AND g.id IN ( $grpId )
+            LEFT JOIN slt_group_attributes grpatt on grpatt.group_id = g.id
+            WHERE e.program_id = :crsid AND IF(FIND_IN_SET(p.id,g.added_users)>0, 1=1, (g.removed_users IS NULL OR FIND_IN_SET(p.id,g.removed_users)<=0)";
+        } else {
+            $updQry = "UPDATE slt_enrollment enr
+            INNER JOIN (SELECT e.id as eid, e.user_id FROM slt_enrollment e
+            INNER JOIN slt_person p ON p.id = e.user_id
+            INNER JOIN slt_course_class cls ON cls.id = e.class_id
+            LEFT JOIN slt_person_jobrole_mapping pm ON pm.user_id = p.id
+            LEFT JOIN slt_groups g on g.is_admin = 0 AND g.id IN ( $grpId )
+            LEFT JOIN slt_group_attributes grpatt on grpatt.group_id = g.id
+            ";
+            
+            if($entType == 'cre_sys_obt_crs')
+                $updQry .= " WHERE e.course_id = :crsid AND IF(FIND_IN_SET(p.id,g.added_users)>0, 1=1, (g.removed_users IS NULL OR FIND_IN_SET(p.id,g.removed_users)<=0) and master_enrollment_id IS NULL";
+            else
+                $updQry .= " WHERE e.class_id = :crsid AND IF(FIND_IN_SET(p.id,g.added_users)>0, 1=1, (g.removed_users IS NULL OR FIND_IN_SET(p.id,g.removed_users)<=0) and master_enrollment_id IS NULL";
+        }
+        
+        $enabledValues = getEnabledAttrForVisibility();
+        expDebug::dPrint("Values of enabled attribute in site settings".print_r($enabledValues,true),4);
+        foreach($enabledValues as $key => $value){
+            
+            $updQry .= " AND ";
+            if($value == 'org_id')
+                $updQry .= "if(g.org_id='All',p.org_id is not null,(FIND_IN_SET(p.org_id,g.org_id)>0) OR g.org_id is null) ";
+            
+            if($value =='country')
+                $updQry .= "if(g.country='All',p.country is not null,(FIND_IN_SET(p.country,g.country)>0) OR g.country is null) ";
+            
+            if($value =='department')
+                $updQry .= "if(g.department='All',p.dept_code is not null,(FIND_IN_SET(p.dept_code,g.department)>0) OR g.department is null) ";
+            
+            if($value =='employment_type')
+                $updQry .= "if(g.employment_type='All',p.employment_type is not null,(FIND_IN_SET(p.employment_type,g.employment_type)>0) OR g.employment_type is null) ";
+            
+            if($value =='language')
+                $updQry .= "if(g.language='All',p.preferred_language is not null,(FIND_IN_SET(p.preferred_language,g.language)>0) OR g.language is null) ";
+            
+            if($value =='state')
+                $updQry .= "if(g.state='All',p.state is not null,(FIND_IN_SET(concat(p.country,'-',p.state),g.state)>0) OR g.state is null) ";
+            
+            if($value =='user_type')
+                $updQry .= "if(g.user_type='All',p.user_type is not null,(FIND_IN_SET(p.user_type,g.user_type)>0) OR g.user_type is null) ";
+            
+            if($value =='job_role')
+                $updQry .= "if(g.job_role='All',(select count(1) from slt_person_jobrole_mapping as jobmap where p.id= jobmap.user_id)>0,g.job_role IS NULL OR (FIND_IN_SET(ifnull(pm.job_role,''),ifnull(g.job_role,''))>0)) ";
+            
+            if($value =='role')
+                $updQry .= "(CASE WHEN (g.is_manager='Y' AND g.is_instructor='Y') 
+                                        THEN
+                    (ifnull(p.is_manager,'N') = g.is_manager or ifnull(p.is_instructor,'N') = g.is_instructor)
+                    WHEN (g.is_manager='Y' AND g.is_instructor='N') 
+                    THEN
+                    (ifnull(p.is_manager,'N') = g.is_manager)
+                    WHEN (g.is_manager='N' AND g.is_instructor='Y') 
+                    THEN 
+                    (ifnull(p.is_instructor,'N') = g.is_instructor)
+                    ELSE
+                    1=1
+                    END )";
+            if($value =='hire_date')
+                $updQry .= "(if(grpatt.id is not null,if(grpatt.on_or_after_start_date is not null ,DATE_FORMAT(grpatt.on_or_after_start_date,'%Y-%m-%d') <= DATE_FORMAT(p.hire_date,'%Y-%m-%d'),1=0) OR 
+                    if(grpatt.on_or_before_start_date is not null, DATE_FORMAT(grpatt.on_or_before_start_date,'%Y-%m-%d') >= DATE_FORMAT(p.hire_date,'%Y-%m-%d'), 1=0) OR
+                    if(grpatt.between_start_date is not null ,DATE_FORMAT(p.hire_date,'%Y-%m-%d') between DATE_FORMAT(grpatt.between_start_date,'%Y-%m-%d') AND DATE_FORMAT(grpatt.between_end_date,'%Y-%m-%d'), 1=0),1=1))";
+        }
+        $updQry .= ")";
+        
+        if($mandorNot == 'Y')
+            $updQry .= ($entType == 'cre_sys_obt_crs' || $entType == 'cre_sys_obt_cls') ? " AND e.mandatory IS NULL " : " AND (e.mandatory = 0 OR e.mandatory IS NULL) ";
+        else
+            $updQry .= " AND e.mandatory IS NOT NULL ";
+        
+        $updQry .= " GROUP BY e.id) x ON x.user_id = enr.user_id AND x.eid = enr.id";
+        
+        if($mandorNot == 'Y'){
+            $manVal = ($entType =='cre_sys_obt_crs' || $entType =='cre_sys_obt_cls') ? 'Y' : 1;
+            $updQry .= " SET enr.mandatory = :y , updated_on = now(),updated_by = :updusr
+            WHERE enr.id = x.eid AND enr.user_id = x.user_id";
+            $args = array(':y' => $manVal,':crsid' => $entId,':updusr' => $logUserid);
+        }else{
+            $updQry .= " SET enr.mandatory = NULL, updated_on = now(),updated_by = :updusr
+            WHERE enr.id = x.eid AND enr.user_id = x.user_id";
+            $args = array(':crsid' => $entId,':updusr' => $logUserid);
+        }
+        
+        expDebug::dPrintDBAPI("Query for update enrollments as mandatory",$updQry,$args);
+        db_query($updQry,$args);
+        
+        // Update dataload_by as null in slt_audit_trail table
+        
+        $qry = "UPDATE slt_audit_trail SET dataload_by = NULL WHERE dataload_by = 'mandGrp'";
+        db_query($qry);
+        
+    }catch(Exception $ex){
+        
+        $qry = "DELETE FROM slt_audit_trail WHERE dataload_by = 'mandGrp'";
+        db_query($qry);
+        
+        watchdog_exception('updateEnrollmentasMandatory', $ex);
+        expertusErrorThrow($ex);
+    }
+}
+
+function existingGroupMapEntries($entityId,$entityType,$emptyId){
+    try{
+        
+        $grpMap = db_select("slt_group_mapping","grpmap");
+        $grpMap->addExpression("CONCAT(grpmap.group_id,'-',grpmap.mro)","gmro");
+        $grpMap->condition('grpmap.entity_type',$entityType,'=');
+        
+        if($entityId == 0)
+            $grpMap->condition('grpmap.custom0', $emptyId,'=');
+        else
+            $grpMap->condition('grpmap.entity_id',$entityId,'=');
+        
+        expDebug::dPrintDBAPI("Query for getting the existing value",$grpMap);
+        $extVal = $grpMap->execute()->fetchCol();
+        expDebug::dPrint("Result of already existing group mapping records".print_r($extVal,true),3);
+        return $extVal;
+    }catch(Exception $e){
+        watchdog_exception('existingGroupMapEntries', $e);
+        expertusErrorThrow($e);
+    }
+}
+
+function existingUserMapEntries($entityId,$entityType,$emptyId){
+    try{
+        
+        $grpMap = db_select("slt_user_access_mapping","grpmap");
+        $grpMap->addExpression("CONCAT(grpmap.user_id,'-',grpmap.mro)","gmro");
+        $grpMap->condition('grpmap.entity_type',$entityType,'=');
+        
+        if($entityId == 0)
+            $grpMap->condition('grpmap.custom0', $emptyId,'=');
+        else
+            $grpMap->condition('grpmap.entity_id',$entityId,'=');
+        
+        expDebug::dPrintDBAPI("Query for getting the existing value",$grpMap);
+        $extVal = $grpMap->execute()->fetchCol();
+        expDebug::dPrint("Result of already existing group mapping records".print_r($extVal,true),3);
+        return $extVal;
+    }catch(Exception $e){
+        watchdog_exception('existingGroupMapEntries', $e);
+        expertusErrorThrow($e);
+    }
+}
+
+function updateMandatoryForEnrollments($grpmroIds,$extVal,$entId,$entType,$cfrom=''){
+    try{
+        
+        
+        expDebug::dPrint("Already existing records".print_r($extVal,true)."Count".count($extVal),4);
+        expDebug::dPrint("Selected group mapping values".print_r($grpmroIds,true).'Count'.count($grpmroIds),4);
+        $nonManArr = array();
+        $manArr = array();
+        if(count($extVal)>0 && count($grpmroIds)>0){
+            
+            $arrDif = array_diff($extVal, $grpmroIds);
+            $grpId = '';
+            foreach($arrDif as $val){
+                if(strpos($val,'cre_sys_inv_man') > 0){
+                    $nonManArr[] = $val;
+                    $grpArr = explode('-',$val);
+                    $grpId .= ($grpId == '') ? $grpArr[0] : ','.$grpArr[0];
+                }
+            }
+            if(count($nonManArr)>0){
+                if(empty($cfrom))
+                    updateEnrollmentasMandatory($grpId,$entId,$entType,'N');
+                else
+                    updateEnrollmentasMandatoryForUserAccess($grpId,$entId,$entType,'N');
+            }
+            
+            $grpId = '';
+            foreach($grpmroIds as $val){
+                if(strpos($val,'cre_sys_inv_man') > 0){
+                    $manArr[] = $val;
+                    $grpArr = explode('-',$val);
+                    $grpId .= ($grpId == '') ? $grpArr[0] : ','.$grpArr[0];
+                }
+            }
+            
+            if(count($manArr)>0){
+                if(empty($cfrom))
+                    updateEnrollmentasMandatory($grpId,$entId,$entType,'Y');
+                else
+                    updateEnrollmentasMandatoryForUserAccess($grpId,$entId,$entType,'Y');
+            }
+         }else if(count($grpmroIds)>0 && count($extVal)<=0){
+            $grpId = '';
+            foreach($grpmroIds as $val){
+                if(strpos($val,'cre_sys_inv_man') > 0){
+                    $manArr[] = $val;
+                    $grpArr = explode('-',$val);
+                    $grpId .= ($grpId == '') ? $grpArr[0] : ','.$grpArr[0]; 
+                }
+            }
+                
+            if(count($manArr)>0){
+                if(empty($cfrom))
+                    updateEnrollmentasMandatory($grpId,$entId,$entType,'Y');
+                else
+                    updateEnrollmentasMandatoryForUserAccess($grpId,$entId,$entType,'Y');
+            }
+         }else if(count($extVal)>0 && count($grpmroIds)<=0){
+            $grpId = '';
+            foreach($extVal as $val){
+                if(strpos($val,'cre_sys_inv_man') > 0){
+                    $nonManArr[] = $val;
+                    $grpArr = explode('-',$val);
+                    $grpId .= ($grpId == '') ? $grpArr[0] : ','.$grpArr[0];
+                }
+            }
+            if(count($nonManArr)>0){
+                if(empty($cfrom))
+                    updateEnrollmentasMandatory($grpId,$entId,$entType,'N');
+                else
+                    updateEnrollmentasMandatoryForUserAccess($grpId,$entId,$entType,'N');
+            }
+         }
+        
+         expDebug::dPrint("old values".print_r($nonManArr,1)."added new value".print_r($manArr,1)."group ids".$grpId,4);
+    }catch (Exception $ex){
+     watchdog_exception('updateMandatoryForEnrollments', $ex);
+     expertusErrorThrow($ex);
+    }
+}
+?>

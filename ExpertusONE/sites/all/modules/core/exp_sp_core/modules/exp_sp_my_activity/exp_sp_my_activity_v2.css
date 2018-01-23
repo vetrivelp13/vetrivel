@@ -1,0 +1,455 @@
+#activity-pager, #userdetailsactivity-pager { position:relative }
+#activity-pager_center, #userdetailsactivity-pager_center {
+  width:100%
+}
+#activity-pager_center .ui-pg-table, 
+#userdetailsactivity-pager_center .ui-pg-table{
+  float:right;
+  position:static
+}
+#wizarad-myprofile-activity .ui-jqgrid .ui-jqgrid-htable th div{
+  color: #666;
+  font-size: 13px;
+  margin-top: 0;
+  display:none
+}
+#gbox_myprofile-activity-details tr.ui-row-ltr td,
+#gbox_myprofile-activity-userdetails tr.ui-row-ltr td {
+  text-align:left
+}
+#wizarad-myprofile-activity #gbox_myprofile-activity-details tr.ui-row-ltr td a.activity-remove-link,
+#wizarad-myprofile-activity #gbox_myprofile-activity-userdetails tr.ui-row-ltr td a.activity-remove-link {
+  color: #FF7924;
+  text-decoration: none;
+  cursor:pointer;
+  font-size:11px;
+  padding-left: 7px		
+}		
+#wizarad-myprofile-activity .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {
+  text-align:left;
+  padding-left:4px 		
+}		
+#activity-pager_left,
+#userdetailsactivity-pager_left,
+#activity-pager_right,
+#userdetailsactivity-pager_right,
+#activity-pager_left:hover,
+#userdetailsactivity-pager_left:hover,
+#activity-pager_right:hover,
+#userdetailsactivity-pager_right:hover{ 
+  width:0;
+  background:none
+}
+.ui-jqgrid .ui-separator{ border:0 }
+#gview_myprofile-activity-details .ui-state-default,
+#gview_myprofile-activity-userdetails .ui-state-default  {
+  background: none;
+  border:0;
+  padding-left:8px
+}
+#activity-pager,
+#userdetailsactivity-pager {
+  border:0
+}	
+#next_activity-pager span,
+#next_userdetailsactivity-pager span,
+#prev_activity-pager span,
+#prev_userdetailsactivity-pager span ,
+#first_activity-pager span,
+#first_userdetailsactivity-pager span,
+#last_activity-pager span,
+#last_userdetailsactivity-pager span { 
+  background: none
+}
+#first_activity-pager,
+#first_userdetailsactivity-pager {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif) no-repeat 0 -2637px;
+  width:14px;
+  height:12px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#prev_activity-pager,
+#prev_userdetailsactivity-pager {
+  background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif) no-repeat 0 -1656px;
+  width:16px;
+  height:20px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#next_activity-pager {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat 0 -1686px;
+  width: 14px;
+  height:12px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#next_userdetailsactivity-pager {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat 0 -1686px;
+  width:14px;
+  height:12px;
+  padding-right:8px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#last_activity-pager,
+#last_userdetailsactivity-pager {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat 0 -2667px;
+  width:9px;
+  height:12px;
+  padding-right:8px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#next_activity-pager span {
+  margin: 0	
+}
+.ui-jqgrid .ui-pg-table {
+  position:normal
+}
+.ui-jqgrid .ui-pg-table td {
+  line-height: 22px;
+  padding:0
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr .myactivity-table td.links-username,
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr .myactivity-table td.hourse-ago {
+  padding-left:10px		
+}	
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr .myactivity-table td.links-username {
+  color: #333;
+  font-size:14px;
+  padding-left: 4px;
+  padding-right: 4px
+}
+.activity-seperate td.links-username {
+  paddinf-left:30px
+}		
+.activity-seperate .myactivity-table td.links-username{
+  padding-left:15px
+}
+#gbox_myprofile-activity-details .ui-jqgrid-hbox .ui-jqgrid-htable,
+#gbox_myprofile-activity-userdetails .ui-jqgrid-hbox .ui-jqgrid-htable {
+  display:none		
+}
+#myprofile-activity-details .myactivity-table .img-spacing,
+#myprofile-activity-userdetails .myactivity-table .img-spacing {
+  margin-top:0
+}
+#myprofile-activity-details .myactivity-table .img-spacing img,
+#myprofile-activity-userdetails .myactivity-table .img-spacing img {
+  height: 36px;
+  width: 36px;
+  margin: 7px
+}
+#myprofile-activity-details .myactivity-table .activity-tab-seperator,
+#myprofile-activity-userdetails .myactivity-table .activity-tab-seperator {
+  color: #999999;
+  float: left;
+  padding: 0 6px
+}
+.ui-state-default .ui-icon,
+#myprofile-activity-details .ui-state-default .ui-icon,
+#myprofile-activity-userdetails .ui-state-default .ui-icon{
+  background: none
+}
+#page-container #activity-pager_center #data-table-page-view {
+  top: 1px;
+  padding-left:15px
+}
+#page-container #wizarad-myprofile-activity #gbox_myprofile-activity-details tr.ui-row-ltr td a.activity-remove-link,
+#page-container #wizarad-myprofile-activity #gbox_myprofile-activity-userdetails tr.ui-row-ltr td a.activity-remove-link {
+  text-decoration: none;
+  cursor:pointer;	
+  background:  url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat -301px -241px;
+  padding: 3px 10px;
+  height: 26px;
+  width: 27px;
+  display: block	
+}	
+#page-container .my-activity-wrapper {
+  clear: both;
+  padding: 0;
+  position: relative;
+}
+#page-container .myactivity-details>tbody>tr:first-child>td,
+.expertusV2PopupContainer .myactivity-details>tbody>tr:first-child>td  {
+  border: 0;
+  padding: 0;	
+}
+#page-container .myactivity-details>tbody>tr>td {
+  border-top: 1px solid #ededed;
+  padding: 20px 10px	
+}
+.expertusV2PopupContainer .myactivity-details>tbody>tr>td {
+  border-top: 1px solid #ededed;
+  padding: 10px 10px	
+}
+#myprofile-activity-details .activity-seperate,
+#myprofile-activity-userdetails .activity-seperate,
+#myprofile-activity-details .myactivity-actions,
+#myprofile-activity-userdetails .myactivity-actions {
+  border-bottom: 0px solid #ededed;
+  color: #2d2d2d;
+  padding: 0
+}
+#myprofile-activity-details .activity-seperate{
+  border-bottom: 0;
+  color: #2d2d2d;
+  padding-left: 5px
+}
+#page-container .myactivity-actions {
+  width: 42px;
+  float: right;	
+  margin-right:-5px
+}
+.activity-seperate .myactivity-table td.links-username{
+  padding-left:15px
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr .hourse-ago{
+  color: #777;
+  font-size: 12px
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr .action-name {
+  color: #2d2d2d;
+  font-size: 13px
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  padding-right: 20px;
+  vertical-align:top
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv #myprofile-activity-details tr.ui-row-ltr  td:first-child{
+  padding-right:10px
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr table.myactivity-table {
+  width:100%;
+  padding-right:0;
+  table-layout:fixed
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr table.myactivity-table td.myprofile-image{
+  width:11%	
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr table.myactivity-table td.myactivity_title {
+  padding-right:0;
+  width:89%
+}
+.page-learning-myteam-search  #wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr .myactivity-table .links-username{
+  padding-top:0px;
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr .myactivity-table .links-username{
+  padding:0
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr:hover td {
+  background: #fafafa
+}
+.page-learning-my-profile #page-container #activity-pager {
+  max-width: 656px;
+  height: 36px	
+}
+#activity-pager  #next_activity-pager,
+#userdetailsactivity-pager #next_userdetailsactivity-pager{
+  display:table-cell
+}
+#activity-pager  #prev_activity-pager,
+#userdetailsactivity-pager #prev_userdetailsactivity-pager{
+  display:block
+}	
+/*Viswanathan commented for #74331*/
+#exp-sp-my-activity-form #activity-pager .search-pagination-right,
+#exp-sp-my-activity-form #userdetailsactivity-pager .search-pagination-right {
+  /*display: block;
+  padding-top:0*/
+}
+#activity-pager_center .ui-pg-table,
+#userdetailsactivity-pager_center .ui-pg-table {
+  margin-right: 8px
+}
+#userdetailsactivity-pager{
+  display: none
+}
+#activity-pager #first_activity-pager span,
+#userdetailsactivity-pager #first_userdetailsactivity-pager span{
+  margin-left:-12px
+}
+#exp-sp-my-activity-form #userdetailsactivity-pager #next_userdetailsactivity-pager {
+  padding-right:0
+}
+#exp-sp-my-activity-form #userdetailsactivity-pager #last_userdetailsactivity-pager {
+  padding-right:0
+}
+#exp-sp-my-activity-form #userdetailsactivity-pager .ui-state-disabled:hover {
+  padding:0
+}
+#wizarad-myprofile-activity #activity-pager #next_activity-pager span.ui-icon{
+  width:10px
+}
+#page-container #block-exp-sp-my-activity-my-activity .region-sidebar-widget-bg{
+  border-left:0;
+  border-right:0
+}
+#page-container #block-exp-sp-my-activity-my-activity .region-sidebar-widget-bg #myprofile-activity-details{
+  border-left:1px solid #e7e7e7;
+  border-right:1px solid #e7e7e7;
+  table-layout:fixed
+}
+#wizarad-myprofile-activity .ui-jqgrid #gview_myprofile-activity-details .ui-jqgrid-bdiv{
+  min-width:658px
+}
+#page-container #learner-myactivity-details .block-title-left{
+  width:97.9%
+}
+/*#myprofile-activity-details .ilt-icon{
+  background-position:-59px -1px	
+}
+#myprofile-activity-details .wbt-icon{
+  background-position:-172px -1px	
+}
+#myprofile-activity-details .vcl-icon{
+  background-position:-4px -1px	
+}
+#myprofile-activity-details .vod-icon{
+  background-position:-116px -1px	
+}
+#myprofile-activity-details .cert-icon{
+  background-position:-228px -1px
+}
+#myprofile-activity-details .curr-icon{
+  background-position:-284px -1px;	
+}
+#myprofile-activity-details .lrn-pln-icon{
+  background-position:-255px -61px;
+  width:52px
+}
+#myprofile-activity-details .crs-icon{
+  background-position:-342px -1px	
+}*/
+#myprofile-activity-details .ass-icon{
+  background-position:-5px -1049px	
+}
+#myprofile-activity-details .sur-icon{
+  background-position:-65px -1049px	
+}
+
+/* Styles for misalignment of text rows in Narrow Search Page starts here */
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr > td {
+  padding-top:13px;
+  padding-bottom:14px;
+  vertical-align:top
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr > td:last-child {
+  padding-left:0
+}
+#wizarad-myprofile-activity .myactivity-table .img-spacing {
+  margin-top:0
+}
+#wizarad-myprofile-activity .myactivity-table .my-activity-list-entity-title-empty-fadeout-container {
+  margin-bottom:-2px
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr .hourse-ago {
+  padding-top:2px
+}
+.expertusV2PopupContainer .user-popout-container #wizarad-myprofile-activity #myprofile-activity-userdetails > tbody > tr > td {
+  padding-top:14px
+}
+table tr:hover .limit-title-row .limit-title .fade-title,
+table tr:hover .limit-desc-row .limit-desc span.fade-desc{
+  background:-ms-linear-gradient(to right, transparent, #fafafa 80%, #fafafa);/*For IE10*/
+  background:linear-gradient(to right, transparent, #fafafa 80%, #fafafa);	
+}
+.expertusV2PopupContainer .user-popout-container #wizarad-myprofile-activity #myprofile-activity-userdetails > tbody > tr > td:first-child{
+  padding-left:17px
+}
+.expertusV2PopupContainer .user-popout-container #wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr table.myactivity-table{
+  width:97%
+}
+/* Styles for misalignment of text rows in Narrow Search Page ends here */
+
+.user-popout-container #learner-myactivity-details .block-title{
+  text-indent:0
+}
+#wizarad-myprofile-activity #data-table-page-view{
+  padding-left:12px
+}
+#myprofile-activity-userdetails .myactivity-table .my-activity-list-entity-title-empty-fadeout-container {
+  max-width:398px
+}
+#wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr .myactivity-table .links-username .limit-title{
+  display:inline-block
+}
+/* Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+   #activity-pager_center .ui-pg-table{
+	white-space:nowrap
+   }
+   #activity-pager_center .ui-pg-table, #userdetailsactivity-pager_center .ui-pg-table {
+	 margin-right:12px
+   }
+   #first_activity-pager,
+   #first_userdetailsactivity-pager {
+     background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif) no-repeat 0 -2634px
+   }
+   #prev_activity-pager,
+   #prev_userdetailsactivity-pager {
+     background: url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif) no-repeat 0 -1653px
+   }
+   #next_activity-pager,
+   #next_userdetailsactivity-pager {
+     background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat 0 -1683px;
+     width: 13px;
+   } 
+   #last_activity-pager,
+   #last_userdetailsactivity-pager {
+     background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat 0 -2664px
+   }
+   #next_activity-pager,
+   #next_userdetailsactivity-pager {
+     background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat 0 -1683px;
+     width: 13px;
+   } 
+   .expertusV2PopupContainer #userdetailsactivity-pager, 
+   .page-learning .expertusV2PopupContainer #userdetailsactivity-pager{
+	 height: 36px;
+	 margin: 0 0 0 -1px;
+	 min-width:494px;
+     max-width:494px;
+  	}
+  	#exp-sp-my-activity-form #activity-pager .search-pagination-right,
+    #exp-sp-my-activity-form #userdetailsactivity-pager .search-pagination-right{
+      line-height:20px
+    }
+    .page-learning .expertusV2PopupContainer #userdetailsactivity-pager #userdetailsactivity-pager_center .ui-pg-table{
+      margin-right:5px
+    }
+    /*Viswanathan added for #78219*/
+    .expertusV2PopupContainer #wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr table.myactivity-table td.myprofile-image
+	{
+		width:15%
+	}
+}
+
+/*safari hack Start*/
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0), not all and (min-resolution:.001dpcm) { @media { _:-webkit-full-screen,
+       #activity-pager_center .ui-pg-table{
+	    min-width: 170px
+       }
+      .expertusV2PopupContainer #userdetailsactivity-pager, 
+      .page-learning .expertusV2PopupContainer #userdetailsactivity-pager{
+	   margin: 0 0 0 -1px;
+	   min-width:494px;
+       max-width:494px;
+  	}
+  	table tr:hover .limit-title-row .limit-title span.fade-title,
+    table tr:hover .limit-desc-row .limit-desc span.fade-desc{
+     background:-webkit-linear-gradient(left, rgba(250,250,250,0) 0%, rgba(250,250,250,1) 80%);	
+   }
+   /*Viswanathan added for #78219*/
+   .expertusV2PopupContainer #wizarad-myprofile-activity .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr table.myactivity-table td.myprofile-image
+	{
+		width:15%
+	}
+}}   
+/*safari hack End*/

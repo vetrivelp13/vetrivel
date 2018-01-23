@@ -1,0 +1,64 @@
+/* Admin Calendar Styles starts here */
+#admincalendarsettingdiv {
+  width:220px
+}
+#admincalendarsettingdiv div.links {
+  width:150px
+}
+.viewreportorderpopupdiv div.links {
+  width: 225px;
+}
+.viewreportorderpopupdiv div.links .list {
+  width:210px;
+}
+.viewreportorderpopupdiv .orders div.links .list-item {
+  width: 145px;
+}
+.viewreportorderpopupdiv div.links .loca-list {
+  width: 120px;
+}
+#calendarnarrowview .fc-view-container thead th.fc-widget-header {
+  font-size: 10px;
+}
+#calendarprimaryview .fc-agendaDay-view .fc-head div.fc-widget-header th.fc-axis{
+  min-width:37px
+}
+#announcement-basic-addedit-form #group-control .autocomplete input#multiautocomplete,
+#catalog-course-basic-addedit-form-container #group-control .autocomplete input#multiautocomplete {
+  max-width:167px
+}
+.page-administration-manage-announcement #announcement-basic-addedit-form #group-control #autocomplete.autocomplete {
+  margin-left: 90px
+}
+
+/* Added/Changed by ganesh on May 9th 2017 for #73716 */
+
+.page-admincalendar #block-system-main-menu { 
+ width: 67.5% 
+}  
+.page-admincalendar .narrow-search-calendar-filter-block{
+	 width: 32%  
+}  
+
+.page-admincalendar #select-list-calendar-dropdown-list{
+	left:-5px; 
+}
+.page-admincalendar #select-list-calendar-dropdown-list li { 
+ width:117px  
+}
+.page-admincalendar .select-list-dropdown-calendar{
+	width:112px 
+}
+.page-admincalendar #block-exp-sp-administration-root-admin-calendar-filter .select-list-dropdown-calendar .fade-out{
+	background:none;
+}
+
+/* Chrome hack Start */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #calendarprimaryview .fc-agendaDay-view .fc-head div.fc-widget-header th.fc-axis{
+  min-width:37px
+  }
+}
+/* Chrome hack End */
+
+/* Admin Calendar Styles ends here */

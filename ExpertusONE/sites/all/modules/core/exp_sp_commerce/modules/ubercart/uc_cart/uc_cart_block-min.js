@@ -1,0 +1,1 @@
+Drupal.behaviors.ucCollapseBlock={attach:function(a){jQuery(".cart-block-title-bar:not(.ucCollapseBlock-processed)",a).addClass("ucCollapseBlock-processed").click(function(){var b=jQuery(".cart-block-items").toggleClass("collapsed");jQuery(".cart-block-arrow").toggleClass("arrow-down",b.hasClass("collapsed"));});}};

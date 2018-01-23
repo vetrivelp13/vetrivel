@@ -1,0 +1,2103 @@
+/* Common styles Start */
+#page-container #manage-dd-list li{
+  width:90%
+}
+#page-container #create-dd-list li, #page-container #manage-dd-list li:hover{
+  width:88.1%
+}
+#page-container .narrow-search-sortbar-sortlinks{
+  width:140px
+}
+#page-container .location-search {
+  right:14px
+}
+#block-exp-sp-forum-header-search,
+#block-exp-sp-lnrsearch-tab-search,
+#block-exp-sp-myteam-header-search,
+.narrow-search-text-filter-block {
+  width:23%;
+}
+#block-system-main-menu {
+  width:75.5%;
+}
+.footer-web-links .web-linnk-linked,
+.footer-web-links .web-linnk-facebook,
+.footer-web-links .web-linnk-google-plus,
+.footer-web-links .web-linnk-persent,
+.footer-web-links .web-linnk-you-tube,
+.footer-web-links .web-linnk-word-press {
+  margin-left:10px;
+}
+#block-system-main-menu li ul, #block-system-main-menu a, #block-system-main-menu li a.active {
+  font-size:12px;
+}
+#block-system-main-menu li.first {
+  padding:13px 6px 0 5px;
+}
+#page-container  #manage-dd-list {
+  min-width:170px
+}
+#page-container #root-admin-links-holder .admin-module-submenu-list-item li span {
+    font-size:11px
+}
+.page-administration-people-user #page-container #paint-narrow-search-results #bubble-face-table{
+  min-width:734px
+}
+.page-administration-people-user #page-container #paint-narrow-search-results #bubble-face-table .ui-jqgrid-view{
+  min-width:691px
+}
+/* Common styles End */
+
+
+/* Home Page Widgets Start */
+#learner-mobileapp-container .learner-mobileapp-body-seperator .learner-mobileapp-body-seperator-text {
+  width:25px
+}
+#page-container .narrow-search-filterset-item-label-unselected,
+#page-container .narrow-search-filterset-item-label-selected
+#page-container .srch-label-cls {
+  min-width:125px
+}
+.page-administration-survey-surveyquestions #page-container .narrow-search-filterset-item-label-unselected,
+.page-administration-survey-surveyquestions #page-container .narrow-search-filterset-item-label-selected,
+.page-administration-assessment-assessmentquestions #page-container .narrow-search-filterset-item-label-unselected,
+.page-administration-assessment-assessmentquestions #page-container .narrow-search-filterset-item-label-selected  {
+  width:160px
+}
+#account_setting div.links{
+  width:154px
+}
+#account_setting .dropdownadd-dd-list-arrow{
+  left:95px
+}
+#block-system-main-menu li{
+  padding:13px 6px 0 5px
+}
+.region-footer .menu li a{
+  text-transform:none;
+  padding:0 4px
+}
+.region-footer .menu li a:hover{
+  text-transform:none;
+  padding:0 4px
+}
+#block-system-main-menu li ul, #block-system-main-menu a {
+  text-transform:uppercase
+}
+#userpoints-leaderboard .overallusersearchlist ul.eol-search-profiles li.eol-search-input{
+  width:130px
+}
+#userpoints-leaderboard .overallusersearchlist ul.eol-search-profiles li.eol-search-input input{
+  width:110px
+}
+#userpoints-leaderboard #catalog-lb-user-list h2{
+  text-indent:6px;
+  line-height:44px
+}
+#userpoints-leaderboard .overallusersearchlist{
+  margin-top:-37px
+}
+/* Home Page Widgets End */
+
+/* Course/Class/Tp Details Start */
+.detail-item-row .para .info .detail-desc {
+  width:83%
+}
+#learning-class-details-displayarea .course-session-timing{
+  width:88%
+}
+/* Course/Class/Tp Details End */
+
+
+/* Sign In styles Start */
+.theme-ctool-popup #my-login-container .form-item label{
+  width:104px
+}
+.theme-ctool-popup .my-login-frm .signin-holder .form-item input{
+  width:258px
+}
+.theme-ctool-popup .my-login-frm .single-req-pwd-form-wrapper {
+  padding-left:112px
+}
+.theme-ctool-popup #my-login-container .my-login-wrapper .form-item label{
+  width:125px
+}
+.theme-ctool-popup .my-login-register{
+  padding-top:0;
+  padding-bottom:0;
+  width:190px;
+  line-height:11px
+}
+.theme-ctool-popup .my-login-register .login-note{
+  padding-left:0
+}
+.my-login-links-actions{
+  width:61%
+}
+.saml-helptext{
+  right:63px
+}
+.saml-signin {
+  right:30px
+}
+.login-admin-save-button-container .item-list ul a {
+  white-space:nowrap
+}
+/* Sign In styles End */
+
+
+/* Register styles Start */
+#reg-new-div .reg-field-title{
+   font-size:11px
+}
+#reg-new-div .receive-news-txt{
+   width:580px
+}
+#reg-new-div .reg-link-back{
+   margin-left:101px
+}
+/* Register styles End */
+
+
+/* Forget Password styles Start */
+/* Forget Password styles End */
+
+
+/* Account styles Start */
+#page-container #learner-myaccount-details #wizard-form-wrapper #gbox_myaccount-orders-details tr.ui-row-ltr td{
+  padding-left:20px
+}
+#page-container #learner-myaccount-details #wizard-form-wrapper .pref-save-cancel-container-alignment .my-account-action-box{
+  width:108px
+}
+#page-container #learner-myaccount-details #wizard-form-wrapper .pref-save-cancel-container-alignment {
+  width:190px;
+  margin-left:289px
+}
+/* Account styles End */
+
+/* E-sign styles Start */
+
+/* E-sign styles End */
+
+/* Catalog styles Start */
+#page-container #paintContentResults .search-register-btn tr td.action-btn-disable {
+  font-size:11px
+}
+#page-container #lnr-catalog-search .find-trng-sort-text {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 79px -467px rgba(0, 0, 0, 0);
+  max-width:88px
+}
+#page-container #lnr-catalog-search .catlog_seats_available{
+  width:96%
+}
+#select-class-dialog #myteam-find-trng-sort-display .find-trng-sortby .find-trng-sort-text {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 68px -467px;
+  font-size:11px;
+  width:78px
+}
+.refer-course-holder .expertusV2PopupContainer .refer-class-table .refer-class-col1{
+  line-height:17px
+}
+/*---- Embed widget start ----*/
+#embed_widget_container .widget-class-table td.dispayparam-checkbox {
+  width:208px
+}
+.refer-course-holder .checkbox-label {
+  float:none;
+  display:inline-block
+}
+#embed_widget_container .widget-class-table td.dispayparam-checkbox span {
+  font-size:10px;
+}
+/*---- Embed widget end ----*/
+#block-exp-sp-lnrsearch-tab-find-training #paintContent .sort-by-links {  left:-45px }
+#block-exp-sp-lnrsearch-tab-find-training #paintContent .sort-by-links { width:150px }
+#select-class-dialog #myteam-cat-delivery-type-list { width:130px }
+#select-class-dialog #myteam-find-trng-sort-display .find-trng-sortby .sort-by-change-links { right:0; width:135px }
+#select-class-dialog #catkeyword_hideshow .searchcatkeyword { width:160px }
+#request_class_holder .refer-class-table .refer-class-col3 { padding-bottom:5px }
+.refer-class-table .input-text { line-height:28px; }
+#page-container #lnr-catalog-search #paintLocation .searchlocation { width:86px }
+#catalog-user-search-list .overallusersearchlist ul.eol-search-profiles li.eol-search-input input { width:115px }
+
+#page-container #paintContentResults .search-register-btn tr td.action-btn-waitlist,
+#page-container #paintContentResults .search-register-btn tr td.action-btn {
+  line-height:12px
+}
+#learning-class-details-displayarea .class-details-attachmentdetails{
+  position:absolute;
+  top:135px;
+  left:150px
+}
+/* Catalog styles End */
+
+/* Profile styles Start */
+.skill-name-parent,
+#page-container .form-item input.skill-text-box{
+  margin-top:0;
+  margin-bottom:0
+}
+.skill-name-parent{
+  padding-bottom:18px
+}
+.skill-text-box{
+  width:357px
+}
+#learner-myskill-details #myskill-parent .prof-parent{
+  width:230px
+}
+#myskill-parent .disp-parent{
+  width:173px
+}
+.learner-save-skill-button .addedit-form-cancel-container-actions{
+  width:149px
+}
+#learner-myskill-details #skill-qtipid #bubble-face-table{
+  margin-left:30px
+}
+#learner-myskill-details  #bubble-face-table{
+  width:470px
+}
+#userprofile-part .total-badge-points, .user-popout-container .total-badge-points{
+  width:101px
+}
+.total-user-points, .total-badge-points{
+  height:50px
+}
+.total-user-points .total-points{
+  padding-top:9px
+}
+#user-points .points-row2, #user-points .points-row2-column-1{
+  height:58px
+}
+#user-points .points-row2-column-1{
+  width:84px
+}
+#user-points .points-row2-column-3 {
+  height:40px;
+  left:186px;
+  width:64px
+}
+#block-exp-sp-administration-module-info-userpoints-userpoints #user-points .points-row2-column-1:first-child .column-action-points{
+  margin-top:24px
+}
+#page-container #catalog-user-search-list .block-title {
+  font-size:12px
+}
+#page-container #catalog-user-search-list li.eol-search-input {
+  width:115px
+}
+#catalog-user-search-list .overallusersearchlist ul.eol-search-profiles li.eol-search-input input {
+  font-size:10px;
+  width:96px
+}
+#activity-pager_center .ui-pg-table, #userdetailsactivity-pager_center .ui-pg-table{
+  min-width:205px
+}
+/* Profile styles End */
+
+/* Discussions styles Start */
+#page-container #forum-list-display .frm-list-sort-text{
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 75px -466px;
+  max-width:74px
+}
+#page-container #frm-paint-content .sort-by-links{
+  width:160px;
+  left:-58px
+}
+#page-container #frm-paint-content .sort-by-links li a,
+#page-container #frm-paint-content .sort-by-links li a:hover{
+  padding:7px 0
+}
+#frm-paint-content .sort-by-links li a{
+  float:none
+}
+#page-container .frm-topic-list-sort-text{
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 80px -466px;
+  max-width:90px
+}
+#page-container .frm-topic-list-sortby .sort-by-links {
+  width:160px;
+  left:-48px
+}
+#page-container .admin-forum-topic-detail-action-btn .addedit-form-cancel-container-actions{
+  width:182px
+}
+#page-container .admin-forum-topic-detail-action-btn .admin-forum-add-topic-list .addedit-form-cancel-container-actions {
+  width:152px
+}
+#page-container .admin-forum-topic-detail-action-btn .admin-forum-add-topic .narrow-search-actionbar-disable-btnBG {
+    font-size:11px;
+    width:85px
+}
+/* Discussions styles End */
+
+/* Team styles Start */
+.myteam-learning-btn .view-btn-mid{
+  padding:0 2px 0 0
+}
+.myteam-learning-course-btn .view-btn-mid{
+  font-size:11px;
+  margin-left:-8px
+}
+.full-button-without-action{
+  width:93px
+}
+#myteam-find-trng-sort-display .find-trng-sort-text{
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 74px -467px;
+  width:70px
+}
+#lnr-myteam-search .find-trng-sort-text{
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 89px -465px;
+  max-width:90px
+}
+#tbl-paintCatalogContentResults .search-register-btn tr td.action-btn-disable{
+  width:137px
+}
+.page-learning-myteam-search #tbl-paintCatalogContentResults .search-register-btn tr td.action-btn-disable{
+  width:105px
+}
+#my-team-dialog #paintCatalogHeader .sort-by-links{
+  width:150px;
+  right:-29px
+}
+#my-team-dialog #paintCatalogHeader .search-cat-keyword{
+  right:140px
+}
+#my-team-dialog #myteam-find-trng-sort-display .find-trng-sortby{
+  right:38px
+}
+#lnr-myteam-search .find-trng-sort-text{
+  background-position:70px -465px
+}
+#page-container #lnr-myteam-search .sort-by-links{
+  left:-50px;
+  width:145px
+}
+.full-button-without-action{
+  width:75px
+}
+#myteam-find-trng-sort-display .find-trng-sort-text{
+  background-position:58px -467px;
+  width:58px
+}
+.myteam-more-action .myteam-more-drop-down-list{
+  width:135px;
+  margin-left:-14px
+}
+body.page-learning-myteam-search table#paintContentResults .top-record-div-left{
+  width:350px;
+}
+#lnr-myteam-search .myteam-learning-btn{
+  width:318px;
+}
+#lnr-myteam-search .find-trng-sort-text{
+  background-position:88px -465px
+}
+#page-container #lnr-myteam-search .sort-by-links{
+  left:-50px;
+  width:145px
+}
+.full-button-without-action{
+  width:82px
+}
+#myteam-find-trng-sort-display .find-trng-sort-text{
+  background-position:74px -467px;
+  width:72px
+}
+.myteam-more-action .myteam-more-drop-down-list{
+  margin-left:-69px;
+  width:179px
+}
+.myteam-more-action .myteam-more-drop-down-list li a{
+  width:182px;
+  padding-left:0
+}
+body.page-learning-myteam-search table#paintContentResults .top-record-div-left{
+  width:318px;
+}
+#lnr-myteam-search .myteam-learning-btn{
+  width:318px;
+}
+
+#myteam-cat-delivery-type-list{
+ right:228px;
+ width:154px;
+}
+#lnr-myteam-search #paintCatalogHeader .sort-by-links{
+ right:-20px;
+}
+#lnr-myteam-search #paintContentResults .cus-accord .ui-jqgrid-hbox .ui-th-column div {
+  width:110px;
+}
+#lnr-myteam-search #paintContentResults tr .ui-jqgrid tr.ui-row-ltr td:last-child{
+  text-indent:12px
+}
+#lnr-myteam-search #paintContentResults tr .ui-jqgrid tr.ui-row-ltr td.course-status-action {
+  min-width:97px
+}
+#lnr-myteam-search .exp-sp-myteam-myclass-view-classtitle-fadeout-container {
+  max-width:215px
+}
+#lnr-myteam-search .usr-enroll-grid-header-grey-cls{
+  margin-left:-3px
+}
+#lnr-myteam-search #paintContentResults .cus-accord .ui-pg-table{
+  min-width:210px
+}
+/* Team styles End */
+
+/* Reports styles Start */
+#page-container #paintReportsContent .narrow-search-sortbar-sorttext{
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 75px -466px;
+  max-width:78px
+}
+#report-query-details table td{
+  font-size:11px
+}
+.page-reports #report_narrow_filter .bubble-table-container .admin-save-button-middle-bg{
+  font-size:11px
+}
+#report-builder-section #report_criteria_form .no-filters{
+  padding-left:18px
+}
+.ui-dialog-content .report-wizard-topbar .nextLink{
+  text-indent:-35px
+}
+#page-container #lnr-reports-search .narrow-search-sortbar-sortlinks{
+  width:145px;
+  left:-40px
+}
+#report_header_text .bubble-table-container .bubble-c .admin-bubble-close,
+#report_footer_text .bubble-table-container .bubble-c .admin-bubble-close,
+#report_criteria_form .bubble-table-container .bubble-c .admin-bubble-close {
+  right:-90px
+}
+#report_criteria_form .bubble-modifier-container .bubble-c .admin-bubble-close {
+  right:-3px
+}
+#report-add-wizard #report_footer_text .bubble-table-container,
+#report-add-wizard #report_header_text .bubble-table-container,
+#report-add-wizard #report_criteria_form .bubble-table-container {
+  width:265px
+}
+#report-builder-section #report_criteria_form .bubble-modifier-container .modifierlabel {
+  width:165px
+}
+#report-add-wizard #report_criteria_form .bubble-modifier-container {
+  width:310px
+}
+#report-builder-section #report_footer_text .bubble-table-container .label,
+#report-builder-section #report_header_text .bubble-table-container .label,
+#report-builder-section #report_criteria_form .bubble-table-container .label {
+  width:125px
+}
+#page-container #lnr-reports-search #manage-dd-list {
+  min-width:170px
+}
+.lnr-report-schedule-popup .schedule-list-wrapper .ui-jqgrid-hdiv .ui-jqgrid-htable .ui-jqgrid-labels th {
+  min-width:90px
+}
+.criteria-button-container .reports-apply-btn {
+  width:50px;
+  font-size:11px
+}
+/* Reports styles End */
+
+/* Shopping Cart styles Start */
+.cart-step-region div{
+  padding:0 7px 5px
+}
+#page-container .shoppingcart-hdr-v2 .cart-step-region div{
+	padding:0 7px 5px
+}
+.cart-step{
+  font-size:11px
+}
+.form-item-panes-payment-details-cc-cvv{
+  margin-right:0
+}
+#uc_cc_info .form-item .form-text {
+  width:186px
+}
+.form-item-panes-payment-details-cc-exp-month, .form-item-panes-payment-details-cc-type{
+  width:120px
+}
+.commerce-container-v2 #uc-cart-checkout .inline-pane-table .field-label{
+  min-width:155px
+}
+.page-cart #uc-cart-checkout #payment-pane #payment-details {
+  width:48%;
+  padding-right:0
+}
+.page-administration-commerce-order #modalContent #order-basic-addedit-form-container .commerce-container-v2 .cart-review .subtotal td.subtotal .uc-price.uc-order-currency-value {
+  width:58px
+}
+.page-administration-order-create #page-container .commerce-container-v2 .cart-review .subtotal .uc-price.uc-order-currency-value {
+  margin-right: 30px;
+}
+.page-administration-order-create #admin_order .cart-review tr.subtotal.total td.subtotal #exp-clone-cart-total .uc-order-currency-value {
+  margin-right:32px
+}
+/* Shopping Cart styles End */
+
+/* My Learning(My Enrollments) styles Start */
+.page-learning-enrollment-search #page-container .sort-by-text{
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 78px -465px;
+  max-width:100px
+}
+#page-container .enroll-sort-bylist{
+  right:26px
+}
+.page-learning-enrollment-search .block #div_my_transcript .block-title-middle h2.block-title{
+  text-indent: 9px
+}
+#enroll-result-container .course-row .course-label,
+#enroll-result-container .status-row .status-label,
+#enroll-result-container .attach-row .attach-label,
+#enroll-result-container .location-row .location-label {
+   width:120px;
+}
+#enroll-result-container.clsenroll-result-container .attach-row .attach-label {
+	width:137px
+}
+.cal-legent-td{
+  display:inline-block;
+  padding:0 2px;
+  width:auto
+}
+#page-container #paintInstructorResults .cus-accord .ui-jqgrid-hbox .ui-th-column{
+  font-size:8.5px;
+  text-indent: 6px
+}
+#instructor-result-container .attach-row .attach-label,
+#instructor-result-container .location-row .location-label {
+  width:132px
+}
+#page-container .enroll-sort-by-container .sort-by-links,
+#page-container .instructor-sort-by-container .sort-by-links{
+  width:151px
+}
+#enroll-result-container .status-row .enr-status-cls.status-desc{
+  width:260px
+}
+#enroll-result-container.clsenroll-result-container .status-row .enr-status-cls.status-desc{
+  width:70%
+}
+#enroll-result-container .status-row .status-label.markcompletestatus {
+  width:200px
+}
+/* My Learning(My Enrollments) styles End */
+
+
+/* My Learning(My Programs) styles Start */
+#enroll-lp-result-container .mypgm-item-assigned-code,
+#enroll-lp-result-container .mypgm-group-title{
+  width:127px
+}
+#enroll-lp-result-container .enroll-accordian-div{
+	width:75%
+}
+.clsContentFull #enroll-lp-result-container .enroll-accordian-div {
+  width:80%
+}
+#enroll-lp-result-container #LPDetailsMainDiv .FindTrngTxt {
+	width:445px
+}
+#paintEnrollmentLPResults .enroll-show-moreclass .exp-sp-lnrmyprogram-class-code {
+    max-width: 320px
+}
+.page-learning-enrollment-search #my-team-dialog #myteam-cat-delivery-type-list{
+  width:139px;
+  right:238px
+}
+.page-learning-enrollment-search #my-team-dialog .change-class-find-trng-sort .sort-by-change-links{
+  width:138px
+}
+#page-container #enroll-lp-result-container .enroll-show-moreclass .enroll-main-action-lp-multiclasss,
+#page-container #paintEnrollmentLPResults .enroll-lp-main-list,
+#page-container #paintEnrollmentResults .enroll-main-list{
+  width:135px
+}
+#page-container #enroll-lp-result-container .enroll-main-action-lp-multiclasss .enroll-launch,
+#page-container #paintEnrollmentLPResults .enroll-lp-main-list .enroll-launch,
+#page-container #paintEnrollmentResults .enroll-main-list .enroll-launch,
+#page-container #paintEnrollmentLPResults .enroll-lp-main-list .enroll-launch:hover{
+  width:117px
+}
+#enroll-lp-result-container .session-time-zone{
+  font-size:11px
+}
+#paintEnrollmentLPResults .enroll-show-moreclass .exp-sp-lnrmyprogram-enroll-fulltitle {
+  max-width: 415px
+}
+/* My Learning(My Programs) styles End */
+
+
+/* My Learning(My Classes) styles Start */
+.page-learning-enrollment-search #page-container #paintInstructorResults td.learners-for-classes,
+.page-learning-enrollment-search #page-container #paintInstructorResults td:first-child .learners-for-classes{
+  font-size:11px;
+}
+#page-container #paintInstructorResults td.instructor-learner-tab .ui-jqgrid .ui-jqgrid-htable th div.checkbox-unselected,
+#page-container #paintInstructorResults td.instructor-learner-tab .ui-jqgrid .ui-jqgrid-htable th div.checkbox-selected {
+  margin-left:9px
+}
+#mark-complete-wizard table td.user-attendance-label{
+  min-width:40%
+}
+#page-container #instructor-result-container #pager-ins_center .ui-pg-table {
+  width: 29%
+}
+/* My Learning(My Classes) styles End */
+
+/* My Learning(My Transcripts) styles Start */
+/* My Learning(My Transcripts) styles End */
+
+/* My Learning(My CalEndar) styles Start */
+.calendar-session-details-list .eventCodetitle {
+  font-size:11px
+}
+.calendar-session-details-list .mycalendar-class-action{
+  font-size:11px
+}
+#page-container .calendar-session-details-list  .eventCodeseperator {
+  padding:0 2px
+}
+#page-container .calendar-session-details-list{
+  margin:14px 0 0 4px
+}
+#page-container .calendar-session-details{
+  padding:8px 7px 15px
+}
+.page-learning-enrollment-search #block-exp-sp-lnrcalendar-tab-my-calendar h2.block-title {
+  text-indent:14px
+}
+/* My Learning(My CalEndar) styles End */
+
+
+/* Chat styles Start */
+/* Chat styles End */
+
+
+/* Learning(Course/Class) styles Start */
+#catalog-class-addedit-form-details #add-class-list-wrapper .admin_class_multi_search_container{
+  left:350px;
+  width:41%
+}
+#catalog-course-basic-addedit-form-container .tag-details-row .addedit-form-cancel-and-save-actions-row,
+.catalog-class-basic-addedit-form-disp .tag-details-row .addedit-form-cancel-and-save-actions-row,
+.narrow-search-results-item-details .tag-details-row .addedit-form-cancel-and-save-actions-row {
+  margin-right:40px
+}
+#catalog-course-basic-addedit-form-container .tag-details-row table + table,
+.catalog-class-basic-addedit-form-disp .tag-details-row table + table,
+.narrow-search-results-item-details .tag-details-row table + table {
+  width:62%
+}
+.add-session-popup-list .add-more-session-list  .dropdown-dd-list-arrow{
+  left:65px;
+}
+.add-session-popup-list  ul.add-more-session-list{
+  width:140px
+}
+#catalog-class-basic-addedit-form-container .admin-datagrid-add-btn-wrapper-container .add_session_popup a{
+  margin-left:-31px
+}
+#catalog-class-basic-addedit-form-container .enrolluser-class-grid-wrapper  #search-list-title-keyword ul{
+  width:135px
+}
+#catalog-class-basic-addedit-form-container #admin-data-grid .enrolluser-class-grid-wrapper  #search-dropdwn-list{
+  width:143px
+}
+#catalog-class-basic-addedit-form-container #admin-data-grid .enrolluser-class-grid-wrapper .select-list-dropdown{
+  width:122px
+}
+.enrolled-display-controller .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-htable th div{
+  padding-left:3px
+}
+#catalog-class-basic-addedit-form-container .attachment-empty-column-height {
+  height:43px
+}
+#catalog-course-basic-addedit-form-container .attachment-empty-column-height {
+  height:43px
+}
+#root-admin #root-admin-search-right-col #tab-content-main .narrow-search-results-item-details .attachment-empty-column-height {
+  height:55px
+}
+#page-container #narrow-search-results-holder .crs-pub-enrolled-btn,
+#page-container #narrow-search-results-holder .crs-publish-btn.glossy-btn,
+#page-container #narrow-search-results-holder .crs-unpublish-btn {
+  font-size:11px
+}
+#add-session-details .admin-addedit-session-details-wrapper #session_attendee_url {
+  width:294px
+}
+#add-session-details .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown{
+  width:126px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-class-time-zone .crt-paint-timezone .ctrDropDown {
+  width:126px
+}
+#add-session-details .admin-addedit-session-details-wrapper .form-item-session-attendee-url label {
+  width:96px
+}
+#catalog-class-basic-addedit-form-container #admin_list_values_container .catalog-pub-add-list {
+  width:263px
+}
+.page-administration-learning-catalog #catalog-class-basic-addedit-form-container #admin_list_values_container .catalog-pub-add-list {
+  width:315px
+}
+.enrolled-display-controller .completion_container_roster .enrollement-date-picker {
+  width:98px
+}
+#catalog-class-basic-addedit-form-container .survey-attach-grid-wrapper .enrolled-status li {
+  width:130px
+}
+#catalog-class-basic-addedit-form-container .assess-attach-grid-wrapper .enrolled-status li {
+  width:110px;
+  font-size:10px
+}
+#catalog-class-basic-addedit-form-container .assess-attach-grid-wrapper .enrolled-selection {
+  float:none
+}
+#catalog-class-basic-addedit-form-container .addedit-twocol-secondcol .addedit-new-field-title {
+  width:111px
+}
+#catalog-class-basic-addedit-form-container #two-col-row-classcode_langcode .addedit-twocol-secondcol .addedit-new-field-title {
+  width:40px
+}
+#add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper .form-item-session-meeting-id label {
+  width:108px
+}
+#catalog-course-basic-addedit-form-container .two-column-container-view .second-col-container-view label {
+  width:150px
+}
+.virtualclass-session #bubble-face-table,
+.session-add-another-popup-container #bubble-face-table {
+  min-width:500px
+}
+#add-session-details .admin-addedit-session-details-wrapper #session_attendee_url {
+  width:291px
+}
+#add-session-details .admin-addedit-session-details-wrapper #session_presenter_url {
+  width:290px
+}
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper #edit-session-name{
+  width:291px
+}
+.admin-datagrid-pagination.survey-attach-grid-wrapper .ui-jqgrid-hdiv .ui-jqgrid-htable th div{
+  font-size:10px
+}
+#catalog-class-basic-addedit-form-container .survey-attach-grid-wrapper .enrolled-status ul.sub-menu {
+  right:29px
+}
+.admin-datagrid-pagination .datagrid-type-enrolluser .ui-jqgrid-hdiv .ui-jqgrid-htable th div{
+  font-size:10px
+}
+#catalog-class-basic-addedit-form-container .enrolluser-class-grid-wrapper .enrolled-status li{
+  width:106px
+}
+.page-administration-learning-catalog #catalog-class-basic-addedit-form-container .enrolled-display-controller .enrolluser-class-grid-wrapper .enrolled-status .sub-menu li{
+  width:100px
+}
+.page-administration-learning-catalog #catalog-class-basic-addedit-form-container .enrolled-display-controller .enrolluser-class-grid-wrapper .enrolled-status li .selected-enrolled-status {
+  width:auto;
+  line-height:14px
+}
+#catalog-class-basic-addedit-form-container .enrolled-selection {
+  margin-top:12px
+}
+#catalog-class-basic-addedit-form-container .enrolluser-class-grid-wrapper .enrolled-status ul.sub-menu li{
+  font-size:10px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper .form-item-session-meeting-id label {
+  width:108px
+}
+#add-session-details #meeting-type-addwebEx .admin-addedit-session-details-wrapper #session_meeting_id {
+  width:99px
+}
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper #edit-session-name{
+  width:290px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper #session_meeting_id{
+  width:99px
+}
+#add-session-details #meeting-type-editwebex .admin-addedit-session-details-wrapper .form-item-session-meeting-id label{
+  width:108px
+}
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper #session_attendee_url {
+  width:286px
+}
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper #session_presenter_url {
+  width:286px
+}
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper #edit-session-name {
+  width:288px
+}
+#admin-data-grid .enrolluser-class-grid-wrapper .admin_add_multi_auto_search {
+  width:172px
+}
+#admin-data-grid .assess-attach-grid-wrapper .admin_add_multi_auto_search {
+  width:180px
+}
+#admin-data-grid .assess-attach-grid-wrapper .admin_add_multi_auto_search #assessment-autocomplete{
+  width:170px
+}
+#add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-session-name label, #add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-start-date label, #add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-time-zone-list label, #add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-session-attendee-url label, #add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-session-presenter-url label, #add-session-details #meeting-type-others .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label {
+  width:143px;
+}
+#add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-session-name label, #add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-start-date label, #add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-time-zone-list label, #add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-session-attendee-url label, #add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-session-presenter-url label, #add-session-details #meeting-type-editothers .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label {
+  width:143px;
+}
+#add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-session-name label, #add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-start-date label, #add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-time-zone-list label, #add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-session-attendee-url label, #add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-session-presenter-url label, #add-session-details #meeting-type-addothers .admin-addedit-session-details-wrapper .form-item-session-details-name-instructor- label {
+  width:143px;
+}
+.page-administration-learning-catalog .root-admin-block #narrow_search_hideshow .ac_input{
+  padding-right:0;
+  width:143px
+}
+.page-administration-learning-catalog .filter-search-box-container{
+  width:156px
+}
+.page-administration-learning-catalog #page-container .root-admin-block #narrow_search_hideshow{
+  width:100%;
+  margin-left:-6px
+}
+/* #catalog-class-basic-addedit-form-container .addedit-new-field-two-col .addedit-twocol-secondcol .expertus-dropdown-bg.crs-lang-dropdown {
+  width:176px
+} */
+#catalog-class-basic-addedit-form-container .addedit-new-field-two-col .addedit-twocol-secondcol .addedit-edit-lang_code{
+  width:194px
+}
+.theme-ctool-popup #catalog-course-basic-addedit-form-container #two-col-row-lang_status .addedit-edit-dropdown.addedit-edit-crs_language{
+  width:197px
+}
+#announcement-basic-addedit-form #group-control #autocomplete,
+#banner-basic-addedit-form #group-control #autocomplete,
+#program-tp-basic-addedit-form-disp #group-control #autocomplete,
+#catalog-course-basic-addedit-form-container #group-control #autocomplete {
+  margin-left:115px
+}
+.admin-datagrid-pagination.assess-attach-grid-wrapper .ui-jqgrid-hdiv .ui-jqgrid-htable th div{
+  font-size:10px;
+  padding-left:4px
+}
+.theme-ctool-popup .addedit-new-field-two-col .crs-compliance-dropdown .expertus-dropdown-icon,
+.theme-ctool-popup .addedit-new-field-two-col .expertus-dropdown-bg.crs-compliance-dropdown{
+  width:115px
+}
+.theme-ctool-popup #program-tp-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions,
+.theme-ctool-popup #catalog-class-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions,
+.theme-ctool-popup #catalog-course-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions{
+  margin-right:49px
+}
+#page-container .block #narrow_search_hideshow .narrow-search-filterset-daterange-empty {
+  font-size:9px;
+}
+.admin-datagrid-session-with-addanother.virtualclass-session .datagrid-type-session .ui-jqgrid-hdiv .ui-jqgrid-htable,
+.admin-datagrid-session-with-addanother.virtualclass-session .datagrid-type-session .ui-jqgrid-bdiv .ui-jqgrid-btable {
+  display:inline-table
+}
+.admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-htable .ui-jqgrid-labels th div {
+  max-height:21px
+}
+#catalog-class-basic-addedit-form-container .admin-datagrid-pagination .admin-datagrid-session-with-addanother .ui-jqgrid .ui-jqgrid-bdiv .ui-jqgrid-btable tr td a.admin-pagination-action-link {
+  background-position:9px 12px;
+  width:24px
+}
+#catalog-class-basic-addedit-form-container #admin-data-grid .admin-datagrid-session-with-addanother.virtualclass-session .datagrid-type-session .ui-jqgrid-hdiv .ui-jqgrid-htable .ui-jqgrid-labels th[style="width:49px;"],
+#catalog-class-basic-addedit-form-container #admin-data-grid .admin-datagrid-session-with-addanother.virtualclass-session .datagrid-type-session .ui-jqgrid-hdiv .ui-jqgrid-htable .ui-jqgrid-labels th[style="width:81px;"] {
+  min-width:42px
+  }
+#catalog-class-basic-addedit-form-container #admin-data-grid .admin-datagrid-session-with-addanother.virtualclass-session .datagrid-type-session .ui-jqgrid-hdiv .ui-jqgrid-htable .ui-jqgrid-labels th[style="width:12px; border-right:0px none;"],
+#catalog-class-basic-addedit-form-container #admin-data-grid .admin-datagrid-session-with-addanother.virtualclass-session .datagrid-type-session .ui-jqgrid-hdiv .ui-jqgrid-htable .ui-jqgrid-labels th[style="width:13px; border-right-width:0px; border-right-style:none;"] {
+  min-width:20px
+}
+#add-session-details #meeting-type-addclassroom .admin-addedit-session-details-wrapper #edit-session-name{
+  width:333px
+}
+#add-session-details .admin-addedit-session-details-wrapper #edit-session-name{
+  width:311px
+}
+.page-administration-learning-catalog #catalog-class-addedit-form-details #add-class-list-wrapper .admin_class_multi_search_container {
+  left:308px;
+  width:46%
+}
+.page-administration-learning-catalog #catalog-class-addedit-form-details .ac_input {
+  width:210px
+}
+.page-administration-learning-catalog #catalog-class-addedit-form-details .admin-pagination-search-go {
+  margin-left:204px
+}
+.page-administration-learning-catalog #catalog-course-basic-addedit-form-disp #sel-unsel-grplist .option-div {
+  min-width:135px
+}
+.page-administration-learning-catalog #catalog-course-basic-addedit-form-disp #sel-unsel-grplist #optionallist li {
+  padding:2px 0
+}
+.page-administration-learning-catalog #catalog-course-basic-addedit-form-disp #ui-multiselect-con #optionallist {
+  width:106px
+}
+.page-administration-learning-catalog .catalog-class-basic-addedit-form-disp #sel-unsel-grplist .option-div {
+  max-width:135px
+}
+#group-control #chk .fade-out-title-container.group-name-option-div{
+  max-width:80px
+}
+.page-administration-learning-catalog .catalog-class-basic-addedit-form-disp #sel-unsel-grplist #optionallist li {
+  padding:2px 0
+}
+.page-administration-learning-catalog .catalog-class-basic-addedit-form-disp #ui-multiselect-con #optionallist {
+  width:106px
+}
+.page-administration-learning-catalog #root-admin .addedit-left-col.mro-wrapper #sel-unsel-grplist #ui-multiselect-con  #optionallist li {
+  padding:2px 0
+}
+.page-administration-learning-catalog #root-admin .addedit-left-col.mro-wrapper #sel-unsel-grplist #ui-multiselect-con #optionallist {
+  width:100px
+}
+.page-administration-learning-catalog .catalog-class-basic-addedit-form-disp .addedit-left-col.mro-wrapper #sel-unsel-grplist #ui-multiselect-con #optionallist {
+  width:106px
+}
+.page-administration-learning-catalog #root-admin .catalog-class-basic-addedit-form-disp .addedit-left-col.mro-wrapper #sel-unsel-grplist #ui-multiselect-con  #optionallist li {
+  padding:2px 0
+}
+#ui-multiselect-con #optionallist {
+  width:100px
+}
+.page-administration-learning-catalog #catalog-class-basic-addedit-form-container #admin-data-grid .survey-attach-grid-wrapper .admin-save-button-container.set-survey-btn {
+  margin-right:10px
+}
+#viewcourse-detail-wrapper .detail-code.reg-ends, #viewclass-detail-wrapper .detail-code.reg-ends {
+  line-height:10px
+}
+#viewcourse-detail-wrapper .detail-code.cont-deta, #viewclass-detail-wrapper .detail-code.cont-deta {
+  width:135px
+}
+/* Learning(Course/Class) styles End */
+
+/* Learning(Training Plan) styles Start */
+#attach_course_dt .admin-tp-auto-search-container{
+  width:300px;
+}
+#attach_course_dt #search-dropdwn-list-course{
+  width:88px
+}
+#attach_course_dt .select-list-course-dropdown-link{
+  margin-left:25px
+}
+#program-tp-basic-addedit-form-container .attachment-empty-column-height {
+  height:58px
+}
+#program-tp-basic-addedit-form-container .tag-details-row .addedit-form-cancel-and-save-actions-row {
+  margin-right:40px
+}
+.tag-details-row table + table {
+  width:62%
+}
+.addedit-training-program-course-list #mandatory-list{
+  width:95px
+}
+#admin-data-grid  .enrolltp-grid-wrapper .select-list-dropdown{
+  width:115px
+}
+#admin-data-grid  .enrolltp-grid-wrapper #search-dropdwn-list{
+  width:150px
+}
+.enrolltp-grid-wrapper #search-list-title-keyword ul{
+  width:133px
+}
+#program-tp-basic-addedit-form-container .survey-attach-grid-wrapper .enrolled-status li{
+  width:116px;
+  font-size:12px
+}
+#program-tp-basic-addedit-form-container .assess-attach-grid-wrapper .enrolled-status li{
+  width:110px;
+  font-size:10px
+}
+#program-tp-basic-addedit-form-container .assess-attach-grid-wrapper .enrolled-selection{
+  float:none
+}
+#program-tp-basic-addedit-form-container .assess-attach-grid-wrapper ul.enrolled-status{
+  margin-left:-5px
+}
+#program-tp-basic-addedit-form-container .enrolltp-grid-wrapper .enrolled-status li{
+  width:88px
+}
+#program-tp-basic-addedit-form-container .enrolltp-grid-wrapper .enrolled-selection{
+  margin-left:-2px
+}
+#program-tp-basic-addedit-form-container .enrolltp-grid-wrapper .selected-enrolled-status{
+  font-size:11px
+}
+.enrolltp-grid-wrapper ul.enrolled-status{
+  margin-left:-6px
+}
+#program-tp-basic-addedit-form-container #admin_list_values_container .catalog-pub-add-list{
+  width:270px
+}
+#attach_course_dt #select-list-course-dropdown-list li{
+  width:56px
+}
+.addedit-training-program-course-list #mandatory-list .man-opt-selection{
+  margin-right:-13px
+}
+.addedit-training-program-course-list #mandatory-list .man-opt ul.sub-menu li {
+  width:93px
+}
+#program-tp-basic-addedit-form-container .survey-attach-grid-wrapper .enrolled-status ul.sub-menu {
+  right:30px
+}
+.narrow-search-multi-action-container #bubble-face-table #program-tp-basic-addedit-form-container .selected-enrolled-status{
+  font-size:11px
+}
+.page-administration-learning-program #program-tp-basic-addedit-form-container #admin-data-grid .admin-datagrid-save-cancel-button-align-bottom .addedit-form-cancel-container-actions,
+.page-administration-learning-program #program-tp-basic-addedit-form-container #admin-data-grid .admin-datagrid-save-cancel-button-align-bottom .addedit-form-cancel-container-actions .admin-save-button-container {
+  margin-bottom:0
+}
+.page-administration-learning-program #root-admin .addedit-left-col.mro-wrapper #sel-unsel-grplist #ui-multiselect-con  #optionallist li,
+.page-administration-learning-program .crs-tab-titles-container .addedit-left-col.mro-wrapper #sel-unsel-grplist #ui-multiselect-con  #optionallist li {
+  padding:2px 0
+}
+/* Learning(Training Plan) styles End */
+
+
+/* People(User) styles Start */
+#page-container .narrow-search-sortbar-sorttext{background-position:80px -466px;max-width:75px;}
+#page-container .narrow-search-sortbar-sortlinks{left:-35px}
+.page-administration-people .root-admin-block #narrow_search_hideshow .ac_input {
+  width:123px;
+}
+.page-administration-people .root-admin-block #narrow_search_hideshow .ac_input{
+  padding-right:16px
+}
+.page-administration #group-control #autocomplete{
+  margin-left:104px;
+}
+.page-administration #group-control .autocomplete input#multiautocomplete {
+  max-width:150px;
+}
+.page-administration-people #admin-data-grid .user-enrollment-div-cls .user-enrollment-pipe-cls {
+  padding-left:2px;
+}
+.page-administration-people #admin-data-grid .user-enrollment-div-cls .user-enrollment-count-pipe-cls{
+  font-size:12px
+}
+.page-administration-people #admin-data-grid .user-enrollment-div-cls .norecords-msg-edit-page{
+  min-height:95px
+}
+.page-administration-people-user .narrow-search-multi-action-container #bubble-face-table tbody tr td.search-pagination-right {
+  min-width:128px
+}
+/* People(User) styles End */
+
+/* People(Organization) styles Start */
+#organization-addedit-form .catalog-pub-add-list{width:91px}
+#admin-data-grid .user-enrollment-div-cls .ui-jqgrid .ui-jqgrid-htable th div{
+  font-size:11px
+}
+#organization-addedit-form .addedit-new-field-title{
+  width:147px
+}
+#organization-addedit-form .addedit-twocol-secondcol .addedit-new-field-title{
+  width:135px
+}
+#organization-addedit-form .addedit-edit-ac-textfield{
+  width:137px
+}
+.addedit-new-field-two-col .addedit-edit-textfield{
+  width:100px
+}
+#organization-addedit-form .addedit-edit-name{
+  width:385px
+}
+#organization-addedit-form .addedit-left-col .addedit-custom-field .addedit-new-field-value textarea.addedit-edit-textarea{
+  min-width:390px;
+  max-width:390px
+}
+#organization-addedit-form .addedit-long-description-container .addedit-new-field-value {
+  width:390px
+}
+#organization-addedit-form .addedit-edit-custom-label-field {
+  width:140px
+}
+#admin-data-grid .user-enrollment-div-cls .ac_input.ac_loading{
+  height:20px
+}
+.page-administration-people-organization #admin-data-grid .user-enrollment-div-cls .ac_input{
+  width:34.8%;
+  padding-right:17px
+}
+#vieworganization-detail-wrapper #org-right-detail-code {
+  width:75px
+}
+#vieworganization-detail-wrapper .detail-code {
+  width:148px
+}
+.user-enrollment-div-cls .ui-jqgrid-view {
+  min-width:550px
+}
+/* People(Organization) styles End */
+
+/* People(Groups) styles Start */
+#role-detail-wrapper #catalog-class-addedit-form-details #add-class-list-wrapper .admin_class_multi_search_container{left:45px}
+#role-detail-wrapper #catalog-class-addedit-form-details #add-class-list-wrapper .admin_class_multi_search_container{width:350px}
+#catalog-class-addedit-form-details #add-class-list-wrapper #search-dropdwn-list-class{width:134px}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper #search-dropdwn-list-class{width:136px}
+
+#catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class,
+#catalog-class-addedit-form-details #add-class-list-wrapper #select-list-class-dropdown-list li{
+ width:113px
+}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class{width:113px;text-align:right}
+.narrow-search-multi-action-container .role_multi_search_container_add, .role_multi_search_container_add{width:360px}
+#add-user-role-page #add-class-list-wrapper .admin-class-auto-search-container{margin-left:137px}
+#add-user-role-page .search-list-keyword{left:1px}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper #select-list-class-dropdown-list {left:-2px}
+#add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-class-dropdown-link{margin-left:-3px}
+#search_add_urs{right:170px}
+#role-addedit-form .catalog-pub-add-list{width:102px}
+.permission-theader-first{width:45%}
+#bubble-face-table #admin-add-permissions .adduser-title-heading, #admin-add-permissions .adduser-title-heading{padding-left:4px}
+#page-container #narrow-search-results-holder .add-users-grp #catalog-class-addedit-form-details #add-class-list-wrapper #search-addusers{right:33px}
+.page-administration-people-group #bubble-face-table .form-item .form-text,
+.page-administration-people-group #narrow-search-results-holder #bubble-face-table tbody tr td .input-field-grey{
+  width:159px
+}
+.owner-user-class #catalog-class-addedit-form-details input.ac_loading{
+  border:1px solid #e5e5e5;
+  border-width:1px 0
+}
+#page-container #add-user-role-page #catalog-class-addedit-form-details .filter-search-start-date-right-bg {
+  margin-left: 160px;
+}
+#role-detail-wrapper #add-class-list-wrapper .admin_class_ac_input_mainform,
+#paint-narrow-search-results .add-users-grp #add-class-list-wrapper .admin_class_ac_input_mainform{
+  width:155px;
+  font-size:11px
+}
+#role-detail-wrapper #add-class-list-wrapper .ac_loading,
+#narrow-search-results-holder #bubble-face-table #add-class-list-wrapper .ac_loading{
+  width:159px
+}
+.page-administration-people-group #page-container #add-user-role-page.add-users-grp #catalog-class-addedit-form-details .filter-search-start-date-right-bg{
+  margin-left:182px;
+}
+.page-administration-people-group #page-container #add-user-role-page.assigned-users-grps #catalog-class-addedit-form-details .filter-search-start-date-right-bg{
+  margin-left:162px;
+}
+#role-detail-wrapper #add-user-role-page #add-class-list-wrapper .filter-search-start-date-right-bg{
+  margin-right:3px;
+}
+#display-assigned-users #attach_user_list_div{
+  top:79px;
+  right:146px
+}
+.page-administration-people-group #security-role-detail-wrapper-list #admin-add-course-training-plan .ui-jqgrid .ui-jqgrid-toppager{
+  margin-left:6px
+}
+.page-administration-people-group #admin-add-course-training-plan .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table{
+  width:135px
+}
+.page-administration-people-group #narrow-search-results-holder #security-role-detail-wrapper .add-users-grp .admin_class_ac_input_mainform{
+  width:164px
+}
+.page-administration-people-group #narrow-search-results-holder #bubble-face-table #security-role-detail-wrapper .add-users-grp .admin_class_ac_input_mainform.ac_loading{
+  width:161px
+}
+.page-administration-people.page-administration-people-group #security-role-detail-wrapper #admin-add-course-training-plan .ui-jqgrid .ui-jqgrid-toppager{
+  margin-left: -13px
+}
+#page-container #admin-add-course-training-plan .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .search-pagination-right{
+  font-size:10px
+}
+#role-detail-wrapper #add-user-role-page #add-class-list-wrapper .admin_class_ac_input_mainform {
+  width:178px
+}
+/* People(Groups) styles End */
+
+/* People(settings) styles Start */
+/* People(settings) styles End */
+
+/* Survey/Assessment styles Start */
+#page-container #narrow-search-results-holder .crs-unpublish-btn.glossy-btn {
+  line-height:14px;
+  padding-top:8px
+}
+#catalog-survey-assesment-basic-addedit-form .form-item-survey-description-value {
+  margin-top:5px
+}
+.add-attachquestion-popup-container {
+  right:10px
+}
+#survey-attach-question-addedit-form-details {
+  padding-top:10px
+}
+#survey_attach_questions_dt .attach-question-mandatory {
+  width:120px
+}
+#survey_attach_questions_dt #attach-question-mandatory-list .man-opt ul.sub-menu {
+  left:auto;
+  right:0;
+  width:110px
+}
+#survey_attach_questions_dt #attach-question-mandatory-list .man-opt ul.sub-menu li {
+  width:100px
+}
+.page-administration-survey-surveydetails #survey_attach_questions_dt .attachquestion-table-heading .attach-question-title {
+  width:201px;
+  line-height:28px;
+  vertical-align:top
+}
+.page-administration-assessment-assessmentdetails #survey_attach_questions_dt .attachquestion-table-heading .attach-question-title,
+.page-administration-assessment-assessmentdetails #survey_attach_questions_dt .attachquestion-table-heading .attach-question-score {
+  line-height:28px;
+  vertical-align:top
+}
+.page-administration-assessment-assessmentdetails #survey_attach_questions_dt .attachquestion-table-heading .attach-question-title {
+  padding-left:10px;
+  max-width:240px;
+  min-width:240px
+}
+.page-administration-assessment-assessmentdetails #view-survey-attachquestion-list-wrapper .attachquestion-table-heading .attach-question-group-name {
+  width:135px
+}
+#survey_attach_questions_dt .attach-question-group-name {
+  width:120px
+}
+.opt-detail-desc {
+  width:350px
+}
+#survey-question-basic-addedit-form .assessment-answer-choice-textarea {
+  max-width:260px;
+  min-width:260px
+}
+.page-administration-survey-surveydetails #viewsurass-detail-wrapper .right-side-container .detail-code,
+.page-administration-assessment-assessmentdetails #viewsurass-detail-wrapper .right-side-container .detail-code {
+  width:122px
+}
+.page-administration-survey-surveyquestions .question-opt-container .sub-opt-detail-code {
+  font-family:openSansRegular, Arial
+}
+.page-administration-survey-surveydetails .attach-question-grp-title-note {
+  white-space:nowrap
+}
+#view-survey-attachquestion-list-wrapper .edit-attachquestion-list .attach-question-score .form-item{
+  margin-left:10px
+}
+.page-administration-assessment-assessmentdetails  #survey_attach_questions_dt .attach-question-group-name {
+  width:134px
+}
+.attach-question-grp-title-note{
+  margin-top:-6px
+}
+/* Survey/Assessment styles End */
+
+/* Manage(Content) styles Start */
+#upload_detail_container #upload_browse_and_url .select-list-dropdown-link {
+  margin-left:67px
+}
+#upload_detail_container #upload_browse_and_url #search-list-title-keyword ul {
+  width:70px
+}
+#upload_detail_container #upload_browse_and_url #select-list-dropdown-list li {
+  width:59px
+}
+.wrapper-browse-url #BrowserVisible {
+  width:350px
+}
+.wrapper-browse-url #FileField {
+  width:280px
+}
+#content-addedit-form .upload-msg-style {
+  padding-left:86px
+}
+.Content-tab-titles-container .tag-details-row table + table {
+  width:50%
+}
+#edit-content-data-url {
+  width:345px
+}
+#content-addedit-form .addedit-new-field-two-col .addedit-new-field-title,
+#content-addedit-form .addedit-new-field-title{
+  width:149px
+}
+#content-addedit-form .addedit-new-field-two-col .addedit-twocol-secondcol .addedit-new-field-title {
+  width:85px
+}
+#admin-move-users-content #search-list-title-keyword ul{
+  width:136px
+}
+#admin-move-users-content .select-moveuser-dropdown{
+  width:120px
+}
+#admin-move-users-content #search-dropdwn-list{
+  width:145px
+}
+#admin-move-users-content .content-save-cancel-btnGrp .catalog-pub-add-list,
+#admin-move-users-content .content-save-cancel-btnGrp .catalog-pub-add-list-move{
+  width:180px
+}
+.page-administration-manage-content #page-container .AdminsublinktabNavigation li a{
+  padding-left:5px
+}
+.page-administration-manage #page-container .narrow-search-actionbar-list li a span.narrow-search-actionbar-orange-btnBG, .narrow-search-actionbar-orange-btnBG{
+  font-size:11px
+}
+.page-administration-manage  #narrow-search-actionbar-list .grey-btn-bg-middle{
+  font-size:10px
+}
+.page-administration-manage  #page-container .AdminsublinktabNavigation li a span span{
+  font-size:10px
+}
+.page-administration-manage #page-container #sort-bar-V2 .AdminsublinktabNavigation{
+  padding-left:0
+}
+#admin-move-users-content .admin-save-pub-unpub-button-container .admin-save-button-middle-bg {
+  width:155px
+}
+.edit-content-version-list-container .edit-content-version-list-left .narrow-search-results-item-detail{
+  font-size:10px;
+}
+#move-users-form-wrapper .edit-class-list .edit-content-version-list-left{
+  width:474px;
+}
+#viewcontent-detail-wrapper .detail-code {
+  width:107px
+}
+#viewcontent-detail-wrapper .right-side-container .detail-code{
+  width:75px
+}
+#viewcontent-detail-wrapper .code-container #detail-desc-view{
+  width:480px
+}
+/* Manage(Content) styles End */
+
+
+/* Manage(Location) styles Start */
+.addedit-form-cancel-container-actions .add-custombtn-symbol {
+  font-size:11px
+}
+.page-administration-manage-location #page-container #narrow-search-results-holder .crs-unpublish-btn.glossy-btn,
+.page-administration-manage-notification-template #page-container #narrow-search-results-holder .crs-unpublish-btn.glossy-btn,
+.page-administration-manage-certificate #page-container #narrow-search-results-holder .crs-unpublish-btn.glossy-btn,
+.page-administration-sitesetup-moduleinfo #page-container #narrow-search-results-holder .crs-unpublish-btn.glossy-btn {
+  line-height:30px
+}
+#location-basic-addedit-form-container .addedit-new-field-title {
+    width:155px;
+    font-size:11px;
+    padding:6px 3px 4px 0
+}
+#location-basic-addedit-form-container .addedit-twocol-secondcol .addedit-new-field-title {
+    width:75px
+}
+#location-basic-addedit-form-container .addedit-twocol-secondcol .addedit-new-field-title {
+    width:100px
+}
+#location-basic-addedit-form-container .addedit-new-field-two-col .addedit-edit-textfield {
+    width:125px
+}
+#location-basic-addedit-form-container .addedit-new-field-two-col .addedit-firstcol-field-value .addedit-edit-textfield {
+    width:97px
+}
+#location-basic-addedit-form-container .addedit-new-field-two-col .addedit-secondcol-field-value .addedit-edit-textfield {
+    width:140px
+}
+#location-basic-addedit-form-container input.addedit-edit-addr2, #location-basic-addedit-form-container input.addedit-edit-addr1 {
+    width:352px
+}
+#location-basic-addedit-form .addedit-edit-custom-value-field {
+    max-width:357px;
+    min-width:357px
+}
+.page-administration-manage-location .addedit-left-col .addedit-new-field .addedit-new-field-value textarea.addedit-edit-textarea {
+    max-width:356px;
+    min-width:356px
+}
+#location-basic-addedit-form .addedit-firstcol-field-value .expertus-dropdown-bg {
+    width:100px
+}
+.page-administration-manage-location #page-container .narrow-search-separater,
+.page-administration-manage-content #page-container .narrow-search-separater{
+  margin:4px 0 0
+}
+.page-administration-manage-location #page-container .narrow-search-actionbar-list li a span.narrow-search-actionbar-orange-btnBG,
+.page-administration-manage-location .narrow-search-actionbar-orange-btnBG,
+.page-administration-manage-content .narrow-search-actionbar-list li a span.narrow-search-actionbar-greyout-btnBG,
+.page-administration-manage-content .narrow-search-actionbar-list li div span.narrow-search-actionbar-greyout-btnBG{
+  font-size:9px
+}
+.page-administration-manage-location #page-container .narrow-search-actionbar,
+.page-administration-manage-content #page-container .narrow-search-actionbar{
+  margin-right:3px
+}
+.page-administration-manage-location #page-container .AdminsublinktabNavigation li{
+   padding-left:4px
+}
+/* Manage(Location) styles End */
+
+
+/* Manage(Banner) styles Start */
+.page-administration-manage-banner #page-container #narrow-search-results-holder .crs-pub-enrolled-btn.glossy-btn {
+  line-height:14px
+}
+.page-administration .addedit-left-col #group-control .autocomplete input#multiautocomplete,
+#announcement-basic-addedit-form #group-control .autocomplete input#multiautocomplete,
+#banner-basic-addedit-form #group-control .autocomplete input#multiautocomplete,
+#program-tp-basic-addedit-form-disp #group-control .autocomplete input#multiautocomplete,
+#catalog-course-basic-addedit-form-container #group-control .autocomplete input#multiautocomplete {
+  max-width:145px
+}
+.page-administration #group-control .ui-multiselect-con-class #autocomplete{
+  margin-left:115px
+}
+#banner-basic-addedit-form #group-control .ui-multiselect-con-class #autocomplete{
+  margin-left:117px
+}
+#viewbanner-detail-wrapper .detail-code {
+  width:130px
+}
+/* Manage(Banner) styles End */
+
+
+/* Manage(Notification/Certificate) styles Start */
+.page-administration-manage-notification-template #admin-add-course-training-plan .admin-datagrid-save-cancel-button-align-bottom,
+.page-administration-manage-certificate #admin-add-course-training-plan .admin-datagrid-save-cancel-button-align-bottom {
+  right:2px
+}
+#two-col-row-freq_type .addedit-twocol-secondcol .addedit-secondcol-field-value .addedit-edit-dropdown{
+  width:155px
+}
+#notification-basic-addedit-form .addedit-twocol-secondcol .addedit-new-field-title {
+  width:144px
+}
+#notification-basic-addedit-form .addedit-new-field-two-col .addedit-secondcol-field-value .addedit-edit-textfield{
+  width:136px
+}
+#notification-basic-addedit-form .addedit-new-field-two-col .addedit-twocol-secondcol .expertus-dropdown-bg, #notification-basic-addedit-form .addedit-new-field-two-col .addedit-twocol-secondcol .expertus-dropdown-icon {
+  width:135px
+}
+#notification-basic-addedit-form #two-col-row-not_sched_days .addedit-twocol-secondcol .addedit-new-field-title {
+  width:138px
+}
+#notification-basic-addedit-form  .edit-notify-days-before {
+  width:101px
+}
+.page-administration-manage-notification-template #admin-add-course-training-plan .admin-datagrid-save-cancel-button-align-bottom,
+.page-administration-manage-certificate #admin-add-course-training-plan .admin-datagrid-save-cancel-button-align-bottom {
+  width:87px
+}
+.page-administration-manage #page-container .narrow-search-separater{
+  margin:4px 0 0
+}
+#admin-notification-template-list-pagination-wrapper .ui-pg-table .ui-pg-table{
+  min-width:310px
+}
+#admin-notification-template-list-pagination-wrapper .ui-pg-table td.search-pagination-right{
+  padding-right:3px
+}
+/* Manage(Notification/Certificate) styles End */
+
+/* Manage(Announcement) styles Start */
+.page-administration-manage-announcement #page-container .narrow-search-filterset-daterange-go-button-img{
+  font-size:11px
+}
+/* Manage(Announcement) styles End */
+
+/* Commerce(Order) styles Start */
+#admin_product_addorder_container #search-list-title-keyword ul{
+  width:143px
+}
+#add_product_form_wrapper #admin-data-grid #search-dropdwn-list{
+  width:160px
+}
+#add_product_form_wrapper #admin-data-grid #admin_product_addorder_container .select-list-dropdown {
+  width:135px
+}
+#discount-basic-addedit-form-container .form-item-dis-applicable-user select.discount_dropdown_width {
+  width:140px
+}
+.theme-ctool-popup #discount-basic-addedit-form-container .addedit-new-field-two-col .addedit-edit-dropdown{
+  width:140px
+}
+.discount-grid-wrapper #select-trainings-dropdown-list li{
+  width:146px;
+  text-align:left
+}
+.discount-grid-wrapper #search-list-title-keyword ul{
+  width:146px
+}
+#admin-data-grid .discount-grid-wrapper .search-list-keyword #search-dropdwn-list {
+  width:148px
+}
+.datagrid-country-setting-commerce .ui-jqgrid-bdiv .datagrid-container-common td .countryaction{
+  font-size:11px;
+  margin-left:-6px
+}
+#commerce-cancellation-policy-screen-wrapper .no-cancel-policy-add-button-div .add-cancel-policy-more-list{
+  width:112px
+}
+.page-administration-commerce-order #group-control #autocomplete{
+  margin-left:125px
+}
+.page-administration-commerce-order #group-control #autoimg,
+.page-administration #group-control #autoimg{
+  right:7px
+}
+.page-administration-commerce-order #group-control .autocomplete input#multiautocomplete {
+  max-width:135px
+}
+.page-administration-commerce .mro-wrapper #access-select-list-class-dropdown{
+  font-size:11px
+}
+#order-basic-addedit-form-disp .commerce-container-v2 .cart-review td.location{
+  width:105px
+}
+#order-basic-addedit-form-container .addedit-new-field .addedit-new-field-value .resizable-textarea .addedit-edit-admin_comment,
+#order-basic-addedit-form-container .addedit-new-field .addedit-new-field-value .form-textarea-wrapper .addedit-edit-admin_comment{
+  min-width:465px;
+  max-width:465px
+}
+#order-basic-addedit-form-disp #order_no_label .addedit-new-field-title{
+  width:173px
+}
+#order-detail-container .two-column-container-view label{
+  width:140px
+}
+#admin_order #payment-pane #payment-details td.field-label{
+  width:40%
+}
+#admin_order #payment-details .order-edit-table .oet-label{
+  width:30%
+}
+#admin_order #payment-pane #payment-details{
+  width:54%
+}
+#admin_order .order-admin-header{
+  width:73%
+}
+.page-administration-order-finish .cart-step,
+.page-administration-order-pay .cart-step{
+  padding-left:0
+}
+.page-administration .mro-wrapper #access-search-list-class-title-keyword {
+  width:98px;
+}
+.page-administration-commerce-order .mro-wrapper #access-search-list-class-title-keyword{
+  left:21px
+}
+.page-administration-commerce-order .mro-wrapper #access-select-list-class-dropdown-list li{
+  min-width:78px
+}
+.page-administration-commerce-order .mro-wrapper #access-select-list-class-dropdown-list{
+  left:-2px
+}
+#select-order-dialog #admin-data-grid .admin_add_multi_auto_search,
+#admin-data-grid #admin_product_addorder_container .admin_add_multi_search_container .admin_add_multi_auto_search .ac_input,
+#admin-data-grid #admin_product_addorder_container .admin_add_multi_search_container .admin_add_multi_auto_search input.ac_loading{
+  width:180px
+}
+.page-administration-commerce-order .expertusV2PopupContainer .ui-dialog-title,
+.page-administration-commerce-order .refer-course-holder .expertusV2PopupContainer .ui-dialog-titlebar-close{
+  font-size:11px
+}
+.page-administration-order #admin_product_addorder_container #search-list-title-keyword ul{
+  width:153px
+}
+.page-administration-order #admin-add-product-form #admin-data-grid #select-list-dropdown-list li{
+  width:91%
+}
+.page-administration-order #admin-data-grid #select-list-dropdown-list{
+  left:-9px
+}
+/* Commerce(Order) styles End */
+
+
+/* Commerce(Tax) styles Start */
+.vat-separator{
+  width:261px
+}
+.page-administration-commerce .root-admin-block #narrow_search_hideshow .ac_input{
+  width:125px;
+  padding-right:15px
+}
+.page-administration-commerce-discounts #page-container #narrow-search-results-holder .crs-unpublish-btn.glossy-btn,
+.page-administration-commerce-tax #page-container #narrow-search-results-holder .crs-unpublish-btn.glossy-btn{
+  line-height:29px
+}
+.page-administration-commerce-tax #page-container .narrow-search-filterset-heading{
+  font-size:12px
+}
+/* Commerce(Tax) styles End */
+
+
+/* Commerce(Discount) styles Start */
+.page-administration-commerce-discounts #search-list-title-keyword ul{
+  width:156px
+}
+.page-administration-commerce-discounts #select-trainings-dropdown-list li{
+  width:143px
+}
+#discount-basic-addedit-form-disp .catalog-course-basic-addedit-form-container{
+  width:625px;
+  padding-left:15px
+}
+#discount-basic-addedit-form-container #two-col-row-discount_type_row .addedit-twocol-secondcol .addedit-new-field-title,
+#discount-basic-addedit-form-container #two-col-row-max_uses_row .addedit-twocol-secondcol .addedit-new-field-title,
+#discount-basic-addedit-form-container #two-col-row-max_uses_per_user_row .addedit-twocol-secondcol .addedit-new-field-title{
+  width:144px
+}
+#discount-basic-addedit-form-container .addedit-new-field .addedit-new-field-title{
+  width:195px
+}
+#discount-basic-addedit-form-container #discount-combine-text-title .addedit-new-field-title{
+  width:205px;
+  font-size:11px
+}
+#discount-basic-addedit-form-container .addedit-new-field-two-col{
+  width:615px
+}
+#discount-basic-addedit-form-container .addedit-new-field-value textarea{
+  min-width:414px;
+  max-width:414px
+}
+#discount-basic-addedit-form .addedit-left-col .form-item-dis-code input.form-text,
+#discount-basic-addedit-form-container .addedit-edit-dis_name{
+  width:408px
+}
+#discount-basic-addedit-form-container .addedit-long-description-container .addedit-new-field-value{
+  width:413px
+}
+#discount-basic-addedit-form-container .addedit-form-cancel-container-actions {
+  margin-right:12px
+}
+#discount-basic-addedit-form-container .mro-wrapper #access-search-list-class-title-keyword{
+  left:198px
+}
+#help-msg{
+  float:left;
+  margin-left:12px
+}
+#discount-basic-addedit-form-disp #admin-data-grid .admin_add_multi_auto_search{
+  width:176px
+}
+#admin-data-grid .discount-grid-wrapper .admin_add_multi_auto_search .ac_input,
+#admin-data-grid .discount-grid-wrapper .admin_add_multi_auto_search input.ac_loading{
+  width:180px;
+}
+/* Commerce(Discount) styles End */
+
+
+/* Commerce(Settings) styles Start */
+#commerce-cancellation-policy-screen-wrapper .no-cancel-policy-add-button-div{
+  width:320px
+}
+#commerce-cancellation-policy-screen-wrapper .no-cancel-policy-add-button-div .add-cancel-policy-more-list{
+  width:151px
+}
+#commerce-cancellation-policy-screen-wrapper .no-cancel-policy-add-button-div .add-cancel-policy-more-list .dropdownadd-dd-list-arrow{
+  left:73px
+}
+.datagrid-country-setting-commerce .ui-jqgrid-bdiv .datagrid-container-common td .countryaction{
+  margin-left:4px
+}
+.page-administration-commerce-setting #commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-twocol-secondcol .addedit-new-field-title{
+  width:102px;
+  padding-left:5px;
+  padding-right:6px
+}
+.page-administration-commerce-setting #commerce-cc-settings-basic-form .addedit-new-field-title-wrapper .addedit-new-field-title-hint{
+  width:102px
+}
+.page-administration-commerce-discounts #search-list-title-keyword ul#select-trainings-dropdown-list {
+  width:156px
+}
+.page-administration-commerce-setting .no-cancel-policy-add-button-div .add-cancel-policy-type-list-ul li.admin-save-button-middle-bg {
+  width:285px
+}
+.page-administration-commerce-order  #order-basic-addedit-form-disp .commerce-container-v2 .cart-review th {
+  padding-top:4px;
+  padding-bottom:2px
+}
+.page-administration-commerce-order  #order-basic-addedit-form-disp .commerce-container-v2 .cart-review th.refund {
+  line-height:10px
+}
+/* Commerce(Settings) styles End */
+
+/* site settings style starts*/
+#pwdstrength-admin-form .addedit-left-col .pwdstrength-admin-form-fields .addedit-new-field-title-wrapper {
+  width:81%
+}
+.page-administration-sitesetup-moduleinfo #saml-basic-addedit-form .addedit-new-field {
+  padding-bottom:15px
+}
+.page-administration-sitesetup-moduleinfo #saml-basic-addedit-form .addedit-new-field-title {
+  height:auto;
+  line-height:16px
+}
+.page-administration-sitesetup-moduleinfo #saml-basic-addedit-form .addedit-new-field-value {
+  height:auto
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field-title{
+  width:180px
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-edit-textfield{
+  width:178px
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .addedit-edit-googleanalytics_roles.addedit-edit-dropdown,
+#webanalytics-admin-form .expertus-dropdown-icon,
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .form-textarea-wrapper {
+  width:185px
+}
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value textarea.addedit-edit-textarea{
+  min-width:185px;
+  max-width:185px
+}
+#saml-basic-addedit-form .addedit-new-field-title{
+  width:400px
+}
+#saml-basic-addedit-form .addedit-new-field-value input{
+  width:280px
+}
+#saml-basic-addedit-form .addedit-new-field-value .expertus-dropdown-icon{
+  width:283px
+}
+#saml-basic-addedit-form .addedit-edit-textarea {
+   width: 283px
+}
+#ldap-basic-addedit-form .addedit-new-field-two-col input.addedit-edit-textfield{
+  width:163px
+}
+#ldap-basic-addedit-form .addedit-new-field .addedit-new-field-title{
+  width:343px
+}
+#ldap-basic-addedit-form .addedit-twocol-secondcol .addedit-new-field-title{
+  width:236px
+}
+#ldap-basic-addedit-form input.addedit-edit-textfield{
+  width:590px
+}
+.theme-ctool-popup #ldap-basic-addedit-form .addedit-new-field-two-col .expertus-dropdown-bg,
+.theme-ctool-popup #ldap-basic-addedit-form .addedit-new-field-two-col .expertus-dropdown-icon,
+#ldap-basic-addedit-form .addedit-left-col .addedit-new-field .addedit-firstcol-field-value .form-type-select .ui-multiselect,
+#ldap-basic-addedit-form .addedit-edit-sso.addedit-edit-dropdown{
+  width:170px
+}
+#saml-basic-addedit-form .addedit-form-cancel-container-actions{
+  margin-right:20px
+}
+/* site settings style ends*/
+/* User preferance */
+.page-learning-enrollment-search #page-container .sort-by-text, .page-learning-enrollment-search #widget .sort-by-text { min-width: 80px }
+#user-preference-settings #manage-dd-list li .dropdown-msg {  padding-left: 5px }
+#user-preference-settings #manage-dd-list li.message {  /*height: 60px */ height:auto;}
+#page-container #user-preference-settings #manage-dd-list, #widget #user-preference-settings #manage-dd-list { width: 185px }
+#page-container #user-preference-settings .manage-dd-list-arrow, #widget #user-preference-settings .manage-dd-list-arrow { left: 135px }
+/* User preferance */
+/* Start SalesForce Style */
+#innerWidgetTagEnroll #page-container #paintReportsContent .narrow-search-sortbar-sorttext{
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 80px -466px;
+  max-width:103px;
+}
+/* End SalesForce Style */
+
+/* Reserved Block CSS Start - Here we can create a new block CSS styles*/
+/* Reserved Block CSS End */
+/*Start title restriction style*/
+.fade-out-title-container.lnr-search-view-detail-recommended-course-title-fadeout-container {
+  max-width: 400px
+}
+.fade-out-title-container.lnr-search-view-detail-mandatory-course-title-fadeout-container {
+  max-width: 410px
+}
+.fade-out-title-container.lnr-search-view-detail-compliance-course-title-fadeout-container {
+  max-width: 415px
+}
+.page-administration-people-user .fade-out-title-container.admin-narrow-search-code-fadeout-container,
+.fade-out-title-container.exp-sp-admin-user-orgname-fadeout-container,
+.fade-out-title-container.exp-sp-admin-user-managrname-fadeout-container {
+  max-width:80px
+}
+#paintEnrollmentLPResults .exp-sp-lnrmyprogram-prg-code {
+  max-width: 90px
+}
+.fade-out-title-container.admin-commerce-tax-statename-fadeout-container,
+.fade-out-title-container.admin-commerce-vat-numbers-fadeout-container {
+  max-width:190px
+}
+.fade-out-title-container.myteam-compliance-course-title-fadeout-container{
+  max-width:312px
+}
+.fade-out-title-container.myteam-mandatory-course-title-fadeout-container{
+  max-width:306px
+}
+.fade-out-title-container.myteam-recommended-course-title-fadeout-container{
+  max-width:292px
+}
+.fade-out-title-container.exp-sp-cart-module-title-fadeout-container{
+  max-width:150px
+}
+.fade-out-title-container.surveylearnear-js-assessment-survey-title{
+  max-width:620px
+}
+.survey-home-table.pre-post-assessment .fade-out-title-container.surveylearnear-js-assessment-survey-title {
+  max-width: 490px
+}
+#block-exp-sp-learning-plan-detail-learning-details .fade-out-title-container.widget-view-detail-page-compliance-fadeout-container {
+  max-width: 71%;
+}
+#block-exp-sp-coursedetail-course-details .fade-out-title-container.widget-view-detail-page-compliance-fadeout-container {
+  max-width: 72%;
+}
+.fade-out-title-container.deleted-panels-fadeout-container{
+  max-width:170px
+}
+#page-container #add-user-role-page #catalog-class-addedit-form-details .filter-search-start-date-right-bg {
+  margin-left: 160px;
+}
+/*End title restriction style*/
+/*Start home page customization style*/
+#banner-basic-addedit-form .banner_size_txt { width: 79px }
+/*End home page customization style*/
+#instructor-markcomplete-dialog #ui-dialog-title-mark-complete-wizard .exp-sp-instructor-desk-markcompletion-dialog-class-title {
+  max-width:230px;
+  display:inline-block;
+  margin-bottom:-20px
+}
+.page-learning-enrollment-search #select-class-equalence-dialog .exp-sp-instructor-desk-markcompletion-classtitle {
+  max-width:230px
+}
+.fade-out-title-container.order-payment-status-fadeout-container{
+   max-width:60px
+}
+#admin_product_addorder_container .dummy-class{
+	left: 366px;
+}
+#admin_product_addorder_container #addproduct-grid-wrapper-add-product-admin-order  .admin_add_multi_search_container input.admin-pagination-search-go{
+	width: 13px;
+	background: #fff url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons_v2.png") no-repeat scroll -485px -20px;
+}
+/* Admin Order */
+.page-administration-commerce-order #order-basic-addedit-form-container .commerce-container-v2 .cart-review .subtotal .uc-price.uc-order-currency-code{
+	width: 33px;
+}
+#order-basic-addedit-form-container .cart-review td.price.refund{
+	width: 107px;
+}
+/* Currency popup */
+#currency-detail-wrapper #qtip_currency_disp_add_currency .admin-currency-save-button-middle-bg{
+	background: rgba(0, 0, 0, 0) url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/search_bg.png") repeat-x scroll 0 -1142px;
+    border: 0 none;
+    border-radius: 0;
+    color: #fff;
+    cursor: pointer;
+    float: left;
+    font-family: ProximaNovaBold,Arial;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    text-transform: uppercase;
+    height: 25px;
+    line-height: 25px;
+}
+/* Chrome hack Start */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #edit-lang-dropdown-select_msdd {
+    min-width:70px;
+    max-width:70px;
+  }
+  #admin-data-grid .user-enrollment-div-cls .ac_input {
+  padding-top:0
+  }
+  #admin-data-grid .user-enrollment-div-cls .ui-jqgrid-toppager .ui-pager-control .ui-pg-table .ui-pg-table .ui-pg-button span.ui-icon-seek-next{
+    padding-right:0
+  }
+  #organization-addedit-form .catalog-pub-add-list{width:98px}
+  #page-container .admin-forum-topic-detail-action-btn .admin-forum-add-topic-list .addedit-form-cancel-container-actions{
+    margin-left:-10px
+  }
+  #add-session-details .admin-addedit-session-details-wrapper .form-item-session-attendee-url label {
+    width:141px
+  }
+  #add-session-details .admin-addedit-session-details-wrapper .form-item-session-presenter-url label {
+    width:155px
+  }
+  #add-session-details .admin-addedit-session-details-wrapper #session_presenter_url{
+    margin-left:3px
+  }
+  #catalog-class-basic-addedit-form-container #admin-data-grid .session-add-another-popup-container .addedit-form-cancel-container-actions:nth-of-type(1) {
+    min-width:262px
+  }
+  .add-session-popup-list ul.add-more-session-list li{
+    min-width:130px
+  }
+  .datagrid-country-setting-commerce .ui-jqgrid-bdiv .datagrid-container-common td .countryaction{
+    margin-left:4px
+  }
+  #page-container .frm-topic-list-sortby .sort-by-links {
+    left:-49px
+  }
+  .page-administration-survey-surveydetails #addquestions-addedit-form-html .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-htable th div .checkbox-unselected,
+  .page-administration-survey-surveydetails #addquestions-addedit-form-html .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-htable th div .checkbox-selected {
+    margin-top:4px;
+    margin-left:0
+  }
+  #list-values-addedit-form-details .add-list-pagination-container{
+    width:176px
+  }
+  .page-administration #group-control .autocomplete input#multiautocomplete {
+    max-width:152px;
+  }
+  .page-administration-commerce-order #group-control .autocomplete input#multiautocomplete {
+    max-width:137px
+  }
+  .admin-qtip-access-parent .qtip-button .admin-bubble-close,
+  .qtip-title .qtip-button .admin-bubble-close{
+    top:-9px
+  }
+  #organization-addedit-form .addedit-twocol-secondcol .addedit-new-field-title{
+    width:140px
+  }
+  #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class{
+    width:115px
+  }
+  #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper #select-list-class-dropdown-list{
+    left:3px
+  }
+  #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class,
+  #catalog-class-addedit-form-details #add-class-list-wrapper #select-list-class-dropdown-list li{
+    width:114px
+  }
+  #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-class-dropdown-link{
+    margin-left:-5px
+  }
+  #catalog-class-addedit-form-details #add-class-list-wrapper #search-dropdwn-list-class{
+    width:135px
+  }
+  .page-administration-people-setup #page-container .narrow-search-results-item-details{
+    margin-top:5px
+  }
+
+  #page-container #paintInstructorResults td.instructor-learner-tab .ui-jqgrid .ui-jqgrid-htable th div.checkbox-unselected,
+  #page-container #paintInstructorResults td.instructor-learner-tab .ui-jqgrid .ui-jqgrid-htable th div.checkbox-selected {
+    margin-left:12px
+  }
+  #mark-complete-wizard table{
+   padding:0 4px;
+   font-size:12px
+  }
+  .expertusV2PopupContainer #mark-complete-wizard .mark-complete-wizard-popup-label input{
+    margin-left:19px
+  }
+  .lnr-report-schedule-popup .schedule-list-wrapper .ui-jqgrid-hdiv .ui-jqgrid-htable .ui-jqgrid-labels th div {
+    font-size:11px
+  }
+  #report-add-wizard #report_criteria_form .bubble-modifier-container {
+    width:320px
+  }
+  .page-administration-commerce-order #page-container #narrow-search-results-holder .catalog-pub-add-list,
+  .page-administration-commerce-order #page-container #narrow-search-results-holder .narrowsearch-pub-add-list{
+    right:16px
+  }
+  .page-administration-commerce-order .mro-wrapper #access-select-list-class-dropdown-list li{
+    min-width:108px
+  }
+  .page-administration-commerce-order .mro-wrapper #access-select-list-class-dropdown-list{
+    left:-4px
+  }
+  .page-administration-commerce-setting #commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-twocol-secondcol .addedit-new-field-title{
+    width:104px
+  }
+  .page-administration .addedit-left-col #group-control .autocomplete input#multiautocomplete {
+    padding-left:2px
+  }
+  #banner-basic-addedit-form #group-control .ui-multiselect-con-class #autocomplete{
+    padding-left:5px
+  }
+  #banner-basic-addedit-form .addedit-left-col #group-control .autocomplete input#multiautocomplete {
+    max-width:113px
+  }
+  #page-container #lnr-catalog-search .searchlocation { width:90px }
+  #block-exp-sp-lnrsearch-tab-find-training #paintContent .sort-by-links { left:-37px }
+  .addedit-training-program-course-list #mandatory-list .man-opt-selection {
+    margin-right:-11px
+  }
+  .page-administration-commerce-order #group-control #autoimg{
+    right:6px
+  }
+  .page-administration-manage-location #page-container  #page-wrapper .AdminsublinktabNavigation li {
+    padding-left:2px
+  }
+  #catalog-survey-assesment-basic-addedit-form .addedit-left-col {
+    min-height:320px
+  }
+  #program-tp-basic-addedit-form-container .assess-attach-grid-wrapper ul.enrolled-status{
+    margin-left:0
+  }
+  .theme-ctool-popup .popups-container-newui{
+    margin-bottom:-2px
+  }
+  #page-container #catalog-users .ui-jqgrid #pg_expertus-online-datatable-pager .ui-pg-table{
+    max-width:220px;
+    white-space:nowrap
+  }
+  #report-builder-section #report_criteria_form .bubble-modifier-container .modifierlabel {
+    width:175px
+  }
+  #admin-add-permissions .chk-edit{
+    margin-right:-13px
+  }
+  #admin-add-permissions .chk-create{
+    margin-right:-16px
+  }
+  .fade-out-title-container.myteam-compliance-course-title-fadeout-container{
+    max-width:317px
+  }
+  .fade-out-title-container.myteam-mandatory-course-title-fadeout-container{
+    max-width:315px
+  }
+  .fade-out-title-container.myteam-recommended-course-title-fadeout-container{
+    max-width:302px
+  }
+}
+/* Chrome hack End */
+
+/*safar hack*/
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0) { @media { _:-webkit-full-screen,
+  #list-values-addedit-form-details .add-list-pagination-container{
+    width:180px
+  }
+  .page-administration-learning-catalog #catalog-class-basic-addedit-form-container #admin-data-grid .assess-attach-grid-wrapper .ui-jqgrid-hdiv .ui-jqgrid-htable tr.ui-jqgrid-labels th:nth-child(4),
+  .page-administration-learning-catalog #catalog-class-basic-addedit-form-container #admin-data-grid .assess-attach-grid-wrapper .ui-jqgrid-hdiv .ui-jqgrid-htable tr.ui-jqgrid-labels th:nth-child(4) div,
+  .page-administration-learning-program #program-tp-basic-addedit-form-container #admin-data-grid .assess-attach-grid-wrapper .ui-jqgrid-hdiv .ui-jqgrid-htable tr.ui-jqgrid-labels th:nth-child(4),
+  .page-administration-learning-program #program-tp-basic-addedit-form-container #admin-data-grid .assess-attach-grid-wrapper .ui-jqgrid-hdiv .ui-jqgrid-htable tr.ui-jqgrid-labels th:nth-child(4) div{
+    width:118px
+  }
+  #catalog-class-basic-addedit-form-container #admin-data-grid .assess-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td:nth-child(1),
+  #program-tp-basic-addedit-form-container #admin-data-grid .assess-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td:nth-child(1){
+    width:170px
+  }
+  #catalog-class-basic-addedit-form-container #admin-data-grid .assess-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td:nth-child(4),
+  #program-tp-basic-addedit-form-container #admin-data-grid .assess-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td:nth-child(4){
+    width:118px
+  }
+  #catalog-class-basic-addedit-form-container #admin-data-grid .assess-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td:nth-child(3),
+  #program-tp-basic-addedit-form-container #admin-data-grid .assess-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td:nth-child(3){
+    min-width:45px;
+    max-width:45px
+  }
+  #root-admin #root-admin-search-right-col #tab-content-main .narrow-search-results-item-details .attachment-empty-column-height {
+    height:70px
+  }
+  #catalog-course-basic-addedit-form-container .attachment-empty-column-height {
+    height:45px
+  }
+  #catalog-class-basic-addedit-form-container .admin-datagrid-pagination .admin-datagrid-session-with-addanother .ui-jqgrid .ui-jqgrid-bdiv .ui-jqgrid-btable tr td a.admin-pagination-action-link {
+    background-position:9px 12px
+  }
+}
+}

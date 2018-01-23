@@ -1,0 +1,141 @@
+<?php 
+class Footerlinks extends DrupalWebTestCase {
+	private $test_case = array();
+	
+	public static function getInfo() {
+    return array(
+      'name' => 'footer',
+      'description' => 'footer link testing',
+      'group' => 'exp_sp_footer',
+    );
+  }
+  public function setUp(){
+  	parent::setUp();
+  	$user = new stdClass();
+  	$user->name =  'admin';
+  	$user->pass_raw = 'welcome';
+  	$this->drupalLogin($user);
+  }
+  public function testFooterlinks(){
+  $this->Aboutuslink();
+  $this->feedbacklink();
+  $this->LegalNoticeslink();
+  $this->PrivacyPolicylink();
+  $this->Trademarklink();
+  $this->Mobilelink();
+  }
+  	private function Aboutuslink(){
+  	module_load_include('inc', 'exp_sp_my_footer', 'exp_sp_my_footer');
+    
+  	$this->clickLink(t('About Us'));
+  	$this->assertUrl('node/1');
+  	$this->assertEqual($this->getUrl(), url('node/1', array('absolute' => TRUE)), t('Correct page redirection.'));
+  	$this->assertRaw('<span class="tab">View</span>','View for about US is present', 'exp_sp_footer');
+  	$this->assertRaw('<div class="content">','Content for about US loaded', 'exp_sp_footer');
+  	$this->assertRaw('<a href="/?q=node/1/edit">','Edit for about US loaded', 'exp_sp_footer');
+  	$link = $this->geturl();
+  	$this->clickLink(t('View'));  
+  	$this->assertUrl('node/1');
+  	$this->assertEqual($link, $this->url, t('Passed and requested URL are equal.'));
+  	$this->clickLink(t('Edit'));
+  	$this->assertUrl('node/1/edit');
+  	$this->assertEqual($this->getUrl(), url('node/1/edit', array('absolute' => TRUE)), t('Correct page redirection.Content Editable'));
+  	
+  	 $input = array();
+  	$formIds = $this->xpath('//form[@action="/?q=node/1/edit"]');
+  	//$this->verbose('sdasd');
+  	expDebug::dPrint(' $result = ' . print_r($formIds, true),3);
+  	//debug($formIds);
+  	$formId = (string) $formIds[1]['id'];
+  	$edit['title'] = 'About us';
+  	$post_field = array('submit'=>array(
+  			"form_id"=>"page_node_form",
+  			"op"=>"Save",
+  	),
+  			'wrapper'=>'wizard-form-wrapper');
+  	$this->setHttpReferer('node/1/edit');
+  	$out = $this->drupalPostAJAX(null,$edit,'Save','?q=system/ajax',array(),array(),$formId,$post_field);
+  	 
+  	//Check if any error thrown
+  
+  	$this->assertResponse(200,'Form Repainted successfully');
+  	$txt = 'Your details have been updated';
+  	$this->assertText(t($txt),'Updated changes successfully','exp_sp_my_account');
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_footer');
+  	$error = "The server encountered a temporary error and could not complete your request at the moment";
+  	$this->assertNoText(t($error),' errors not found','exp_sp_footer');
+  }
+  private function feedbacklink(){
+  	$this->clickLink(t('Feedback'));
+  	$this->assertUrl('node/2');
+  	$this->assertEqual($this->getUrl(), url('node/2', array('absolute' => TRUE)), t('Correct page redirection.'));
+  	$this->assertRaw(' href="/?q=node/2"','View link is present', 'exp_sp_footer');
+  	$this->assertRaw('<a href="/?q=node/2/edit">','Edit link is present', 'exp_sp_footer');
+  	$link = $this->geturl();
+  	$this->clickLink(t('View'));
+  	$this->assertUrl('node/2');
+  	$this->assertEqual($link, $this->url, t('Passed and requested URL are equal.'));
+  	$this->clickLink(t('Edit'));
+  	$this->assertUrl('node/2/edit');
+  	$this->assertEqual($this->getUrl(), url('node/2/edit', array('absolute' => TRUE)), t('Correct page redirection.Content Editable'));
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_footer');
+  	$error = "The server encountered a temporary error and could not complete your request at the moment";
+  	$this->assertNoText(t($error),' errors not found','exp_sp_footer');
+  	
+  }
+  private function LegalNoticeslink(){
+  	
+  	$this->clickLink(t('Legal Notices'));
+  	$this->assertUrl('node/5');
+  	$this->assertEqual($this->getUrl(), url('node/5', array('absolute' => TRUE)), t('Correct page redirection.'));
+  	$this->assertRaw('href="/?q=node/5"','View link is present', 'exp_sp_footer');
+  	$this->assertRaw('<a href="/?q=node/5/edit">','Edit link is present', 'exp_sp_footer');
+  	$link = $this->geturl();
+  	$this->clickLink(t('View'));
+  	$this->assertUrl('node/5');
+  	$this->assertEqual($link, $this->url, t('Passed and requested URL are equal.'));
+  	$this->clickLink(t('Edit'));
+  	$this->assertUrl('node/5/edit');
+  	$this->assertEqual($this->getUrl(), url('node/5/edit', array('absolute' => TRUE)), t('Correct page redirection.Content Editable'));
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_footer');
+  	$error = "The server encountered a temporary error and could not complete your request at the moment";
+  	$this->assertNoText(t($error),' errors not found','exp_sp_footer');
+  	
+  }
+  private function PrivacyPolicylink(){
+  	$this->clickLink(t('Privacy Policy'));
+  	$this->assertUrl('node/3');
+  	$this->assertEqual($this->getUrl(), url('node/3', array('absolute' => TRUE)), t('Correct page redirection.'));
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_footer');
+  	$error = "The server encountered a temporary error and could not complete your request at the moment";
+  	$this->assertNoText(t($error),' errors not found','exp_sp_footer');
+  }
+  private function Trademarklink(){
+  	$this->clickLink(t('Trademark'));
+  	$this->assertUrl('node/4');
+  	$this->assertEqual($this->getUrl(), url('node/4', array('absolute' => TRUE)), t('Correct page redirection.'));
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_footer');
+  	$error = "The server encountered a temporary error and could not complete your request at the moment";
+  	$this->assertNoText(t($error),' errors not found','exp_sp_footer');
+  }
+  private function Mobilelink(){
+  	$this->clickLink(t('Mobile'));
+  	$this->assertUrl('learning/mobile-app');
+  	$this->assertEqual($this->getUrl(), url('learning/mobile-app', array('absolute' => TRUE)), t('Correct page redirection.'));
+  	$this->assertRaw('href="/?q=learning/mobile-app/ctool-js/android"','Download link for mobile android available', 'exp_sp_footer');
+  	
+  	$this->assertRaw('href="/?q=learning/mobile-app/ctool-js/iphone"','Download link for iphone available', 'exp_sp_footer');
+  	$this->assertLinkByHref('/?q=learning/mobile-app/ctool-js/android');
+  	$webError = "Website encountered an unexpected error";
+  	$this->assertNoText(t($webError),'Web errors not found','exp_sp_footer');
+  	$error = "The server encountered a temporary error and could not complete your request at the moment";
+  	$this->assertNoText(t($error),' errors not found','exp_sp_footer');
+  }
+}
+
+  ?>

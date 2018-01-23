@@ -1,0 +1,547 @@
+*html #drupalchat {
+  display: none
+}
+#drupalchat-wrapper {
+  bottom: 0;
+  height: auto;
+  margin: 0 1%;
+  position: fixed;
+  font-family:helvetica neue, helvetica, arial;
+  right: 0;
+  z-index: 10100;
+  width:100%;
+  height:100%;
+  visibility:hidden
+}
+#drupalchat-wrapper .block-title-left {
+  padding-left:10px
+}
+#drupalchat-wrapper.offline .block-title-left {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/menu_bg1.png") no-repeat left -717px 
+}
+#drupalchat-wrapper .block-title-right {
+  padding-right:10px
+}
+#drupalchat-wrapper.offline .block-title-right {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/menu_bg1.png") no-repeat right -798px
+}
+#drupalchat-wrapper.offline .block-title-middle {
+  background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/menu_bg1.png") repeat-x right -758px
+}
+#drupalchat {
+  border-bottom: none;
+  float: right;
+  font-family: Arial, sans-serif
+}
+#drupalchat ul {
+  float: right;
+  list-style: none;
+  margin: 0;
+  padding: 0; 
+  width: 100%
+}
+#drupalchat ul li {
+  float: left;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  list-style: none;
+  margin-right: 13px
+}
+#drupalchat ul li.last div.subpanel_toggle {
+  border-right: none
+}
+#drupalchat ul li div.subpanel_toggle {
+  color: #333;
+  float: left;
+  line-height: 30px;
+  position: relative;
+  text-decoration: none;
+  width: 99%
+}
+#drupalchat ul li a {
+  font-weight:bold
+}
+#drupalchat ul li a:active { 
+  border-top: none; 
+  margin-top: -2px;
+  position: relative;
+  z-index: 200
+}
+#drupalchat ul li a span.subpanel_title_text {
+  width:100%
+}
+#drupalchat ul li a:active span.subpanel_title_text {
+  float: left;
+  margin-top: 2px;
+  width:100%
+}
+#drupalchat img.icon {
+  float: left;
+  margin-right: 6px;
+  padding: 0;
+  margin-top:10px
+}
+#drupalchat ul li a.chat {
+  width: 188px
+}
+#drupalchat ul li a.chatboxhead {
+  width: 213px
+}
+#drupalchat ul li div a {
+  color: #4686DD;
+  float: none;
+  height: auto;
+  padding: 0;
+  position: static;
+  width: auto
+}
+#drupalchat ul li div a:hover {
+  text-decoration: underline
+}
+#drupalchat #chatpanel .subpanel {
+  background: #ffffff;
+  bottom: 29px;
+  display: none;
+  left: 0px;
+  overflow: hidden;
+  position: relative;
+  top:-2px;
+  width: 186px
+}
+#drupalchat #chatpanel .subpanel .item-list {
+	display:inline-block;
+	width:186px;
+}
+#drupalchat #chatpanel .subpanel .jspPane {
+  width: 186px
+}
+#drupalchat .chatbox .subpanel {
+  width: 209px
+}
+#drupalchat .subpanel_title {
+  color: #333333;
+  padding: 3px 0 0;
+  font-size: 13px
+}
+#drupalchat .subpanel_title div.status-1{
+  display: block;
+  float: left;
+  background: url(images/online.png) no-repeat 0px 0px;
+  height: 9px;
+  width: 9px;
+  overflow: hidden;
+  margin-top: 11px;
+  margin-right: 6px  
+}
+#drupalchat .subpanel_title div.status-0{
+  display: block;
+  float: left;
+  background: url(images/offline.png) no-repeat 100% center;
+  height: 9px;
+  width: 9px;
+  overflow: hidden;
+  margin-top: 11px;
+  margin-right: 6px  
+}
+#drupalchat .subpanel_title span#chatCloseBtn {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -95px -1569px;
+  height: 11px;
+  width: 11px;
+  cursor: pointer;
+  float: right;
+  margin: 10px 0 0 0
+}
+.chatMinMaxBtn {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -121px -1571px;
+  height: 11px;
+  width: 11px;
+  float: right;
+  margin: 10px 7px 0 0;
+  cursor: pointer
+}
+#drupalchat .subpanel_title span.options {
+  background: url(images/options.png) no-repeat 6px center;
+  width: 12px;
+  height: 12px
+}
+#drupalchat .subpanel ul { 
+  background: #fff;
+  border: none;
+  margin: 0;
+  overflow: auto;
+  width: 100%
+}
+#drupalchat .subpanel li {
+  background: #fff;
+  clear: both;
+  display: block;
+  float: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0; 
+  position: static
+}
+#drupalchat .subpanel li:hover {
+  background: #EEE
+}
+#drupalchat .subpanel li a span {
+  float: left;
+  margin: 0 8px;
+  /*padding-left: 20px*/
+}
+#drupalchat .subpanel li a {
+  border: none;
+  display: block;
+  font-weight: normal;
+  height: 32px;
+  line-height: 32px;
+  margin: 0;
+  padding: 4px 0 4px 4px;
+  text-decoration:none
+}
+#drupalchat .subpanel li.nopic a {
+	height: 22px;
+	line-height: 22px;
+	padding: 3px 0 4px 9px
+}
+#drupalchat .subpanel li a:hover {
+  background: transparent;
+  text-decoration: none;
+  font-weight:normal
+}
+#drupalchat .subpanel li.status-1 a {
+  background: url(images/online.png) no-repeat 95% center
+}
+#drupalchat .subpanel li.status-2 a {
+  background: url(images/idle.png) no-repeat 95% center
+}
+#drupalchat .subpanel li.link a {
+  padding-left: 8px
+}
+#drupalchat ul li a.chatboxhead {
+  padding: 0 10px 0 0;
+  visibility: hidden
+}
+#drupalchat .subpanel .chat_options {
+  background: #F9F9F9;
+  border-bottom: 1px solid #b5b5b5;
+  border-top: 1px solid #b5b5b5;
+  overflow: hidden;
+  position: relative
+}
+#drupalchat .subpanel .chat_options a {
+  border-left: none;
+  border-right: 1px solid #cccccc;
+  color: #333333;
+  float: left;
+  padding: 3px 8px 3px 19px
+}
+#drupalchat .subpanel .chat_options a.status-1 {
+  background: url(images/online_black.png) no-repeat 6px center
+} 
+#drupalchat .subpanel .chat_options a.status-2 {
+  background: url(images/idle_black.png) no-repeat 6px 49%
+} 
+#drupalchat .subpanel .chat_options a.chat_loading {
+  background: url(images/loading.gif) no-repeat 4px center
+}
+#drupalchat .subpanel .chat_options a.options {
+  background: url(images/options.png) no-repeat 6px center
+}
+.chatbox {
+  display: none;
+  position: absoloute;
+  z-index: 9999
+}
+#drupalchat ul li a.chatboxblink {
+  background-color: #516ea6;
+  color: #fff
+}
+.chatboxcontent {
+  background-color: #fff;
+  color: #fff;
+  height: 110px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  padding: 0;
+  border-left:1px solid #b5b5b5;
+  border-right:1px solid #b5b5b5
+}
+.chatboxinput {
+  background-color: #fff;
+  border-right: 1px solid #b5b5b5;
+  border-left: 1px solid #b5b5b5;
+  border-bottom: 1px solid #b5b5b5;
+  padding: 5px
+}
+.drupalchat_userOffline {
+  background-color: #fff;
+  color: #C00;
+  font-size: 11px;
+  height: 15px;
+  width: 239px;
+  display: none;
+  text-align: center;
+  border-top-color: #EEE;
+  border-top-style: solid;
+  border-top-width: 1px
+}
+.chatboxtextarea {
+  border: 1px solid #b5b5b5;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  resize: none;
+  width: 195px;
+  font-size: 13px
+}
+.chatboxtextareaselected {
+  border: 1px solid #b5b5b5;
+  width: 226px
+}
+.chatboxusername {
+  font-size: 13px;
+  width: 215px
+}
+.chatboxusername a {
+  border: none;
+  font-weight: bold 
+}
+.chatboxusername a:hover {
+  color: #333
+}
+.chatboxtime {
+  color: #777;
+  float: right;
+  font-size: 9px;
+  margin:10px 24px 0 0;
+  font-weight: normal
+}
+.chatboxusername.nopic .chatboxtime {
+  margin: 5px 24px 0 0
+}
+.chatboxcontent p {
+  clear: both;
+  color: #333333;
+  font-size: 12px;
+  margin: 2px 4px 0;
+  text-align: left;
+  width: 189px;
+  word-wrap: break-word
+}
+#drupalchat .drupalchatnousers {
+  display: block;
+  font-weight: normal;
+  height: 22px;
+  line-height: 22px;
+  margin: 0;
+  padding: 3px 0 3px 8px;
+  color: #333
+}
+#drupalchat .drupalchatnousers.change-signin-state {
+  display: block;
+  font-weight: normal;
+  height: 22px;
+  line-height: 22px;
+  margin: 0;
+  padding: 3px 0 3px 8px;
+  color: #4686DD;
+  text-align:left;
+  width:auto
+}
+#drupalchat .drupalchat_popup{
+  width: 70px;
+  position: absolute;
+  display: none;
+  z-index: 200;
+  background: #FFF;
+  border: 1px solid #b5b5b5;
+  border-bottom: 2px solid #b5b5b5
+}
+#drupalchat .drupalchat_popup ul { 
+  background: #fff;
+  border: none;
+  margin: 0;
+  overflow: auto;
+  width: 100%
+}
+#drupalchat .drupalchat_popup li {
+  background: #fff;
+  clear: both;
+  display: block;
+  float: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0; 
+  position: static
+}
+#drupalchat .drupalchat_popup li:hover {
+  background: #516ea6
+}
+#drupalchat .drupalchat_popup li a span {
+  float: left;
+  margin: 0 8px;
+  padding-left: 20px
+}
+#drupalchat .drupalchat_popup li a {
+  border: none;
+  display: block;
+  font-weight: normal;
+  height: 12px;
+  line-height: 12px;
+  margin: 0;
+  padding: 3px 0 3px 8px 
+}
+#drupalchat .drupalchat_popup li a:hover {
+  background: transparent;
+  text-decoration: none;
+}
+#drupalchat .chatboxcontent .chatboxusername span.chatmsgusername {
+  color: #333;
+  font-weight:bold
+}
+#drupalchat .chatboxcontent .chatboxusername.nopic span.chatmsgusername {
+  padding-left: 8px;
+  line-height: 22px
+}
+#drupalchat .onlineuserpic,
+#drupalchat .chatmsguserpic {
+  padding-right: 3px
+}
+#mainpanel .chatbox a.active {
+  display:none
+}
+#chatpanel .subpanel {
+  border:1px solid #ccc
+}
+.offline #chatpanel .subpanel {
+  border:1px solid #DFDFDF;
+  border-top:none
+}
+#drupalchat #chatpanel {
+  bottom: -2px;
+  position: fixed;
+  right: 0;
+  z-index: 10000;
+  width:190px;
+  visibility:visible
+}
+#drupalchat .subpanel .subpanel_title .block-title-middle {
+  line-height:30px
+}
+.subpanel .chatboxcontent .chatboxusername img {
+  width:24px;
+  height:24px;
+  margin-left:10px
+}
+#chatpanel .subpanel .item-list img {
+  width:24px;
+  height:24px
+}
+.subpanel .chatboxcontent p {
+  margin-left:10px;
+  line-height:20px
+}
+#drupalchat .chatbox {
+  height:310px; 
+  width:200px;
+  right: 175px
+}
+#drupalchat .chatbox .subpanel {
+  position:absolute;
+  bottom:0px;
+  right:10px;
+  visibility:visible
+}
+#drupalchat .undelivered {
+  color: red
+}
+p#vtip {
+  z-index: 99999999
+}
+#drupalchat .newchatmsg .block-title-left {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png") no-repeat left -258px
+}
+#drupalchat .newchatmsg .block-title-middle {
+ background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png") repeat-x right -288px
+}
+#drupalchat .newchatmsg .block-title-right {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png") no-repeat right -318px
+}
+.chatBoxContentWrapper {
+  height: 110px
+}
+#drupalchat .change-signin-state {
+  color: #4686DD;
+  cursor: pointer;
+  line-height: 56px;
+  display: block;
+  text-align: center;
+  width: 100%
+}
+#drupalchat .conversation-time,
+#drupalchat .undelivered-errmsg {
+  color: #777777
+}
+.signin-signout-container {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -36px -1469px;
+  display: none;
+  position: absolute;
+  z-index: 100;
+  top: 15px;
+  right: -6px;
+  height: 45px;
+  width: 75px
+}
+.signin-signout-container.chat-signin-bg-setting {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat 0 -1714px;
+  display: none;
+  position: absolute;
+  z-index: 100;
+  top: 15px;
+  right: -6px;
+  height: 45px;
+  width: 112px
+}
+.signin-signout-arrow {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll -117px -14px transparent;
+  float: right;
+  height: 14px;
+  margin: 5px 0 0 0;
+  width: 12px;
+  cursor: pointer
+}
+#drupalchat .signin-signout-container .qtip-close-button {
+  height: 13px;
+  position: absolute;
+  right: -5px;
+  top: 4px;
+  width: 13px
+}
+#drupalchat .jspArrowUp {
+  background: url("images/basic_arrow_top_down.png") no-repeat 0 -16px;
+  height:8px
+}
+#drupalchat .jspArrowUp.jspDisabled {
+  background: url("images/basic_arrow_top_down.png") no-repeat 0 0;
+  height:8px
+}
+#drupalchat .jspArrowDown {
+  background: url("images/basic_arrow_top_down.png") no-repeat 0 -24px;
+  height:8px;
+  position:relative
+}
+#drupalchat .jspArrowDown.jspDisabled {
+  background: url("images/basic_arrow_top_down.png") no-repeat 0 -8px;
+  height:8px;
+  position:relative
+}
+#drupalchat .jspTrack {
+  border-left:1px solid #D4D4D4
+}
+#drupalchat .jspTrack:hover {
+  border:1px solid #D4D4D4;
+  border-width:0 0 0 1px
+}

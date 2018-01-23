@@ -1,0 +1,9 @@
+name = Learner Find Training
+description = Responsible for learner side Find Training.
+package = ExpertusONE Learning
+dependencies[] = exp_sp_learning
+testing_api = 2.x
+files[] = exp_sp_lnrsearch.inc
+files[] = tests/exp_sp_lnrsearch.test
+version = VERSION
+core = 7.x

@@ -1,0 +1,399 @@
+#notification-basic-addedit-form .addedit-form-cancel-container-actions {
+  float:right;
+  margin:10px 30px 10px 0
+}
+#notification-basic-addedit-form .addedit-form-cancel-and-save-actions-row {
+  width:100%;
+  margin:0;
+  clear:both
+}
+#notification-basic-addedit-form .addedit-new-field-two-col .addedit-edit-dropdown {
+  width:170px;
+  height:24px;
+  padding-top:1px
+}
+#notification-basic-addedit-form .addedit-new-field-two-col .addedit-edit-textfield {
+  width:164px
+}
+.addedit-onecol-secondcol {
+  display:inline;
+  float:left;
+  margin:0;
+  vertical-align:middle;
+  padding-left:2px
+}
+#two-col-row-freq_type .addedit-twocol-secondcol .addedit-secondcol-field-value .addedit-edit-dropdown {
+  width:170px;
+  height:24px;
+  padding-top:1px
+}
+#exp-sp-administration-notification-attaching-template-form #catalog-class-addedit-form-details .add-class-button {
+ margin-right:21px;
+ position:absolute;
+ right:0;
+ top:-28px
+}
+#exp-sp-administration-notification-attaching-template-form #admin-course-class-list-pagination-wrapper .edit-class-list-container {
+  border-bottom:1px dotted #ccc;
+  width:510px
+}
+#notification-basic-addedit-form .addedit-new-field-title {
+  padding:6px 10px 4px 0;
+  width:115px
+}
+#notification-basic-addedit-form .addedit-twocol-secondcol {
+  display:inline;
+  margin:0;
+  vertical-align:middle
+}
+#notification-basic-addedit-form .addedit-new-field-two-col {
+  width:590px;
+  float:center
+}
+#admin-notification-template-list-pagination-wrapper .ui-jqgrid .ui-jqgrid-hdiv {
+  border:0;
+  display:none;
+  margin:0;
+  overflow-x:hidden;
+  overflow-y:auto;
+  padding:0;
+  position:relative
+}
+#exp-sp-administration-notification-attaching-template-addedit-form .addedit-new-field-title {
+  padding:6px 5px 4px 0;
+  width:70px
+}
+#exp-sp-administration-notification-attaching-template-addedit-form .addedit-new-field-two-col .addedit-edit-textfield {
+  width:295px
+}
+#exp-sp-administration-notification-attaching-template-addedit-form .addedit-twocol-secondcol {
+  display:inline;
+  float:none;
+  margin:0;
+  vertical-align:middle
+}
+#exp-sp-administration-notification-attaching-template-addedit-form .crs-tab-titles-container {
+  position:absolute;
+  margin-top:-26px;
+  margin-left:70px
+}
+#exp-sp-administration-notification-attaching-template-addedit-form .addedit-form-cancel-container-actions {
+  float:right;
+  margin-right:16px;
+  position:relative
+}
+#admin-add-course-training-plan .admin-datagrid-save-cancel-button-align-bottom {
+  clear:both;
+  position:relative
+}
+.admin-insert-to-template-keyword{
+  color:#4686DD;
+  cursor:pointer;
+  float:left;
+  text-decoration:none
+}
+#keywords-addedit-form-html #admin-add-course-training-plan {
+  padding:5px
+}
+#notification-basic-addedit-form.addedit-left-col {
+  width:98.3%;
+  padding:15px 0 0 16px;
+  position:relative
+}
+.frequency-scheduled-days {
+  color:#666;
+  font-size:12px;
+  padding:0;
+  width:26px;
+  line-height:27px;
+  text-align:left;
+  float:left
+}
+.notification-add-template-container .addedit-new-field-two-col {
+  width:auto
+}
+#admin-notification-template-list-pagination-wrapper .ui-jqgrid-btable tr {
+  background:none;
+  border:0
+}
+#admin-notification-template-list-pagination-wrapper .edit-class-list .admin-add-edit-button {
+  margin-right:19px;
+  margin-top:0
+}
+.notification-add-template-container .addedit-form-cancel-and-save-actions-row {
+  margin-top:8px
+}
+#admin-add-course-training-plan .add-key-word-list {
+  min-height:145px;
+  max-height:145px
+} 
+#admin-add-course-training-plan .add-key-word-list .jspVerticalBar .jspTrack {
+  min-height:143px;
+  max-height:143px
+} 
+#admin-add-course-training-plan .add-key-word-list .jspVerticalBar {
+  padding-left:3px
+}
+.add-key-word-edit-list {
+  left:260px
+}
+.add-keyword-tab-icon {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -158px -538px;
+  height:20px;
+  width:20px
+}
+#admin-notification-template-list-pagination-wrapper .edit-class-list {
+  width:98%;
+  margin:0 5px;
+  padding:5px 0 10px 10px
+}
+#add-template-list-wrapper .ui-jqgrid .ui-jqgrid-bdiv{
+  overflow:hidden
+}
+#two-col-row-freq_type .addedit-twocol-secondcol {
+  width:226px
+}
+#notification-basic-addedit-form .addedit-new-field-two-col .notify-frequency-change-new {
+  width:116px;
+  height:24px
+}
+#admin-frequency-data-part-expires .notification-scheduled-days{
+  width:20px;
+  height:18px
+}
+#two-col-row-mail_sent_to img {
+  visibility:hidden;
+  float:left
+}
+#notification-basic-addedit-form .addedit-edit-cc_mail{
+  height:17px
+}
+#notification-basic-addedit-form .addedit-edit-cc_mail.cc-mail-empty {
+  color:#ccc;
+  font-size:10px;
+  font-style:italic
+}
+#notification-basic-addedit-form .addedit-edit-cc_mail.cc-mail-notempty {
+  color:#333;
+  font-size:13px;
+  font-style:normal
+}
+#notification-basic-addedit-form .save-and-enable-disabled,
+#notification-basic-addedit-form .save-and-enable-disabled:hover{
+  color:#ccc;
+  cursor:default
+}
+#add-template-list-wrapper .narrow-search-actionbar-greyout-btnLeft {
+  float:left;
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -113px -1679px;
+  width:10px;
+  height:22px
+}
+#add-template-list-wrapper .narrow-search-actionbar-greyout-btnBG {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -7px -1759px;
+  color:#FFF;
+  float:left;
+  font-size:12px;
+  font-weight:bold;
+  height:20px;
+  padding:3px 3px 0 12px
+}
+#add-template-list-wrapper .narrow-search-actionbar-greyout-btnRight {
+  float:left;
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -135px -1679px;
+  width:10px;
+  height:22px
+}
+.addedit-twocol-firstcol .ui-multiselect,
+.addedit-twocol-secondcol .ui-multiselect {
+  font-size:12px;
+  color:#999;
+  font-weight:normal;
+  border-radius:0;
+  background:block;
+  border:1px solid #7F9DB9;
+  width:192px;
+  font-family:helvetica,arial
+} 
+#notification-basic-addedit-form .addedit-left-col{
+  padding:9px 0 15px 17px
+}
+#notification-basic-addedit-form .admin-save-pub-unpub-button-container{
+  padding-left:0
+}
+#exp-sp-administration-notification-attaching-template-addedit-form .addedit-new-field-value{
+  width:490px
+}
+#exp-sp-administration-notification-attaching-template-addedit-form .addedit-new-field-value .defaultSkin table.mceLayout iframe{
+  min-height:235px
+}
+#notification-basic-addedit-form .addedit-left-col .addedit-new-field .addedit-new-field-value input.addedit-edit-textfield{
+  width:455px
+}
+#notification-basic-addedit-form .addedit-new-field-value .defaultSkin table.mceLayout iframe{
+  min-height:150px
+}
+#notification-basic-addedit-form .addedit-long-description-container .addedit-new-field-value {
+  width:460px
+}
+#notification-basic-addedit-form .addedit-twocol-secondcol {
+  float:none
+}
+#notification-basic-addedit-form .addedit-twocol-secondcol .addedit-new-field-title{
+  padding:6px 10px 4px 0;
+  width:110px
+}
+#admin-add-course-training-plan .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-hbox .ui-jqgrid-labels th,
+#admin-add-course-training-plan .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td,
+#admin-add-course-training-plan .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-htable th div {
+  padding-left:0
+}
+#notification-basic-addedit-form .addedit-secondcol-field-value{
+  padding:0
+}
+#notification-basic-addedit-form .certificate-description .addedit-new-field-value .defaultSkin table.mceLayout iframe{
+  height:190px
+}
+#admin-notification-template-list-pagination-wrapper #data-table-page-view {
+  display:none
+}
+#admin-notification-template-list-pagination-wrapper .ui-jqgrid .ui-state-disabled {
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#admin-notification-template-list-pagination-wrapper .ui-pg-table .ui-state-hover {
+  background:none;
+  border:0	
+}
+#admin-notification-template-list-pagination-wrapper .ui-pg-table .ui-icon-seek-pgstart {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -158px -253px;
+  border:0;
+  float:left;
+  height:20px;
+  opacity:1;
+  width:26px
+}
+#admin-notification-template-list-pagination-wrapper .ui-pg-table .ui-icon-seek-prev {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -91px -302px;
+  border:0;
+  float:left;
+  height:20px;
+  opacity:1;
+  width:25px
+}
+#admin-notification-template-list-pagination-wrapper .ui-pg-table  .ui-icon-seek-next {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -122px -302px;
+  border:0;
+  float:right;
+  height:20px;
+  opacity:1;
+  width:29px;
+  margin-top:-1px;
+  margin-right:4px
+}
+#admin-notification-template-list-pagination-wrapper .ui-pg-table  .ui-icon-seek-pgend {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -158px -302px;
+  border:0;
+  float:right;
+  height:20px;
+  opacity:1;
+  width:29px;
+  margin-top:-1px 
+}
+#admin-notification-template-list-pagination-wrapper .ui-pg-table .search-pagination-right {
+  padding-left:3px;
+  padding-top:2px;
+  font-size:12px
+}
+#admin-notification-template-list-pagination-wrapper .ui-pg-table .ui-icon-seek-first,
+#admin-notification-template-list-pagination-wrapper .ui-pg-table .ui-icon-seek-end{
+  display:none
+}
+#admin-notification-template-list-pagination-wrapper .ui-pg-table tr{
+  float:right;
+  margin-right:-20px
+}
+#exp-sp-administration-notification-attaching-template-addedit-form .addedit-left-col .addedit-new-field .addedit-new-field-value textarea.addedit-edit-textarea {
+   max-width:490px;
+   min-width:490px;
+   height:55px;
+   resize:none
+}
+#exp-sp-administration-notification-attaching-template-addedit-form .addedit-edit-sms_text{
+  height:17px
+}
+#exp-sp-administration-notification-attaching-template-addedit-form .addedit-edit-sms_text.cc-mail-empty {
+  color:#ccc;
+  font-size:10px;
+  font-style:italic
+}
+#exp-sp-administration-notification-attaching-template-addedit-form .addedit-edit-sms_text.cc-mail-notempty {
+  color:#333;
+  font-size:13px;
+  font-style:normal
+}
+/*! Chrome Hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #admin-add-course-training-plan .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-hbox .ui-jqgrid-labels th {
+    padding:0
+  }
+  #admin-add-course-training-plan .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td{
+    padding-left:0
+  }
+  #admin-add-course-training-plan .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-htable th div {
+    padding-left:0
+  }
+  #admin-add-course-training-plan .ui-jqgrid .ui-jqgrid-hdiv{
+    padding-left:2px
+  }
+ }
+ .notify-freq-hide{
+	display:none;
+}
+.edit-freq-data-notify{
+	width :130px;
+}
+.edit-notify-days-before {
+	width :130px;
+}
+.notify-days-text {
+	float: left;
+	/*font-family: proximanovabold;*/
+  font-size: 12px;
+  margin-top: 5px;
+  padding-left: 5px;
+  width: 25px;
+}
+#notification-basic-addedit-form #two-col-row-not_sched_days .addedit-firstcol-field-value{
+	width: 137px;
+}
+#notification-basic-addedit-form #two-col-row-not_sched_days .addedit-twocol-secondcol .addedit-new-field-title{
+	width : 114px;
+}
+.page-administration-manage-certificate .narrow-search-results-item-details .fade-out-title-container.admin-narrow-search-fadeout-container, 
+.page-administration-manage-notification-template .narrow-search-results-item-details .fade-out-title-container.admin-narrow-search-fadeout-container {
+  max-width:550px
+}
+.page-administration-manage-notification-template .narrow-search-results-item-details .admin-narrow-search-edit-tooltip-code-fadeout-container {
+  max-width:550px
+}
+.page-administration-manage-notification-template .admin-attach-keywords-tab-datagrid-wrapper .multi-grid-addkeywords-title-fadeout-container,
+.page-administration-manage-certificate .admin-attach-keywords-tab-datagrid-wrapper .multi-grid-addkeywords-title-fadeout-container {
+  max-width:180px
+}
+.page-administration-manage-notification-template #viewnotification-detail-wrapper .admin-narrow-notify-view-title-fadeout-container,
+.page-administration-manage-certificate #viewnotification-detail-wrapper .admin-narrow-notify-view-title-fadeout-container {
+  max-width:550px
+}
+.page-administration-manage-notification-template #viewnotification-detail-wrapper .admin-narrow-notify-view-notifycc-fadeout-container,
+.page-administration-manage-certificate #viewnotification-detail-wrapper .admin-narrow-notify-view-notifycc-fadeout-container {
+  max-width:190px
+}
+.page-administration-manage-notification-template #viewnotification-detail-wrapper .admin-narrow-notify-view-accessname-fadeout-container,
+.page-administration-manage-certificate #viewnotification-detail-wrapper.admin-narrow-notify-view-accessname-fadeout-container {
+  max-width:550px
+}
+.page-administration-manage-notification-template #view-scroll-wrapper span.vtip,
+.page-administration-manage-certificate #view-scroll-wrapper span.vtip {
+  float:left
+}

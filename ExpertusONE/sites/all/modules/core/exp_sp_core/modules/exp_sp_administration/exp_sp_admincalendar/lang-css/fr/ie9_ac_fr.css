@@ -1,0 +1,5 @@
+/* Admin Calendar Styles starts here */
+.page-admincalendar #calendarprimaryview .fc-agendaDay-view .fc-head div.fc-widget-header th.fc-axis{
+  min-width:49px
+}
+/* Admin Calendar Styles ends here */

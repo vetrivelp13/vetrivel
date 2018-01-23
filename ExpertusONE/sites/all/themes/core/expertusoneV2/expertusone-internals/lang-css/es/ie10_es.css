@@ -1,0 +1,280 @@
+/* Common styles Start */
+/* Common styles End */
+
+
+/* Home Page Widgets Start */
+/* Home Page Widgets End */
+
+/* Course/Class/Tp Details Start */
+.learning-detail-desc div.prgdet-node form#fivestar-rating-widget .form-item .description{
+  width:88px
+}
+/* Course/Class/Tp Details End */
+
+
+/* Sign In styles Start */
+/* Sign In styles End */
+
+
+/* Register styles Start */
+/* Register styles End */
+
+
+/* Forget Password styles Start */
+/* Forget Password styles End */
+
+
+/* Account styles Start */
+#exp-sp-my-account-shopping-cart-form .ui-jqgrid #account-pager.ui-jqgrid-pager {
+  height:22px
+}
+/* Account styles End */
+
+
+/* Catalog styles Start */
+.page-learning-catalog-search .ui-jqgrid .ui-pg-input{
+  width:auto;
+}
+/* Catalog styles End */
+
+/* Profile styles Start */
+.page-learning-my-profile #page-container #myskill-parent .form-type-textfield{
+  display:inline-block
+}
+.page-learning-my-profile #page-container #my_transcript_pager .search-pagination-right span {
+  margin-right:0 
+}
+#page-container #catalog-users .ui-jqgrid #pg_expertus-online-datatable-pager .ui-pg-table{
+  min-width:180px
+}
+#catalog-userpoints-loader .user-points-result-widget .points-row2-column-3 .column-action-text{
+  margin-left: -13px;
+}
+/* Profile styles End */
+
+/* Discussions styles Start */
+#page-container #frm-topic-list-sort-display .frm-topic-list-sortby .sort-by-links {
+    left: -49px
+}
+.page-learning-forum-topic-list #page-container .admin-forum-topic-detail-action-btn .addedit-form-cancel-container-actions{
+  width:162px
+}
+/* Discussions styles End */
+
+/* Team styles Start */
+#my-team-dialog .title-mandatory-clr{
+  margin-top:0
+}
+#block-exp-sp-myteam-tab-manager-view #lnr-myteam-search #paintContentResults .usr-enroll-grid-header-grey-cls {
+  width:110px;
+}
+body.page-learning.page-learning-myteam-search table#paintContentResults .top-record-div-left{
+  width:304px
+}
+/* Team styles End */
+
+
+/* Shopping Cart styles Start */
+/* Shopping Cart styles End */
+
+
+/* My Learning(My Enrollments) styles Start */
+.page-learning.page-learning-enrollment-search #page-container #enroll-lp-result-container .enroll-main-list.enroll-main-action-lp-multiclasss .enroll-action{
+  width:139px
+}
+/* My Learning(My Enrollments) styles End */
+
+
+/* My Learning(My Programs) styles Start */
+/* .page-learning-enrollment-search #page-container #enroll-lp-result-container .enroll-show-moreclass .enroll-main-action-lp-multiclasss,
+.page-learning-enrollment-search #page-container #paintEnrollmentLPResults .enroll-lp-main-list,
+.page-learning-enrollment-search #page-container #paintEnrollmentResults .enroll-main-list{
+  width: 141px
+}
+.page-learning-enrollment-search #page-container #enroll-lp-result-container .enroll-main-action-lp-multiclasss .enroll-launch,
+.page-learning-enrollment-search #page-container #paintEnrollmentLPResults .enroll-lp-main-list .enroll-launch,
+.page-learning-enrollment-search #page-container #paintEnrollmentResults .enroll-main-list .enroll-launch,
+.page-learning-enrollment-search #page-container #paintEnrollmentLPResults .enroll-lp-main-list .enroll-launch:hover{
+	width:123px
+} */
+/* My Learning(My Programs) styles End */
+
+
+/* My Learning(My Classes) styles Start */
+.expertusV2PopupContainer #mark-complete-wizard .require-text{
+  margin-left:-7px
+}
+/* My Learning(My Classes) styles End */
+
+/* My Learning(My Transcripts) styles Start */
+/* My Learning(My Transcripts) styles End */
+
+/* My Learning(My CalEndar) styles Start */
+/* My Learning(My CalEndar) styles End */
+
+
+/* Chat styles Start */
+#drupalchat-wrapper #drupalchat .change-signin-state{
+ font-size: 8px;
+}
+/* Chat styles End */
+
+
+/* Learning(Course/Class) styles Start */
+#add-session-details .admin-addedit-session-details-wrapper .form-item-session-presenter-url label {
+  width: 107px
+}
+.page-administration-learning-catalog #tab-content-main #narrow-search-results-holder #catalog-attachment-disp-container td.attachment-empty-column-height {
+  height:55px
+}
+.page-administration-learning-catalog #catalog-course-basic-addedit-form-container #catalog-attachment-disp-container td.attachment-empty-column-height {
+  height:49px
+}
+.page-administration-learning-catalog #catalog-class-basic-addedit-form-container #catalog-attachment-disp-container td.attachment-empty-column-height {
+  height:34px
+}
+/* Learning(Course/Class) styles End */
+
+/* Learning(Training Plan) styles Start */
+.page-administration-learning-program #tab-content-main  #narrow-search-results-holder #catalog-attachment-disp-container td.attachment-empty-column-height {
+  height:55px
+}
+.page-administration-learning-program #program-tp-basic-addedit-form-disp  #catalog-attachment-disp-container td.attachment-empty-column-height {
+  height:35px
+}
+body.page-administration-learning-catalog .addedit-form-main-container #catalog-class-basic-addedit-form-container .enrolled-display-controller .ui-jqgrid-bdiv .checkbox-unselected{
+  margin-left: -2px;
+ }
+ body.page-administration-learning-catalog .addedit-form-main-container #catalog-class-basic-addedit-form-container .enrolled-display-controller .ui-jqgrid-bdiv .checkbox-selected{
+  margin-left: -2px;
+ }
+/* Learning(Training Plan) styles End */
+
+
+/* People(User) styles Start */
+/* People(User) styles End */
+
+/* People(Organization) styles Start */
+.page-administration-people-organization #organization-addedit-form .catalog-pub-add-list{width:99px}
+/* People(Organization) styles End */
+
+/* People(Groups) styles Start */
+.page-administration-people-group #catalog-class-addedit-form-details #add-class-list-wrapper #search-dropdwn-list-class{width:136px}
+.page-administration-people-group #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class,
+.page-administration-people-group #catalog-class-addedit-form-details #add-class-list-wrapper #select-list-class-dropdown-list li{
+ width:114px
+}
+.page-administration-people-group #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper #search-dropdwn-list-class{width:138px}
+.page-administration-people-group #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class{width:114px;text-align:right}
+.attr-pane .attr-selected-pane span.item-short-desc,
+.attr-pane .attr-selected-pane span.item-long-desc{line-height:25px}
+#user-basic-addedit-form .form-item-files-picture #edit-picture{margin-top:4px}
+#user-basic-addedit-form .addedit-left-col{width:97.5%}
+.crs-tab-titles-container .tab-title,.crs-tab-titles-container-view .tab-title,.narrow-search-multi-action-container .tab-title,
+.modal-content .crs-tab-titles-container .tab-title,.modal-content .crs-tab-titles-container-view .tab-title,.modal-content .narrow-search-multi-action-container .tab-title {
+  display:block;
+  height:24px;
+}
+.page-administration-people-group #role-detail-wrapper #catalog-class-addedit-form-details #add-class-list-wrapper .admin_class_multi_search_container{width:353px}
+/* People(Groups) styles End */
+
+/* People(settings) styles Start */
+.page-administration-people-setup #page-container .narrow-search-results-item-details{
+  margin-top:4px
+}
+.page-administration-people-setup #list-values-addedit-form-details .disable-delete-icon{
+  margin-top:0
+}
+/* People(settings) styles End */
+
+/* Survey/Assessment styles Start */
+/* Survey/Assessment styles End */
+
+/* Manage(Content) styles Start */
+#upload_browse_and_url .select-list-dropdown {
+  white-space:nowrap
+}
+/* Manage(Content) styles End */
+
+
+/* Manage(Location) styles Start */
+#location-basic-addedit-form-container .addedit-new-field-title {
+    margin-top:-2px
+}
+/* Manage(Location) styles End */
+
+
+/* Manage(Banner) styles Start */
+#ctools-face-table #banner-basic-addedit-form  .addedit-form-wrapper  .mro-wrapper #access-search-list-class-title-keyword{
+  left:28px
+}
+#exp-sp-administration-banner-addedit-form .addedit-firstcol-field-value input.addedit-edit-file-upload,
+.page-administration-manage-banner .addedit-new-field .form-type-file input.addedit-edit-file-upload{
+  width:155px
+}
+/* Manage(Banner) styles End */
+
+
+/* Manage(Notification/Certificate) styles Start */
+#notification-basic-addedit-form ul.catalog-pub-add-list .save-pub-unpub-sub-menu .pub-unpub-only-save-btn {
+  float:none
+}
+/* Manage(Notification/Certificate) styles End */
+
+/* Manage(Announcement) styles Start */
+/* Manage(Announcement) styles End */
+
+/* Commerce(Order) styles Start */
+.page-administration-commerce.page-administration-commerce-order .mro-wrapper #access-select-list-class-dropdown-list li{
+  min-width:110px
+}
+.page-administration-commerce.page-administration-commerce-order .mro-wrapper #access-select-list-class-dropdown-list{
+  left:-4px
+}
+.page-administration-commerce-order #page-container #narrow-search-results-holder .catalog-pub-add-list,
+.page-administration-commerce-order #page-container #narrow-search-results-holder .narrowsearch-pub-add-list{
+  right:14px
+}
+/* Commerce(Order) styles End */
+
+/* Commerce(Discount) styles Start */
+/* Commerce(Discount) styles End */
+
+/* Commerce(Tax) styles Start */
+/* Commerce(Tax) styles End */
+
+/* Commerce(Settings) styles Start */
+.page-administration-commerce.page-administration-commerce-setting #commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-twocol-secondcol .addedit-new-field-title{
+  width:98px;
+  font-size:11px;
+  padding-left:2px;
+  padding-right:2px
+}
+.page-administration-commerce-setting #commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-new-field-title {
+  width: 118px;
+}
+/* Commerce(Settings) styles End */
+
+/* site settings style starts*/
+#webanalytics-admin-form .addedit-left-col .addedit-new-field .addedit-new-field-value .addedit-edit-dropdown {
+  width:247px
+}
+/* site settings style ends*/
+
+/* Reports styles Start */
+.page-reports #create-schedule-addedit-form .addedit-new-field-title {
+    padding: 6px 3px 4px 6px
+}
+/* Reports styles End */
+
+.page-administration-learning-catalog #catalog-class-basic-addedit-form-container .assess-attach-grid-wrapper .enrolled-status ul.sub-menu{
+	right:315px
+}
+
+/* Reserved Block CSS Start - Here we can create a new block CSS styles*/
+/* Reserved Block CSS End */
+
+/* Chrome hack Start */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+}
+/* Chrome hack End */

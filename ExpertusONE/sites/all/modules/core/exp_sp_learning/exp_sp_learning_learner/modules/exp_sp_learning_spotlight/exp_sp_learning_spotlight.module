@@ -1,0 +1,345 @@
+<?php
+/**
+ * Implementation of hook_block_info().
+ */
+function exp_sp_learning_spotlight_block_info() {
+  try{
+  $blocks = array();
+
+  $blocks['new_courses'] = array(
+    'info' => t('New Courses'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => '<front>'
+  );
+  $blocks['most_viewed'] = array(
+    'info' => t('Most Viewed'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => '<front>'
+  );
+  $blocks['highly_rated'] = array(
+    'info' => t('Highly Rated'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => '<front>'
+  );
+  $blocks['most_active_users'] = array(
+    'info' => t('Most Active Users'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => '<front>'
+  );
+  $blocks['most_popular'] = array(
+    'info' => t('Most Popular'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => '<front>'
+  );
+  /* changes for 12376 */
+  $blocks['featured_training'] = array(
+    'info' => t('Featured Training'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => '<front>'
+  );
+  $blocks['leaderboard'] = array(
+    'info' => t('LBL1063'), //leaderboard
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+    'pages' => '<front>'
+  );
+  return $blocks;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_learning_spotlight_block_info', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function exp_sp_learning_spotlight_block_view($delta = ''){
+  try{
+    global $theme_key;
+  $block = array();
+	drupal_add_js(drupal_get_path('module', 'exp_sp_learning_learner') .'/js/exp_sp_learningspotlight/exp_sp_learning_spotlight.js');
+	global $theme_key;
+	if($theme_key == 'expertusoneV2') {
+		drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner').'/css/exp_sp_learning_spotlight_v2.css');		
+		/* 0061827: Leaderboard widget: Expand button for user description not working**/
+		$status = checkBlockStatus('leaderboard','exp_sp_learning_spotlight');
+		if(drupal_is_front_page() && $status == 1){
+			drupal_add_js(drupal_get_path('module', 'exp_sp_my_profile').'/exp_sp_my_profile.js', array('type' => 'file', 'group' => JS_DEFAULT));
+		}
+		
+	} else {
+		drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner').'/css/exp_sp_learning_spotlight.css');
+	}
+	
+  require_once('exp_sp_learning_spotlight.inc');
+  switch ($delta) {
+    case 'new_courses':
+      $block['subject'] = t('LBL004');
+      $block['content'] = " ";
+      $rst=getNewTrainings();
+      if ($rst == null) {
+        $block['content'] = t('MSG023');
+      }
+      $block['blockname'] = "NEW TRAINING";
+      $block['results'] = $rst;
+      break;
+    case 'highly_rated':
+      $block['subject'] = t('LBL142');
+      $block['content'] = " ";
+      if(!empty($_SESSION['availableFunctionalities']->exp_sp_fivestar)) {
+      	$rst = getHighlyRatedRating();
+      	$block['blockname'] = "HIGHLY RATED TRAINING";
+      }
+      if ($rst == null) {
+        	$block['content'] = t('MSG255');
+      }
+      $block['results'] = $rst;
+      break;
+    case 'most_active_users':
+      drupal_add_css(drupal_get_path('module', 'exp_sp_learning_learner').'/css/exp_sp_learning_Mostactiveusers.css');
+      $block['subject'] = t('LBL160');
+      $block['content'] = " ";
+      	$rst = getMostActiveUser();
+      if ($rst == null) {
+        $block['content'] = t('MSG254');
+      }
+      $block['blockname'] = "Most Active Users";
+      $block['results'] = $rst;
+      break;
+    case 'most_popular':
+      $block['subject'] = t('LBL007');
+      $block['content'] = " ";
+      $userId = getSltpersonUserId();
+      $rst = getMostPopular($userId);
+      if ($rst == null) {
+        $block['content'] = t('MSG025');
+      }
+      $block['blockname'] = "MOST POPULAR TRAINING";
+      $block['results'] = $rst;
+      break;
+      /* changes for 12376 */
+      case 'featured_training':
+    		$block['subject'] = t('LBL006');
+      	$block['content'] = " ";
+      	$rst = getHighlyRateds();
+      	$block['blockname'] = "FEATURED TRAINING";
+      if ($rst == null) {
+    		$block['content'] = t('MSG024');
+      }
+      $block['results'] = $rst;
+      break;
+      
+      case 'leaderboard':
+        
+        $js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+        $css_module_optional = array('type' => 'file', 'group' => CSS_DEFAULT);
+        include_once(drupal_get_path('module', 'exp_sp_admin_userpoints') .'/exp_sp_admin_userpoints.inc');
+        drupal_add_js(drupal_get_path('module', 'exp_sp_admin_userpoints').'/exp_sp_admin_userpoints.js',$js_module_optional);
+        includeJqGridJsCss();
+        if($theme_key == 'expertusoneV2'){
+          drupal_add_css(drupal_get_path('module', 'exp_sp_admin_userpoints').'/exp_sp_admin_userpoints_v2.css', $css_module_optional);
+        }
+        else{
+          drupal_add_css(drupal_get_path('module', 'exp_sp_admin_userpoints').'/exp_sp_admin_userpoints.css', $css_module_optional);
+      }
+      if(module_exists('exp_sp_admin_userpoints')){
+      	$block['subject'] = t('LBL1063'); //leaderboard
+      	$block['content'] =  " ";
+      }
+      break;
+  }
+  return $block;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_learning_spotlight_block_view', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+function exp_sp_learning_spotlight_menu() {
+  try{
+   $items = array();
+   
+   $items['learning/course-shortdetails/%'] = array(
+    'title' => 'Course Details',
+    'page callback' => 'get_sort_details',
+    'page arguments' => array(2),
+    'access arguments' => array('expertus learner'),
+    'type' => MENU_CALLBACK,
+    'file' => 'exp_sp_learning_spotlight.inc'
+  );
+  return $items;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_learning_spotlight_menu', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+/**
+ * Implements hook_block_configure().
+ */
+function exp_sp_learning_spotlight_block_configure($delta = '') {
+  try{
+  $form = array();  
+  if ($delta == 'new_courses') {
+    $form['exp_sp_new_course_block_no_of_display'] = array(
+      '#type' => 'select',
+      '#title' => t('Number of New Courses'),
+	  	'#description' => t('Number of new courses to display.'),
+      '#default_value' => variable_get('exp_sp_new_course_block_no_of_display', 0),
+      '#options' => drupal_map_assoc(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)),
+    );
+  }
+  else if ($delta == 'most_viewed') {
+    $form['exp_sp_most_viewed_block_no_of_display'] = array(
+      '#type' => 'select',
+      '#title' => t('Number of Most Viewed'),
+	  	'#description' => t('Number of most viewed to display.'),
+      '#default_value' => variable_get('exp_sp_most_viewed_block_no_of_display', 0),
+      '#options' => drupal_map_assoc(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)),
+    );
+  }
+  else if ($delta == 'highly_rated') {
+    $form['exp_sp_highly_rated_block_no_of_display'] = array(
+      '#type' => 'select',
+      '#title' => t('Number of Highly Rated'),
+	  	'#description' => t('Number of highly rated to display.'),
+      '#default_value' => variable_get('exp_sp_highly_rated_block_no_of_display', 0),
+      '#options' => drupal_map_assoc(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)),
+    );
+  }
+  else if ($delta == 'most_active_users') {
+    $form['exp_sp_most_active_users_block_no_of_display'] = array(
+      '#type' => 'select',
+      '#title' => t('Number of Most Active Users'),
+	  	'#description' => t('Number of most active users to display.'),
+      '#default_value' => variable_get('exp_sp_most_active_users_block_no_of_display', 0),
+      '#options' => drupal_map_assoc(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)),
+    );
+  }
+  else if ($delta == 'most_popular') {
+    $form['exp_sp_most_popular_block_no_of_display'] = array(
+      '#type' => 'select',
+      '#title' => t('Number of Most Pobular'),
+	  	'#description' => t('Number of most popular to display.'),
+      '#default_value' => variable_get('exp_sp_most_popular_block_no_of_display', 0),
+      '#options' => drupal_map_assoc(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)),
+    );
+  }
+  /* changes for 12376 */
+  else if ($delta == 'featured_training') {
+    $form['exp_sp_featured_training_block_no_of_display'] = array(
+      '#type' => 'select',
+      '#title' => t('Number of Featured Training'),
+	  	'#description' => t('Number of featured training to display.'),
+      '#default_value' => variable_get('exp_sp_featured_training_block_no_of_display', 0),
+      '#options' => drupal_map_assoc(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)),
+    );
+  }
+  else if($delta == 'leaderboard'){
+      $form['exp_sp_admin_userpoints_block_max_list_count'] = array(
+      '#type' => 'select', 
+      '#title' => t('User list length'), 
+      '#default_value' => variable_get('exp_sp_admin_userpoints_block_max_list_count',5), 
+      '#options' => drupal_map_assoc(array(3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 40, 50, 75, 100)), 
+      '#description' => t('Maximum number of users having points to display.'));
+  }
+  
+  return $form;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_learning_spotlight_block_configure', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+/**
+ * Implements hook_block_save().
+ */
+function exp_sp_learning_spotlight_block_save($delta = '', $edit = array()) {
+  try{
+  switch ($delta) {
+    case 'new_courses':
+	  variable_set('exp_sp_new_course_block_no_of_display', $edit['exp_sp_new_course_block_no_of_display']);
+    break;
+    case 'most_viewed':
+	  variable_set('exp_sp_most_viewed_block_no_of_display', $edit['exp_sp_most_viewed_block_no_of_display']);
+    break;
+    case 'highly_rated':
+	  variable_set('exp_sp_highly_rated_block_no_of_display', $edit['exp_sp_highly_rated_block_no_of_display']);
+    break;
+    case 'most_active_users':
+	  variable_set('exp_sp_most_active_users_block_no_of_display', $edit['exp_sp_most_active_users_block_no_of_display']);
+    break;
+    case 'most_popular':
+	  variable_set('exp_sp_most_popular_block_no_of_display', $edit['exp_sp_most_popular_block_no_of_display']);
+    break;
+    /* changes for 12376 */
+    case 'featured_training':
+	  variable_set('exp_sp_featured_training_block_no_of_display', $edit['exp_sp_featured_training_block_no_of_display']);
+    break;
+    case 'leaderboard':
+      variable_set('exp_sp_admin_userpoints_block_max_list_count', $edit['exp_sp_admin_userpoints_block_max_list_count']);
+    break;
+  }
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_learning_spotlight_block_save', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function exp_sp_learning_spotlight_preprocess_page(&$variables) {
+	try {
+		global $front_sidebar, $hightlight_blocks;
+		if ($variables['is_front']) {
+			$hightlight_blocks 				= blockCount($variables['page']['highlight']);
+			if ($variables['page']['sidebar_second']) {
+				$variables['slideshow'] = 'normal';
+				$front_sidebar = true;
+			} else {
+				$variables['slideshow'] = 'wider';
+				$front_sidebar = false;
+			}
+		}
+		//expDebug::dPrint('preprocess: $front_sidebar:' . $front_sidebar . '$hightlight_blocks:' . $hightlight_blocks);
+	} catch(Exception $ex) {
+		watchdog_exception('exp_sp_learning_spotlight_preprocess_page', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function exp_sp_learning_spotlight_preprocess_html(&$variables) {
+	try {
+		global $hightlight_blocks;
+		if ($variables['is_front']) {
+			$variables['classes_array'][] 	= 'highlight-' . $hightlight_blocks;
+		}
+	} catch(Exception $ex) {
+		watchdog_exception('exp_sp_learning_spotlight_preprocess_html', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+/**
+ * Used to calculate blocks avaialble in the region
+ * @param mixed $blocks
+ * return int $count
+ */
+function blockCount($blocks = array()) {
+	$count = 0;
+	foreach($blocks as $key => $block) {
+		if (is_array($block) && isset($block['#weight'])) {
+			++$count;
+		}
+	}
+	return $count;
+}
+?>

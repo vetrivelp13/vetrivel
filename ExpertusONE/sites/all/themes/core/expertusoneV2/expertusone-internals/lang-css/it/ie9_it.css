@@ -1,0 +1,349 @@
+/* Common styles Start */
+/* Common styles End */
+
+
+/* Home Page Widgets Start */
+/* Home Page Widgets End */
+
+/* Course/Class/Tp Details Start */
+/* Course/Class/Tp Details End */
+
+
+/* Sign In styles Start */
+.ctool-login-modal .theme-ctool-popup .my-login-frm .single-req-pwd-form-wrapper {
+  padding-left: 134px
+}
+#modal-content #my-login-container .login-admin-save-button-container .item-list ul{
+  padding-top:2px
+}
+div.saml-helptext {
+  right:100px
+}
+#my-login-container .saml-signin {
+  right:35px
+}
+/* Sign In styles End */
+
+
+/* Register styles Start */
+/* Register styles End */
+
+
+/* Forget Password styles Start */
+/* Forget Password styles End */
+
+
+/* Account styles Start */
+.page-learning-my-account #page-container .my-account-wrapper .form-select{
+  width:313px
+}
+/* Account styles End */
+
+
+/* Catalog styles Start */
+#block-exp-sp-lnrsearch-tab-find-training #paintContent .find-trng-sortby .sort-by-links {  left: -50px }
+/* Catalog styles End */
+
+/* Profile styles Start */
+#my_transcript_loader .my-transcript-inner #my_transcript_pager #my_transcript_pager_center .ui-pg-table {
+  min-width:190px
+}
+#page-container #catalog-users .ui-jqgrid #pg_expertus-online-datatable-pager .ui-pg-table{
+  min-width:170px
+}
+.page-learning-my-profile #activity-pager_center .ui-pg-table, #userdetailsactivity-pager_center .ui-pg-table {
+  min-width: 200px;
+}
+/* Profile styles End */
+
+/* Discussions styles Start */
+#page-container #frm-paint-content #discuss-frm-sort-display .sort-by-links{
+  left: -59px
+}
+/* Discussions styles End */
+
+/* Team styles Start */
+#my-team-dialog .title-mandatory-clr{
+  margin-top:0
+}
+#block-exp-sp-myteam-tab-manager-view #lnr-myteam-search .myteam-learning-btn{
+  width:362px;
+}
+body.page-learning.page-learning-myteam-search table#paintContentResults .top-record-div-left{
+  width:252px;
+}
+/* Team styles End */
+
+
+/* Shopping Cart styles Start */
+#page-container .shoppingcart-hdr-v2 .cart-step-region div {
+  padding:0 20px 5px 20px
+}
+/* Shopping Cart styles End */
+
+
+/* My Learning(My Enrollments) styles Start */
+.page-learning-enrollment-search #page-container .enroll-sort-by-container .sort-by-links, 
+.page-learning-enrollment-search #page-container .instructor-sort-by-container .sort-by-links{
+  left:-113px
+}
+.page-learning-enrollment-search #page-container .enroll-sort-bylist{
+  right:4px
+}
+/* My Learning(My Enrollments) styles End */
+
+
+/* My Learning(My Programs) styles Start */
+#page-container #div_my_transcript .my-transcript-inner #my_transcript_pager #my_transcript_pager_center .ui-pg-table {
+  margin-right: 10px
+}
+/* My Learning(My Programs) styles End */
+
+
+/* My Learning(My Classes) styles Start */
+.page-learning-enrollment-search #page-container  #paintInstructorResults .paint-mark-completion .enroll-launch-full{
+  margin-left:0
+}
+.expertusV2PopupContainer #mark-complete-wizard .require-text{
+  margin-left:-7px
+} 
+/* My Learning(My Classes) styles End */
+
+/* My Learning(My Transcripts) styles Start */
+/* My Learning(My Transcripts) styles End */
+
+/* My Learning(My CalEndar) styles Start */
+#page-container #catalog-admin-cal-legend .cal-legent-td .mycalendar-class-types{
+  display:inline;
+  font-size:11px
+}
+#catalog-admin-cal-legend .cal-legent-td{
+  width:117px
+}
+/* My Learning(My CalEndar) styles End */
+
+
+/* Chat styles Start */
+/* Chat styles End */
+
+
+/* Learning(Course/Class) styles Start */
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .attachment-empty-column-height {
+  height: 48px
+}
+#catalog-course-basic-addedit-form-disp #catalog-course-basic-addedit-form-container .attachment-empty-column-height {
+  height: 35px
+}
+#catalog-class-basic-addedit-form-container #add-session-details #meeting-type-webEx .admin-addedit-session-details-wrapper #session_meeting_id{
+  width:100px
+}
+/* .page-administration-learning-catalog .theme-ctool-popup .addedit-new-field-two-col .crs-compliance-dropdown .expertus-dropdown-icon,
+.page-administration-learning-catalog .theme-ctool-popup .addedit-new-field-two-col .expertus-dropdown-bg.crs-compliance-dropdown{
+  width:110px
+} */
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .admin-content-data-grid-rows .ui-jqgrid-hbox .checkbox-selected, 
+.catalog-class-basic-addedit-form-disp #catalog-class-basic-addedit-form-container .admin-content-data-grid-rows .ui-jqgrid-hbox .checkbox-unselected{
+  margin-left:1px
+}
+/* Learning(Course/Class) styles End */
+
+/* Learning(Training Plan) styles Start */
+.page-administration-learning-program #program-tp-basic-addedit-form-container .attachment-empty-column-height{
+  height:35px
+}
+/* Learning(Training Plan) styles End */
+
+
+/* People(User) styles Start */
+/* .page-administration-people-user #admin-data-grid .ui-jqgrid-toppager .ui-pg-table{
+  right:166px
+} */
+#admin-data-grid .user-enrollment-div-cls .narrow-text-search{
+  z-index:100
+}
+#admin-data-grid .user-enrollment-div-cls .ac_input{
+  z-index:99
+}
+.page-administration #group-control #autoimg{
+  right:12px;
+  top:-22px
+}
+/* People(User) styles End */
+
+/* People(Organization) styles Start */
+.page-administration-people-organization #organization-addedit-form .catalog-pub-add-list{width:99px}
+/* People(Organization) styles End */
+
+/* People(Groups) styles Start */
+.page-administration-people-group #catalog-class-addedit-form-details #add-class-list-wrapper #search-dropdwn-list-class{width:136px}
+.page-administration-people-group #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class,
+.page-administration-people-group #catalog-class-addedit-form-details #add-class-list-wrapper #select-list-class-dropdown-list li{
+ width:114px
+}
+.page-administration-people-group #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper #search-dropdwn-list-class{width:138px}
+.page-administration-people-group #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class{width:114px;text-align:right}
+.page-administration-people-group #narrow-search-results-holder #bubble-face-table #add-user-role-page.assigned-users-grps .addedit-edit-username-search-autocomplete {
+  width: 159px
+}
+/* People(Groups) styles End */
+
+/* People(settings) styles Start */
+.page-administration-people-setup #page-container .narrow-search-results-item-details{
+  margin-top:5px
+}
+#addedit-listvalues-detail-wrapper .addedit-new-field-title {
+  padding-top:3px
+}
+.page-administration-people-setup #list-values-addedit-form-details .disable-delete-icon,
+.page-administration-people-setup #list-values-addedit-form-details .delete-class-button{
+  margin-top:0
+}
+/* People(settings) styles End */
+
+/* Survey/Assessment styles Start */
+.page-administration-survey-surveydetails #admin-add-questions-survey-assessment .ui-jqgrid .ui-pg-table,
+.page-administration-assessment-assessmentdetails #admin-add-questions-survey-assessment .ui-jqgrid .ui-pg-table  {
+  right: 126px;	
+}
+/* Survey/Assessment styles End */
+
+/* Manage(Content) styles Start */
+#modal-content #content-addedit-form .addedit-new-field-two-col .addedit-edit-dropdown {
+  width: 179px
+}
+.page-administration-manage-content #page-container #tab-content-main #narrow-search-results-holder a.crs-unpublish-btn.glossy-btn {
+  padding-top:5px;
+  padding-bottom:5px
+}
+/* Manage(Content) styles End */
+
+
+/* Manage(Location) styles Start */
+#location-basic-addedit-form-container .addedit-new-field-title {
+    margin-top:-2px
+}
+/* Manage(Location) styles End */
+
+
+/* Manage(Banner) styles Start */
+#ctools-face-table #banner-basic-addedit-form  .addedit-form-wrapper  .mro-wrapper #access-search-list-class-title-keyword{
+  left:28px
+}
+/* Manage(Banner) styles End */
+
+
+/* Manage(Notification/Certificate) styles Start */
+/* Manage(Notification/Certificate) styles End */
+
+/* Manage(Announcement) styles Start */
+/* Manage(Announcement) styles End */
+
+/* Commerce(Order) styles Start */
+#admin-data-grid .discount-grid-wrapper .trainings-view-grid .ui-pager-control .ui-pg-table{
+  min-width:165px
+}
+.page-administration-order-create #select-order-dialog #add_product_form_wrapper #admin-data-grid #admin_product_addorder_container .select-list-dropdown {
+  width: 135px
+}
+.page-administration-order-create #select-order-dialog #add_product_form_wrapper #admin-data-grid #admin_product_addorder_container  #search-dropdwn-list{
+  width: 160px
+}
+.page-administration-commerce.page-administration-commerce-order .mro-wrapper #access-select-list-class-dropdown-list li{
+  min-width:110px
+}
+.page-administration-commerce.page-administration-commerce-order .mro-wrapper #access-select-list-class-dropdown-list{
+  left:-4px
+}
+.page-administration-commerce-order #page-container #narrow-search-results-holder .catalog-pub-add-list,
+.page-administration-commerce-order #page-container #narrow-search-results-holder .narrowsearch-pub-add-list{
+  right:14px
+}
+.page-administration-order #page-container .shoppingcart-hdr-v2 .cart-step-region div{
+  padding-left:0
+}
+.page-administration-order-finish #page-container .shoppingcart-hdr-v2 .cart-step-region .cart-step,
+.page-administration-order-pay #page-container .shoppingcart-hdr-v2 .cart-step-region .cart-step{
+  padding-left:5px
+}
+.page-administration-order #admin_order .order-method-title{
+  width:130px
+}
+/* Commerce(Order) styles End */
+
+
+/* Commerce(Discount) styles Start */
+.page-administration-commerce-discounts #admin-data-grid .ui-jqgrid-toppager .ui-pg-table{
+  right:11px
+}
+.discount-grid-wrapper .ui-jqgrid-hdiv .ui-jqgrid-htable input.multiselect-selectall{
+  margin-left:-10px;
+  position:relative;
+  left:-5px
+}
+/* Commerce(Discount) styles End */
+
+/* Commerce(Tax) styles Start */
+.page-administration-commerce-tax #catalog-question-basic-addedit-form .admin-save-pub-unpub-button-container .edit-catalog-course-save-publish,
+.page-administration-commerce-tax .pub-unpub-only-save-btn{
+  float:none
+}
+/* Commerce(Tax) styles End */
+
+/* Commerce(Settings) styles Start */
+.page-administration-commerce.page-administration-commerce-setting #commerce-cc-settings-form-wrapper .commerce-cc-settings-form .addedit-twocol-secondcol .addedit-new-field-title{
+  width:98px;
+  font-size:11px;
+  padding-left:2px
+}
+/* Commerce(Settings) styles End */
+
+
+/* site settings style starts*/
+.ctools-admin-user-points-modal#modalContent div.addedit-left-col div.addedit-new-field-title {
+  width:280px
+}
+.ctools-admin-user-points-modal#modalContent #userpoints-admin-form div.points-badges-seperator {
+  width:358px
+}
+/* site settings style ends*/
+
+/*Start SalesForce Style */
+#innerWidgetTagEnroll #page-container #paintReportsContent .narrow-search-sortbar-sorttext{
+      background: url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/layoutBg.gif") no-repeat scroll 72px -466px;
+ }
+/*End SalesForce Style */
+
+/* Reports styles Start */
+#report-add-wizard #report_criteria_form .narrow-filter-fields-conatiner .bubble-modifier-container {
+    width:320px
+}
+.expertusV2PopupContainer #report-add-wizard .textform {
+    width: 380px;
+}
+#report-add-wizard .breadcrump-container { width: 645px; }
+#report-add-wizard .breadcrump-container .reports-title-div, 
+#report-add-wizard .breadcrump-container .reports-title-div-selected,
+#report-add-wizard .breadcrump-container .reports-title-div-end, 
+#report-add-wizard .breadcrump-container .reports-title-next-div-completed, 
+#report-add-wizard .breadcrump-container .reports-title-div-completed, 
+#report-add-wizard .breadcrump-container .reports-title-div-grey-end-prev, 
+#report-add-wizard .breadcrump-container .reports-title-div-edit-end { 
+	width: 215px; }
+/* Reports styles End */
+
+
+/* Reserved Block CSS Start - Here we can create a new block CSS styles*/
+/* Reserved Block CSS End */
+
+/*Start title restriction style*/
+.page-learning-myteam-search .fade-out-title-container.myteam-compliance-course-title-fadeout-container{
+  max-width:370px 
+}
+.page-learning-myteam-search .fade-out-title-container.myteam-mandatory-course-title-fadeout-container{
+  max-width:360px 
+}
+.page-learning-myteam-search .fade-out-title-container.myteam-recommended-course-title-fadeout-container{
+  max-width:350px 
+}
+/*End title restriction style*/
+

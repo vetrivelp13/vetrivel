@@ -1,0 +1,632 @@
+.my-account-wrapper span.require-image {
+  display:inline-block;
+  margin-left:5px;
+  margin-top:5px
+}
+.my-account-wrapper {
+  clear:both;
+  padding:10px 0 10px 2px;
+  position:relative
+}
+.my-account-box .form-item, .form-actions {
+  margin-top:0;
+  margin-bottom:0;
+  display:inline-block;
+  float:left
+}
+.my-account-wrapper .form-text {
+  width:400px;
+  float:left
+}
+.my-account-wrapper .form-select {
+  float:left;
+  width:398px;
+  font-size:13px
+}
+.my-account-wrapper .error {
+  clear:both;
+  display:block
+}
+.my-account-wrapper, .my-account-wrapper * {
+  zoom:0
+}
+#wizard-form-wrapper .messages {
+  margin:0
+}
+.my-account-wrapper span.require-text {
+  color:#FF0000;
+  font-weight:bold
+}
+#learner-myaccount-details .block-title {
+  color:#333;
+  float:left;
+  font-weight:bold;
+  padding:0;
+  text-align:left;
+  text-indent:3px;
+  text-transform:uppercase;
+  width:13%
+}
+#learner-myaccount-details #learner-myaccount-sub-tabs {
+  float:left;
+  margin-left:10px;
+  padding-top:4px;
+  width:82%
+}
+.EnrolltabNavigation {
+  margin:0;
+  padding:0;
+  list-style-type:none
+}
+.EnrolltabNavigation li {
+  display:block;
+  margin-right:0;
+  float:left;
+  height:30px;
+  padding:0 8px
+}
+.EnrolltabNavigation li a {
+  text-decoration:none;
+  color:#666;
+  height:29px;
+  font-size:13px;
+  float:left
+}
+.EnrolltabNavigation li a span {
+  float:left;
+  height:19px;
+  padding:0 0 5px 0;
+  text-decoration:none
+}
+.EnrolltabNavigation li a span span {
+  float:left;
+  height:19px;
+  padding:4px 10px 3px 0;
+  text-decoration:none
+}
+.EnrolltabNavigation li {
+  display:block;
+  margin-right:0;
+  float:left;
+  height:25px;
+  padding:0 8px
+}
+.EnrolltabNavigation li a:hover {
+  text-decoration:none;
+  color:#666;
+  height:29px;
+  font-size:13px;
+  float:left
+}
+.EnrolltabNavigation li a:hover span {
+  float:left;
+  height:19px;
+  padding:0 0 5px 0;
+  text-decoration:none
+}
+.EnrolltabNavigation li a:hover span span {
+  float:left;
+  height:19px;
+  padding:4px 10px 5px 0;
+  text-decoration:none
+}
+.EnrolltabNavigation li.selected {
+  display:inline;
+  float:left;
+  height:30px;
+  padding:0 8px
+}
+.EnrolltabNavigation li.selected a {
+  text-decoration:none;
+  color:#000;
+  font-size:13px;
+  height:27px;
+  padding:0 0 0 10px;
+  float:left;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png) no-repeat left -114px
+}
+.EnrolltabNavigation li.selected a span {
+  float:left;
+  height:27px;
+  padding:0 10px 0 0;
+  text-decoration:none;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png) no-repeat right -174px
+}
+.EnrolltabNavigation li.selected a span span {
+  float:left;
+  height:20px;
+  padding:5px 0 2px 0;
+  text-decoration:none;
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/menu_bg1.png) repeat-x left -144px
+}
+.textarea-width {
+  width:205px;
+  font-size:13px
+}
+.my-account-box {
+  clear:both;
+  width:100%
+}
+.my-account-box td {
+  height:22px
+}
+.my-account-box td.field-value img {
+  height:32px;
+  width:32px
+}
+.myorders {
+  clear:both;
+  width:60%;
+  height:100%
+}
+.my-account-title {
+  background:none;
+  font-weight:bold;
+  padding-top:2px;
+  padding-bottom:3px
+}
+.my-account-title-text {
+  color:#417BAA;
+  font-size:14px
+}
+.my-account input[type="text"] {
+  border:1px solid #FFF;
+  height:22px;
+  width:auto
+}
+.my-account select {
+  border:1px solid #FFF;
+  height:22px;
+  width:auto
+}
+.my-account-title .action-button {
+  cursor:pointer;
+  display:block;
+  float:right;
+  height:19px;
+  border:0;
+  text-align:right
+}
+.my-account-title .action-button input.my-account-cancel-button {
+  display:inline-block;
+  cursor:pointer;
+  text-align:center;
+  padding:0 12px 0 0;
+  font-size:13px
+}
+.my-account-box .field-title {
+  font-size:13px;
+  font-weight:normal;
+  padding:5px 5px 5px 10px;
+  text-align:left;
+  width:15%;
+  color:#666
+}
+#exp-sp-my-account-preference-form .field-title {
+  font-size:13px;
+  font-weight:normal;
+  padding:5px 5px 5px 10px;
+  text-align:left;
+  width:20%;
+  color:#666
+}
+#exp-sp-my-account-preference-form--2 .field-title {
+  font-size:13px;
+  font-weight:normal;
+  padding:5px 5px 5px 10px;
+  text-align:left;
+  width:20%;
+  color:#666
+}
+.my-account-box .field-title-sub {
+  font-size:11px;
+  font-weight:normal;
+  color:#666;
+  text-align:left
+}
+.my-account-box .order-field-title {
+  font-size:13px;
+  font-weight:normal;
+  padding:5px;
+  text-align:left;
+  width:55%;
+  color:#666
+}
+.my-account-box .order-field-value {
+  font-weight:normal;
+  font-size:13px;
+  color:#666;
+  padding:4px 0 4px 16px;
+  text-align:left;
+  width:100%
+}
+.my-account-box .field-seperator {
+  font-size:12px;
+  text-align:left;
+  width:4%
+}
+.my-account-box .field-value {
+  font-weight:normal;
+  font-size:13px;
+  color:#333;
+  text-align:left
+}
+#exp-sp-my-account-preference-form .field-value {
+  font-weight:normal;
+  font-size:13px;
+  color:#333;
+  text-align:left
+}
+.my-account-box .field-value label {
+  display:none
+}
+#exp-sp-my-account-form span.require-image {
+  display:inline-block;
+  margin-left:5px;
+  margin-top:5px
+}
+.page-learning-my-account .form-wrapper {
+  clear:both;
+  margin:0 10px;
+  padding:10px 0 0 0
+}
+.page-learning-my-account .form-wrapper .region-sidebar-widget-bg {
+  border:0
+}
+#exp-sp-my-account-form .form-text {
+  width:364px;
+  float:left;
+  font-size:13px
+}
+.page-learning-my-account .form-wrapper .error {
+  clear:both;
+  display:block
+}
+.page-learning-my-account .form-wrapper div.messages,.form-wrapper div.status,.form-wrapper div.warning,.form-wrapper div.error {
+  margin:5px;
+  width:83%
+}
+#acc-required-box.require-image {
+  float:left
+}
+#exp-sp-my-account-form .form-item, .form-actions {
+  margin:0
+}
+#addedit-account-details-page .form-item-SmsAlertCheck {
+  float:left;
+  margin-left:153px;
+  width:17px
+}
+input.form-checkbox, input.form-radio {
+  margin-left:0
+}
+#addedit-account-details-page .smsalert-check-yes {
+  color:#333;
+  display:block;
+  float:left;
+  font-size:13px;
+  margin-top:2px
+}
+.page-learning-my-account .block-title {
+  color:#333;
+  font-weight:bold
+}
+.my-account-box .action-button {
+  float:right;
+  margin-right:25px;
+  padding:2px;
+  margin-bottom:5px
+}
+#exp-sp-my-account-preference-form .my-account-box.my-account-action-box .my-account-title .action-button {
+  margin-right:-22px
+}
+#exp-sp-my-account-form .layout-add-edit-button,
+#exp-sp-my-account-preference-form .layout-add-edit-button,
+#exp-sp-my-account-preference-form--2 .layout-add-edit-button {
+  background-position: 0 -918px;
+  width: 72px
+}
+.my-account-action-box-act-cls {
+  position:absolute;
+  width:200px;
+  right:0;
+  top:5px
+}
+#exp-sp-my-account-form .my-account-action-box {
+  bottom:3px
+}
+#exp-sp-my-account-form .my-account-action-box {
+  right:470px
+}
+.my-account-box-act-cls {
+  position:absolute;
+  width:200px;
+  right:0;
+  top:5px
+}
+.page-learning-my-account .form-wrapper,
+.page-learning-my-account .form-wrapper * {
+  zoom:0
+}
+.page-learning-my-account #password-policy-restrictions-acc ul li {
+  list-style-type:none;
+  color:#999;
+  padding-top:3px
+}
+.page-learning-my-account .form-wrapper .form-item-rem-link {
+  padding:0 0 0 194px
+}
+.my-account-browse-btn {
+  width:270px
+}
+#exp-sp-my-account-form span.require-text {
+  color:#FF0000;
+  font-weight:bold
+}
+#exp-sp-my-account-form span.require-heading, #exp-sp-my-account-preference-form span.require-heading {
+  color:#FF0000;
+  font-weight:bold;
+  padding-left:8px
+}
+.field-title span {
+  color:#666
+}
+#edit-rem-link {
+  margin-bottom:5px;
+  padding-left:6px
+}
+#exp-sp-my-account-preference-form .receive-news-txt {
+  color:#666;
+  font-size:13px;
+  font-weight:normal;
+  padding:0 0 0 32px;
+  text-align:left;
+  width:570px
+}
+#exp-sp-my-account-form #edit-sub-check {
+  display:inline;
+  float:left;
+  margin-left:2px;
+  margin-right:7px;
+  margin-top:1px
+}
+.form-wrapper .esign-fieldset-class {
+  margin-top:0;
+  margin-right:82px;
+  float:right;
+  background-color:#DBEEFA;
+  position:absolute;
+  right:0;
+  top:59px;
+  width:250px
+}
+.page-learning-my-account .esign-fieldset-class .fieldset-wrapper {
+  width:210px;
+  margin:0 auto;
+  float:none
+}
+.page-learning-my-account .esign-fieldset-class .form-submit {
+  float:right
+}
+#wizard-form-wrapper {
+  position:relative;
+  clear:both;
+  min-height:100px
+}
+.my-account-cancel-button {
+  background:none;
+  border:0;
+  color:#4686DD;
+  cursor:pointer;
+  height:24px;
+  padding:0
+}
+.my-account-edit-button {
+  float:right;
+  margin-left:5px
+}
+.my-account-box .learner-send-me-training-new {
+  height:25px;
+  line-height:25px;
+  vertical-align:middle;
+  padding:0
+}
+.my-account-box .field-yes {
+  margin-right:05px;
+  margin-top:1px;
+  vertical-align:middle;
+  margin-left:0
+}
+.my-account-box .send-me-training-new {
+  margin:0;
+  vertical-align:middle
+}
+.learner-myaccount-delete-btn {
+  display:inline;
+  left:281px;
+  position:relative;
+  top:-26px;
+  width:150px
+}
+#data-table-page-view {
+  display:none
+}		
+#account-pager {
+  position:relative;
+  border:0
+}
+#account-pager table tr {
+  background:none
+}
+#gbox_myaccount-orders-details {
+  margin-left:7px;
+  margin:0 auto
+}
+#block-exp-sp-my-account-my-account-details #learner-myaccount-details .ui-jqgrid .ui-icon-desc {
+  margin-top:1px
+}
+#account-pager_center {
+  width:100%
+}
+#account-pager_center .ui-pg-table {
+  float:right;
+  position:static
+}
+#wizard-form-wrapper .ui-jqgrid .ui-jqgrid-htable th div {
+  color:#666;
+  font-size:13px;
+  height:30px;
+  margin-top:0
+}
+#wizard-form-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr td {
+  color:#666;
+  font-size:13px
+}
+#wizard-form-wrapper #gview_myaccount-orders-details .ui-jqgrid-hbox {
+  padding-left:4px
+}
+#wizard-form-wrapper #gbox_myaccount-orders-details tr.ui-row-ltr td {
+  text-align:left;
+  padding-left:8px;
+  height:29px
+}
+#wizard-form-wrapper #gbox_myaccount-orders-details tr.ui-row-ltr td a {
+  color:#4682B3;
+  text-decoration:none
+}
+#wizard-form-wrapper .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {
+  text-align:left
+}
+#account-pager_left, #account-pager_right {
+  display:none
+}
+#first_account-pager .ui-icon-seek-pgstart, #last_account-pager .ui-icon-seek-pgend {
+  background:none
+}
+#first_account-pager, #last_account-pager {
+  display:block
+}
+.ui-jqgrid .ui-separator {
+  border:0
+}
+#gview_myaccount-orders-details .ui-state-default {
+  background:none;
+  border:0
+}
+#next_account-pager span,
+#prev_account-pager span {
+  background:none
+}
+#first_account-pager {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -158px -253px;
+  width:27px;
+  height:21px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#prev_account-pager {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -91px -302px;
+  width:24px;
+  height:18px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#next_account-pager {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -126px -302px;
+  width:29px;
+  heidght:18px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#last_account-pager {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -158px -302px;
+  width:22px;
+  height:21px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#exp-sp-my-account-shopping-cart-form #account-pager .search-pagination-right {
+  padding:0 3px
+}
+#exp-sp-my-account-shopping-cart-form #account-pager #account-pager_center .ui-pg-table {
+  margin-top:5px
+}
+.ui-jqgrid .ui-pg-table {
+  position:normal
+}
+.ui-jqgrid .ui-pg-table td {
+  line-height:22px;
+  padding:0
+}
+.norecords-msg-profile-page {
+  border-bottom:0;
+  color:#999;
+  font-size:12px;
+  height:30px;
+  text-align:center;
+  width:100%
+}
+#exp-sp-my-account-preference-form .preference-mail-checkbox div {
+  display:inline-block;
+  padding:0
+}
+#wizard-form-wrapper #gbox_myaccount-orders-details tr.ui-row-ltr td a.grey-out {
+  color:#B0B0B0;
+  cursor:default
+}
+#wizard-form-wrapper .account-details-username-label {
+  text-indent:3px
+}
+.details-with-pass-policy {
+  width:45%;
+  float:left;
+  padding-top:115px
+}
+#addedit-account-details-page .field-title {
+  width:19%
+}
+#addedit-account-details-page .field-value {
+  width:10%
+}
+.details-without-pass-policy {
+  width:55%;
+  float:left
+}
+#addedit-account-details-pass-policy #password-policy-restrictions-acc {
+  padding-left:5px
+}
+#addedit-account-details-pass-policy .password-note-cls ul li {
+  width:400px
+}
+#wizard-form-wrapper #message-container {
+  top:-3px;
+  position:absolute;
+  z-index:100
+}
+#exp-sp-my-account-preference-form .admin-save-button-container {
+  float:right;
+  margin:1px 0 14px 0
+}
+#learner-myaccount-details th {
+  font-weight:bold
+}
+#account-pager .ui-pg-button {
+  padding:0
+}
+.page-learning-my-account .admin-save-button-middle-bg {
+  font-size:13px
+}	
+	
+/*chrome hack*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #page-container #learner-myaccount-details .content .ui-jqgrid .ui-jqgrid-btable {
+    table-layout:auto
+  }
+  #myaccount-orders-details_Tax {
+    width:72px
+  }
+}

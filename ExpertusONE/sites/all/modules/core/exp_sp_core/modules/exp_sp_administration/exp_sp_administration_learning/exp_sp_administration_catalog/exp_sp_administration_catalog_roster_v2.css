@@ -1,0 +1,631 @@
+#catalog_roster_container {
+  overflow-x:hidden;
+  padding:1em;
+  font-size:12px
+}
+#roster-result-container{
+  table-layout:fixed;
+  width:763px;
+  overflow-x:hidden
+}
+#catalog_roster_container .ui-jqgrid-bdiv {
+  overflow:hidden;
+  width:763px; 
+  border:1px solid #ccc;
+  border-width:1px 0;
+}
+.admin-roster-wrapper .ui-jqgrid-btable {
+  table-layout:none
+}
+#roster-container-div .ui-jqgrid-btable tr.jqgrow td {
+  border:1px solid #ccc;
+  border-width:1px 0;
+  color:#333;
+  padding:8px 0 8px 5px;
+  white-space:normal;
+  font-size:12px
+}  
+#catalog-roster-form-id{
+  border:1px solid #CCC;
+  height:150px;
+  padding:10px;
+  width:742px;
+  padding-top:15px;
+  margin-top:4px
+}
+.admin-roster-wrapper span.admin-roster-col1 {
+  width:380px;
+  float:left;
+  height:30px;
+  margin-left:5px;
+  position:relative
+}
+.admin-roster-wrapper span.admin-roster-col2 {
+  width:300px;
+  float:left;
+  height:30px;
+  margin-left:5px;
+  position:relative  
+}
+.admin-roster-wrapper span.admin-roster-col1 .admin-roster-col1-field {
+  width:150px
+}
+.admin-roster-col2 .hasDatepicker,
+.admin-roster-col1 .hasDatepicker {
+  width:150px;
+  height:18px
+}
+#catalog-roster-form label{
+  width:125px;
+  float:left;
+  font-weight:normal
+}
+#catalog-roster-form select{
+  width:155px
+}
+#catalog-roster-form td{
+  height:30px
+}
+#catalog_roster_container .center-align{
+  text-align:center;
+  width:850px;
+  padding:0;
+  margin:0
+}
+.catalog-label-div{
+  font-weight:bold;
+  color:#666;
+  padding:4px 0
+}
+.roster-status{
+  display:none;
+  margin-bottom:15px
+}
+.roster-status table{
+  border-bottom:1px solid #ccc
+}
+.roster-status tr{
+  border:1px solid #ccc;
+  border-bottom:0
+}
+.roster-status td{
+  width:200px;
+  height:30px
+}
+#catalog-roster-form .admin-save-button-container{
+   margin:0 5px 10px 10px
+}
+#catalog-roster-form img{
+  padding-left:3px
+}
+#catalog-roster-form .addedit-form-cancel-container-actions {
+  margin-top:5px
+}
+.roster-status .header td{
+  padding-left:10px;
+  background:#EFEFEF;
+  font-size:13px;
+  color:#666;
+  font-weight:bold
+}
+#catalog_roster_container #roster-noresult-msg{
+  width:400px;
+  padding:5px 10px;
+  text-align:center;
+  display:none;
+  font-size:12px;
+  width: 850px;
+  color:#999  
+}
+#gview_roster-result-container thead{
+  background-color:#FFF;
+  height:30px
+}
+#gview_roster-result-container .ui-state-default {
+  background:#EFEFEF;
+  border:0;
+  padding:5px 0 4px 3px;
+  text-align:left;
+  font-size:13px;
+  color:#666
+}
+#gview_roster-result-container tr.ui-state-hover {
+  border:0;
+  background:#dbeefa
+}
+#gview_roster-result-container .ui-widget-content a {
+  text-decoration:none;
+  display:block
+}
+#gview_roster-result-container .jqgrow a {
+  text-decoration:none
+}
+#gview_roster-result-container .ui-jqgrid-hdiv{
+  border:1px solid #ccc;
+  border-bottom:0
+}
+#gbox_roster-result-container #pager-roster{
+  padding-top:6px;
+  width:765px;
+  border-top:0
+}
+#cb_roster-result-container{
+  display:none
+}
+#pager-roster {
+  background:none;
+  font-size:13px;
+  color:#666;
+  position:relative;
+  font-size:12px;
+  font-family:helvetica neue, arial
+}
+#pager-roster #pager_right {
+  position:absolute;
+  left:20px
+}
+#pager-roster { 
+  position:relative
+}
+#pager-roster_center {
+  width:100%
+}
+#pager-roster_center .ui-pg-table {
+  float:right;
+  position:static
+}
+#pager-roster_left,
+#pager-roster_right,
+#first_pager-roster,
+#last_pager-roster { 
+  display:none
+}
+#next_pager-roster span,
+#prev_pager-roster span { background:none;}
+#prev_pager-roster {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png) no-repeat -91px -302px;
+  width:24px;
+  height:18px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#next_pager-roster {
+  background:url(/sites/all/themes/core/expertusoneV2/expertusone-internals/images/ExpertusIcons.png) no-repeat -126px -302px;
+  width:22px;
+  height:18px;
+  padding-right:8px;
+  border:0;
+  opacity:8;
+  filter:Alpha(Opacity=100)
+}
+#program-tp-basic-addedit-form-container .two-column-container-view,
+#catalog-course-basic-addedit-form-container .two-column-container-view {
+  clear:both
+}
+#catalog-course-basic-addedit-form-container .two-column-container-view .course-view-mode label,
+#program-tp-basic-addedit-form-container .two-column-container-view .tp-view-mode label {
+   width:154px		
+}
+#catalog-survey-assesment-basic-addedit-form div.two-column-container-view label {
+  width:200px;
+  float:left;
+  font-size:12px;
+  font-weight:normal;
+  font-family:openSansRegular, Arial;
+  color:#000;
+}
+#addedit-twocol-export-compliance #edit-export-compliance {
+  margin-bottom:2px;
+  padding:0;
+  vertical-align:bottom
+}
+div#gview_roster-result-container tr.ui-search-toolbar input{
+  margin:0;
+  border:1px solid #ccc;
+  height:18px;		 
+}
+.admin-roster-wrapper .ui-datepicker-trigger {
+  cursor:pointer;
+  left:256px;
+  position:absolute;
+  top:4px  
+}
+.admin-roster-wrapper .count-statistics {
+  padding:5px 0 9px 0
+}
+div#gview_roster-result-container tr.ui-search-toolbar {
+  border:1px solid #EEE
+}
+#gs_Grade, #gs_Score {
+  width:36px
+}
+#roster-result-container .jqgfirstrow {
+  border:0
+}
+/*title restriction style*/
+.page-administration-learning-catalog .fade-out-title-container.admin-narrow-search-code-fadeout-container {
+  max-width: 100px;
+  display: inline-block;
+  margin-bottom: -8px
+}
+.fade-out-title-container.narrow-search-lang-fadeout-container{
+  max-width: 150px;
+  display: inline-block;
+  margin-bottom: -8px
+}
+.fade-out-title-container.narrow-search-results-item-class-title-fadeout-container{
+  max-width:720px
+}
+.page-administration-learning-catalog #catalog-class-addedit-form-details tr.ui-state-hover .edit-class-list-container .fade-out-title-container .fade-out-image,
+.page-administration-learning-catalog #catalog-class-addedit-form-details tr.ui-state-hover.ui-state-highlight .edit-class-list-container .fade-out-title-container .fade-out-image {
+  background:url("/sites/all/themes/core/expertusoneV2/expertusone-internals/images/title_gradient.png") no-repeat right 0
+}
+.fade-out-title-container.narrow-search-results-item-detail-class-code-fadeout-container,
+.fade-out-title-container.narrow-search-results-item-detail-class-language-fadeout-container{
+  max-width: 120px;
+  display: inline-block;
+  margin-bottom: -8px
+}
+.fade-out-title-container.addedit-course-field-code-fadeout-container{
+  max-width: 140px
+}
+.fade-out-title-container.admin-narrow-search-courseview-catalog-title-fadeout-container{
+  max-width: 600px
+}
+.fade-out-title-container.admin-narrow-search-courseview-catalog-code-fadeout-container{
+  max-width:390px
+}
+.fade-out-title-container.admin-narrow-search-courseview-tag-string-fadeout-container,
+.fade-out-title-container.admin-narrow-search-courseview-access-name-fadeout-container,
+.fade-out-title-container.admin-narrow-search-courseview-certificate-name-fadeout-container,
+.fade-out-title-container.narrow-classview-detaildesc-survey-title-fadeout-container,
+.fade-out-title-container.narrow-classview-detaildesc-access-fadeout-container {
+  max-width: 610px;
+  display:inline-block
+}
+.fade-out-title-container.narrow-classview-detaildesc-tagstring-fadeout-container{
+  max-width: 320px
+}
+.fade-out-title-container.narrow-classview-detaildesc-title-fadeout-container{
+  max-width: 550px;
+  display:inline-block
+}
+.fade-out-title-container.narrow-classview-detaildesc-code-fadeout-container{
+  max-width: 310px;
+  display:inline-block
+}
+.fade-out-title-container.narrow-classview-detaildesc-continfo-title-fadeout-container{
+  max-width: 460px
+}
+.fade-out-title-container.addedit-cataog-certificate-name-fadeout-container{
+  max-width:300px
+}
+.fade-out-title-container.narrow-classview-detaildesc-auth-vend-fadeout-container,
+.fade-out-title-container.narrow-classview-detaildesc-businessstr-fadeout-container{
+  max-width:125px
+}
+.fade-out-title-container.narrow-classview-detaildesc-assessinfo-title-fadeout-container{
+  max-width:500px;
+  display:inline-block
+}
+.fade-out-title-container.admin-narrow-search-courseview-catalog-author-title-fadeout-container{
+  max-width:600px
+}
+#catalog-course-basic-addedit-form-container .admin-datagrid-pagination .ui-jqgrid-bdiv .ui-jqgrid-btable tr:nth-child(odd) .fade-out-image,
+.table-detail-tr-odd .class-detail-session-name .fade-out-title-container.narrow-classview-detaildesc-assessinfo-title-fadeout-container .fade-out-image {
+  background-position: right -60px;
+}
+.fade-out-title-container.admin-narrow-search-datewithzone-fadeout-container{
+  display: inline-block;
+  margin-bottom: -7px;
+  max-width: 253px;
+}
+.fade-out-title-container.narrow-search-filterset-checkbox-fadeout-container,
+.fade-out-title-container.narrow-search-filterset-radio-label-fadeout-container{
+  max-width:140px
+}
+.fade-out-title-container.multi-grid-perrequisite-title-fadeout-container,
+.fade-out-title-container.multi-grid-equivalence-title-fadeout-container{
+  max-width:450px;
+  line-height: normal;
+  margin-bottom:-4px
+}
+.fade-out-title-container.admin-narrow-search-edit-tooltip-code-fadeout-container{
+  display: inline-block;
+  margin-bottom: -8px;
+  max-width:125px
+}
+.fade-out-title-container.multi-grid-assessment-view-title-fadeout-container{
+  max-width:125px;
+  margin-bottom:-6px
+}
+.fade-out-title-container.multi-grid-assessment-view-code-fadeout-container{
+  max-width:90px;
+  margin-bottom:-6px
+}
+.fade-out-title-container.multi-grid-survey-view-title-fadeout-container{
+  max-width:300px;
+  margin-bottom:-6px
+}
+.fade-out-title-container.multi-grid-survey-view-code-fadeout-container{
+  max-width:100px;
+  margin-bottom:-6px
+}
+.fade-out-title-container.view-enrolluser-fullname{
+  max-width:100px;
+  margin-bottom:-6px
+}
+.fade-out-title-container.view-enrolluser-username{
+  max-width:90px;
+  margin-bottom:-6px
+}
+.fade-out-title-container.multi-grid-content-code-fadeout-container{
+  max-width:150px;
+  margin-bottom:-6px
+}
+.fade-out-title-container.multi-grid-content-type-fadeout-container{
+  max-width:80px;
+  margin-bottom:-6px
+}
+.fade-out-title-container.admin-learning-metting-title-fadeout-container{
+  max-width:216px;
+  margin-bottom:-8px;
+  display:inline-block;
+  line-height:17px
+}
+.fade-out-title-container.admin-learning-metting-title-fadeout-container .fade-out-image,
+.fade-out-title-container.admin-learning-metting-fullname-fadeout-container .fade-out-image{
+  height:30px
+}
+.fade-out-title-container.multi-grid-perrequisite-code-fadeout-container,
+.fade-out-title-container.multi-grid-equivalence-code-fadeout-container{
+  max-width:100px;
+  line-height: normal;
+  margin-bottom:-4px
+}
+.fade-out-title-container.view-name{
+  max-width:135px;
+  margin-bottom:-6px
+}
+.fade-out-title-container.edit-fullname{
+  max-width:135px;
+  margin-bottom:-6px
+}
+.fade-out-title-container.edit-username{
+  max-width:123px;
+  margin-bottom:-6px
+}
+.fade-out-title-container.addedit-course-field-author-vendor-fadeout-container{
+  max-width:140px
+}
+.page-administration-learning-catalog .fade-out-title-container.admin-narrow-search-courseview-prerequiste-morethanone-name-fadeout-container,
+.page-administration-learning-catalog .fade-out-title-container.admin-narrow-search-courseview-equivalence-morethanone-name-fadeout-container{
+  max-width: 350px;
+  display: inline-block;
+  margin-bottom:-11px
+}
+.page-administration-learning-catalog .fade-out-title-container.admin-narrow-search-courseview-prerequiste-morethanone-code-fadeout-container,
+.page-administration-learning-catalog .fade-out-title-container.admin-narrow-search-courseview-equivalence-morethanone-code-fadeout-container{
+  max-width: 233px;
+  display: inline-block;
+  margin-bottom:-11px
+}
+.fade-out-title-container.admin-learning-metting-fullname-fadeout-container{
+  max-width:120px;
+  margin-bottom:-8px;
+  display:inline-block;
+  line-height:17px
+}
+#catalog-course-basic-addedit-form .addedit-course-field-title .addedit-course-customlabel-view-fadeout-container,
+#catalog-course-basic-addedit-form .addedit-customfields-wrapper .addedit-new-field-title .admin-add-custom-field-label-fadeout-container {
+  max-width:130px;
+  display:inline-block;
+  margin-bottom:-8px
+}
+#catalog-class-basic-addedit-form-container .addedit-customfields-wrapper .addedit-new-field-title .admin-add-custom-field-label-fadeout-container {
+  max-width:130px;
+  display:inline-block;
+  margin-bottom:-8px  
+}
+#enrollment-class-list-view .view-enrollment-popup .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-state-hover:nth-child(even) {
+  background:#f7f7f7
+}
+.page-administration-learning-catalog #exp-sp-administration-view-coursedetails-addedit-form .view-enrollment-popup .admin-learning-enrollments-result-for-view-fullname-fadeout-container {
+  max-width:115px;
+  margin-bottom:-8px;
+  padding-left:10px
+}
+.page-administration-learning-catalog #exp-sp-administration-view-coursedetails-addedit-form .view-enrollment-popup .admin-learning-enrollments-result-for-view-username-fadeout-container {
+  max-width:110px;
+  margin-bottom:-8px;
+  padding-left:10px
+}
+.page-administration-learning-catalog #exp-sp-administration-view-coursedetails-addedit-form .view-enrollment-popup .admin-learning-enrollments-result-for-view-status-fadeout-container {
+  max-width:80px;
+  margin-bottom:-8px;
+  padding-left:10px  
+}
+.page-administration-learning-catalog #exp-sp-administration-view-coursedetails-addedit-form .view-enrollment-popup .admin-learning-enrollments-result-for-view-score-fadeout-container {
+  max-width:60px;
+  margin-bottom:-8px;
+  padding-left:10px
+}
+.page-administration-learning-catalog #exp-sp-administration-view-coursedetails-addedit-form .view-enrollment-popup tr:nth-child(even) .fade-out-image{
+  background-position:right 0px
+}
+.page-administration-learning-catalog #exp-sp-administration-view-coursedetails-addedit-form .view-enrollment-popup tr:nth-child(odd) .fade-out-image{
+  background-position:right -30px
+}
+.page-administration-learning-catalog #exp-sp-administration-view-coursedetails-addedit-form .view-enrollment-popup tr.ui-state-hover:nth-child(even) .fade-out-image {
+  background-position:right -60px  
+}
+.page-administration-learning-catalog #narrow-search-results .admin-narrow-search-fadeout-container {
+  max-width:415px
+}
+.page-administration-learning-catalog .fade-out-title-container.view-reg-from-fadeout-container{
+  max-width:90px
+}
+.page-administration-learning-catalog .fade-out-title-container.view-reg-from-fadeout-container .title-lengthy-text{
+  margin-bottom:-7px
+}
+.page-administration-learning-catalog .fade-out-title-container.multi-grid-survey-edit-title-fadeout-container{
+  margin-bottom:-8px;
+  max-width:360px	
+}
+#page-container #admin-data-grid #admin_list_values_container .enrolled-display-controller .admin-course-class-tab-datagrid-wrapper .ui-state-hover{
+  border-right:0
+}
+#setwaived-visible-container span.enrolled-exempted-all-status .enrolled-all-exempted{
+  color: #2d2d2d;
+  cursor: pointer;
+  font-family: openSansRegular,Arial;
+  font-size: 11px;
+  font-weight: normal;
+  line-height: 27px;
+  text-decoration: none;
+}
+.enrolled-exempted-status-link{
+  cursor:pointer
+}
+#setwaived-visible-container .addedit-new-field-title {
+  font-weight: normal;
+}
+.enrolled-exempted-container .roster-exempted-message {
+  font-size: 9px;
+  text-transform:none;
+}
+.page-administration-learning-catalog .narrow-search-results-item-details ul.enrolled-status .fade-out-title-container {
+  max-width:80px;
+  margin-bottom:-1px;
+  line-height:16px;
+  float:left
+}
+.course-class-edit-qtip #message-container .messages.error{
+text-align:left
+}
+.course-class-edit-qtip #message-container .messages.error td{
+text-align:left;
+padding-left:3px
+}
+.page-administration-learning-catalog .qtip-title .qtip-button .admin-bubble-close{
+  top:0
+}
+.page-administration-learning-catalog .label-separator{
+  margin-top:3px
+}
+.page-administration-learning-catalog .survey-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable td,
+.page-administration-learning-catalog .survey-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable td ul.enrolled-status li,
+.page-administration-learning-program .survey-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable td, 
+.page-administration-learning-program .survey-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable td ul.enrolled-status li,
+.page-administration-learning-program .assess-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable td, 
+.page-administration-learning-program .assess-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable td ul.enrolled-status li {
+  position:relative
+}
+.page-administration-learning-catalog #catalog-class-basic-addedit-form-container .survey-attach-grid-wrapper .enrolled-status ul.sub-menu,
+.page-administration-learning-program #program-tp-basic-addedit-form-container .survey-attach-grid-wrapper .enrolled-status ul.sub-menu,
+.page-administration-learning-program #program-tp-basic-addedit-form-container .assess-attach-grid-wrapper .enrolled-status ul.sub-menu {
+  right:0
+}
+.page-administration-learning-catalog .admin-datagrid-pagination.survey-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr > td,
+.page-administration-learning-program .admin-datagrid-pagination.survey-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr > td,
+.page-administration-learning-program .admin-datagrid-pagination.assess-attach-grid-wrapper .ui-jqgrid-bdiv .ui-jqgrid-btable tr.ui-row-ltr > td {
+  overflow:visible
+}
+.page-administration-learning-catalog .registration_container_roster .qtip-button .admin-bubble-close{
+  top: -38px;
+  right: -12px	
+}
+.courselangtype-scroll-list-container,
+.coursecurrency-scroll-list-container,
+.classcurrency-scroll-list-container,
+.tpcurrency-scroll-list-container,
+.langtype-scroll-list-container,
+.surveydetailslang-scroll-list-container,
+.surveyquestionslang-scroll-list-container,
+.contentlang-scroll-list-container,
+.ordercurrency-scroll-list-container,
+.classlangtype-scroll-list-container,
+.grplang-scroll-list-container,
+.rescountry-scroll-list-container,
+#lnr-myteam-search #paintCountry,
+.announcementlang-scroll-list-container{
+ max-height:120px;
+ width:93%
+}
+/*! Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	#gbox_roster-result-container #pager-roster{
+	  padding-top:6px;
+	  width:765px;
+	  border-top:1px solid #ccc
+	}
+	.page-administration-learning-catalog .fade-out-title-container.multi-grid-survey-edit-title-fadeout-container{
+       margin-bottom:-10px	
+      }
+  .fade-out-title-container.multi-grid-survey-edit-code-fadeout-container,
+  .fade-out-title-container.multi-grid-survey-edit-title-fadeout-container,
+  .fade-out-title-container.multi-grid-assessment-edit-code-fadeout-container,
+  .fade-out-title-container.multi-grid-assessment-edit-title-fadeout-container{
+    margin-bottom:-10px
+  }
+  #setwaived-visible-container span.enrolled-exempted-all-status .enrolled-all-exempted{
+  color: #2d2d2d;
+  cursor: pointer;
+  font-family: openSansRegular,Arial;
+  font-size: 11px;
+  font-weight: normal;
+  line-height: 27px;
+  text-decoration: none;
+  }
+  .page-administration-learning-program .survey-attach-grid-wrapper.admin-training-program-tab-datagrid-wrapper .ui-jqgrid-view.datagrid-type-survey .ui-jqgrid-htable th.ui-th-ltr:first-child {
+    min-width:180px
+  }
+  .page-administration-learning-program .survey-attach-grid-wrapper.admin-training-program-tab-datagrid-wrapper .ui-jqgrid-view .ui-jqgrid-htable th.ui-th-ltr:first-child {
+    min-width:415px
+  }
+  .page-administration-learning-program .survey-attach-grid-wrapper.admin-training-program-tab-datagrid-wrapper .ui-jqgrid-view .ui-jqgrid-htable th.ui-th-ltr:last-child .un-sortable {
+/*     padding-left:12px */
+  }
+}
+/*safari hack Start*/
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0), not all and (min-resolution:.001dpcm) { @media { _:-webkit-full-screen,
+      .fade-out-title-container.admin-learning-metting-title-fadeout-container,
+      .fade-out-title-container.admin-learning-metting-fullname-fadeout-container{
+        margin-bottom:0
+      } 
+      .page-administration-learning-catalog .fade-out-title-container.narrow-search-results-item-detail-class-code-fadeout-container, 
+	  .page-administration-learning-catalog .fade-out-title-container.narrow-search-results-item-detail-class-language-fadeout-container {
+  		margin-bottom:-4px
+	  }
+	  .page-administration-learning-catalog .fade-out-title-container.admin-narrow-search-code-fadeout-container,
+	  .page-administration-learning-program .fade-out-title-container.narrow-search-lang-fadeout-container{
+	    margin-bottom:-4px
+	  }
+	  .fade-out-title-container.multi-grid-perrequisite-title-fadeout-container,
+      .fade-out-title-container.multi-grid-equivalence-title-fadeout-container,
+      .fade-out-title-container.multi-grid-perrequisite-code-fadeout-container,
+      .fade-out-title-container.multi-grid-equivalence-code-fadeout-container{
+        margin-bottom:0
+      }
+      .fade-out-title-container.admin-narrow-search-datewithzone-fadeout-container{
+		  margin-bottom:0
+	  }
+	  .page-administration-learning-catalog .fade-out-title-container.view-reg-from-fadeout-container .title-lengthy-text{
+  		margin-bottom:0
+		}
+      .page-administration-learning-catalog .fade-out-title-container.multi-grid-survey-edit-title-fadeout-container{
+       margin-bottom:0
+      }
+      .fade-out-title-container.multi-grid-content-code-fadeout-container,
+      .fade-out-title-container.multi-grid-content-type-fadeout-container{
+        margin-bottom:0
+      }
+      .page-administration-learning-catalog .fade-out-title-container.admin-narrow-search-courseview-prerequiste-morethanone-name-fadeout-container,
+      .page-administration-learning-catalog .fade-out-title-container.admin-narrow-search-courseview-equivalence-morethanone-name-fadeout-container,
+      .page-administration-learning-catalog .fade-out-title-container.admin-narrow-search-courseview-prerequiste-morethanone-code-fadeout-container,
+      .page-administration-learning-catalog .fade-out-title-container.admin-narrow-search-courseview-equivalence-morethanone-code-fadeout-container{
+        margin-bottom:0
+      }
+}}
+/*safari hack End*/

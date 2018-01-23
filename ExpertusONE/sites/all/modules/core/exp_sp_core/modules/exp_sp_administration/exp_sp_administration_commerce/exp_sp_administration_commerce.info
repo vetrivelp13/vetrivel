@@ -1,0 +1,7 @@
+name = Commerce Administration
+description = Container folder for all commerce administration modules and shared functions of those modules if any
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration
+dependencies[] = exp_sp_commerce
+version = VERSION
+core = 7.x

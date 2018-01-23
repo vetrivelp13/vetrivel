@@ -1,0 +1,6 @@
+name = Profile configuration engine
+description = Responsible for user profiling.
+package = ExpertusONE Core
+version = VERSION
+core = 7.x
+dependencies[] = exp_sp_core

@@ -1,0 +1,60 @@
+
+	
+	<%
+	if(GLOBALPARAMS_H5P.action.params.contenttype == "presentation")
+	{
+   %>
+	<a id="control-close" class="qtip-close-button" onclick="closeH5PIcon(this)"></a>
+    <div class="e1_h5p_error" style="height:auto;margin-top: -17px;"></div>
+    <%
+    }
+    var resultMsg = window.parent.Drupal.t('MSG906', {'@interaction' : "'" + window.parent.Drupal.t('Fill in the Blanks') + "'"  });
+    //Enter question text with asterisk(*) before and after the correct phrase.
+    var tipData =  "<span style='width:330px;display:block;padding-left:20px;'>";
+        tipData += "<span>"+resultMsg+"</span>";
+    	tipData += "<br/><br/><span>"+window.parent.Drupal.t('MSG905')+"</span>";
+    	tipData += "<br/><br/>";
+    	tipData += "<span>"+window.parent.Drupal.t('MSG912')+"</span><br/>";
+    	tipData += "<span>The quick brown *fox* jumps over the lazy dog.</span>";
+    	tipData += "<br/><br/>";
+    	tipData += window.parent.Drupal.t('MSG909');
+    	tipData += "<br/>";
+    	tipData += "<span>The quick brown <input type=text size=10></input> jumps over the lazy dog.</span>";
+    	tipData += "<br/><br/>";
+    	tipData += window.parent.Drupal.t('MSG913');
+    	tipData += "</span>"; 
+    %>
+ 
+ <div class="field text h5peditor-interaction-label form-item-question-row">
+   <label class="h5peditor-label-wrapper"><span class="h5peditor-label h5peditor-required"><%=window.parent.Drupal.t('LBL083')%>:</span><input class="h5peditor-text" value="<%=GLOBALPARAMS_H5P.action.params.text%>" id="questionid" type="text" value="" maxlength="255"></label>
+  </div> 
+  
+<div class="field text h5peditor-interaction-label form-item-statements-row">
+   <label class="h5peditor-label-wrapper"><span class="h5peditor-label h5peditor-required"><%=window.parent.Drupal.t('Fill-in-the-blank Questions')%>:</span><img src="/sites/all/themes/core/expertusoneV2/expertusone-internals/images/help-info.png" class="vtip  medium-vtip" title="<%= tipData %>"></img></label>
+</div>
+<div class="statements_container">
+</div>
+ <div class="field text h5peditor-interaction-label form-item-add-another-row">
+  <a class="h5peditor-label h5peditor addanother" href="javascript:void(0);" onclick="addStatement();">+ <%=window.parent.Drupal.t('LBL287')%> <%=window.parent.Drupal.t('LBL3040')%></a>
+</div>
+ 
+ <%
+	if(GLOBALPARAMS_H5P.action.params.contenttype != "presentation")
+	{
+   %>
+ 
+<div class="field text h5peditor-interaction-label form-item-label-row">
+   <label class="h5peditor-label-wrapper"><span class="h5peditor-label"><%=window.parent.Drupal.t('LBL3034')%>:</span><input class="h5peditor-text" value="<%=GLOBALPARAMS_H5P.label%>" id="labelid" type="text"  maxlength="100"></label>
+   <div class="h5p-errors"></div>
+   <div class="h5peditor-field-description"></div>
+</div>
+ <%
+    }
+ %>
+
+<script>
+vtip();
+</script>
+ 
+   
+  

@@ -1,0 +1,6 @@
+name = Prerequisite
+description = Responsible for prerequisite courses
+package = ExpertusONE Learning
+dependencies[] = exp_sp_learning
+version = VERSION
+core = 7.x

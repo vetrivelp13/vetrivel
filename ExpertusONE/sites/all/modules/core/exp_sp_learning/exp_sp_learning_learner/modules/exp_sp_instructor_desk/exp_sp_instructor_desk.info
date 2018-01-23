@@ -1,0 +1,6 @@
+name = Instructor Desk
+description = Responsible for listing all the classes which instructor takes.
+package = ExpertusONE Learning
+dependencies[] = exp_sp_learning
+version = VERSION
+core = 7.x

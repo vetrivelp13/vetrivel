@@ -1,0 +1,73 @@
+<?php
+include_once DRUPAL_ROOT."/sites/all/services/SCSoapClient.php";
+
+function exp_sp_batchmonitor_cron()
+{
+  try{
+   	$config=getConfig("exp_sp");
+   	if(!isset($_COOKIE['SPCertificate'])){
+   	$url=$config["service_url"]."?actionkey=".$config["actionkey"];
+   	$requestXML = getRequestXML_authenticateBatch($username, $pwd,120);
+		$xmlstr = SCSoapClient::connect(null,$url,$requestXML,'','');
+		$cert='';
+		if($xmlstr && strlen($xmlstr)>0) {
+			$dom = new DOMDocument('1.0','UTF-8');
+			$dom->loadXML($xmlstr);
+			$cert=$dom->getElementsByTagName("SPCertificate")->item(0)->nodeValue;
+		}
+   	}else{
+    	$cert=$_COOKIE['SPCertificate'];
+   	}
+   	$url=$config["service_url"]."?actionkey=".$config["batchmonitorserviceno"]."&certificateid=".$cert;
+   	$requestXML = batchmonitorRequestXML();
+   	$xmlstr = SCSoapClient::connect(null,$url,$requestXML,'','');
+  }catch (Exception $ex) {
+    watchdog_exception('batchmonitorcron', $ex);
+    expertusErrorThrow($ex);
+  } 
+
+}
+function batchmonitorRequestXML()
+{
+  try{
+    $xml = '<?xml version="1.0" encoding="ISO-8859-1"?>';
+		$xml .= '<SOAP-ENV:Envelope xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+		$xml .= '<SOAP-ENV:Body>';
+		$xml .= '<batchmonitorRequest>';
+		$xml .= '<Id>1</Id>';
+		$xml .= '<Type>Enroll|LoginCount|Statistics|RegStatus|RemindSession|LPExpired</Type>';
+		$xml .= '</batchmonitorRequest>';
+		$xml .= '</SOAP-ENV:Body>';
+		$xml .= '</SOAP-ENV:Envelope>';
+		return $xml;
+  }catch (Exception $ex) {
+    watchdog_exception('batchmonitorRequestXML', $ex);
+    expertusErrorThrow($ex);
+  } 
+}
+
+function getRequestXML_authenticateBatch($username, $pwd,$valid)
+	{
+	  try{
+		$xml = '<?xml version="1.0" encoding="ISO-8859-1"?>';
+		$xml .= '<SOAP-ENV:Envelope xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">';
+		$xml .= '<SOAP-ENV:Body>';
+		$xml .= '<Authenticate>';
+		$xml .= '<Username>guest</Username>';
+		$xml .= '<Password>welcome</Password>';
+		$xml .= '<Locale>en_US</Locale>';
+		$xml .= '<ValidityInMin>'.$valid.'</ValidityInMin>';
+		$xml .= '<isGlobal>true</isGlobal>';
+		$xml .= '</Authenticate>';
+		$xml .= '</SOAP-ENV:Body>';
+		$xml .= '</SOAP-ENV:Envelope>';
+
+		return $xml;
+      }catch (Exception $ex) {
+        watchdog_exception('getRequestXML_authenticateBatch', $ex);
+        expertusErrorThrow($ex);
+      } 
+	}
+
+
+?>

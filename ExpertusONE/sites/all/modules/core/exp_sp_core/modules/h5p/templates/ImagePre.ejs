@@ -1,0 +1,166 @@
+
+<%
+	var chkBoxCls = GLOBALPARAMS_H5P.action.params.resize == true?"checkPause":"uncheckPause";
+	var enabledOr = GLOBALPARAMS_H5P.action.params.resize == true?"checked":"";
+%>
+
+<!-- <div class="form-item form-type-file form-item-image form-item-files-video uploadiconbgshow"> -->
+
+  
+	<a id="control-close" class="qtip-close-button" onclick="closeH5PIcon(this)"></a>
+    <div class="e1_h5p_error" style="height:auto;margin-top: -17px;"></div>
+   
+
+<div class="form-item form-type-file form-item-image form-item-files-video">
+		      <label class="h5peditor-label-wrapper"><span class="h5peditor-label h5peditor-required"><%=window.parent.Drupal.t('LBL3044')%>:</span> </label>
+		      <form  id="uploadimage" action="" method="post" enctype="multipart/form-data" style="margin-top: 4px;margin-bottom: 6px;">
+		         <input autocomplete="off" class="addedit-edit-video addedit-edit-file-upload form-file" tabindex="4" type="file" name="file" id="uploadImg" value="<%=GLOBALPARAMS_H5P.action.params.file%>" size="35">
+		      	 <span class="customlabelfileupload"><%=window.parent.Drupal.t('MSG892')%></span>
+		      	 <span class="customlabelfileuploadhelp upload-msg-style"><%=window.parent.Drupal.t('MSG779')%></span>
+		         <input type="hidden" name="contentId" value=<%= H5PEditor.contentId %> >
+		         <input type="hidden" name="dataURI" >
+		         <input type="hidden" name="pre" value = "pre" >
+		         <input type="hidden" name="field" value='{"name":"file","type":"image","label":"Image"}' >
+		      </form>
+</div>
+
+<div class="field text h5peditor-interaction-label" style="clear:both;">
+	<label class="h5peditor-label-wrapper">
+		<span class="h5peditor-label"><%=window.parent.Drupal.t('LBL3039')%> <%=window.parent.Drupal.t('LBL3032')%>:</span>
+		<input class="vtip h5peditor-text" value="<%=GLOBALPARAMS_H5P.action.params.title%>" id="labelid" type="text"  maxlength="100">
+	</label>
+</div>
+
+
+<div class="field boolean h5peditor-interaction-audio-pause">
+		<span class="h5peditor-label"><%=window.parent.Drupal.t('Resize')%>:<img src="/sites/all/themes/core/expertusoneV2/expertusone-internals/images/help-info.png" class="vtip  medium-vtip" title="<%=window.parent.Drupal.t('MSG920')%>" ></img></span>
+      <div class="form-item-check  <%= chkBoxCls%>" style="margin-top:4px">
+      		<input type="checkbox" id="resizeImg" onclick="pauseEvent(this);" <%= enabledOr %> ></input>
+      </div>
+</div>
+	
+	
+				
+
+		
+	
+					
+					
+					
+					
+<script>
+
+ns.$(".displayas").css("width","20px");
+if(GLOBALPARAMS_H5P.displayType == "poster")
+  		{
+  			ns.$("#labelid").parent().parent().hide();
+  		}
+vtip();
+ns.$("#uploadImg").change(function(e){
+	var filename = $("#uploadImg").val();
+	if(filename != "" || filename != undefined)
+	{
+		filename = filename.replace("\\","/");
+		filename = filename.replace("\\","/");
+		filename = filename.split("/");
+		
+		$(".customlabelfileupload").html(window.parent.Drupal.t("Uploading")+"...");
+		$("#uploadimage").addClass("afterUpload");
+		$("#uploadImg").hide();
+	    $(".customlabelfileuploadhelp").hide();
+		
+	}	
+	$("#uploadimage").submit();
+});
+
+$("#uploadimage").on('submit',(function(e) {
+var test = new FormData(this);
+console.log("required values1122",test);
+
+e.preventDefault();
+window.parent.EXPERTUS_SMARTPORTAL_AbstractDetailsWidget.createLoader("modalContent");
+ns.$.ajax({
+url: window.parent.Drupal.settings.h5peditor.ajaxPath+"files", // Url to which the request is send
+type: "POST",             // Type of request to be send, called as method
+data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+contentType: false,       // The content type used when sending data to the server.
+cache: false,             // To unable request pages to be cached
+processData:false,        // To send DOMDocument or non processed data file it is set to false
+success: function(data)   // A function to be called if request succeeds
+{
+	window.parent.EXPERTUS_SMARTPORTAL_AbstractDetailsWidget.destroyLoader("modalContent");
+	var jsonobj = JSON.parse(data);
+	var filename = jsonobj.path;	
+   if(filename != "" && filename != undefined)
+   {
+	var filenamearr = filename.split("^^^");
+	
+	$(".customlabelfileupload").hide();
+	
+    var lengthytitle = '';	
+	if(filenamearr[0].length > 12)
+					lengthytitle = '<div class="fade-out-title-container  image-popup-title-fadeout-container"><span class="title-lengthy-text">'+filenamearr[0]+'</span><span class="fade-out-image"></span></div>';
+				else
+					lengthytitle = filenamearr[0];
+
+
+var htm = "<div id='tmpdata2' style='font-size:11px;'><span style='vertical-align:4px;'>" +lengthytitle+ "&nbsp;</span><a href='javascript:void(0);' onclick='showeditimageupload();'>x</a></div>";
+	$("#uploadimage").append(htm);
+	
+	
+	$("#uploadImg").attr("processedresponse",data);
+	$("#uploadImg").attr("filename",filename);
+	//$("#uploadImg").val(jsonobj.path);
+
+ }
+  
+else{
+   showeditimageupload()
+   displayh5pexpertusmsg(window.parent.Drupal.t('MSG779'));
+   }
+
+	
+}
+ 
+			
+});
+}));
+function showeditimageupload()
+{
+    $("#tmpdata2").remove();
+	$("#uploadImg").show();
+	$("#uploadImg").val("");
+	$(".customlabelfileuploadhelp").show();
+	//$(".customlabelfileupload").html("");
+	$("#uploadimage").removeClass("afterUpload");
+	$(".customlabelfileupload").html(window.parent.Drupal.t('MSG892'));
+	$(".customlabelfileupload").show();
+	
+	$("#uploadImg").attr("filename","");
+}
+//if(GLOBALPARAMS_H5P.action.params.file != undefined && GLOBALPARAMS_H5P.action.params.file != "")
+// {
+//  alert(GLOBALPARAMS_H5P.action.params.file);
+//  alert(888888);
+if(GLOBALPARAMS_H5P.action.params.file !=  undefined && GLOBALPARAMS_H5P.action.params.file.path != undefined && GLOBALPARAMS_H5P.action.params.file.path != "")
+ {
+	var filenamearr = GLOBALPARAMS_H5P.action.params.file.path.split("^^^");	
+	//$(".customlabelfileupload").html(filenamearr[0]+"&nbsp;<a href='javascript:void(0);' onclick='showeditimageupload();'>x</a>");
+	
+	 var lengthytitle = '';	
+	if(filenamearr[0].length > 12)
+					lengthytitle = '<div class="fade-out-title-container  image-popup-title-fadeout-container"><span class="title-lengthy-text">'+filenamearr[0]+'</span><span class="fade-out-image"></span></div>';
+				else
+					lengthytitle = filenamearr[0];
+
+
+    var htm = "<div id='tmpdata2' style='font-size:11px;'><span style='vertical-align:4px;'>" +lengthytitle+ "&nbsp;</span><a href='javascript:void(0);' onclick='showeditimageupload();'>x</a></div>";
+	$("#uploadimage").append(htm);
+	
+	$("#uploadImg").attr("filename",GLOBALPARAMS_H5P.action.params.file.path);
+	$("#uploadImg").hide();
+	$(".customlabelfileuploadhelp").hide();
+	$(".customlabelfileupload").hide();
+	$("#uploadimage").addClass("afterUpload");
+}
+</script>

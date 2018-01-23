@@ -1,0 +1,11 @@
+name = User Registration
+description = Responsible for new user registration.
+package = ExpertusONE Core
+configure = admin/config/userregister/settings
+dependencies[] = exp_sp_core
+dependencies[] = password_policy
+testing_api = 2.x
+files[] = exp_sp_userregister.inc
+files[] = tests/exp_sp_userregister.test
+version = VERSION
+core = 7.x

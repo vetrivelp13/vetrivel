@@ -1,0 +1,137 @@
+<?php
+class courseDetailsTestCase extends ExpertusWebTestCase {
+	private $test_case = array();
+		public static function getInfo() {
+    	return array(
+      		'name' => 'Course Details',
+      		'description' => 'Course detail page testing',
+      		'group' => 'exp_sp_coursedetail',
+    	);
+ 	 }
+ 	 
+    public function setUp(){
+	  	// User Authentication
+	  	$user = $this->getUserList(1);
+	  	$usr = new stdClass();
+	  	$usr->name =  'user1';
+	  	$usr->pass_raw = 'welcome';
+	  	$this->drupalLogin($usr);
+	  	
+	  	parent::setUp();
+    }
+  
+    public function testCourseDetails(){
+    	$this->getTestCases();
+	    // Retrive Course Detail's page content	
+	  	$this->getCourseDetailsPageComponents();		
+	 
+	  	$this->addForumComment();
+	  	$this->deleteReply();
+	  	$this->deleteTopic();
+    }
+  
+	private function getCourseDetailsPageComponents(){
+		// set refer to prevent access denied error	
+		$this->setHttpReferer('learning/course-details/28');
+		
+		// Retrive raw html content from server
+		$out = $this->drupalGet('learning/course-details/28');
+		
+		// Check basic page load with blocks
+		$this->assertRaw('<div class="content-row-container cre_sys_obt_crs">','Course Details Content Loaded in Course level', 'exp_sp_coursedetail');
+		$this->assertRaw('<div class="course-content-wrapper border-box-crs">','Class details Loaded in Course level', 'exp_sp_coursedetail');
+		$this->assertRaw('<div class="course-stats-wrapper stats-wrapper border-box">','Course details status loaded', 'exp_sp_coursedetail');
+
+		// General check error message appear on the site.
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_coursedetail');
+	}
+	private function getNodeId(){
+		$nodeId = db_query("select nid from node where type='cre_sys_obt_crs' and title like '%72282%'")->fetchField();
+		return $nodeId;
+	}
+	private function deleteReply(){
+		$nodeid = $this->getNodeId();
+		//1484 - get the value from froum_index
+		// 9 - Get the value from comment
+		$out = $this->drupalGet("ajax/delete-comments/".$nodeid."/1484/9");
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_coursedetail');
+	}
+	private function deleteTopic(){
+		$nodeid = $this->getNodeId();
+		//1484 - get the value from froum_index
+		$out = $this->drupalGet("ajax/delete-topic/".$nodeid."/1484");
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_coursedetail');
+	}
+	private function addForumComment(){
+		/* $path = '//*[@id="comments-qtip_visible_disp_addcomments_1487_forum-comments"]//a';
+		$tipAtr = $this->getQtipAttributes($path,'onclick'); */
+		$this->setHttpReferer('learning/catalog-search');
+		$path = '//*[@id="comments-qtip_visible_disp_addcomments_1487_forum-comments"]';
+		$testc = 'forumcreate';
+		/*$addClassObj = $this->getQtipAttributes($path,'href');
+		$qtipDef = array(
+				'tipWidth'=>$addClassObj['wBubble'],
+				'tipTop'=>787,
+				'tipLeft'=>139.767,
+				'tipId'=>$addClassObj['catalogVisibleId'],
+				'tipObjectId'=>$addClassObj['entityId'],
+				'tipTableWidht'=>373,
+				'tipContentId'=>$addClassObj['popupDispId'],
+				'tipEntityType'=>'forum-comments',
+				'tipPos'=>'tipfaceTopMiddle'
+		
+		);
+		
+		$this->addQtipModel($qtipDef);
+		$this->verbose('pupup  teeeee: ' . $this->getUrl() .
+ 		'<hr />' . $this->content);*/
+		
+		$modelContent = $this->content; 
+		
+		foreach($this->testcases[$testc] as $test){
+		$post_field = array('wrapper'=>'popup_container_qtip_visible_disp_addcomments_1487_forum-comments');
+		$out = $this->drupalPostAJAX(null,$edit,'Save','ajax/forum-comments/add/23/1487/0',array(),array(),'',$post_field);
+		
+		$this->verbose('Request to: ' . $this->getUrl() .
+				'<hr />' . $this->content);
+		$this->assertResponse(200,'Form Rendered successfully');
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_coursedetail');
+		
+		$param = array(
+				"form_id"=>"add_topic_comments_html",
+				"_triggering_element_name"=>"op",
+				"_triggering_element_value"=>"Post",
+		);
+		$post_field = array('submit'=>$param,	'wrapper'=>'forum-topic-list-class');
+	/* 	$input = array("forum_topic_desc" => "yyyy"
+		); */
+		$out = $this->drupalPostAJAX(null,$test,'Save','?q=system/ajax',array(),array(),'',$post_field);
+		$this->verbose('ssasaasas: ' . $this->getUrl() .
+				'<hr />' . $this->content);	
+		$error = '';
+		$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+		foreach($isError as $err){
+			$error .= (string) $err[0]->span;
+		}
+		$this->assertResponse(200,'Form Rendered successfully');
+		$webError = "Website encountered an unexpected error";
+		$this->assertNoText(t($webError),'Web errors not found','exp_sp_coursedetail');
+		}
+	}
+	private function getTestCases(){
+		$t = time();
+		$this->testcases = array( 
+				'forumcreate' => array(
+						array('input'=>array(
+			  					"forum_topic_desc[value]"=>'comment'.($t+rand(1,99))),
+								
+			  	),
+				),
+		);
+	}
+}
+?>

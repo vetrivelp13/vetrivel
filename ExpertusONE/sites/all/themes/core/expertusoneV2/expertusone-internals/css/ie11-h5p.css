@@ -1,0 +1,37 @@
+.h5p-interactivevideo-editor .label-container .h5p-dialog-inner .h5peditor-interaction-pause,
+.h5p-interactivevideo-editor .link-container .h5p-dialog-inner .h5peditor-interaction-pause{
+	margin-left:8px;
+}
+
+ .h5p-interactive-video .h5p-dialog-wrapper .single-choice-set-container .h5p-dialog-inner .single-choice-container .OptionalLabel .ckeditor
+{
+	max-width:352px;
+	min-width:352px;
+}
+.single-choice-set-container .h5p-dialog-inner .single-choice-container .OptionalLabel {
+    margin-bottom: 20px;
+}
+
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog .h5p-dialog-interaction.h5p-blanks .h5p-question-buttons button.h5p-question-iv-continue{
+	width:72px;
+}
+/* .h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog .h5p-blanks .h5p-question-buttons button.h5p-question-iv-continue{
+	width:72px;
+}
+ .h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-iv-continue,
+.h5p-interactive-video .h5p-video-wrapper .h5p-interaction.h5p-poster .h5p-interaction-inner .h5p-question-buttons button.h5p-question-iv-continue {
+  max-width:72px;
+  min-width:72px;
+  margin-right:5px
+} */
+
+.h5p-interactive-video .h5p-dialog-wrapper .h5p-dialog .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-iv-continue, .h5p-interactive-video .h5p-video-wrapper .h5p-poster.h5p-interaction .h5p-interaction-inner .h5p-question-buttons button.h5p-question-iv-continue,
+.h5p-interactive-video .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-try-again, .h5p-interactive-video .h5p-video-wrapper .h5p-poster.h5p-interaction .h5p-interaction-inner .h5p-question-buttons button.h5p-question-try-again {
+	max-width: 72px;
+	min-width: 72px;
+}
+
+.h5p-interactive-video .h5p-dialog-interaction .h5p-question-buttons button.h5p-question-show-solution, .h5p-interactive-video .h5p-video-wrapper .h5p-poster.h5p-interaction .h5p-interaction-inner .h5p-question-buttons button.h5p-question-show-solution {
+    max-width: 111px;
+    min-width: 111px;
+}

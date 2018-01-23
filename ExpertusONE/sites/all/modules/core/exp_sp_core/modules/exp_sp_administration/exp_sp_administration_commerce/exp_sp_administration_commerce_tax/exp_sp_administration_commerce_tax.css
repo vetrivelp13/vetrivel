@@ -1,0 +1,95 @@
+.vat-separator{
+  font-size: 9px
+}
+#tax-basic-addedit-form-container .addedit-twocol-firstcol .addedit-new-field-title {
+  padding: 6px 5px 4px 0
+}
+#tax-basic-addedit-form-container .addedit-new-field {
+  clear: none;
+  float: left;
+  margin-top: 2px
+}
+#exp-sp-administration-tax-addedit-form input,textarea,
+#tax-basic-addedit-form-container .addedit-new-field-value .form-type-select .ui-multiselect {
+  font-size: 12px;
+  font-weight: normal
+}
+#exp-sp-administration-tax-addedit-form .addedit-left-col,
+#tax-basic-addedit-form .addedit-left-col {
+  padding: 13px 0 13px 16px;
+  width: 96.5%
+}
+#tax-basic-addedit-form-container .addedit-new-field .addedit-new-field-title,
+#tax-basic-addedit-form-container .addedit-twocol-firstcol .addedit-new-field-title {
+  width: 190px;
+}
+#tax-basic-addedit-form-container .addedit-new-field .addedit-edit-textfield {
+  width: 259px;
+  border: 1px solid #7F9DB9;
+  height: 18px;
+  padding-left: 4px;
+  padding-top: 2px
+}
+#tax-basic-addedit-form-container .addedit-new-field .addedit-new-field-value .resizable-textarea .addedit-edit-vat_number {
+  min-width: 265px;
+  max-width: 265px;
+  height: 22px;
+  border: 1px solid #7F9DB9;
+  padding-left: 4px;
+  padding-top: 2px
+}
+#tax-basic-addedit-form-container .addedit-firstcol-field-value .addedit-edit-dropdown {
+  width: 265px;
+  border: 1px solid #7F9DB9;
+  height: 22px
+}
+#tax-basic-addedit-form-container .addedit-new-field-value .form-type-select .addedit-edit-dropdown {
+  width: 265px
+}
+#tax-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row {
+  float: left;
+  margin-top: 6px
+}
+#tax-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions {
+  margin-right:13px
+}
+#tax-basic-addedit-form-container .addedit-new-field-value .form-type-select .ui-multiselect {
+  background:none;
+  border: 1px solid #7F9DB9;
+  border-radius:0;
+  color: #333;
+  height: 22px;
+  padding-left: 2px
+}
+#tax-basic-addedit-form-container .addedit-new-field-value .form-type-select .ui-multiselect .ui-icon {
+  background: url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -116px 1px;
+  height: 12px;
+  margin-right: 1px;
+  width: 12px
+}
+#gview_narrow-search-results-holder .narrow-search-results-item-details {
+  padding-bottom: 12px;
+  padding-top: 6px
+}
+#tax-basic-addedit-form-container .addedit-form-cancel-and-save-actions-row .addedit-form-cancel-container-actions .admin-action-button-middle-bg {
+  margin-right: -2px;	
+  padding: 3px 0 0
+}
+#tax-basic-addedit-form-container .addedit-firstcol-field-value .addedit-edit-dropdown option {
+  width: 240px
+}
+.page-administration-commerce-tax div.popups-title .popups-close {
+  margin-right: 12px
+}
+.fade-out-title-container.admin-narrow-search-fadeout-container{
+  max-width: 520px
+}
+.fade-out-title-container.admin-narrow-search-edit-tooltip-code-fadeout-container{
+  max-width: 250px
+}
+.fade-out-title-container.admin-commerce-tax-statename-fadeout-container,
+.fade-out-title-container.admin-commerce-vat-numbers-fadeout-container {
+  display: inline-block;
+  margin-bottom: -4px;
+  max-width: 200px
+}

@@ -1,0 +1,27 @@
+<?php 
+
+/**
+ * Implemetion of hook_menu
+ */
+function exp_sp_callout_menu() {
+	$items = array();
+	
+	$items['cart-callout/checkout/complete'] = array(
+			'title' => 'Order complete',
+			'page callback' =>'orderCompleteCallback',
+			'access callback' => true,
+			'type' => MENU_CALLBACK,
+	);
+	return $items;
+}
+
+function orderCompleteCallback() {
+	$pmtDet  = getCalloutEntityInfo('cme_pmt');
+	require_once DRUPAL_ROOT.$pmtDet[file];
+	expDebug::dPrint("Payment Details for Callout".print_r($pmtDet,true),4);
+	processCalloutPaymentResponse();
+} 
+
+
+
+

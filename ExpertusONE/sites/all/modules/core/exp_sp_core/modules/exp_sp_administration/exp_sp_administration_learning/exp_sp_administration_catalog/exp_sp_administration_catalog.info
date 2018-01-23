@@ -1,0 +1,12 @@
+name = Catalog Learning Administration
+description = Responsible for Course and Class administration
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration_learning
+testing_api = 2.x
+files[] = tests/exp_sp_administration_catalog.test
+files[] = tests/exp_sp_administration_course.test
+files[] = tests/exp_sp_administration_course_create.test
+files[] = tests/exp_sp_administration_course_update.test
+files[] = tests/exp_sp_administration_course_delete.test
+version = VERSION
+core = 7.x 

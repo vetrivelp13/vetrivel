@@ -1,0 +1,274 @@
+<?php 
+
+class AdministrationDiscountTestHelper extends ExpertusWebTestCase {
+	private $searchResultContent=null;
+	
+	protected $testcases = array();
+
+	public $listContent = '';
+	
+	private $srcParam = array(
+			'title'=>'',		// Title base search
+			'announcementdaterange'=>'',		// date range on announcement
+			'announcementlang'=>'cre_sys_lng_eng', 	// Selected languages pipe separated
+			'sortby'=> 'desc',		//	Sort by option
+			'announcemanage' => 'cre_sys_fop_me'
+	);
+
+	public function setUp() {
+		parent::setUp();
+		$this->drupalLogin($this->admin); // login as admin
+		$this->getDiscountTestCases();
+		// set refer to prevent access denied error
+		$this->setHttpReferer('learning/enrollment-search');
+	}
+	
+	public function manageAdminDiscount($scope = 'basic') {
+	
+		// Get Main HTML content
+		$this->drupalPost('administration/commerce/discounts');
+		$content = $this->content;
+	
+		// Get Filters
+		$this->drupalGetAJAX('administration/search-filter/discounts');
+		$this->content = drupal_json_decode($this->content);
+			
+		//Update filters with existing response
+		$replArray = array(
+				'rendered_narrow_search_filters' => 'narrow-search',
+				'rendered_main_div' => 'root-admin-results',
+				'rendered_tab_content_main' => 'tab-content-main',
+				'rendered_narrow_search_sortbar' => 'admin-maincontent_tab',
+				'rendered_narrow_search_actionbar' => 'sort-bar-V2'
+		);
+			
+		$this->updateSearchFilters($content, $replArray, 'div', 'tag', 'div' );
+	
+		$this->displayTagsById('narrow-search');
+		$this->displayTagsById('root-admin-results');
+	
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['discountList'];
+		} else {
+			$testCases = array($this->testcases['discountList'][$scope]);
+		}
+		
+		//Get search results
+		foreach($testCases as $test){
+			$this->getAdministrationDiscountList($test);
+		}
+	}
+	
+	public function getAdministrationDiscountList($opt = array()){
+		$opt = array_merge($this->basicParam, $opt);
+		$this->listContent = $this->content;
+		$srcRc = $this->drupalGetAJAX('administration/commerce/discounts/search/all/',array('query'=>$opt));
+		$this->updateSearchResults($this->listContent,$srcRc,'narrow-search-results-holder');
+	}
+
+	protected function getDiscountTestCases(){
+		$rand = $this->randomName();
+		$this->testcases = array(
+				'discountList' => array(
+						'basic' => array(),
+						'case1' => array(),
+				),		
+				'discountCreate' => array(
+		  				'st_case1' => array(
+		  						"dis_name"						=> 'st_case1 Discount Test '.$rand,
+		  						"dis_description[value]"		=> 'sample descrption st_case1',
+								"dis_type"						=> 2, // Percent amount deposit
+								"dis_typeval" 					=> 10, 
+								"dis_max_uses"					=> 10,
+								"dis_min_price"					=> 10,
+								"dis_max_uses_per_user"			=> 10,
+		  						"dis_max_uses_per_code"			=> 10,
+		  						"dis_code" 						=> 'st_case1-' . $rand, 
+		  						"dis_applicable_training"		=> 1,
+		  						"dis_applicable_user"			=> 1,
+		  						"dis_combine"					=> 1
+		  				 ),
+						'st_case2' => array(
+		  						"dis_name"						=> 'st_case2 Discount Test '.$rand,
+		  						"dis_description[value]"		=> 'sample descrption st_case1',
+								"dis_type"						=> 3, // Fixed amount deposit
+								"dis_applicable_currency"		=> 'USD',
+								"dis_typeval" 					=> 10, 
+								"dis_max_uses"					=> 10,
+								"dis_min_price"					=> 10,
+								"dis_max_uses_per_user"			=> 10,
+								"dis_max_uses_per_code"			=> 10,
+		  						"dis_code" 						=> 'st_case2-' . $rand,
+								"dis_applicable_training"		=> 1,
+								"dis_applicable_user"			=> 1,
+								"dis_combine"					=> 1
+						),
+				),
+				'discountUpdate' => array(
+						'st_case1' 	=> array(
+							"dis_name"						=> 'st_case1 Discount changed- '.$rand,
+							"id"						=> $this->getDiscountId('st_case1'),	
+						 ),
+						'st_case2' => array(
+							"dis_name"						=> 'st_case2 Discount changed- '.$rand,
+							"id"						=> $this->getDiscountId('st_case2'),
+						),
+				),
+				'discountDelete' => array(
+						'st_case1' 	=> array( 'id'	 	=> $this->getDiscountId('st_case1') ),
+						'st_case2' 	=> array( 'id' 		=> $this->getDiscountId('st_case2') ),
+				),
+				'discountStatus'=>array(
+						'st_case1' 	=> array( 'id'	 	=> $this->getDiscountId('st_case1') ),
+						'st_case2' 	=> array( 'id' 		=> $this->getDiscountId('st_case2') ),						
+				),
+		);
+	}
+	
+	public function getDiscountTitle($discountId = '') {
+		$discountTitle = db_query("SELECT discount_name FROM slt_discounts WHERE id = :discount_id", array(':discount_id' => $discountId ))->fetchField();
+		return $discountTitle;
+	}
+	
+	public function getDiscountStatus($discountId = '') {
+		$discountStatus = db_query("SELECT is_active FROM uc_discounts WHERE discount_id = :discount_id", array(':discount_id' => $discountId ))->fetchField();
+		return $discountStatus;
+	}
+	
+	public function getDiscountId($search_str = '') {
+		$select = db_select('slt_discounts', 'dis');
+		$select->addField('dis', 'id', 'id');
+		$select->condition('dis.discount_name', '%' . db_like($search_str) . '%', 'LIKE');
+		$select->orderBy('dis.id', 'DESC');
+		$select->range(0,1);
+		$discountId = $select->execute()->fetchField();
+		return $discountId;
+	}
+}
+
+
+class AdministrationDiscountListBase extends AdministrationDiscountTestHelper
+{
+	
+}
+class AdministrationDiscountListAll extends AdministrationDiscountListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Discount - List - All Tests',
+				'description' => 'Module : exp_sp_administration_discount',
+				'group' => '1702 - Administration - Manage - Discount - List',
+		);
+	}
+	
+	public function testDiscountListAll() {
+		debug('testAdminDiscountListAll called');
+		$this->manageAdminDiscount('all');
+	}
+}
+
+class AdministrationDiscountListCase1 extends AdministrationDiscountListBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Discount - List - Case 1',
+				'description' => 'Module : exp_sp_administration_discount',
+				'group' => '1702 - Administration - Manage - Discount - List',
+		);
+	}
+
+	public function testDiscountListCase1() {
+		debug('testAdminDiscountListCase1 called');
+		$this->manageAdminDiscount('case1');
+	}
+}
+
+/**
+ *  Discount change status test cases
+ *  Created By :Maheswari.M
+ *  Created Date:26.12.2016
+ *  To check the functionality for the discount active/suspend .
+ */
+
+class AdministrationDiscountStatusBase extends AdministrationDiscountTestHelper
+{
+	public function statusGroupTestCase($scope = 'all') {
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['discountStatus'];
+		} else {
+			$testCases = array($this->testcases['discountStatus'][$scope]);
+		}
+
+		foreach($testCases as $test){			
+			$discountId = $test['id'];
+			if ($discountId != '') {
+			$status=$this->getDiscountStatus($discountId);
+			$this->changeStatus($discountId,$status);
+			$status=$this->getDiscountStatus($discountId);
+			$this->changeStatus($discountId,$status);
+			$this->content = $this->listContent;
+			$this->getAdministrationDiscountList();			
+			} else
+				debug ( 'The discount id not found' );
+		}
+	}
+	
+		public function changeStatus($discountId,$status) {
+			if($status==1){				
+				$this->changeDiscountStatus($discountId);
+				$this->assertResponse(200,'Discount status suspended successfully');				
+			}else{			
+				$this->changeDiscountStatus($discountId);
+				$this->assertResponse(200,'Discount status activated successfully');			
+ 			} 			
+		}
+		
+		public function changeDiscountStatus($discountId) {
+			$this->drupalPostAJAX(null, $edit,'Save','?q=ajax/administration/commerce/discounts/publish-and-unpublish/' . $discountId,array(),array(),'',$post_field);
+			$this->verbose('Request to: ' . $this->getUrl() . '<hr />' . $this->content);
+		}		
+	
+}
+
+class AdministrationDiscountStatusCase1 extends AdministrationDiscountStatusBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Discount - Status - Case1',
+				'description' => 'Module : exp_sp_administration_discount',
+				'group' => '1702 - Administration - Manage - Discount - Status',
+		);
+	}
+
+	public function testDiscountPublishCase1() {
+		debug('testDiscountPublishCase1 called');
+		$this->manageAdminDiscount('case1');
+		$this->statusGroupTestCase('st_case1');
+	}
+}
+
+class AdministrationDiscountStatusCase2 extends AdministrationDiscountStatusBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Discount - Status - Case2',
+				'description' => 'Module : exp_sp_administration_discount',
+				'group' => '1702 - Administration - Manage - Discount - Status',
+		);
+	}
+
+	public function testDiscountPublishCase2() {
+		debug('testDiscountPublishCase1 called');
+		$this->manageAdminDiscount('case1');
+		$this->statusGroupTestCase('st_case2');
+	}
+}
+
+
+
+
+
+
+?>

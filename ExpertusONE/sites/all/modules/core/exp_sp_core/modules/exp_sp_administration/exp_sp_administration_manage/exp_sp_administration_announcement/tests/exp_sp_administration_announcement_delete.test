@@ -1,0 +1,81 @@
+<?php 
+
+class AdministrationAnnouncementDeleteBase extends AdministrationAnnouncementTestHelper
+{
+	public function deleteAnnouncementTestCase($scope = 'all'){
+		
+		// Based on the scope set the data to test
+		if ($scope == 'all') {
+			$testCases = $this->testcases['announcementDelete'];
+		} else {
+			$testCases = array($this->testcases['announcementDelete'][$scope]);
+		}
+		
+		foreach($testCases as $test){
+			$announcementTitle = $this->getAnnouncementTitle($test['id']);
+			debug("Announcement name to delete: " . $announcementTitle);
+	
+			//drupalPost($path, $edit, $submit, $options, $headers, $form_html_id);
+			$announcementId = $test['id'];
+			$deletePath = 'ajax/admincore/deleteprocessobject/' . $announcementId . '/announcement';
+			$out = $this->drupalPost($deletePath, array(), t('Delete'));
+			$this->verbose('Request to: ' . $this->getUrl() .	'<hr />' . $this->content);
+	
+			$announcementStatus = $this->getAnnouncementStatus($test['id']);
+			debug("Announcement status : " . $announcementStatus);
+		}
+	
+	}
+}
+
+class AdministrationAnnouncementDeleteAll extends AdministrationAnnouncementDeleteBase
+{
+public static function getInfo() {
+		return array(
+				'name' => 'Administration - Announcement - Delete - AllTest',
+				'description' => 'Module : exp_sp_administration_announcement',
+				'group' => '1506 - Administration - Manage - Announcement - Delete',
+		);
+	}
+
+	public function testAnnouncementDeleteAll() {
+		$this->deleteAnnouncementTestCase('all');
+		$this->manageAdminAnnouncement();
+	}
+}
+
+class AdministrationAnnouncementDeleteCase1 extends AdministrationAnnouncementDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Announcement - Delete - Case 1',
+				'description' => 'Module : exp_sp_administration_announcement',
+				'group' => '1506 - Administration - Manage - Announcement - Delete',
+		);
+	}
+
+	public function testAnnouncementDeleteCase1() {
+		debug('testAnnouncementDeleteCase1 called');
+		$this->deleteAnnouncementTestCase('st_case1');
+		$this->manageAdminAnnouncement();
+	}
+}
+
+class AdministrationAnnouncementDeleteCase2 extends AdministrationAnnouncementDeleteBase
+{
+	public static function getInfo() {
+		return array(
+				'name' => 'Administration - Announcement - Delete - Case 1',
+				'description' => 'Module : exp_sp_administration_announcement',
+				'group' => '1506 - Administration - Manage - Announcement - Delete',
+		);
+	}
+
+	public function testAnnouncementDeleteCase2() {
+		debug('testAnnouncementDeleteCase2 called');
+		$this->deleteAnnouncementTestCase('st_case2');
+		$this->manageAdminAnnouncement();
+	}
+}
+
+?>

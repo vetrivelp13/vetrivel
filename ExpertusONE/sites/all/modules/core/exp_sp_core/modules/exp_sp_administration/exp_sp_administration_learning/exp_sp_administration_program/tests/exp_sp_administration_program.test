@@ -1,0 +1,836 @@
+<?php 
+/**
+ * Aministration TP Listing 
+ * @author Vincent
+ *
+ */
+class adminTPList extends ExpertusWebTestCase {
+	protected $group = 'Administration - Learning - Training Plan';
+	
+	protected $searchResultContent = null;
+	
+	protected $testcases = array();
+	
+	protected $prgId;
+	
+	protected $moduleId;
+	
+	protected $prgCount = 0;
+	
+	protected $courseId;
+	
+	//protected $classId;
+	
+	private $srcParam = array(
+		'assesmentName'=>'',	// Delivery types pipe separated
+		'courseName'=>'',	// TP tpes pipe separated
+		'deliverytype'=>'',		// All available MRO types
+		'langtype'=>'', 	// MRO type pipe separaed
+		'prgstatus'=>'', 	// All available languages
+		'progPrice'=>'0|10000',		// Price fileter (min and max values separted by -)
+		'surveyName'=>'',		// Start date mm-dd-yyyy
+		'tagName'=>'',			// End date mm-dd-yyyy
+		'textfilter'=>'',			// Location search
+		'tpcurrency'=>'',		// Rating value pipe separated	
+		'tpmanage'=>'',	// All available Job Role
+	);
+	
+	public static function getInfo() {
+    return array(
+      'name' => 'Training Plan Listing',
+      'description' => 'Catalog Administration, Training Plan',
+      'group' => 'Administration - Learning - Training Plan',
+    );
+  }
+  
+  public function setUp(){
+  	// User Authentication
+  	$user = $this->getUserList(1);
+  	$usr = new stdClass();
+  	$usr->name =  $user[0]->username;
+  	$usr->pass_raw = 'welcome';
+  	$this->drupalLogin($usr);
+  	
+  	parent::setUp();
+  }
+  
+  public function testTPSearch(){
+  	$test = $this->getTestCases();
+  	$this->TPSearch();
+  	//TODO: below search filter validation tests needs to be extend like learner catalog search
+  	//expDebug::dPrint("Content data -- ".print_r($this->drupalGetContent(),true),1);
+  	foreach($test['filters'] as $tc){
+  		list($test,$msg,$grp) = $tc;
+  		$this->assertRaw($test,$msg,$grp);
+  	}
+  }
+  
+	protected function TPSearch(){
+  	$this->setHttpReferer('administration/learning/program');
+  	// Get Main HTML content
+  	$this->drupalPost('administration/learning/program');
+		$content = $this->content;
+		
+		// Get Filters
+  	$this->drupalGetAJAX('administration/search-filter/program');
+  	$this->content = drupal_json_decode($this->content);
+  	
+  	//Update filters with existing response
+  	$replArray = array(
+  		'rendered_narrow_search_filters' => 'narrow-search',
+  		'rendered_main_div' => 'root-admin-results',
+  		'rendered_tab_content_main' => 'tab-content-main',
+  		'rendered_narrow_search_sortbar' => 'admin-maincontent_tab',
+  		'rendered_narrow_search_actionbar' => 'sort-bar-V2'
+  	);
+  	
+  	$this->updateSearchFilters($content, $replArray, 'div', 'tag', 'div' );
+		
+		$this->displayTagsById('narrow-search');
+		$this->displayTagsById('root-admin-results');
+		expDebug::dPrint("narrow search >>> ". print_r($this->content,true),5);
+		//Get search results
+		$this->getCatalogList();
+  }
+
+  /**
+   * List admin catalog search results
+   * @param $opt
+   * @return unknown_type
+   */
+  protected function getCatalogList($opt = array()){
+  	$opt = array_merge($this->basicParam,$opt);
+  	$content = $this->content;
+  	$srcRc = $this->drupalGetAJAX('administration/learning/program/search/all/',array('query'=>$opt));
+  	$this->updateSearchResults($content,$srcRc,'narrow-search-results-holder');
+  	
+  }
+  
+  /**
+   * Create Course
+   * @param $testc 
+   * 		String - the test name to pickup 
+   * @return unknown_type
+   */
+  protected function createTP($testc=''){
+		// Add ctool model container 
+  	$ctoolModel = array(
+  		'modelWidth' => 890,
+  		'modelClass' => 'ctool-login-modal',
+  		'modelTitle' => 'Training Plan',
+  		'contentWidth' => 845,
+  		'contentMhight' => 335,
+  		'outerHeight' => 479,
+  		'outerWidth' => 890,
+  		'blockHeight' => 1232,
+  		'blockWidth' => 1343,
+  		'modelTop' => 150,
+  		'modelLeft' => 226.5,
+  		'docHeight' => 1232,
+  		'docWidth' => 1343
+  	);
+  	$this->addCtoolModelContent($ctoolModel);
+  	
+  	// Keep content with ctool model for multiple test
+  	$modelContent = $this->content;
+  	
+  	$testc = 'singleTPCreate';
+  	expDebug::dPrint("test cases -->>> ". print_r($this->testcases,true),5);
+  	// Start test
+  	foreach($this->testcases[$testc] as $test){
+  		expDebug::dPrint("test cases -->>> ". print_r($test,true),5);
+  		//Reset content with the ctool model
+  		$this->content = $modelContent;
+  		
+	  	//Get empty form
+	  	$post_field = array(
+											'wrapper'=>'paint-narrow-search-results');
+	  	
+	  	$out = $this->drupalPostAJAX(null,$edit,'Save','?q=administration/learning/program/ajax/addedit',array(),array(),'',$post_field);
+	  	$this->verbose('Empty TP Form: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	
+	  	// Do General validations
+	  	$this->assertResponse(200,'Form Rended successfully');
+	  	$webError = "Website encountered an unexpected error";
+	  	$this->assertNoText(t($webError),'Web errors not found','training_program');
+	  	
+	  	// Certificate related additional fields enable and validate
+	  	if($test['input']['object_type']=='cre_sys_obt_crt'){
+	  		// Show certificate expire field
+	  		$this->displayTagsById('admin-trp-delivery-data-part');
+	  		$this->displayTagsById('admin-trp-delivery-data-part-expires');
+	  		$this->hideTagsById('admin-trp-delivery-data-part-compdate');
+	  		
+	  		$expire = ($this->getElementByAttribute('input','name','expires_in_value')) != null ? TRUE : FALSE;
+	  		$this->assertTrue($expire,'Expire input field present for certificate','training_program');
+	  		
+	  		$expunit = ($this->getElementByAttribute('select','name','expires_in_unit')) != null ? TRUE : FALSE;
+	  		$this->assertTrue($expunit,'Expire by unit field present for certificate','training_program');
+	  		
+	  	}
+	  	
+  		// Learning Plan related additional fields enable and validate
+	  	if($test['input']['object_type']=='cre_sys_obt_trn'){
+	  		// Show certificate expire field
+	  		$this->displayTagsById('admin-trp-delivery-data-part');
+	  		$this->displayTagsById('admin-trp-delivery-data-part-compdate');
+	  		$this->hideTagsById('admin-trp-delivery-data-part-expires');
+	  		
+	  		$cmpby = ($this->getElementByAttribute('input','name','end_date')) != null ? TRUE : FALSE;
+	  		$this->assertTrue($cmpby,'Complete by input field present for learning plan','training_program');
+
+	  	}
+	  	// Save form
+	  	$param = array(
+									"form_id"=>"exp_sp_administration_program_addedit_form",
+									"_triggering_element_name"=>"save",
+									"_triggering_element_value"=>"Save",
+							);
+	  	$post_field = array('submit'=>$param,	'wrapper'=>'program-addedit-form');
+	  	$out = $this->drupalPostAJAX(null,$test['input'],'Save','?q=system/ajax',array(),array(),'',$post_field);
+	  	$this->verbose('TP Save: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+	  		  	
+	  	//Check if any error thrown 
+	  	$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+	  	$error = '';
+	  	if(sizeOf($isError) > 0){
+	  		$error = (string) $isError[0];
+	  	}
+	  	$this->assertResponse(200,'Form Repainted successfully');
+	  	$this->assertNoText(t($error),'Error - '.$error,'training_program');
+	  	$webError = "Website encountered an unexpected error";
+	  	$this->assertNoText(t($webError),'Web errors not found','training_program');
+	  	
+	  	$this->prgId = db_query('SELECT id FROM slt_program ORDER BY ID DESC LIMIT 1 ')->fetchField();
+	  	
+  		foreach($test['results'] as $str=>$msg){
+	  		$this->assertText(t($str),$msg,'training_program');
+	  	}
+  	}
+  }
+ /**
+   * Edit Training plan
+   * @param $testc 
+   * 		String - the test name to pickup 
+   * @return unknown_type
+   */
+	protected function editTrainingPlan(){
+	  $this->prgId = $this->id[0];
+	  // Get course id (encrypted) to edit
+	  $prgIdencrypt = core_encrypt($this->prgId);
+	  
+	  // Get URL for a course to edit
+	  $path = '//a[@id="visible-ctools-'.$prgIdencrypt.'"]';
+	  //$xpath = new DOMXPath($dom);
+	  $node = $this->xpath($path);
+	  $url = (string) $node[0]['href'];
+	  
+	  $url = str_replace('nojs','ajax',$url);
+	  	
+	  	// Add ctool model container 
+	  	$ctoolModel = array(
+	  		'modelWidth' => 890,
+	  		'modelClass' => 'ctool-login-modal',
+	  		'modelTitle' => 'Course',
+	  		'contentWidth' => 845,
+	  		'contentMhight' => 335,
+	  		'outerHeight' => 479,
+	  		'outerWidth' => 890,
+	  		'blockHeight' => 1232,
+	  		'blockWidth' => 1343,
+	  		'modelTop' => 150,
+	  		'modelLeft' => 226.5,
+	  		'docHeight' => 1232,
+	  		'docWidth' => 1343
+	  	);
+	  	$this->addCtoolModelContent($ctoolModel);
+	  	
+	  	// Keep content with ctool model for multiple test
+	  	$modelContent = $this->content;
+	  	$testc =  'singleTPEdit';
+	  	expDebug::dPrint("test cases AAAA -->>> ". print_r($this->testcases,true),5);
+	  	// Start test
+	  	foreach($this->testcases[$testc] as $test){
+	  		expDebug::dPrint("test cases -->>> ". print_r($test,true),5);
+	  		//Reset content with the ctool model
+	  		$this->content = $modelContent;
+	  		
+		  	//Get edit form
+		  	$post_field = array(
+												'wrapper'=>'paint-narrow-search-results');
+		  	
+		  	$out = $this->drupalPostAJAX(null,$edit,'Save',$url,array(),array(),'',$post_field);
+		  	
+		  	/*// Load TP details
+		  	$url = '?q=administration/class-pagination/'.$prgId.'/0/0&_search=false&nd=1465187685290&rows=5&page=1&sidx=&sord=asc';
+	
+		  	$post_field = array(
+												'wrapper'=>'admin-course-class-list-pagination-wrapper');
+		  	$content = $this->content;
+		  	$out = $this->drupalPostAJAX(null,$edit,'Save',$url,array(),array(),'',$post_field);
+		  	
+		  	//administration/learning/program/ajax/addedit/ZZ34ZZb7505c8f7388d5b6
+		  	
+	  	 	$this->updateSearchResults($content,$out,'admin-course-class-list-'.$prgId.'-pagination');
+		  	
+		  	$this->verbose('Empty Course Form: ' . $this->getUrl() .
+		                         '<hr />' . $this->content);
+		
+		  	// Do General validations
+		  	$this->assertResponse(200,'Form Rended successfully');
+		  	$webError = "Website encountered an unexpected error";
+		  	$this->assertNoText(t($webError),'Web errors not found','catalog_admin');
+		  	
+		  	*/
+		  	
+		  	$formIds = $this->xpath('//div[@id="program-addedit-form"]/form');
+  		$formId = (string) $formIds[0]['id'];
+		  	
+		  	
+		  	// Save form
+		  	$param = array(
+									"form_id"=>"exp_sp_administration_program_addedit_form",
+									"_triggering_element_name"=>"save",
+									"_triggering_element_value"=>"Save",
+							);
+		  $post_field = array('submit'=>$param,	'wrapper'=>'program-tp-basic-addedit-form-disp');
+	  	  $out = $this->drupalPostAJAX(null,$test,'Save','?q=system/ajax',array(),array(),$formId,$post_field);
+	  	  $this->verbose('TP Edit Save: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+		  expDebug::dPrint("out after tp save >>> ". print_r($out,true),5);	
+		  		  	
+	  	//Check if any error thrown 
+	  	$isError = $this->xpath('//div[@class="messages error"]//ul/li');
+	  	$error = '';
+	  	if(sizeOf($isError) > 0){
+	  		$error = (string) $isError[0];
+	  	}
+	  	$this->assertResponse(200,'Form Repainted successfully');
+	  	$this->assertNoText(t($error),'Error - '.$error,'training_program');
+	  	$webError = "Website encountered an unexpected error";
+	  	$this->assertNoText(t($webError),'Web errors not found','training_program');
+	  	
+  		foreach($test['results'] as $str=>$msg){
+	  		$this->assertText(t($str),$msg,'training_program');
+	  	}
+	  	
+	  	}
+  }
+  
+  
+  /**
+   * Create Course
+   * @param $testc 
+   * 		String - the test name to pickup 
+   * @return unknown_type
+   */
+  protected function createGroup(){
+  	$dom = new DOMDocument();
+  	$dom->loadHTML($this->content);
+  	$xpath = new DOMXPath($dom);
+  	$node  = $xpath->query('//ul[@class="attach-grp-links"]')->item(0);
+  	$node->setAttribute('style','display:block');
+  	$this->content = $dom->saveHTML();
+  	expDebug::dPrint("content group page --->>> ". $this->content);
+  	$this->verbose('Empty TP Group : ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+  	
+  	//Request to get add group form 
+  	$this->moduleId = db_query('SELECT id FROM slt_module WHERE program_id = :pid LIMIT 1 ',array(':pid'=>$this->prgId))->fetchField();
+  	$post_field = array();
+  	$out = $this->drupalPostAJAX(null,array(),'Group Save','?q=administration/learning/program/add-group/'.$this->prgId.'/'.$this->moduleId,array(),array(),'',$post_field);
+  	
+  	/* //Add group form
+  	$addGrp = '<div class="qtip-tip-point-right"></div><table cellspacing="0" cellpadding="0" id="bubble-face-table" class="bubble-table-container"><tbody><tr><td class="bubble-tl"></td><td class="bubble-t"></td><td class="bubble-tr"></td></tr><tr><td class="bubble-cl"></td><td valign="top" class="bubble-c"></form><form action="/?q=administration/learning/program/add-group/191/295" method="post" id="add-group-topic-html" accept-charset="UTF-8"><div><div id="group-topic"></div><div id="admin-group-add-topic-container" class="admin-group-add-topic-container"><div class="admin-group-add-topic-list"> <label class="addedit-new-field-title">Group Name</label><div class="form-item form-type-textfield form-item-group-topic-title">
+				 <input onblur="courseGroupSave(191);" type="text" id="group_topic_title" name="group_topic_title" value="" size="20" maxlength="128" class="form-text" />
+				</div>
+				<div class="clearBoth"></div></div><input type="hidden" name="form_build_id" value="form-DWt2ROSA3oRBu2bLjdTZUO1abaZW372UlrdUggoxdu8" />
+				<input type="hidden" name="form_token" value="9AdbNqt7TZ62AeZjoYYz5IsHL069Jrbt9Jc0wx6TGjk" />
+				<input type="hidden" name="form_id" value="add_group_topic_html" />
+				</div></form></td><td class="bubble-cr"></td></tr><tr><td class="bubble-bl"></td><td class="bubble-b"><table width="100%" cellspacing="0" cellpadding="0"><tbody><tr><td class="bubble-blt"></td><td class="bubble-blr"></td></tr></tbody></table></td><td class="bubble-br"></td></tr></tbody></table>';
+  	*/
+
+  	//Add group form
+  	$addGrp = '<div class="qtip-tip-point-right"></div><table cellspacing="0" cellpadding="0" id="bubble-face-table" class="bubble-table-container"><tbody><tr><td class="bubble-tl"></td><td class="bubble-t"></td><td class="bubble-tr"></td></tr><tr><td class="bubble-cl"></td><td valign="top" class="bubble-c">
+  	'.$out['render_content_main'].'
+  	</td><td class="bubble-cr"></td></tr><tr><td class="bubble-bl"></td><td class="bubble-b"><table width="100%" cellspacing="0" cellpadding="0"><tbody><tr><td class="bubble-blt"></td><td class="bubble-blr"></td></tr></tbody></table></td><td class="bubble-br"></td></tr></tbody></table>';
+  	
+  	
+  	$dom = new DOMDocument();
+  	$dom->loadHTML($this->content);
+  	$xpath = new DOMXPath($dom);
+  	$node  = $xpath->query('//span[@id="add-group-popup"]')->item(0);
+  	$node->setAttribute('style','display:block');
+  	if($node){
+  		$newDom = new DOMDocument();
+	  	$newDom->loadHTML($addGrp);
+	  	$newNode = $dom->importNode($newDom->documentElement, TRUE);
+	  	$node->appendChild($newNode);
+  	}
+  	$this->content = $dom->saveHTML();
+  	
+  	$this->verbose('TP Group form : ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+  	
+  
+  	$group_name  = 'SimpleTest_group_'.($t+rand(1,99));
+  	$post_field = array();
+  	$out = $this->drupalPostAJAX(null,array(),'Group Save','?q=administration/learning/program/group-save/'.$this->prgId.'/'.$this->moduleId.'/'.$group_name,array(),array(),'',$post_field);
+  	$this->verbose('TP module group save test: ' . $this->getUrl() .
+  			'<hr />' . $this->content);
+  	
+  	
+	 	//Remove add group name popup
+  	$dom = new DOMDocument();
+  	$dom->loadHTML($this->content);
+  	$xpath = new DOMXPath($dom);
+  	$node  = $xpath->query('//span[@id="add-group-popup"]')->item(0);
+  	if($node){
+	  	while ($node->childNodes->length){
+	     $node->removeChild($node->firstChild);
+	  	}
+  	}
+  	$node->setAttribute('style','display:block');
+  	$this->content = $dom->saveHTML(); 
+  	
+  	// Reload module page
+	  	$param = array(
+								"form_id"=>"exp_sp_administration_program_attaching_courses_form",
+								"_triggering_element_name"=>"hidden-save",
+								"_triggering_element_value"=>"hidden-save",
+	  						"mapped_module_id"=>$this->moduleId
+						);
+			$formIds = $this->xpath('//div[@id="attach_course_dt"]/form');
+  		$formId = (string) $formIds[0]['id'];
+		  $post_field = array('submit'=>$param,	'wrapper'=>'attach_course_dt');
+  	  $out = $this->drupalPostAJAX(null,$test,'Save','?q=system/ajax',array(),array(),$formId,$post_field);
+  	  
+  	  $dom = new DOMDocument();
+	  	$dom->loadHTML($this->content);
+	  	$xpath = new DOMXPath($dom);
+	  	//$nodeN  = $xpath->query('//div[@id="module-program-"'.$this->moduleId.'"]')->item(0);
+	  	$nodeN = 'module-program-'.$this->moduleId;
+	  	$node  = $xpath->query('//div[@id="' . $nodeN . '"]')->item(0);
+	  	$node->setAttribute('style','padding:1em 1.4em');
+	  	$this->content = $dom->saveHTML();
+	  	expDebug::dPrint($node);
+	  	  	
+  	  $this->verbose('TP Edit Save: ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+	  	
+		  expDebug::dPrint("out after tp save >>> ". print_r($out,true),5);	
+  }
+  
+  protected function attachCourse(){
+  	expDebug::dPrint("attachCourse inside test ". $this->prgId);
+  	$prgId = $this->prgId;
+  	//Get course id
+		$path = '//*[@id="qtip_visible_disp_addcrs_'.$prgId.'_cre_sys_obt_trp"]';
+		expDebug::dPrint("path value >>>  ".$path);
+  	$addClassObj = $this->getQtipAttributes($path,'onmousedown');
+		expDebug::dPrint("add class object ".print_r($addClassObj,1));
+  	//Add qtip popup for class
+  	$qtipDef = array(
+  		'tipWidth'=>$addClassObj['wBubble'],
+  		'tipTop'=>313,
+  		'tipLeft'=>395.767,
+  		'tipId'=>$addClassObj['catalogVisibleId'],
+  		'tipObjectId'=>$addClassObj['courseId'],
+  		'tipTableWidht'=>250,
+  		'tipContentId'=>$addClassObj['popupDispId'],
+  		'tipEntityType'=>'cre_sys_obt_trp',
+  		'tipClass'=>'qtip-parent',
+  		'tipPos'=>'bottomRight'
+  		
+  	);
+
+  	$this->addQtipModel($qtipDef);
+  	
+  	//Get empty form
+  	$post_field = array(
+										'wrapper'=>'paintContent'.$addClassObj['popupDispId']);
+  	
+  	//$this->moduleId = db_query('SELECT id FROM slt_module WHERE program_id = :pid LIMIT 1 ',array(':pid'=>$prgId))->fetchField();
+  	
+  	$out = $this->drupalPostAJAX(null,$edit,'Attach courses','?q=administration/learning/program/attachcourse/'.$prgId.'/cre_sys_obt_trp/'.$this->moduleId.'',array(),array(),'',$post_field);
+  	
+  	$this->verbose('Attach Course Form: ' . $out .
+	                         '<hr />' . $this->content);
+  	$contantbase = $this->content;
+  	$testc = 'attachCourses';
+  	/*$crs = db_query("SELECT crs.id FROM slt_course_template crs INNER JOIN slt_course_class cls ON crs.id = cls.course_id
+							WHERE  crs.status = 'lrn_crs_sts_atv'  AND cls.status = 'lrn_cls_sts_atv' GROUP BY crs.id limit 10")->fetchAll();*/
+  	//foreach($this->testcases[$testc] as $tc){
+  		
+	  	//$this->content = $contantbase;
+	  	
+  	$formIds = $this->xpath('//*[@id="paintContentqtip_visible_disp_addcrs_'.$prgId.'_cre_sys_obt_trp"]');
+		$divId = (string) $formIds[0]['id'];
+
+  	$clsId = explode('-',$divId);
+	  	
+  	$bParam = $this->basicParam;
+  	$gUrl = 'administration/multiselect-grid/edit/TPAttachCourse//'.$prgId.'-'.$this->moduleId.'/cre_sys_obt_trp/0';
+  	$content = $this->content;
+  	$srcRc = $this->drupalGetAJAX($gUrl,array('query'=>$bParam));
+  	
+  	//Collect listed course ids
+  	$crs = array();
+  	foreach($srcRc['rows'] as $row){
+  		$crs[] = $row['id'];
+  	}
+  	expDebug::dPrint("Course list ".print_r($crs,true),4);
+  	$wraper = '//*[@id="datagrid-container-TPAttachCourse-'.$prgId.'-'.'cre_sys_obt_trp"]';
+  	//$wraper = "datagrid-container-TPAttachCourse-".$prgId."-cre_sys_obt_trp";
+  	//datagrid-container-TPAttachCourse-255-cre_sys_obt_trp
+  	$flist = array(
+  		'title'=>'Title',
+  		'code'=>'Code',
+  		'action' => array('MultiselectCheck' => '<input type="checkbox" name="multiselect-singlecheck-TPAttachCourse-'.$prgId.'-cre_sys_obt_trp_{#MultiselectCheck#}" value="{#MultiselectCheck#}">',
+  	  									'ShowDelete' => '')
+  	); //multiselect-singlecheck-TPAttachCourse-255-cre_sys_obt_trp_5
+  	$this->updateGrid($content,$flist,$srcRc,$wraper);
+  	expDebug::dPrint("wrapper test >>> ". $wraper);
+  	debug("wrapper test ". $wraper);
+  	//$this->updateSearchResults($content,$srcRc,$wraper);
+  	
+  	//For styling course list grid
+  	$dom = new DOMDocument();
+  	$dom->loadHTML($this->content);
+  	$xpath = new DOMXPath($dom);
+  	$nodeN = 'module-program-'.$this->moduleId;
+  	$node  = $xpath->query('//div[@id="datagrid-div-TPAttachCourse-' . $prgId . '-cre_sys_obt_trp"]')->item(0);
+  	$node->setAttribute('style','padding-top:20px');
+  	$this->content = $dom->saveHTML();
+  	
+  	$this->verbose('Render grid TP Courses: ' . $this->getUrl() .
+                         '<hr />' . $this->content);
+  	
+
+  	//SET input values to the form elements
+  	$selCrs = array();
+  	for($j=0;$j<5;$j++){
+  		$selCrs[] = $crs[array_rand($crs)];
+  	}
+  	//$inputs['hidden_idlist_TPAttachCourse-'.$prgId.'-cre_sys_obt_trp'] = $crs[array_rand($crs)];
+  	//Set selected course list in hidden variable
+  	$dom = new DOMDocument();
+  	$dom->loadHTML($this->content);
+  	$xpath = new DOMXPath($dom);
+  	$nodeN = 'hidden_idlist_TPAttachCourse-' . $prgId . '-cre_sys_obt_trp'; //hidden_idlist_TPAttachCourse-327-cre_sys_obt_trp
+  	$node  = $xpath->query('//input[@name="'.$nodeN.'"]')->item(0);						//hidden_idlist_TPAttachCourse-328-cre_sys_obt_trp
+  	if($node){
+  		$node->setAttribute('value',implode(',',$selCrs));
+  	}
+  	$this->content = $dom->saveHTML();
+	  	
+	  //	$cids = explode(',',$crs[array_rand($crs)]->id);
+  	$ainputs = array();
+
+  	expDebug::dPrint("courses list >>> ". implode(',',$selCrs),4);
+  	
+  	//Save Content hidden_idlist_TPAttachCourse-255-cre_sys_obt_trp
+  	$formIds = $this->xpath('//*[@id="paintContent"]/form');
+  	$formId = (string) $formIds[0]['id']; //'addcrs_addedit_form_html'; //
+  	
+  	expDebug::dPrint("form id >>> ". print_r($formId,1) ,5);
+		$ainputs['module_id'] = $this->moduleId; 	
+  	$param = array(
+								"form_id"=>"addcrs_addedit_form_html",
+								"_triggering_element_name"=>"set_attachcourse_edit_mode",
+									"_triggering_element_value"=>"Attach",
+						);
+		$param = array_merge($param,$ainputs);
+  	$post_field = array('submit'=>$param,	'wrapper'=>'attach_course_dt');
+  	expDebug::dPrint("attach courses inputs >>> ". print_r($inputs,true),5);
+  	expDebug::dPrint("attach courses params >>> ". print_r($param,true),5);
+  	
+  	$out = $this->drupalPostAJAX(null,$inputs,'Attach','?q=system/ajax',array(),array(),$formId,$post_field);
+  	$this->verbose('Save attached Courses: ' . $out .
+	                         '<hr />' . $this->content);
+  	
+  	//Remove Attach Course popup
+  	$dom = new DOMDocument();
+		$dom->loadHTML($this->content);
+		$xpath = new DOMXPath($dom);
+		$node  = $xpath->query('//div[contains(@class,"qtip-active")]')->item(0);
+		$node->parentNode->removeChild($node);
+		$this->content = $dom->saveHTML();
+  
+		$this->verbose('Save attached Courses: ' . $out .
+		                         '<hr />' . $this->content);
+  	//}
+  	
+  	
+  }
+  
+protected function createModule(){
+		expDebug::dPrint("inside create module >>> ");
+  	debug("inside create module ");
+  	$dom = new DOMDocument();
+  	$dom->loadHTML($this->content);
+  	$xpath = new DOMXPath($dom);
+  	$node  = $xpath->query('//ul[@class="attach-module-link"]')->item(0);
+  	$node->setAttribute('style','display:block');
+  	$this->content = $dom->saveHTML();
+  	$this->verbose('Empty TP Module : ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+  	
+  	$content = $this->content;
+  	//Add module select form
+  	$post_field = array();
+  	$out = $this->drupalPostAJAX(null,array(),'Add Module','?q=administration/learning/program/add-module/'.$this->prgId,array(),array(),'',$post_field);
+  	
+  	$addGrp = '<span id="add_new_module_popup" class="qtip-popup-visible" style=""></span>';
+		$addGrp .= '<table id="bubble-face-table" class="bubble-table-container" cellspacing="0" cellpadding="0">';
+		$addGrp .= '<tbody><tr><td class="bubble-tl"></td><td class="bubble-t"></td><td class="bubble-tr"></td></tr>';
+		$addGrp .= '<tr><td class="bubble-cl"></td><td class="bubble-c" valign="top">';
+		$addGrp .= '<div class="tip_close admin-bubble-close">&nbsp;</div><div class="module-scroll-pane-container">';
+		$addGrp .= $out['render_content_main'];
+		$addGrp .= '</div></td><td class="bubble-cr"></td></tr><tr><td class="bubble-bl"></td><td class="bubble-b">';
+		$addGrp .= '<table width="100%" cellspacing="0" cellpadding="0"><tbody><tr><td class="bubble-blt">';
+		$addGrp .= '</td><td class="bubble-blr"></td></tr></tbody></table></td><td class="bubble-br"></td></tr></tbody></table></span>';
+		
+  	$dom = new DOMDocument();
+  	$dom->loadHTML($content);
+  	$xpath = new DOMXPath($dom);
+  	$node  = $xpath->query('//div[@id="qtip_addmodule_div"]')->item(0);
+  	//$node->setAttribute('style','display:block');
+  	if($node){
+  		$newDom = new DOMDocument();
+	  	$newDom->loadHTML($addGrp);
+	  	$newNode = $dom->importNode($newDom->documentElement, TRUE);
+	  	$node->appendChild($newNode);
+  	}
+  	$this->content = $dom->saveHTML();
+  	
+  	$this->verbose('TP Add Module Select : ' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+  	
+  	$dom = new DOMDocument();
+  	$dom->loadHTML($this->content);
+  	$xpath = new DOMXPath($dom);
+  	$node  = $xpath->query('//input[@name="add_module"]')->item(0);
+  	if($node){
+	  	$class = $node->getAttribute('class');
+	  	$node->setAttribute('class',$class.' ajax-processed');
+  	}
+  	$this->content = $dom->saveHTML();
+  	
+  	expDebug::dPrint("add module form id bbbb >>> ",4);
+  	
+  	//Save Content hidden_idlist_TPAttachCourse-255-cre_sys_obt_trp
+  	$formIds = $this->xpath('//*[@id="qtip_addmodule_div"]//form');
+  	$formId = (string) $formIds[0]['id']; //'addcrs_addedit_form_html'; //
+  	
+  	expDebug::dPrint("add module form id >>> ". print_r($formId,1) ,4);
+
+  	$param = array(
+								"form_id"=>"add_module_topic_html",
+								"_triggering_element_name"=>"add_module",
+									"_triggering_element_value"=>"Done",
+						);
+
+  	$post_field = array('submit'=>$param,	'wrapper'=>'attach_course_dt');
+  	expDebug::dPrint("attach courses inputs >>> ". print_r($inputs,true),5);
+  	expDebug::dPrint("attach courses params >>> ". print_r($param,true),5);
+  	$inputs['module_sel'] = 'new';
+  	$out = $this->drupalPostAJAX(null,$inputs,'Done','?q=system/ajax',array(),array(),$formId,$post_field);
+  	
+  	$this->verbose('Add module submit : ' . $out .
+	                         '<hr />' . $this->content);
+  	
+  	//Hide previous module list tab 
+  	$dom = new DOMDocument();
+  	$dom->loadHTML($this->content);
+  	$xpath = new DOMXPath($dom);
+  	$node  = $xpath->query('//div[@id="module-program-'.$this->moduleId.'"]')->item(0);
+  	if($node)
+  		$node->setAttribute('style','display:none');
+  	$this->content = $dom->saveHTML();
+  	$this->verbose('Add module complete : '.$this->moduleId . '----' . $this->getUrl() .
+	                         '<hr />' . $this->content);
+  }
+  
+  
+  /**
+   * Test cases for Admin TP Search
+   * @return Array
+   */
+  private function getTestCases(){
+  	$this->testcases = array(
+  		'filters' => array(
+  			// Validate Filters 
+  			array('<div class="srch-filter-heading">Refine</div>','Refine filter herader available',$this->group),
+  			
+  			// Validate type filter options
+  			array('<span id="deliverytype_filterset_title" class="cls-show " onclick=\'$("#root-admin").data("narrowsearch").showHide("deliverytype_filterset_title", "deliverytype_filterset");\'>','Type filter expand/collapse available',$this->group),
+				//array("<span id='deliverytype_filterset_title' class='cls-show' onclick='$(\"#root-admin\").data(\"narrowsearch\").showHide(\"deliverytype_filterset_title\", \"deliverytype_filterset\");'><a class='narrow-search-filterset-heading'>type</a></span>","Type filter expand/collapse available",$this->group),
+  			
+  				array('<span id="prgstatus_filterset_title" class="cls-show " onclick=\'$("#root-admin").data("narrowsearch").showHide("prgstatus_filterset_title", "prgstatus_filterset");\'>','Status Filter is available',$this->group),
+				array('<span id="tpmanage_filterset_title" class="cls-show " onclick=\'$("#root-admin").data("narrowsearch").showHide("tpmanage_filterset_title", "tpmanage_filterset");\'>','Manage by Filter is available',$this->group),
+				array('<span id="tpcurrency_filterset_title" class="cls-show " onclick=\'$("#root-admin").data("narrowsearch").showHide("tpcurrency_filterset_title", "tpcurrency_filterset");\'>','Currency Filter is available',$this->group),
+  			array('<span id="progPrice_filterset_title" class="cls-show " onclick=\'$("#root-admin").data("narrowsearch").showHide("progPrice_filterset_title", "progPrice_filterset");\'>','Price Filter is available',$this->group),
+  			array('<span id="courseName_filterset_title" class="cls-show" onclick=\'$("#root-admin").data("narrowsearch").showHide("courseName_filterset_title", "courseName_filterset");\'>','Course Filter is available',$this->group),
+  			array('<span id="surveyName_filterset_title" class="cls-show" onclick=\'$("#root-admin").data("narrowsearch").showHide("surveyName_filterset_title", "surveyName_filterset");\'>','Survey Filter is available',$this->group),
+  			array('<span id="assesmentName_filterset_title" class="cls-show" onclick=\'$("#root-admin").data("narrowsearch").showHide("assesmentName_filterset_title", "assesmentName_filterset");\'>','Assessment Filter is available',$this->group),
+  			array('<span id="tagName_filterset_title" class="cls-show" onclick=\'$("#root-admin").data("narrowsearch").showHide("tagName_filterset_title", "tagName_filterset");\'>','Tags Filter is available',$this->group)
+  			
+  		),
+  	);
+  	
+  	return $this->testcases;
+  }
+}	// End of adminTPList
+
+class adminTPCreate extends adminTPList {
+		
+	public static function getInfo() {
+    return array(
+      'name' => 'TP Creation',
+      'description' => 'Catalog Administration, Create Training plan',
+      'group' => 'Administration - Learning - Training Plan',
+    );
+  }
+  
+  /**
+   * Test for single course creation
+   * @return unknown_type
+   */
+  public function testTPCreation(){
+  	// Prepare test cases
+  	$this->getTestCases();
+  	
+  	$this->TPSearch();
+  	$this->searchResultContent = $this->content;
+  	$this->createTP();
+  	$this->createGroup();
+  	$this->attachCourse();
+  	$this->createModule();
+  }
+  
+  /**
+   * List of test cases
+   * @return unknown_type
+   */
+  private function getTestCases(){
+  	$t = time();
+  	//$loc = $this->getLocation();
+  	$fd = $this->getRandomDateTime('date');
+  	//$ft[0] = $this->getRandomDateTime('time');
+  	//$ft[1] = $this->getRandomDateTime('time');
+		$this->testcases = array( //
+	  	'singleTPCreate' => array(
+				/*array( 
+		  		'input'=>array("title" =>'SimpleTest_'.$t,"code" =>'ST'.$t,
+		  					"short_desc[value]"=>'SimpleTest TP created by test '.$t, "object_type" => "cre_sys_obt_cur",
+		  					"author_vendor" => '',"lang_code"=>'cre_sys_lng_eng',"enforce_sequence" =>'N',"price"=>''),
+					'results'=>array('Details saved successfully'=>'TP Details saved successfully')
+		  	),*/
+				array(
+		  		'input'=>array("title" =>'SimpleTest_'.($t+rand(1,99)),"code" =>'ST'.($t+rand(1,99)),
+		  					"short_desc[value]"=>'SimpleTest TP created by test '.($t+rand(1,99)), "object_type" => "cre_sys_obt_crt",
+		  					"author_vendor" => '',"lang_code"=>'cre_sys_lng_eng',"enforce_sequence" =>'N',"price"=>'',
+		  					"expires_in_value"=>100,"expires_in_unit"=>'days'),
+					'results'=>array('Details saved successfully'=>'TP Details saved successfully')
+		  	),
+		 /* 	array(
+		  		'input'=>array("title" =>'SimpleTest_'.($t+rand(1,99)),"code" =>'ST'.($t+rand(1,99)),
+		  					"short_desc[value]"=>'SimpleTest TP created by test '.($t+rand(1,99)), "object_type" => "cre_sys_obt_trn",
+		  					"author_vendor" => '',"lang_code"=>'cre_sys_lng_eng',"enforce_sequence" =>'N',"price"=>'',
+		  					"end_date"=>$fd),
+					'results'=>array('Details saved successfully'=>'TP Details saved successfully')
+		  	),*/
+			),
+			'singleGroupCreate' => array(
+		  		array(
+		  			'input'=>array("group_topic_title" =>'SimpleTest_group_'.($t+rand(1,99))), // ILT CLASS
+			  		'results'=>array(
+		  					'Group Created successfully.'=>'Group Created Successfully'
+		  				),
+		  			'info'=>array('session'=>true,'publish'=>true)
+		  		),
+	  	),
+  	);
+  }
+} // END of class adminCatalogCreate
+
+class adminTPEdit extends adminTPList {
+	
+	public static function getInfo() {
+    return array(
+      'name' => 'Training Plan Edit',
+      'description' => 'Administration, Edit Training Plan',
+      'group' => 'Administration - Learning - Training Plan',
+    );
+  }
+  
+  /**
+   * Test for TP creation
+   * @return unknown_type
+   */
+
+  public function testTPCreation(){
+  	// Prepare test cases
+  	$this->getTestCases();
+  	
+  	$this->TPSearch();
+  	$this->searchResultContent = $this->content;
+  	/*$this->prgCount = count($this->id);
+  	$prg = db_query("SELECT prg.id FROM slt_program prg 
+							WHERE  prg.object_type = 'cre_sys_obt_crt'  AND prg.expires_in_unit > 0 ORDER BY prg.id desc limit 1")->fetchAll();
+  	expdebug::dPrint("program id first >>".print_r($prg,1),5);
+  	$this->id[0] = 255;
+  	expdebug::dPrint("program id >> ". $this->id[0]);
+  	if($this->id[0] > 0){
+  		$this->editTrainingPlan();
+  		//$this->createGroup();
+  		$this->attachCourse();
+  		//$this->createModule();
+  	}*/
+  	
+  	$this->prgCount = count($this->id);
+  	if($this->prgCount > 0){
+  		$this->editTrainingPlan();
+  		//$this->createGroup();
+  		$this->attachCourse();
+  	}
+  }
+  private function getTestCases(){
+  	$t = time();
+  	//$loc = $this->getLocation();
+  	$fd = $this->getRandomDateTime('date');
+  	$ft[0] = $this->getRandomDateTime('time');
+  	$ft[1] = $this->getRandomDateTime('time');
+  		$crs = db_query("SELECT crs.id FROM slt_course_template crs INNER JOIN slt_course_class cls ON crs.id = cls.course_id
+							WHERE  crs.status = 'lrn_crs_sts_atv'  AND cls.status = 'lrn_cls_sts_atv' GROUP BY crs.id limit 10")->fetchAll();
+		$this->testcases = array(
+	  	'singleTPEdit' => array(
+	  		array("short_desc[value]"=>'SimpleTest TP created by test - Edit check '),
+	  		'results'=>array('Details updated successfully'=>'TP Details updated successfully')
+	  		
+	  	),
+	  	'attachCourses' => array(
+	  		array(
+	  			'input'=>array(
+	  								"id" => $crs[array_rand($crs)]->id
+	  								),
+	  			'results'=>array(''),
+	  		)
+	  	),
+	  	/*'singleClassEdit' => array(
+	  		array("short_description[value]"=>'SimpleTest Class created by test - Class edited ') // ILT CLASS
+	  	),
+	  	
+	  	'singleILTsession' => array(
+	  		array("start_date"=>$fd,"start_hours"=>($ft[0]<$ft[1]?$ft[0]:$ft[1]),"end_hours"=>($ft[0]>$ft[1]?$ft[0]:$ft[1]),"hid_instructor_id"=>'')
+	  	),*/
+  	);
+  }
+}
+
+?>

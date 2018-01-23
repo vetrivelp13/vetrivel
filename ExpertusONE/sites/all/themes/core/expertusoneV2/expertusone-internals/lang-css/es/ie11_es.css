@@ -1,0 +1,129 @@
+.page-administration-people-group #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-dropdown-class{
+  width:115px
+}
+.page-administration-people-group #add-user-role-page #catalog-class-addedit-form-details #add-class-list-wrapper .select-list-class-dropdown-link{
+  width:15px
+}
+#edit-panes-payment-payment-method{
+  width: 45%
+}
+.page-cart-checkout-paymethod  #uc-cart-checkout #payment-pane #payment-details{
+  width: 51%
+}
+#payment-details .order-edit-table .oet-label{
+  width:29%
+}
+.commerce-container-v2 .payment-billing-details-info{
+  width:43.5%
+}
+select[disabled='disabled']::-ms-value,
+#program-addedit-form .addedit-new-field-two-col .addedit-edit-dropdown.addedit-readonly-dropdown[disabled='disabled']::-ms-value {
+  color: #2d2d2d
+}
+
+#schedule-qtip-popup .schedule-exportcontainer-page{
+  right:150px
+}
+#schedule-qtip-popup .schedule-list-wrapper .page-pipeline{
+  right:148px
+}
+#schedule-qtip-popup .schedule-list-wrapper .datagrid-items-list .ui-jqgrid-toppager .ui-pager-control .ui-pg-table{
+  left:214px
+}
+.page-administration-learning-catalog #tab-content-main #narrow-search-results-holder #catalog-attachment-disp-container td.attachment-empty-column-height,
+.page-administration-learning-program #tab-content-main #narrow-search-results-holder #catalog-attachment-disp-container td.attachment-empty-column-height {
+    height:54px
+}
+.page-administration-learning-program #program-tp-basic-addedit-form-disp #catalog-attachment-disp-container td.attachment-empty-column-height {
+    height:35px
+}
+.page-administration-learning-catalog #catalog-course-basic-addedit-form-container #catalog-attachment-disp-container td.attachment-empty-column-height {
+    height:49px
+}
+.page-administration-learning-catalog #catalog-class-basic-addedit-form-container #catalog-attachment-disp-container td.attachment-empty-column-height {
+    height:34px
+}
+.page-learning-enrollment-search .block-exp-sp-instructor-desk #instructor-result-container .ui-jqgrid-btable td.search-pagination-right {
+  min-width:130px
+}
+
+#page-container .owner-narrow-search #add-user-role-page #catalog-class-addedit-form-details .filter-search-start-date-right-bg {
+    margin-left: 171px;
+}
+
+#page-container #add-user-role-page #catalog-class-addedit-form-details .filter-search-start-date-right-bg {
+    margin-left: 162px;
+}
+
+.add_owner #security-role-detail-wrapper-list #add-user-role-page #catalog-class-addedit-form-details .role_multi_search_container .filter-search-start-date-right-bg {
+    margin-left: 171px;
+}
+.page-learning-forum-topic-list #page-container .admin-forum-topic-detail-action-btn .addedit-form-cancel-container-actions{
+  width:162px
+}
+body.page-learning.page-learning-myteam-search table#paintContentResults .top-record-div-left{
+  width:304px
+}
+#learner-myskill-details .learner-save-skill-button .addedit-form-cancel-container-actions{
+ 	width:auto;
+}
+/*rendering*/
+.addedit-customattributes-wrapper .new-customattribute #create-dd-list {
+	min-width: 151px;
+	margin-left: 104px;
+}
+#new-customattribute-wrapper-checkbox .new-customattribute #create-dd-list {
+    margin-left: 140px;
+}
+#new-customattribute-wrapper-dropdown .new-customattribute #create-dd-list {
+    margin-left: 78px;
+}
+#new-customattribute-wrapper-radio .new-customattribute #create-dd-list {
+    margin-left: 94px;
+}
+#new-customattribute-wrapper-textarea .new-customattribute #create-dd-list {
+    margin-left: 86px;
+}
+#new-customattribute-wrapper-textbox .new-customattribute #create-dd-list {
+    margin-left: 85px;
+}
+/* My Learning(My Enrollments) styles Start */
+.page-learning.page-learning-enrollment-search #page-container #enroll-lp-result-container .enroll-main-list.enroll-main-action-lp-multiclasss .enroll-action{
+  width:139px
+}
+/* My Learning(My Enrollments) styles End */
+/*------------------ Sales Force ------------------------*/
+.salesforce-widget #page-container #paintEnrollmentResults .enroll-action .enroll-drop-down-list li a,
+.salesforce-widget #page-container #paintEnrollmentLPResults .enroll-action .enroll-drop-down-list li a,
+.salesforce-widget #page-container #paintInstructorResults .enroll-action .enroll-drop-down-list li a ,
+.salesforce-widget #page-container #paintEnrollmentResults .enroll-action .enroll-drop-down-list li a:hover,
+.salesforce-widget #page-container #paintEnrollmentLPResults .enroll-action .enroll-drop-down-list li a:hover,
+.salesforce-widget #page-container #paintInstructorResults .enroll-action .enroll-drop-down-list li a:hover {
+  font-size: 10px
+}
+.salesforce-widget #report-query-details table td{
+  font-size: 10px
+}
+#catalog-class-basic-addedit-form-container .assess-attach-grid-wrapper .enrolled-status ul.sub-menu{right:314px}
+.refer-course-holder .refer-note span{
+   display:table-cell;
+}
+/*#custom_attribute_0078975*/
+#customattribute-basic-addedit-form-container #admin-save-screen-button {
+	margin-left: 0
+}
+.page-administration-manage #sort-bar-V2 #carousel_container #carousel_inner {
+	width: 449px
+}
+.page-learning-my-account  #page-container #learner-myaccount-details .content #exp-sp-my-account-form .my-account-action-box{
+  margin-left:315px
+}
+.page-learning-my-account-preference.page-learning-my-account #page-container #learner-myaccount-details #wizard-form-wrapper .pref-save-cancel-container-alignment{
+  margin-left:221px
+}
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .customattribute-basic-addedit-form-container .addedit-edit-cattr_display_opt, #customattribute-basic-addedit-form-disp .custom_attr_radio .customattribute-basic-addedit-form-container .addedit-edit-cattr_display_opt {
+    width: 76px;
+}
+#customattribute-basic-addedit-form-disp .custom_attr_checkbox .customattribute-basic-addedit-form-container .addedit-twocol-secondcol .addedit-new-field-title, #customattribute-basic-addedit-form-disp .custom_attr_radio .customattribute-basic-addedit-form-container .addedit-twocol-secondcol .addedit-new-field-title {
+    width: 112px;
+}

@@ -1,0 +1,53 @@
+<%
+	
+	var choiceRow = "";
+	if(GLOBALPARAMS_H5P.action.params.choices != undefined)
+	{
+		choiceRow = GLOBALPARAMS_H5P.action.params.choices[GLOBALPARAMS_H5P.choicecount-1];
+		if(choiceRow != "" && choiceRow != undefined)
+		{
+			choiceRow = JSON.stringify(choiceRow);
+			choiceRow = JSON.parse(choiceRow);
+		}
+		else
+			choiceRow = {"text":"","goTo":"","ifChosenText":""};
+	}
+	if(choiceRow.goTo != undefined && choiceRow.goTo != null && ns.$(".goToChoices").attr("addnew") != 1)
+		choiceRow.goTo = convertMinutes(choiceRow.goTo);
+%>
+
+
+
+
+
+
+
+<div class="field text h5peditor-interaction-label form-item-option-row" >
+   <label class="h5peditor-label-wrapper form-item-option-label">
+   		<span class="h5peditor-label h5peditor h5peditor-required">
+   			<%=window.parent.Drupal.t('LBL387')%>
+   				<span class="choice_numcount" value="<%= GLOBALPARAMS_H5P.choicecount%>"><%= GLOBALPARAMS_H5P.choicecount%></span>
+   			:
+   		</span>
+   		<input class="h5peditor-text choice_text" choicecount="<%= GLOBALPARAMS_H5P.choicecount %>" id="questionid" type="text" value="<%= choiceRow.text %>" maxlength="255">
+   		
+   </label> 
+   
+   <label class="h5peditor-label-wrapper form-item-goto-label" >
+   		<span class="h5peditor-label h5peditor">
+   			<%=window.parent.Drupal.t('LBL906')%>: 
+   		</span>
+   		<input class="h5peditor-text goto_text" value="<%= choiceRow.goTo %>" placeholder="mm:ss" type="text" maxlength="255">
+   </label> 
+   <label>
+   <% if(GLOBALPARAMS_H5P.choicecount > 2)
+      	{
+      	%>
+   			<a href="javascript:void(0);" onClick="deleteChoiceStatement(this);" class="deleteicon" >x</a>
+   			
+   		<%
+      	}
+      	%>
+   </label>
+  
+</div>

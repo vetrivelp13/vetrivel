@@ -1,0 +1,8 @@
+name = Footer Block
+description = Responsible for generating footer.
+package = ExpertusONE Core
+version = VERSION
+testing_api = 2.x
+files[] = tests/exp_sp_footer.test
+core = 7.x
+dependencies[] = exp_sp_core

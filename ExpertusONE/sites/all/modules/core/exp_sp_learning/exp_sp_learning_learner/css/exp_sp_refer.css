@@ -1,0 +1,143 @@
+.CoursePopContainer {
+  padding: 10px;
+  widht: auto;
+  height: auto
+}
+.CoursePopupRow {
+  width: 500px;
+  min-height: 28px;
+  float: left
+}
+.CoursePopTitle {
+  color: #ffffff;
+  float: left;
+  padding: 5px 0 0 15px;
+  width: 85%;
+  text-align: left
+}
+.CoursePopCloseBtn {
+  text-align: right;
+  cursor: pointer;
+  float: right;
+  width: 10%
+}
+.CoursePopCloseBtn img {
+  width: 16px;
+  height: 16px;
+  margin-top: 7px;
+  margin-right: 7px
+}
+.CoursePopupTxtBox {
+  width: 88px;
+  height: 28px;
+  float: left
+}
+.CoursePopupField {
+  width: 350px;
+  height: auto;
+  float: left
+}
+.CoursePopupBtn {
+  width: 470px;
+  height: auto;
+  float: left;
+  text-align: right;
+  padding: 10px 0
+}
+.CoursePopupImg {
+  width: 15px;
+  height: 15px;
+  padding: 4px 8px 0 0
+}
+.CoursePrevDetails {
+  border: 1px solid #aaa;
+  width: 476px;
+  height: auto;
+  background: #f7f9fb;
+  padding: 2px;
+  float: left
+}
+.CoursePrevHeader {
+  width: 476px;
+  background: #DFDFDF;
+  height: 40px
+}
+.CoursePrevTitle {
+  color: #CC6600;
+  width: 370px;
+  float: left;
+  height: 30px;
+  padding: 10px 0 0 15px
+}
+.CoursePrevCls {
+  background: #999;
+  color: #fff;
+  float: left;
+  width: 75px;
+  height: 26px;
+  margin: 2px;
+  cursor: pointer;
+  padding: 10px 0 0 10px
+}
+#ReferService_class_preview_widget_content table td, #ReferService_course_preview_widget_content table td {
+  padding: 0;
+  background: #fff
+}
+.HeaderImgMiddle {
+  background: url("images/head_bg.gif") repeat-x 0 -31px;
+  width: 100.4%
+}
+.HeaderImgRight {
+  background: url("images/head_bg_r.jpg") no-repeat right top;
+  min-height: 31px;
+  width: 100%
+}
+.HeaderImgLeft {
+  background: url("images/head_bg.gif") no-repeat left top;
+  width: 100%
+}
+.sp_email_wdgt_div {
+  right: 0;
+  padding: 0;
+  display: block;
+  width: 500px;
+  text-align: left;
+  position: absolute;
+  background-color: #fff;
+  color: #000
+}
+#ReferService_refer_course_mail_content, #ReferService_refer_class_mail_content {
+  background: #F7F9FB;
+  float: left;
+  width: 100%;
+  border: 1px solid #aaa;
+  height: auto
+}
+#ReferService_refer_course_widget {
+  background: url("images/head_bg.gif") repeat-x 0 -31px
+}
+#ReferService_refer_class_widget {
+  background: url("images/head_bg.gif") repeat-x 0 -31px
+}
+#ReferService_copy_html_widget {
+  padding-top: 5px
+}
+#ReferService_class_preview_widget_content table td, #ReferService_course_preview_widget_content table td {
+  padding: 0;
+  background: #fff
+}
+.sp_email_status_wdgt_div {
+  background-color: #F2F2F2;
+  height: 100px;
+  text-align: center
+}
+.referClassLink {
+  font-weight: bold;
+  color: #0066CC;
+  cursor: pointer
+}
+.CoursePopupTxt {
+  width: 110px;
+  height: 28px;
+  float: left
+}

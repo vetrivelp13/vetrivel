@@ -1,0 +1,688 @@
+<?php
+/** 
+ * Implementation of hook_menu().
+ */
+function exp_sp_menu_menu() {
+  try{
+  /* 
+  $items['portalpages/sp_administrator'] = array(
+    'title' => 'Administer',
+    'description' => 'Administration',
+    'page callback' => 'exp_sp_portalpages_callback',
+    'access callback' => 'site_admin_access_calback',
+    'type' => 6,
+    'weight' => 1,
+  );
+  $items['portalpages/sp_administrator/sys-admin'] = array(
+    'title' => 'System Administration',
+    'description' => 'System Administration',
+    'page callback' => 'exp_sp_sysadmin_sysadmin',
+    'access callback' => 'user_access',
+    'access arguments' => array('Sys Admin Perm'),
+    'type' => 6,
+    'weight' => 4,
+  );
+ $items['portalpages/sp_administrator/sys-admin/securitymgmt'] = array(
+    'title' => 'Security Role',
+    'description' => 'Manage Security Roles and Permissions.',
+    'page callback' => 'exp_sp_securitymgmtadmin_render',
+    'access callback' => 'user_access',
+    'access arguments' => array('Security Admin Perm'),
+    'type' => 6,
+    'weight' => 4,
+  );
+  $items['portalpages/sp_administrator/sys-admin/assign-role-to-user'] = array(
+    'title' => 'Assign Role',
+    'description' => 'Assign single role to multiple users.',
+    'page callback' => 'user_admin',
+    'access callback' => 'user_access',
+    'access arguments' => array('administer users'),
+    'type' => 6,
+    'weight' => 5,
+    'file' => 'user.admin.inc',
+    'file path' => 'modules/user',
+  );
+  $items['portalpages/sp_administrator/sys-admin/profile-config'] = array(
+    'title' => 'Profile Config',
+    'description' => 'Create and configure Profiles.',
+    'page callback' => 'exp_sp_sysadmin_profileconfig',
+    'access callback' => 'user_access',
+    'access arguments' => array('Profile Config Admin Perm'),
+    'type' => 6,
+    'weight' => 6,
+  );*/
+ $items['portalpages/sp_administrator/sys-admin/lookup-master'] = array(
+    'title' => 'List Values',
+    'description' => 'Master view of configuration information.',
+    'page callback' => 'exp_sp_sysadmin_report_lookup',
+    'access callback' => 'user_access',
+    'access arguments' => array('Site Setup Admin Perm'),
+    'type' => 6,
+    'weight' => 7,
+  );
+  /*$items['portalpages/sp_administrator/sys-admin/notification'] = array(
+    'title' => 'Template',
+    'description' => 'Manage Templates.',
+    'page callback' => 'exp_sp_sysadmin_notification',
+    'access callback' => 'user_access',
+    'access arguments' => array('administer messaging'),
+    'type' => 6,
+    'weight' => 8,
+  );*/
+  
+  /* OAuth Disclaimer page menu reference. It will be used when third party access the ExpertusONE data. 
+  *  Suresh
+  */
+   $items['oauth/grant_access'] = array(
+    'title' => 'Grant Access',
+    'description' => 'Grant Access',
+    'page callback' => 'oauth_grant_access',
+    'access callback' => 'user_access',
+     'access arguments' => array('access content'),
+     'hidden' => "1",
+    'type' => 6,
+    'weight' => 8,
+  );
+
+  // Comments added by Suresh 	  
+  // Hi Team, 
+  //  Use next menu weight value as 15. Since having problem with migrating menu item from 
+  //  ldap_authentication.module and ldap_servers.module. weight value from 12 to 14 resides there. I will migrate asap.
+  	  
+  return $items;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_menu_menu', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function site_admin_access_calback(){
+	try{
+  return user_access('Sys Admin Perm') || (user_access('Commerce Admin Perm') && module_exists("exp_sp_commerce"));
+  }catch (Exception $ex) {
+  	watchdog_exception('site_admin_access_calback', $ex);
+  	expertusErrorThrow($ex);
+  }
+}
+
+/*
+*  This will be used to accept the permission to serve data to the third party.
+*  
+*/
+function oauth_grant_access()
+{
+	try{
+	$sitename=arg(2);//"www.externalportal.com";
+	$source=arg(4);
+	$userid=arg(6);
+	$goto=arg(8);
+	$goto=substr($goto,3);
+	$access=arg(10);
+	
+	if($access=="granted")
+	{
+	  	$goto=str_replace("authorize","authenticate",$goto);
+	  		
+		//qa.expertusone.com	/apis/core/oauth/authorize?redirect_uri=https%3A%2F%2Fapigee.com%2Foauth_callback%2Fapi-expertusone-com%2Foauth2CodeCallback&client_id=5587354c93ce2eec02ca1da2aeaa8af604eb76789	20	no-store, no-cache, must-revalidate, post-check=0, pre-check=0  Expires: Thu, 19 Nov 1981 08:52:00 GMT	text/html	iexplore:29452			
+		$redirect_uri=$_SESSION["redirect_uri"];
+		if($redirect_uri!="")
+		{
+			$_SESSION["redirect_uri"]=null;
+			$urlparts=parse_url($redirect_uri);
+			$tmp=str_replace("://","^^^",$redirect_uri);	
+			$hostname="";
+			if(isset($_SERVER["HTTPS"]) &&$_SERVER["HTTPS"] == "on" )
+			    $pageURL="https://";
+			else
+			    $pageURL="http://";
+			$hostname= $pageURL.$_SERVER['SERVER_NAME'];
+	    
+	    
+			$redirect_location= $hostname."/".urldecode($goto."&userid=".$userid."&redirect_uri=".$tmp);
+			expDebug::dPrint("redirect loc::".$redirect_location , 4);
+			header('Location: '.urldecode($redirect_location));exit();
+		}
+		else
+		{
+			header('Location: ' .urldecode($goto."&userid=".$userid));
+		}
+			
+	}
+	else
+	{
+	 	$out = "";
+	  	$out.='<div id="content-area">';
+	  	$out.=' <fieldset>';
+		$out.="<legend style='font-weight:bold;color:red;'>Disclaimer</legend>";
+		$out.=" <br/><h3  style='padding-left:5px;'>ExpertusONE accounts</h3> ";   
+		$out.="<br>";
+		$out.="<p style='padding-left:5px;'>";
+		$out.="The site ".$sitename." is requesting access to your expertusone's enrollment data. ExpertusONE is not affiliated with ".$sitename.", and we recommend that you grant access only if you trust the site.<br>";
+		$out.="<br></p>";
+		$out.="<p  style='padding-left:5px;'>";
+		$out.=$sitename." will not have access to your password or any other personal information from your ExpertusONE account.";
+		$out.="</p>";
+		$out.="<p><br></p>";
+		$out.="<p  style='padding-left:5px;text-align:right;'><input id='grantaccess' value='Grant Access' class='form-submit' type='button' onclick='doGrantAccess();'>&nbsp;<input id='denyaccess' class='form-submit'  value='Deny Access' type='button' onclick='window.close();'></p><br/>";
+		$out.="</fieldset>";
+		$out.="</div>";
+		$out.="</div></div>";
+		
+		$out.="<script>function doGrantAccess()	{ ";
+		
+	  	$out.="window.location.href=window.location.href+'/access/granted'";
+	  	$out.="} </script>";
+	  
+		$out.="</div></div>";
+	}
+	return $out;
+  }catch (Exception $ex) {
+    watchdog_exception('oauth_grant_access', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+//hook_form_alter
+function exp_sp_menu_form_alter(&$form, $form_state, $form_id) { 
+  try{ 
+  switch($form_id){
+  	
+	case 'user_filter_form':
+		$outstr = '<div id="rollAssignByAdmin" class="search-result-container roll-assign-admin">';
+		$outstr .= '<div class="block-header sp_content_header" style="height:0px;"><div style="float: left; position: relative;"><h2 style="width: 150px;top:-40px;position:absolute;">Assign Role</h2></div><div id="contentGuide" style="float: right; position: relative; margin-top:5px;margin-right:17px;"></div></div>';
+		$form['#prefix'] =$outstr;
+	break;
+	case 'user_admin_account':
+		$form['#suffix'] ='</div><div class="block-footer-left"><div class="block-footer-right"><div class="block-footer-middle">&nbsp;</div></div></div>';
+		break;
+
+	case 'password_policy_admin_settings':
+	case 'format_password_policy_admin_list':
+	case 'format_password_policy_admin_form':
+	case 'password_policy_password_change_settings':
+		$outstr = '<div class="search-result-container roll-assign-admin" style="margin-top:-33px;padding-top:28px;">';
+		$outstr .= '<div class="block-header sp_content_header" style="height:0px;"><div style="float: left; position: relative;"><h2 style="width: 250px;top:-65px;position:absolute;">Password policies</h2></div><div id="contentGuide" style="float: right; position: relative; margin-top:5px;margin-right:17px;"></div></div>';
+		$form['#prefix'] =$outstr;
+		$form['#suffix'] ='</div><div class="block-footer-left"><div class="block-footer-right"><div class="block-footer-middle">&nbsp;</div></div></div>';
+		break;
+	}
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_menu_form_alter', $ex);
+    expertusErrorThrow($ex);
+  }
+}	
+
+function exp_sp_portalpages_callback() {
+  try{
+  /*$js_module_optional = array('type' => 'file', 'group' => JS_DEFAULT);
+  drupal_add_js(drupal_get_path('module', 'exp_sp_learning_admin').'/js/exp_sp_catalogadmin/exp_sp_catalogwidget.js', $js_module_optional);
+  drupal_add_js(drupal_get_path('module', 'exp_sp_learning_admin').'/js/exp_sp_catalogadmin/exp_sp_catalogitemwidget.js', $js_module_optional);
+  drupal_add_js(drupal_get_path('module', 'exp_sp_learning_admin').'/js/exp_sp_catalogadmin/exp_sp_catalogequv.js', $js_module_optional);
+  drupal_add_js(drupal_get_path('module', 'exp_sp_learning_admin').'/js/exp_sp_catalogadmin/exp_sp_catalogprereq.js', $js_module_optional);
+  return '';*/
+  //drupal_goto('portalpages/sp_administrator/learning-admin/content');
+  //drupal_goto('portalpages/sp_administrator/sys-admin/notification');
+  /*if (user_access('administer messaging')) {
+    drupal_goto('portalpages/sp_administrator/sys-admin/notification');
+  }else*/ 
+ /* if (user_access('Security Admin Perm')) {
+  	drupal_goto('portalpages/sp_administrator/sys-admin/securitymgmt');
+  }
+  else if (user_access('administer users')) {
+    drupal_goto('portalpages/sp_administrator/sys-admin/assign-role-to-user');
+  }
+  else if (user_access('Profile Config Admin Perm')) {
+  	drupal_goto('portalpages/sp_administrator/sys-admin/profile-config');
+  }
+  else if (user_access('Master View Admin Perm')) {
+    drupal_goto('portalpages/sp_administrator/sys-admin/lookup-master');
+  }
+  else if (user_access('Commerce Admin Perm')) {
+    drupal_goto('portalpages/sp_administrator/store-admin/');
+  }
+  */
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_portalpages_callback', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_home_callback() {
+	try{
+	return '';
+	}catch (Exception $ex) {
+		watchdog_exception('exp_sp_home_callback', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+
+function portal_page_access($arg)
+{
+	try{
+	global $user;
+	if(in_array($arg,$user->roles))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	}catch (Exception $ex) {
+		watchdog_exception('portal_page_access', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+function home_page_access()
+{
+	try{
+	return true;
+	}catch (Exception $ex) {
+		watchdog_exception('home_page_access', $ex);
+		expertusErrorThrow($ex);
+	}
+}
+/**
+ * Implementation of hook_permission().
+ */
+function exp_sp_menu_permission() {
+	try{
+  return array(    
+    'SmartPortal Admin Perm' => array(
+      'title' => t('SmartPortal Admin Perm')
+    ),
+    'Sys Admin Perm' => array(
+      'title' => t('Sys Admin Perm')
+    ),
+    'Security Admin Perm' => array(
+      'title' => t('Security Admin Perm')
+    )
+  );
+  }catch (Exception $ex) {
+  	watchdog_exception('exp_sp_menu_permission', $ex);
+  	expertusErrorThrow($ex);
+  }
+} 
+
+function exp_sp_menu_admin(){
+  try{
+	global $user;
+	if(in_array("catalog admin",$user->roles)) {
+		drupal_goto("portalpages/sp_administrator/catalog-admin");
+	} else if(in_array("hr admin",$user->roles)) {
+		drupal_goto("portalpages/sp_administrator/hr-admin");
+	} else {
+		drupal_goto("portalpages/sp_administrator/sys-admin");
+	}
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_menu_admin', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+//************* callback for sysadmin paths - Start *****************/
+function exp_sp_sysadmin_sysadmin(){
+  try{
+  /*$out  = '';
+  drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/exp_sp_welcomemenu/exp_sp_welcomemenu.js', array('type' => 'file', 'group' => JS_DEFAULT));
+  $out.="<div class='rightBoxleftcorner'><div class='rightBoxrightcorner'><h2 id='WelcomeMenuService'  class='welcomeadmin' data=''></h2></div></div>";
+  $out.="<input type='hidden' id='welcomeTitle' value='".t("System Admin")."'>";
+  return $out;*/
+  //drupal_goto('portalpages/sp_administrator/sys-admin/notification');
+  /*if (user_access('administer messaging')) {
+    drupal_goto('portalpages/sp_administrator/sys-admin/notification');
+  }else*/
+/*  if (user_access('Security Admin Perm')) {
+    drupal_goto('portalpages/sp_administrator/sys-admin/securitymgmt');
+  }
+  else if (user_access('administer users')) {
+    drupal_goto('portalpages/sp_administrator/sys-admin/assign-role-to-user');
+  }
+  else if (user_access('Profile Config Admin Perm')) {
+    drupal_goto('portalpages/sp_administrator/sys-admin/profile-config');
+  }
+  else*/ if (user_access('Master View Admin Perm')) {
+    drupal_goto('portalpages/sp_administrator/sys-admin/lookup-master');
+  }
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_sysadmin_sysadmin', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+
+function exp_sp_sysadmin_appfunc(){
+  try{
+	global $user;
+	$out="<div id='ProfileService'  class='profileadmin' data=''></div>";
+	if(in_array("sys admin",$user->roles)){
+		//show catalog status tree with read/write access
+		$out.="<input type='hidden' id='profileAccess' value='111'>";
+	} else {
+		//show catalog status tree with read access
+		$out.="<input type='hidden' id='profileAccess' value='000'>";
+	}
+	$out.="<input type='hidden' id='profileTitle' value='".t("Application Functions")."'>";
+	$out.="<input type='hidden' id='profileType' value='1'>";
+	return $out;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_sysadmin_appfunc', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+
+function exp_sp_sysadmin_analtsearch(){
+  try{
+	global $user;
+	$out="<div id='ProfileService'  class='profileadmin' data=''></div>";
+	if(in_array("sys admin",$user->roles)){
+		//show catalog status tree with read/write access
+		$out.="<input type='hidden' id='profileAccess' value='111'>";
+	} else {
+		//show catalog status tree with read access
+		$out.="<input type='hidden' id='profileAccess' value='000'>";
+	}
+	$out.="<input type='hidden' id='profileTitle' value='".t("Analytical Search")."'>";
+	$out.="<input type='hidden' id='profileType' value='2'>";
+	return $out;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_sysadmin_analtsearch', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+
+function exp_sp_sysadmin_alerts(){
+  try{
+	global $user;
+	$out="<div id='ProfileService'  class='profileadmin' data=''></div>";
+	if(in_array("sys admin",$user->roles)){
+		//show catalog status tree with read/write access
+		$out.="<input type='hidden' id='profileAccess' value='111'>";
+
+	} else {
+		//show catalog status tree with read access
+		$out.="<input type='hidden' id='profileAccess' value='000'>";
+	}
+	$out.="<input type='hidden' id='profileTitle' value='".t("Alerts")."'>";
+	$out.="<input type='hidden' id='profileType' value='2'>";
+	return $out;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_sysadmin_alerts', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_sysadmin_profilemanage(){
+  try{
+	global $user;
+	$out="<div id='ProfileService'  class='profileadmin' data=''></div>";
+	if(in_array("sys admin",$user->roles)){
+		//show catalog status tree with read/write access
+		$out.="<input type='hidden' id='profileAccess' value='111'>";
+	} else {
+		//show catalog status tree with read access
+		$out.="<input type='hidden' id='profileAccess' value='000'>";
+	}
+	$out.="<input type='hidden' id='profileTitle' value='".t("Profile Management")."'>";
+	$out.="<input type='hidden' id='profileType' value='2'>";
+	return $out;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_sysadmin_profilemanage', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_sysadmin_profileconfig(){
+  try{
+	drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/exp_sp_profile/exp_sp_profileconfigwidget.js', array('type' => 'file', 'group' => JS_DEFAULT));
+	$out="<div id='ProfileConfigService'  class='profileconfig' data=''></div>";
+	return $out;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_sysadmin_profileconfig', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+function exp_sp_sysadmin_report_sysadmin(){
+  try{
+	drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/exp_sp_welcomemenu/exp_sp_welcomemenu.js', array('type' => 'file', 'group' => JS_DEFAULT));
+		$out.="<div class='rightBoxleftcorner'><div class='rightBoxrightcorner'><h2 id='WelcomeMenuService'  class='welcomeadmin' data=''></h2></div></div>";
+		$out.="<input type='hidden' id='welcomeTitle' value='".t("System Report Admin")."'>";
+		return $out;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_sysadmin_report_sysadmin', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+function exp_sp_sysadmin_report_lookup(){
+  try{
+	$out="<div id='ProfileService'  class='profileadmin' data=''></div>";
+	$out.="<input type='hidden' id='profileTitle' value='".t("R")."'>";
+	$out.="<input type='hidden' id='profileAccess' value='111'>";
+	$out.="<input type='hidden' id='profileType' value='0'>";
+	return $out;
+   }catch (Exception $ex) {
+    watchdog_exception('exp_sp_sysadmin_report_lookup', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+/*function exp_sp_sysadmin_notification(){
+  try{
+	drupal_add_js(drupal_get_path('module', 'exp_sp_core').'/js/exp_sp_notification/exp_sp_notificationtemplate.js', array('type' => 'file', 'group' => JS_DEFAULT));
+	$out="<div id='NotificationService'  class='location' data=''></div>";
+	return $out;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_sysadmin_notification', $ex);
+    expertusErrorThrow($ex);
+  }
+}*/
+//************* callback for sysadmin paths - End *****************/
+/**
+ * Implementation of hook_block_info().
+ */
+function exp_sp_menu_block_info() {
+  try{
+  $blocks = array();
+ 
+  $blocks['admin menu'] = array(
+    'info' => t('Admin Menu'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'portalpages/sp_administrator'
+  );
+  $blocks['top menu'] = array(
+    'info' => t('Top Menu'),
+  	'cache' => DRUPAL_CACHE_PER_ROLE,
+    'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+    'pages' => '*/preview/*'
+  );
+ 
+  return $blocks;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_menu_block_info', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+/**
+ * Implementation of hook_block_view().
+ */
+function exp_sp_menu_block_view($delta = ''){
+  try{
+  $block = array();
+  switch ($delta) {
+    case 'admin menu':
+      $block['subject'] = t('Admin menu');
+      $block['content'] = _getMenus();
+      break;
+    case 'top menu':
+      global $user;
+    	$currpath=$_GET['q'];
+    	$curr='home';
+    	$count=strpos($currpath,'portalpages/sp_administrator');
+    	if(isset($count) && is_numeric($count)){
+    		$curr='admin';
+    	} else {
+    		$count=strpos($currpath,'portalpages/authenticated-user/learning');
+    		if(isset($count) && is_numeric($count)){
+    			$curr='learning';
+    		} else {
+    			$count=strpos($currpath,'portalpages/authenticated-user/reports');
+    			if(isset($count) && is_numeric($count)){
+    				$curr='reports';
+    			} else {
+    				$count=strpos($currpath,'node');
+    				if(isset($count) && is_numeric($count)){
+    					$curr='feedback';
+    				}else{
+    					$curr= 'home';
+    				}
+    			}
+    		}
+    	}
+    	if($user->uid){
+    	    $myTwoColumnTab = '';
+    		$output='<ul class="topmenu" id="menu">';
+    		$mylearning_url=strlen(getAdminSiteUrl()) == 0 ? $base_path : getAdminSiteUrl();
+    
+    		// SULTHAN - CREATING THEME WISE MENUS
+    		// THE BELOW GIVEN CONDITION IS TO CHECK IT FOR LMS TWO COLUMN THEME
+    		// ELSE THE DEFAULT SET OF MENU OPTIONS WILL APPEAR
+    		$myprogramTab = '';
+    		if(arg(0) == 'learner')
+    			$myprogramTab = 'selected';
+    		else if(arg(0) == 'learning' || arg(0)=='node' ){
+    		    $myTwoColumnTab = 'selected';
+    		    $output.='<input type="hidden" id="learning_menuitem" value="'.arg(1).'">';
+    		}else if(arg(0) == 'manager')
+    			$myTeam = 'selected';
+    		if(isset($_SESSION['availableFunctionalities']->exp_sp_learning))
+    		   $output.='<li class="first '.$myTwoColumnTab.'"><a href="'. check_url(url('')) .'" class="menulink">'.t("My Learning").'</a></li>';
+    		//$output.='<li class="first '.$myTwoColumnTab.'"><a href="'. check_url(url('learning/catalog-search')) .'" class="menulink">'.t("My Training").'</a></li>';
+    		if(isset($_SESSION['availableFunctionalities']->exp_sp_spportal))
+    		//---- added for the time being ----/////////
+    		if(arg(0) !== 'portalpages'){    		
+    		   $output.='<li class="'.$myprogramTab.'"><a href="'. check_url(url('learner/trainingprogram-search/view/all')) .'" class="menulink">'.t("My Program").'</a></li>';
+    		}
+    		//------- added for the time being -------------////////
+    		if(check_permission('My Team Perm') && $user->uid>1) 						
+    		   $output.='<li class="'.$myTeam.'"><a href="'. check_url(url('manager/dashboard/view/all')) .'" class="menulink">'.t("My Team").'</a></li>';
+    		
+    		if(check_permission('SmartPortal Admin Perm') || $user->uid==1){
+    			$output.='<li>';
+    			if($curr == 'admin' || $curr == 'feedback')
+    				$output.='<a href="'. check_url(url('portalpages/sp_administrator')) .'" class="menulink_active">'.t("ADMINISTER").'</a>';
+    			else
+    				$output.='<a href="'. check_url(url('portalpages/sp_administrator')) .'" class="menulink">'.t("ADMINISTER").'</a>';
+    
+    			$output.='</li>';
+    		}
+    		if(module_exists('exp_sp_reportconfig'))
+    		{
+    			if(check_permission('Report Perm') || $user->uid==1){
+    				$output.='<li class="last">';
+    				if($curr == 'reports' || $curr == 'feedback')
+    				$output.='<a href="'. check_url(url('portalpages/authenticated-user/reports')) .'" class="menulink_active">'.t("Reports").'</a>';
+    				else
+    				$output.='<a href="'. check_url(url('portalpages/authenticated-user/reports')) .'" class="menulink">'.t("Reports").'</a>';
+    				$output.='</li>';
+    			}
+    		}
+    		$output.='</ul>';
+    
+    	}else{
+    		 $output.='<input type="hidden" id="learning_menuitem" value="'.arg(1).'">';
+    	}
+      $block['subject'] = t('Topmenu');
+      $block['content'] = $output;
+      break;
+
+  } 
+  return $block;
+  }catch (Exception $ex) {
+    watchdog_exception('exp_sp_menu_block_view', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+ 
+
+function _getMenus() {
+  try{
+	$html='';
+	$count=0;
+	$rec_count=0;
+	$result = db_query("select * from menu_links where link_path like 'portalpages/sp_administrator/%' and has_children = 1 and hidden = 0 order by weight");
+	foreach ($result as $row) {
+		$grouphtml='';
+		$grouphtml_inner='';
+		$prepend=false;
+		$result_child = db_query("SELECT m.*, ml.*
+		FROM {menu_links} ml
+		INNER JOIN {menu_router} m ON ml.router_path = m.path
+		WHERE ml.link_path != 'admin/help' AND menu_name = :menu_name AND ml.plid = :plid AND hidden = 0 order by ml.weight", array(':menu_name' => $row->menu_name, ':plid' => $row->mlid));
+		foreach ($result_child as $item) {
+			//_menu_link_translate($item);
+			$rec_count++;
+			/*if (!$item->access) {
+				continue;
+			}*/
+			$prepend=true;
+			$even_odd = (($rec_count%2)==0)? 'odd': 'even';
+			$grouphtml_inner.="<tr><td class=\"".$even_odd."\"><dt>".l($item->title,$item->link_path)."</dt>";
+			$grouphtml_inner.="<dd>".$item->description."</dd></td></tr>";
+		}
+
+		if($prepend){
+			$count++;
+			$rec_count=0;
+			$grouphtml="<div class='admin-panel'>";
+			$grouphtml.="<h3>".$row->link_title."</h3>";
+			$grouphtml.="<div class='body'>";
+			$grouphtml.="<dl class='admin-list'><table border='0' width='100%' id='admin_container' cellspacing='0' cellpadding='3'>";
+
+			$grouphtml.=$grouphtml_inner;
+			$grouphtml.="</table></dl>";
+			$grouphtml.="</div>";
+			$grouphtml.="</div>";
+		}
+		if($count <= 3)
+		$html.=$grouphtml;
+		if($count==4){
+			$html.="<div class='admin-panel' style='text-align: right; font-weight: bold;'><a onclick='javascript:showNextDiv(this)'>".t("More")."...</a></div>";
+			$html.="<div style='display:none;'>";
+			$html.=$grouphtml;
+		}
+		if($count > 4){
+			$html.=$grouphtml;
+			//$html.='</div>';
+		}
+	}
+	if($count >= 4){
+		$html.='</div>';
+	}
+	return $html;
+  }catch (Exception $ex) {
+    watchdog_exception('_getMenus', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+
+//Added by Ilayaraja.E on 31/May/2011
+//Replaced existing check permission function with DRUPAL api for checkinng permission
+function check_permission($permission_name) {
+  try{
+	global $user;
+  	$account = user_load($user->uid);
+	if (user_access($permission_name, $account))
+    	//drupal_set_message(t("The user @username with uid @uid has the permission to do cool stuff.", array('@username' => $account->name, '@uid' => $account->uid));
+    	return true;
+	else
+		return false;    
+  }catch (Exception $ex) {
+    watchdog_exception('check_permission', $ex);
+    expertusErrorThrow($ex);
+  }
+}
+?>

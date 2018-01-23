@@ -1,0 +1,324 @@
+#exp-sp-administration-role-attaching-user-form .ac_input {
+  width:130px
+}
+#role-detail-wrapper #catalog-class-addedit-form-details #add-class-list-wrapper .admin_class_multi_search_container {
+  margin:-26px 0 0 150px;
+  width:280px
+}
+#role-addedit-form .addedit-form-cancel-container-actions {
+  margin-right:23px
+}
+#exp-sp-administration-role-attaching-user-form #catalog-class-addedit-form-details .add-class-button {
+  margin-right:16px
+}
+.add-user-delete {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/close.png") no-repeat 0 0;
+  cursor:pointer
+}
+#permissions_disp_div {
+  margin-left:152px;
+  margin-top:-26px;
+  position:absolute
+} 
+.add-permission-class {
+  height:180px
+}
+#add-class-list-wrapper .nonlist {
+  height:30px;
+  padding-top:15px
+}
+.admin-pagination-role-search-go {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -114px -183px;
+  border:0;
+  cursor:pointer;
+  display:block;
+  height:20px;
+  outline:none;
+  text-decoration:none;
+  width:20px
+}
+.display_user_list {
+  margin-top:10px
+}
+#security-role-detail-wrapper-list #admin-add-course-training-plan .ui-jqgrid .ui-jqgrid-toppager, 
+#admin-data-grid .ui-jqgrid .ui-jqgrid-toppager {
+  height:24px
+}
+#display-assigned-users #attach_user_list {
+  margin-right:5px;
+  margin-top:17px;
+  position:static
+}
+#add-user-role-page .add-class-button {
+  top:200px;
+  right:-16px
+}
+#add-user-role-page {
+  padding:5px;
+  position:relative
+}
+#add-user-role-page .ui-state-hover {
+  background:none;
+  text-align:left;
+  border:0;
+  padding:0 2px 0 0
+}
+.admin-save-button-container {
+  float:right;
+  margin:1px 0 5px
+}
+#add-user-role-page #add-class-list-wrapper #search-dropdwn-list-class {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat 0 -278px;
+  display:block;
+  float:left;
+  height:20px;
+  width:105px
+}
+#add-user-role-page #add-class-list-wrapper .select-list-dropdown-class {
+  background:none;
+  border:0;
+  color:#666;
+  float:left;
+  font-size:12px;
+  height:10px;
+  padding:2px 2px 5px 8px;
+  width:75px
+}
+#add-user-role-page #add-class-list-wrapper .select-list-class-dropdown-link {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat 1px -255px;
+  cursor:pointer;
+  float:left;
+  height:20px;
+  text-decoration:none;
+  width:20px
+}
+#add-user-role-page #add-class-list-wrapper #search-list-class-title-keyword ul {
+  background:#FFF;
+  border:1px solid #CCC;
+  list-style-type:none;
+  padding:0
+}
+#add-user-role-page #add-class-list-wrapper #select-list-class-dropdown-list {
+  display:none;
+  left:2px;
+  position:absolute;
+  top:20px;
+  z-index:100
+}
+#add-user-role-page .search-list-keyword {
+  position:absolute;
+  left:6px
+}
+.adduser-table-heading {
+  width:570px;
+  padding-left:5px
+}
+.adduser-title-heading {
+  color:#666;
+  font-size:12px;
+  font-weight:bold;
+  padding-left:13px
+}
+.adduser-title-heading-permission {
+  padding-left:4px
+}
+#admin-add-permissions .adduser-title-heading {
+  font-weight:bold
+}
+.permission-button-size {
+  font-size:12px
+}
+.permission-header-tr {
+  height:35px
+}
+.permission-detail-tr-odd {
+  height:30px
+}
+.permission-detail-tr-even {
+  height:30px;
+  background:#EEE
+}
+.edit-adduser-list {
+  padding-bottom:15px
+}
+.user-list-detail {
+  color:#666;
+  font-size:13px
+}
+#admin-add-permissions .certificate-column {
+  padding-top:7px
+}
+#add-user-role-page #add-class-list-wrapper .admin-class-auto-search-container {
+  margin:-16px 111px 0
+}
+#role-detail-wrapper #add-class-list-wrapper .admin_class_ac_input_mainform,
+#add-user-role-page #add-class-list-wrapper .admin_class_ac_input_mainform {
+  width:130px
+}
+#display-assigned-users #attach_user_list_div {
+  margin-right:0;
+  position:relative;
+  right:176px;
+  top:83px 
+}
+#security-role-detail-wrapper-list {
+  min-height:225px
+}  
+#security-role-detail-wrapper {
+  min-height:165px
+}
+#security-role-detail-wrapper-list .admin-save-button-container .narrow-search-actionbar-orange-btnBG {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat -3px -1022px;
+  padding:0 3px 0 7px
+}
+#search_addusers {
+  border:0
+}
+#search_add_urs {
+  border:0
+}
+#display-assigned-users .admin-empty-text-msg {
+  padding-top:72px
+}
+#permissions-addedit-form-html #admin-add-permissions .jspTrack {
+  height:175px
+}
+#assigned_user .addedit-form-cancel-container-actions .admin-action-button-middle-bg { 
+  margin-top:17px; 
+  margin-left:15px
+}
+#role-detail-wrapper .add-user-pagination-container {
+  clear:both;
+  float:right;
+  margin:5px 11px 5px 0
+}
+#role-detail-wrapper .add-user-first-btn {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -158px -253px;
+  width:23px;
+  height:23px;
+  margin:0 0 0 5px;
+  border:none;
+  display:block;
+  float:left;
+  opacity:8
+}
+#role-detail-wrapper .add-user-previous-btn {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -92px -302px;
+  width:23px;
+  height:23px;
+  margin:0 0 0 5px;
+  border:none;
+  display:block;
+  float:left;  
+  opacity:8
+}
+#role-detail-wrapper .add-user-next-btn {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -126px -302px;
+  width:23px;
+  height:23px;
+  margin:0 0 0 3px;
+  border:none;
+  padding:0;
+  display:block;
+  float:left;
+  opacity:8
+}
+#role-detail-wrapper .add-user-last-btn {
+  background:url(/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png) no-repeat -158px -302px;
+  width:23px;
+  height:23px;
+  margin:0 0 0 5px;
+  border:none;
+  padding:0;  
+  display:block;
+  float:left;
+  opacity:8
+}
+#add_usr_pg_txtfld {
+  font-size:12px;
+  color:#333;
+  border:1px solid #ccc;
+  height:14px;
+  width:20px;
+  text-align:center;
+  margin-left:3px
+}
+#role-detail-wrapper .attached-course-pagination-container {
+  clear:both;
+  float:right;
+  margin-right:7px;
+  width:106px
+}
+#role-detail-wrapper .tot-txt-cls {
+  font-size:12px;
+  color:#333;  
+  width:auto;
+  margin:0 1px 0 3px; 
+  padding:2px 0 0 0;
+  display:block;
+  float:left
+}
+#role-detail-wrapper .tot-txt-cls .form-item-add-usr-pg-txtfld {
+  display:inline;
+  margin:0 3px 0 1px;
+  height:25px
+}
+#attach_user {
+  margin-right:-4px;  
+  font-size:12px
+}
+#assigned_user {
+  margin-right:-4px;  
+  font-size:12px;
+  margin-top:-20px
+}
+.button-margin-edit {
+  margin-right:-4px
+}
+.button-margin-search {
+  margin-right:18px
+}
+.permission-tab-icon {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll -4px -1908px;
+  height:20px;
+  width:20px
+}
+.users-tab-icon {
+  background:url("/sites/all/themes/core/expertusone/expertusone-internals/images/ExpertusIcons.png") no-repeat scroll -34px -1909px;
+  height:20px;
+  width:20px
+}
+.user-list-full-name {
+  padding-left:12px
+}
+#role-security-role-detail-wrapper-list {  
+  min-height:165px
+}
+#security-role-detail-wrapper-list #admin-add-course-training-plan .admin-save-button-container {
+  margin-bottom:6px;
+  margin-right:2px
+}
+#add-user-role-page #admin-add-course-training-plan .ui-jqgrid-hbox input.multiselect-selectall {
+  margin-left:-2px
+}
+.qtip-parent-adduser #bubble-face-table .bubble-br {
+  width:31px
+}
+.qtip-parent-adduser .qtip-tip {
+  width:65px
+}
+/*! Chrome hack */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #add-user-role-page .admin-datagrid-pagination .ui-jqgrid-hdiv .ui-jqgrid-hbox .ui-jqgrid-labels th {
+    padding:0 4px 0 0;
+  }
+  #add-user-role-page .ui-state-hover {
+    background:none;
+    text-align:left;
+    border:0;
+    padding:0 4px 0 0
+  }
+  #role-detail-wrapper .tot-txt-cls {
+    min-width:61px
+  }
+}

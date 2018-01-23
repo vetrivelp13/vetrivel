@@ -1,0 +1,66 @@
+.cart-review #subtotal-title{
+  width:105px
+}
+#edit-panes-payment-payment-method{
+  width: 46%
+}
+.page-cart-checkout-paymethod  #uc-cart-checkout #payment-pane #payment-details{
+  width: 51%
+}
+#payment-details .order-edit-table .oet-label{
+  width:26%
+}
+.commerce-container-v2 .payment-billing-details-info{
+  width:44.5%
+}
+#my-team-dialog .title-mandatory-clr {
+  width:73px
+}
+.page-learning-myteam-search .expertusV2PopupContainer .assign-learning-team .checkbox-unselected, 
+.page-learning-myteam-search .expertusV2PopupContainer .assign-learning-team .checkbox-selected {
+  margin:0 0 0 27px
+}
+#schedule-qtip-popup .schedule-exportcontainer-page{
+  right:150px
+}
+#schedule-qtip-popup .schedule-list-wrapper .page-pipeline{
+  right:148px
+}
+#schedule-qtip-popup .schedule-list-wrapper .datagrid-items-list .ui-jqgrid-toppager .ui-pager-control .ui-pg-table{
+  left:214px
+}
+#catalog-course-basic-addedit-form-container .crs-tab-titles-container #catalog-attachment-disp-container td.attachment-empty-column-height {
+  height:35px
+}
+#program-tp-basic-addedit-form-container .crs-tab-titles-container #catalog-attachment-disp-container td.attachment-empty-column-height {
+  height:35px
+}
+.page-learning-enrollment-search .block-exp-sp-instructor-desk #instructor-result-container #pager-ins_center td.search-pagination-right {
+  min-width:110px
+}
+.page-learning-enrollment-search .block-exp-sp-instructor-desk #instructor-result-container .ui-jqgrid-btable td.search-pagination-right {
+  min-width:130px
+}
+.page-learning-myteam-search .myteam-learning-btn .view-learning-txt,
+.page-learning-myteam-search .myteam-learning-btn .actionLink {
+  /* padding:9px 8px 7px */
+}
+body.page-learning.page-learning-myteam-search table#paintContentResults .top-record-div-left{
+  width:252px;
+}
+.page-administration-manage-content #page-container #tab-content-main #narrow-search-results-holder a.crs-unpublish-btn.glossy-btn {
+  padding-top:10px
+}
+/*#custom_attribute_0078975*/
+#customattribute-basic-addedit-form-container #admin-save-screen-button {
+	margin-left: 0
+}
+.page-administration-manage #carousel_container #carousel_inner {
+	width: 433px
+}
+.page-learning-my-account  #page-container #learner-myaccount-details .content #exp-sp-my-account-form .my-account-action-box{
+  margin-left:257px
+}
+.page-learning-my-account-preference.page-learning-my-account #page-container #learner-myaccount-details #wizard-form-wrapper .pref-save-cancel-container-alignment{
+  margin-left:257px
+}

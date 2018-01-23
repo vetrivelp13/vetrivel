@@ -1,0 +1,56 @@
+<?php
+
+class ExpSpForumTest extends DrupalWebTestCase {
+
+private $test_case = array();
+
+  protected $admin_user;
+  protected $edit_own_topics_user;
+  protected $edit_any_topics_user;
+  protected $annonymus_user;
+  protected $container;
+  protected $forum;
+  protected $root_forum;
+  protected $nids;
+
+	public static function getInfo() {
+    return array(
+      'name' => 'Comments functionality',
+      'description' => 'Create, view, edit, delete, and change Discussion entries and verify its consistency in the database.',
+      'group' => 'Dissucssion Page Test',
+    );
+  }
+  
+    public function setUp(){
+  	parent::setUp();
+  	$user = new stdClass();
+  	$user->name =  'admin';
+  	$user->pass_raw = 'welcome';
+  	$this->drupalLogin($user);
+  }
+  
+ public function testExpertusoneForum() {
+	$this->getForumListDetails();
+	$this->nids =  $this->getNodesId();	
+}
+private function getForumListDetails(){
+  		$this->setHttpReferer('learning/forum-list');
+		$out = $this->drupalGet('learning/forum-list');
+		$this->assertRaw('<table id="forumListContentResults">','Form Rendered Successfully', 'exp_sp_forum');
+		$webError = "Website encountered an unexpected error";
+  		$this->assertNoText(t($webError),'Web errors not found','exp_sp_forum'); 
+  }
+  
+  private function getNodesId(){  	
+  	$select = db_select('node', 'n');
+  	$select->addField('n','nid', 'nid');
+  	$select->condition('n.type', 'forum', '=');
+  	$nids = $select->execute()->fetchAll();
+  	return $nids;
+  }
+ }
+
+
+
+
+?>

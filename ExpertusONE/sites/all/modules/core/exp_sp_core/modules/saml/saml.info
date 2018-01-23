@@ -1,0 +1,12 @@
+; @version     $Id: saml.info $ 
+; @package     ExpertusONE
+; @subpackage  SAML
+; @since 7.x
+name = ExpertusONE SingleSignOn SAML
+description = "Allows users to log into ExpertusONE using SSO credentials. SAML 2.0 compliant"
+version = VERSION
+package = ExpertusONE Single SignOn
+core = 7.x
+configure = admin/config/system/sso/saml
+
+

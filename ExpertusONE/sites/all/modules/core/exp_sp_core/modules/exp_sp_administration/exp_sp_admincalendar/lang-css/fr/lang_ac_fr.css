@@ -1,0 +1,49 @@
+/* Admin Calendar Styles starts here */
+#admincalendarsettingdiv {
+  width:220px
+}
+#admincalendarsettingdiv div.links {
+  width:150px
+}
+.viewreportorderpopupdiv div.links { 
+  width:240px;
+}
+.viewreportorderpopupdiv div.links .list {
+  width: 220px;
+}
+.viewreportorderpopupdiv div.links .loca-list {
+  width: 130px;
+}
+.viewreportorderpopupdiv .orders div.links .list-item {
+  width: 135px;
+}
+.page-admincalendar #block-system-main-menu {
+  width: 71.5%;
+}
+#calendarprimaryview .fc-agendaDay-view .fc-head div.fc-widget-header th.fc-axis{
+  min-width:51px
+}
+#select-list-calendar-dropdown-list{
+		/*left:-160px*/
+	left:-45px; /* Added/Changed by ganesh on May 9th 2017 for #73716 */
+}
+#select-list-calendar-dropdown-list li {
+     /* width:205px */
+ width:123px; /* Added/Changed by ganesh on May 9th 2017 for #73716 */
+}
+.section-admincalendar .catalog-class-basic-addedit-form-disp .mro-wrapper #access-search-list-class-title-keyword,
+.section-admincalendar #ctools-face-table #announcement-basic-addedit-form .mro-wrapper #access-search-list-class-title-keyword {
+  left:27px
+}
+.section-admincalendar .mro-wrapper #access-search-list-class-title-keyword ul {
+  width:90px
+}
+/* Admin Calendar Styles ends here */
+
+/*safari hack Start*/
+@media screen and (min-color-index:0)and(-webkit-min-device-pixel-ratio:0), not all and (min-resolution:.001dpcm) { @media { _:-webkit-full-screen,
+  #calendarprimaryview .fc-agendaDay-view .fc-head div.fc-widget-header th.fc-axis{
+    min-width:50px
+  }
+}}
+/*safari hack End*/

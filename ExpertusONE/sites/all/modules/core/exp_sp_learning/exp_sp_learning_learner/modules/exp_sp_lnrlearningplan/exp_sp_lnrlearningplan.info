@@ -1,0 +1,6 @@
+name = Learner My Learning Plan
+description = Responsible for learner side my learning plan.
+package = ExpertusONE Learning
+dependencies[] = exp_sp_learning
+version = VERSION
+core = 7.x

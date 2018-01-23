@@ -1,0 +1,12 @@
+name = People Administration
+description = Container folder for all people administration modules and shared functions of those modules if any
+package = ExpertusONE Administration
+dependencies[] = exp_sp_administration
+testing_api = 2.x
+files[] = exp_sp_administration_people.inc
+files[] = tests/exp_sp_administration_people.test
+files[] = tests/exp_sp_administration_people_create.test
+files[] = tests/exp_sp_administration_people_update.test
+files[] = tests/exp_sp_administration_people_delete.test
+version = VERSION
+core = 7.x

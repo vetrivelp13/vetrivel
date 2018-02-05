@@ -1,6 +1,0 @@
-name = Commerce Learner Core
-description = Core Engine responsible for commerce learner.
-package = ExpertusONE Commerce
-dependencies[] = exp_sp_commerce
-version = VERSION
-core = 7.x

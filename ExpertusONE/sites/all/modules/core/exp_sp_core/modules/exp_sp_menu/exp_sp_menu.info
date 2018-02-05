@@ -1,6 +1,0 @@
-name = Menu engine
-description = Menu generation module.
-package = ExpertusONE Core
-version = VERSION
-core = 7.x
-dependencies[] = exp_sp_core

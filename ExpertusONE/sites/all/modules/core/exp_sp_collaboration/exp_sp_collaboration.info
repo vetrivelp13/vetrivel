@@ -1,6 +1,0 @@
-name = Collaboration Core
-description = Core Engine responsible for collaboration functions.
-package = ExpertusONE Collaboration
-dependencies[] = exp_sp_core
-version = VERSION
-core = 7.x

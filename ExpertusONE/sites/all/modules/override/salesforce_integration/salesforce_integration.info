@@ -1,8 +1,0 @@
-; @version     $Id: adfs.info $
-; @since 7.x
-name = ExpertusONE SalesForce Connector
-description = "SalesForce integration component"
-version = VERSION
-package = ExpertusONE Partner Integration
-core = 7.x
-configure = admin/config/system/salesforce

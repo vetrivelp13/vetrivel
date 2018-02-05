@@ -1,1 +1,0 @@
-(function(a){a.widget("ui.shoppingcart",{_init:function(){try{var b=this;}catch(c){}}});a.extend(a.ui.shoppingcart.prototype,EXPERTUS_SMARTPORTAL_AbstractManager,EXPERTUS_SMARTPORTAL_AbstractDetailsWidget);})(jQuery);$(function(){try{}catch(a){}});

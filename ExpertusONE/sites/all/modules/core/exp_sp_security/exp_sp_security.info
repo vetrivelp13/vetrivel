@@ -1,6 +1,0 @@
-name = Security Core
-description = Security related functionality
-core = 7.x
-dependencies[] = exp_sp_core
-package = ExpertusONE Core
-version = 1.0

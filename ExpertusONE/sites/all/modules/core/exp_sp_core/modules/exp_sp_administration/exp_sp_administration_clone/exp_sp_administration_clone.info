@@ -1,6 +1,0 @@
-name = Administration Clone
-description = Container folder for administration clone.
-package = ExpertusONE Administration
-dependencies[] = exp_sp_administration
-version = VERSION
-core = 7.x

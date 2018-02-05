@@ -1,6 +1,0 @@
-name = Announcement Learner 
-description = Responsible for announcement rendering for learners.
-package = ExpertusONE Collaboration
-dependencies[] = exp_sp_administration_banner
-version = VERSION
-core = 7.x

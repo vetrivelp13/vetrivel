@@ -1,1 +1,0 @@
-settings={scheme:"http",port:8080,host:"localhost",serviceKey:"DUMMY-SERVICE-KEY",flashPolicy:{port:10843},backend:{port:80,scheme:"http",host:"localhost"},debug:true,eraseDrupalAuthAfter:120000,publishQueuedMsgsBatchSize:5,msgAckTimeoutAfter:30000,publishNextMsgsBatchAfter:200,drupalchatNodejs:{showUserPicture:true,eraseUserAfter:45000,currTheme:"expertusoneV2"}};

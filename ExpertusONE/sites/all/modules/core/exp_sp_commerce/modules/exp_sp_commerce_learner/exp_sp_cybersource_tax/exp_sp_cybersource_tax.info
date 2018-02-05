@@ -1,7 +1,0 @@
-name = ExpertusONE Cybersource Tax
-description = Calculate tax amount from cybersource.
-package = ExpertusONE Commerce
-dependencies[] = exp_sp_commerce_learner
-
-version = VERSION
-core = 7.x

@@ -1,6 +1,0 @@
-name = Survey Details Administration
-description = Responsible for survey details administration
-package = ExpertusONE Administration
-dependencies[] = exp_sp_administration_survey
-version = VERSION
-core = 7.x

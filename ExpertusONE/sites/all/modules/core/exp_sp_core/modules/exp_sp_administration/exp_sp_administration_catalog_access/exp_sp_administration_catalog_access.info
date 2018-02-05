@@ -1,6 +1,0 @@
-name = Administration Catalog Role Access 
-description = Catalog role base access
-package = ExpertusONE Administration
-dependencies[] = exp_sp_administration
-version = VERSION
-core = 7.x

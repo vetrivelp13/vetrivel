@@ -1,1 +1,0 @@
-<div> Image </div>

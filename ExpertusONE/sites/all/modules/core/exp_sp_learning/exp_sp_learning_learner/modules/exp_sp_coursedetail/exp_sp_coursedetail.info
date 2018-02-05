@@ -1,9 +1,0 @@
-name = Course Details 
-description = Responsible for rendering course details.
-package = ExpertusONE Learning
-dependencies[] = exp_sp_core
-testing_api = 2.x
-files[] = exp_sp_coursedetail.inc
-files[] = tests/exp_sp_coursedetail.test
-version = VERSION
-core = 7.x

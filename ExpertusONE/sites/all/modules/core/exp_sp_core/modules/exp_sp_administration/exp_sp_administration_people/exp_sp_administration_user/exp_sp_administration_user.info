@@ -1,7 +1,0 @@
-name = User Administration
-description = Responsible for user administration
-package = ExpertusONE Administration
-dependencies[] = exp_sp_administration_people
-dependencies[] = password_policy
-version = VERSION
-core = 7.x

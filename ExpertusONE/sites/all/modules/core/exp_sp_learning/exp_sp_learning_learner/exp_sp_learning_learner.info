@@ -1,6 +1,0 @@
-name = Learning Learner Core
-description = Core Engine responsible for learning learner.
-package = ExpertusONE Learning
-dependencies[] = exp_sp_learning
-version = VERSION
-core = 7.x

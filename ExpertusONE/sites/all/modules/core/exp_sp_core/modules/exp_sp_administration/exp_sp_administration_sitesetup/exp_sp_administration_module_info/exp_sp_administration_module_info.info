@@ -1,6 +1,0 @@
-name = Admin Module Details Information 
-description = Responsible for admin module enable or disable
-package = ExpertusONE Administration
-dependencies[] = exp_sp_administration_sitesetup
-version = VERSION
-core = 7.x

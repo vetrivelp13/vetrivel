@@ -1,7 +1,0 @@
-name = ExpertusONe Fivestar
-description = Responsible for fivestar rating on the Learner Side.
-package = ExpertusONE Collaboration
-dependencies[] = exp_sp_collaboration
-dependencies[] = fivestar
-version = VERSION
-core = 7.x

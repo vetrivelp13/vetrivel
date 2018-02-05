@@ -1,6 +1,0 @@
-name = Commerce Payment Core
-description = Core Engine responsible for commerce payment override function.
-package = ExpertusONE Commerce
-dependencies[] = exp_sp_commerce
-version = VERSION
-core = 7.x

@@ -1,6 +1,0 @@
-name = Commerce Engine
-description = Commerce Engine responsible for shopping cart.
-package = ExpertusONE Commerce
-dependencies[] = exp_sp_learning
-version = VERSION
-core = 7.x

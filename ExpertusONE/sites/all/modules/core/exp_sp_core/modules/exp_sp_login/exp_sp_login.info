@@ -1,9 +1,0 @@
-name = Basic Login
-description = Responsible for user login and authentication.
-package = ExpertusONE Core
-version = VERSION
-core = 7.x
-testing_api = 2.x
-files[] = exp_sp_login.module
-files[] = tests/exp_sp_login.test
-dependencies[] = exp_sp_core

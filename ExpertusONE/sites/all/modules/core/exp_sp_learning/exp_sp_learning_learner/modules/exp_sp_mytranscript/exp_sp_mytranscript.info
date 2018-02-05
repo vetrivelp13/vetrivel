@@ -1,6 +1,0 @@
-name = My Transcript
-description = Responsible for learner side my enrollment details.
-package = ExpertusONE Learning
-dependencies[] = exp_sp_learning
-version = VERSION
-core = 7.x

@@ -1,9 +1,0 @@
-.h5p-course-presentation .Blanks-CourPres .ui-dialog-content .form-item-statements-row span.h5peditor-label.h5peditor-required {
-	width: 105px;
-}
-.h5p-dialog.image-container .h5p-dialog-inner .form-item-image #uploadimage,
-.h5p-course-presentation .Image-CourPres #uploadimage,
-.h5p-course-presentation .Video-CourPres #uploadimage,
-.h5p-course-presentation .Audio-CourPres #uploadimage{
-	max-width : 145px;
-}

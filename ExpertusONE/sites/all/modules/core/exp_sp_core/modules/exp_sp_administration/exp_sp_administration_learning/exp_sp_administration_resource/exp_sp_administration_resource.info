@@ -1,6 +1,0 @@
-name = Resource Administration
-description = Responsible for Resource administration
-package = ExpertusONE Administration
-dependencies[] = exp_sp_administration_learning
-version = VERSION
-core = 7.x

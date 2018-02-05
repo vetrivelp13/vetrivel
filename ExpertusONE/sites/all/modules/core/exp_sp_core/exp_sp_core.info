@@ -1,7 +1,0 @@
-name = Core Engine
-description = Core Engine responsible for script loading AJAX handling and others.
-package = ExpertusONE Core
-testing_api = 2.x
-files[] = tests/exp_sp_core.test
-version = VERSION
-core = 7.x

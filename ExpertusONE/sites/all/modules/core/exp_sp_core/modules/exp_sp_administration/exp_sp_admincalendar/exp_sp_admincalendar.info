@@ -1,6 +1,0 @@
-name = ExpertusONE Admin Calendar
-description = Admin Calendar is used to view events such as class, annoncements, reports and orders in the Calendar format
-core = 7.x
-dependencies[] = exp_sp_core
-package = ExpertusONE Core
-version = 1.0

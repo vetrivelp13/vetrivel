@@ -1,6 +1,0 @@
-name = Language Switcher Dropdown
-package = Multilingual
-description = Provides a dropdown select to switch between available languages.
-dependencies[] = locale
-configure = 'admin/structure/block'
-core = 7.x

@@ -1,6 +1,0 @@
-name = Mobile App 
-description = Responsible for Managing Learner Side Mobile Application
-package = ExpertusONE Learning
-dependencies[] = exp_sp_learning
-version = VERSION
-core = 7.x

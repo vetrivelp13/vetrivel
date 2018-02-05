@@ -1,6 +1,0 @@
-name = Site Setup Administration
-description = Container folder for all admin modules and configurations functions of those modules if any
-package = ExpertusONE Administration
-dependencies[] = exp_sp_administration
-version = VERSION
-core = 7.x

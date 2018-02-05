@@ -1,7 +1,0 @@
-name = Refer Course 
-description = Responsible for refer course,class or curricula.
-package = ExpertusONE Learning
-dependencies[] = exp_sp_learning
-files[] = exp_sp_refer_course.test
-version = VERSION
-core = 7.x

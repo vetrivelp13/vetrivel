@@ -1,6 +1,0 @@
-name = Theme switcher
-description = Responsible for switching themes.
-package = ExpertusONE Core
-dependencies[] = exp_sp_core
-version = VERSION
-core = 7.x

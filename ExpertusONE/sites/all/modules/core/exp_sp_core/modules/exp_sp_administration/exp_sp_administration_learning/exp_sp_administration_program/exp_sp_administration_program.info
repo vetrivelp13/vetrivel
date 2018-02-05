@@ -1,8 +1,0 @@
-name = Program Administration
-description = Responsible for Program administration
-package = ExpertusONE Administration
-dependencies[] = exp_sp_administration_learning
-testing_api = 2.x
-files[] = tests/exp_sp_administration_program.test
-version = VERSION
-core = 7.x

@@ -1,6 +1,0 @@
-name = Currency Switcher Dropdown
-package = Multicurrency
-description = Provides a dropdown select to switch between available currency.
-dependencies[] = locale
-configure = 'admin/structure/block'
-core = 7.x

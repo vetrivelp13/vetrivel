@@ -1,6 +1,0 @@
-CALLOUT MODULE HELPHER FILE
-
-CONTENTS INCLUDED:
-    * Tax
-    * Payment
-    * Refund 

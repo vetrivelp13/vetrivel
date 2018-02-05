@@ -1,1 +1,0 @@
-function getUsersearch(){try{var a=$("#search_all_user_type-hidden").val();$("#hiddengptype").val(a);}catch(b){}}function moreRoleHideShow(){try{$(".more-drop-down").slideToggle();$(".more-drop-down li:last").css("border-bottom","0px none");}catch(a){}}

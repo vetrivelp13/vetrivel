@@ -1,6 +1,0 @@
-name = Manage Miscellaneous Administration
-description = Container folder for all miscellaneous administration modules and shared functions of those modules if any
-package = ExpertusONE Administration
-dependencies[] = exp_sp_administration
-version = VERSION
-core = 7.x

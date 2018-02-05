@@ -1,6 +1,0 @@
-name = Take Survey
-description = Responsible for take survey at learner side.
-package = ExpertusONE Survey
-dependencies[] = exp_sp_survey
-version = VERSION
-core = 7.x

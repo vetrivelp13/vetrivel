@@ -1,6 +1,0 @@
-name = ExpertusONE Meeting Integration
-description = Responsible for Expertus Meetings.
-package = ExpertusONE Meetings
-version = VERSION
-core = 7.x
-dependencies[] = bbb

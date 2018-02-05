@@ -1,6 +1,0 @@
-name = Learner My Calendar
-description = Responsible for learner side my calendar.
-package = ExpertusONE Learning
-dependencies[] = exp_sp_learning
-version = VERSION
-core = 7.x

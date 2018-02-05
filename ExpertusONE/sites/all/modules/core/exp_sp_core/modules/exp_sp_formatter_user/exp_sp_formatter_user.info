@@ -1,9 +1,0 @@
-name = User link and picture formatter
-description = Responsible for override drupal core user link and picture.
-package = ExpertusONE Core
-version = VERSION
-core = 7.x
-dependencies[] = exp_sp_core
-
-files[] = exp_sp_formatter_user.module
-files[] = exp_sp_formatter_user.test

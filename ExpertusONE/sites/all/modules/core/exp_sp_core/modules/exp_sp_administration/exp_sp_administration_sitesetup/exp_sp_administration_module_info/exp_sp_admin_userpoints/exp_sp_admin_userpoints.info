@@ -1,6 +1,0 @@
-name = User Points
-description = Responsible For User Points Administration
-package = ExpertusONE Administration
-dependencies[] = exp_sp_administration_module_info
-version = VERSION
-core = 7.x

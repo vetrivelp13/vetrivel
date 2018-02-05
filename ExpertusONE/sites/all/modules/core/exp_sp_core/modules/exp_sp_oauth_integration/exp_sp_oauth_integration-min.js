@@ -1,1 +1,0 @@
-$(document).ready(function(){$("#edit-client-type").change(function(){var a=$("#edit-client-type option:selected").val();$("#edit-client-url").val("");if(a=="API"||a=="DL"){var b=window.location.origin;$("#edit-client-url").val(b);$("#edit-client-url").prop("readonly",true);}else{$("#edit-client-url").prop("readonly",false);}});});

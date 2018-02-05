@@ -1,8 +1,0 @@
-; $Id: uc_po.info,v 1.2 2009/04/24 00:59:42 rszrama Exp $
-name = Purchase Order
-description = Grant customers permission to pay by purchase order.
-dependencies[] = uc_order
-dependencies[] = uc_payment
-package = ExpertusONE Commerce
-core = 7.x
-

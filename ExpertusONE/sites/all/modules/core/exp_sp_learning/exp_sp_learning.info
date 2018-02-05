@@ -1,7 +1,0 @@
-name = Learning Core
-description = Core Engine responsible for learning functions.
-package = ExpertusONE Learning
-dependencies[] = exp_sp_core
-dependencies[] = exp_sp_profileadmin
-version = VERSION
-core = 7.x

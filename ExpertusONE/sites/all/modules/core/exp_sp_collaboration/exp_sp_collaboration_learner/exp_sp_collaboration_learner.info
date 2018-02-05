@@ -1,6 +1,0 @@
-name = Collaboration Learner
-description =Responsible for collaboration learner features.
-package = ExpertusONE Collaboration
-dependencies[] = exp_sp_collaboration
-version = VERSION
-core = 7.x

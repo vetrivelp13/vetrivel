@@ -12,5 +12,19 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    
+    $tasks = DB::table('vel_family')->get();
+    
+    return view('index', compact('tasks'));
 });
+
+
+Route::get('/detail/{id}', function ($id) {
+    
+    $details = DB::table('vel_family')->find($id);
+    
+    //dd($details);
+    
+    return view('show', compact('details'));
+});
+        

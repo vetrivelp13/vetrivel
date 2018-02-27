@@ -5,12 +5,16 @@
     </head>
     
     <body>
-        <div style="Align:'center'" >
+        <div style="align:'center'" >
         	<h1>About my family</h1>
         		<ul>
         			@foreach ($tasks as $task)
         
-        				<li>{{ $task->name }}</li>
+        				<li>
+        					<a href="/detail/{{$task->id}}">
+        						{{ $task->name }}
+        					</a>
+        				</li>
         
         			@endforeach
         		</ul>

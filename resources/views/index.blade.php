@@ -1,12 +1,11 @@
 <!doctype html>
 <html>
     <head>
-        <title></title>
+        <title>My Page</title>
     </head>
     
     <body>
         <div style="align:'center'" >
-        	<h1>About my family</h1>
         		<ul>
         			@foreach ($tasks as $task)
         

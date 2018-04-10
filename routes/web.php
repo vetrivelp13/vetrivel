@@ -13,17 +13,15 @@
 
 Route::get('/', function () {
     
-    $tasks = DB::table('vel_family')->get();
+    $tasks = DB::table('vc_users')->get();
     
     return view('index', compact('tasks'));
 });
 
 
-Route::get('/detail/{id}', function ($id) {
+Route::get('/detail/{uid}', function ($uid) {
     
-    $details = DB::table('vel_family')->find($id);
-    
-    //dd($details);
+    $details = DB::table('vc_users')->find($uid);
     
     return view('show', compact('details'));
 });

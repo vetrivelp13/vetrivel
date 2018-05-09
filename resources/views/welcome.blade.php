@@ -1,19 +1,31 @@
 <!doctype html>
-<html>
+<html lang="{{ app()->getLocale() }}">
     <head>
-        <title></title>
+        
     </head>
-    
     <body>
-        <div style="Align:'center'" >
-        	<h1>About my family</h1>
-        		<ul>
-        			@foreach ($tasks as $task)
-        
-        				<li>{{ $task->name }}</li>
-        
-        			@endforeach
-        		</ul>
-        </div>
-    </body>
+   	 	<div class="vclsloginbox">
+	        <img src="iimages/Vclasslogo.png" alt="" class="vclslogo">
+	        <form class="vclsloginform" method="POST" action="/login">
+	        {{ csrf_field() }}
+	            <div class="vclsid infield">
+	                <label for="vclassid">ID</label>
+	                <input type="text" class="" name="id" required>
+	            </div>
+	            <div class="vclsid infield">
+	                <label for="vclassname">USER NAME</label>
+	                <input type="text" class="" name="username" placeholder="Enter User Name" required>
+	            </div>
+	            <div class="vclsid infield">
+	                <Label for="vclasspassword">PASSWORD</Label>
+	                <input type="password" class="" name="password" placeholder="Enter Password" required>
+	            </div>
+	            <a href="#" class="forgetlink" target="_self">Forget Password?</a>
+	            <input type="submit" class="vclssubmit" name="" value="LOGIN">
+	        </form>
+    	</div>
+	</body>
 </html>
+
+
+

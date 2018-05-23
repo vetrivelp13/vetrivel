@@ -1,0 +1,197 @@
+@import url("/css/reset.css");
+@import url("/css/fonts.css");
+body{
+    background-color: #84c8e1;
+    height: 100vh;
+    font-family: 'open_sansregular', sans-serif;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+input, button, submit{
+    border:none;
+} 
+::-webkit-input-placeholder {
+  color: #c5c5c5;
+  font-size: 18px;
+}
+::-moz-placeholder {
+  color: #c5c5c5;
+  font-size: 18px;
+}
+:-ms-input-placeholder {
+  color: #c5c5c5;
+  font-size: 18px;
+}
+::placeholder {
+  color: #c5c5c5;
+  font-size: 18px;
+}
+input[type="text"]{
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+.vclsloginbox{
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    width: 400px;
+    height: 450px;
+    border-radius: 10px;
+}
+.vclslogo{
+    display: block;
+    width: 200px;
+    margin: 0px auto;
+    padding: 20px;
+}
+.vclsloginform{
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+.infield{
+    border-bottom: 2px solid #c5c5c5;
+    padding: 20px 0px 0px 0px; 
+}
+.infield:hover, .infield:active{
+    border-color: #d16623;
+    transition: all ease-in .25s;
+}
+.infield label{
+    color: #909090;
+    font-size: 20px;
+}
+.infield input[type="text"],.infield input[type="password"]{
+    color: #d16623;
+    padding: 5px 0;
+    font-size: 18px;
+}
+.forgetlink{
+    text-decoration: none;
+    color:#909090;
+    display: block;
+    width: 100%;
+    text-align: right;
+    font-size: 14px;
+    padding: 5px 0;
+    outline: none;
+}
+.forgetlink:hover{
+    text-decoration: underline;
+}
+.vclssubmit{
+    display: block;
+    width: 100%;
+    margin: 30px 0;
+    padding: 10px 0px;
+    font-family: 'open_sansbold', sans-serif;
+    color: #02a6e2;
+    background-color: #fff; 
+    cursor: pointer;
+    border: 2px solid #02a6e2;
+    border-radius: 10px;
+    text-align: center;
+}
+.vclssubmit:hover{
+    color: #fff;
+    background-color: #02a6e2;
+    transition: all ease-in .25s;
+}
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (max-width : 576px) {
+/* Styles */
+   .vclsloginbox{
+       width: 300px;
+       height: 450px;
+   }
+   .infield input[type="text"],.infield input[type="password"]{
+       font-size: 14px;
+   }
+   ::-webkit-input-placeholder {
+       font-size: 14px;
+   }
+   ::-moz-placeholder {
+       font-size: 14px;
+   }
+   :-ms-input-placeholder {
+       font-size: 14px;
+   }
+   ::placeholder {
+       font-size: 14px;
+   }
+   .vclslogo {
+       padding: 30px 0px 20px 0px;
+   }
+}
+
+/* Tablets (portrait) ----------- */
+@media only screen and (min-device-width : 576px) and (max-device-width : 768px) {
+/* Styles */
+   .vclsloginbox{
+       width: 350px;
+       height: 450px;
+   }
+   .infield input[type="text"],.infield input[type="password"]{
+       font-size: 16px;
+   }
+   ::-webkit-input-placeholder {
+       font-size: 16px;
+   }
+   ::-moz-placeholder {
+       font-size: 16px;
+   }
+   :-ms-input-placeholder {
+       font-size: 16px;
+   }
+   ::placeholder {
+       font-size: 16px;
+   }
+   .vclslogo {
+       padding: 30px 0px 20px 0px;
+   }
+}
+
+/* Tablets (landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 992px) {
+/* Styles */
+}
+
+/* Desktop ----------- */
+@media only screen and (min-device-width : 992px) and (max-device-width : 1200px) {
+/* Styles */
+}
+
+/* Large Desktop ----------- */
+@media only screen and (min-device-width : 1200px) {
+/* Styles */
+   .vclsloginbox{
+       width: 400px;
+       height: 500px;
+   }
+   .infield input[type="text"],.infield input[type="password"]{
+       font-size: 18px;
+   }
+   ::-webkit-input-placeholder {
+       font-size: 18px;
+   }
+   ::-moz-placeholder {
+       font-size: 18px;
+   }
+   :-ms-input-placeholder {
+       font-size: 18px;
+   }
+   ::placeholder {
+       font-size: 18px;
+   }
+   .vclslogo {
+       padding: 50px 0px 20px 0px;
+   }
+}

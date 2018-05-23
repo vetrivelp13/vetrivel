@@ -5,7 +5,7 @@
     </head>
     <body>
    	 	<div class="vclsloginbox">
-	        <img src="iimages/Vclasslogo.png" alt="" class="vclslogo">
+	        <img src="/images/Vclasslogo.png" alt="" class="vclslogo">
 	        <form class="vclsloginform" method="POST" action="/login">
 	        {{ csrf_field() }}
 	            <div class="vclsid infield">
